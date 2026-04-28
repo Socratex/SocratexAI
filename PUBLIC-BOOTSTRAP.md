@@ -97,6 +97,16 @@ Report missing runtimes or libraries.
 
 If something is missing, follow `core/SCRIPT-FALLBACK.yaml`: propose installing the missing runtime before using manual fallback.
 
+If PowerShell 7 (`pwsh`) is missing, treat it as the first setup improvement:
+
+1. Run `tools/install_powershell.ps1` when PowerShell-compatible shell execution is available.
+2. Present the detected install command and ask for explicit approval before using `-Apply`.
+3. After installation, rerun `tools/check_runtime.py --root-key runtime_status`.
+4. If the platform cannot support PowerShell, recommend one of:
+   - use lite/no-tools mode,
+   - run SocratexAI from a supported host or container,
+   - port required scripts to the target shell before relying on automation.
+
 Store the result in `PIPELINE-CONFIG.yaml` under `runtime_status`.
 
 ## Programming Questions

@@ -35,8 +35,18 @@ def pwsh_install_hint() -> str:
     if system == "darwin":
         return "brew install --cask powershell"
     if system == "windows":
-        return "Install PowerShell from Microsoft Store or GitHub releases."
-    return "Install PowerShell for your platform."
+        return "winget install --id Microsoft.PowerShell --source winget"
+    return "PowerShell install is not known for this platform."
+
+
+def pwsh_supported() -> bool:
+    return platform.system().lower() in {"linux", "darwin", "windows"}
+
+
+def pwsh_fallback_recommendation() -> str:
+    if pwsh_supported():
+        return "Install PowerShell 7 before using SocratexAI tools when possible."
+    return "Use a no-tools/lite mode, run SocratexAI from a supported host, or port required scripts to the target shell before relying on automation."
 
 
 def emit_yaml(data: dict, root_key: str) -> None:
@@ -74,6 +84,8 @@ def main() -> int:
             "ok": pwsh_version is not None,
             "version": pwsh_version,
             "install_hint": None if pwsh_version else pwsh_install_hint(),
+            "install_supported": pwsh_supported(),
+            "fallback_recommendation": None if pwsh_version else pwsh_fallback_recommendation(),
         },
         "pyyaml": {
             "ok": pyyaml_ok,

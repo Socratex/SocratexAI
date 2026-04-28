@@ -301,6 +301,8 @@ runtime_status:
     ok: TBD
     version: TBD
     install_hint: TBD
+    install_supported: TBD
+    fallback_recommendation: TBD
   pyyaml:
     ok: TBD
     version: TBD

@@ -84,6 +84,8 @@ Before silently bypassing a script, the agent follows `core/SCRIPT-FALLBACK.yaml
 
 Missing runtimes should be reported as setup issues with install hints before manual fallback.
 
+PowerShell 7 (`pwsh`) is the preferred automation runtime. If it is missing during setup, run `tools/install_powershell.ps1`, ask before applying the install command, then rerun the runtime check. If PowerShell is unsupported, recommend lite/no-tools mode, a supported host/container, or porting required scripts.
+
 ## Broad Task Work
 
 For broad multi-step tasks, the agent should create temporary task work at `docs-tech/cache/current_task.yaml`, track micro-task status during execution, then delete it or promote only durable facts.

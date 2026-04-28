@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
     date: 2026-04-28
+    feature: powershell_first_setup
+    change: Added PowerShell-first setup guidance, runtime metadata, and an install helper with unsupported-platform fallback recommendations.
+  - version: 0.2.0-alpha
+    date: 2026-04-28
     feature: reinitialization_and_changelog_config
     change: Added changelog opt-in configuration, missing-only reinitialization, and update flow support for newly introduced initialized artifacts.
   - version: 0.2.0-alpha

@@ -279,7 +279,7 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
             }
@@ -292,6 +292,8 @@ try {
         $pipelineConfigTemplate = Get-RepoText -RelativePath "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "project_profile:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "runtime_status:" -Label "templates/code/PIPELINE-CONFIG.yaml"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle "install_supported:" -Label "templates/code/PIPELINE-CONFIG.yaml"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle "fallback_recommendation:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "branch_mode:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "update_source:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "remove_command:" -Label "templates/code/PIPELINE-CONFIG.yaml"

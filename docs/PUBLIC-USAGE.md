@@ -26,6 +26,7 @@ The AI should:
 4. Ask context questions.
 5. If programming, run the Project Profile Interview.
 6. Run the runtime check when tools are available.
+7. If PowerShell 7 is missing, run the install helper, ask before applying the install command, and rerun the runtime check after installation.
 7. Ask programming-specific questions, including branch workflow mode.
 8. Install, merge, or migrate according to the user's answers.
 9. Run audit if tools are available.

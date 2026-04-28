@@ -86,6 +86,8 @@ Code projects can store `project_profile`, `runtime_status`, and `workflow.branc
 
 The agent uses `project_profile` to filter known solutions, `ROI-BIAS.md` to rank recommendations, and `SCRIPT-FALLBACK.md` when tools cannot run.
 
+PowerShell 7 (`pwsh`) is the preferred automation runtime. During setup, the agent should check it first, run `tools/install_powershell.ps1` when missing, and recommend lite/no-tools mode, a supported host/container, or porting scripts if the target system cannot support PowerShell.
+
 If the AI environment is limited, read `tools/lite-option/README.md` before selecting artifacts.
 
 User-facing guides:

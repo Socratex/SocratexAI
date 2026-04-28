@@ -54,6 +54,9 @@ If the context is programming, also ask:
    - highest current pain
    - stack tags, suggested from `tools/detect_project_stack.ps1` when practical
 17. Run `tools/check_runtime.py` when practical and record runtime availability.
+   - If PowerShell 7 (`pwsh`) is missing, run `tools/install_powershell.ps1` to produce an install plan.
+   - Ask for explicit user approval before installing with `-Apply`.
+   - If PowerShell is unsupported, recommend lite/no-tools mode, a supported host/container, or porting required scripts.
 18. Which branch workflow mode should this project use?
    - `branch_scoped`
    - `linear`

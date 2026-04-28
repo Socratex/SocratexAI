@@ -62,6 +62,14 @@ items:
       ```
       
       Step 4: Never claim a script ran when it did not run.
+
+      PowerShell-first setup:
+
+      - `pwsh` is the preferred runtime for SocratexAI tool automation.
+      - During setup, check `pwsh` before relying on tool workflows.
+      - If `pwsh` is missing, run `tools/install_powershell.ps1` to produce an install plan.
+      - Use `tools/install_powershell.ps1 -Apply` only after explicit user approval.
+      - If PowerShell is unsupported on the target system, recommend lite/no-tools mode, running SocratexAI from a supported host or container, or porting required scripts to the target shell.
       
   install_hints:
     title: 'Install Hints'
@@ -74,7 +82,7 @@ items:
       - Python package: `python -m pip install --user <package>`
       - PowerShell on Linux: `sudo snap install powershell --classic`
       - PowerShell on macOS: `brew install --cask powershell`
-      - PowerShell on Windows: install PowerShell from Microsoft Store or GitHub releases.
+      - PowerShell on Windows: `winget install --id Microsoft.PowerShell --source winget`, Microsoft Store, or GitHub releases.
       
       If the platform cannot be detected, provide the generic runtime name and ask the user how they want dependencies installed.
       
