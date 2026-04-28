@@ -11,6 +11,8 @@ param(
 
     [string[]]$DirectiveFiles = @("AGENTS.md"),
 
+    [switch]$ReinitializeNew,
+
     [switch]$DryRun
 )
 
@@ -83,6 +85,9 @@ if (Test-Path -LiteralPath (Join-Path $SourceRoot "templates\SOCRATEX.md")) {
 }
 
 if (-not $DryRun) {
+    if ($ReinitializeNew) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\reinitialize_pipeline.ps1") -TargetPath $TargetRoot -Packs $Packs
+    }
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\set_directives.ps1") -TargetPath $TargetRoot -Mode $DirectiveMode -DirectiveFiles $DirectiveFiles
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\audit_docs.ps1")
 }

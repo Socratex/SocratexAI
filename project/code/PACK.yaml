@@ -61,7 +61,7 @@ items:
       - `TODO.yaml`
       - `BUGS.yaml`
       - `BUGS-SOLVED.yaml`
-      - `CHANGELOG.yaml`
+      - `CHANGELOG.yaml` when `changelog.enabled` is not `no`
       - `DECISIONS.yaml`
       - `PIPELINE-CONFIG.yaml`
       - `context-docs/TECHNICAL.yaml`

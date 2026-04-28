@@ -127,7 +127,7 @@ items:
       
       - promote durable findings to `context-docs/`,
       - promote durable decisions to `DECISIONS.yaml`,
-      - record shipped outcomes in `CHANGELOG.yaml` when appropriate,
+      - record shipped outcomes in `CHANGELOG.yaml` when appropriate and `changelog.enabled` is not `no`,
       - leave local branch files as reference unless the user asks to clean them.
       
       Do not promote every scratch note.

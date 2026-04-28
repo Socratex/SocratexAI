@@ -103,24 +103,27 @@ Store the result in `PIPELINE-CONFIG.yaml` under `runtime_status`.
 
 If the context is programming, ask:
 
-1. Should the AI commit changes?
-2. Should the AI push changes?
-3. Which branch workflow mode should this project use?
+1. Should the project use `CHANGELOG.yaml` for shipped history?
+   - `yes`: create and maintain `CHANGELOG.yaml` for shipped functionality and major fixes.
+   - `no`: skip changelog files and do not require changelog promotion.
+2. Should the AI commit changes?
+3. Should the AI push changes?
+4. Which branch workflow mode should this project use?
    - `branch_scoped`: use committed directives under `.aiassistant/` and local branch memory under `ignored/ai-socratex/`.
    - `linear`: use normal `STATE.yaml` and `_PLAN.yaml` under the SocratexAI installation.
    Default to `branch_scoped` when the user works on Git branches.
-4. Can there be external changes from other people, CI, tools, or branches while the AI is working?
-5. Should the AI force DDD-ADIV as a required design discipline?
-6. Should the AI import a pipeline package or dependency when the ecosystem supports it?
-7. Should the AI detect package managers and frameworks, such as Composer for PHP?
-8. Should the AI replace current directives after saving a snapshot, or merge with current directives?
-9. Which directive files should be managed?
+5. Can there be external changes from other people, CI, tools, or branches while the AI is working?
+6. Should the AI force DDD-ADIV as a required design discipline?
+7. Should the AI import a pipeline package or dependency when the ecosystem supports it?
+8. Should the AI detect package managers and frameworks, such as Composer for PHP?
+9. Should the AI replace current directives after saving a snapshot, or merge with current directives?
+10. Which directive files should be managed?
    - `AGENTS.md`
    - `CLAUDE.md`
    - `.cursor/rules`
    - `.github/copilot-instructions.md`
    - other
-10. What should the first useful work pass be?
+11. What should the first useful work pass be?
 
 ## Programming Detection
 
@@ -158,7 +161,7 @@ For programming projects:
 4. Keep Markdown only for scratch intake, prompt-language branch files, and short user-facing notes.
 5. Install code pack files under `SocratexAI/project/code/`.
 6. Install tools under `SocratexAI/tools/`.
-7. Create `SocratexAI/PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, and `runtime_status`.
+7. Create `SocratexAI/PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, and `changelog.enabled`.
 8. If `workflow.branch_mode` is `branch_scoped`, create committed directives under `.aiassistant/socratex/`, create local branch memory under `ignored/ai-socratex/`, and ensure `/ignored` is gitignored.
 9. Apply directive merge or replace mode.
 10. Run document audit when possible.
@@ -196,12 +199,15 @@ Report this handoff explicitly:
 Use these tools when available:
 
 - `tools/update_pipeline_from_link.ps1`: update a user's project from the latest public pipeline source.
+- `tools/reinitialize_pipeline.ps1`: add newly introduced initialized artifacts without overwriting existing project memory.
 - `tools/upgrade_from_riftbound.ps1`: maintainer-only upgrade from the active gamedev source pipeline.
 - `tools/migrate_ai_pipeline.ps1`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
 
 When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.yaml`.
 
 The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user.
+
+If the updated pipeline includes initializer artifacts missing from the installed project, run `tools/reinitialize_pipeline.ps1` in missing-only mode after update.
 
 If no source is configured, ask for the URL or local source path before changing files.
 

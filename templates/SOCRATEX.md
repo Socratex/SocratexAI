@@ -21,7 +21,9 @@ Read order:
 
 After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
 
-When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater from `SocratexAI/tools/`, then run audit and activation check.
+When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater from `SocratexAI/tools/`, run missing-only reinitialization when new initializer artifacts exist, then run audit and activation check.
+
+When the user asks to reinitialize the pipeline, run `SocratexAI/tools/reinitialize_pipeline.ps1` in missing-only mode. Preserve existing project memory.
 
 When the user asks to remove the pipeline, read `SocratexAI/core/REMOVAL-PROTOCOL.yaml` and run `SocratexAI/tools/remove_pipeline.ps1` instead of deleting files manually.
 

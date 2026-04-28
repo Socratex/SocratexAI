@@ -5,6 +5,8 @@ param(
     [string]$AiMode = "Standard",
     [string]$FirstTarget = "TBD",
     [string]$FirstSessionSuccess = "TBD",
+    [ValidateSet("yes", "no", "TBD")]
+    [string]$UseChangelog = "yes",
     [string]$UseGit = "TBD",
     [string]$AiMayCommit = "TBD",
     [string]$AiMayPush = "TBD",
@@ -223,13 +225,17 @@ if ($CreateFiles) {
         Copy-CodeTemplateFile -TemplateName "TODO.yaml" -DestinationRelativePath "TODO.yaml"
         Copy-CodeTemplateFile -TemplateName "BUGS.yaml" -DestinationRelativePath "BUGS.yaml"
         Copy-CodeTemplateFile -TemplateName "BUGS-SOLVED.yaml" -DestinationRelativePath "BUGS-SOLVED.yaml"
-        Copy-CodeTemplateFile -TemplateName "CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
+        if ($UseChangelog -ne "no") {
+            Copy-CodeTemplateFile -TemplateName "CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
+        }
         Copy-CodeTemplateFile -TemplateName "context-docs\TECHNICAL.yaml" -DestinationRelativePath "context-docs\TECHNICAL.yaml"
         Copy-CodeTemplateFile -TemplateName "context-docs\FROZEN_LAYERS.yaml" -DestinationRelativePath "context-docs\FROZEN_LAYERS.yaml"
         Copy-TemplateFile -TemplateName "logs-.gitkeep" -DestinationRelativePath "logs\.gitkeep"
     } elseif ($keep.ContainsKey("code")) {
         Copy-CodeTemplateFile -TemplateName "TODO.yaml" -DestinationRelativePath "TODO.yaml"
-        Copy-CodeTemplateFile -TemplateName "CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
+        if ($UseChangelog -ne "no") {
+            Copy-CodeTemplateFile -TemplateName "CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
+        }
     }
 
     if ($keep.ContainsKey("generic") -or $keep.ContainsKey("personal") -or $keep.ContainsKey("creative")) {
@@ -326,12 +332,15 @@ package_manager_detection: $PackageManagerDetection
 directive_mode: $DirectiveMode
 first_target: $FirstTarget
 first_session_success_criteria: $FirstSessionSuccess
+changelog:
+  enabled: $UseChangelog
 pipeline:
   version: 0.2.0-alpha
   update_source: TBD
   public_bootstrap_url: TBD
-  update_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source "<source>" -Packs code
+  update_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source "<source>" -Packs code -ReinitializeNew
   remove_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .
+  reinitialize_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath .
 workflow:
   branch_mode: $BranchMode
   branch_files_dir: ignored/ai-socratex

@@ -1,4 +1,4 @@
-﻿schema: socratex-document/v1
+schema: socratex-document/v1
 title: 'Code Registries'
 index:
   - quick_index
@@ -101,10 +101,11 @@ items:
     body: |
       ## Changelog Registry
       
-      `CHANGELOG.yaml` stores shipped user-visible behavior changes and major fixes.
+      `CHANGELOG.yaml` stores shipped user-visible behavior changes and major fixes when `changelog.enabled` is not `no`.
       
       Rules:
       
+      - If `changelog.enabled` is `no`, skip this registry and report shipped changes in the final response only.
       - Do not use it as a work queue.
       - Do not record tiny internal churn unless it materially affects users, maintainers, architecture, or risk.
       - Completed-pass history belongs here, not in `_PLAN.yaml`.

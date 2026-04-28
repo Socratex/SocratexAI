@@ -32,9 +32,10 @@ $firstTarget = Ask-Default -Prompt "6. First concrete target" -Default "Define t
 $optimizeFor = Ask-Default -Prompt "7. Optimize for" -Default "correctness"
 $avoid = Ask-Default -Prompt "8. What should the agent avoid" -Default "unbounded scope"
 $artifacts = Ask-Default -Prompt "9. Required artifacts after initialization" -Default "default pack artifacts"
-$useGit = Ask-Default -Prompt "10. Use Git" -Default "yes"
-$external = Ask-Default -Prompt "11. External tools, folders, accounts, or references" -Default "none"
-$success = Ask-Default -Prompt "12. Successful first session means" -Default "project initialized and first pass ready"
+$useChangelog = Ask-Default -Prompt "10. Use CHANGELOG for shipped history? yes/no" -Default "yes"
+$useGit = Ask-Default -Prompt "11. Use Git" -Default "yes"
+$external = Ask-Default -Prompt "12. External tools, folders, accounts, or references" -Default "none"
+$success = Ask-Default -Prompt "13. Successful first session means" -Default "project initialized and first pass ready"
 $aiMayCommit = "no"
 $aiMayPush = "no"
 $branchMode = "linear"
@@ -65,26 +66,26 @@ if ($kind -eq "code" -or $packs -match "code") {
     } catch {
         Write-Host "Stack detection failed: $($_.Exception.Message)"
     }
-    $aiMayCommit = Ask-Default -Prompt "13. Should AI commit changes" -Default "no"
-    $aiMayPush = Ask-Default -Prompt "14. Should AI push changes" -Default "no"
-    $projectLifecycle = Ask-Default -Prompt "15. Lifecycle: greenfield, early, mature, legacy, sunset" -Default "early"
-    $testCoverage = Ask-Default -Prompt "16. Test coverage: none, smoke-only, partial, comprehensive, tdd" -Default "partial"
-    $framework = Ask-Default -Prompt "17. Framework name or none" -Default "TBD"
-    $frameworkKind = Ask-Default -Prompt "18. Framework kind: standard, custom in-house, mixed, none" -Default "standard"
-    $linter = Ask-Default -Prompt "19. Linter/typecheck: enforced, optional, none" -Default "optional"
-    $ci = Ask-Default -Prompt "20. CI/CD: full, partial, none" -Default "partial"
-    $docs = Ask-Default -Prompt "21. Documentation: current, partial, stale, none" -Default "partial"
-    $teamSize = Ask-Default -Prompt "22. Team size: solo, small, medium, large" -Default "solo"
-    $velocity = Ask-Default -Prompt "23. Velocity: experimental, iterating, shipping, maintenance" -Default "iterating"
-    $highestPain = Ask-Default -Prompt "24. Highest current pain" -Default "TBD"
-    $stackText = Ask-Default -Prompt "25. Stack tags, comma-separated" -Default "TBD"
+    $aiMayCommit = Ask-Default -Prompt "14. Should AI commit changes" -Default "no"
+    $aiMayPush = Ask-Default -Prompt "15. Should AI push changes" -Default "no"
+    $projectLifecycle = Ask-Default -Prompt "16. Lifecycle: greenfield, early, mature, legacy, sunset" -Default "early"
+    $testCoverage = Ask-Default -Prompt "17. Test coverage: none, smoke-only, partial, comprehensive, tdd" -Default "partial"
+    $framework = Ask-Default -Prompt "18. Framework name or none" -Default "TBD"
+    $frameworkKind = Ask-Default -Prompt "19. Framework kind: standard, custom in-house, mixed, none" -Default "standard"
+    $linter = Ask-Default -Prompt "20. Linter/typecheck: enforced, optional, none" -Default "optional"
+    $ci = Ask-Default -Prompt "21. CI/CD: full, partial, none" -Default "partial"
+    $docs = Ask-Default -Prompt "22. Documentation: current, partial, stale, none" -Default "partial"
+    $teamSize = Ask-Default -Prompt "23. Team size: solo, small, medium, large" -Default "solo"
+    $velocity = Ask-Default -Prompt "24. Velocity: experimental, iterating, shipping, maintenance" -Default "iterating"
+    $highestPain = Ask-Default -Prompt "25. Highest current pain" -Default "TBD"
+    $stackText = Ask-Default -Prompt "26. Stack tags, comma-separated" -Default "TBD"
     $stackTags = $stackText -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_ -ne "TBD" }
-    $branchMode = Ask-Default -Prompt "26. Branch mode: branch_scoped, linear" -Default "branch_scoped"
-    $externalChangesPossible = Ask-Default -Prompt "27. Can external changes happen while AI works" -Default "yes"
-    $forceDddAdiv = Ask-Default -Prompt "28. Force DDD-ADIV" -Default "yes"
-    $importPipelinePackage = Ask-Default -Prompt "29. Import pipeline package/dependency if ecosystem supports it" -Default "no"
-    $packageManagerDetection = Ask-Default -Prompt "30. Detect package managers/frameworks, including Composer" -Default "yes"
-    $directiveMode = Ask-Default -Prompt "31. Directive mode: snapshot, merge, replace" -Default "merge"
+    $branchMode = Ask-Default -Prompt "27. Branch mode: branch_scoped, linear" -Default "branch_scoped"
+    $externalChangesPossible = Ask-Default -Prompt "28. Can external changes happen while AI works" -Default "yes"
+    $forceDddAdiv = Ask-Default -Prompt "29. Force DDD-ADIV" -Default "yes"
+    $importPipelinePackage = Ask-Default -Prompt "30. Import pipeline package/dependency if ecosystem supports it" -Default "no"
+    $packageManagerDetection = Ask-Default -Prompt "31. Detect package managers/frameworks, including Composer" -Default "yes"
+    $directiveMode = Ask-Default -Prompt "32. Directive mode: snapshot, merge, replace" -Default "merge"
 }
 
 Write-Host ""
@@ -112,6 +113,7 @@ $initScript = Join-Path $PSScriptRoot "Initialize-SocratexPipeline.ps1"
     -AiMode $aiMode `
     -FirstTarget $firstTarget `
     -FirstSessionSuccess $success `
+    -UseChangelog $useChangelog `
     -UseGit $useGit `
     -AiMayCommit $aiMayCommit `
     -AiMayPush $aiMayPush `

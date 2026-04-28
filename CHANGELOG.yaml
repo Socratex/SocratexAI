@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
     date: 2026-04-28
+    feature: reinitialization_and_changelog_config
+    change: Added changelog opt-in configuration, missing-only reinitialization, and update flow support for newly introduced initialized artifacts.
+  - version: 0.2.0-alpha
+    date: 2026-04-28
     feature: yaml_agent_docs
     change: Migrated durable agent-facing pipeline documents from Markdown to YAML while keeping public docs, adapter entrypoints, and scratch templates in Markdown.
   - version: 0.2.0-alpha

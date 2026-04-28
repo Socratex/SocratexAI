@@ -33,15 +33,16 @@ Ask these questions before changing the skeleton:
    - high accountability
 8. What should the agent avoid?
 9. Which artifacts should exist after initialization?
-10. Should the project use Git?
-11. Are there external tools, folders, accounts, or references the agent should know about?
-12. What counts as a successful first session?
+10. Should the project use `CHANGELOG.yaml` for shipped history?
+11. Should the project use Git?
+12. Are there external tools, folders, accounts, or references the agent should know about?
+13. What counts as a successful first session?
 
 If the context is programming, also ask:
 
-13. Should the AI commit changes?
-14. Should the AI push changes?
-15. Project Profile Interview:
+14. Should the AI commit changes?
+15. Should the AI push changes?
+16. Project Profile Interview:
    - lifecycle: greenfield / early / mature / legacy / sunset
    - test coverage: none / smoke-only / partial / comprehensive / tdd
    - framework: standard (name) / custom in-house / mixed / none
@@ -52,15 +53,15 @@ If the context is programming, also ask:
    - velocity expectation: experimental / iterating / shipping / maintenance
    - highest current pain
    - stack tags, suggested from `tools/detect_project_stack.ps1` when practical
-16. Run `tools/check_runtime.py` when practical and record runtime availability.
-17. Which branch workflow mode should this project use?
+17. Run `tools/check_runtime.py` when practical and record runtime availability.
+18. Which branch workflow mode should this project use?
    - `branch_scoped`
    - `linear`
-18. Can external changes happen while AI is working?
-19. Should the AI force DDD-ADIV?
-20. Should the AI import a pipeline package or dependency if the ecosystem supports it?
-21. Should the AI detect package managers and frameworks, including Composer for PHP?
-22. Should directive files be snapshotted, merged, or replaced?
+19. Can external changes happen while AI is working?
+20. Should the AI force DDD-ADIV?
+21. Should the AI import a pipeline package or dependency if the ecosystem supports it?
+22. Should the AI detect package managers and frameworks, including Composer for PHP?
+23. Should directive files be snapshotted, merged, or replaced?
 
 ## Initialization Actions
 
@@ -75,7 +76,7 @@ After receiving answers:
 7. Move `initializer/` into `temp/trash/initializer/`.
 8. Record the initialization decision in `DECISIONS.md` if that file exists.
 9. Create `PIPELINE-CONFIG.md` with selected packs, language, operating mode, Git preference, and first-session success criteria.
-10. For code projects, create `PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, and `runtime_status`.
+10. For code projects, create `PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, and `changelog.enabled`.
 11. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
 12. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
 13. Run `tools/audit_docs.ps1 -Initialized` for code projects when practical.

@@ -1,4 +1,4 @@
-﻿schema: socratex-document/v1
+schema: socratex-document/v1
 title: 'Task Work'
 index:
   - quick_index
@@ -135,7 +135,7 @@ items:
       - promote durable technical facts to `context-docs/`,
       - promote durable decisions to `DECISIONS.yaml`,
       - promote remaining future work to `_PLAN.yaml` or `TODO.yaml`,
-      - promote shipped behavior or major fixes to `CHANGELOG.yaml`,
+      - promote shipped behavior or major fixes to `CHANGELOG.yaml` when `changelog.enabled` is not `no`,
       - keep only the compact current checkpoint in `STATE.yaml`.
       
       Do not copy the full temporary micro-task file into project memory.

@@ -1,4 +1,4 @@
-﻿schema: socratex-document/v1
+schema: socratex-document/v1
 title: 'Promotion Rules'
 index:
   - quick_index
@@ -92,7 +92,7 @@ items:
       
       - current technical truths to `context-docs/`,
       - architecture or process decisions to `DECISIONS.yaml`,
-      - shipped user-visible outcomes or major fixes to `CHANGELOG.yaml`,
+      - shipped user-visible outcomes or major fixes to `CHANGELOG.yaml` when `changelog.enabled` is not `no`,
       - unresolved future work to `_PLAN.yaml` or `TODO.yaml`.
       
       Leave transient debugging notes, dead hypotheses, and local execution history in the branch file as reference unless the user asks to clean it.
@@ -105,7 +105,7 @@ items:
     body: |
       ## PLAN to CHANGELOG
       
-      When a pass is completed and it shipped meaningful functionality, fixed a major issue, or changed durable behavior, record the outcome in the completion log.
+      When a pass is completed and it shipped meaningful functionality, fixed a major issue, or changed durable behavior, record the outcome in the completion log if `changelog.enabled` is not `no`.
       
       Then remove the completed pass from the active plan file.
       

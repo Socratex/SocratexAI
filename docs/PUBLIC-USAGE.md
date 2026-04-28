@@ -48,7 +48,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/update_pipeline_from_l
 
 In an installed project, run the updater from `SocratexAI/tools/update_pipeline_from_link.ps1`.
 
-When a user asks an agent to update the pipeline, the agent should read `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source` or `pipeline.public_bootstrap_url` from config, run the updater, then run audit and activation check.
+Use `-ReinitializeNew` when updating from a newer pipeline release so newly introduced initialized artifacts are created without overwriting existing project memory.
+
+When a user asks an agent to update the pipeline, the agent should read `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source` or `pipeline.public_bootstrap_url` from config, run the updater, reinitialize missing new artifacts when needed, then run audit and activation check.
 
 If no source is configured, the agent should ask for the update URL or local source path before changing files.
 

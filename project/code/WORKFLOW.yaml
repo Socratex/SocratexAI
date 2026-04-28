@@ -192,7 +192,7 @@ items:
       5. Update branch STATE and PLAN continuously, not only at the end.
       6. Keep STATE factual: findings, root causes, changes, verification, blockers.
       7. Keep PLAN as next steps only, with no history.
-      8. At branch end, optionally promote durable findings into `context-docs/`, `DECISIONS.yaml`, `CHANGELOG.yaml`, `_PLAN.yaml`, or `TODO.yaml`.
+      8. At branch end, optionally promote durable findings into `context-docs/`, `DECISIONS.yaml`, `CHANGELOG.yaml` when `changelog.enabled` is not `no`, `_PLAN.yaml`, or `TODO.yaml`.
       
       If the branch files language is not English, ensure the branch files directory is ignored by Git before writing local notes.
       

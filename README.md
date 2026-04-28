@@ -120,11 +120,12 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 ## Update, Upgrade, Migrate
 
 - `SocratexAI/tools/update_pipeline_from_link.ps1`: public user update from a latest pipeline source.
+- `SocratexAI/tools/reinitialize_pipeline.ps1`: missing-only reinitialization after setup or update.
 - `SocratexAI/tools/remove_pipeline.ps1`: remove the installed pipeline through a bounded remover.
 - `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active gamedev source pipeline.
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
-When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater, then run audit and activation check.
+When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater, reinitialize newly introduced missing artifacts when needed, then run audit and activation check.
 
 When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.yaml` and run `SocratexAI/tools/remove_pipeline.ps1`.
 
