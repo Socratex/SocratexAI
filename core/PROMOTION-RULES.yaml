@@ -60,7 +60,7 @@ items:
       
       For code projects, use YAML project memory such as `_PLAN.yaml`, `TODO.yaml`, and `DECISIONS.yaml`.
       
-      For non-code projects, use YAML project memory too. Keep Markdown only for scratch intake, prompt drafts, final prose artifacts, public docs, and adapter entrypoints.
+      For non-code projects, keep user-facing memory in Markdown and agent-only memory in YAML or JSON.
       
   plan_to_state:
     title: 'PLAN to STATE'
@@ -91,9 +91,9 @@ items:
       Promote only durable information:
       
       - current technical truths to `context-docs/`,
-      - architecture or process decisions to `DECISIONS.yaml`,
-      - shipped user-visible outcomes or major fixes to `CHANGELOG.yaml` when `changelog.enabled` is not `no`,
-      - unresolved future work to `_PLAN.yaml` or `TODO.yaml`.
+      - architecture or process decisions to `DECISIONS.yaml` for code projects or `DECISIONS.md` for non-code user-facing memory,
+      - shipped user-visible outcomes or major fixes to `CHANGELOG.yaml` in code projects when `changelog.enabled` is not `no`, or to a user-facing Markdown changelog when a non-code project uses one,
+      - unresolved future work to `_PLAN.yaml` / `TODO.yaml` for code projects or `_PLAN.md` / `BACKLOG.md` for non-code user-facing memory.
       
       Leave transient debugging notes, dead hypotheses, and local execution history in the branch file as reference unless the user asks to clean it.
       

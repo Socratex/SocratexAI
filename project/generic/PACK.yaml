@@ -46,14 +46,15 @@ items:
     body: |
       ## Recommended Files
       
-      - `STATE.yaml`
-      - `_PLAN.yaml`
-      - `BACKLOG.yaml`
-      - `DECISIONS.yaml`
-      - `ISSUES.yaml`
-      - `JOURNAL.yaml`
-      - `REVIEW.yaml`
-      - `context-docs/*.yaml`
+      - `STATE.md`
+      - `_PLAN.md`
+      - `BACKLOG.md`
+      - `DECISIONS.md`
+      - `ISSUES.md`
+      - `JOURNAL.md`
+      - `REVIEW.md`
+      - `PIPELINE-CONFIG.yaml`
+      - agent-only `context-docs/*.yaml`
       
   execution_defaults:
     title: 'Execution Defaults'
@@ -67,8 +68,9 @@ items:
       - Keep one active priority visible.
       - Separate commitments from possibilities.
       - Record decisions that affect future work.
-      - Use SocratexAI YAML tools for structured memory changes when practical: `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_move`, and `doc_item_migrate`.
-      - Run document audit after changing project memory when practical.
+      - Use SocratexAI YAML tools for agent-only structured YAML files when practical: `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_move`, and `doc_item_migrate`.
+      - Keep user-facing planning files in Markdown unless the user asks for YAML.
+      - Run document audit after changing pipeline or agent-managed memory when practical.
       - Keep context short enough for fast resumption.
       - Prefer artifacts over discussion.
       

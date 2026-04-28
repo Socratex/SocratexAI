@@ -173,10 +173,13 @@ if ($CreateProjectFiles) {
         }
     } else {
         @{
-            "STATE.yaml" = "STATE.yaml"
-            "_PLAN.yaml" = "_PLAN.yaml"
-            "TODO.yaml" = "TODO.yaml"
-            "DECISIONS.yaml" = "DECISIONS.yaml"
+            "STATE.md" = "STATE.md"
+            "_PLAN.md" = "_PLAN.md"
+            "BACKLOG.md" = "BACKLOG.md"
+            "DECISIONS.md" = "DECISIONS.md"
+            "ISSUES.md" = "ISSUES.md"
+            "JOURNAL.md" = "JOURNAL.md"
+            "REVIEW.md" = "REVIEW.md"
             "PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"
         }
     }

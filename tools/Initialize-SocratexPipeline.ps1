@@ -211,11 +211,11 @@ if ($CreateFiles) {
         Copy-CodeTemplateFile -TemplateName "DECISIONS.yaml" -DestinationRelativePath "DECISIONS.yaml"
         Copy-CodeTemplateFile -TemplateName "PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
     } else {
-        Copy-TemplateFile -TemplateName "STATE.yaml" -DestinationRelativePath "STATE.yaml"
-        Copy-TemplateFile -TemplateName "_PLAN.yaml" -DestinationRelativePath "_PLAN.yaml"
-        Copy-TemplateFile -TemplateName "DECISIONS.yaml" -DestinationRelativePath "DECISIONS.yaml"
-        Copy-TemplateFile -TemplateName "JOURNAL.yaml" -DestinationRelativePath "JOURNAL.yaml"
-        Copy-TemplateFile -TemplateName "REVIEW.yaml" -DestinationRelativePath "REVIEW.yaml"
+        Copy-TemplateFile -TemplateName "STATE.md" -DestinationRelativePath "STATE.md"
+        Copy-TemplateFile -TemplateName "_PLAN.md" -DestinationRelativePath "_PLAN.md"
+        Copy-TemplateFile -TemplateName "DECISIONS.md" -DestinationRelativePath "DECISIONS.md"
+        Copy-TemplateFile -TemplateName "JOURNAL.md" -DestinationRelativePath "JOURNAL.md"
+        Copy-TemplateFile -TemplateName "REVIEW.md" -DestinationRelativePath "REVIEW.md"
         Copy-TemplateFile -TemplateName "PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
     }
 
@@ -241,8 +241,8 @@ if ($CreateFiles) {
     }
 
     if ($keep.ContainsKey("generic") -or $keep.ContainsKey("personal") -or $keep.ContainsKey("creative")) {
-        Copy-TemplateFile -TemplateName "BACKLOG.yaml" -DestinationRelativePath "BACKLOG.yaml"
-        Copy-TemplateFile -TemplateName "ISSUES.yaml" -DestinationRelativePath "ISSUES.yaml"
+        Copy-TemplateFile -TemplateName "BACKLOG.md" -DestinationRelativePath "BACKLOG.md"
+        Copy-TemplateFile -TemplateName "ISSUES.md" -DestinationRelativePath "ISSUES.md"
     }
 
     if (-not $DryRun -and (Test-Path -LiteralPath (Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"))) {

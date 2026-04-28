@@ -66,23 +66,25 @@ items:
     body: |
       ## Non-Code Projects
 
-      Non-code projects should also use YAML for standardized project memory, configuration, plans, backlog, issues, decisions, reviews, and agent-readable context.
+      Non-code projects should use Markdown for files the user is expected to read or edit directly.
 
-      Use Markdown in non-code projects only for raw scratch intake, prompt drafts, human-facing prose artifacts, and adapter/public entrypoints.
+      Use Markdown for:
 
-      Preferred non-code project formats:
+      - forced agent entrypoints such as `SOCRATEX.md`, `AGENTS.md`, `CLAUDE.md`, or provider-specific instruction files,
+      - user scratch files and raw prompt intake,
+      - user-facing non-code project memory such as `STATE.md`, `_PLAN.md`, `BACKLOG.md`, `DECISIONS.md`, `ISSUES.md`, `JOURNAL.md`, and `REVIEW.md`,
+      - final prose artifacts and public documentation.
 
-      - `STATE.yaml`
-      - `_PLAN.yaml`
-      - `BACKLOG.yaml`
-      - `DECISIONS.yaml`
-      - `ISSUES.yaml`
-      - `JOURNAL.yaml`
-      - `REVIEW.yaml`
-      - `PIPELINE-CONFIG.yaml`
-      - `context-docs/*.yaml`
+      Use YAML or JSON for files managed only by the agent:
 
-      Do not force final human-facing deliverables into YAML when Markdown or another native output format is the actual artifact.
+      - `PIPELINE-CONFIG.yaml`,
+      - `_INSTRUCTION-QUEUE.yaml`,
+      - generated caches and indexes,
+      - agent-only `context-docs/*.yaml`,
+      - large AI-only internal memory files,
+      - machine-readable diagnostics or summaries.
+
+      If both the user and the agent read a file, prefer Markdown in non-code projects unless the user explicitly wants structured YAML.
 
   migration_rule:
     title: 'Migration Rule'
@@ -90,11 +92,10 @@ items:
     body: |
       ## Migration Rule
 
-      When converting a code project from Markdown to YAML/JSON:
+      When converting a project from Markdown to YAML/JSON:
 
       1. Preserve all unresolved requirements.
-      2. Convert standardized registries first.
-      3. Keep raw scratch files as Markdown.
+      2. Convert agent-only structured registries first.
+      3. Keep forced entrypoints, user scratches, and non-code user-facing memory as Markdown.
       4. Update the audit rules and initializer together.
-
 

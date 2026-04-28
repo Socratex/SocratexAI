@@ -133,10 +133,10 @@ items:
       At the end of the task:
       
       - promote durable technical facts to `context-docs/`,
-      - promote durable decisions to `DECISIONS.yaml`,
-      - promote remaining future work to `_PLAN.yaml` or `TODO.yaml`,
-      - promote shipped behavior or major fixes to `CHANGELOG.yaml` when `changelog.enabled` is not `no`,
-      - keep only the compact current checkpoint in `STATE.yaml`.
+      - promote durable decisions to `DECISIONS.yaml` in code projects or `DECISIONS.md` in non-code user-facing memory,
+      - promote remaining future work to `_PLAN.yaml` or `TODO.yaml` in code projects, or `_PLAN.md` / `BACKLOG.md` in non-code user-facing memory,
+      - promote shipped behavior or major fixes to `CHANGELOG.yaml` in code projects when `changelog.enabled` is not `no`, or to a user-facing Markdown changelog when a non-code project uses one,
+      - keep only the compact current checkpoint in `STATE.yaml` for code projects or `STATE.md` for non-code user-facing memory.
       
       Do not copy the full temporary micro-task file into project memory.
       

@@ -221,6 +221,8 @@ items:
 
       Use SocratexAI tools for structured YAML documents in every project type, including generic, personal, and creative projects.
 
+      In non-code projects, this applies primarily to agent-only YAML/JSON files. User-facing Markdown memory can be edited as prose unless a dedicated Markdown tool exists.
+
       Default tool discipline:
 
       - Use `tools/doc_keys.ps1` and `tools/doc_read.ps1` for selective reads when a YAML document is structured.

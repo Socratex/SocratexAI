@@ -100,8 +100,9 @@ User-facing guides:
 Format contract:
 
 - code projects use YAML/JSON for standardized project memory,
-- non-code projects also use YAML for standardized project memory,
-- Markdown is reserved for scratch intake, prompt drafts, final prose artifacts, public docs, and adapter entrypoints.
+- non-code projects use Markdown for user-facing memory such as state, plan, backlog, decisions, issues, journal, and review,
+- YAML/JSON is used for files managed only by the agent, such as config, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries,
+- Markdown is also used for forced agent entrypoints, user scratches, prompt drafts, final prose artifacts, public docs, and adapter entrypoints.
 
 ## Pack Model
 
@@ -126,7 +127,7 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active gamedev source pipeline.
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
-Structured YAML tools apply to every project type, including non-code projects. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_move`, and `doc_item_migrate` for structured memory whenever practical.
+Structured YAML tools apply to every project type, including non-code projects, for agent-only structured YAML files. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_move`, and `doc_item_migrate` whenever practical.
 
 When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater, reinitialize newly introduced missing artifacts when needed, then run audit and activation check.
 

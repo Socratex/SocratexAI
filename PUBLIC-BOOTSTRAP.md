@@ -193,10 +193,10 @@ For non-programming projects:
 
 1. Create root `SOCRATEX.md`.
 2. Install all pipeline files under `SocratexAI/`.
-3. Use YAML for standardized project memory, plans, backlog, issues, decisions, reviews, and configuration.
-4. Keep Markdown only for scratch intake, prompt drafts, final prose artifacts, and public/adapter entrypoints.
+3. Use Markdown for user-facing project memory, including state, plan, backlog, decisions, issues, journal, and review files.
+4. Use YAML or JSON for files managed only by the agent, including configuration, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries.
 5. Install only the selected project packs.
-6. Use shared YAML/document tools for structured project memory.
+6. Use shared YAML/document tools for agent-only structured YAML files.
 7. Avoid truly code-only tools unless explicitly requested.
 
 ## Post-Setup Activation

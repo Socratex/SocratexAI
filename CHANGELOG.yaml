@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
     date: 2026-04-28
+    feature: non_code_user_facing_markdown
+    change: Restored Markdown for non-code user-facing state, plan, backlog, decision, issue, journal, review, todo, bug, and changelog templates while keeping agent-only files in YAML or JSON.
+  - version: 0.2.0-alpha
+    date: 2026-04-28
     feature: non_code_tool_first_yaml
     change: Extended tool-first YAML discipline to non-code project packs and shared project memory workflows.
   - version: 0.2.0-alpha
