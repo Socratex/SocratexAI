@@ -5,6 +5,8 @@ param(
     [string]$AiMode = "Standard",
     [string]$FirstTarget = "TBD",
     [string]$FirstSessionSuccess = "TBD",
+    [ValidateSet("standard", "epistemic_skeptic")]
+    [string]$CommunicationProfile = "standard",
     [ValidateSet("yes", "no", "TBD")]
     [string]$UseChangelog = "yes",
     [string]$UseGit = "TBD",
@@ -293,6 +295,8 @@ package_manager_detection: $PackageManagerDetection
 directive_mode: $DirectiveMode
 first_target: $FirstTarget
 first_session_success_criteria: $FirstSessionSuccess
+communication:
+  profile: $CommunicationProfile
 changelog:
   enabled: $UseChangelog
 pipeline:

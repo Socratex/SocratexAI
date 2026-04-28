@@ -117,6 +117,9 @@ function Ensure-ConfigDefaults {
         $enabledText = if ($ChangelogEnabled) { "yes" } else { "no" }
         $updated = $updated.TrimEnd() + "`nchangelog:`n  enabled: $enabledText`n"
     }
+    if ($updated -notmatch "(?m)^communication:\s*$") {
+        $updated = $updated.TrimEnd() + "`ncommunication:`n  profile: standard`n"
+    }
     if ($updated -notmatch "(?m)^\s+reinitialize_command:\s*") {
         $updated = $updated -replace "(?m)^(\s+remove_command:\s*.+)$", "`$1`n  reinitialize_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath ."
     }

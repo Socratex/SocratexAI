@@ -216,6 +216,8 @@ language: $Language
 active_project_packs:
 $packLines
 ai_operating_mode: $AiMode
+communication:
+  profile: standard
 branch_workflow: $BranchMode
 pipeline:
   version: 0.2.0-alpha
@@ -267,6 +269,8 @@ language: $Language
 active_project_packs:
 $(($Packs | ForEach-Object { "  - $_" }) -join [Environment]::NewLine)
 ai_operating_mode: $AiMode
+communication:
+  profile: standard
 pipeline:
   version: 0.2.0-alpha
   update_source: TBD

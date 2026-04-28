@@ -1,4 +1,4 @@
-﻿schema: socratex-document/v1
+schema: socratex-document/v1
 title: 'Pipeline Config'
 index:
   - quick_index
@@ -10,6 +10,7 @@ index:
   - git
   - first_target
   - first_session_success_criteria
+  - communication
 items:
   quick_index:
     title: 'Quick Index'
@@ -22,66 +23,75 @@ items:
       - git
       - first_target
       - first_session_success_criteria
+      - communication
   overview:
     title: 'Overview'
     format: 'markdown-section'
     body: |
       # Pipeline Config
-      
+
   summary:
     title: 'Summary'
     format: 'markdown-section'
     body: |
       ## Summary
-      
+
       Initialized project configuration for SocratexPipeline.
-      
+
   language:
     title: 'Language'
     format: 'markdown-section'
     body: |
       ## Language
-      
+
       TBD.
-      
+
   active_project_packs:
     title: 'Active Project Packs'
     format: 'markdown-section'
     body: |
       ## Active Project Packs
-      
+
       TBD.
-      
+
   ai_operating_mode:
     title: 'AI Operating Mode'
     format: 'markdown-section'
     body: |
       ## AI Operating Mode
-      
+
       TBD.
-      
+
   git:
     title: 'Git'
     format: 'markdown-section'
     body: |
       ## Git
-      
+
       TBD.
-      
+
   first_target:
     title: 'First Target'
     format: 'markdown-section'
     body: |
       ## First Target
-      
+
       TBD.
-      
+
   first_session_success_criteria:
     title: 'First-Session Success Criteria'
     format: 'markdown-section'
     body: |
       ## First-Session Success Criteria
-      
+
       TBD.
-      
-      
+
+  communication:
+    title: 'Communication'
+    format: 'markdown-section'
+    body: |
+      ## Communication
+
+      profile: standard
+
+

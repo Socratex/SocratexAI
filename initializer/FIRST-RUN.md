@@ -24,25 +24,28 @@ Ask these questions before changing the skeleton:
    - lite / limited AI context, tool use, budget, or reliability
    - standard / normal coding-agent usage
    - enterprise / high-context, high-tooling, long-session capable
-6. What should the first concrete target be?
-7. What should the agent optimize for?
+6. Which communication profile should this project use?
+   - `standard`
+   - `epistemic_skeptic`: truth-first discussion mode with skepticism, falsifiability, evidence/framing separation, confidence levels, concise structure, and tables when useful
+7. What should the first concrete target be?
+8. What should the agent optimize for?
    - speed
    - correctness
    - creative quality
    - low administrative overhead
    - high accountability
-8. What should the agent avoid?
-9. Which artifacts should exist after initialization?
-10. Should the project use `CHANGELOG.yaml` for shipped history?
-11. Should the project use Git?
-12. Are there external tools, folders, accounts, or references the agent should know about?
-13. What counts as a successful first session?
+9. What should the agent avoid?
+10. Which artifacts should exist after initialization?
+11. Should the project use `CHANGELOG.yaml` for shipped history?
+12. Should the project use Git?
+13. Are there external tools, folders, accounts, or references the agent should know about?
+14. What counts as a successful first session?
 
 If the context is programming, also ask:
 
-14. Should the AI commit changes?
-15. Should the AI push changes?
-16. Project Profile Interview:
+15. Should the AI commit changes?
+16. Should the AI push changes?
+17. Project Profile Interview:
    - lifecycle: greenfield / early / mature / legacy / sunset
    - test coverage: none / smoke-only / partial / comprehensive / tdd
    - framework: standard (name) / custom in-house / mixed / none
@@ -53,18 +56,18 @@ If the context is programming, also ask:
    - velocity expectation: experimental / iterating / shipping / maintenance
    - highest current pain
    - stack tags, suggested from `tools/detect_project_stack.ps1` when practical
-17. Run `tools/check_runtime.py` when practical and record runtime availability.
+18. Run `tools/check_runtime.py` when practical and record runtime availability.
    - If PowerShell 7 (`pwsh`) is missing, run `tools/install_powershell.ps1` to produce an install plan.
    - Ask for explicit user approval before installing with `-Apply`.
    - If PowerShell is unsupported, recommend lite/no-tools mode, a supported host/container, or porting required scripts.
-18. Which branch workflow mode should this project use?
+19. Which branch workflow mode should this project use?
    - `branch_scoped`
    - `linear`
-19. Can external changes happen while AI is working?
-20. Should the AI force DDD-ADIV?
-21. Should the AI import a pipeline package or dependency if the ecosystem supports it?
-22. Should the AI detect package managers and frameworks, including Composer for PHP?
-23. Should directive files be snapshotted, merged, or replaced?
+20. Can external changes happen while AI is working?
+21. Should the AI force DDD-ADIV?
+22. Should the AI import a pipeline package or dependency if the ecosystem supports it?
+23. Should the AI detect package managers and frameworks, including Composer for PHP?
+24. Should directive files be snapshotted, merged, or replaced?
 
 ## Initialization Actions
 
@@ -79,7 +82,7 @@ After receiving answers:
 7. Move `initializer/` into `temp/trash/initializer/`.
 8. Record the initialization decision in `DECISIONS.yaml` if that file exists.
 9. Create `PIPELINE-CONFIG.yaml` with selected packs, language, operating mode, Git preference, and first-session success criteria.
-10. For code projects, create `PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, and `changelog.enabled`.
+10. For code projects, create `PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
 11. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
 12. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
 13. Run `tools/audit_docs.ps1 -Initialized` for code projects when practical.

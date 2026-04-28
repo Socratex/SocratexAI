@@ -182,6 +182,8 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
 
     Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "Communication Profiles" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "epistemic_skeptic" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> Brief" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> State" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> Problem" -Label "core/AGENT-CONTRACT.yaml"
@@ -304,6 +306,8 @@ try {
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "remove_command:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "reinitialize_command:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "changelog:" -Label "templates/code/PIPELINE-CONFIG.yaml"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle "communication:" -Label "templates/code/PIPELINE-CONFIG.yaml"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle "profile: standard" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle ".old" -Label "tools/set_directives.ps1"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle "SOCRATEX.md" -Label "tools/set_directives.ps1"
     }

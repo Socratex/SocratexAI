@@ -20,6 +20,17 @@ First ask:
 
 After the user answers, ask the remaining questions in that language.
 
+## Communication Profile
+
+Ask:
+
+`Which communication profile should this project use?`
+
+Supported profiles:
+
+- `standard`: normal SocratexAI communication rules.
+- `epistemic_skeptic`: truth-first discussion mode. Prioritizes epistemic accuracy over agreement, uses skepticism, confidence levels, falsifiability, evidence/framing separation, concise structure, tables when useful, and validate-then-criticize-then-advise ordering.
+
 ## Supported Contexts
 
 Ask:
@@ -171,7 +182,7 @@ For programming projects:
 4. Keep Markdown only for scratch intake, prompt-language branch files, and short user-facing notes.
 5. Install code pack files under `SocratexAI/project/code/`.
 6. Install tools under `SocratexAI/tools/`.
-7. Create `SocratexAI/PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, and `changelog.enabled`.
+7. Create `SocratexAI/PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
 8. If `workflow.branch_mode` is `branch_scoped`, create committed directives under `.aiassistant/socratex/`, create local branch memory under `ignored/ai-socratex/`, and ensure `/ignored` is gitignored.
 9. Apply directive merge or replace mode.
 10. Run document audit when possible.

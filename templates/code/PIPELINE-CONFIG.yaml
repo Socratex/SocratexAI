@@ -15,6 +15,8 @@ first_target: TBD
 first_session_success_criteria: TBD
 changelog:
   enabled: yes
+communication:
+  profile: standard
 pipeline:
   version: 0.2.0-alpha
   update_source: TBD

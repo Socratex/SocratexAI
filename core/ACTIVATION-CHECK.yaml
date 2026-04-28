@@ -75,6 +75,7 @@ items:
       Confirm that the current response behavior applies:
       
       - configured pipeline language,
+      - configured communication profile,
       - context-appropriate emoji at section or standalone status starts,
       - communication structure from `core/AGENT-CONTRACT.yaml`,
       - known-solutions and profile-fit checks,
