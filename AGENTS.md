@@ -4,7 +4,9 @@ Read `core/AGENT-CONTRACT.yaml` first.
 
 If `initializer/FIRST-RUN.md` exists, this is an uninitialized skeleton. Follow `initializer/FIRST-RUN.md` before doing normal project work.
 
-After initialization, use `STATE.yaml` for code projects or `STATE.md` for non-code user-facing memory as the compact active-state entry point.
+After initialization, read `DOCS.yaml` before reading, creating, renaming, or updating project documents. Use it to choose what to read and where to write new information.
+
+Then use `STATE.yaml` for code projects or `STATE.md` for non-code user-facing memory as the compact active-state entry point.
 
 For code projects, also read:
 

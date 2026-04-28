@@ -206,11 +206,13 @@ if ($CreateFiles) {
     }
 
     if ($keep.ContainsKey("code")) {
+        Copy-CodeTemplateFile -TemplateName "DOCS.yaml" -DestinationRelativePath "DOCS.yaml"
         Copy-CodeTemplateFile -TemplateName "STATE.yaml" -DestinationRelativePath "STATE.yaml"
         Copy-CodeTemplateFile -TemplateName "_PLAN.yaml" -DestinationRelativePath "_PLAN.yaml"
         Copy-CodeTemplateFile -TemplateName "DECISIONS.yaml" -DestinationRelativePath "DECISIONS.yaml"
         Copy-CodeTemplateFile -TemplateName "PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
     } else {
+        Copy-TemplateFile -TemplateName "DOCS.yaml" -DestinationRelativePath "DOCS.yaml"
         Copy-TemplateFile -TemplateName "STATE.md" -DestinationRelativePath "STATE.md"
         Copy-TemplateFile -TemplateName "_PLAN.md" -DestinationRelativePath "_PLAN.md"
         Copy-TemplateFile -TemplateName "DECISIONS.md" -DestinationRelativePath "DECISIONS.md"

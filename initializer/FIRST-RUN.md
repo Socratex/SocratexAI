@@ -74,21 +74,22 @@ If the context is programming, also ask:
 After receiving answers:
 
 1. Update `README.md` with the actual project identity.
-2. Create `STATE.yaml` for code projects, or `STATE.md` for non-code user-facing memory.
-3. Create the selected pack's recommended files from `templates/`.
-4. Keep selected packs under `project/`.
-5. Move unselected packs into `temp/trash/project/` unless the user asks to keep them.
-6. Keep adapters thin.
-7. Move `initializer/` into `temp/trash/initializer/`.
-8. Record the initialization decision in `DECISIONS.yaml` for code projects, or `DECISIONS.md` for non-code user-facing memory, if that file exists.
-9. Create `PIPELINE-CONFIG.yaml` with selected packs, language, operating mode, Git preference, and first-session success criteria.
-10. Create `PIPELINE-CONFIG.yaml`; for code projects include `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
-11. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
-12. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
-13. Run `tools/audit_docs.ps1 -Initialized` for initialized projects when practical.
-14. Activate the initialized pipeline for the current and future sessions.
-15. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
-16. For code projects, include the three most relevant known-solution families for the project profile and ROI Picks for the first useful work pass.
+2. Create `DOCS.yaml` as the document role index.
+3. Create `STATE.yaml` for code projects, or `STATE.md` for non-code user-facing memory.
+4. Create the selected pack's recommended files from `templates/`.
+5. Keep selected packs under `project/`.
+6. Move unselected packs into `temp/trash/project/` unless the user asks to keep them.
+7. Keep adapters thin.
+8. Move `initializer/` into `temp/trash/initializer/`.
+9. Record the initialization decision in `DECISIONS.yaml` for code projects, or `DECISIONS.md` for non-code user-facing memory, if that file exists.
+10. Create `PIPELINE-CONFIG.yaml` with selected packs, language, operating mode, Git preference, and first-session success criteria.
+11. Create `PIPELINE-CONFIG.yaml`; for code projects include `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
+12. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
+13. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
+14. Run `tools/audit_docs.ps1 -Initialized` for initialized projects when practical.
+15. Activate the initialized pipeline for the current and future sessions.
+16. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
+17. For code projects, include the three most relevant known-solution families for the project profile and ROI Picks for the first useful work pass.
 
 ## Post-Initialization Activation
 
@@ -98,10 +99,11 @@ Immediately switch the current session to the initialized project pipeline:
 
 1. Re-read root `SOCRATEX.md`.
 2. Follow the read order defined there.
-3. For branch-scoped code projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, detect the current branch, and read branch STATE/PLAN.
-4. Use the initialized `SocratexAI/` files for all future work in this project.
-5. After the first user prompt handled under the initialized pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that all rules are loaded, including communication format and emoji rules.
-6. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
+3. Read `SocratexAI/DOCS.yaml` before reading, creating, renaming, or updating project documents.
+4. For branch-scoped code projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, detect the current branch, and read branch STATE/PLAN.
+5. Use the initialized `SocratexAI/` files for all future work in this project.
+6. After the first user prompt handled under the initialized pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that all rules are loaded, including communication format and emoji rules.
+7. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
 
 Report this handoff explicitly:
 

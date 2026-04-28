@@ -65,6 +65,7 @@ items:
       - root `SOCRATEX.md`,
       - `SocratexAI/AGENTS.md`,
       - `SocratexAI/PIPELINE-CONFIG.yaml`,
+      - `SocratexAI/DOCS.yaml`,
       - `SocratexAI/core/AGENT-CONTRACT.yaml`,
       - selected project pack files,
       - `core/PROJECT-PROFILE.yaml` when `project_profile` exists,

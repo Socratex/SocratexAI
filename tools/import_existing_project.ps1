@@ -155,6 +155,7 @@ if ($CreateProjectFiles) {
     $hasCodePack = $Packs -contains "code"
     $templateMap = if ($hasCodePack) {
         @{
+            "code/DOCS.yaml" = "DOCS.yaml"
             "code/STATE.yaml" = "STATE.yaml"
             "code/_PLAN.yaml" = "_PLAN.yaml"
             "code/TODO.yaml" = "TODO.yaml"
@@ -173,6 +174,7 @@ if ($CreateProjectFiles) {
         }
     } else {
         @{
+            "DOCS.yaml" = "DOCS.yaml"
             "STATE.md" = "STATE.md"
             "_PLAN.md" = "_PLAN.md"
             "BACKLOG.md" = "BACKLOG.md"

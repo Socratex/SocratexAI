@@ -17,7 +17,10 @@ Read order:
 3. `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present
 4. `SocratexAI/AGENTS.md`
 5. `SocratexAI/PIPELINE-CONFIG.yaml`
-6. `SocratexAI/STATE.yaml` for code projects, or `SocratexAI/STATE.md` for non-code user-facing memory
+6. `SocratexAI/DOCS.yaml`
+7. `SocratexAI/STATE.yaml` for code projects, or `SocratexAI/STATE.md` for non-code user-facing memory
+
+Before reading, creating, renaming, or updating project documents, use `SocratexAI/DOCS.yaml` to identify what each document is for, which document should be read, and where new information should be written.
 
 After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
 

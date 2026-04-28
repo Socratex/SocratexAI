@@ -40,6 +40,7 @@ items:
     body: |
       ## Recommended Files
       
+      - `DOCS.yaml`
       - `STATE.md`
       - `AREAS.md`
       - `TARGETS.md`
@@ -50,6 +51,8 @@ items:
       - `REVIEW.md`
       - `JOURNAL.md`
       - `PIPELINE-CONFIG.yaml`
+
+      Read `DOCS.yaml` before reading, creating, renaming, or updating project documents so the agent chooses the correct source and write target.
       
   operating_defaults:
     title: 'Operating Defaults'

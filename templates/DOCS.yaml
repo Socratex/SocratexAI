@@ -1,0 +1,86 @@
+summary: Document role index for a non-code SocratexAI project.
+rules:
+  read_before_document_work: true
+  update_when_adding_or_renaming_documents: true
+  purpose: >
+    Use this file to decide which documents to read, create, update, or avoid
+    before changing project memory or adding new documentation.
+documents:
+  SOCRATEX.md:
+    role: Root activation entrypoint.
+    audience: ai
+    format: markdown
+    read_when: Always first.
+    write_when: Only when pipeline activation rules change.
+  PIPELINE-CONFIG.yaml:
+    role: Installed pipeline configuration.
+    audience: ai
+    format: yaml
+    read_when: Before applying configuration-sensitive workflow rules.
+    write_when: Initialization, reinitialization, migration, or explicit configuration updates.
+  DOCS.yaml:
+    role: Document map and routing contract.
+    audience: ai
+    format: yaml
+    read_when: Before reading, creating, renaming, or updating project documents.
+    write_when: Any durable document is added, removed, renamed, or its role changes.
+  STATE.md:
+    role: Compact active project state.
+    audience: user-and-ai
+    format: markdown
+    read_when: At session start after DOCS.yaml.
+    write_when: Active objective, checkpoint, blocker, risk, or next action changes.
+  _PLAN.md:
+    role: Active and future execution passes.
+    audience: user-and-ai
+    format: markdown
+    read_when: Before broad work, planning, or CONTINUE-style execution.
+    write_when: Active passes are added, reshaped, completed, or reordered.
+  BACKLOG.md:
+    role: Future work not yet promoted into the active plan.
+    audience: user-and-ai
+    format: markdown
+    read_when: When proposing or selecting future work.
+    write_when: New unresolved work is discovered but not yet ready for the active plan.
+  DECISIONS.md:
+    role: Durable project decisions.
+    audience: user-and-ai
+    format: markdown
+    read_when: Before reversing or depending on prior decisions.
+    write_when: A decision affects future work, tradeoffs, constraints, or operating rules.
+  ISSUES.md:
+    role: Active problems, risks, defects, or blockers.
+    audience: user-and-ai
+    format: markdown
+    read_when: Before diagnostics, review, or blocked execution.
+    write_when: A new issue is found, resolved, reclassified, or needs follow-up.
+  JOURNAL.md:
+    role: Human-readable working notes when the user wants a journal.
+    audience: user-and-ai
+    format: markdown
+    read_when: Only when historical note context is directly useful.
+    write_when: The user asks for a journal entry or the project explicitly uses one.
+  REVIEW.md:
+    role: Review findings, recommendations, and follow-up observations.
+    audience: user-and-ai
+    format: markdown
+    read_when: Before continuing review-driven work.
+    write_when: A review produces durable findings or follow-up recommendations.
+  _INSTRUCTIONS.md:
+    role: Raw user instruction intake and scratch capture.
+    audience: user-and-ai
+    format: markdown
+    read_when: When processing pending user instructions.
+    write_when: User provides raw directives that need later capture.
+  _INSTRUCTION-QUEUE.yaml:
+    role: Agent-managed structured instruction queue.
+    audience: ai
+    format: yaml
+    read_when: When processing queued instructions.
+    write_when: Defragmenting, sorting, promoting, or completing queued instructions.
+  context-docs/*.yaml:
+    role: Agent-only compact context capsules.
+    audience: ai
+    format: yaml
+    read_when: When the relevant topic is in scope and STATE.md is insufficient.
+    write_when: Durable current-state context would reduce future rereading cost.

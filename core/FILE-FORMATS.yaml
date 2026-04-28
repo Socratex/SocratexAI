@@ -48,6 +48,7 @@ items:
 
       Preferred code-project formats:
 
+      - `DOCS.yaml`
       - `STATE.yaml`
       - `_PLAN.yaml`
       - `TODO.yaml`
@@ -77,6 +78,7 @@ items:
 
       Use YAML or JSON for files managed only by the agent:
 
+      - `DOCS.yaml`,
       - `PIPELINE-CONFIG.yaml`,
       - `_INSTRUCTION-QUEUE.yaml`,
       - generated caches and indexes,

@@ -38,6 +38,7 @@ items:
     body: |
       ## Recommended Files
       
+      - `DOCS.yaml`
       - `STATE.md`
       - `DIRECTION.md`
       - `REFERENCES.md`
@@ -47,6 +48,8 @@ items:
       - `RELEASE.md`
       - `JOURNAL.md`
       - `PIPELINE-CONFIG.yaml`
+
+      Read `DOCS.yaml` before reading, creating, renaming, or updating project documents so the agent chooses the correct source and write target.
       
   creative_defaults:
     title: 'Creative Defaults'

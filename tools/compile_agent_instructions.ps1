@@ -18,6 +18,8 @@ $lines.Add("# Agent Instructions") | Out-Null
 $lines.Add("") | Out-Null
 $lines.Add('Read `core/AGENT-CONTRACT.yaml` first.') | Out-Null
 $lines.Add("") | Out-Null
+$lines.Add('Read `DOCS.yaml` before reading, creating, renaming, or updating project documents. Use it to choose what to read and where to write new information.') | Out-Null
+$lines.Add("") | Out-Null
 $lines.Add('Then read the active state file as the compact active project state. For code projects, use `STATE.yaml`; for non-code user-facing memory, use `STATE.md`.') | Out-Null
 $lines.Add("") | Out-Null
 $lines.Add('Read `core/MEMORY-MODEL.yaml` for active state, branch-scoped state, plans, decisions, and context capsules.') | Out-Null

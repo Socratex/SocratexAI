@@ -293,10 +293,13 @@ try {
                 Add-Error "Missing prompt workflow template: $template"
             }
         }
-        foreach ($template in @("templates/STATE.md", "templates/_PLAN.md", "templates/BACKLOG.md", "templates/DECISIONS.md", "templates/ISSUES.md", "templates/JOURNAL.md", "templates/REVIEW.md", "templates/PIPELINE-CONFIG.yaml")) {
+        foreach ($template in @("templates/DOCS.yaml", "templates/STATE.md", "templates/_PLAN.md", "templates/BACKLOG.md", "templates/DECISIONS.md", "templates/ISSUES.md", "templates/JOURNAL.md", "templates/REVIEW.md", "templates/PIPELINE-CONFIG.yaml")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
                 Add-Error "Missing non-code user-facing template: $template"
             }
+        }
+        if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "templates/code/DOCS.yaml"))) {
+            Add-Error "Missing code document role template: templates/code/DOCS.yaml"
         }
         $pipelineConfigTemplate = Get-RepoText -RelativePath "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "project_profile:" -Label "templates/code/PIPELINE-CONFIG.yaml"
@@ -316,9 +319,9 @@ try {
 
     if ($Initialized) {
         $requiredInitializedFiles = if ($codePackActive) {
-            @("STATE.yaml", "_PLAN.yaml", "DECISIONS.yaml", "PIPELINE-CONFIG.yaml")
+            @("DOCS.yaml", "STATE.yaml", "_PLAN.yaml", "DECISIONS.yaml", "PIPELINE-CONFIG.yaml")
         } else {
-            @("STATE.md", "_PLAN.md", "DECISIONS.md", "PIPELINE-CONFIG.yaml")
+            @("DOCS.yaml", "STATE.md", "_PLAN.md", "DECISIONS.md", "PIPELINE-CONFIG.yaml")
         }
 
         foreach ($requiredFile in $requiredInitializedFiles) {

@@ -32,7 +32,9 @@ items:
     body: |
       ## Active State
       
-      The active state is the first file an agent reads after initialization.
+      `DOCS.yaml` is the document routing map and should be read before reading, creating, renaming, or updating project documents.
+
+      The active state is the first memory file an agent reads after `DOCS.yaml`.
       
       It should stay short:
       

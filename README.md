@@ -77,8 +77,9 @@ On first run, the agent should:
 4. Remove unused packs and templates.
 5. Create the project-local files from `templates/`.
 6. Move `initializer/` into `temp/trash/initializer/`.
-7. Update the active state file under `SocratexAI/` with the initialized project state.
-8. Switch the current session to root `SOCRATEX.md`.
+7. Create `SocratexAI/DOCS.yaml` as the document role index.
+8. Update the active state file under `SocratexAI/` with the initialized project state.
+9. Switch the current session to root `SOCRATEX.md`.
 
 For code projects, the agent should also read `project/code/COMMANDS.yaml`, `project/code/REGISTRIES.yaml`, `project/code/DDD-ADIV.yaml`, and `core/PROMOTION-RULES.yaml`.
 
@@ -101,7 +102,7 @@ Format contract:
 
 - code projects use YAML/JSON for standardized project memory,
 - non-code projects use Markdown for user-facing memory such as state, plan, backlog, decisions, issues, journal, and review,
-- YAML/JSON is used for files managed only by the agent, such as config, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries,
+- YAML/JSON is used for files managed only by the agent, such as `DOCS.yaml`, config, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries,
 - Markdown is also used for forced agent entrypoints, user scratches, prompt drafts, final prose artifacts, public docs, and adapter entrypoints.
 
 ## Pack Model

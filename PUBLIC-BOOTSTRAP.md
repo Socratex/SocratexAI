@@ -182,22 +182,24 @@ For programming projects:
 4. Keep Markdown only for scratch intake, prompt-language branch files, and short user-facing notes.
 5. Install code pack files under `SocratexAI/project/code/`.
 6. Install tools under `SocratexAI/tools/`.
-7. Create `SocratexAI/PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
-8. If `workflow.branch_mode` is `branch_scoped`, create committed directives under `.aiassistant/socratex/`, create local branch memory under `ignored/ai-socratex/`, and ensure `/ignored` is gitignored.
-9. Apply directive merge or replace mode.
-10. Run document audit when possible.
-11. Activate the installed pipeline for the current and future sessions.
-12. End with first useful work pass recommendations and ROI Picks.
+7. Create `SocratexAI/DOCS.yaml` as the document role index.
+8. Create `SocratexAI/PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
+9. If `workflow.branch_mode` is `branch_scoped`, create committed directives under `.aiassistant/socratex/`, create local branch memory under `ignored/ai-socratex/`, and ensure `/ignored` is gitignored.
+10. Apply directive merge or replace mode.
+11. Run document audit when possible.
+12. Activate the installed pipeline for the current and future sessions.
+13. End with first useful work pass recommendations and ROI Picks.
 
 For non-programming projects:
 
 1. Create root `SOCRATEX.md`.
 2. Install all pipeline files under `SocratexAI/`.
-3. Use Markdown for user-facing project memory, including state, plan, backlog, decisions, issues, journal, and review files.
-4. Use YAML or JSON for files managed only by the agent, including configuration, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries.
-5. Install only the selected project packs.
-6. Use shared YAML/document tools for agent-only structured YAML files.
-7. Avoid truly code-only tools unless explicitly requested.
+3. Create `SocratexAI/DOCS.yaml` as the document role index.
+4. Use Markdown for user-facing project memory, including state, plan, backlog, decisions, issues, journal, and review files.
+5. Use YAML or JSON for files managed only by the agent, including configuration, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries.
+6. Install only the selected project packs.
+7. Use shared YAML/document tools for agent-only structured YAML files.
+8. Avoid truly code-only tools unless explicitly requested.
 
 ## Post-Setup Activation
 
@@ -207,10 +209,11 @@ Immediately switch the current session to the installed project pipeline:
 
 1. Re-read root `SOCRATEX.md`.
 2. Follow the read order defined there.
-3. For branch-scoped projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, then detect the current branch and read branch STATE/PLAN.
-4. Use the installed `SocratexAI/` files for all future work in this project.
-5. After the first user prompt handled under the installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that all rules are loaded, including communication format and emoji rules.
-6. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
+3. Read `SocratexAI/DOCS.yaml` before reading, creating, renaming, or updating project documents.
+4. For branch-scoped projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, then detect the current branch and read branch STATE/PLAN.
+5. Use the installed `SocratexAI/` files for all future work in this project.
+6. After the first user prompt handled under the installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that all rules are loaded, including communication format and emoji rules.
+7. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
 
 Report this handoff explicitly:
 

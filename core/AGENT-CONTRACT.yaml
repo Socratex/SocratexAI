@@ -65,6 +65,8 @@ items:
       - Preserve momentum when the request is clear.
       - Ask questions only when missing information materially changes the action.
       - Keep project-facing files concise, current, and useful.
+      - Read `DOCS.yaml` before reading, creating, renaming, or updating project documents.
+      - Update `DOCS.yaml` whenever a durable document is added, removed, renamed, or its role changes.
       - Prefer the smallest meaningful ownership slice.
       - Avoid broad sweeps when a narrow contract point solves the problem.
       - Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.

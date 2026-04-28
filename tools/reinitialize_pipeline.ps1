@@ -159,6 +159,7 @@ Ensure-ConfigDefaults -Text $configText -ChangelogEnabled $changelogEnabled
 
 foreach ($pack in $Packs) {
     if ($pack -eq "code") {
+        Ensure-Template -TemplateRelativePath "code/DOCS.yaml" -DestinationRelativePath "DOCS.yaml"
         Ensure-Template -TemplateRelativePath "code/STATE.yaml" -DestinationRelativePath "STATE.yaml"
         Ensure-Template -TemplateRelativePath "code/_PLAN.yaml" -DestinationRelativePath "_PLAN.yaml"
         Ensure-Template -TemplateRelativePath "code/DECISIONS.yaml" -DestinationRelativePath "DECISIONS.yaml"
@@ -175,6 +176,7 @@ foreach ($pack in $Packs) {
             Ensure-Template -TemplateRelativePath "code/CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
         }
     } else {
+        Ensure-Template -TemplateRelativePath "DOCS.yaml" -DestinationRelativePath "DOCS.yaml"
         Ensure-Template -TemplateRelativePath "STATE.md" -DestinationRelativePath "STATE.md"
         Ensure-Template -TemplateRelativePath "_PLAN.md" -DestinationRelativePath "_PLAN.md"
         Ensure-Template -TemplateRelativePath "DECISIONS.md" -DestinationRelativePath "DECISIONS.md"

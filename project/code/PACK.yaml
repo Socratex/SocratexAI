@@ -56,6 +56,7 @@ items:
     body: |
       ## Recommended Files
       
+      - `DOCS.yaml`
       - `STATE.yaml`
       - `_PLAN.yaml`
       - `TODO.yaml`
@@ -71,6 +72,8 @@ items:
       - `_INSTRUCTIONS.md` for raw scratch intake only
       - `_INSTRUCTION-QUEUE.yaml`
       - generated indexes and diagnostics as `.json`
+
+      Read `DOCS.yaml` before reading, creating, renaming, or updating project documents so the agent chooses the correct source and write target.
       - `tools/`
       
   required_reads_for_code_projects:
