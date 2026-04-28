@@ -204,3 +204,5 @@ When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL
 The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user.
 
 If no source is configured, ask for the URL or local source path before changing files.
+
+When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.md` and run `tools/remove_pipeline.ps1` from the installed `SocratexAI/tools/` directory.

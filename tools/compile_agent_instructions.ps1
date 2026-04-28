@@ -26,6 +26,8 @@ $lines.Add('Use `core/ACTIVATION-CHECK.md` after the first prompt handled under 
 $lines.Add("") | Out-Null
 $lines.Add('Use `core/UPDATE-PROTOCOL.md` when the user asks to update, refresh, reinstall, or pull the latest pipeline.') | Out-Null
 $lines.Add("") | Out-Null
+$lines.Add('Use `core/REMOVAL-PROTOCOL.md` when the user asks to remove, uninstall, delete, or disable the pipeline.') | Out-Null
+$lines.Add("") | Out-Null
 $lines.Add('Read `core/PROMOTION-RULES.md` before moving work between memory layers.') | Out-Null
 $lines.Add("") | Out-Null
 $lines.Add('Read `core/PROJECT-PROFILE.md` when `PIPELINE-CONFIG.yaml` contains `project_profile`.') | Out-Null

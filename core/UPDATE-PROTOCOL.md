@@ -28,6 +28,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipe
 
 Use the selected project packs from config when available.
 
+If `pipeline.update_command` exists in config, use it as the command template after replacing `<source>` with the resolved update source.
+
 For maintainer-only upgrades from a private reference project, use the maintainer upgrade tool only when the user explicitly requests that source:
 
 ```powershell
@@ -58,4 +60,3 @@ Do not overwrite project memory such as active state, branch state, plans, backl
 Do not update from an untrusted URL without telling the user what source will be used.
 
 If update source is missing, ask for it and stop before changing files.
-

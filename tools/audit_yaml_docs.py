@@ -208,6 +208,8 @@ def validate_pipeline_config_schema(repo_root: Path) -> list[str]:
         errors.append(f"{relative}: missing pipeline mapping.")
     elif "update_source" not in pipeline:
         errors.append(f"{relative}: missing pipeline.update_source.")
+    elif "remove_command" not in pipeline:
+        errors.append(f"{relative}: missing pipeline.remove_command.")
     if not isinstance(data.get("project_profile"), dict):
         errors.append(f"{relative}: missing project_profile mapping.")
     if not isinstance(data.get("runtime_status"), dict):
@@ -226,7 +228,7 @@ def validate_pipeline_config_schema_text(repo_root: Path) -> list[str]:
     if not path.exists():
         return [f"{relative}: missing pipeline config template."]
     text = path.read_text(encoding="utf-8")
-    required = ["pipeline:", "update_source:", "project_profile:", "runtime_status:", "workflow:", "branch_mode:"]
+    required = ["pipeline:", "update_source:", "remove_command:", "project_profile:", "runtime_status:", "workflow:", "branch_mode:"]
     return [f"{relative}: missing required text: {token}" for token in required if token not in text]
 
 

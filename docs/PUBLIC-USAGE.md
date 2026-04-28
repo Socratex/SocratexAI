@@ -52,6 +52,16 @@ When a user asks an agent to update the pipeline, the agent should read `Socrate
 
 If no source is configured, the agent should ask for the update URL or local source path before changing files.
 
+## Public Removal
+
+Users can remove an installed pipeline with:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .
+```
+
+When a user asks an agent to remove the pipeline, the agent should read `SocratexAI/core/REMOVAL-PROTOCOL.md` and use the remover script instead of manually deleting files.
+
 ## Maintainer Upgrade
 
 The maintainer can pull improvements from the active gamedev pipeline with:

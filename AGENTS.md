@@ -22,6 +22,7 @@ For code projects, also read:
 - `core/MEMORY-MODEL.md`
 - `core/ACTIVATION-CHECK.md`
 - `core/UPDATE-PROTOCOL.md` when the user asks to update the pipeline
+- `core/REMOVAL-PROTOCOL.md` when the user asks to remove the pipeline
 - `core/PROMOTION-RULES.md`
 - `core/CONTEXT-COMPACTION.md`
 - `core/INSTRUCTION-CAPTURE.md`

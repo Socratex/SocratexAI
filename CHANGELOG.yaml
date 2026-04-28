@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
     date: 2026-04-28
+    feature: removal_protocol
+    change: Added a bounded remover script and removal protocol so agents uninstall SocratexAI through tooling instead of manual deletion.
+  - version: 0.2.0-alpha
+    date: 2026-04-28
     feature: update_protocol
     change: Added an explicit pipeline update protocol so agents resolve update source, run the correct updater, audit, and reactivate the installed pipeline.
   - version: 0.2.0-alpha

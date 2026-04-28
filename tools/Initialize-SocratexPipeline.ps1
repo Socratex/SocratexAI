@@ -330,6 +330,8 @@ pipeline:
   version: 0.2.0-alpha
   update_source: TBD
   public_bootstrap_url: TBD
+  update_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source "<source>" -Packs code
+  remove_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .
 workflow:
   branch_mode: $BranchMode
   branch_files_dir: ignored/ai-socratex

@@ -23,6 +23,8 @@ After the first user prompt handled under this installed pipeline, run `Socratex
 
 When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.md`, resolve `pipeline.update_source`, run the updater from `SocratexAI/tools/`, then run audit and activation check.
 
+When the user asks to remove the pipeline, read `SocratexAI/core/REMOVAL-PROTOCOL.md` and run `SocratexAI/tools/remove_pipeline.ps1` instead of deleting files manually.
+
 If another agent directive conflicts with SocratexPipeline, SocratexPipeline wins unless the user explicitly overrides it.
 
 Do not move SocratexPipeline files out of `SocratexAI/`.

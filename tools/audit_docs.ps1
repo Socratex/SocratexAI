@@ -133,6 +133,7 @@ try {
     $memoryModel = Get-RepoText -RelativePath "core/MEMORY-MODEL.md"
     $activationCheck = Get-RepoText -RelativePath "core/ACTIVATION-CHECK.md"
     $updateProtocol = Get-RepoText -RelativePath "core/UPDATE-PROTOCOL.md"
+    $removalProtocol = Get-RepoText -RelativePath "core/REMOVAL-PROTOCOL.md"
     $projectProfile = Get-RepoText -RelativePath "core/PROJECT-PROFILE.md"
     $roiBias = Get-RepoText -RelativePath "core/ROI-BIAS.md"
     $scriptFallback = Get-RepoText -RelativePath "core/SCRIPT-FALLBACK.md"
@@ -153,6 +154,7 @@ try {
     Test-ContainsText -Text $agents -Needle "core/MEMORY-MODEL.md" -Label "AGENTS.md"
     Test-ContainsText -Text $agents -Needle "core/ACTIVATION-CHECK.md" -Label "AGENTS.md"
     Test-ContainsText -Text $agents -Needle "core/UPDATE-PROTOCOL.md" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/REMOVAL-PROTOCOL.md" -Label "AGENTS.md"
     Test-ContainsText -Text $agents -Needle "core/PROMOTION-RULES.md" -Label "AGENTS.md"
     $publicBootstrap = Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text $publicBootstrap -Needle "Project Profile Interview" -Label "PUBLIC-BOOTSTRAP.md"
@@ -164,11 +166,13 @@ try {
     Test-ContainsText -Text $publicBootstrap -Needle "branch_scoped" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "Update, Upgrade, Migrate" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "UPDATE-PROTOCOL.md" -Label "PUBLIC-BOOTSTRAP.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "REMOVAL-PROTOCOL.md" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "Directive Merge Modes" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "SocratexAI/" -Label "templates/SOCRATEX.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "activation point" -Label "templates/SOCRATEX.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "ACTIVATION-CHECK.md" -Label "templates/SOCRATEX.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "UPDATE-PROTOCOL.md" -Label "templates/SOCRATEX.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "REMOVAL-PROTOCOL.md" -Label "templates/SOCRATEX.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "VERSION") -Needle "0.2.0-alpha" -Label "VERSION"
     Test-ContainsText -Text (Get-RepoText -RelativePath "CHANGELOG.yaml") -Needle "0.2.0-alpha" -Label "CHANGELOG.yaml"
     Test-ContainsText -Text (Get-RepoText -RelativePath "LICENSE") -Needle "MIT License" -Label "LICENSE"
@@ -201,6 +205,8 @@ try {
     Test-ContainsText -Text $updateProtocol -Needle "Source Resolution" -Label "core/UPDATE-PROTOCOL.md"
     Test-ContainsText -Text $updateProtocol -Needle "pipeline.update_source" -Label "core/UPDATE-PROTOCOL.md"
     Test-ContainsText -Text $updateProtocol -Needle "update_pipeline_from_link.ps1" -Label "core/UPDATE-PROTOCOL.md"
+    Test-ContainsText -Text $removalProtocol -Needle "remove_pipeline.ps1" -Label "core/REMOVAL-PROTOCOL.md"
+    Test-ContainsText -Text $removalProtocol -Needle "Default Preservation" -Label "core/REMOVAL-PROTOCOL.md"
     Test-ContainsText -Text $projectProfile -Needle "Profile-Fit Check" -Label "core/PROJECT-PROFILE.md"
     Test-ContainsText -Text $roiBias -Needle "ROI Picks" -Label "core/ROI-BIAS.md"
     Test-ContainsText -Text $scriptFallback -Needle "Never claim a script ran when it did not run" -Label "core/SCRIPT-FALLBACK.md"
@@ -266,7 +272,7 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
             }
@@ -281,6 +287,7 @@ try {
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "runtime_status:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "branch_mode:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "update_source:" -Label "templates/code/PIPELINE-CONFIG.yaml"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle "remove_command:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle ".old" -Label "tools/set_directives.ps1"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle "SOCRATEX.md" -Label "tools/set_directives.ps1"
     }
