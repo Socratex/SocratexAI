@@ -34,13 +34,81 @@ Supported contexts:
 - creative
 - mixed
 
+## Project Profile Interview
+
+For programming context, ask these questions before programming operation questions:
+
+1. Project age or lifecycle stage:
+   - `greenfield`
+   - `early`
+   - `mature`
+   - `legacy`
+   - `sunset`
+2. Test coverage:
+   - `none`
+   - `smoke-only`
+   - `partial`
+   - `comprehensive`
+   - `tdd`
+3. Framework:
+   - `standard (name)`
+   - `custom in-house`
+   - `mixed`
+   - `none`
+4. Linter or typecheck:
+   - `enforced`
+   - `optional`
+   - `none`
+5. CI/CD:
+   - `full`
+   - `partial`
+   - `none`
+6. Documentation state:
+   - `current`
+   - `partial`
+   - `stale`
+   - `none`
+7. Team size:
+   - `solo`
+   - `small (2-5)`
+   - `medium (6-20)`
+   - `large (>20)`
+8. Velocity expectation:
+   - `experimental`
+   - `iterating`
+   - `shipping`
+   - `maintenance`
+9. Highest current pain: free text.
+10. Stack tags: auto-suggest using `tools/detect_project_stack.ps1` when possible, then ask the user to verify or edit the list.
+
+Store answers in `PIPELINE-CONFIG.yaml` under `project_profile`.
+
+After the profile interview, list the three most relevant known-solution families for this profile.
+
+## Runtime Check
+
+After Project Profile Interview and before programming questions, run the runtime check when tools are available:
+
+```powershell
+python tools/check_runtime.py --root-key runtime_status
+```
+
+Report missing runtimes or libraries.
+
+If something is missing, follow `core/SCRIPT-FALLBACK.md`: propose installing the missing runtime before using manual fallback.
+
+Store the result in `PIPELINE-CONFIG.yaml` under `runtime_status`.
+
 ## Programming Questions
 
 If the context is programming, ask:
 
 1. Should the AI commit changes?
 2. Should the AI push changes?
-3. Do you work on branches?
+3. Which branch workflow mode should this project use?
+   - `branch_scoped`: use committed directives under `.aiassistant/` and local branch memory under `ignored/ai-socratex/`.
+   - `linear`: use normal `STATE.yaml` and `_PLAN.yaml` under the SocratexAI installation.
+   Default to `branch_scoped` when the user works on Git branches.
 4. Can there be external changes from other people, CI, tools, or branches while the AI is working?
 5. Should the AI force DDD-ADIV as a required design discipline?
 6. Should the AI import a pipeline package or dependency when the ecosystem supports it?
@@ -87,13 +155,14 @@ For programming projects:
 1. Create root `SOCRATEX.md`.
 2. Install all pipeline files under `SocratexAI/`.
 3. Create or update YAML/JSON project memory files under `SocratexAI/`.
-4. Keep Markdown only for scratch intake and short user-facing notes.
+4. Keep Markdown only for scratch intake, prompt-language branch files, and short user-facing notes.
 5. Install code pack files under `SocratexAI/project/code/`.
 6. Install tools under `SocratexAI/tools/`.
-7. Create `SocratexAI/PIPELINE-CONFIG.yaml`.
-8. Apply directive merge or replace mode.
-9. Run document audit when possible.
-10. End with upgrade recommendations.
+7. Create `SocratexAI/PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, and `runtime_status`.
+8. If `workflow.branch_mode` is `branch_scoped`, create committed directives under `.aiassistant/socratex/`, create local branch memory under `ignored/ai-socratex/`, and ensure `/ignored` is gitignored.
+9. Apply directive merge or replace mode.
+10. Run document audit when possible.
+11. End with first useful work pass recommendations and ROI Picks.
 
 For non-programming projects:
 

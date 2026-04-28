@@ -37,6 +37,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/Initialize-SocratexPip
 
 This creates standardized code memory as YAML/JSON, with Markdown reserved for scratch intake such as `_INSTRUCTIONS.md`.
 
+For branch-scoped code work, add:
+
+```powershell
+-BranchMode branch_scoped
+```
+
+The project profile and runtime status are stored in `PIPELINE-CONFIG.yaml`.
+
 ## After Initialization
 
 For code projects, run:

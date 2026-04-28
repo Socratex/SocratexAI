@@ -9,6 +9,9 @@ param(
 
     [string]$Language = "English",
 
+    [ValidateSet("branch_scoped", "linear")]
+    [string]$BranchMode = "linear",
+
     [switch]$CreateProjectFiles,
     [switch]$DryRun
 )
@@ -45,6 +48,82 @@ function Copy-ItemSafe {
     $parent = Split-Path -Parent $Destination
     New-Item -ItemType Directory -Force -Path $parent | Out-Null
     Copy-Item -LiteralPath $Source -Destination $Destination -Recurse
+}
+
+function Ensure-TargetGitignore {
+    $gitignorePath = Join-Path $TargetRoot ".gitignore"
+    $comment = "# AI working files in user's prompt language - local-only, not for review"
+    $ignoredLine = "/ignored"
+
+    if ($DryRun) {
+        Write-Host "Would ensure .gitignore contains: $ignoredLine"
+        return
+    }
+
+    if (-not (Test-Path -LiteralPath $gitignorePath)) {
+        Set-Content -LiteralPath $gitignorePath -Value "$comment`n$ignoredLine`n" -NoNewline
+        return
+    }
+
+    $content = Get-Content -Raw -LiteralPath $gitignorePath
+    $changed = $false
+    if ($content -notmatch '(?m)^# AI working files in user''s prompt language - local-only, not for review$') {
+        $content = $content.TrimEnd() + "`n$comment`n"
+        $changed = $true
+    }
+    if ($content -notmatch '(?m)^/ignored/?$') {
+        $content = $content.TrimEnd() + "`n$ignoredLine`n"
+        $changed = $true
+    }
+    if ($changed) {
+        Set-Content -LiteralPath $gitignorePath -Value $content -NoNewline
+    }
+}
+
+function Get-CurrentBranchName {
+    Push-Location -LiteralPath $TargetRoot
+    try {
+        $branch = git branch --show-current 2>$null
+        if ($LASTEXITCODE -eq 0 -and $branch) {
+            return ($branch.Trim() -replace '[\\/:*?"<>|]', '-')
+        }
+    } finally {
+        Pop-Location
+    }
+    return "unknown-branch"
+}
+
+function Initialize-TargetAssistantLayout {
+    $assistantRoot = Join-Path $TargetRoot ".aiassistant\socratex"
+    if ($DryRun) {
+        Write-Host "Would create branch-scoped committed directives under: $assistantRoot"
+        return
+    }
+
+    New-Item -ItemType Directory -Force -Path $assistantRoot | Out-Null
+    Copy-Item -LiteralPath (Join-Path $SourceRoot "AGENTS.md") -Destination (Join-Path $assistantRoot "AGENTS.md") -Force
+    Set-Content -LiteralPath (Join-Path $assistantRoot "DOCS.md") -Value @"
+# SocratexAI Documents
+
+## Summary
+
+Committed SocratexAI project directives live here.
+
+Local branch working memory lives under `ignored/ai-socratex/` when branch-scoped mode is active.
+
+"@ -NoNewline
+    $configPath = Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
+    if (Test-Path -LiteralPath $configPath) {
+        Copy-Item -LiteralPath $configPath -Destination (Join-Path $assistantRoot "PIPELINE-CONFIG.yaml") -Force
+    }
+    Set-Content -LiteralPath (Join-Path $TargetRoot ".aiassistant\PROJECT.md") -Value @"
+# Project Rules
+
+## Summary
+
+Project-specific code generation rules belong here when they are durable and review-facing.
+
+"@ -NoNewline
 }
 
 Write-Host "==> importing SocratexPipeline into existing project"
@@ -105,6 +184,15 @@ if ($CreateProjectFiles) {
     foreach ($entry in $templateMap.GetEnumerator()) {
         Copy-ItemSafe -Source (Join-Path $SourceRoot "templates\$($entry.Key)") -Destination (Join-Path $InstallRoot $entry.Value)
     }
+
+    if ($hasCodePack -and $BranchMode -eq "branch_scoped") {
+        Copy-ItemSafe -Source (Join-Path $SourceRoot "templates\code\branch\BRANCH-TODO.md") -Destination (Join-Path $TargetRoot "ignored\ai-socratex\TODO.md")
+        $branch = Get-CurrentBranchName
+        Copy-ItemSafe -Source (Join-Path $SourceRoot "templates\code\branch\BRANCH-STATE.md") -Destination (Join-Path $TargetRoot "ignored\ai-socratex\$branch-STATE.md")
+        Copy-ItemSafe -Source (Join-Path $SourceRoot "templates\code\branch\BRANCH-PLAN.md") -Destination (Join-Path $TargetRoot "ignored\ai-socratex\$branch-PLAN.md")
+        Ensure-TargetGitignore
+        Initialize-TargetAssistantLayout
+    }
 }
 
 if (-not $DryRun) {
@@ -114,7 +202,12 @@ if (-not $DryRun) {
     } else {
         Join-Path $InstallRoot "PIPELINE-CONFIG.md"
     }
-    if (-not (Test-Path -LiteralPath $configPath)) {
+    $shouldWriteConfig = -not (Test-Path -LiteralPath $configPath)
+    if (-not $shouldWriteConfig) {
+        $existingConfig = Get-Content -Raw -LiteralPath $configPath
+        $shouldWriteConfig = $existingConfig -match "language: TBD"
+    }
+    if ($shouldWriteConfig) {
         if ($hasCodePack) {
             $packLines = ($Packs | ForEach-Object { "  - $_" }) -join [Environment]::NewLine
             $config = @"
@@ -123,6 +216,38 @@ language: $Language
 active_project_packs:
 $packLines
 ai_operating_mode: $AiMode
+branch_workflow: $BranchMode
+workflow:
+  branch_mode: $BranchMode
+  branch_files_dir: ignored/ai-socratex
+  branch_state_file: ignored/ai-socratex/<branch>-STATE.md
+  branch_plan_file: ignored/ai-socratex/<branch>-PLAN.md
+  branch_files_language: prompt-language
+project_profile:
+  lifecycle: TBD
+  test_coverage: TBD
+  framework: TBD
+  framework_kind: TBD
+  linter: TBD
+  ci: TBD
+  docs: TBD
+  team_size: TBD
+  velocity: TBD
+  highest_pain: TBD
+  stack: []
+runtime_status:
+  python3:
+    ok: TBD
+    version: TBD
+    install_hint: TBD
+  pwsh:
+    ok: TBD
+    version: TBD
+    install_hint: TBD
+  pyyaml:
+    ok: TBD
+    version: TBD
+    install_hint: TBD
 "@
         } else {
             $config = @"

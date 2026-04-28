@@ -30,6 +30,10 @@ If no active pass exists, propose the next code target from `TODO.yaml`; do not 
 
 Promote selected code backlog into executable passes.
 
+Before promotion, score each candidate with ROI metadata from `core/ROI-BIAS.md`.
+
+Prefer high-ROI candidates for the current `project_profile`.
+
 Each pass must define:
 
 - goal,
@@ -69,6 +73,8 @@ Lead with:
 
 Keep findings tied to concrete files, functions, contracts, or behavior.
 
+End with `ROI Picks`: one to three follow-up improvements worth doing now, or state that no follow-up is currently worth doing.
+
 ## AUDIT
 
 Run the code-project document consistency audit.
@@ -95,6 +101,7 @@ Order:
 4. Update `_PLAN.yaml` if passes were completed or reshaped.
 5. Update `CHANGELOG.yaml` for shipped behavior or major fixes.
 6. Report changed files and unverified areas.
+7. Include ROI Picks when follow-up recommendations remain.
 
 Default helper:
 

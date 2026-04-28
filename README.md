@@ -14,6 +14,7 @@ Installed projects use this layout:
 
 - root `SOCRATEX.md` is the only required root control file,
 - `SocratexAI/` contains pipeline files, tools, packs, state, registries, templates, and docs,
+- branch-scoped code projects may also use `.aiassistant/` for committed project directives and `ignored/ai-socratex/` for local branch memory,
 - existing AI directive files should only point to `SOCRATEX.md`.
 
 ## Public Bootstrap
@@ -39,6 +40,13 @@ The target project should end up with:
 ```text
 SOCRATEX.md
 SocratexAI/
+```
+
+Branch-scoped code projects may also include:
+
+```text
+.aiassistant/
+ignored/ai-socratex/
 ```
 
 ## Structure
@@ -68,6 +76,10 @@ On first run, the agent should:
 7. Update the active state file under `SocratexAI/` with the initialized project state.
 
 For code projects, the agent should also read `project/code/COMMANDS.md`, `project/code/REGISTRIES.md`, `project/code/DDD-ADIV.md`, and `core/PROMOTION-RULES.md`.
+
+Code projects can store `project_profile`, `runtime_status`, and `workflow.branch_mode` in `PIPELINE-CONFIG.yaml`.
+
+The agent uses `project_profile` to filter known solutions, `ROI-BIAS.md` to rank recommendations, and `SCRIPT-FALLBACK.md` when tools cannot run.
 
 If the AI environment is limited, read `tools/lite-option/README.md` before selecting artifacts.
 
@@ -133,7 +145,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/commit_task.ps1 -Messa
 
 ## Version
 
-Current version: `0.1.0-alpha`.
+Current version: `0.2.0-alpha`.
 
 See `VERSION` and `QUALITY-GATE.yaml`.
 

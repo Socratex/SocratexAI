@@ -8,11 +8,24 @@ param(
     [string]$UseGit = "TBD",
     [string]$AiMayCommit = "TBD",
     [string]$AiMayPush = "TBD",
-    [string]$BranchWorkflow = "TBD",
+    [ValidateSet("branch_scoped", "linear", "TBD")]
+    [string]$BranchMode = "linear",
     [string]$ExternalChangesPossible = "TBD",
     [string]$ForceDddAdiv = "TBD",
     [string]$ImportPipelinePackage = "TBD",
     [string]$PackageManagerDetection = "TBD",
+    [string]$ProjectLifecycle = "TBD",
+    [string]$TestCoverage = "TBD",
+    [string]$Framework = "TBD",
+    [string]$FrameworkKind = "TBD",
+    [string]$Linter = "TBD",
+    [string]$Ci = "TBD",
+    [string]$Docs = "TBD",
+    [string]$TeamSize = "TBD",
+    [string]$Velocity = "TBD",
+    [string]$HighestPain = "TBD",
+    [string[]]$StackTags = @(),
+    [string]$BranchFilesLanguage = "prompt-language",
     [ValidateSet("snapshot", "merge", "replace")]
     [string]$DirectiveMode = "merge",
     [string[]]$KeepPacks = @("generic"),
@@ -112,6 +125,75 @@ function Set-TemplateValue {
     Set-Content -LiteralPath $destination -Value $content -NoNewline
 }
 
+function Ensure-BranchGitignore {
+    param([string]$TargetRoot)
+
+    $gitignorePath = Join-Path $TargetRoot ".gitignore"
+    $comment = "# AI working files in user's prompt language - local-only, not for review"
+    $ignoredLine = "/ignored"
+
+    if ($DryRun) {
+        Write-Output "Would ensure .gitignore contains branch-scoped AI working files ignore rule."
+        return
+    }
+
+    if (-not (Test-Path -LiteralPath $gitignorePath)) {
+        Set-Content -LiteralPath $gitignorePath -Value "$comment`n$ignoredLine`n" -NoNewline
+        return
+    }
+
+    $content = Get-Content -Raw -LiteralPath $gitignorePath
+    $changed = $false
+    if ($content -notmatch '(?m)^# AI working files in user''s prompt language - local-only, not for review$') {
+        $content = $content.TrimEnd() + "`n$comment`n"
+        $changed = $true
+    }
+    if ($content -notmatch '(?m)^/ignored/?$') {
+        $content = $content.TrimEnd() + "`n$ignoredLine`n"
+        $changed = $true
+    }
+    if ($changed) {
+        Set-Content -LiteralPath $gitignorePath -Value $content -NoNewline
+    }
+}
+
+function Initialize-AssistantLayout {
+    $assistantRoot = Join-Path $Root ".aiassistant\socratex"
+    if ($DryRun) {
+        Write-Output "Would create branch-scoped committed directives under: $assistantRoot"
+        return
+    }
+
+    New-Item -ItemType Directory -Force -Path $assistantRoot | Out-Null
+    Copy-Item -LiteralPath (Join-Path $Root "AGENTS.md") -Destination (Join-Path $assistantRoot "AGENTS.md") -Force
+    Set-Content -LiteralPath (Join-Path $assistantRoot "DOCS.md") -Value @"
+# SocratexAI Documents
+
+## Summary
+
+Committed SocratexAI project directives live here.
+
+Local branch working memory lives under `ignored/ai-socratex/` when branch-scoped mode is active.
+
+"@ -NoNewline
+    $configPath = Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
+    if (Test-Path -LiteralPath $configPath) {
+        Copy-Item -LiteralPath $configPath -Destination (Join-Path $assistantRoot "PIPELINE-CONFIG.yaml") -Force
+    }
+    $projectFileName = ($ProjectName -replace '[\\/:*?"<>|]', '-').Trim()
+    if (-not $projectFileName) {
+        $projectFileName = "PROJECT"
+    }
+    Set-Content -LiteralPath (Join-Path $Root ".aiassistant\$projectFileName.md") -Value @"
+# Project Rules
+
+## Summary
+
+Project-specific code generation rules belong here when they are durable and review-facing.
+
+"@ -NoNewline
+}
+
 if ($CreateFiles) {
     if ($DryRun) {
         Write-Output "Would copy root controller: $(Join-Path $TemplateDir 'SOCRATEX.md') -> $(Join-Path $Root 'SOCRATEX.md')"
@@ -198,6 +280,35 @@ $FirstSessionSuccess
 
     if (-not $DryRun -and (Test-Path -LiteralPath (Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"))) {
         $packLines = ($KeepPacks | ForEach-Object { "  - $_" }) -join [Environment]::NewLine
+        $stackLines = if ($StackTags.Count -gt 0) {
+            ($StackTags | ForEach-Object { "    - $_" }) -join [Environment]::NewLine
+        } else {
+            "    []"
+        }
+        $runtimeStatusYaml = @"
+runtime_status:
+  python3:
+    ok: TBD
+    version: TBD
+    install_hint: TBD
+  pwsh:
+    ok: TBD
+    version: TBD
+    install_hint: TBD
+  pyyaml:
+    ok: TBD
+    version: TBD
+    install_hint: TBD
+"@
+        $python = Get-Command python -ErrorAction SilentlyContinue
+        if ($python) {
+            try {
+                $runtimeStatusYaml = & python (Join-Path $PSScriptRoot "check_runtime.py") --root-key runtime_status
+                $runtimeStatusYaml = [string]::Join([Environment]::NewLine, $runtimeStatusYaml)
+            } catch {
+                $runtimeStatusYaml = $runtimeStatusYaml + [Environment]::NewLine + "  check_error: `"runtime check failed`""
+            }
+        }
         $configYaml = @"
 summary: Initialized project configuration for SocratexPipeline.
 language: $Language
@@ -207,7 +318,7 @@ ai_operating_mode: $AiMode
 git: $UseGit
 ai_may_commit: $AiMayCommit
 ai_may_push: $AiMayPush
-branch_workflow: $BranchWorkflow
+branch_workflow: $BranchMode
 external_changes_possible: $ExternalChangesPossible
 force_ddd_adiv: $ForceDddAdiv
 import_pipeline_package: $ImportPipelinePackage
@@ -215,8 +326,37 @@ package_manager_detection: $PackageManagerDetection
 directive_mode: $DirectiveMode
 first_target: $FirstTarget
 first_session_success_criteria: $FirstSessionSuccess
+workflow:
+  branch_mode: $BranchMode
+  branch_files_dir: ignored/ai-socratex
+  branch_state_file: ignored/ai-socratex/<branch>-STATE.md
+  branch_plan_file: ignored/ai-socratex/<branch>-PLAN.md
+  branch_files_language: $BranchFilesLanguage
+project_profile:
+  lifecycle: $ProjectLifecycle
+  test_coverage: $TestCoverage
+  framework: $Framework
+  framework_kind: $FrameworkKind
+  linter: $Linter
+  ci: $Ci
+  docs: $Docs
+  team_size: $TeamSize
+  velocity: $Velocity
+  highest_pain: "$HighestPain"
+  stack:
+$stackLines
+$runtimeStatusYaml
 "@
         Set-Content -LiteralPath (Join-Path $InstallRoot "PIPELINE-CONFIG.yaml") -Value $configYaml -NoNewline
+    }
+
+    if ($keep.ContainsKey("code") -and $BranchMode -eq "branch_scoped") {
+        if ($DryRun) {
+            Write-Output "Would initialize root ignored/ai-socratex branch memory."
+        } else {
+            & (Join-Path $PSScriptRoot "init_branch_memory.ps1") -BranchFilesDir "ignored/ai-socratex" -EnsureGitignore
+        }
+        Initialize-AssistantLayout
     }
 }
 

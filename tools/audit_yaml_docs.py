@@ -4,7 +4,10 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import yaml
+try:
+    import yaml
+except ModuleNotFoundError:
+    yaml = None
 
 
 REQUIRED_LEGACY_DOCUMENT_KEYS = {"id", "key", "title", "type", "version", "owner", "language", "canonical", "generated"}
@@ -25,6 +28,8 @@ def is_excluded(path: Path, repo_root: Path) -> bool:
 
 
 def load_yaml(path: Path) -> Any:
+    if yaml is None:
+        raise RuntimeError("PyYAML is not installed. Install with: python -m pip install --user pyyaml")
     with path.open("r", encoding="utf-8") as handle:
         return yaml.safe_load(handle)
 
@@ -188,12 +193,53 @@ def validate_cache(repo_root: Path, yaml_paths: list[Path]) -> list[str]:
     return errors
 
 
+def validate_pipeline_config_schema(repo_root: Path) -> list[str]:
+    path = repo_root / "templates" / "code" / "PIPELINE-CONFIG.yaml"
+    relative = repo_path(path, repo_root)
+    if not path.exists():
+        return [f"{relative}: missing pipeline config template."]
+    try:
+        data = load_yaml(path)
+    except Exception as exc:
+        return [f"{relative}: YAML parse failed: {exc}"]
+    errors: list[str] = []
+    if not isinstance(data.get("project_profile"), dict):
+        errors.append(f"{relative}: missing project_profile mapping.")
+    if not isinstance(data.get("runtime_status"), dict):
+        errors.append(f"{relative}: missing runtime_status mapping.")
+    workflow = data.get("workflow")
+    if not isinstance(workflow, dict):
+        errors.append(f"{relative}: missing workflow mapping.")
+    elif "branch_mode" not in workflow:
+        errors.append(f"{relative}: missing workflow.branch_mode.")
+    return errors
+
+
+def validate_pipeline_config_schema_text(repo_root: Path) -> list[str]:
+    path = repo_root / "templates" / "code" / "PIPELINE-CONFIG.yaml"
+    relative = repo_path(path, repo_root)
+    if not path.exists():
+        return [f"{relative}: missing pipeline config template."]
+    text = path.read_text(encoding="utf-8")
+    required = ["project_profile:", "runtime_status:", "workflow:", "branch_mode:"]
+    return [f"{relative}: missing required text: {token}" for token in required if token not in text]
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate YAML documentation files and generated document cache.")
     parser.add_argument("--repo-root", required=True)
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
+    if yaml is None:
+        errors = validate_pipeline_config_schema_text(repo_root)
+        if errors:
+            for error in errors:
+                print(f"ERROR: {error}")
+            raise SystemExit(1)
+        print("OK: PyYAML missing; validated pipeline config schema presence only.")
+        return
+
     yaml_paths = sorted(
         path
         for pattern in ("*.yaml", "*.yml")
@@ -205,6 +251,7 @@ def main() -> None:
     for path in yaml_paths:
         errors.extend(validate_document(path, repo_root))
     errors.extend(validate_cache(repo_root, yaml_paths))
+    errors.extend(validate_pipeline_config_schema(repo_root))
 
     if errors:
         for error in errors:

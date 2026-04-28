@@ -130,10 +130,15 @@ try {
     $fileFormats = Get-RepoText -RelativePath "core/FILE-FORMATS.md"
     $promotionRules = Get-RepoText -RelativePath "core/PROMOTION-RULES.md"
     $contextCompaction = Get-RepoText -RelativePath "core/CONTEXT-COMPACTION.md"
+    $memoryModel = Get-RepoText -RelativePath "core/MEMORY-MODEL.md"
+    $projectProfile = Get-RepoText -RelativePath "core/PROJECT-PROFILE.md"
+    $roiBias = Get-RepoText -RelativePath "core/ROI-BIAS.md"
+    $scriptFallback = Get-RepoText -RelativePath "core/SCRIPT-FALLBACK.md"
     $instructionCapture = Get-RepoText -RelativePath "core/INSTRUCTION-CAPTURE.md"
     $codePackActive = Test-Path -LiteralPath (Join-Path $repoRoot "project/code/PACK.md")
     $codePack = if ($codePackActive) { Get-RepoText -RelativePath "project/code/PACK.md" } else { "" }
     $codeWorkflow = if ($codePackActive) { Get-RepoText -RelativePath "project/code/WORKFLOW.md" } else { "" }
+    $branchMode = if ($codePackActive) { Get-RepoText -RelativePath "project/code/BRANCH-MODE.md" } else { "" }
     $codeCommands = if ($codePackActive) { Get-RepoText -RelativePath "project/code/COMMANDS.md" } else { "" }
     $codeRegistries = if ($codePackActive) { Get-RepoText -RelativePath "project/code/REGISTRIES.md" } else { "" }
     $dddAdiv = if ($codePackActive) { Get-RepoText -RelativePath "project/code/DDD-ADIV.md" } else { "" }
@@ -143,12 +148,18 @@ try {
     $codeDiagnostics = if ($codePackActive) { Get-RepoText -RelativePath "project/code/DIAGNOSTICS.md" } else { "" }
 
     Test-ContainsText -Text $agents -Needle "core/AGENT-CONTRACT.md" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/MEMORY-MODEL.md" -Label "AGENTS.md"
     Test-ContainsText -Text $agents -Needle "core/PROMOTION-RULES.md" -Label "AGENTS.md"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "Programming Questions" -Label "PUBLIC-BOOTSTRAP.md"
+    $publicBootstrap = Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md"
+    Test-ContainsText -Text $publicBootstrap -Needle "Project Profile Interview" -Label "PUBLIC-BOOTSTRAP.md"
+    Test-ContainsText -Text $publicBootstrap -Needle "Runtime Check" -Label "PUBLIC-BOOTSTRAP.md"
+    Test-ContainsText -Text $publicBootstrap -Needle "Programming Questions" -Label "PUBLIC-BOOTSTRAP.md"
+    Test-ContainsText -Text $publicBootstrap -Needle "branch_scoped" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "Update, Upgrade, Migrate" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "Directive Merge Modes" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "SocratexAI/" -Label "templates/SOCRATEX.md"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "VERSION") -Needle "0.1.0-alpha" -Label "VERSION"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "VERSION") -Needle "0.2.0-alpha" -Label "VERSION"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "CHANGELOG.yaml") -Needle "0.2.0-alpha" -Label "CHANGELOG.yaml"
     Test-ContainsText -Text (Get-RepoText -RelativePath "LICENSE") -Needle "MIT License" -Label "LICENSE"
     Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.yaml") -Needle "audit_docs" -Label "QUALITY-GATE.yaml"
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
@@ -161,6 +172,9 @@ try {
     Test-ContainsText -Text $contract -Needle "## <emoji> Summary" -Label "core/AGENT-CONTRACT.md"
     Test-ContainsText -Text $contract -Needle "configured pipeline language" -Label "core/AGENT-CONTRACT.md"
     Test-ContainsText -Text $contract -Needle "Primary Known-Solutions Directive" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "Profile-fit check" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "ROI Picks" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "SCRIPT-FALLBACK.md" -Label "core/AGENT-CONTRACT.md"
     Test-ContainsText -Text $contract -Needle "Build-vs-borrow discipline" -Label "core/AGENT-CONTRACT.md"
     Test-ContainsText -Text $contract -Needle "Future-fit check" -Label "core/AGENT-CONTRACT.md"
     Test-ContainsText -Text $contract -Needle "DDD-ADIV" -Label "core/AGENT-CONTRACT.md"
@@ -169,11 +183,16 @@ try {
     Test-ContainsText -Text $fileFormats -Needle "Code Projects" -Label "core/FILE-FORMATS.md"
     Test-ContainsText -Text $fileFormats -Needle "YAML and JSON" -Label "core/FILE-FORMATS.md"
     Test-ContainsText -Text $contextCompaction -Needle "When to Recommend a Hard Reset" -Label "core/CONTEXT-COMPACTION.md"
+    Test-ContainsText -Text $memoryModel -Needle "Branch-Scoped Active State" -Label "core/MEMORY-MODEL.md"
+    Test-ContainsText -Text $projectProfile -Needle "Profile-Fit Check" -Label "core/PROJECT-PROFILE.md"
+    Test-ContainsText -Text $roiBias -Needle "ROI Picks" -Label "core/ROI-BIAS.md"
+    Test-ContainsText -Text $scriptFallback -Needle "Never claim a script ran when it did not run" -Label "core/SCRIPT-FALLBACK.md"
     Test-ContainsText -Text $instructionCapture -Needle "Defragmentation" -Label "core/INSTRUCTION-CAPTURE.md"
     Test-ContainsText -Text $instructionCapture -Needle "Cleaning Rules" -Label "core/INSTRUCTION-CAPTURE.md"
 
     Test-ContainsText -Text $promotionRules -Needle "BACKLOG to PLAN" -Label "core/PROMOTION-RULES.md"
     Test-ContainsText -Text $promotionRules -Needle "PLAN to STATE" -Label "core/PROMOTION-RULES.md"
+    Test-ContainsText -Text $promotionRules -Needle "BRANCH STATE to durable memory" -Label "core/PROMOTION-RULES.md"
     Test-ContainsText -Text $promotionRules -Needle "PLAN or BACKLOG to DECISIONS" -Label "core/PROMOTION-RULES.md"
     Test-ContainsText -Text $promotionRules -Needle "context-docs/" -Label "core/PROMOTION-RULES.md"
 
@@ -183,6 +202,7 @@ try {
         Test-ContainsText -Text $agents -Needle "core/FILE-FORMATS.md" -Label "AGENTS.md"
 
         Test-ContainsText -Text $codePack -Needle "Required Reads for Code Projects" -Label "project/code/PACK.md"
+        Test-ContainsText -Text $codePack -Needle "Profile-Aware Defaults" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Organize code top-down" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Known-Solution Bias" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Script-First Automation Directive" -Label "project/code/PACK.md"
@@ -195,7 +215,10 @@ try {
 
         Test-ContainsText -Text $codeWorkflow -Needle "Command Classifier" -Label "project/code/WORKFLOW.md"
         Test-ContainsText -Text $codeWorkflow -Needle "Script-First Execution" -Label "project/code/WORKFLOW.md"
+        Test-ContainsText -Text $codeWorkflow -Needle "Branch-Scoped Workflow" -Label "project/code/WORKFLOW.md"
+        Test-ContainsText -Text $codeWorkflow -Needle "ROI Workflow" -Label "project/code/WORKFLOW.md"
         Test-ContainsText -Text $codeWorkflow -Needle "Context Cost Control" -Label "project/code/WORKFLOW.md"
+        Test-ContainsText -Text $branchMode -Needle "Branch Mode" -Label "project/code/BRANCH-MODE.md"
 
         foreach ($command in @("CONTINUE", "PLAN", "BUG", "REVIEW", "AUDIT", "FINISH", "COMMIT", "LOG", "DIAGNOSTICS", "PROMPT", "INSTRUCTIONS")) {
             Test-ContainsText -Text $codeCommands -Needle "## $command" -Label "project/code/COMMANDS.md"
@@ -226,16 +249,20 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
             }
         }
-        foreach ($template in @("templates/_PROMPTS.md", "templates/code/_PROMPT-QUEUE.yaml")) {
+        foreach ($template in @("templates/_PROMPTS.md", "templates/code/_PROMPT-QUEUE.yaml", "templates/code/branch/BRANCH-STATE.md", "templates/code/branch/BRANCH-PLAN.md", "templates/code/branch/BRANCH-TODO.md")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
                 Add-Error "Missing prompt workflow template: $template"
             }
         }
+        $pipelineConfigTemplate = Get-RepoText -RelativePath "templates/code/PIPELINE-CONFIG.yaml"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle "project_profile:" -Label "templates/code/PIPELINE-CONFIG.yaml"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle "runtime_status:" -Label "templates/code/PIPELINE-CONFIG.yaml"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle "branch_mode:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle ".old" -Label "tools/set_directives.ps1"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle "SOCRATEX.md" -Label "tools/set_directives.ps1"
     }

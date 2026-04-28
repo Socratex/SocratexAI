@@ -20,7 +20,15 @@ $lines.Add('Read `core/AGENT-CONTRACT.md` first.') | Out-Null
 $lines.Add("") | Out-Null
 $lines.Add('Then read the active state file as the compact active project state. For code projects, use `STATE.yaml`.') | Out-Null
 $lines.Add("") | Out-Null
+$lines.Add('Read `core/MEMORY-MODEL.md` for active state, branch-scoped state, plans, decisions, and context capsules.') | Out-Null
+$lines.Add("") | Out-Null
 $lines.Add('Read `core/PROMOTION-RULES.md` before moving work between memory layers.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/PROJECT-PROFILE.md` when `PIPELINE-CONFIG.yaml` contains `project_profile`.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/ROI-BIAS.md` before ranking recommendations, planning work, or reviewing tradeoffs.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/SCRIPT-FALLBACK.md` before bypassing any script that cannot run.') | Out-Null
 $lines.Add("") | Out-Null
 $lines.Add('Use `core/CONTEXT-COMPACTION.md` during long or drift-prone sessions.') | Out-Null
 $lines.Add("") | Out-Null
@@ -42,6 +50,7 @@ if ($normalizedPacks -contains "code") {
     $lines.Add("") | Out-Null
     foreach ($path in @(
         "project/code/WORKFLOW.md",
+        "project/code/BRANCH-MODE.md",
         "project/code/COMMANDS.md",
         "project/code/REGISTRIES.md",
         "project/code/DDD-ADIV.md",

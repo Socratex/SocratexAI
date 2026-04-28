@@ -1,0 +1,48 @@
+# Script Fallback
+
+## Purpose
+
+This protocol preserves script-first discipline when a required runtime or dependency is missing.
+
+Missing tooling is a system setup bug worth fixing, not a permanent constraint.
+
+## Protocol
+
+Step 0: Check prerequisites before running a script when the runtime is uncertain.
+
+Use:
+
+```powershell
+python tools/check_runtime.py
+```
+
+Step 1: If the runtime exists, run the script.
+
+Step 2: If the runtime is missing, propose a system improvement first:
+
+- name the missing runtime or library,
+- give an install command for the detected platform when possible,
+- explain which workflows the runtime unlocks,
+- ask the user for an explicit decision before using a manual fallback.
+
+Step 3: Only if the user declines the system improvement, use a manual fallback or skip.
+
+When falling back, report:
+
+```text
+executed manually, script `<script>` skipped due to missing `<runtime>`, system improvement declined by user
+```
+
+Step 4: Never claim a script ran when it did not run.
+
+## Install Hints
+
+Prefer platform-specific install hints when known:
+
+- Python package: `python -m pip install --user <package>`
+- PowerShell on Linux: `sudo snap install powershell --classic`
+- PowerShell on macOS: `brew install --cask powershell`
+- PowerShell on Windows: install PowerShell from Microsoft Store or GitHub releases.
+
+If the platform cannot be detected, provide the generic runtime name and ask the user how they want dependencies installed.
+

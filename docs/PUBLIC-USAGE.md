@@ -24,9 +24,12 @@ The AI should:
 2. Detect the setup request language when possible.
 3. Ask the pipeline language question first.
 4. Ask context questions.
-5. If programming, ask programming-specific questions.
-6. Install, merge, or migrate according to the user's answers.
-7. Run audit if tools are available.
+5. If programming, run the Project Profile Interview.
+6. Run the runtime check when tools are available.
+7. Ask programming-specific questions, including branch workflow mode.
+8. Install, merge, or migrate according to the user's answers.
+9. Run audit if tools are available.
+10. End with first useful work recommendations and ROI Picks.
 
 Installed projects should contain only `SOCRATEX.md` at the project root as the Socratex control file. All pipeline-owned files should live under `SocratexAI/`.
 

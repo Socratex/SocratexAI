@@ -36,6 +36,21 @@ Move from the active plan file to the active state file only as:
 
 Do not copy full pass definitions into active state.
 
+## BRANCH STATE to durable memory
+
+When a branch is merged or closed, review branch-scoped active state under `ignored/ai-socratex/<branch>-STATE.md`.
+
+Promote only durable information:
+
+- current technical truths to `context-docs/`,
+- architecture or process decisions to `DECISIONS.yaml`,
+- shipped user-visible outcomes or major fixes to `CHANGELOG.yaml`,
+- unresolved future work to `_PLAN.yaml` or `TODO.yaml`.
+
+Leave transient debugging notes, dead hypotheses, and local execution history in the branch file as reference unless the user asks to clean it.
+
+Do not leak local prompt-language branch notes into committed review-facing docs unless they are translated and promoted deliberately.
+
 ## PLAN to CHANGELOG
 
 When a pass is completed and it shipped meaningful functionality, fixed a major issue, or changed durable behavior, record the outcome in the completion log.

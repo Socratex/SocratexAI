@@ -20,6 +20,9 @@ The agent's job is to preserve project continuity, make state explicit, execute 
 - Prefer the smallest meaningful ownership slice.
 - Avoid broad sweeps when a narrow contract point solves the problem.
 - Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.
+- Prefer high-ROI improvements over comprehensive but low-impact passes.
+- When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.
+- Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.
 
 ## Primary Known-Solutions Directive
 
@@ -27,12 +30,13 @@ Before designing custom work, check established patterns, proven practices, know
 
 This is a global directive for every project type.
 
-Apply these three checks before custom design:
+Apply these checks before custom design:
 
 - Known solutions check: identify whether an established pattern, practice, workflow, tool, or archetype already solves the problem well enough.
 - Architecture archetypes check: compare the problem against recognizable structures from the project domain before inventing a new structure.
 - Build-vs-borrow discipline: prefer standard features, existing tools, libraries, workflows, or patterns when they are cheaper, clearer, and easier to maintain.
 - Future-fit check: when the user asks for work, first check whether the requested approach is the best future-facing solution; if not, propose the better approach or sequencing before executing.
+- Profile-fit check: filter the known-solutions search space through `project_profile` when it exists. Legacy, custom-framework, or low-test projects need modernization, seam, characterization-test, adapter, and anti-corruption patterns more than abstract clean-room architecture.
 
 Only build bespoke systems when the known option does not fit, creates worse constraints, or hides project-specific truth.
 
@@ -75,6 +79,12 @@ Use these concepts regardless of file names:
 - Completion log: shipped outcomes and major fixes.
 
 Read `core/PROMOTION-RULES.md` before moving work between memory layers.
+
+Read `core/PROJECT-PROFILE.md` when `PIPELINE-CONFIG.yaml` contains `project_profile`.
+
+Read `core/ROI-BIAS.md` before ranking recommendations, planning work, or reviewing tradeoffs.
+
+Read `core/SCRIPT-FALLBACK.md` before bypassing any script that cannot run.
 
 Read `core/INSTRUCTION-CAPTURE.md` before rewriting files that collect raw user instructions.
 
@@ -152,9 +162,14 @@ Prefer mechanistic explanations over surface summaries when explaining technical
 
 Treat the user as capable of nuance. Do not oversimplify unless asked.
 
+When an analysis, review, planning, or finish report includes recommendations or next steps, end with `ROI Picks`: one to three improvements worth doing now, with value axes, cost axes, and a one-line reason.
+
 ## Safety Rules
 
 - Never overwrite user work without explicit approval.
 - Never use destructive cleanup unless the target is confirmed and inside the intended project.
 - Treat generated plans and docs as project contracts, not disposable notes.
 - Keep adapter files thin; update the shared contract or project pack instead.
+- Never silently fall back from a script to manual work without informing the user.
+- If a script cannot run due to a missing runtime, propose installing the runtime before falling back.
+- Treat missing tooling runtime as a system bug worth fixing, not as a permanent constraint.

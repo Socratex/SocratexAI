@@ -32,6 +32,7 @@ The pack is language-agnostic and framework-agnostic. It adds technical executio
 - `core/PROMOTION-RULES.md`
 - `core/CONTEXT-COMPACTION.md`
 - `project/code/WORKFLOW.md`
+- `project/code/BRANCH-MODE.md` when `workflow.branch_mode` is `branch_scoped`
 - `project/code/COMMANDS.md`
 - `project/code/REGISTRIES.md`
 - `project/code/DDD-ADIV.md`
@@ -39,6 +40,9 @@ The pack is language-agnostic and framework-agnostic. It adds technical executio
 - `project/code/FROZEN-LAYERS.md`
 - `project/code/INSTRUCTION-CAPTURE.md`
 - `project/code/DIAGNOSTICS.md`
+- `core/PROJECT-PROFILE.md` when `project_profile` exists
+- `core/ROI-BIAS.md`
+- `core/SCRIPT-FALLBACK.md`
 
 ## Technical Defaults
 
@@ -145,6 +149,35 @@ Examples:
 Use the standard solution when it is cheaper and clearer than bespoke architecture.
 
 If rejecting a known solution, state the constraint that makes it a poor fit.
+
+## Profile-Aware Defaults
+
+Use `project_profile` to choose the right kind of known solution.
+
+For `legacy` projects:
+
+- prefer minimal-invasive changes,
+- add characterization tests or golden master checks before risky refactors,
+- introduce seams before broad rewrites,
+- use strangler fig and anti-corruption patterns when moving behavior to new boundaries.
+
+For `none` or `smoke-only` test coverage:
+
+- propose a golden master test, manual reproduction script, or fixture snapshot before non-trivial behavior changes,
+- keep changes small and reversible,
+- report unverified assumptions explicitly.
+
+For `custom in-house` or `mixed` frameworks:
+
+- isolate framework touchpoints behind adapters,
+- search for injection seams,
+- avoid editing framework core unless that is the explicit task.
+
+For mature standard frameworks:
+
+- prefer built-in framework mechanisms,
+- follow ecosystem conventions,
+- avoid custom infrastructure when standard extension points fit.
 
 ## Change Strategy
 

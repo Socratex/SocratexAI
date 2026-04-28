@@ -41,12 +41,26 @@ If the context is programming, also ask:
 
 13. Should the AI commit changes?
 14. Should the AI push changes?
-15. Do you work on branches?
-16. Can external changes happen while AI is working?
-17. Should the AI force DDD-ADIV?
-18. Should the AI import a pipeline package or dependency if the ecosystem supports it?
-19. Should the AI detect package managers and frameworks, including Composer for PHP?
-20. Should directive files be snapshotted, merged, or replaced?
+15. Project Profile Interview:
+   - lifecycle: greenfield / early / mature / legacy / sunset
+   - test coverage: none / smoke-only / partial / comprehensive / tdd
+   - framework: standard (name) / custom in-house / mixed / none
+   - linter or typecheck: enforced / optional / none
+   - CI/CD: full / partial / none
+   - documentation state: current / partial / stale / none
+   - team size: solo / small / medium / large
+   - velocity expectation: experimental / iterating / shipping / maintenance
+   - highest current pain
+   - stack tags, suggested from `tools/detect_project_stack.ps1` when practical
+16. Run `tools/check_runtime.py` when practical and record runtime availability.
+17. Which branch workflow mode should this project use?
+   - `branch_scoped`
+   - `linear`
+18. Can external changes happen while AI is working?
+19. Should the AI force DDD-ADIV?
+20. Should the AI import a pipeline package or dependency if the ecosystem supports it?
+21. Should the AI detect package managers and frameworks, including Composer for PHP?
+22. Should directive files be snapshotted, merged, or replaced?
 
 ## Initialization Actions
 
@@ -61,9 +75,12 @@ After receiving answers:
 7. Move `initializer/` into `temp/trash/initializer/`.
 8. Record the initialization decision in `DECISIONS.md` if that file exists.
 9. Create `PIPELINE-CONFIG.md` with selected packs, language, operating mode, Git preference, and first-session success criteria.
-10. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
-11. Run `tools/audit_docs.ps1 -Initialized` for code projects when practical.
-12. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
+10. For code projects, create `PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, and `runtime_status`.
+11. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
+12. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
+13. Run `tools/audit_docs.ps1 -Initialized` for code projects when practical.
+14. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
+15. For code projects, include the three most relevant known-solution families for the project profile and ROI Picks for the first useful work pass.
 
 ## Lite Mode
 

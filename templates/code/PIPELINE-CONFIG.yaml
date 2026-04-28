@@ -5,7 +5,7 @@ ai_operating_mode: TBD
 git: TBD
 ai_may_commit: TBD
 ai_may_push: TBD
-branch_workflow: TBD
+branch_workflow: linear
 external_changes_possible: TBD
 force_ddd_adiv: TBD
 import_pipeline_package: TBD
@@ -13,3 +13,34 @@ package_manager_detection: TBD
 directive_mode: merge
 first_target: TBD
 first_session_success_criteria: TBD
+workflow:
+  branch_mode: linear
+  branch_files_dir: ignored/ai-socratex
+  branch_state_file: ignored/ai-socratex/<branch>-STATE.md
+  branch_plan_file: ignored/ai-socratex/<branch>-PLAN.md
+  branch_files_language: prompt-language
+project_profile:
+  lifecycle: TBD
+  test_coverage: TBD
+  framework: TBD
+  framework_kind: TBD
+  linter: TBD
+  ci: TBD
+  docs: TBD
+  team_size: TBD
+  velocity: TBD
+  highest_pain: TBD
+  stack: []
+runtime_status:
+  python3:
+    ok: TBD
+    version: TBD
+    install_hint: TBD
+  pwsh:
+    ok: TBD
+    version: TBD
+    install_hint: TBD
+  pyyaml:
+    ok: TBD
+    version: TBD
+    install_hint: TBD

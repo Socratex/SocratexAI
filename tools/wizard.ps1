@@ -37,12 +37,23 @@ $external = Ask-Default -Prompt "11. External tools, folders, accounts, or refer
 $success = Ask-Default -Prompt "12. Successful first session means" -Default "project initialized and first pass ready"
 $aiMayCommit = "no"
 $aiMayPush = "no"
-$branchWorkflow = "unknown"
+$branchMode = "linear"
 $externalChangesPossible = "unknown"
 $forceDddAdiv = "yes"
 $importPipelinePackage = "no"
 $packageManagerDetection = "yes"
 $directiveMode = "merge"
+$projectLifecycle = "TBD"
+$testCoverage = "TBD"
+$framework = "TBD"
+$frameworkKind = "TBD"
+$linter = "TBD"
+$ci = "TBD"
+$docs = "TBD"
+$teamSize = "TBD"
+$velocity = "TBD"
+$highestPain = "TBD"
+$stackTags = @()
 
 if ($kind -eq "code" -or $packs -match "code") {
     Write-Host ""
@@ -56,12 +67,24 @@ if ($kind -eq "code" -or $packs -match "code") {
     }
     $aiMayCommit = Ask-Default -Prompt "13. Should AI commit changes" -Default "no"
     $aiMayPush = Ask-Default -Prompt "14. Should AI push changes" -Default "no"
-    $branchWorkflow = Ask-Default -Prompt "15. Do you work on branches" -Default "yes"
-    $externalChangesPossible = Ask-Default -Prompt "16. Can external changes happen while AI works" -Default "yes"
-    $forceDddAdiv = Ask-Default -Prompt "17. Force DDD-ADIV" -Default "yes"
-    $importPipelinePackage = Ask-Default -Prompt "18. Import pipeline package/dependency if ecosystem supports it" -Default "no"
-    $packageManagerDetection = Ask-Default -Prompt "19. Detect package managers/frameworks, including Composer" -Default "yes"
-    $directiveMode = Ask-Default -Prompt "20. Directive mode: snapshot, merge, replace" -Default "merge"
+    $projectLifecycle = Ask-Default -Prompt "15. Lifecycle: greenfield, early, mature, legacy, sunset" -Default "early"
+    $testCoverage = Ask-Default -Prompt "16. Test coverage: none, smoke-only, partial, comprehensive, tdd" -Default "partial"
+    $framework = Ask-Default -Prompt "17. Framework name or none" -Default "TBD"
+    $frameworkKind = Ask-Default -Prompt "18. Framework kind: standard, custom in-house, mixed, none" -Default "standard"
+    $linter = Ask-Default -Prompt "19. Linter/typecheck: enforced, optional, none" -Default "optional"
+    $ci = Ask-Default -Prompt "20. CI/CD: full, partial, none" -Default "partial"
+    $docs = Ask-Default -Prompt "21. Documentation: current, partial, stale, none" -Default "partial"
+    $teamSize = Ask-Default -Prompt "22. Team size: solo, small, medium, large" -Default "solo"
+    $velocity = Ask-Default -Prompt "23. Velocity: experimental, iterating, shipping, maintenance" -Default "iterating"
+    $highestPain = Ask-Default -Prompt "24. Highest current pain" -Default "TBD"
+    $stackText = Ask-Default -Prompt "25. Stack tags, comma-separated" -Default "TBD"
+    $stackTags = $stackText -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ -and $_ -ne "TBD" }
+    $branchMode = Ask-Default -Prompt "26. Branch mode: branch_scoped, linear" -Default "branch_scoped"
+    $externalChangesPossible = Ask-Default -Prompt "27. Can external changes happen while AI works" -Default "yes"
+    $forceDddAdiv = Ask-Default -Prompt "28. Force DDD-ADIV" -Default "yes"
+    $importPipelinePackage = Ask-Default -Prompt "29. Import pipeline package/dependency if ecosystem supports it" -Default "no"
+    $packageManagerDetection = Ask-Default -Prompt "30. Detect package managers/frameworks, including Composer" -Default "yes"
+    $directiveMode = Ask-Default -Prompt "31. Directive mode: snapshot, merge, replace" -Default "merge"
 }
 
 Write-Host ""
@@ -92,11 +115,22 @@ $initScript = Join-Path $PSScriptRoot "Initialize-SocratexPipeline.ps1"
     -UseGit $useGit `
     -AiMayCommit $aiMayCommit `
     -AiMayPush $aiMayPush `
-    -BranchWorkflow $branchWorkflow `
+    -BranchMode $branchMode `
     -ExternalChangesPossible $externalChangesPossible `
     -ForceDddAdiv $forceDddAdiv `
     -ImportPipelinePackage $importPipelinePackage `
     -PackageManagerDetection $packageManagerDetection `
+    -ProjectLifecycle $projectLifecycle `
+    -TestCoverage $testCoverage `
+    -Framework $framework `
+    -FrameworkKind $frameworkKind `
+    -Linter $linter `
+    -Ci $ci `
+    -Docs $docs `
+    -TeamSize $teamSize `
+    -Velocity $velocity `
+    -HighestPain $highestPain `
+    -StackTags $stackTags `
     -DirectiveMode $directiveMode `
     -KeepPacks $packs `
     -CreateFiles `

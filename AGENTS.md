@@ -10,6 +10,7 @@ For code projects, also read:
 
 - `project/code/PACK.md`
 - `project/code/WORKFLOW.md`
+- `project/code/BRANCH-MODE.md` when `workflow.branch_mode` is `branch_scoped`
 - `project/code/COMMANDS.md`
 - `project/code/REGISTRIES.md`
 - `project/code/DDD-ADIV.md`
@@ -18,8 +19,12 @@ For code projects, also read:
 - `project/code/INSTRUCTION-CAPTURE.md`
 - `project/code/DIAGNOSTICS.md`
 - `core/FILE-FORMATS.md`
+- `core/MEMORY-MODEL.md`
 - `core/PROMOTION-RULES.md`
 - `core/CONTEXT-COMPACTION.md`
 - `core/INSTRUCTION-CAPTURE.md`
+- `core/PROJECT-PROFILE.md` when `project_profile` exists
+- `core/ROI-BIAS.md`
+- `core/SCRIPT-FALLBACK.md`
 
 Adapter-specific files under `adapters/` are intentionally thin pointers. The shared contract in `core/AGENT-CONTRACT.md` is the source of truth.

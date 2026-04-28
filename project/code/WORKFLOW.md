@@ -12,9 +12,12 @@ For ordinary code work:
 
 1. `AGENTS.md`
 2. `STATE.yaml`
-3. `_PLAN.yaml`
-4. smallest relevant file under `context-docs/`
-5. source files in the touched ownership slice
+3. `PIPELINE-CONFIG.yaml`
+4. `core/PROJECT-PROFILE.md` when `project_profile` exists
+5. `core/ROI-BIAS.md`
+6. `_PLAN.yaml`
+7. smallest relevant file under `context-docs/`
+8. source files in the touched ownership slice
 
 For broad architecture, ownership, persistence, API, build, toolchain, or registry work, also read:
 
@@ -22,6 +25,11 @@ For broad architecture, ownership, persistence, API, build, toolchain, or regist
 2. `project/code/DDD-ADIV.md`
 3. `project/code/GIT.md`
 4. `project/code/FROZEN-LAYERS.md`
+
+For branch-scoped projects, also read:
+
+1. `project/code/BRANCH-MODE.md`
+2. branch state and plan from the configured `workflow.branch_files_dir`
 
 For raw user instruction buffers, also read:
 
@@ -64,10 +72,11 @@ For logs, traces, crashes, console output, and evidence-driven debugging, also r
 4. Check whether a known solution, pattern, or tool is cheaper than custom design.
 5. Check whether a future-facing prerequisite should happen before the requested implementation.
 6. For structural or multi-boundary work, write a short impact note or plan before editing.
-7. Implement within the scoped boundary.
-8. Verify with the strongest practical gate.
-9. Update only the memory layers whose current truth changed.
-10. Finish with concrete changed files, verification, and residual risk.
+7. Rank recommendations or candidate passes by ROI when there are multiple options.
+8. Implement within the scoped boundary.
+9. Verify with the strongest practical gate.
+10. Update only the memory layers whose current truth changed.
+11. Finish with concrete changed files, verification, residual risk, and ROI Picks when follow-up recommendations exist.
 
 ## Script-First Execution
 
@@ -75,9 +84,34 @@ For programming work, prefer project scripts whenever practical.
 
 Use `tools/` helpers for pipeline tasks, package-manager scripts for ecosystem tasks, and framework CLIs for framework-native work.
 
+Before running a script, verify its runtime is available when uncertain. If not, follow `core/SCRIPT-FALLBACK.md`: propose a system improvement with an install command and justification before falling back to manual work.
+
 Do not manually duplicate a script's behavior unless the script is unavailable, unsafe for the current scope, broken, or explicitly rejected by the user.
 
 Run scripts at natural workflow boundaries: before broad work when they provide routing context, during diagnostics when they summarize evidence, and near the end for check, audit, quality, finish, and commit steps.
+
+## Branch-Scoped Workflow
+
+When `workflow.branch_mode` is `branch_scoped`:
+
+1. Detect the current Git branch at session start.
+2. Look for `ignored/ai-socratex/<branch>-STATE.md` and `ignored/ai-socratex/<branch>-PLAN.md`, or the configured equivalents.
+3. Read them when they exist.
+4. Create them from `templates/code/branch/` when missing.
+5. Update branch STATE and PLAN continuously, not only at the end.
+6. Keep STATE factual: findings, root causes, changes, verification, blockers.
+7. Keep PLAN as next steps only, with no history.
+8. At branch end, optionally promote durable findings into `context-docs/`, `DECISIONS.yaml`, `CHANGELOG.yaml`, `_PLAN.yaml`, or `TODO.yaml`.
+
+If the branch files language is not English, ensure the branch files directory is ignored by Git before writing local notes.
+
+## ROI Workflow
+
+`REVIEW` must end with ROI Picks when it contains findings or recommendations.
+
+`PLAN` must assign ROI metadata before promoting backlog items into `_PLAN.yaml`.
+
+Promotion should prefer high-ROI work for the current `project_profile`, especially work that improves the user's stated highest pain.
 
 ## Context Cost Control
 

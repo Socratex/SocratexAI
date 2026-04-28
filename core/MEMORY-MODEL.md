@@ -13,11 +13,36 @@ It should stay short:
 - risks,
 - non-regression reminders.
 
+## Branch-Scoped Active State
+
+Branch-scoped active state is local working memory for one Git branch.
+
+Use it when the project config sets `workflow.branch_mode` to `branch_scoped`.
+
+It normally lives under `ignored/ai-socratex/<branch>-STATE.md`.
+
+It may use the user's prompt language because it is local-only working memory.
+
+It stores branch facts:
+
+- findings,
+- root causes,
+- changes made,
+- verification,
+- current blockers,
+- durable findings that may need promotion.
+
+It should not replace durable project memory.
+
 ## Plan
 
 The plan contains only active and future execution passes.
 
 It is not history.
+
+In branch-scoped mode, the branch plan lives under `ignored/ai-socratex/<branch>-PLAN.md`.
+
+It contains next steps only and should be updated continuously during the branch.
 
 ## Backlog
 
@@ -53,4 +78,3 @@ Do not use them for:
 - scratch notes,
 - duplicated backlog,
 - speculative future roadmaps.
-
