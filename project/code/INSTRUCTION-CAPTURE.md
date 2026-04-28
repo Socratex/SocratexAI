@@ -6,6 +6,12 @@ Use this file for programming-specific handling of raw user instruction buffers.
 
 Also read `core/INSTRUCTION-CAPTURE.md`.
 
+For prompt-queue execution, treat `_PROMPTS.md` and `_PROMPT-QUEUE.yaml` as programming aliases of the same raw-intake workflow:
+
+- `_PROMPTS.md` is immediate raw prompt intake.
+- `_PROMPT-QUEUE.yaml` is defragmented, sorted prompt work.
+- Use the `PROMPT` command workflow in `project/code/COMMANDS.md`.
+
 ## Code Sorting Rules
 
 When defragmenting programming instructions, sort pending work in this order:

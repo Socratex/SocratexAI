@@ -32,10 +32,12 @@ Evidence may include:
 1. Identify the newest relevant evidence.
 2. Extract current errors, warnings, stack traces, failing tests, and repeated symptoms.
 3. Separate observed facts from hypotheses.
-4. Choose the smallest source-owned fix or the smallest useful diagnostic addition.
-5. Run the relevant quality gate.
-6. Update `BUGS.yaml`, `ISSUES.yaml`, or `STATE.yaml` when the evidence changes active work.
-7. Ask for user confirmation before moving a suspected bug to `BUGS-SOLVED.yaml`.
+4. Translate raw payloads into human-readable units before reporting them.
+5. Add a likely-cause interpretation after the observed facts.
+6. Choose the smallest source-owned fix or the smallest useful diagnostic addition.
+7. Run the relevant quality gate.
+8. Update `BUGS.yaml`, `ISSUES.yaml`, or `STATE.yaml` when the evidence changes active work.
+9. Ask for user confirmation before moving a suspected bug to `BUGS-SOLVED.yaml`.
 
 ## Generic Command
 
@@ -44,6 +46,20 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/log_summary.ps1 -Descr
 ```
 
 The default output is `DIAGNOSTICS-SUMMARY.json`.
+
+## Human-Readable Reporting
+
+When reporting diagnostics to a user:
+
+- show timing in milliseconds when practical,
+- show memory in KB, MB, or GB,
+- show throughput or frame rates in the most natural domain unit,
+- show timestamps as `YYYY-MM-DD HH:MM:SS` when timestamps are present,
+- include the relevant domain label or environment label when the evidence provides one,
+- distinguish observed data from likely-cause inference,
+- state uncertainty when the evidence is incomplete.
+
+Do not paste large raw logs into chat when a compact summary is enough.
 
 ## Evidence Handling
 

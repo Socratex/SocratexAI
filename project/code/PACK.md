@@ -18,6 +18,8 @@ The pack is language-agnostic and framework-agnostic. It adds technical executio
 - `PIPELINE-CONFIG.yaml`
 - `context-docs/TECHNICAL.yaml`
 - `context-docs/FROZEN_LAYERS.yaml`
+- `_PROMPTS.md` for raw prompt intake when the user wants a prompt queue.
+- `_PROMPT-QUEUE.yaml` for defragmented prompt work.
 - `_INSTRUCTIONS.md` for raw scratch intake only
 - `_INSTRUCTION-QUEUE.yaml`
 - generated indexes and diagnostics as `.json`
@@ -61,6 +63,8 @@ The pack is language-agnostic and framework-agnostic. It adds technical executio
 
 Use existing project scripts and pipeline tools whenever practical.
 
+This is a high-priority programming directive: when a script can safely do the work, prefer the script.
+
 Before manually performing repeatable work, check `tools/`, package scripts, task runners, Makefiles, CI commands, framework CLIs, and project-specific helper scripts.
 
 Prefer scripts for:
@@ -80,6 +84,18 @@ Prefer scripts for:
 If a suitable script exists, use it instead of reimplementing the same workflow manually.
 
 If a script is skipped, state why: missing dependency, unsafe side effect, wrong scope, platform mismatch, or user instruction.
+
+Run status, check, audit, and quality scripts at verification boundaries instead of after every micro-edit.
+
+For changed-path checks, prefer a compact helper such as:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_task.ps1 -Paths <changed paths>
+```
+
+For structured project documents, generated files, registries, or contract-managed files, prefer repository scripts over manual edits when a relevant script exists.
+
+For repeated or structurally constrained edits without a script, complete the requested change first, then recommend adding a small script when it would reduce future drift.
 
 ## DDD-ADIV Recommendation
 
@@ -142,6 +158,40 @@ If rejecting a known solution, state the constraint that makes it a poor fit.
 - When existing architecture is incoherent, prefer one explicit boundary repair over scattered local workarounds.
 - Do not introduce abstractions for vague future needs.
 - Add an abstraction only when it removes real complexity, reduces meaningful duplication, or matches an established local pattern.
+
+## Task Gating
+
+Before implementation, check whether the requested work is the best future-facing solution.
+
+If a cheaper prerequisite, enabling contract, diagnostic step, or architecture cleanup should happen first, recommend it before implementing or make it the first step when it stays inside the user's requested outcome.
+
+Use a short plan-first checkpoint for work that is complex, underspecified, structural, or spans multiple ownership boundaries.
+
+Before broad implementation, note likely impact when the task touches:
+
+- multiple systems,
+- state transitions,
+- persistence or schemas,
+- randomness, concurrency, async, timing, or scheduling,
+- more than two or three files,
+- public APIs, tool contracts, or registries.
+
+Stop and reframe when the requested approach would materially increase coupling, hide side effects, add nondeterminism, or blur ownership.
+
+For local, reversible, clearly scoped changes, implement directly and report the outcome.
+
+## Reporting
+
+For non-trivial code work, the first execution update should be compact and concrete:
+
+- Usage: whether the task may be expensive in context, tool calls, or time.
+- Impact: the likely blast radius.
+- Domains: the touched ownership areas.
+- Current situation: observed facts.
+- Expected result: what should be true after the change.
+- Applied solutions: known solutions, scripts, or patterns to use.
+
+After implementation, report changed files, verification, skipped checks, and residual risk.
 
 ## Review Heuristics
 

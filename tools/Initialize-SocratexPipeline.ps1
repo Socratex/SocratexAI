@@ -134,6 +134,8 @@ if ($CreateFiles) {
     }
 
     if ($keep.ContainsKey("code") -and $AiMode -ne "Lite") {
+        Copy-TemplateFile -TemplateName "_PROMPTS.md" -DestinationRelativePath "_PROMPTS.md"
+        Copy-CodeTemplateFile -TemplateName "_PROMPT-QUEUE.yaml" -DestinationRelativePath "_PROMPT-QUEUE.yaml"
         Copy-TemplateFile -TemplateName "_INSTRUCTIONS.md" -DestinationRelativePath "_INSTRUCTIONS.md"
         Copy-CodeTemplateFile -TemplateName "_INSTRUCTION-QUEUE.yaml" -DestinationRelativePath "_INSTRUCTION-QUEUE.yaml"
         Copy-CodeTemplateFile -TemplateName "TODO.yaml" -DestinationRelativePath "TODO.yaml"

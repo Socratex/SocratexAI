@@ -83,6 +83,8 @@ if ($CreateProjectFiles) {
             "code/CHANGELOG.yaml" = "CHANGELOG.yaml"
             "code/BUGS.yaml" = "BUGS.yaml"
             "code/BUGS-SOLVED.yaml" = "BUGS-SOLVED.yaml"
+            "_PROMPTS.md" = "_PROMPTS.md"
+            "code/_PROMPT-QUEUE.yaml" = "_PROMPT-QUEUE.yaml"
             "_INSTRUCTIONS.md" = "_INSTRUCTIONS.md"
             "code/_INSTRUCTION-QUEUE.yaml" = "_INSTRUCTION-QUEUE.yaml"
             "code/PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"

@@ -180,6 +180,8 @@ try {
         Test-ContainsText -Text $codePack -Needle "Organize code top-down" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Known-Solution Bias" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Script-First Automation Directive" -Label "project/code/PACK.md"
+        Test-ContainsText -Text $codePack -Needle "Task Gating" -Label "project/code/PACK.md"
+        Test-ContainsText -Text $codePack -Needle "Reporting" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Use existing project scripts and pipeline tools whenever practical" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Architecture archetypes check" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "DDD alignment" -Label "project/code/PACK.md"
@@ -189,7 +191,7 @@ try {
         Test-ContainsText -Text $codeWorkflow -Needle "Script-First Execution" -Label "project/code/WORKFLOW.md"
         Test-ContainsText -Text $codeWorkflow -Needle "Context Cost Control" -Label "project/code/WORKFLOW.md"
 
-        foreach ($command in @("CONTINUE", "PLAN", "BUG", "REVIEW", "AUDIT", "FINISH", "COMMIT", "LOG", "DIAGNOSTICS", "INSTRUCTIONS")) {
+        foreach ($command in @("CONTINUE", "PLAN", "BUG", "REVIEW", "AUDIT", "FINISH", "COMMIT", "LOG", "DIAGNOSTICS", "PROMPT", "INSTRUCTIONS")) {
             Test-ContainsText -Text $codeCommands -Needle "## $command" -Label "project/code/COMMANDS.md"
         }
 
@@ -206,9 +208,11 @@ try {
         Test-ContainsText -Text $gitRules -Needle "Worktree Rules" -Label "project/code/GIT.md"
         Test-ContainsText -Text $frozenLayers -Needle "Default Contract" -Label "project/code/FROZEN-LAYERS.md"
         Test-ContainsText -Text $codeInstructionCapture -Needle "Code Sorting Rules" -Label "project/code/INSTRUCTION-CAPTURE.md"
+        Test-ContainsText -Text $codeInstructionCapture -Needle "_PROMPTS.md" -Label "project/code/INSTRUCTION-CAPTURE.md"
         Test-ContainsText -Text $codeDiagnostics -Needle "Required Project Setup" -Label "project/code/DIAGNOSTICS.md"
         Test-ContainsText -Text $codeDiagnostics -Needle "tools/log_summary.ps1" -Label "project/code/DIAGNOSTICS.md"
         Test-ContainsText -Text $codeDiagnostics -Needle "DIAGNOSTICS-SUMMARY.json" -Label "project/code/DIAGNOSTICS.md"
+        Test-ContainsText -Text $codeDiagnostics -Needle "Human-Readable Reporting" -Label "project/code/DIAGNOSTICS.md"
 
         foreach ($doc in @("docs/GETTING-STARTED.md", "docs/CODE-PROJECTS.md", "docs/MODES.md", "docs/IMPORT-EXISTING-PROJECT.md", "docs/PUBLIC-USAGE.md")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $doc))) {
@@ -219,6 +223,11 @@ try {
         foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
+            }
+        }
+        foreach ($template in @("templates/_PROMPTS.md", "templates/code/_PROMPT-QUEUE.yaml")) {
+            if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
+                Add-Error "Missing prompt workflow template: $template"
             }
         }
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle ".old" -Label "tools/set_directives.ps1"

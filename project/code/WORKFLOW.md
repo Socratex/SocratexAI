@@ -52,6 +52,8 @@ For logs, traces, crashes, console output, and evidence-driven debugging, also r
 
 `DIAGNOSTICS`: summarize newest diagnostic evidence, identify the highest-leverage issue, and choose the next source-owned fix or evidence step.
 
+`PROMPT`: execute or defragment raw prompt intake from `_PROMPTS.md` and `_PROMPT-QUEUE.yaml`.
+
 `INSTRUCTIONS`: defragment raw user instructions, sort them by dependency/future-change cost, promote them into the correct layer, and clear completed intake.
 
 ## General Workflow
@@ -60,10 +62,12 @@ For logs, traces, crashes, console output, and evidence-driven debugging, also r
 2. Identify the ownership slice.
 3. Check existing scripts and project automation before doing repeatable work manually.
 4. Check whether a known solution, pattern, or tool is cheaper than custom design.
-5. Implement within the scoped boundary.
-6. Verify with the strongest practical gate.
-7. Update only the memory layers whose current truth changed.
-8. Finish with concrete changed files, verification, and residual risk.
+5. Check whether a future-facing prerequisite should happen before the requested implementation.
+6. For structural or multi-boundary work, write a short impact note or plan before editing.
+7. Implement within the scoped boundary.
+8. Verify with the strongest practical gate.
+9. Update only the memory layers whose current truth changed.
+10. Finish with concrete changed files, verification, and residual risk.
 
 ## Script-First Execution
 
@@ -72,6 +76,8 @@ For programming work, prefer project scripts whenever practical.
 Use `tools/` helpers for pipeline tasks, package-manager scripts for ecosystem tasks, and framework CLIs for framework-native work.
 
 Do not manually duplicate a script's behavior unless the script is unavailable, unsafe for the current scope, broken, or explicitly rejected by the user.
+
+Run scripts at natural workflow boundaries: before broad work when they provide routing context, during diagnostics when they summarize evidence, and near the end for check, audit, quality, finish, and commit steps.
 
 ## Context Cost Control
 

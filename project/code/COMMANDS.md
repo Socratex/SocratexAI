@@ -125,6 +125,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/commit_task.ps1 -Messa
 
 Analyze a supplied diagnostic log, crash log, trace, test output, or runtime dump.
 
+`LOG` requires a non-empty diagnostic description. If the description is missing, ask for it and stop before inspecting files.
+
 Order:
 
 1. Identify the freshest relevant evidence.
@@ -133,6 +135,8 @@ Order:
 4. Apply the smallest source-owned fix or add targeted diagnostics.
 5. Run the relevant quality gate.
 6. Update the related registry entry if one exists.
+
+Treat explicit user confirmations such as `fixed`, `resolved`, `naprawione`, or equivalent as permission to close the active log investigation and clear generated diagnostic captures when the project workflow allows it.
 
 ## DIAGNOSTICS
 
@@ -147,6 +151,23 @@ Order:
 5. Identify the smallest source-owned fix or the smallest useful diagnostic addition.
 6. Run the relevant quality gate.
 7. Update `BUGS.yaml`, `ISSUES.yaml`, `STATE.yaml`, or `context-docs/TECHNICAL.yaml` only when current truth changed.
+
+## PROMPT
+
+Resolve raw prompt intake for programming work.
+
+Order:
+
+1. Inspect `_PROMPTS.md` first when it exists and is not empty.
+2. If it contains one actionable prompt, execute it immediately.
+3. If it contains multiple prompts or separable sections, defragment them into `_PROMPT-QUEUE.yaml`.
+4. Merge duplicate or overlapping scopes.
+5. Sort pending work by documentation/contracts, diagnostics, architecture prerequisites, implementation, then polish.
+6. Clear `_PROMPTS.md` after successful defragmentation or execution.
+7. If `_PROMPTS.md` is empty, execute the next actionable pass from `_PROMPT-QUEUE.yaml`.
+8. Remove completed prompt-queue entries while preserving every unresolved future entry.
+
+Mention `_PROMPTS.md` and `_PROMPT-QUEUE.yaml` only during `PROMPT`, or when their content directly affects the current task.
 
 ## INSTRUCTIONS
 

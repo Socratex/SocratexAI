@@ -124,6 +124,15 @@ Do not fake verification. If something was not verified, say so.
 
 Keep updates short and factual.
 
+Prefer aggregated sections instead of splitting closely related thoughts into many tiny headings.
+
+For analysis, diagnosis, recommendations, and planning, use compact sections with context-appropriate emoji headings when the output is more than a trivial one-liner. A useful default shape is:
+
+- short lead: the whole situation and next move,
+- state or problem: observed facts and current behavior,
+- suggestion: what to do,
+- summary: why the recommendation follows, including uncertainty or tradeoffs.
+
 When work is likely to be expensive in context, tool usage, or time, warn before starting and offer a smaller scope.
 
 When reviewing work, lead with risks, defects, and missing verification.
