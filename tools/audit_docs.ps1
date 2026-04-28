@@ -154,6 +154,12 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
 
     Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Krótko" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Stan" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Problem" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Sugestia" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Podsumowanie" -Label "core/AGENT-CONTRACT.md"
+    Test-ContainsText -Text $contract -Needle "configured pipeline language" -Label "core/AGENT-CONTRACT.md"
     Test-ContainsText -Text $contract -Needle "Primary Known-Solutions Directive" -Label "core/AGENT-CONTRACT.md"
     Test-ContainsText -Text $contract -Needle "Build-vs-borrow discipline" -Label "core/AGENT-CONTRACT.md"
     Test-ContainsText -Text $contract -Needle "Future-fit check" -Label "core/AGENT-CONTRACT.md"
