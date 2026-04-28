@@ -198,3 +198,9 @@ Use these tools when available:
 - `tools/update_pipeline_from_link.ps1`: update a user's project from the latest public pipeline source.
 - `tools/upgrade_from_riftbound.ps1`: maintainer-only upgrade from the active gamedev source pipeline.
 - `tools/migrate_ai_pipeline.ps1`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
+
+When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.md`.
+
+The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user.
+
+If no source is configured, ask for the URL or local source path before changing files.

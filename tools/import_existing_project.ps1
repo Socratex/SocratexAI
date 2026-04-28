@@ -217,6 +217,10 @@ active_project_packs:
 $packLines
 ai_operating_mode: $AiMode
 branch_workflow: $BranchMode
+pipeline:
+  version: 0.2.0-alpha
+  update_source: TBD
+  public_bootstrap_url: TBD
 workflow:
   branch_mode: $BranchMode
   branch_files_dir: ignored/ai-socratex

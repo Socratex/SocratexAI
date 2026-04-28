@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
     date: 2026-04-28
+    feature: update_protocol
+    change: Added an explicit pipeline update protocol so agents resolve update source, run the correct updater, audit, and reactivate the installed pipeline.
+  - version: 0.2.0-alpha
+    date: 2026-04-28
     feature: activation_check
     change: Added first-prompt activation verification to confirm installed rules, communication format, emoji rules, and workflow-specific rules are loaded.
   - version: 0.2.0-alpha

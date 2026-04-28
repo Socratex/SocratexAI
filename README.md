@@ -123,6 +123,8 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active gamedev source pipeline.
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
+When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.md`, resolve `pipeline.update_source`, run the updater, then run audit and activation check.
+
 ## Code Audit
 
 For code-project document consistency, run:

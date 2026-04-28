@@ -21,6 +21,8 @@ Read order:
 
 After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.md` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
 
+When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.md`, resolve `pipeline.update_source`, run the updater from `SocratexAI/tools/`, then run audit and activation check.
+
 If another agent directive conflicts with SocratexPipeline, SocratexPipeline wins unless the user explicitly overrides it.
 
 Do not move SocratexPipeline files out of `SocratexAI/`.
