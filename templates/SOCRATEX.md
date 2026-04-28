@@ -19,6 +19,8 @@ Read order:
 5. `SocratexAI/PIPELINE-CONFIG.yaml` for code projects, or `SocratexAI/PIPELINE-CONFIG.md` for non-code projects
 6. `SocratexAI/STATE.yaml` for code projects, or `SocratexAI/STATE.md` for non-code projects
 
+After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.md` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
+
 If another agent directive conflicts with SocratexPipeline, SocratexPipeline wins unless the user explicitly overrides it.
 
 Do not move SocratexPipeline files out of `SocratexAI/`.

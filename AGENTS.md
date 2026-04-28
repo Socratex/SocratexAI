@@ -20,6 +20,7 @@ For code projects, also read:
 - `project/code/DIAGNOSTICS.md`
 - `core/FILE-FORMATS.md`
 - `core/MEMORY-MODEL.md`
+- `core/ACTIVATION-CHECK.md`
 - `core/PROMOTION-RULES.md`
 - `core/CONTEXT-COMPACTION.md`
 - `core/INSTRUCTION-CAPTURE.md`

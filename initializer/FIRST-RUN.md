@@ -93,7 +93,8 @@ Immediately switch the current session to the initialized project pipeline:
 2. Follow the read order defined there.
 3. For branch-scoped code projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, detect the current branch, and read branch STATE/PLAN.
 4. Use the initialized `SocratexAI/` files for all future work in this project.
-5. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
+5. After the first user prompt handled under the initialized pipeline, run `SocratexAI/core/ACTIVATION-CHECK.md` once to verify that all rules are loaded, including communication format and emoji rules.
+6. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
 
 Report this handoff explicitly:
 

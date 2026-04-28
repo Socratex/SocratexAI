@@ -22,6 +22,8 @@ $lines.Add('Then read the active state file as the compact active project state.
 $lines.Add("") | Out-Null
 $lines.Add('Read `core/MEMORY-MODEL.md` for active state, branch-scoped state, plans, decisions, and context capsules.') | Out-Null
 $lines.Add("") | Out-Null
+$lines.Add('Use `core/ACTIVATION-CHECK.md` after the first prompt handled under an installed pipeline to verify the rules are loaded.') | Out-Null
+$lines.Add("") | Out-Null
 $lines.Add('Read `core/PROMOTION-RULES.md` before moving work between memory layers.') | Out-Null
 $lines.Add("") | Out-Null
 $lines.Add('Read `core/PROJECT-PROFILE.md` when `PIPELINE-CONFIG.yaml` contains `project_profile`.') | Out-Null

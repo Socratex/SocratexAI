@@ -29,6 +29,8 @@ The agent should detect the language of that setup request, ask the pipeline lan
 
 After setup succeeds, the agent should switch to the installed project pipeline immediately and use root `SOCRATEX.md` as the starting point for the current and future sessions.
 
+After the first prompt handled under the installed pipeline, the agent should run the activation check to verify communication format, emoji rules, config, project pack, and workflow-specific rules.
+
 ## Quick Install Prompt
 
 After publishing this repository, use the raw GitHub link:

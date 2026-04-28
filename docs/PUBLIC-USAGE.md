@@ -36,6 +36,8 @@ Installed projects should contain only `SOCRATEX.md` at the project root as the 
 
 After setup succeeds, the agent should stop using the public bootstrap as the active instruction source and immediately continue from the installed project's `SOCRATEX.md`.
 
+After the first user prompt handled under the installed pipeline, the agent should run the activation check from `SocratexAI/core/ACTIVATION-CHECK.md` to verify that communication format, emoji rules, config, project pack, and workflow-specific rules were loaded.
+
 ## Public Update
 
 Users can update from a link with:
