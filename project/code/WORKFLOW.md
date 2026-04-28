@@ -15,9 +15,10 @@ For ordinary code work:
 3. `PIPELINE-CONFIG.yaml`
 4. `core/PROJECT-PROFILE.md` when `project_profile` exists
 5. `core/ROI-BIAS.md`
-6. `_PLAN.yaml`
-7. smallest relevant file under `context-docs/`
-8. source files in the touched ownership slice
+6. `core/TASK-WORK.md` for broad multi-step work
+7. `_PLAN.yaml`
+8. smallest relevant file under `context-docs/`
+9. source files in the touched ownership slice
 
 For broad architecture, ownership, persistence, API, build, toolchain, or registry work, also read:
 
@@ -71,12 +72,13 @@ For logs, traces, crashes, console output, and evidence-driven debugging, also r
 3. Check existing scripts and project automation before doing repeatable work manually.
 4. Check whether a known solution, pattern, or tool is cheaper than custom design.
 5. Check whether a future-facing prerequisite should happen before the requested implementation.
-6. For structural or multi-boundary work, write a short impact note or plan before editing.
-7. Rank recommendations or candidate passes by ROI when there are multiple options.
-8. Implement within the scoped boundary.
-9. Verify with the strongest practical gate.
-10. Update only the memory layers whose current truth changed.
-11. Finish with concrete changed files, verification, residual risk, and ROI Picks when follow-up recommendations exist.
+6. For broad multi-step work, create or refresh `docs-tech/cache/current_task.yaml` and split the request into micro-tasks.
+7. For structural or multi-boundary work, write a short impact note or plan before editing.
+8. Rank recommendations or candidate passes by ROI when there are multiple options.
+9. Implement within the scoped boundary, updating micro-task status when task work tracking is active.
+10. Verify with the strongest practical gate.
+11. Update only the memory layers whose current truth changed.
+12. Finish with concrete changed files, verification, residual risk, and ROI Picks when follow-up recommendations exist.
 
 ## Script-First Execution
 
@@ -89,6 +91,35 @@ Before running a script, verify its runtime is available when uncertain. If not,
 Do not manually duplicate a script's behavior unless the script is unavailable, unsafe for the current scope, broken, or explicitly rejected by the user.
 
 Run scripts at natural workflow boundaries: before broad work when they provide routing context, during diagnostics when they summarize evidence, and near the end for check, audit, quality, finish, and commit steps.
+
+For structured YAML documents, use `tools/doc_read.ps1` or `tools/doc_keys.ps1` before edits when selective reads are enough.
+
+For moving or copying items between structured YAML documents, use `tools/doc_item_migrate.ps1`.
+
+For moving items inside one structured YAML document, use `tools/doc_item_move.ps1`.
+
+For inserting items into structured YAML documents, use `tools/doc_item_insert.ps1`.
+
+## Task Work Tracking
+
+For broad tasks, use `core/TASK-WORK.md`.
+
+Default temporary file:
+
+```text
+docs-tech/cache/current_task.yaml
+```
+
+Use `tools/init_task_work.ps1` when practical.
+
+The agent should:
+
+1. Create a micro-task plan before broad implementation.
+2. Track one active micro-task at a time.
+3. Update statuses and short results during work.
+4. Track questions, risks, and verification gaps.
+5. Before final response, resolve every micro-task as done, skipped, blocked, or deferred.
+6. Remove the temporary file when it has no future value, or promote only durable facts to the proper memory layer.
 
 ## Branch-Scoped Workflow
 

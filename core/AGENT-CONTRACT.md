@@ -86,6 +86,8 @@ Read `core/ROI-BIAS.md` before ranking recommendations, planning work, or review
 
 Read `core/SCRIPT-FALLBACK.md` before bypassing any script that cannot run.
 
+Read `core/TASK-WORK.md` before broad multi-step work that needs a temporary micro-task plan.
+
 Read `core/INSTRUCTION-CAPTURE.md` before rewriting files that collect raw user instructions.
 
 Read `core/FILE-FORMATS.md` before creating or renaming project memory files.

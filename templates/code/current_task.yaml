@@ -1,0 +1,19 @@
+task:
+  title: TBD
+  status: active
+  source_request: TBD
+  done_criteria: []
+micro_tasks:
+  - key: inspect_context
+    status: pending
+    result: TBD
+  - key: implement_change
+    status: pending
+    result: TBD
+  - key: verify
+    status: pending
+    result: TBD
+questions: []
+risks: []
+next_suggestions: []
+

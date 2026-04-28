@@ -16,6 +16,7 @@ For code projects, the agent reads:
 - `core/PROJECT-PROFILE.md` when `project_profile` exists
 - `core/ROI-BIAS.md`
 - `core/SCRIPT-FALLBACK.md`
+- `core/TASK-WORK.md` for broad multi-step tasks
 - `project/code/WORKFLOW.md`
 - `project/code/BRANCH-MODE.md` when `workflow.branch_mode` is `branch_scoped`
 - `project/code/COMMANDS.md`
@@ -48,6 +49,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_task.ps1 -Quali
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/commit_task.ps1 -Message "<message>" -Paths <explicit paths>
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/log_summary.ps1 -Description "<diagnostic description>"
 python tools/check_runtime.py --root-key runtime_status
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/init_task_work.ps1 -Title "<task>" -SourceRequest "<request>"
 ```
 
 ## File Formats
@@ -81,6 +83,12 @@ ROI Picks rank work by value axes, cost axes, profile fit, and why the improveme
 Before silently bypassing a script, the agent follows `core/SCRIPT-FALLBACK.md`.
 
 Missing runtimes should be reported as setup issues with install hints before manual fallback.
+
+## Broad Task Work
+
+For broad multi-step tasks, the agent should create temporary task work at `docs-tech/cache/current_task.yaml`, track micro-task status during execution, then delete it or promote only durable facts.
+
+For moving items between structured YAML documents, the agent should use `tools/doc_item_migrate.ps1` instead of manual editing.
 
 ## Quality Gate
 

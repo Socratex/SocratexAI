@@ -43,6 +43,7 @@ The pack is language-agnostic and framework-agnostic. It adds technical executio
 - `core/PROJECT-PROFILE.md` when `project_profile` exists
 - `core/ROI-BIAS.md`
 - `core/SCRIPT-FALLBACK.md`
+- `core/TASK-WORK.md` for broad multi-step tasks
 
 ## Technical Defaults
 
@@ -98,6 +99,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_task.ps1 -Paths 
 ```
 
 For structured project documents, generated files, registries, or contract-managed files, prefer repository scripts over manual edits when a relevant script exists.
+
+For item moves between structured YAML documents, use `tools/doc_item_migrate.ps1`.
+
+For item ordering inside one structured YAML document, use `tools/doc_item_move.ps1`.
+
+For controlled insertion into structured YAML documents, use `tools/doc_item_insert.ps1`.
 
 For repeated or structurally constrained edits without a script, complete the requested change first, then recommend adding a small script when it would reduce future drift.
 

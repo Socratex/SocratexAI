@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
     date: 2026-04-28
+    feature: task_work_tracking
+    change: Added broad-task micro-task tracking and structured YAML document movement discipline.
+  - version: 0.2.0-alpha
+    date: 2026-04-28
     feature: removal_protocol
     change: Added a bounded remover script and removal protocol so agents uninstall SocratexAI through tooling instead of manual deletion.
   - version: 0.2.0-alpha

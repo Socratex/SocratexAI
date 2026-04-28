@@ -137,6 +137,7 @@ try {
     $projectProfile = Get-RepoText -RelativePath "core/PROJECT-PROFILE.md"
     $roiBias = Get-RepoText -RelativePath "core/ROI-BIAS.md"
     $scriptFallback = Get-RepoText -RelativePath "core/SCRIPT-FALLBACK.md"
+    $taskWork = Get-RepoText -RelativePath "core/TASK-WORK.md"
     $instructionCapture = Get-RepoText -RelativePath "core/INSTRUCTION-CAPTURE.md"
     $codePackActive = Test-Path -LiteralPath (Join-Path $repoRoot "project/code/PACK.md")
     $codePack = if ($codePackActive) { Get-RepoText -RelativePath "project/code/PACK.md" } else { "" }
@@ -155,6 +156,7 @@ try {
     Test-ContainsText -Text $agents -Needle "core/ACTIVATION-CHECK.md" -Label "AGENTS.md"
     Test-ContainsText -Text $agents -Needle "core/UPDATE-PROTOCOL.md" -Label "AGENTS.md"
     Test-ContainsText -Text $agents -Needle "core/REMOVAL-PROTOCOL.md" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/TASK-WORK.md" -Label "AGENTS.md"
     Test-ContainsText -Text $agents -Needle "core/PROMOTION-RULES.md" -Label "AGENTS.md"
     $publicBootstrap = Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text $publicBootstrap -Needle "Project Profile Interview" -Label "PUBLIC-BOOTSTRAP.md"
@@ -210,6 +212,8 @@ try {
     Test-ContainsText -Text $projectProfile -Needle "Profile-Fit Check" -Label "core/PROJECT-PROFILE.md"
     Test-ContainsText -Text $roiBias -Needle "ROI Picks" -Label "core/ROI-BIAS.md"
     Test-ContainsText -Text $scriptFallback -Needle "Never claim a script ran when it did not run" -Label "core/SCRIPT-FALLBACK.md"
+    Test-ContainsText -Text $taskWork -Needle "docs-tech/cache/current_task.yaml" -Label "core/TASK-WORK.md"
+    Test-ContainsText -Text $taskWork -Needle "doc_item_migrate.ps1" -Label "core/TASK-WORK.md"
     Test-ContainsText -Text $instructionCapture -Needle "Defragmentation" -Label "core/INSTRUCTION-CAPTURE.md"
     Test-ContainsText -Text $instructionCapture -Needle "Cleaning Rules" -Label "core/INSTRUCTION-CAPTURE.md"
 
@@ -232,6 +236,7 @@ try {
         Test-ContainsText -Text $codePack -Needle "Task Gating" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Reporting" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Use existing project scripts and pipeline tools whenever practical" -Label "project/code/PACK.md"
+        Test-ContainsText -Text $codePack -Needle "doc_item_migrate.ps1" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Architecture archetypes check" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "DDD alignment" -Label "project/code/PACK.md"
         Test-ContainsText -Text $codePack -Needle "Future-fit check" -Label "project/code/PACK.md"
@@ -240,6 +245,7 @@ try {
         Test-ContainsText -Text $codeWorkflow -Needle "Script-First Execution" -Label "project/code/WORKFLOW.md"
         Test-ContainsText -Text $codeWorkflow -Needle "Branch-Scoped Workflow" -Label "project/code/WORKFLOW.md"
         Test-ContainsText -Text $codeWorkflow -Needle "ROI Workflow" -Label "project/code/WORKFLOW.md"
+        Test-ContainsText -Text $codeWorkflow -Needle "Task Work Tracking" -Label "project/code/WORKFLOW.md"
         Test-ContainsText -Text $codeWorkflow -Needle "Context Cost Control" -Label "project/code/WORKFLOW.md"
         Test-ContainsText -Text $branchMode -Needle "Branch Mode" -Label "project/code/BRANCH-MODE.md"
 
@@ -272,12 +278,12 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
             }
         }
-        foreach ($template in @("templates/_PROMPTS.md", "templates/code/_PROMPT-QUEUE.yaml", "templates/code/branch/BRANCH-STATE.md", "templates/code/branch/BRANCH-PLAN.md", "templates/code/branch/BRANCH-TODO.md")) {
+        foreach ($template in @("templates/_PROMPTS.md", "templates/code/_PROMPT-QUEUE.yaml", "templates/code/current_task.yaml", "templates/code/branch/BRANCH-STATE.md", "templates/code/branch/BRANCH-PLAN.md", "templates/code/branch/BRANCH-TODO.md")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
                 Add-Error "Missing prompt workflow template: $template"
             }

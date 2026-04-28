@@ -23,6 +23,7 @@ For code projects, also read:
 - `core/ACTIVATION-CHECK.md`
 - `core/UPDATE-PROTOCOL.md` when the user asks to update the pipeline
 - `core/REMOVAL-PROTOCOL.md` when the user asks to remove the pipeline
+- `core/TASK-WORK.md` for broad multi-step tasks
 - `core/PROMOTION-RULES.md`
 - `core/CONTEXT-COMPACTION.md`
 - `core/INSTRUCTION-CAPTURE.md`
