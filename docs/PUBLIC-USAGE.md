@@ -29,9 +29,12 @@ The AI should:
 7. Ask programming-specific questions, including branch workflow mode.
 8. Install, merge, or migrate according to the user's answers.
 9. Run audit if tools are available.
-10. End with first useful work recommendations and ROI Picks.
+10. Activate the installed project pipeline by switching to root `SOCRATEX.md`.
+11. End with first useful work recommendations and ROI Picks.
 
 Installed projects should contain only `SOCRATEX.md` at the project root as the Socratex control file. All pipeline-owned files should live under `SocratexAI/`.
+
+After setup succeeds, the agent should stop using the public bootstrap as the active instruction source and immediately continue from the installed project's `SOCRATEX.md`.
 
 ## Public Update
 

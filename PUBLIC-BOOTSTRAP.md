@@ -162,7 +162,8 @@ For programming projects:
 8. If `workflow.branch_mode` is `branch_scoped`, create committed directives under `.aiassistant/socratex/`, create local branch memory under `ignored/ai-socratex/`, and ensure `/ignored` is gitignored.
 9. Apply directive merge or replace mode.
 10. Run document audit when possible.
-11. End with first useful work pass recommendations and ROI Picks.
+11. Activate the installed pipeline for the current and future sessions.
+12. End with first useful work pass recommendations and ROI Picks.
 
 For non-programming projects:
 
@@ -172,6 +173,22 @@ For non-programming projects:
 4. Use YAML only for large AI-only internal memory files.
 5. Install only the selected project packs.
 6. Avoid code-only tools unless explicitly requested.
+
+## Post-Setup Activation
+
+After setup, import, migration, or update succeeds, stop treating `PUBLIC-BOOTSTRAP.md` as the active instruction source.
+
+Immediately switch the current session to the installed project pipeline:
+
+1. Re-read root `SOCRATEX.md`.
+2. Follow the read order defined there.
+3. For branch-scoped projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, then detect the current branch and read branch STATE/PLAN.
+4. Use the installed `SocratexAI/` files for all future work in this project.
+5. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
+
+Report this handoff explicitly:
+
+`SocratexAI is now active for this project. Future sessions should start from SOCRATEX.md.`
 
 ## Update, Upgrade, Migrate
 

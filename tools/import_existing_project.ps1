@@ -275,4 +275,5 @@ $AiMode
     }
 }
 
-Write-Host "Import complete. Review SOCRATEX.md and run SocratexAI/tools/audit_docs.ps1 when ready."
+Write-Host "Import complete. SocratexAI is now active for this project; future sessions should start from SOCRATEX.md."
+Write-Host "Review SOCRATEX.md and run SocratexAI/tools/audit_docs.ps1 when ready."

@@ -79,8 +79,25 @@ After receiving answers:
 11. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
 12. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
 13. Run `tools/audit_docs.ps1 -Initialized` for code projects when practical.
-14. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
-15. For code projects, include the three most relevant known-solution families for the project profile and ROI Picks for the first useful work pass.
+14. Activate the initialized pipeline for the current and future sessions.
+15. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
+16. For code projects, include the three most relevant known-solution families for the project profile and ROI Picks for the first useful work pass.
+
+## Post-Initialization Activation
+
+After initialization succeeds, stop using `initializer/FIRST-RUN.md` as the active instruction source.
+
+Immediately switch the current session to the initialized project pipeline:
+
+1. Re-read root `SOCRATEX.md`.
+2. Follow the read order defined there.
+3. For branch-scoped code projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, detect the current branch, and read branch STATE/PLAN.
+4. Use the initialized `SocratexAI/` files for all future work in this project.
+5. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
+
+Report this handoff explicitly:
+
+`SocratexAI is now active for this project. Future sessions should start from SOCRATEX.md.`
 
 ## Lite Mode
 

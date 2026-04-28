@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
     date: 2026-04-28
+    feature: post_setup_activation
+    change: Added explicit activation handoff so agents switch to installed SOCRATEX.md after setup, import, migration, or update.
+  - version: 0.2.0-alpha
+    date: 2026-04-28
     feature: branch_scoped_workflow
     change: Added branch-scoped mode with committed directives and local prompt-language branch memory under ignored/ai-socratex.
   - version: 0.2.0-alpha

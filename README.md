@@ -27,6 +27,8 @@ use this link to setup pipeline <link-to-PUBLIC-BOOTSTRAP.md>
 
 The agent should detect the language of that setup request, ask the pipeline language question first, then continue the setup questions in the chosen language.
 
+After setup succeeds, the agent should switch to the installed project pipeline immediately and use root `SOCRATEX.md` as the starting point for the current and future sessions.
+
 ## Quick Install Prompt
 
 After publishing this repository, use the raw GitHub link:
@@ -74,6 +76,7 @@ On first run, the agent should:
 5. Create the project-local files from `templates/`.
 6. Move `initializer/` into `temp/trash/initializer/`.
 7. Update the active state file under `SocratexAI/` with the initialized project state.
+8. Switch the current session to root `SOCRATEX.md`.
 
 For code projects, the agent should also read `project/code/COMMANDS.md`, `project/code/REGISTRIES.md`, `project/code/DDD-ADIV.md`, and `core/PROMOTION-RULES.md`.
 

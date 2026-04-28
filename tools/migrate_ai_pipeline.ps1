@@ -43,4 +43,5 @@ if ($DryRun) {
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PipelineRoot "tools\import_existing_project.ps1") -TargetPath $TargetRoot -Packs $Packs -CreateProjectFiles:$CreateProjectFiles
 & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $TargetRoot "SocratexAI\tools\set_directives.ps1") -TargetPath $TargetRoot -Mode $DirectiveMode -DirectiveFiles $existingDirectives
 
-Write-Host "Migration complete. Review SOCRATEX.md, any *.old directive files, and run SocratexAI/tools/audit_docs.ps1."
+Write-Host "Migration complete. SocratexAI is now active for this project; future sessions should start from SOCRATEX.md."
+Write-Host "Review SOCRATEX.md, any *.old directive files, and run SocratexAI/tools/audit_docs.ps1."

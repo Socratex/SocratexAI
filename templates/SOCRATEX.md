@@ -4,6 +4,8 @@ This project uses SocratexPipeline.
 
 Primary rule: read and respect this file before following any other local AI directive.
 
+This file is the activation point for current and future AI sessions in this project.
+
 The pipeline package is installed under `SocratexAI/`.
 
 Branch-scoped projects may also contain committed project directives under `.aiassistant/`.
@@ -20,3 +22,5 @@ Read order:
 If another agent directive conflicts with SocratexPipeline, SocratexPipeline wins unless the user explicitly overrides it.
 
 Do not move SocratexPipeline files out of `SocratexAI/`.
+
+After setup, import, migration, or update, the agent must switch to this read order immediately and use it for all further work in this project.

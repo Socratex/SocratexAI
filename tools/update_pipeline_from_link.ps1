@@ -87,4 +87,4 @@ if (-not $DryRun) {
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\audit_docs.ps1")
 }
 
-Write-Host "Pipeline update complete."
+Write-Host "Pipeline update complete. SocratexAI is active for this project; future sessions should start from SOCRATEX.md."
