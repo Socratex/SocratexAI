@@ -23,7 +23,7 @@ When defragmenting programming instructions, sort pending work in this order:
 5. Architecture boundaries needed by upcoming work.
 6. Feature implementation.
 7. Refactors that are not blocking current work.
-8. Polish and optional cleanup.
+8. Refinement and optional cleanup.
 
 ## Code Promotion Rules
 

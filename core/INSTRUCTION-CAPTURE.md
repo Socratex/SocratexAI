@@ -35,7 +35,7 @@ Sort the resulting queue by future-change cost and dependency order:
 2. Diagnostics, bugfixes, and verification gaps.
 3. Enabling architecture and ownership boundaries.
 4. Implementation features.
-5. Polish and optional refinements.
+5. Refinement and optional cleanup.
 
 If doing X before Y prevents later coupling, retrofitting, or harder debugging, place X before Y.
 

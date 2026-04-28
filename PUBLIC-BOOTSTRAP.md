@@ -12,8 +12,6 @@ The agent should read this file, ask the bootstrap questions, then install or me
 
 Detect the language of the user's setup request when possible.
 
-If the user says `użyj tego linku`, default to Polish.
-
 If the user's system locale or project language can be detected, mention it as the suggested language.
 
 First ask:

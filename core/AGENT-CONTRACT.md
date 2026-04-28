@@ -133,14 +133,12 @@ Prefer aggregated sections instead of splitting closely related thoughts into ma
 
 For analysis, diagnosis, recommendations, and planning, use about four compact Markdown sections with context-appropriate emoji and one-word headings when the answer is more than a trivial one-liner.
 
-In Polish, use this default structure:
+Use this default structure, translated into the configured pipeline language:
 
-- `## <emoji> Krótko`: the whole situation as briefly as possible, from what is happening to what should happen next.
-- `## <emoji> Stan` or `## <emoji> Problem`: observed facts and current behavior; merge cause, context, and difference here when they belong together.
-- `## <emoji> Sugestia`: what to do.
-- `## <emoji> Podsumowanie`: why the recommendation follows, including uncertainty or tradeoffs.
-
-In other languages, translate the heading labels while preserving the same roles.
+- `## <emoji> Brief`: the whole situation as briefly as possible, from what is happening to what should happen next.
+- `## <emoji> State` or `## <emoji> Problem`: observed facts and current behavior; merge cause, context, and difference here when they belong together.
+- `## <emoji> Suggestion`: what to do.
+- `## <emoji> Summary`: why the recommendation follows, including uncertainty or tradeoffs.
 
 Merge closely related sections by default. Do not split `Problem`, `Cause`, and `Difference` unless the distinction materially improves understanding.
 

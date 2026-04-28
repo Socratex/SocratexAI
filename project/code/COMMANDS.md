@@ -136,7 +136,7 @@ Order:
 5. Run the relevant quality gate.
 6. Update the related registry entry if one exists.
 
-Treat explicit user confirmations such as `fixed`, `resolved`, `naprawione`, or equivalent as permission to close the active log investigation and clear generated diagnostic captures when the project workflow allows it.
+Treat explicit user confirmations such as `fixed`, `resolved`, or equivalent in the user's language as permission to close the active log investigation and clear generated diagnostic captures when the project workflow allows it.
 
 ## DIAGNOSTICS
 

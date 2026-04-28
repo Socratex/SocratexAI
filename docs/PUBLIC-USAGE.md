@@ -14,13 +14,7 @@ Example user prompt:
 use this link to setup pipeline https://example.com/PUBLIC-BOOTSTRAP.md
 ```
 
-If the user writes in Polish:
-
-```text
-użyj tego linku, żeby ustawić pipeline https://example.com/PUBLIC-BOOTSTRAP.md
-```
-
-the agent should default to Polish unless the user chooses otherwise.
+If the user writes in any language, the agent should default to that language unless the user chooses otherwise.
 
 ## Public Flow
 
