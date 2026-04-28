@@ -43,7 +43,7 @@ items:
       ## Recommended Files
       
       - `_INSTRUCTIONS.md`: fresh unprocessed user instructions.
-      - `_INSTRUCTION-QUEUE.yaml` for code projects, or `_INSTRUCTION-QUEUE.md` for non-code projects: defragmented, sorted, actionable instruction queue.
+      - `_INSTRUCTION-QUEUE.yaml`: defragmented, sorted, actionable instruction queue.
       
       Projects may rename these files, but the workflow stays the same.
       

@@ -60,7 +60,7 @@ items:
       
       For code projects, use YAML project memory such as `_PLAN.yaml`, `TODO.yaml`, and `DECISIONS.yaml`.
       
-      For non-code user-facing project memory, Markdown remains acceptable unless the file is an AI-only mega-file.
+      For non-code projects, use YAML project memory too. Keep Markdown only for scratch intake, prompt drafts, final prose artifacts, public docs, and adapter entrypoints.
       
   plan_to_state:
     title: 'PLAN to STATE'

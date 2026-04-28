@@ -1,0 +1,27 @@
+﻿schema: socratex-document/v1
+title: 'Technical Context'
+index:
+  - quick_index
+  - overview
+  - summary
+items:
+  quick_index:
+    title: 'Quick Index'
+    refs:
+      - overview
+      - summary
+  overview:
+    title: 'Overview'
+    format: 'markdown-section'
+    body: |
+      # Technical Context
+      
+  summary:
+    title: 'Summary'
+    format: 'markdown-section'
+    body: |
+      ## Summary
+      
+      Current technical architecture, ownership boundaries, invariants, and known traps.
+      
+      

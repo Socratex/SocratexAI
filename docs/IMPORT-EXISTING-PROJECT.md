@@ -36,4 +36,4 @@ After code import, review `SOCRATEX.md`, `SocratexAI/PIPELINE-CONFIG.yaml`, and 
 powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/audit_docs.ps1 -Initialized
 ```
 
-For non-code imports, review `SocratexAI/PIPELINE-CONFIG.md` instead.
+For non-code imports, review `SocratexAI/PIPELINE-CONFIG.yaml` instead.

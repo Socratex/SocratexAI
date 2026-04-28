@@ -173,11 +173,11 @@ if ($CreateProjectFiles) {
         }
     } else {
         @{
-            "STATE.md" = "STATE.md"
-            "_PLAN.md" = "_PLAN.md"
-            "TODO.md" = "TODO.md"
-            "DECISIONS.md" = "DECISIONS.md"
-            "PIPELINE-CONFIG.md" = "PIPELINE-CONFIG.md"
+            "STATE.yaml" = "STATE.yaml"
+            "_PLAN.yaml" = "_PLAN.yaml"
+            "TODO.yaml" = "TODO.yaml"
+            "DECISIONS.yaml" = "DECISIONS.yaml"
+            "PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"
         }
     }
 
@@ -200,7 +200,7 @@ if (-not $DryRun) {
     $configPath = if ($hasCodePack) {
         Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
     } else {
-        Join-Path $InstallRoot "PIPELINE-CONFIG.md"
+        Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
     }
     $shouldWriteConfig = -not (Test-Path -LiteralPath $configPath)
     if (-not $shouldWriteConfig) {
@@ -262,24 +262,18 @@ runtime_status:
 "@
         } else {
             $config = @"
-# Pipeline Config
-
-## Summary
-
-Imported SocratexPipeline configuration.
-
-## Language
-
-$Language
-
-## Active Project Packs
-
-$([string]::Join(", ", $Packs))
-
-## AI Operating Mode
-
-$AiMode
-
+summary: Imported SocratexPipeline configuration.
+language: $Language
+active_project_packs:
+$(($Packs | ForEach-Object { "  - $_" }) -join [Environment]::NewLine)
+ai_operating_mode: $AiMode
+pipeline:
+  version: 0.2.0-alpha
+  update_source: TBD
+  public_bootstrap_url: TBD
+  update_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source "<source>" -Packs generic -ReinitializeNew
+  remove_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .
+  reinitialize_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath .
 "@
         }
         Set-Content -LiteralPath $configPath -Value $config -NoNewline

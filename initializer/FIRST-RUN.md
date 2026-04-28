@@ -71,14 +71,14 @@ If the context is programming, also ask:
 After receiving answers:
 
 1. Update `README.md` with the actual project identity.
-2. Create `STATE.md`.
+2. Create `STATE.yaml`.
 3. Create the selected pack's recommended files from `templates/`.
 4. Keep selected packs under `project/`.
 5. Move unselected packs into `temp/trash/project/` unless the user asks to keep them.
 6. Keep adapters thin.
 7. Move `initializer/` into `temp/trash/initializer/`.
-8. Record the initialization decision in `DECISIONS.md` if that file exists.
-9. Create `PIPELINE-CONFIG.md` with selected packs, language, operating mode, Git preference, and first-session success criteria.
+8. Record the initialization decision in `DECISIONS.yaml` if that file exists.
+9. Create `PIPELINE-CONFIG.yaml` with selected packs, language, operating mode, Git preference, and first-session success criteria.
 10. For code projects, create `PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, and `changelog.enabled`.
 11. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
 12. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.

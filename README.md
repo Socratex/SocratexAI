@@ -100,9 +100,8 @@ User-facing guides:
 Format contract:
 
 - code projects use YAML/JSON for standardized project memory,
-- code projects use Markdown only for scratch or short human-facing notes,
-- non-code user-facing files remain Markdown by default,
-- non-code YAML is reserved for large AI-only files.
+- non-code projects also use YAML for standardized project memory,
+- Markdown is reserved for scratch intake, prompt drafts, final prose artifacts, public docs, and adapter entrypoints.
 
 ## Pack Model
 

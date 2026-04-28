@@ -4,7 +4,7 @@ Read `core/AGENT-CONTRACT.yaml` first.
 
 If `initializer/FIRST-RUN.md` exists, this is an uninitialized skeleton. Follow `initializer/FIRST-RUN.md` before doing normal project work.
 
-After initialization, use `STATE.md` as the compact active-state entry point.
+After initialization, use `STATE.yaml` as the compact active-state entry point.
 
 For code projects, also read:
 

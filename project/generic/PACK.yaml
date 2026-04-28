@@ -46,14 +46,14 @@ items:
     body: |
       ## Recommended Files
       
-      - `STATE.md`
-      - `_PLAN.md`
-      - `BACKLOG.md`
-      - `DECISIONS.md`
-      - `ISSUES.md`
-      - `JOURNAL.md`
-      - `REVIEW.md`
-      - `context-docs/`
+      - `STATE.yaml`
+      - `_PLAN.yaml`
+      - `BACKLOG.yaml`
+      - `DECISIONS.yaml`
+      - `ISSUES.yaml`
+      - `JOURNAL.yaml`
+      - `REVIEW.yaml`
+      - `context-docs/*.yaml`
       
   execution_defaults:
     title: 'Execution Defaults'
@@ -62,6 +62,8 @@ items:
       ## Execution Defaults
       
       - Convert vague intent into explicit outcomes.
+      - Research known solutions, proven workflows, archetypes, templates, and borrowed systems before inventing a bespoke approach.
+      - Prefer borrowed or adapted practices when they are cheaper, clearer, and easier to maintain than custom process design.
       - Keep one active priority visible.
       - Separate commitments from possibilities.
       - Record decisions that affect future work.

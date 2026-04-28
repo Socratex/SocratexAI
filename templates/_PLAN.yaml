@@ -1,0 +1,57 @@
+﻿schema: socratex-document/v1
+title: 'Plan'
+index:
+  - quick_index
+  - overview
+  - purpose
+  - pass_index
+  - pass_1_initial_execution_pass
+items:
+  quick_index:
+    title: 'Quick Index'
+    refs:
+      - overview
+      - purpose
+      - pass_index
+      - pass_1_initial_execution_pass
+  overview:
+    title: 'Overview'
+    format: 'markdown-section'
+    body: |
+      # Plan
+      
+  purpose:
+    title: 'Purpose'
+    format: 'markdown-section'
+    body: |
+      ## Purpose
+      
+      This file contains only active and future execution passes.
+      
+  pass_index:
+    title: 'Pass Index'
+    format: 'markdown-section'
+    body: |
+      ## Pass Index
+      
+      - Pass 1: Initial execution pass
+      
+  pass_1_initial_execution_pass:
+    title: 'Pass 1: Initial Execution Pass'
+    format: 'markdown-section'
+    body: |
+      ## Pass 1: Initial Execution Pass
+      
+      Goal: TBD.
+      
+      Touched domains: TBD.
+      
+      Scope boundaries: TBD.
+      
+      Expected outcome: TBD.
+      
+      Verification: TBD.
+      
+      Does not do yet: TBD.
+      
+      

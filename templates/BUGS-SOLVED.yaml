@@ -1,0 +1,46 @@
+﻿schema: socratex-document/v1
+title: 'Bugs Solved'
+index:
+  - quick_index
+  - overview
+  - summary
+  - resolved_bug_template
+items:
+  quick_index:
+    title: 'Quick Index'
+    refs:
+      - overview
+      - summary
+      - resolved_bug_template
+  overview:
+    title: 'Overview'
+    format: 'markdown-section'
+    body: |
+      # Bugs Solved
+      
+  summary:
+    title: 'Summary'
+    format: 'markdown-section'
+    body: |
+      ## Summary
+      
+      Confirmed resolved bugs.
+      
+  resolved_bug_template:
+    title: 'Resolved Bug Template'
+    format: 'markdown-section'
+    body: |
+      ## Resolved Bug Template
+      
+      ### Bug N: Short title
+      
+      Status: Confirmed resolved
+      
+      Original observed behavior: TBD.
+      
+      Fix summary: TBD.
+      
+      Verification: TBD.
+      
+      Residual risk: TBD.
+      

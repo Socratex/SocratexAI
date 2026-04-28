@@ -38,14 +38,14 @@ items:
     body: |
       ## Recommended Files
       
-      - `STATE.md`
-      - `DIRECTION.md`
-      - `REFERENCES.md`
-      - `WORKS.md`
-      - `FEEDBACK.md`
-      - `DECISIONS.md`
-      - `RELEASE.md`
-      - `JOURNAL.md`
+      - `STATE.yaml`
+      - `DIRECTION.yaml`
+      - `REFERENCES.yaml`
+      - `WORKS.yaml`
+      - `FEEDBACK.yaml`
+      - `DECISIONS.yaml`
+      - `RELEASE.yaml`
+      - `JOURNAL.yaml`
       
   creative_defaults:
     title: 'Creative Defaults'
@@ -54,6 +54,8 @@ items:
       ## Creative Defaults
       
       - Keep the current creative target explicit.
+      - Research known creative workflows, reference systems, genre conventions, production archetypes, and borrowed release/review practices before inventing a custom process.
+      - Prefer borrowed or adapted practices when they preserve taste while reducing process friction.
       - Separate taste decisions from technical execution.
       - Preserve references and comparison points.
       - Version important outputs.

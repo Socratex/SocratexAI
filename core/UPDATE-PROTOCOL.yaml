@@ -42,8 +42,8 @@ items:
 
       Determine the update source in this order:
 
-      1. `PIPELINE-CONFIG.yaml` or `PIPELINE-CONFIG.md` value `pipeline.update_source`.
-      2. `PIPELINE-CONFIG.yaml` or `PIPELINE-CONFIG.md` value `pipeline.public_bootstrap_url`.
+      1. `PIPELINE-CONFIG.yaml` value `pipeline.update_source`.
+      2. `PIPELINE-CONFIG.yaml` value `pipeline.public_bootstrap_url`.
       3. The installed `SocratexAI/PUBLIC-BOOTSTRAP.md` source URL if documented by the project.
       4. A user-provided URL or local source path.
       5. Ask the user for the update source.
@@ -113,5 +113,4 @@ items:
       Do not update from an untrusted URL without telling the user what source will be used.
 
       If update source is missing, ask for it and stop before changing files.
-
 

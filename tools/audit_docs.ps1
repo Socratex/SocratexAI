@@ -289,6 +289,11 @@ try {
                 Add-Error "Missing prompt workflow template: $template"
             }
         }
+        foreach ($template in @("templates/STATE.yaml", "templates/_PLAN.yaml", "templates/BACKLOG.yaml", "templates/DECISIONS.yaml", "templates/ISSUES.yaml", "templates/JOURNAL.yaml", "templates/REVIEW.yaml", "templates/PIPELINE-CONFIG.yaml")) {
+            if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
+                Add-Error "Missing non-code YAML template: $template"
+            }
+        }
         $pipelineConfigTemplate = Get-RepoText -RelativePath "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "project_profile:" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "runtime_status:" -Label "templates/code/PIPELINE-CONFIG.yaml"
@@ -304,11 +309,7 @@ try {
     }
 
     if ($Initialized) {
-        $requiredInitializedFiles = if ($codePackActive) {
-            @("STATE.yaml", "_PLAN.yaml", "DECISIONS.yaml", "PIPELINE-CONFIG.yaml")
-        } else {
-            @("STATE.md", "_PLAN.md", "DECISIONS.md", "PIPELINE-CONFIG.md")
-        }
+        $requiredInitializedFiles = @("STATE.yaml", "_PLAN.yaml", "DECISIONS.yaml", "PIPELINE-CONFIG.yaml")
 
         foreach ($requiredFile in $requiredInitializedFiles) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $requiredFile))) {
@@ -343,16 +344,12 @@ try {
     }
 
     Test-FileSoftLimit -RelativePath "STATE.yaml" -SoftLimit $StateSoftLimit -Purpose "active state should stay compact"
-    Test-FileSoftLimit -RelativePath "STATE.md" -SoftLimit $StateSoftLimit -Purpose "active state should stay compact"
     Test-FileSoftLimit -RelativePath "core/AGENT-CONTRACT.yaml" -SoftLimit 320 -Purpose "the shared contract should stay readable through thin adapters"
 
     if ((Test-Path -LiteralPath "_PLAN.yaml") -and -not ((Get-Content -Raw -LiteralPath "_PLAN.yaml") -match 'pass_index')) {
         Add-Warning "_PLAN.yaml does not mention pass_index."
     }
 
-    if ((Test-Path -LiteralPath "_PLAN.md") -and -not ((Get-Content -Raw -LiteralPath "_PLAN.md") -match 'Pass Index')) {
-        Add-Warning "_PLAN.md does not mention Pass Index."
-    }
 
     foreach ($warning in $warnings) {
         Write-Host "WARNING: $warning"

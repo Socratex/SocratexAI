@@ -172,11 +172,14 @@ foreach ($pack in $Packs) {
             Ensure-Template -TemplateRelativePath "code/CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
         }
     } else {
-        Ensure-Template -TemplateRelativePath "STATE.md" -DestinationRelativePath "STATE.md"
-        Ensure-Template -TemplateRelativePath "_PLAN.md" -DestinationRelativePath "_PLAN.md"
-        Ensure-Template -TemplateRelativePath "DECISIONS.md" -DestinationRelativePath "DECISIONS.md"
-        Ensure-Template -TemplateRelativePath "BACKLOG.md" -DestinationRelativePath "BACKLOG.md"
-        Ensure-Template -TemplateRelativePath "ISSUES.md" -DestinationRelativePath "ISSUES.md"
+        Ensure-Template -TemplateRelativePath "STATE.yaml" -DestinationRelativePath "STATE.yaml"
+        Ensure-Template -TemplateRelativePath "_PLAN.yaml" -DestinationRelativePath "_PLAN.yaml"
+        Ensure-Template -TemplateRelativePath "DECISIONS.yaml" -DestinationRelativePath "DECISIONS.yaml"
+        Ensure-Template -TemplateRelativePath "BACKLOG.yaml" -DestinationRelativePath "BACKLOG.yaml"
+        Ensure-Template -TemplateRelativePath "ISSUES.yaml" -DestinationRelativePath "ISSUES.yaml"
+        Ensure-Template -TemplateRelativePath "JOURNAL.yaml" -DestinationRelativePath "JOURNAL.yaml"
+        Ensure-Template -TemplateRelativePath "REVIEW.yaml" -DestinationRelativePath "REVIEW.yaml"
+        Ensure-Template -TemplateRelativePath "PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
     }
 }
 

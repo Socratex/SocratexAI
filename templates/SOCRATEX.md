@@ -16,8 +16,8 @@ Read order:
 2. `.aiassistant/socratex/AGENTS.md` when present
 3. `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present
 4. `SocratexAI/AGENTS.md`
-5. `SocratexAI/PIPELINE-CONFIG.yaml` for code projects, or `SocratexAI/PIPELINE-CONFIG.md` for non-code projects
-6. `SocratexAI/STATE.yaml` for code projects, or `SocratexAI/STATE.md` for non-code projects
+5. `SocratexAI/PIPELINE-CONFIG.yaml`
+6. `SocratexAI/STATE.yaml`
 
 After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
 
