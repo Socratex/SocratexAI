@@ -1,0 +1,176 @@
+# Project Pack: Code
+
+## Purpose
+
+Use this pack for software projects in any language, framework, or domain.
+
+The pack is language-agnostic and framework-agnostic. It adds technical execution standards, verification rules, and DDD-ADIV defaults to the core runtime.
+
+## Recommended Files
+
+- `STATE.yaml`
+- `_PLAN.yaml`
+- `TODO.yaml`
+- `BUGS.yaml`
+- `BUGS-SOLVED.yaml`
+- `CHANGELOG.yaml`
+- `DECISIONS.yaml`
+- `PIPELINE-CONFIG.yaml`
+- `context-docs/TECHNICAL.yaml`
+- `context-docs/FROZEN_LAYERS.yaml`
+- `_INSTRUCTIONS.md` for raw scratch intake only
+- `_INSTRUCTION-QUEUE.yaml`
+- generated indexes and diagnostics as `.json`
+- `tools/`
+
+## Required Reads for Code Projects
+
+- `core/AGENT-CONTRACT.md`
+- `core/FILE-FORMATS.md`
+- `core/PROMOTION-RULES.md`
+- `core/CONTEXT-COMPACTION.md`
+- `project/code/WORKFLOW.md`
+- `project/code/COMMANDS.md`
+- `project/code/REGISTRIES.md`
+- `project/code/DDD-ADIV.md`
+- `project/code/GIT.md`
+- `project/code/FROZEN-LAYERS.md`
+- `project/code/INSTRUCTION-CAPTURE.md`
+- `project/code/DIAGNOSTICS.md`
+
+## Technical Defaults
+
+- Prefer readable, diagnosable code over compact or clever code.
+- Prefer explicit control flow, explicit data flow, explicit ownership, and explicit state transitions.
+- Separate pure domain logic from I/O, framework glue, persistence, engine APIs, and other side effects.
+- Normalize external errors at boundaries.
+- Prefer fail-fast behavior for invalid states.
+- Use guard clauses and small functions over deep nesting.
+- Keep parameter counts and cyclomatic complexity under control.
+- Use typed, linted, formatter-friendly code when the ecosystem supports it.
+- Avoid hidden semantics, ambiguous convention, and runtime-only meaning when a mechanical contract is possible.
+- Organize code top-down when practical: entry points and orchestration first, lower-level helpers later.
+- Keep one block focused on one concern and one abstraction level.
+- Extract intent-revealing helpers when a block starts doing multiple jobs.
+- Prefer explicit comparisons and conditions over coercive, ambiguous, or clever expressions.
+- Prefer structured APIs and parsers over ad hoc string manipulation when a reasonable option exists.
+- Isolate nondeterminism and external boundaries behind small, testable interfaces when practical.
+- Comments should explain non-obvious constraints, workarounds, hazards, or tradeoffs; do not restate visible code.
+
+## Script-First Automation Directive
+
+Use existing project scripts and pipeline tools whenever practical.
+
+Before manually performing repeatable work, check `tools/`, package scripts, task runners, Makefiles, CI commands, framework CLIs, and project-specific helper scripts.
+
+Prefer scripts for:
+
+- initialization,
+- audits,
+- quality gates,
+- formatting,
+- tests,
+- diagnostics,
+- snapshots,
+- commits,
+- migrations,
+- generated indexes,
+- documentation normalization.
+
+If a suitable script exists, use it instead of reimplementing the same workflow manually.
+
+If a script is skipped, state why: missing dependency, unsafe side effect, wrong scope, platform mismatch, or user instruction.
+
+## DDD-ADIV Recommendation
+
+Use DDD-ADIV as the default design lens:
+
+- model domain concepts explicitly,
+- isolate bounded contexts,
+- protect invariants close to the state they govern,
+- record durable architecture decisions,
+- verify risky behavior with tests, checks, or clear manual validation.
+
+The full definition lives in `project/code/DDD-ADIV.md`.
+
+## Known-Solution Bias
+
+Before custom implementation, apply the full code known-solutions directive:
+
+- Known solutions check: identify whether established patterns, proven practices, standard tools, or business/software archetypes solve the problem well enough.
+- Architecture archetypes check: compare the problem against recognizable structures such as layered architecture, hexagonal architecture, CQRS, state machines, queues, adapters, repositories, and domain services.
+- Build-vs-borrow discipline: avoid bespoke systems when a framework feature, library, workflow, or design pattern is cheaper, clearer, and easier to maintain.
+- Future-fit check: when the user asks for code work, check whether the requested approach is the best future-facing solution for ownership, invariants, testing, persistence, and extension cost; if not, recommend a better approach or prerequisite first.
+- DDD alignment: use patterns to clarify domain ownership, invariants, boundaries, and language; do not add pattern ceremony that obscures the domain.
+
+Examples:
+
+- domain services,
+- repositories and ports,
+- adapters,
+- layered architecture,
+- hexagonal architecture,
+- CQRS,
+- state machines,
+- command handlers,
+- event queues,
+- schema validation,
+- transaction boundaries,
+- retry/backoff policies,
+- caching,
+- memoization,
+- idempotency keys,
+- migrations,
+- background jobs,
+- test fixtures,
+- golden files,
+- contract tests.
+
+Use the standard solution when it is cheaper and clearer than bespoke architecture.
+
+If rejecting a known solution, state the constraint that makes it a poor fit.
+
+## Change Strategy
+
+- For surgical fixes, make the smallest safe change.
+- For larger work, introduce a clear ownership boundary.
+- Preserve coherent architecture.
+- Do not refactor unrelated areas.
+- Remove dead code, unused imports, duplicate conditions, and temporary diagnostics when touched.
+- Treat syntax errors, type errors, unresolved references, and linter failures as must-fix issues.
+- When existing architecture is coherent, extend it instead of replacing it.
+- When existing architecture is incoherent, prefer one explicit boundary repair over scattered local workarounds.
+- Do not introduce abstractions for vague future needs.
+- Add an abstraction only when it removes real complexity, reduces meaningful duplication, or matches an established local pattern.
+
+## Review Heuristics
+
+Lead with bugs, regressions, security issues, data-loss risks, and missing verification.
+
+Flag:
+
+- unsafe dynamic execution,
+- injection risks,
+- unintended mass updates or deletes,
+- swallowed exceptions,
+- inconsistent return paths,
+- hidden control flow,
+- concurrency hazards,
+- unbounded resource usage,
+- unclear ownership.
+
+## Verification
+
+Use the strongest practical quality gate available:
+
+- unit tests,
+- integration tests,
+- typecheck,
+- lint,
+- formatter check,
+- build,
+- smoke test,
+- manual reproduction,
+- diff check.
+
+If verification is impossible or skipped, report it explicitly.

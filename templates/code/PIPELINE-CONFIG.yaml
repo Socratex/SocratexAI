@@ -1,0 +1,15 @@
+summary: Initialized project configuration for SocratexPipeline.
+language: TBD
+active_project_packs: []
+ai_operating_mode: TBD
+git: TBD
+ai_may_commit: TBD
+ai_may_push: TBD
+branch_workflow: TBD
+external_changes_possible: TBD
+force_ddd_adiv: TBD
+import_pipeline_package: TBD
+package_manager_detection: TBD
+directive_mode: merge
+first_target: TBD
+first_session_success_criteria: TBD

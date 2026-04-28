@@ -1,0 +1,15 @@
+summary: SocratexPipeline self-check quality gate.
+commands:
+  powershell_parse:
+    description: Parse top-level PowerShell scripts.
+    command: "Get-ChildItem tools -Filter '*.ps1' -File | ForEach-Object { $errors = $null; [System.Management.Automation.PSParser]::Tokenize((Get-Content -Raw $_.FullName), [ref]$errors) | Out-Null; if ($errors) { throw \"PowerShell parse failed: $($_.Name)\" } }"
+  audit_docs:
+    description: Run SocratexPipeline document audit.
+    command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1"
+  init_dry_run:
+    description: Smoke-test code project initialization without writing files.
+    command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/Initialize-SocratexPipeline.ps1 -ProjectName 'Demo Project' -Language 'English' -AiMode Enterprise -KeepPacks code -CreateFiles -CompileAgent -RunAudit -DryRun"
+notes:
+  - Providers differ; CI should translate these commands into the provider's shell syntax.
+  - The audit command is the canonical minimum self-check.
+
