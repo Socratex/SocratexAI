@@ -12,6 +12,7 @@ index:
   - execution_passes
   - known_solution_bias
   - quality_gates
+  - tool_first_yaml
   - communication_rules
   - communication_profiles
   - safety_rules
@@ -29,6 +30,7 @@ items:
       - execution_passes
       - known_solution_bias
       - quality_gates
+      - tool_first_yaml
       - communication_rules
       - communication_profiles
       - safety_rules
@@ -211,6 +213,27 @@ items:
 
       Do not fake verification. If something was not verified, say so.
 
+  tool_first_yaml:
+    title: 'Tool-First YAML'
+    format: 'markdown-section'
+    body: |
+      ## Tool-First YAML
+
+      Use SocratexAI tools for structured YAML documents in every project type, including generic, personal, and creative projects.
+
+      Default tool discipline:
+
+      - Use `tools/doc_keys.ps1` and `tools/doc_read.ps1` for selective reads when a YAML document is structured.
+      - Use `tools/doc_item_insert.ps1` for controlled item insertion.
+      - Use `tools/doc_item_move.ps1` for moving items inside one YAML document.
+      - Use `tools/doc_item_migrate.ps1` for moving or copying items between YAML documents.
+      - Use `tools/audit_docs.ps1` after project memory or pipeline documents change when practical.
+      - Use `tools/reinitialize_pipeline.ps1` when newly introduced initialized artifacts need to be added without overwriting existing memory.
+
+      Manual YAML edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.yaml`.
+
+      Never silently bypass a relevant tool in a non-code project just because the project is not programming-related.
+
   communication_rules:
     title: 'Communication Rules'
     format: 'markdown-section'
@@ -298,4 +321,3 @@ items:
       - Never silently fall back from a script to manual work without informing the user.
       - If a script cannot run due to a missing runtime, propose installing the runtime before falling back.
       - Treat missing tooling runtime as a system bug worth fixing, not as a permanent constraint.
-

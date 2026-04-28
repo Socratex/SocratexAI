@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
     date: 2026-04-28
+    feature: non_code_tool_first_yaml
+    change: Extended tool-first YAML discipline to non-code project packs and shared project memory workflows.
+  - version: 0.2.0-alpha
+    date: 2026-04-28
     feature: epistemic_skeptic_profile
     change: Added an optional truth-first discussion communication profile with skepticism, evidence separation, confidence levels, tables when useful, and validate-criticize-advise ordering.
   - version: 0.2.0-alpha

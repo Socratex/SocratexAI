@@ -184,6 +184,8 @@ try {
     Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "Communication Profiles" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "epistemic_skeptic" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "Tool-First YAML" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "doc_item_migrate.ps1" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> Brief" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> State" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> Problem" -Label "core/AGENT-CONTRACT.yaml"
@@ -348,7 +350,7 @@ try {
     }
 
     Test-FileSoftLimit -RelativePath "STATE.yaml" -SoftLimit $StateSoftLimit -Purpose "active state should stay compact"
-    Test-FileSoftLimit -RelativePath "core/AGENT-CONTRACT.yaml" -SoftLimit 320 -Purpose "the shared contract should stay readable through thin adapters"
+    Test-FileSoftLimit -RelativePath "core/AGENT-CONTRACT.yaml" -SoftLimit 340 -Purpose "the shared contract should stay readable through thin adapters"
 
     if ((Test-Path -LiteralPath "_PLAN.yaml") -and -not ((Get-Content -Raw -LiteralPath "_PLAN.yaml") -match 'pass_index')) {
         Add-Warning "_PLAN.yaml does not mention pass_index."

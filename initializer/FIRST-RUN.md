@@ -85,7 +85,7 @@ After receiving answers:
 10. For code projects, create `PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
 11. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
 12. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
-13. Run `tools/audit_docs.ps1 -Initialized` for code projects when practical.
+13. Run `tools/audit_docs.ps1 -Initialized` for initialized projects when practical.
 14. Activate the initialized pipeline for the current and future sessions.
 15. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
 16. For code projects, include the three most relevant known-solution families for the project profile and ROI Picks for the first useful work pass.

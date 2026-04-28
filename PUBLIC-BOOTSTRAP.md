@@ -196,7 +196,8 @@ For non-programming projects:
 3. Use YAML for standardized project memory, plans, backlog, issues, decisions, reviews, and configuration.
 4. Keep Markdown only for scratch intake, prompt drafts, final prose artifacts, and public/adapter entrypoints.
 5. Install only the selected project packs.
-6. Avoid code-only tools unless explicitly requested.
+6. Use shared YAML/document tools for structured project memory.
+7. Avoid truly code-only tools unless explicitly requested.
 
 ## Post-Setup Activation
 

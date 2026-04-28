@@ -126,6 +126,8 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active gamedev source pipeline.
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
+Structured YAML tools apply to every project type, including non-code projects. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_move`, and `doc_item_migrate` for structured memory whenever practical.
+
 When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater, reinitialize newly introduced missing artifacts when needed, then run audit and activation check.
 
 When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.yaml` and run `SocratexAI/tools/remove_pipeline.ps1`.
