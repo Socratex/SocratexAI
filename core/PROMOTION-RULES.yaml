@@ -1,0 +1,174 @@
+﻿schema: socratex-document/v1
+title: 'Promotion Rules'
+index:
+  - quick_index
+  - overview
+  - summary
+  - backlog_to_plan
+  - plan_to_state
+  - branch_state_to_durable_memory
+  - plan_to_changelog
+  - plan_or_backlog_to_decisions
+  - plan_or_implementation_to_context_docs
+  - state_to_plan
+  - decisions_to_plan
+items:
+  quick_index:
+    title: 'Quick Index'
+    refs:
+      - overview
+      - summary
+      - backlog_to_plan
+      - plan_to_state
+      - branch_state_to_durable_memory
+      - plan_to_changelog
+      - plan_or_backlog_to_decisions
+      - plan_or_implementation_to_context_docs
+      - state_to_plan
+      - decisions_to_plan
+  overview:
+    title: 'Overview'
+    format: 'markdown-section'
+    body: |
+      # Promotion Rules
+      
+  summary:
+    title: 'Summary'
+    format: 'markdown-section'
+    body: |
+      ## Summary
+      
+      Project memory should move through explicit layers instead of being duplicated across files.
+      
+  backlog_to_plan:
+    title: 'BACKLOG to PLAN'
+    format: 'markdown-section'
+    body: |
+      ## BACKLOG to PLAN
+      
+      Promote backlog into the plan only when the work becomes part of the active execution sequence.
+      
+      Before promotion, ensure the item has:
+      
+      - clear outcome,
+      - ownership boundary,
+      - known dependencies,
+      - verification path,
+      - reason it should happen now.
+      
+      After promotion, preserve unresolved scope in the active plan file and remove or shrink the source backlog item so the same work is not tracked twice.
+      
+      For code projects, use YAML project memory such as `_PLAN.yaml`, `TODO.yaml`, and `DECISIONS.yaml`.
+      
+      For non-code user-facing project memory, Markdown remains acceptable unless the file is an AI-only mega-file.
+      
+  plan_to_state:
+    title: 'PLAN to STATE'
+    format: 'markdown-section'
+    body: |
+      ## PLAN to STATE
+      
+      The active state file should contain only the compact active checkpoint.
+      
+      Move from the active plan file to the active state file only as:
+      
+      - current active pass,
+      - next action,
+      - blocker,
+      - risk,
+      - non-regression reminder.
+      
+      Do not copy full pass definitions into active state.
+      
+  branch_state_to_durable_memory:
+    title: 'BRANCH STATE to durable memory'
+    format: 'markdown-section'
+    body: |
+      ## BRANCH STATE to durable memory
+      
+      When a branch is merged or closed, review branch-scoped active state under `ignored/ai-socratex/<branch>-STATE.md`.
+      
+      Promote only durable information:
+      
+      - current technical truths to `context-docs/`,
+      - architecture or process decisions to `DECISIONS.yaml`,
+      - shipped user-visible outcomes or major fixes to `CHANGELOG.yaml`,
+      - unresolved future work to `_PLAN.yaml` or `TODO.yaml`.
+      
+      Leave transient debugging notes, dead hypotheses, and local execution history in the branch file as reference unless the user asks to clean it.
+      
+      Do not leak local prompt-language branch notes into committed review-facing docs unless they are translated and promoted deliberately.
+      
+  plan_to_changelog:
+    title: 'PLAN to CHANGELOG'
+    format: 'markdown-section'
+    body: |
+      ## PLAN to CHANGELOG
+      
+      When a pass is completed and it shipped meaningful functionality, fixed a major issue, or changed durable behavior, record the outcome in the completion log.
+      
+      Then remove the completed pass from the active plan file.
+      
+      Do not keep completed-pass history in the active plan file.
+      
+  plan_or_backlog_to_decisions:
+    title: 'PLAN or BACKLOG to DECISIONS'
+    format: 'markdown-section'
+    body: |
+      ## PLAN or BACKLOG to DECISIONS
+      
+      Move information to the decision log when it becomes a durable choice that future work should respect.
+      
+      Record:
+      
+      - decision,
+      - context,
+      - rationale,
+      - consequences,
+      - verification or revisit condition.
+      
+      Do not record every task as a decision.
+      
+  plan_or_implementation_to_context_docs:
+    title: 'PLAN or IMPLEMENTATION to context-docs'
+    format: 'markdown-section'
+    body: |
+      ## PLAN or IMPLEMENTATION to context-docs
+      
+      Use `context-docs/` only for current technical or domain memory that prevents repeated rediscovery.
+      
+      Valid content:
+      
+      - invariants,
+      - ownership contracts,
+      - source-of-truth paths,
+      - known traps,
+      - performance heuristics,
+      - debugging heuristics.
+      
+      Invalid content:
+      
+      - changelog history,
+      - scratch notes,
+      - duplicated backlog,
+      - broad future roadmap,
+      - implementation diary.
+      
+  state_to_plan:
+    title: 'STATE to PLAN'
+    format: 'markdown-section'
+    body: |
+      ## STATE to PLAN
+      
+      If active state contains future work that is larger than the next immediate action, demote it back to the active plan or backlog.
+      
+      Active state must stay small enough to read first in every session.
+      
+  decisions_to_plan:
+    title: 'DECISIONS to PLAN'
+    format: 'markdown-section'
+    body: |
+      ## DECISIONS to PLAN
+      
+      A decision can create follow-up work, but the work belongs in the active plan or backlog, not inside the decision entry.
+      

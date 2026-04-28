@@ -57,4 +57,4 @@ Then configure the project-specific quality gate.
 
 After initialization succeeds, the agent should switch the current session to root `SOCRATEX.md` and use the initialized pipeline for all future sessions in that project.
 
-After the first prompt handled under the initialized pipeline, the agent should run `SocratexAI/core/ACTIVATION-CHECK.md` once to verify the loaded rules.
+After the first prompt handled under the initialized pipeline, the agent should run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify the loaded rules.

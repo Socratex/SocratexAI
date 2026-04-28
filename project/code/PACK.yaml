@@ -1,0 +1,360 @@
+﻿schema: socratex-document/v1
+title: 'Project Pack: Code'
+index:
+  - quick_index
+  - overview
+  - purpose
+  - recommended_files
+  - required_reads_for_code_projects
+  - technical_defaults
+  - script_first_automation_directive
+  - ddd_adiv_recommendation
+  - known_solution_bias
+  - profile_aware_defaults
+  - change_strategy
+  - task_gating
+  - reporting
+  - review_heuristics
+  - verification
+items:
+  quick_index:
+    title: 'Quick Index'
+    refs:
+      - overview
+      - purpose
+      - recommended_files
+      - required_reads_for_code_projects
+      - technical_defaults
+      - script_first_automation_directive
+      - ddd_adiv_recommendation
+      - known_solution_bias
+      - profile_aware_defaults
+      - change_strategy
+      - task_gating
+      - reporting
+      - review_heuristics
+      - verification
+  overview:
+    title: 'Overview'
+    format: 'markdown-section'
+    body: |
+      # Project Pack: Code
+      
+  purpose:
+    title: 'Purpose'
+    format: 'markdown-section'
+    body: |
+      ## Purpose
+      
+      Use this pack for software projects in any language, framework, or domain.
+      
+      The pack is language-agnostic and framework-agnostic. It adds technical execution standards, verification rules, and DDD-ADIV defaults to the core runtime.
+      
+  recommended_files:
+    title: 'Recommended Files'
+    format: 'markdown-section'
+    body: |
+      ## Recommended Files
+      
+      - `STATE.yaml`
+      - `_PLAN.yaml`
+      - `TODO.yaml`
+      - `BUGS.yaml`
+      - `BUGS-SOLVED.yaml`
+      - `CHANGELOG.yaml`
+      - `DECISIONS.yaml`
+      - `PIPELINE-CONFIG.yaml`
+      - `context-docs/TECHNICAL.yaml`
+      - `context-docs/FROZEN_LAYERS.yaml`
+      - `_PROMPTS.md` for raw prompt intake when the user wants a prompt queue.
+      - `_PROMPT-QUEUE.yaml` for defragmented prompt work.
+      - `_INSTRUCTIONS.md` for raw scratch intake only
+      - `_INSTRUCTION-QUEUE.yaml`
+      - generated indexes and diagnostics as `.json`
+      - `tools/`
+      
+  required_reads_for_code_projects:
+    title: 'Required Reads for Code Projects'
+    format: 'markdown-section'
+    body: |
+      ## Required Reads for Code Projects
+      
+      - `core/AGENT-CONTRACT.yaml`
+      - `core/FILE-FORMATS.yaml`
+      - `core/PROMOTION-RULES.yaml`
+      - `core/CONTEXT-COMPACTION.yaml`
+      - `project/code/WORKFLOW.yaml`
+      - `project/code/BRANCH-MODE.yaml` when `workflow.branch_mode` is `branch_scoped`
+      - `project/code/COMMANDS.yaml`
+      - `project/code/REGISTRIES.yaml`
+      - `project/code/DDD-ADIV.yaml`
+      - `project/code/GIT.yaml`
+      - `project/code/FROZEN-LAYERS.yaml`
+      - `project/code/INSTRUCTION-CAPTURE.yaml`
+      - `project/code/DIAGNOSTICS.yaml`
+      - `core/PROJECT-PROFILE.yaml` when `project_profile` exists
+      - `core/ROI-BIAS.yaml`
+      - `core/SCRIPT-FALLBACK.yaml`
+      - `core/TASK-WORK.yaml` for broad multi-step tasks
+      
+  technical_defaults:
+    title: 'Technical Defaults'
+    format: 'markdown-section'
+    body: |
+      ## Technical Defaults
+      
+      - Prefer readable, diagnosable code over compact or clever code.
+      - Prefer explicit control flow, explicit data flow, explicit ownership, and explicit state transitions.
+      - Separate pure domain logic from I/O, framework glue, persistence, engine APIs, and other side effects.
+      - Normalize external errors at boundaries.
+      - Prefer fail-fast behavior for invalid states.
+      - Use guard clauses and small functions over deep nesting.
+      - Keep parameter counts and cyclomatic complexity under control.
+      - Use typed, linted, formatter-friendly code when the ecosystem supports it.
+      - Avoid hidden semantics, ambiguous convention, and runtime-only meaning when a mechanical contract is possible.
+      - Organize code top-down when practical: entry points and orchestration first, lower-level helpers later.
+      - Keep one block focused on one concern and one abstraction level.
+      - Extract intent-revealing helpers when a block starts doing multiple jobs.
+      - Prefer explicit comparisons and conditions over coercive, ambiguous, or clever expressions.
+      - Prefer structured APIs and parsers over ad hoc string manipulation when a reasonable option exists.
+      - Isolate nondeterminism and external boundaries behind small, testable interfaces when practical.
+      - Comments should explain non-obvious constraints, workarounds, hazards, or tradeoffs; do not restate visible code.
+      
+  script_first_automation_directive:
+    title: 'Script-First Automation Directive'
+    format: 'markdown-section'
+    body: |
+      ## Script-First Automation Directive
+      
+      Use existing project scripts and pipeline tools whenever practical.
+      
+      This is a high-priority programming directive: when a script can safely do the work, prefer the script.
+      
+      Before manually performing repeatable work, check `tools/`, package scripts, task runners, Makefiles, CI commands, framework CLIs, and project-specific helper scripts.
+      
+      Prefer scripts for:
+      
+      - initialization,
+      - audits,
+      - quality gates,
+      - formatting,
+      - tests,
+      - diagnostics,
+      - snapshots,
+      - commits,
+      - migrations,
+      - generated indexes,
+      - documentation normalization.
+      
+      If a suitable script exists, use it instead of reimplementing the same workflow manually.
+      
+      If a script is skipped, state why: missing dependency, unsafe side effect, wrong scope, platform mismatch, or user instruction.
+      
+      Run status, check, audit, and quality scripts at verification boundaries instead of after every micro-edit.
+      
+      For changed-path checks, prefer a compact helper such as:
+      
+      ```powershell
+      powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_task.ps1 -Paths <changed paths>
+      ```
+      
+      For structured project documents, generated files, registries, or contract-managed files, prefer repository scripts over manual edits when a relevant script exists.
+      
+      For item moves between structured YAML documents, use `tools/doc_item_migrate.ps1`.
+      
+      For item ordering inside one structured YAML document, use `tools/doc_item_move.ps1`.
+      
+      For controlled insertion into structured YAML documents, use `tools/doc_item_insert.ps1`.
+      
+      For repeated or structurally constrained edits without a script, complete the requested change first, then recommend adding a small script when it would reduce future drift.
+      
+  ddd_adiv_recommendation:
+    title: 'DDD-ADIV Recommendation'
+    format: 'markdown-section'
+    body: |
+      ## DDD-ADIV Recommendation
+      
+      Use DDD-ADIV as the default design lens:
+      
+      - model domain concepts explicitly,
+      - isolate bounded contexts,
+      - protect invariants close to the state they govern,
+      - record durable architecture decisions,
+      - verify risky behavior with tests, checks, or clear manual validation.
+      
+      The full definition lives in `project/code/DDD-ADIV.yaml`.
+      
+  known_solution_bias:
+    title: 'Known-Solution Bias'
+    format: 'markdown-section'
+    body: |
+      ## Known-Solution Bias
+      
+      Before custom implementation, apply the full code known-solutions directive:
+      
+      - Known solutions check: identify whether established patterns, proven practices, standard tools, or business/software archetypes solve the problem well enough.
+      - Architecture archetypes check: compare the problem against recognizable structures such as layered architecture, hexagonal architecture, CQRS, state machines, queues, adapters, repositories, and domain services.
+      - Build-vs-borrow discipline: avoid bespoke systems when a framework feature, library, workflow, or design pattern is cheaper, clearer, and easier to maintain.
+      - Future-fit check: when the user asks for code work, check whether the requested approach is the best future-facing solution for ownership, invariants, testing, persistence, and extension cost; if not, recommend a better approach or prerequisite first.
+      - DDD alignment: use patterns to clarify domain ownership, invariants, boundaries, and language; do not add pattern ceremony that obscures the domain.
+      
+      Examples:
+      
+      - domain services,
+      - repositories and ports,
+      - adapters,
+      - layered architecture,
+      - hexagonal architecture,
+      - CQRS,
+      - state machines,
+      - command handlers,
+      - event queues,
+      - schema validation,
+      - transaction boundaries,
+      - retry/backoff policies,
+      - caching,
+      - memoization,
+      - idempotency keys,
+      - migrations,
+      - background jobs,
+      - test fixtures,
+      - golden files,
+      - contract tests.
+      
+      Use the standard solution when it is cheaper and clearer than bespoke architecture.
+      
+      If rejecting a known solution, state the constraint that makes it a poor fit.
+      
+  profile_aware_defaults:
+    title: 'Profile-Aware Defaults'
+    format: 'markdown-section'
+    body: |
+      ## Profile-Aware Defaults
+      
+      Use `project_profile` to choose the right kind of known solution.
+      
+      For `legacy` projects:
+      
+      - prefer minimal-invasive changes,
+      - add characterization tests or golden master checks before risky refactors,
+      - introduce seams before broad rewrites,
+      - use strangler fig and anti-corruption patterns when moving behavior to new boundaries.
+      
+      For `none` or `smoke-only` test coverage:
+      
+      - propose a golden master test, manual reproduction script, or fixture snapshot before non-trivial behavior changes,
+      - keep changes small and reversible,
+      - report unverified assumptions explicitly.
+      
+      For `custom in-house` or `mixed` frameworks:
+      
+      - isolate framework touchpoints behind adapters,
+      - search for injection seams,
+      - avoid editing framework core unless that is the explicit task.
+      
+      For mature standard frameworks:
+      
+      - prefer built-in framework mechanisms,
+      - follow ecosystem conventions,
+      - avoid custom infrastructure when standard extension points fit.
+      
+  change_strategy:
+    title: 'Change Strategy'
+    format: 'markdown-section'
+    body: |
+      ## Change Strategy
+      
+      - For surgical fixes, make the smallest safe change.
+      - For larger work, introduce a clear ownership boundary.
+      - Preserve coherent architecture.
+      - Do not refactor unrelated areas.
+      - Remove dead code, unused imports, duplicate conditions, and temporary diagnostics when touched.
+      - Treat syntax errors, type errors, unresolved references, and linter failures as must-fix issues.
+      - When existing architecture is coherent, extend it instead of replacing it.
+      - When existing architecture is incoherent, prefer one explicit boundary repair over scattered local workarounds.
+      - Do not introduce abstractions for vague future needs.
+      - Add an abstraction only when it removes real complexity, reduces meaningful duplication, or matches an established local pattern.
+      
+  task_gating:
+    title: 'Task Gating'
+    format: 'markdown-section'
+    body: |
+      ## Task Gating
+      
+      Before implementation, check whether the requested work is the best future-facing solution.
+      
+      If a cheaper prerequisite, enabling contract, diagnostic step, or architecture cleanup should happen first, recommend it before implementing or make it the first step when it stays inside the user's requested outcome.
+      
+      Use a short plan-first checkpoint for work that is complex, underspecified, structural, or spans multiple ownership boundaries.
+      
+      Before broad implementation, note likely impact when the task touches:
+      
+      - multiple systems,
+      - state transitions,
+      - persistence or schemas,
+      - randomness, concurrency, async, timing, or scheduling,
+      - more than two or three files,
+      - public APIs, tool contracts, or registries.
+      
+      Stop and reframe when the requested approach would materially increase coupling, hide side effects, add nondeterminism, or blur ownership.
+      
+      For local, reversible, clearly scoped changes, implement directly and report the outcome.
+      
+  reporting:
+    title: 'Reporting'
+    format: 'markdown-section'
+    body: |
+      ## Reporting
+      
+      For non-trivial code work, the first execution update should be compact and concrete:
+      
+      - Usage: whether the task may be expensive in context, tool calls, or time.
+      - Impact: the likely blast radius.
+      - Domains: the touched ownership areas.
+      - Current situation: observed facts.
+      - Expected result: what should be true after the change.
+      - Applied solutions: known solutions, scripts, or patterns to use.
+      
+      After implementation, report changed files, verification, skipped checks, and residual risk.
+      
+  review_heuristics:
+    title: 'Review Heuristics'
+    format: 'markdown-section'
+    body: |
+      ## Review Heuristics
+      
+      Lead with bugs, regressions, security issues, data-loss risks, and missing verification.
+      
+      Flag:
+      
+      - unsafe dynamic execution,
+      - injection risks,
+      - unintended mass updates or deletes,
+      - swallowed exceptions,
+      - inconsistent return paths,
+      - hidden control flow,
+      - concurrency hazards,
+      - unbounded resource usage,
+      - unclear ownership.
+      
+  verification:
+    title: 'Verification'
+    format: 'markdown-section'
+    body: |
+      ## Verification
+      
+      Use the strongest practical quality gate available:
+      
+      - unit tests,
+      - integration tests,
+      - typecheck,
+      - lint,
+      - formatter check,
+      - build,
+      - smoke test,
+      - manual reproduction,
+      - diff check.
+      
+      If verification is impossible or skipped, report it explicitly.
+      
+

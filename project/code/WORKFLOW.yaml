@@ -1,0 +1,221 @@
+﻿schema: socratex-document/v1
+title: 'Code Workflow'
+index:
+  - quick_index
+  - overview
+  - summary
+  - read_order
+  - command_classifier
+  - general_workflow
+  - script_first_execution
+  - task_work_tracking
+  - branch_scoped_workflow
+  - roi_workflow
+  - context_cost_control
+items:
+  quick_index:
+    title: 'Quick Index'
+    refs:
+      - overview
+      - summary
+      - read_order
+      - command_classifier
+      - general_workflow
+      - script_first_execution
+      - task_work_tracking
+      - branch_scoped_workflow
+      - roi_workflow
+      - context_cost_control
+  overview:
+    title: 'Overview'
+    format: 'markdown-section'
+    body: |
+      # Code Workflow
+      
+  summary:
+    title: 'Summary'
+    format: 'markdown-section'
+    body: |
+      ## Summary
+      
+      This file is the compact workflow classifier for programming projects.
+      
+      Read it after `STATE.yaml` when the user gives a code-project command or asks for implementation work.
+      
+  read_order:
+    title: 'Read Order'
+    format: 'markdown-section'
+    body: |
+      ## Read Order
+      
+      For ordinary code work:
+      
+      1. `AGENTS.md`
+      2. `STATE.yaml`
+      3. `PIPELINE-CONFIG.yaml`
+      4. `core/PROJECT-PROFILE.yaml` when `project_profile` exists
+      5. `core/ROI-BIAS.yaml`
+      6. `core/TASK-WORK.yaml` for broad multi-step work
+      7. `_PLAN.yaml`
+      8. smallest relevant file under `context-docs/`
+      9. source files in the touched ownership slice
+      
+      For broad architecture, ownership, persistence, API, build, toolchain, or registry work, also read:
+      
+      1. `core/PROMOTION-RULES.yaml`
+      2. `project/code/DDD-ADIV.yaml`
+      3. `project/code/GIT.yaml`
+      4. `project/code/FROZEN-LAYERS.yaml`
+      
+      For branch-scoped projects, also read:
+      
+      1. `project/code/BRANCH-MODE.yaml`
+      2. branch state and plan from the configured `workflow.branch_files_dir`
+      
+      For raw user instruction buffers, also read:
+      
+      1. `core/INSTRUCTION-CAPTURE.yaml`
+      2. `project/code/INSTRUCTION-CAPTURE.yaml`
+      
+      For logs, traces, crashes, console output, and evidence-driven debugging, also read:
+      
+      1. `project/code/DIAGNOSTICS.yaml`
+      
+  command_classifier:
+    title: 'Command Classifier'
+    format: 'markdown-section'
+    body: |
+      ## Command Classifier
+      
+      `CONTINUE`: execute the next active pass from `_PLAN.yaml`.
+      
+      `PLAN`: promote selected `TODO.yaml` or backlog work into explicit passes.
+      
+      `BUG`: select and work the best active entry from `BUGS.yaml`.
+      
+      `REVIEW`: inspect code, diff, plan, or architecture for risks first.
+      
+      `AUDIT`: run `tools/audit_docs.ps1`.
+      
+      `FINISH`: run quality checks, audit changed memory, update state, and report residual risk.
+      
+      `COMMIT`: create a bounded Git commit with explicit paths.
+      
+      `LOG`: inspect supplied diagnostics and apply the smallest source-owned fix or diagnostic step.
+      
+      `DIAGNOSTICS`: summarize newest diagnostic evidence, identify the highest-leverage issue, and choose the next source-owned fix or evidence step.
+      
+      `PROMPT`: execute or defragment raw prompt intake from `_PROMPTS.md` and `_PROMPT-QUEUE.yaml`.
+      
+      `INSTRUCTIONS`: defragment raw user instructions, sort them by dependency/future-change cost, promote them into the correct layer, and clear completed intake.
+      
+  general_workflow:
+    title: 'General Workflow'
+    format: 'markdown-section'
+    body: |
+      ## General Workflow
+      
+      1. Start from the smallest state source that answers the question.
+      2. Identify the ownership slice.
+      3. Check existing scripts and project automation before doing repeatable work manually.
+      4. Check whether a known solution, pattern, or tool is cheaper than custom design.
+      5. Check whether a future-facing prerequisite should happen before the requested implementation.
+      6. For broad multi-step work, create or refresh `docs-tech/cache/current_task.yaml` and split the request into micro-tasks.
+      7. For structural or multi-boundary work, write a short impact note or plan before editing.
+      8. Rank recommendations or candidate passes by ROI when there are multiple options.
+      9. Implement within the scoped boundary, updating micro-task status when task work tracking is active.
+      10. Verify with the strongest practical gate.
+      11. Update only the memory layers whose current truth changed.
+      12. Finish with concrete changed files, verification, residual risk, and ROI Picks when follow-up recommendations exist.
+      
+  script_first_execution:
+    title: 'Script-First Execution'
+    format: 'markdown-section'
+    body: |
+      ## Script-First Execution
+      
+      For programming work, prefer project scripts whenever practical.
+      
+      Use `tools/` helpers for pipeline tasks, package-manager scripts for ecosystem tasks, and framework CLIs for framework-native work.
+      
+      Before running a script, verify its runtime is available when uncertain. If not, follow `core/SCRIPT-FALLBACK.yaml`: propose a system improvement with an install command and justification before falling back to manual work.
+      
+      Do not manually duplicate a script's behavior unless the script is unavailable, unsafe for the current scope, broken, or explicitly rejected by the user.
+      
+      Run scripts at natural workflow boundaries: before broad work when they provide routing context, during diagnostics when they summarize evidence, and near the end for check, audit, quality, finish, and commit steps.
+      
+      For structured YAML documents, use `tools/doc_read.ps1` or `tools/doc_keys.ps1` before edits when selective reads are enough.
+      
+      For moving or copying items between structured YAML documents, use `tools/doc_item_migrate.ps1`.
+      
+      For moving items inside one structured YAML document, use `tools/doc_item_move.ps1`.
+      
+      For inserting items into structured YAML documents, use `tools/doc_item_insert.ps1`.
+      
+  task_work_tracking:
+    title: 'Task Work Tracking'
+    format: 'markdown-section'
+    body: |
+      ## Task Work Tracking
+      
+      For broad tasks, use `core/TASK-WORK.yaml`.
+      
+      Default temporary file:
+      
+      ```text
+      docs-tech/cache/current_task.yaml
+      ```
+      
+      Use `tools/init_task_work.ps1` when practical.
+      
+      The agent should:
+      
+      1. Create a micro-task plan before broad implementation.
+      2. Track one active micro-task at a time.
+      3. Update statuses and short results during work.
+      4. Track questions, risks, and verification gaps.
+      5. Before final response, resolve every micro-task as done, skipped, blocked, or deferred.
+      6. Remove the temporary file when it has no future value, or promote only durable facts to the proper memory layer.
+      
+  branch_scoped_workflow:
+    title: 'Branch-Scoped Workflow'
+    format: 'markdown-section'
+    body: |
+      ## Branch-Scoped Workflow
+      
+      When `workflow.branch_mode` is `branch_scoped`:
+      
+      1. Detect the current Git branch at session start.
+      2. Look for `ignored/ai-socratex/<branch>-STATE.md` and `ignored/ai-socratex/<branch>-PLAN.md`, or the configured equivalents.
+      3. Read them when they exist.
+      4. Create them from `templates/code/branch/` when missing.
+      5. Update branch STATE and PLAN continuously, not only at the end.
+      6. Keep STATE factual: findings, root causes, changes, verification, blockers.
+      7. Keep PLAN as next steps only, with no history.
+      8. At branch end, optionally promote durable findings into `context-docs/`, `DECISIONS.yaml`, `CHANGELOG.yaml`, `_PLAN.yaml`, or `TODO.yaml`.
+      
+      If the branch files language is not English, ensure the branch files directory is ignored by Git before writing local notes.
+      
+  roi_workflow:
+    title: 'ROI Workflow'
+    format: 'markdown-section'
+    body: |
+      ## ROI Workflow
+      
+      `REVIEW` must end with ROI Picks when it contains findings or recommendations.
+      
+      `PLAN` must assign ROI metadata before promoting backlog items into `_PLAN.yaml`.
+      
+      Promotion should prefer high-ROI work for the current `project_profile`, especially work that improves the user's stated highest pain.
+      
+  context_cost_control:
+    title: 'Context Cost Control'
+    format: 'markdown-section'
+    body: |
+      ## Context Cost Control
+      
+      Use `core/CONTEXT-COMPACTION.yaml` when a session becomes long, after several major passes, or after repeated retry loops.
+      
+      Prefer a hard reset after compacting `STATE.yaml` and relevant `context-docs/` over carrying stale live context indefinitely.
+      
+

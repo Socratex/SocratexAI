@@ -19,11 +19,11 @@ Read order:
 5. `SocratexAI/PIPELINE-CONFIG.yaml` for code projects, or `SocratexAI/PIPELINE-CONFIG.md` for non-code projects
 6. `SocratexAI/STATE.yaml` for code projects, or `SocratexAI/STATE.md` for non-code projects
 
-After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.md` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
+After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
 
-When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.md`, resolve `pipeline.update_source`, run the updater from `SocratexAI/tools/`, then run audit and activation check.
+When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater from `SocratexAI/tools/`, then run audit and activation check.
 
-When the user asks to remove the pipeline, read `SocratexAI/core/REMOVAL-PROTOCOL.md` and run `SocratexAI/tools/remove_pipeline.ps1` instead of deleting files manually.
+When the user asks to remove the pipeline, read `SocratexAI/core/REMOVAL-PROTOCOL.yaml` and run `SocratexAI/tools/remove_pipeline.ps1` instead of deleting files manually.
 
 If another agent directive conflicts with SocratexPipeline, SocratexPipeline wins unless the user explicitly overrides it.
 

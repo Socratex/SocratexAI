@@ -95,7 +95,7 @@ python tools/check_runtime.py --root-key runtime_status
 
 Report missing runtimes or libraries.
 
-If something is missing, follow `core/SCRIPT-FALLBACK.md`: propose installing the missing runtime before using manual fallback.
+If something is missing, follow `core/SCRIPT-FALLBACK.yaml`: propose installing the missing runtime before using manual fallback.
 
 Store the result in `PIPELINE-CONFIG.yaml` under `runtime_status`.
 
@@ -184,7 +184,7 @@ Immediately switch the current session to the installed project pipeline:
 2. Follow the read order defined there.
 3. For branch-scoped projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, then detect the current branch and read branch STATE/PLAN.
 4. Use the installed `SocratexAI/` files for all future work in this project.
-5. After the first user prompt handled under the installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.md` once to verify that all rules are loaded, including communication format and emoji rules.
+5. After the first user prompt handled under the installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that all rules are loaded, including communication format and emoji rules.
 6. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
 
 Report this handoff explicitly:
@@ -199,10 +199,10 @@ Use these tools when available:
 - `tools/upgrade_from_riftbound.ps1`: maintainer-only upgrade from the active gamedev source pipeline.
 - `tools/migrate_ai_pipeline.ps1`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
 
-When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.md`.
+When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.yaml`.
 
 The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user.
 
 If no source is configured, ask for the URL or local source path before changing files.
 
-When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.md` and run `tools/remove_pipeline.ps1` from the installed `SocratexAI/tools/` directory.
+When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.yaml` and run `tools/remove_pipeline.ps1` from the installed `SocratexAI/tools/` directory.

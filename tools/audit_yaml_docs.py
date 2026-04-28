@@ -62,8 +62,10 @@ def validate_document(path: Path, repo_root: Path) -> list[str]:
 
     if "index" in data or "items" in data:
         errors.extend(validate_compact_document(data, relative))
-    else:
+    elif "document" in data or "toc" in data:
         errors.extend(validate_legacy_document(data, relative, repo_root))
+    else:
+        return errors
 
     text = path.read_text(encoding="utf-8")
     forbidden_tokens = ["legacy_markdown", "source_migrated_from", "compatibility shim"]

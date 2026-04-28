@@ -8,24 +8,24 @@ This guide explains the programming-specific SocratexPipeline workflow.
 
 For code projects, the agent reads:
 
-- `core/AGENT-CONTRACT.md`
-- `core/FILE-FORMATS.md`
-- `core/PROMOTION-RULES.md`
-- `core/CONTEXT-COMPACTION.md`
-- `core/INSTRUCTION-CAPTURE.md`
-- `core/PROJECT-PROFILE.md` when `project_profile` exists
-- `core/ROI-BIAS.md`
-- `core/SCRIPT-FALLBACK.md`
-- `core/TASK-WORK.md` for broad multi-step tasks
-- `project/code/WORKFLOW.md`
-- `project/code/BRANCH-MODE.md` when `workflow.branch_mode` is `branch_scoped`
-- `project/code/COMMANDS.md`
-- `project/code/REGISTRIES.md`
-- `project/code/DDD-ADIV.md`
-- `project/code/GIT.md`
-- `project/code/FROZEN-LAYERS.md`
-- `project/code/INSTRUCTION-CAPTURE.md`
-- `project/code/DIAGNOSTICS.md`
+- `core/AGENT-CONTRACT.yaml`
+- `core/FILE-FORMATS.yaml`
+- `core/PROMOTION-RULES.yaml`
+- `core/CONTEXT-COMPACTION.yaml`
+- `core/INSTRUCTION-CAPTURE.yaml`
+- `core/PROJECT-PROFILE.yaml` when `project_profile` exists
+- `core/ROI-BIAS.yaml`
+- `core/SCRIPT-FALLBACK.yaml`
+- `core/TASK-WORK.yaml` for broad multi-step tasks
+- `project/code/WORKFLOW.yaml`
+- `project/code/BRANCH-MODE.yaml` when `workflow.branch_mode` is `branch_scoped`
+- `project/code/COMMANDS.yaml`
+- `project/code/REGISTRIES.yaml`
+- `project/code/DDD-ADIV.yaml`
+- `project/code/GIT.yaml`
+- `project/code/FROZEN-LAYERS.yaml`
+- `project/code/INSTRUCTION-CAPTURE.yaml`
+- `project/code/DIAGNOSTICS.yaml`
 
 ## Main Commands
 
@@ -80,7 +80,7 @@ ROI Picks rank work by value axes, cost axes, profile fit, and why the improveme
 
 ## Script Fallback
 
-Before silently bypassing a script, the agent follows `core/SCRIPT-FALLBACK.md`.
+Before silently bypassing a script, the agent follows `core/SCRIPT-FALLBACK.yaml`.
 
 Missing runtimes should be reported as setup issues with install hints before manual fallback.
 

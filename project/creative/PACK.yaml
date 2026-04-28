@@ -1,0 +1,78 @@
+﻿schema: socratex-document/v1
+title: 'Project Pack: Creative'
+index:
+  - quick_index
+  - overview
+  - purpose
+  - recommended_files
+  - creative_defaults
+  - review_gate
+items:
+  quick_index:
+    title: 'Quick Index'
+    refs:
+      - overview
+      - purpose
+      - recommended_files
+      - creative_defaults
+      - review_gate
+  overview:
+    title: 'Overview'
+    format: 'markdown-section'
+    body: |
+      # Project Pack: Creative
+      
+  purpose:
+    title: 'Purpose'
+    format: 'markdown-section'
+    body: |
+      ## Purpose
+      
+      Use this pack for music, writing, design, visual art, video, worldbuilding, and other creative projects.
+      
+      The pack exists to preserve direction, taste, references, iteration history, and release readiness.
+      
+  recommended_files:
+    title: 'Recommended Files'
+    format: 'markdown-section'
+    body: |
+      ## Recommended Files
+      
+      - `STATE.md`
+      - `DIRECTION.md`
+      - `REFERENCES.md`
+      - `WORKS.md`
+      - `FEEDBACK.md`
+      - `DECISIONS.md`
+      - `RELEASE.md`
+      - `JOURNAL.md`
+      
+  creative_defaults:
+    title: 'Creative Defaults'
+    format: 'markdown-section'
+    body: |
+      ## Creative Defaults
+      
+      - Keep the current creative target explicit.
+      - Separate taste decisions from technical execution.
+      - Preserve references and comparison points.
+      - Version important outputs.
+      - Record feedback without automatically obeying it.
+      - Prefer concrete artifacts over abstract planning.
+      - Treat dissatisfaction as useful data when it names a contrast, missing quality, or unwanted effect.
+      
+  review_gate:
+    title: 'Review Gate'
+    format: 'markdown-section'
+    body: |
+      ## Review Gate
+      
+      Check:
+      
+      - Does the work match the intended direction?
+      - Are references visible and relevant?
+      - Is feedback specific enough to act on?
+      - Is the current version shippable, exploratory, or discarded?
+      - Is the next iteration focused on one meaningful improvement?
+      
+      

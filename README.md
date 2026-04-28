@@ -80,7 +80,7 @@ On first run, the agent should:
 7. Update the active state file under `SocratexAI/` with the initialized project state.
 8. Switch the current session to root `SOCRATEX.md`.
 
-For code projects, the agent should also read `project/code/COMMANDS.md`, `project/code/REGISTRIES.md`, `project/code/DDD-ADIV.md`, and `core/PROMOTION-RULES.md`.
+For code projects, the agent should also read `project/code/COMMANDS.yaml`, `project/code/REGISTRIES.yaml`, `project/code/DDD-ADIV.yaml`, and `core/PROMOTION-RULES.yaml`.
 
 Code projects can store `project_profile`, `runtime_status`, and `workflow.branch_mode` in `PIPELINE-CONFIG.yaml`.
 
@@ -124,9 +124,9 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active gamedev source pipeline.
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
-When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.md`, resolve `pipeline.update_source`, run the updater, then run audit and activation check.
+When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater, then run audit and activation check.
 
-When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.md` and run `SocratexAI/tools/remove_pipeline.ps1`.
+When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.yaml` and run `SocratexAI/tools/remove_pipeline.ps1`.
 
 ## Code Audit
 

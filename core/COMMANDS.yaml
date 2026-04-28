@@ -1,0 +1,107 @@
+﻿schema: socratex-document/v1
+title: 'Core Commands'
+index:
+  - quick_index
+  - overview
+  - init
+  - continue
+  - capture
+  - plan
+  - review
+  - audit
+  - finish
+items:
+  quick_index:
+    title: 'Quick Index'
+    refs:
+      - overview
+      - init
+      - continue
+      - capture
+      - plan
+      - review
+      - audit
+      - finish
+  overview:
+    title: 'Overview'
+    format: 'markdown-section'
+    body: |
+      # Core Commands
+      
+      These commands are conceptual. A project may implement them as scripts, agent instructions, or manual workflows.
+      
+  init:
+    title: 'INIT'
+    format: 'markdown-section'
+    body: |
+      ## INIT
+      
+      Initialize a new project from this skeleton.
+      
+      Use `initializer/FIRST-RUN.md` while it exists.
+      
+  continue:
+    title: 'CONTINUE'
+    format: 'markdown-section'
+    body: |
+      ## CONTINUE
+      
+      Resume the next active pass from the execution plan.
+      
+      If no active pass exists, use the active state and backlog to propose the next best target.
+      
+  capture:
+    title: 'CAPTURE'
+    format: 'markdown-section'
+    body: |
+      ## CAPTURE
+      
+      Capture loose input without immediately executing it.
+      
+      Classify the input as a task, decision, issue, reference, risk, or backlog item.
+      
+  plan:
+    title: 'PLAN'
+    format: 'markdown-section'
+    body: |
+      ## PLAN
+      
+      Turn selected backlog or captured input into one or more execution passes.
+      
+  review:
+    title: 'REVIEW'
+    format: 'markdown-section'
+    body: |
+      ## REVIEW
+      
+      Inspect the current artifact, plan, or change set for defects, risks, contradictions, and missing verification.
+      
+  audit:
+    title: 'AUDIT'
+    format: 'markdown-section'
+    body: |
+      ## AUDIT
+      
+      Check project memory consistency:
+      
+      - active state matches the plan,
+      - completed work is not still listed as active,
+      - unresolved requirements are preserved,
+      - decisions with durable impact are recorded,
+      - project packs do not duplicate core rules.
+      
+  finish:
+    title: 'FINISH'
+    format: 'markdown-section'
+    body: |
+      ## FINISH
+      
+      Close the current work unit:
+      
+      - run the relevant quality gate,
+      - update active state,
+      - update completion log when something shipped,
+      - remove completed active passes,
+      - report what changed and what was not verified.
+      
+      

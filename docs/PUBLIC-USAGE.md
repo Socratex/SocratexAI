@@ -36,7 +36,7 @@ Installed projects should contain only `SOCRATEX.md` at the project root as the 
 
 After setup succeeds, the agent should stop using the public bootstrap as the active instruction source and immediately continue from the installed project's `SOCRATEX.md`.
 
-After the first user prompt handled under the installed pipeline, the agent should run the activation check from `SocratexAI/core/ACTIVATION-CHECK.md` to verify that communication format, emoji rules, config, project pack, and workflow-specific rules were loaded.
+After the first user prompt handled under the installed pipeline, the agent should run the activation check from `SocratexAI/core/ACTIVATION-CHECK.yaml` to verify that communication format, emoji rules, config, project pack, and workflow-specific rules were loaded.
 
 ## Public Update
 
@@ -48,7 +48,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/update_pipeline_from_l
 
 In an installed project, run the updater from `SocratexAI/tools/update_pipeline_from_link.ps1`.
 
-When a user asks an agent to update the pipeline, the agent should read `SocratexAI/core/UPDATE-PROTOCOL.md`, resolve `pipeline.update_source` or `pipeline.public_bootstrap_url` from config, run the updater, then run audit and activation check.
+When a user asks an agent to update the pipeline, the agent should read `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source` or `pipeline.public_bootstrap_url` from config, run the updater, then run audit and activation check.
 
 If no source is configured, the agent should ask for the update URL or local source path before changing files.
 
@@ -60,7 +60,7 @@ Users can remove an installed pipeline with:
 powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .
 ```
 
-When a user asks an agent to remove the pipeline, the agent should read `SocratexAI/core/REMOVAL-PROTOCOL.md` and use the remover script instead of manually deleting files.
+When a user asks an agent to remove the pipeline, the agent should read `SocratexAI/core/REMOVAL-PROTOCOL.yaml` and use the remover script instead of manually deleting files.
 
 ## Maintainer Upgrade
 
