@@ -154,8 +154,12 @@ items:
       If a script is skipped, state why: missing dependency, unsafe side effect, wrong scope, platform mismatch, or user instruction.
       
       Run status, check, audit, and quality scripts at verification boundaries instead of after every micro-edit.
+
+      For the normal task flow, gather context first, make the code and document edits for the current scope, then run one git-based batch finalizer near the end. The finalizer should discover changed files from git, normalize text, rebuild document caches, refresh code-line indexes, run checks, and report status through repository scripts instead of requiring manual normalizer/cache/index command chains.
+
+      If a repeated finalizer failure requires manual recovery, fix or extend the relevant script so future equivalent work is handled automatically.
       
-      For changed-path checks, prefer a compact helper such as:
+      For compact changed-path checks during a verification boundary, prefer a helper such as:
       
       ```powershell
       powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_task.ps1 -Paths <changed paths>

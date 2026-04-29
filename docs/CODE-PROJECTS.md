@@ -46,7 +46,7 @@ For code projects, the agent reads:
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/task_snapshot.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_quality_gate.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_task.ps1 -Quality
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/commit_task.ps1 -Message "<message>" -Paths <explicit paths>
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_subtask.ps1 -Message "<message>"
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/log_summary.ps1 -Description "<diagnostic description>"
 python tools/check_runtime.py --root-key runtime_status
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/init_task_work.ps1 -Title "<task>" -SourceRequest "<request>"
@@ -119,7 +119,7 @@ These scripts should own the write, UTF-8 normalization, cache refresh when appl
 
 Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title flow by default: derive likely duplicate words, run `doc_list_check`, read candidates with `doc_read_titles`, then write once with a transactional insert or item script.
 
-Do not manually repeat normalize, cache, check, or readback commands after a successful transactional document edit unless the wrapper failed, `-NoPostEdit` was intentionally used, or a broader verification boundary requires it.
+Do not manually repeat normalize, cache, index, check, or readback commands after a successful transactional document edit unless the wrapper failed, `-NoPostEdit` was intentionally used, or a broader verification boundary requires it.
 
 ## YAML Read Discipline
 
@@ -143,13 +143,19 @@ Run status, audit, quality, line-index, finish, and commit helpers at workflow b
 
 Do not run `git status`, `git diff --check`, `tools/check_task.ps1`, `tools/run_quality_gate.ps1`, `tools/update_code_line_index.ps1`, or `tools/finish_task.ps1` after every small edit.
 
+Normal task flow: gather context with repository scripts, make the code and document edits for the current scope, then run one git-based batch finalizer near the end. The finalizer should discover changed files from git, normalize text, rebuild document cache, refresh code-line indexes, verify, and report status.
+
+If a repeated finalizer failure requires manual recovery, improve the script so future equivalent work is handled automatically.
+
 Do not follow a successful `tools/doc_read.ps1` with a full `Get-Content` of the same document unless the selected output is insufficient, raw formatting matters, or the document structure looks suspicious.
 
 ## Git Completion
 
-Hard rule: use `tools/commit_task.ps1` whenever practical for task closure.
+Hard rule: use `tools/finish_subtask.ps1 -Message "<message>"` whenever practical for subtask closure.
 
-The wrapper should stage explicit paths, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.
+The wrapper should discover changed files from git, run the batch finalizer, stage intentional non-local-artifact changes, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.
+
+`tools/commit_task.ps1` remains a compatibility wrapper around `tools/finish_subtask.ps1`; new automation should call the subtask finisher directly.
 
 If the working tree is not clean after commit/push, the subtask is not closed.
 

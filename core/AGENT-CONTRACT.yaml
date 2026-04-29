@@ -218,13 +218,9 @@ items:
     format: markdown-section
     body: |-
       ## Tool-First YAML
-
       Use SocratexAI tools for structured YAML documents in every project type, including generic, personal, and creative projects.
-
       In non-code projects, this applies primarily to agent-only YAML/JSON files. User-facing Markdown memory can be edited as prose unless a dedicated Markdown tool exists.
-
       Default tool discipline:
-
       - Use `tools/doc_keys.ps1` and `tools/doc_read.ps1` for selective reads when a YAML document is structured.
       - Use `tools/doc_item_insert.ps1` for controlled single-item insertion.
       - Use `tools/doc_item_bulk_insert.ps1` for controlled multi-item insertion into one document.
@@ -232,13 +228,11 @@ items:
       - Use `tools/doc_item_migrate.ps1` for moving or copying items between YAML documents.
       - Treat document edit tools as transaction wrappers: the tool should own its write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.
       - Do not compose manual read/edit/normalize/cache/check/read command queues after a successful transactional document edit tool.
-      - Use full `tools/audit_docs.ps1` at the final verification boundary, not after every item edit.
-      - Use `tools/reinitialize_pipeline.ps1` when newly introduced initialized artifacts need to be added without overwriting existing memory.
-
+      - Use full `tools/audit_docs.ps1` at the final verification boundary, not after every item edit; use `tools/reinitialize_pipeline.ps1` when newly introduced initialized artifacts need to be added without overwriting existing memory.
+      - Run status, audit, quality, line-index, and finish scripts at verification boundaries instead of after every micro-edit; for normal code-project work, complete the current edit scope, then run one git-based batch finalizer that discovers changed files, normalizes text, rebuilds cache, refreshes indexes, verifies, and reports status.
+      - If the same finalizer failure would recur, improve the script instead of repeating manual recovery steps.
       For structured YAML documents, full-text grep tools such as `Select-String`, `grep`, or `rg` are fallback tools, not the default read path. Use `tools/doc_read.ps1` when the stable key is known, `tools/doc_keys.ps1` when the local key list is needed, and `tools/doc_route.ps1` or `tools/doc_search.ps1` when searching by intent or phrase. Use text grep on YAML only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.
-
       Manual YAML edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.yaml`.
-
       Never silently bypass a relevant tool in a non-code project just because the project is not programming-related.
       - Use `tools/doc_list_insert.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing structured YAML item; it should replace chained key/read/search/manual-edit/check queues for that case.
       - Use `tools/doc_list_check.ps1` before list insertion only when the user asks for a duplicate report or possible matches must be reviewed before choosing the target item.
@@ -336,10 +330,8 @@ items:
     content: |-
       ## Git Completion
 
-      Hard rule: use the project's commit/push wrapper whenever practical for task closure.
-
-      The wrapper must stage explicit paths, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.
-
+      Hard rule: use the project's subtask finish wrapper whenever practical for task closure.
+      The wrapper must discover changed files from git, run the batch finalizer, stage intentional source/assets/docs/config changes, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.
       If the working tree is not clean after commit/push, the subtask is not closed.
 schema: socratex-document/v1
 title: Agent Contract

@@ -189,7 +189,8 @@ items:
       
       Rules:
       
-      - stage only explicit paths,
+      - prefer the git-based subtask finisher,
+      - let the finisher discover changed files from git and run the batch finalizer,
       - avoid generated or temporary files unless intentionally part of the change,
       - do not commit unrelated user changes,
       - mention skipped verification.
@@ -197,7 +198,7 @@ items:
       Default helper:
       
       ```powershell
-      powershell -NoProfile -ExecutionPolicy Bypass -File tools/commit_task.ps1 -Message "<message>" -Paths <explicit paths>
+      powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_subtask.ps1 -Message "<message>"
       ```
       
   log:

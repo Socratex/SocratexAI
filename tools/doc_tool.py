@@ -324,7 +324,7 @@ def command_build_cache(args: argparse.Namespace) -> None:
         "documents": document_caches,
     }
     output_path = output_dir / "doc_index.json"
-    output_path.write_text(json.dumps(cache, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output_path.write_text(json.dumps(cache, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(str(output_path))
 
 

@@ -1,70 +1,67 @@
 param(
-    [Parameter(Mandatory = $true)]
-    [string]$Message,
-
-    [Parameter(Mandatory = $true)]
-    [string[]]$Paths,
-
-    [switch]$NoVerify,
-
-    [switch]$NoPush
+	[Parameter(Mandatory = $true)]
+	[string]$Message,
+	[string[]]$Paths = @(),
+	[switch]$Quality,
+	[string[]]$QualityCommand,
+	[switch]$StrictAudit,
+	[switch]$NoAudit,
+	[switch]$NoVerify,
+	[switch]$NoPush,
+	[switch]$AllowPreStaged
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$Root = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
+$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
+$finishSubtaskScript = Join-Path $PSScriptRoot "finish_subtask.ps1"
 
-Push-Location -LiteralPath $Root
+if ([string]::IsNullOrWhiteSpace($Message)) {
+	throw "Commit message must not be empty."
+}
+
+Push-Location -LiteralPath $repoRoot
 try {
-    if (-not (Test-Path -LiteralPath ".git")) {
-        throw "This project is not a Git repository."
-    }
+	if ($Paths.Count -gt 0) {
+		Write-Host "commit_task.ps1 delegates to finish_subtask.ps1; explicit -Paths are accepted for compatibility but staging is git-derived."
+	} else {
+		Write-Host "commit_task.ps1 delegates to finish_subtask.ps1; prefer finish_subtask.ps1 for new automation."
+	}
 
-    Write-Host "==> git status before staging"
-    git status --short
+	$finishSubtaskArgs = @(
+		"-NoProfile",
+		"-ExecutionPolicy",
+		"Bypass",
+		"-File",
+		$finishSubtaskScript,
+		"-Message",
+		$Message
+	)
+	if ($Quality) {
+		$finishSubtaskArgs += "-Quality"
+	}
+	if ($QualityCommand -and $QualityCommand.Count -gt 0) {
+		$finishSubtaskArgs += "-QualityCommand"
+		$finishSubtaskArgs += $QualityCommand
+	}
+	if ($StrictAudit) {
+		$finishSubtaskArgs += "-StrictAudit"
+	}
+	if ($NoAudit -or $NoVerify) {
+		$finishSubtaskArgs += "-NoAudit"
+	}
+	if ($NoPush) {
+		$finishSubtaskArgs += "-NoPush"
+	}
+	if ($AllowPreStaged) {
+		$finishSubtaskArgs += "-AllowPreStaged"
+	}
 
-    foreach ($path in $Paths) {
-        if (-not (Test-Path -LiteralPath $path)) {
-            throw "Cannot stage missing path: $path"
-        }
-    }
-
-    Write-Host "==> staging explicit paths"
-    git add -- $Paths
-
-    Write-Host "==> staged diff"
-    git diff --cached --stat
-
-    if (-not $NoVerify) {
-        Write-Host "==> git diff --cached --check"
-        git diff --cached --check
-    }
-
-    Write-Host "==> committing"
-    git commit -m $Message
-    if ($LASTEXITCODE -ne 0) {
-        throw "git commit failed with exit code $LASTEXITCODE"
-    }
-
-    if (-not $NoPush) {
-        Write-Host "==> pushing"
-        git push origin HEAD
-        if ($LASTEXITCODE -ne 0) {
-            throw "git push failed with exit code $LASTEXITCODE"
-        }
-    }
-
-    Write-Host "==> final repository state"
-    $remaining = @(git status --short)
-    if ($remaining.Count -eq 0) {
-        Write-Host "OK: working tree clean; subtask closed."
-    } else {
-        Write-Host "WARN: working tree still has changes; subtask not fully closed."
-        foreach ($line in $remaining) {
-            Write-Host $line
-        }
-    }
+	& powershell @finishSubtaskArgs
+	if ($LASTEXITCODE -ne 0) {
+		throw "finish_subtask failed with exit code $LASTEXITCODE"
+	}
 } finally {
-    Pop-Location
+	Pop-Location
 }

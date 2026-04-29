@@ -35,6 +35,7 @@ function Invoke-CheckCommand {
 function Get-ChangedTextPaths {
 	$changed = @(git diff --name-only --diff-filter=ACMR)
 	$changed += @(git diff --cached --name-only --diff-filter=ACMR)
+	$changed += @(git ls-files --others --exclude-standard)
 	return @($changed | Where-Object {
 		$_ -match '\.(md|txt|json|ya?ml|cfg|gd|tscn|tres|ps1|py)$'
 	} | Sort-Object -Unique)
@@ -57,29 +58,43 @@ function Get-CheckPaths {
 	return @($expanded)
 }
 
+function Invoke-TextNormalization {
+	param(
+		[string]$Label,
+		[switch]$Check
+	)
+
+	if ($NoNormalize) {
+		return
+	}
+	if ($checkPaths.Count -eq 0) {
+		Write-Host ""
+		Write-Host "==> $Label"
+		Write-Host "skipped; no changed text paths and no -Paths were provided"
+		return
+	}
+
+	$normalizationArgs = @(
+		"-NoProfile",
+		"-ExecutionPolicy",
+		"Bypass",
+		"-File",
+		$textNormalizeScript
+	)
+	if ($Check) {
+		$normalizationArgs += "-Check"
+	}
+	$normalizationArgs += "-Paths"
+	$normalizationArgs += $checkPaths
+	Invoke-CheckCommand -Label $Label -Command "powershell" -Arguments $normalizationArgs
+}
+
 Push-Location -LiteralPath $repoRoot
 try {
 	$checkPaths = @(Get-CheckPaths)
 
-	if (-not $NoNormalize) {
-		if ($checkPaths.Count -gt 0) {
-			$textNormalizeArgs = @(
-				"-NoProfile",
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				$textNormalizeScript,
-				"-Check",
-				"-Paths"
-			)
-			$textNormalizeArgs += $checkPaths
-			Invoke-CheckCommand -Label "text normalization check" -Command "powershell" -Arguments $textNormalizeArgs
-		} else {
-			Write-Host ""
-			Write-Host "==> text normalization check"
-			Write-Host "skipped; no changed text paths and no -Paths were provided"
-		}
-	}
+	Invoke-TextNormalization -Label "text normalization refresh"
+	Invoke-TextNormalization -Label "text normalization check" -Check
 
 	if ($MarkdownEmoji) {
 		if ($checkPaths.Count -gt 0) {
@@ -109,6 +124,15 @@ try {
 	Invoke-CheckCommand -Label "git diff --check" -Command "git" -Arguments $diffCheckArgs
 
 	if (-not $NoLineIndex) {
+		Invoke-CheckCommand -Label "code line index refresh" -Command "powershell" -Arguments @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$lineIndexScript,
+			"-ChangedOnly"
+		)
+		Invoke-TextNormalization -Label "post-generator text normalization refresh"
 		Invoke-CheckCommand -Label "code line index check" -Command "powershell" -Arguments @(
 			"-NoProfile",
 			"-ExecutionPolicy",

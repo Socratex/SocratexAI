@@ -61,7 +61,9 @@ items:
     body: |
       ## Staging Rules
       
-      - Stage only explicit paths.
+      - Prefer `tools/finish_subtask.ps1 -Message "<message>"` for task closure.
+      - Let the subtask finisher discover changed files from git, run the batch finalizer, stage intentional non-local-artifact changes, verify, commit, and push.
+      - Stage only explicit paths when using lower-level manual git commands.
       - Do not stage generated artifacts unless intentionally part of the change.
       - Do not stage unrelated formatting churn.
       - Inspect `git status` before staging.

@@ -1,6 +1,10 @@
 summary: SocratexAI pipeline product changelog.
 entries:
   - version: 0.2.0-alpha
+    date: 2026-04-29
+    feature: git_batch_finishers
+    change: Added git-derived batch task finalization with finish_task normalization/cache/index refresh, a finish_subtask commit/push wrapper, commit_task compatibility delegation, and LF-stable document cache writes.
+  - version: 0.2.0-alpha
     date: 2026-04-28
     feature: docs_role_index
     change: Added DOCS.yaml templates and installation rules so agents use a document role index before reading, creating, renaming, or updating project documents.

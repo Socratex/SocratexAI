@@ -1,0 +1,27 @@
+* text=auto eol=lf
+
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.ps1 text eol=lf
+*.py text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+*.csv text eol=lf
+
+*.png binary -eol
+*.jpg binary -eol
+*.jpeg binary -eol
+*.webp binary -eol
+*.ico binary -eol
+*.wav binary -eol
+*.ogg binary -eol
+*.mp3 binary -eol
+*.mp4 binary -eol
+*.avi binary -eol
+*.zip binary -eol
+*.7z binary -eol
+*.dll binary -eol
+*.exe binary -eol

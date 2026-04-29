@@ -1,0 +1,36 @@
+{
+    "generatedAt":  "2026-04-29T15:23:28+02:00",
+    "threshold":  300,
+    "files":  [
+                  {
+                      "path":  "tools/doc_tool.py",
+                      "lines":  295,
+                      "extension":  ".py",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/finish_task.ps1",
+                      "lines":  152,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/check_task.ps1",
+                      "lines":  150,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/finish_subtask.ps1",
+                      "lines":  144,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/commit_task.ps1",
+                      "lines":  61,
+                      "extension":  ".ps1",
+                      "large":  false
+                  }
+              ]
+}
