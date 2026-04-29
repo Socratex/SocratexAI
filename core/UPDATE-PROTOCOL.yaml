@@ -74,6 +74,8 @@ items:
 
       Reinitialization must be missing-only: create newly introduced files or config defaults, but do not overwrite active project memory.
 
+      When updating the pipeline inside Riftbound Vanguard, ask whether the user also wants the source `SocratexPipeline` repository upgraded and pushed when the installed pipeline change exposes a reusable pipeline improvement.
+
       For maintainer-only upgrades from a private reference project, use the maintainer upgrade tool only when the user explicitly requests that source:
 
       ```powershell
@@ -113,4 +115,3 @@ items:
       Do not update from an untrusted URL without telling the user what source will be used.
 
       If update source is missing, ask for it and stop before changing files.
-

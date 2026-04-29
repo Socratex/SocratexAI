@@ -2448,6 +2448,34 @@
           "status": ""
         }
       }
+    },
+    {
+      "path": "tools/tmp/doc_list_insert_checked_test.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "test"
+      ],
+      "top_level_keys": [
+        "index",
+        "items",
+        "schema"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "test": {
+          "path": "items.test",
+          "title": "Test",
+          "ref": "items.test",
+          "status": ""
+        }
+      }
     }
   ]
 }

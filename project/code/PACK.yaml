@@ -168,6 +168,10 @@ items:
       For item ordering inside one structured YAML document, use `tools/doc_item_move.ps1`.
       
       For controlled insertion into structured YAML documents, use `tools/doc_item_insert.ps1`.
+
+      For one-line list additions inside an existing structured YAML item, use `tools/doc_list_insert_checked.ps1` when available so insertion and compact changed-path verification run as one workflow.
+
+      For candidate-title duplicate review before documentation updates, use `tools/doc_list_review.ps1` when available so duplicate search and candidate section reads run as one workflow.
       
       For repeated or structurally constrained edits without a script, complete the requested change first, then recommend adding a small script when it would reduce future drift.
       
