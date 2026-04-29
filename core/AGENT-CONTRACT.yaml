@@ -1,58 +1,56 @@
-schema: socratex-document/v1
-title: 'Agent Contract'
 index:
-  - quick_index
-  - overview
-  - purpose
-  - operating_principles
-  - primary_known_solutions_directive
-  - emoji_rule
-  - ddd_adiv_default
-  - project_memory_layers
-  - execution_passes
-  - known_solution_bias
-  - quality_gates
-  - tool_first_yaml
-  - communication_rules
-  - communication_profiles
-  - safety_rules
+- quick_index
+- overview
+- purpose
+- operating_principles
+- primary_known_solutions_directive
+- emoji_rule
+- ddd_adiv_default
+- project_memory_layers
+- execution_passes
+- known_solution_bias
+- quality_gates
+- tool_first_yaml
+- communication_rules
+- communication_profiles
+- safety_rules
+- git_completion
 items:
   quick_index:
-    title: 'Quick Index'
-    refs:
-      - overview
-      - purpose
-      - operating_principles
-      - primary_known_solutions_directive
-      - emoji_rule
-      - ddd_adiv_default
-      - project_memory_layers
-      - execution_passes
-      - known_solution_bias
-      - quality_gates
-      - tool_first_yaml
-      - communication_rules
-      - communication_profiles
-      - safety_rules
+    title: Quick Index
+    content: |
+      - Overview
+      - Purpose
+      - Operating Principles
+      - Primary Known-Solutions Directive
+      - Emoji Rule
+      - DDD-ADIV Default
+      - Project Memory Layers
+      - Execution Passes
+      - Known-Solution Bias
+      - Quality Gates
+      - Tool-First YAML
+      - Communication Rules
+      - Communication Profiles
+      - Safety Rules
+      - Git Completion
   overview:
-    title: 'Overview'
-    format: 'markdown-section'
+    title: Overview
+    format: markdown-section
     body: |
       # Agent Contract
-
   purpose:
-    title: 'Purpose'
-    format: 'markdown-section'
+    title: Purpose
+    format: markdown-section
     body: |
       ## Purpose
 
       This file is the shared instruction contract for all adapters and project packs.
 
       The agent's job is to preserve project continuity, make state explicit, execute concrete work, and keep decisions falsifiable.
-
   operating_principles:
-    title: 'Operating Principles'
-    format: 'markdown-section'
+    title: Operating Principles
+    format: markdown-section
     body: |
       ## Operating Principles
 
@@ -73,10 +71,9 @@ items:
       - Prefer high-ROI improvements over comprehensive but low-impact passes.
       - When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.
       - Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.
-
   primary_known_solutions_directive:
-    title: 'Primary Known-Solutions Directive'
-    format: 'markdown-section'
+    title: Primary Known-Solutions Directive
+    format: markdown-section
     body: |
       ## Primary Known-Solutions Directive
 
@@ -103,10 +100,9 @@ items:
       - Profile-fit check: filter the known-solutions search space through `project_profile` when it exists. Legacy, custom-framework, or low-test projects need modernization, seam, characterization-test, adapter, and anti-corruption patterns more than abstract clean-room architecture.
 
       Only build bespoke systems when the known option does not fit, creates worse constraints, or hides project-specific truth.
-
   emoji_rule:
-    title: 'Emoji Rule'
-    format: 'markdown-section'
+    title: Emoji Rule
+    format: markdown-section
     body: |
       ## Emoji Rule
 
@@ -117,10 +113,9 @@ items:
       Do not force emoji into ordinary list items by default.
 
       For opening table-of-contents or index lists, every item should start with a context-appropriate emoji.
-
   ddd_adiv_default:
-    title: 'DDD-ADIV Default'
-    format: 'markdown-section'
+    title: DDD-ADIV Default
+    format: markdown-section
     body: |
       ## DDD-ADIV Default
 
@@ -137,10 +132,9 @@ items:
       - Verification attached: risky work should define how correctness will be checked.
 
       Do not turn DDD-ADIV into ceremony. Use it when it reduces ambiguity, future retrofit cost, or hidden coupling.
-
   project_memory_layers:
-    title: 'Project Memory Layers'
-    format: 'markdown-section'
+    title: Project Memory Layers
+    format: markdown-section
     body: |
       ## Project Memory Layers
 
@@ -167,10 +161,9 @@ items:
       Read `core/INSTRUCTION-CAPTURE.yaml` before rewriting files that collect raw user instructions.
 
       Read `core/FILE-FORMATS.yaml` before creating or renaming project memory files.
-
   execution_passes:
-    title: 'Execution Passes'
-    format: 'markdown-section'
+    title: Execution Passes
+    format: markdown-section
     body: |
       ## Execution Passes
 
@@ -186,10 +179,9 @@ items:
       - What it intentionally does not do yet.
 
       Completed passes should leave a concise trace in the completion log and be removed from the active plan.
-
   known_solution_bias:
-    title: 'Known-Solution Bias'
-    format: 'markdown-section'
+    title: Known-Solution Bias
+    format: markdown-section
     body: |
       ## Known-Solution Bias
 
@@ -205,10 +197,9 @@ items:
       - In research: evidence tables, source grading, literature maps, falsifiable claims, synthesis memos.
 
       Prefer known solutions when they are cheaper, clearer, and easier to verify.
-
   quality_gates:
-    title: 'Quality Gates'
-    format: 'markdown-section'
+    title: Quality Gates
+    format: markdown-section
     body: |
       ## Quality Gates
 
@@ -222,11 +213,10 @@ items:
       - Generic execution: artifact completeness, stakeholder review, decision consistency, risk check.
 
       Do not fake verification. If something was not verified, say so.
-
   tool_first_yaml:
-    title: 'Tool-First YAML'
-    format: 'markdown-section'
-    body: |
+    title: Tool-First YAML
+    format: markdown-section
+    body: |-
       ## Tool-First YAML
 
       Use SocratexAI tools for structured YAML documents in every project type, including generic, personal, and creative projects.
@@ -250,10 +240,15 @@ items:
       Manual YAML edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.yaml`.
 
       Never silently bypass a relevant tool in a non-code project just because the project is not programming-related.
-
+      - Use `tools/doc_list_insert.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing structured YAML item; it should replace chained key/read/search/manual-edit/check queues for that case.
+      - Use `tools/doc_list_check.ps1` before list insertion only when the user asks for a duplicate report or possible matches must be reviewed before choosing the target item.
+      - For documentation updates outside context capsules and strictly technical agent memory, use the candidate-title flow by default: derive likely duplicate words, run `tools/doc_list_check.ps1 -Terms <words>`, read only candidate sections with `tools/doc_read_titles.ps1 -Titles <titles>`, then apply the update with one transactional insert or item script.
+      - `tools/doc_list_check.ps1 -Terms <words>` returns candidate titles, keys, matched terms, and excerpts so the agent can avoid broad reads before deciding whether an update is a duplicate.
+      - `tools/doc_read_titles.ps1 -Titles <titles>` reads only selected candidate sections by title or key after duplicate discovery.
+      - Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title workflow: derive likely duplicate words, run `tools/doc_list_check.ps1 -Terms <words>`, read only candidates with `tools/doc_read_titles.ps1 -Titles <titles>`, then write once through a transactional document script.
   communication_rules:
-    title: 'Communication Rules'
-    format: 'markdown-section'
+    title: Communication Rules
+    format: markdown-section
     body: |
       ## Communication Rules
 
@@ -285,10 +280,9 @@ items:
       Treat the user as capable of nuance. Do not oversimplify unless asked.
 
       When an analysis, review, planning, or finish report includes recommendations or next steps, end with `ROI Picks`: one to three improvements worth doing now, with value axes, cost axes, and a one-line reason.
-
   communication_profiles:
-    title: 'Communication Profiles'
-    format: 'markdown-section'
+    title: Communication Profiles
+    format: markdown-section
     body: |
       ## Communication Profiles
 
@@ -324,10 +318,9 @@ items:
       - Prefer step-by-step mechanistic explanations over vague summaries.
       - List adjacent side topics briefly instead of over-expanding the main answer.
       - Provide constructive criticism whenever it is relevant and actionable.
-
   safety_rules:
-    title: 'Safety Rules'
-    format: 'markdown-section'
+    title: Safety Rules
+    format: markdown-section
     body: |
       ## Safety Rules
 
@@ -338,3 +331,15 @@ items:
       - Never silently fall back from a script to manual work without informing the user.
       - If a script cannot run due to a missing runtime, propose installing the runtime before falling back.
       - Treat missing tooling runtime as a system bug worth fixing, not as a permanent constraint.
+  git_completion:
+    title: Git Completion
+    content: |-
+      ## Git Completion
+
+      Hard rule: use the project's commit/push wrapper whenever practical for task closure.
+
+      The wrapper must stage explicit paths, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.
+
+      If the working tree is not clean after commit/push, the subtask is not closed.
+schema: socratex-document/v1
+title: Agent Contract

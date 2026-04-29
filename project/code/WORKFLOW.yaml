@@ -129,7 +129,7 @@ items:
   script_first_execution:
     title: Script-First Execution
     format: markdown-section
-    body: |
+    body: |-
       ## Script-First Execution
 
       For programming work, prefer project scripts whenever practical.
@@ -155,6 +155,9 @@ items:
       For moving items inside one structured YAML document, use `tools/doc_item_move.ps1`.
 
       For inserting items into structured YAML documents, use `tools/doc_item_insert.ps1`.
+      - For simple reference, inspiration, source, URL, or one-line list additions inside an existing structured YAML item, use `tools/doc_list_insert.ps1`; use `tools/doc_list_check.ps1` first only when duplicate matches need explicit review.
+      - For documentation updates outside context capsules and strictly technical agent memory, use the candidate-title flow: derive duplicate terms, run `tools/doc_list_check.ps1 -Terms <words>`, read candidates with `tools/doc_read_titles.ps1 -Titles <titles>`, then write once with a transactional insert/item script.
+      - Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title workflow: derive likely duplicate words, run `tools/doc_list_check.ps1 -Terms <words>`, read only candidates with `tools/doc_read_titles.ps1 -Titles <titles>`, then write once through a transactional document script.
   verification_boundary:
     title: Verification Boundary
     format: markdown-section

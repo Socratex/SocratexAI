@@ -110,9 +110,14 @@ Use:
 - `tools/doc_item_bulk_insert.ps1` for multiple keyed items in one document,
 - `tools/doc_item_move.ps1` for ordering inside one document,
 - `tools/doc_item_migrate.ps1` for moving or copying between documents,
+- `tools/doc_list_insert.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing YAML item,
+- `tools/doc_list_check.ps1 -Terms <words>` to return candidate duplicate titles, keys, matched terms, and excerpts before deciding whether an update already exists,
+- `tools/doc_read_titles.ps1 -Titles <titles>` to read only candidate sections before writing,
 - `tools/docs_slim.ps1` and `tools/docs_migrator.ps1` for whole-document format passes.
 
 These scripts should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.
+
+Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title flow by default: derive likely duplicate words, run `doc_list_check`, read candidates with `doc_read_titles`, then write once with a transactional insert or item script.
 
 Do not manually repeat normalize, cache, check, or readback commands after a successful transactional document edit unless the wrapper failed, `-NoPostEdit` was intentionally used, or a broader verification boundary requires it.
 
@@ -139,6 +144,14 @@ Run status, audit, quality, line-index, finish, and commit helpers at workflow b
 Do not run `git status`, `git diff --check`, `tools/check_task.ps1`, `tools/run_quality_gate.ps1`, `tools/update_code_line_index.ps1`, or `tools/finish_task.ps1` after every small edit.
 
 Do not follow a successful `tools/doc_read.ps1` with a full `Get-Content` of the same document unless the selected output is insufficient, raw formatting matters, or the document structure looks suspicious.
+
+## Git Completion
+
+Hard rule: use `tools/commit_task.ps1` whenever practical for task closure.
+
+The wrapper should stage explicit paths, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.
+
+If the working tree is not clean after commit/push, the subtask is not closed.
 
 ## Quality Gate
 

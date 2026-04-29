@@ -5,7 +5,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string[]]$Paths,
 
-    [switch]$NoVerify
+    [switch]$NoVerify,
+
+    [switch]$NoPush
 )
 
 Set-StrictMode -Version Latest
@@ -41,7 +43,28 @@ try {
 
     Write-Host "==> committing"
     git commit -m $Message
+    if ($LASTEXITCODE -ne 0) {
+        throw "git commit failed with exit code $LASTEXITCODE"
+    }
+
+    if (-not $NoPush) {
+        Write-Host "==> pushing"
+        git push origin HEAD
+        if ($LASTEXITCODE -ne 0) {
+            throw "git push failed with exit code $LASTEXITCODE"
+        }
+    }
+
+    Write-Host "==> final repository state"
+    $remaining = @(git status --short)
+    if ($remaining.Count -eq 0) {
+        Write-Host "OK: working tree clean; subtask closed."
+    } else {
+        Write-Host "WARN: working tree still has changes; subtask not fully closed."
+        foreach ($line in $remaining) {
+            Write-Host $line
+        }
+    }
 } finally {
     Pop-Location
 }
-

@@ -1,0 +1,2453 @@
+{
+  "schema_version": 1,
+  "documents": [
+    {
+      "path": "CHANGELOG.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "entries"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "core/ACTIVATION-CHECK.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "when_to_run",
+        "required_checks",
+        "report_shape",
+        "emoji_activation",
+        "failure_handling"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "when_to_run": {
+          "path": "items.when_to_run",
+          "title": "When To Run",
+          "ref": "items.when_to_run",
+          "status": ""
+        },
+        "required_checks": {
+          "path": "items.required_checks",
+          "title": "Required Checks",
+          "ref": "items.required_checks",
+          "status": ""
+        },
+        "report_shape": {
+          "path": "items.report_shape",
+          "title": "Report Shape",
+          "ref": "items.report_shape",
+          "status": ""
+        },
+        "emoji_activation": {
+          "path": "items.emoji_activation",
+          "title": "<emoji> Activation",
+          "ref": "items.emoji_activation",
+          "status": ""
+        },
+        "failure_handling": {
+          "path": "items.failure_handling",
+          "title": "Failure Handling",
+          "ref": "items.failure_handling",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/AGENT-CONTRACT.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "operating_principles",
+        "primary_known_solutions_directive",
+        "emoji_rule",
+        "ddd_adiv_default",
+        "project_memory_layers",
+        "execution_passes",
+        "known_solution_bias",
+        "quality_gates",
+        "tool_first_yaml",
+        "communication_rules",
+        "communication_profiles",
+        "safety_rules",
+        "git_completion"
+      ],
+      "top_level_keys": [
+        "index",
+        "items",
+        "schema",
+        "title"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "operating_principles": {
+          "path": "items.operating_principles",
+          "title": "Operating Principles",
+          "ref": "items.operating_principles",
+          "status": ""
+        },
+        "primary_known_solutions_directive": {
+          "path": "items.primary_known_solutions_directive",
+          "title": "Primary Known-Solutions Directive",
+          "ref": "items.primary_known_solutions_directive",
+          "status": ""
+        },
+        "emoji_rule": {
+          "path": "items.emoji_rule",
+          "title": "Emoji Rule",
+          "ref": "items.emoji_rule",
+          "status": ""
+        },
+        "ddd_adiv_default": {
+          "path": "items.ddd_adiv_default",
+          "title": "DDD-ADIV Default",
+          "ref": "items.ddd_adiv_default",
+          "status": ""
+        },
+        "project_memory_layers": {
+          "path": "items.project_memory_layers",
+          "title": "Project Memory Layers",
+          "ref": "items.project_memory_layers",
+          "status": ""
+        },
+        "execution_passes": {
+          "path": "items.execution_passes",
+          "title": "Execution Passes",
+          "ref": "items.execution_passes",
+          "status": ""
+        },
+        "known_solution_bias": {
+          "path": "items.known_solution_bias",
+          "title": "Known-Solution Bias",
+          "ref": "items.known_solution_bias",
+          "status": ""
+        },
+        "quality_gates": {
+          "path": "items.quality_gates",
+          "title": "Quality Gates",
+          "ref": "items.quality_gates",
+          "status": ""
+        },
+        "tool_first_yaml": {
+          "path": "items.tool_first_yaml",
+          "title": "Tool-First YAML",
+          "ref": "items.tool_first_yaml",
+          "status": ""
+        },
+        "communication_rules": {
+          "path": "items.communication_rules",
+          "title": "Communication Rules",
+          "ref": "items.communication_rules",
+          "status": ""
+        },
+        "communication_profiles": {
+          "path": "items.communication_profiles",
+          "title": "Communication Profiles",
+          "ref": "items.communication_profiles",
+          "status": ""
+        },
+        "safety_rules": {
+          "path": "items.safety_rules",
+          "title": "Safety Rules",
+          "ref": "items.safety_rules",
+          "status": ""
+        },
+        "git_completion": {
+          "path": "items.git_completion",
+          "title": "Git Completion",
+          "ref": "items.git_completion",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/COMMANDS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "init",
+        "continue",
+        "capture",
+        "plan",
+        "review",
+        "audit",
+        "finish"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "init": {
+          "path": "items.init",
+          "title": "INIT",
+          "ref": "items.init",
+          "status": ""
+        },
+        "continue": {
+          "path": "items.continue",
+          "title": "CONTINUE",
+          "ref": "items.continue",
+          "status": ""
+        },
+        "capture": {
+          "path": "items.capture",
+          "title": "CAPTURE",
+          "ref": "items.capture",
+          "status": ""
+        },
+        "plan": {
+          "path": "items.plan",
+          "title": "PLAN",
+          "ref": "items.plan",
+          "status": ""
+        },
+        "review": {
+          "path": "items.review",
+          "title": "REVIEW",
+          "ref": "items.review",
+          "status": ""
+        },
+        "audit": {
+          "path": "items.audit",
+          "title": "AUDIT",
+          "ref": "items.audit",
+          "status": ""
+        },
+        "finish": {
+          "path": "items.finish",
+          "title": "FINISH",
+          "ref": "items.finish",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/CONTEXT-COMPACTION.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "when_to_recommend_a_hard_reset",
+        "before_reset",
+        "what_not_to_store",
+        "reset_message"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "when_to_recommend_a_hard_reset": {
+          "path": "items.when_to_recommend_a_hard_reset",
+          "title": "When to Recommend a Hard Reset",
+          "ref": "items.when_to_recommend_a_hard_reset",
+          "status": ""
+        },
+        "before_reset": {
+          "path": "items.before_reset",
+          "title": "Before Reset",
+          "ref": "items.before_reset",
+          "status": ""
+        },
+        "what_not_to_store": {
+          "path": "items.what_not_to_store",
+          "title": "What Not to Store",
+          "ref": "items.what_not_to_store",
+          "status": ""
+        },
+        "reset_message": {
+          "path": "items.reset_message",
+          "title": "Reset Message",
+          "ref": "items.reset_message",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/FILE-FORMATS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "code_projects",
+        "non_code_projects",
+        "migration_rule"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "code_projects": {
+          "path": "items.code_projects",
+          "title": "Code Projects",
+          "ref": "items.code_projects",
+          "status": ""
+        },
+        "non_code_projects": {
+          "path": "items.non_code_projects",
+          "title": "Non-Code Projects",
+          "ref": "items.non_code_projects",
+          "status": ""
+        },
+        "migration_rule": {
+          "path": "items.migration_rule",
+          "title": "Migration Rule",
+          "ref": "items.migration_rule",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/INSTRUCTION-CAPTURE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "recommended_files",
+        "defragmentation",
+        "sorting",
+        "cleaning_rules",
+        "promotion_boundary"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "items.recommended_files",
+          "title": "Recommended Files",
+          "ref": "items.recommended_files",
+          "status": ""
+        },
+        "defragmentation": {
+          "path": "items.defragmentation",
+          "title": "Defragmentation",
+          "ref": "items.defragmentation",
+          "status": ""
+        },
+        "sorting": {
+          "path": "items.sorting",
+          "title": "Sorting",
+          "ref": "items.sorting",
+          "status": ""
+        },
+        "cleaning_rules": {
+          "path": "items.cleaning_rules",
+          "title": "Cleaning Rules",
+          "ref": "items.cleaning_rules",
+          "status": ""
+        },
+        "promotion_boundary": {
+          "path": "items.promotion_boundary",
+          "title": "Promotion Boundary",
+          "ref": "items.promotion_boundary",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/MEMORY-MODEL.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "active_state",
+        "branch_scoped_active_state",
+        "plan",
+        "backlog",
+        "decisions",
+        "context_capsules"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "active_state": {
+          "path": "items.active_state",
+          "title": "Active State",
+          "ref": "items.active_state",
+          "status": ""
+        },
+        "branch_scoped_active_state": {
+          "path": "items.branch_scoped_active_state",
+          "title": "Branch-Scoped Active State",
+          "ref": "items.branch_scoped_active_state",
+          "status": ""
+        },
+        "plan": {
+          "path": "items.plan",
+          "title": "Plan",
+          "ref": "items.plan",
+          "status": ""
+        },
+        "backlog": {
+          "path": "items.backlog",
+          "title": "Backlog",
+          "ref": "items.backlog",
+          "status": ""
+        },
+        "decisions": {
+          "path": "items.decisions",
+          "title": "Decisions",
+          "ref": "items.decisions",
+          "status": ""
+        },
+        "context_capsules": {
+          "path": "items.context_capsules",
+          "title": "Context Capsules",
+          "ref": "items.context_capsules",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/PROJECT-PROFILE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "profile_axes",
+        "behavior_impact",
+        "profile_fit_check"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "profile_axes": {
+          "path": "items.profile_axes",
+          "title": "Profile Axes",
+          "ref": "items.profile_axes",
+          "status": ""
+        },
+        "behavior_impact": {
+          "path": "items.behavior_impact",
+          "title": "Behavior Impact",
+          "ref": "items.behavior_impact",
+          "status": ""
+        },
+        "profile_fit_check": {
+          "path": "items.profile_fit_check",
+          "title": "Profile-Fit Check",
+          "ref": "items.profile_fit_check",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/PROMOTION-RULES.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "backlog_to_plan",
+        "plan_to_state",
+        "branch_state_to_durable_memory",
+        "plan_to_changelog",
+        "plan_or_backlog_to_decisions",
+        "plan_or_implementation_to_context_docs",
+        "state_to_plan",
+        "decisions_to_plan"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "backlog_to_plan": {
+          "path": "items.backlog_to_plan",
+          "title": "BACKLOG to PLAN",
+          "ref": "items.backlog_to_plan",
+          "status": ""
+        },
+        "plan_to_state": {
+          "path": "items.plan_to_state",
+          "title": "PLAN to STATE",
+          "ref": "items.plan_to_state",
+          "status": ""
+        },
+        "branch_state_to_durable_memory": {
+          "path": "items.branch_state_to_durable_memory",
+          "title": "BRANCH STATE to durable memory",
+          "ref": "items.branch_state_to_durable_memory",
+          "status": ""
+        },
+        "plan_to_changelog": {
+          "path": "items.plan_to_changelog",
+          "title": "PLAN to CHANGELOG",
+          "ref": "items.plan_to_changelog",
+          "status": ""
+        },
+        "plan_or_backlog_to_decisions": {
+          "path": "items.plan_or_backlog_to_decisions",
+          "title": "PLAN or BACKLOG to DECISIONS",
+          "ref": "items.plan_or_backlog_to_decisions",
+          "status": ""
+        },
+        "plan_or_implementation_to_context_docs": {
+          "path": "items.plan_or_implementation_to_context_docs",
+          "title": "PLAN or IMPLEMENTATION to context-docs",
+          "ref": "items.plan_or_implementation_to_context_docs",
+          "status": ""
+        },
+        "state_to_plan": {
+          "path": "items.state_to_plan",
+          "title": "STATE to PLAN",
+          "ref": "items.state_to_plan",
+          "status": ""
+        },
+        "decisions_to_plan": {
+          "path": "items.decisions_to_plan",
+          "title": "DECISIONS to PLAN",
+          "ref": "items.decisions_to_plan",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/REMOVAL-PROTOCOL.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "command",
+        "workflow",
+        "default_preservation",
+        "safety"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "command": {
+          "path": "items.command",
+          "title": "Command",
+          "ref": "items.command",
+          "status": ""
+        },
+        "workflow": {
+          "path": "items.workflow",
+          "title": "Workflow",
+          "ref": "items.workflow",
+          "status": ""
+        },
+        "default_preservation": {
+          "path": "items.default_preservation",
+          "title": "Default Preservation",
+          "ref": "items.default_preservation",
+          "status": ""
+        },
+        "safety": {
+          "path": "items.safety",
+          "title": "Safety",
+          "ref": "items.safety",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/ROI-BIAS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "value_axes",
+        "cost_axes",
+        "roi_rule",
+        "profile_weight",
+        "roi_picks",
+        "emoji_roi_picks",
+        "anti_pattern"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "value_axes": {
+          "path": "items.value_axes",
+          "title": "Value Axes",
+          "ref": "items.value_axes",
+          "status": ""
+        },
+        "cost_axes": {
+          "path": "items.cost_axes",
+          "title": "Cost Axes",
+          "ref": "items.cost_axes",
+          "status": ""
+        },
+        "roi_rule": {
+          "path": "items.roi_rule",
+          "title": "ROI Rule",
+          "ref": "items.roi_rule",
+          "status": ""
+        },
+        "profile_weight": {
+          "path": "items.profile_weight",
+          "title": "Profile Weight",
+          "ref": "items.profile_weight",
+          "status": ""
+        },
+        "roi_picks": {
+          "path": "items.roi_picks",
+          "title": "ROI Picks",
+          "ref": "items.roi_picks",
+          "status": ""
+        },
+        "emoji_roi_picks": {
+          "path": "items.emoji_roi_picks",
+          "title": "<emoji> ROI Picks",
+          "ref": "items.emoji_roi_picks",
+          "status": ""
+        },
+        "anti_pattern": {
+          "path": "items.anti_pattern",
+          "title": "Anti-Pattern",
+          "ref": "items.anti_pattern",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/SCRIPT-FALLBACK.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "protocol",
+        "install_hints"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "protocol": {
+          "path": "items.protocol",
+          "title": "Protocol",
+          "ref": "items.protocol",
+          "status": ""
+        },
+        "install_hints": {
+          "path": "items.install_hints",
+          "title": "Install Hints",
+          "ref": "items.install_hints",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/TASK-WORK.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "when_to_use",
+        "default_file",
+        "minimal_schema",
+        "workflow",
+        "promotion",
+        "structured_document_edits"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "when_to_use": {
+          "path": "items.when_to_use",
+          "title": "When To Use",
+          "ref": "items.when_to_use",
+          "status": ""
+        },
+        "default_file": {
+          "path": "items.default_file",
+          "title": "Default File",
+          "ref": "items.default_file",
+          "status": ""
+        },
+        "minimal_schema": {
+          "path": "items.minimal_schema",
+          "title": "Minimal Schema",
+          "ref": "items.minimal_schema",
+          "status": ""
+        },
+        "workflow": {
+          "path": "items.workflow",
+          "title": "Workflow",
+          "ref": "items.workflow",
+          "status": ""
+        },
+        "promotion": {
+          "path": "items.promotion",
+          "title": "Promotion",
+          "ref": "items.promotion",
+          "status": ""
+        },
+        "structured_document_edits": {
+          "path": "items.structured_document_edits",
+          "title": "Structured Document Edits",
+          "ref": "items.structured_document_edits",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/UPDATE-PROTOCOL.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "source_resolution",
+        "update_command",
+        "workflow",
+        "safety"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "source_resolution": {
+          "path": "items.source_resolution",
+          "title": "Source Resolution",
+          "ref": "items.source_resolution",
+          "status": ""
+        },
+        "update_command": {
+          "path": "items.update_command",
+          "title": "Update Command",
+          "ref": "items.update_command",
+          "status": ""
+        },
+        "workflow": {
+          "path": "items.workflow",
+          "title": "Workflow",
+          "ref": "items.workflow",
+          "status": ""
+        },
+        "safety": {
+          "path": "items.safety",
+          "title": "Safety",
+          "ref": "items.safety",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/BRANCH-MODE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "layout",
+        "session_start",
+        "file_language",
+        "state_and_plan_contract",
+        "branch_end"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "layout": {
+          "path": "items.layout",
+          "title": "Layout",
+          "ref": "items.layout",
+          "status": ""
+        },
+        "session_start": {
+          "path": "items.session_start",
+          "title": "Session Start",
+          "ref": "items.session_start",
+          "status": ""
+        },
+        "file_language": {
+          "path": "items.file_language",
+          "title": "File Language",
+          "ref": "items.file_language",
+          "status": ""
+        },
+        "state_and_plan_contract": {
+          "path": "items.state_and_plan_contract",
+          "title": "State and Plan Contract",
+          "ref": "items.state_and_plan_contract",
+          "status": ""
+        },
+        "branch_end": {
+          "path": "items.branch_end",
+          "title": "Branch End",
+          "ref": "items.branch_end",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/COMMANDS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "continue",
+        "plan",
+        "bug",
+        "review",
+        "audit",
+        "finish",
+        "commit",
+        "log",
+        "diagnostics",
+        "prompt",
+        "instructions"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "continue": {
+          "path": "items.continue",
+          "title": "CONTINUE",
+          "ref": "items.continue",
+          "status": ""
+        },
+        "plan": {
+          "path": "items.plan",
+          "title": "PLAN",
+          "ref": "items.plan",
+          "status": ""
+        },
+        "bug": {
+          "path": "items.bug",
+          "title": "BUG",
+          "ref": "items.bug",
+          "status": ""
+        },
+        "review": {
+          "path": "items.review",
+          "title": "REVIEW",
+          "ref": "items.review",
+          "status": ""
+        },
+        "audit": {
+          "path": "items.audit",
+          "title": "AUDIT",
+          "ref": "items.audit",
+          "status": ""
+        },
+        "finish": {
+          "path": "items.finish",
+          "title": "FINISH",
+          "ref": "items.finish",
+          "status": ""
+        },
+        "commit": {
+          "path": "items.commit",
+          "title": "COMMIT",
+          "ref": "items.commit",
+          "status": ""
+        },
+        "log": {
+          "path": "items.log",
+          "title": "LOG",
+          "ref": "items.log",
+          "status": ""
+        },
+        "diagnostics": {
+          "path": "items.diagnostics",
+          "title": "DIAGNOSTICS",
+          "ref": "items.diagnostics",
+          "status": ""
+        },
+        "prompt": {
+          "path": "items.prompt",
+          "title": "PROMPT",
+          "ref": "items.prompt",
+          "status": ""
+        },
+        "instructions": {
+          "path": "items.instructions",
+          "title": "INSTRUCTIONS",
+          "ref": "items.instructions",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/DDD-ADIV.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "known_solutions_alignment",
+        "domain_driven",
+        "architecture_decisive",
+        "invariant_visible",
+        "verification_attached"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "known_solutions_alignment": {
+          "path": "items.known_solutions_alignment",
+          "title": "Known-Solutions Alignment",
+          "ref": "items.known_solutions_alignment",
+          "status": ""
+        },
+        "domain_driven": {
+          "path": "items.domain_driven",
+          "title": "Domain-Driven",
+          "ref": "items.domain_driven",
+          "status": ""
+        },
+        "architecture_decisive": {
+          "path": "items.architecture_decisive",
+          "title": "Architecture-Decisive",
+          "ref": "items.architecture_decisive",
+          "status": ""
+        },
+        "invariant_visible": {
+          "path": "items.invariant_visible",
+          "title": "Invariant-Visible",
+          "ref": "items.invariant_visible",
+          "status": ""
+        },
+        "verification_attached": {
+          "path": "items.verification_attached",
+          "title": "Verification-Attached",
+          "ref": "items.verification_attached",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/DIAGNOSTICS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "required_project_setup",
+        "diagnostic_intake",
+        "workflow",
+        "generic_command",
+        "human_readable_reporting",
+        "evidence_handling"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "required_project_setup": {
+          "path": "items.required_project_setup",
+          "title": "Required Project Setup",
+          "ref": "items.required_project_setup",
+          "status": ""
+        },
+        "diagnostic_intake": {
+          "path": "items.diagnostic_intake",
+          "title": "Diagnostic Intake",
+          "ref": "items.diagnostic_intake",
+          "status": ""
+        },
+        "workflow": {
+          "path": "items.workflow",
+          "title": "Workflow",
+          "ref": "items.workflow",
+          "status": ""
+        },
+        "generic_command": {
+          "path": "items.generic_command",
+          "title": "Generic Command",
+          "ref": "items.generic_command",
+          "status": ""
+        },
+        "human_readable_reporting": {
+          "path": "items.human_readable_reporting",
+          "title": "Human-Readable Reporting",
+          "ref": "items.human_readable_reporting",
+          "status": ""
+        },
+        "evidence_handling": {
+          "path": "items.evidence_handling",
+          "title": "Evidence Handling",
+          "ref": "items.evidence_handling",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/FROZEN-LAYERS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "default_contract",
+        "freeze_candidate_examples",
+        "non_local_changes"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "default_contract": {
+          "path": "items.default_contract",
+          "title": "Default Contract",
+          "ref": "items.default_contract",
+          "status": ""
+        },
+        "freeze_candidate_examples": {
+          "path": "items.freeze_candidate_examples",
+          "title": "Freeze Candidate Examples",
+          "ref": "items.freeze_candidate_examples",
+          "status": ""
+        },
+        "non_local_changes": {
+          "path": "items.non_local_changes",
+          "title": "Non-Local Changes",
+          "ref": "items.non_local_changes",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/GIT.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "worktree_rules",
+        "branch_rules",
+        "staging_rules",
+        "commit_rules"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "worktree_rules": {
+          "path": "items.worktree_rules",
+          "title": "Worktree Rules",
+          "ref": "items.worktree_rules",
+          "status": ""
+        },
+        "branch_rules": {
+          "path": "items.branch_rules",
+          "title": "Branch Rules",
+          "ref": "items.branch_rules",
+          "status": ""
+        },
+        "staging_rules": {
+          "path": "items.staging_rules",
+          "title": "Staging Rules",
+          "ref": "items.staging_rules",
+          "status": ""
+        },
+        "commit_rules": {
+          "path": "items.commit_rules",
+          "title": "Commit Rules",
+          "ref": "items.commit_rules",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/INSTRUCTION-CAPTURE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "code_sorting_rules",
+        "code_promotion_rules",
+        "cleaning_rules"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "code_sorting_rules": {
+          "path": "items.code_sorting_rules",
+          "title": "Code Sorting Rules",
+          "ref": "items.code_sorting_rules",
+          "status": ""
+        },
+        "code_promotion_rules": {
+          "path": "items.code_promotion_rules",
+          "title": "Code Promotion Rules",
+          "ref": "items.code_promotion_rules",
+          "status": ""
+        },
+        "cleaning_rules": {
+          "path": "items.cleaning_rules",
+          "title": "Cleaning Rules",
+          "ref": "items.cleaning_rules",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/PACK.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "required_reads_for_code_projects",
+        "technical_defaults",
+        "script_first_automation_directive",
+        "ddd_adiv_recommendation",
+        "known_solution_bias",
+        "profile_aware_defaults",
+        "change_strategy",
+        "task_gating",
+        "reporting",
+        "review_heuristics",
+        "verification"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "items.recommended_files",
+          "title": "Recommended Files",
+          "ref": "items.recommended_files",
+          "status": ""
+        },
+        "required_reads_for_code_projects": {
+          "path": "items.required_reads_for_code_projects",
+          "title": "Required Reads for Code Projects",
+          "ref": "items.required_reads_for_code_projects",
+          "status": ""
+        },
+        "technical_defaults": {
+          "path": "items.technical_defaults",
+          "title": "Technical Defaults",
+          "ref": "items.technical_defaults",
+          "status": ""
+        },
+        "script_first_automation_directive": {
+          "path": "items.script_first_automation_directive",
+          "title": "Script-First Automation Directive",
+          "ref": "items.script_first_automation_directive",
+          "status": ""
+        },
+        "ddd_adiv_recommendation": {
+          "path": "items.ddd_adiv_recommendation",
+          "title": "DDD-ADIV Recommendation",
+          "ref": "items.ddd_adiv_recommendation",
+          "status": ""
+        },
+        "known_solution_bias": {
+          "path": "items.known_solution_bias",
+          "title": "Known-Solution Bias",
+          "ref": "items.known_solution_bias",
+          "status": ""
+        },
+        "profile_aware_defaults": {
+          "path": "items.profile_aware_defaults",
+          "title": "Profile-Aware Defaults",
+          "ref": "items.profile_aware_defaults",
+          "status": ""
+        },
+        "change_strategy": {
+          "path": "items.change_strategy",
+          "title": "Change Strategy",
+          "ref": "items.change_strategy",
+          "status": ""
+        },
+        "task_gating": {
+          "path": "items.task_gating",
+          "title": "Task Gating",
+          "ref": "items.task_gating",
+          "status": ""
+        },
+        "reporting": {
+          "path": "items.reporting",
+          "title": "Reporting",
+          "ref": "items.reporting",
+          "status": ""
+        },
+        "review_heuristics": {
+          "path": "items.review_heuristics",
+          "title": "Review Heuristics",
+          "ref": "items.review_heuristics",
+          "status": ""
+        },
+        "verification": {
+          "path": "items.verification",
+          "title": "Verification",
+          "ref": "items.verification",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/REGISTRIES.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "bug_registry",
+        "solved_bug_registry",
+        "todo_registry",
+        "changelog_registry",
+        "decision_registry"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "bug_registry": {
+          "path": "items.bug_registry",
+          "title": "Bug Registry",
+          "ref": "items.bug_registry",
+          "status": ""
+        },
+        "solved_bug_registry": {
+          "path": "items.solved_bug_registry",
+          "title": "Solved Bug Registry",
+          "ref": "items.solved_bug_registry",
+          "status": ""
+        },
+        "todo_registry": {
+          "path": "items.todo_registry",
+          "title": "TODO Registry",
+          "ref": "items.todo_registry",
+          "status": ""
+        },
+        "changelog_registry": {
+          "path": "items.changelog_registry",
+          "title": "Changelog Registry",
+          "ref": "items.changelog_registry",
+          "status": ""
+        },
+        "decision_registry": {
+          "path": "items.decision_registry",
+          "title": "Decision Registry",
+          "ref": "items.decision_registry",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/WORKFLOW.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "read_order",
+        "command_classifier",
+        "general_workflow",
+        "script_first_execution",
+        "verification_boundary",
+        "task_work_tracking",
+        "branch_scoped_workflow",
+        "roi_workflow",
+        "context_cost_control"
+      ],
+      "top_level_keys": [
+        "index",
+        "items",
+        "schema",
+        "title"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "read_order": {
+          "path": "items.read_order",
+          "title": "Read Order",
+          "ref": "items.read_order",
+          "status": ""
+        },
+        "command_classifier": {
+          "path": "items.command_classifier",
+          "title": "Command Classifier",
+          "ref": "items.command_classifier",
+          "status": ""
+        },
+        "general_workflow": {
+          "path": "items.general_workflow",
+          "title": "General Workflow",
+          "ref": "items.general_workflow",
+          "status": ""
+        },
+        "script_first_execution": {
+          "path": "items.script_first_execution",
+          "title": "Script-First Execution",
+          "ref": "items.script_first_execution",
+          "status": ""
+        },
+        "verification_boundary": {
+          "path": "items.verification_boundary",
+          "title": "Verification Boundary",
+          "ref": "items.verification_boundary",
+          "status": ""
+        },
+        "task_work_tracking": {
+          "path": "items.task_work_tracking",
+          "title": "Task Work Tracking",
+          "ref": "items.task_work_tracking",
+          "status": ""
+        },
+        "branch_scoped_workflow": {
+          "path": "items.branch_scoped_workflow",
+          "title": "Branch-Scoped Workflow",
+          "ref": "items.branch_scoped_workflow",
+          "status": ""
+        },
+        "roi_workflow": {
+          "path": "items.roi_workflow",
+          "title": "ROI Workflow",
+          "ref": "items.roi_workflow",
+          "status": ""
+        },
+        "context_cost_control": {
+          "path": "items.context_cost_control",
+          "title": "Context Cost Control",
+          "ref": "items.context_cost_control",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/creative/PACK.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "creative_defaults",
+        "review_gate"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "items.recommended_files",
+          "title": "Recommended Files",
+          "ref": "items.recommended_files",
+          "status": ""
+        },
+        "creative_defaults": {
+          "path": "items.creative_defaults",
+          "title": "Creative Defaults",
+          "ref": "items.creative_defaults",
+          "status": ""
+        },
+        "review_gate": {
+          "path": "items.review_gate",
+          "title": "Review Gate",
+          "ref": "items.review_gate",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/generic/PACK.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "execution_defaults",
+        "review_gate"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "items.recommended_files",
+          "title": "Recommended Files",
+          "ref": "items.recommended_files",
+          "status": ""
+        },
+        "execution_defaults": {
+          "path": "items.execution_defaults",
+          "title": "Execution Defaults",
+          "ref": "items.execution_defaults",
+          "status": ""
+        },
+        "review_gate": {
+          "path": "items.review_gate",
+          "title": "Review Gate",
+          "ref": "items.review_gate",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/personal/PACK.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "operating_defaults",
+        "job_search_add_on",
+        "review_gate"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "items.recommended_files",
+          "title": "Recommended Files",
+          "ref": "items.recommended_files",
+          "status": ""
+        },
+        "operating_defaults": {
+          "path": "items.operating_defaults",
+          "title": "Operating Defaults",
+          "ref": "items.operating_defaults",
+          "status": ""
+        },
+        "job_search_add_on": {
+          "path": "items.job_search_add_on",
+          "title": "Job Search Add-On",
+          "ref": "items.job_search_add_on",
+          "status": ""
+        },
+        "review_gate": {
+          "path": "items.review_gate",
+          "title": "Review Gate",
+          "ref": "items.review_gate",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "QUALITY-GATE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "commands",
+        "notes"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/_INSTRUCTION-QUEUE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/_INSTRUCTION-QUEUE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "queue"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/_PLAN.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "purpose",
+        "pass_index",
+        "passes"
+      ],
+      "keys": {
+        "pass_1": {
+          "path": "pass_index.0",
+          "title": "Initial execution pass",
+          "ref": "pass_index.0",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/_PROMPT-QUEUE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "items"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/BUGS-SOLVED.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "resolved_bugs"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/BUGS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "bugs"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/CHANGELOG.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "entries"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/context-docs/FROZEN_LAYERS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "layers"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/context-docs/TECHNICAL.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "invariants",
+        "ownership_contracts",
+        "source_of_truth",
+        "known_traps"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/current_task.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "task",
+        "micro_tasks",
+        "questions",
+        "risks",
+        "next_suggestions"
+      ],
+      "keys": {
+        "inspect_context": {
+          "path": "micro_tasks.0",
+          "title": "",
+          "ref": "micro_tasks.0",
+          "status": "pending"
+        },
+        "implement_change": {
+          "path": "micro_tasks.1",
+          "title": "",
+          "ref": "micro_tasks.1",
+          "status": "pending"
+        },
+        "verify": {
+          "path": "micro_tasks.2",
+          "title": "",
+          "ref": "micro_tasks.2",
+          "status": "pending"
+        }
+      }
+    },
+    {
+      "path": "templates/code/DECISIONS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "decisions"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/DOCS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "rules",
+        "documents"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/PIPELINE-CONFIG.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "language",
+        "active_project_packs",
+        "ai_operating_mode",
+        "git",
+        "ai_may_commit",
+        "ai_may_push",
+        "branch_workflow",
+        "external_changes_possible",
+        "force_ddd_adiv",
+        "import_pipeline_package",
+        "package_manager_detection",
+        "directive_mode",
+        "first_target",
+        "first_session_success_criteria",
+        "changelog",
+        "communication",
+        "pipeline",
+        "workflow",
+        "project_profile",
+        "runtime_status"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/STATE.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "current_objective",
+        "current_pass",
+        "next_action",
+        "blockers",
+        "risks",
+        "non_regression_reminders"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/code/TODO.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "items"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/context-docs-FROZEN_LAYERS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/context-docs-TECHNICAL.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/DOCS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "rules",
+        "documents"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/PIPELINE-CONFIG.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "language",
+        "active_project_packs",
+        "ai_operating_mode",
+        "git",
+        "first_target",
+        "first_session_success_criteria",
+        "communication"
+      ],
+      "top_level_keys": [
+        "schema",
+        "title",
+        "index",
+        "items"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "items.summary",
+          "title": "Summary",
+          "ref": "items.summary",
+          "status": ""
+        },
+        "language": {
+          "path": "items.language",
+          "title": "Language",
+          "ref": "items.language",
+          "status": ""
+        },
+        "active_project_packs": {
+          "path": "items.active_project_packs",
+          "title": "Active Project Packs",
+          "ref": "items.active_project_packs",
+          "status": ""
+        },
+        "ai_operating_mode": {
+          "path": "items.ai_operating_mode",
+          "title": "AI Operating Mode",
+          "ref": "items.ai_operating_mode",
+          "status": ""
+        },
+        "git": {
+          "path": "items.git",
+          "title": "Git",
+          "ref": "items.git",
+          "status": ""
+        },
+        "first_target": {
+          "path": "items.first_target",
+          "title": "First Target",
+          "ref": "items.first_target",
+          "status": ""
+        },
+        "first_session_success_criteria": {
+          "path": "items.first_session_success_criteria",
+          "title": "First-Session Success Criteria",
+          "ref": "items.first_session_success_criteria",
+          "status": ""
+        },
+        "communication": {
+          "path": "items.communication",
+          "title": "Communication",
+          "ref": "items.communication",
+          "status": ""
+        }
+      }
+    }
+  ]
+}
