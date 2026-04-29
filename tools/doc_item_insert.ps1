@@ -12,7 +12,8 @@ param(
 	[string]$Before = "",
 	[string]$After = "",
 	[switch]$AllowEmpty,
-	[switch]$Replace
+	[switch]$Replace,
+	[switch]$NoPostEdit
 )
 
 Set-StrictMode -Version Latest
@@ -37,4 +38,11 @@ if ($Replace) { $arguments += "--replace" }
 & $python @arguments
 if ($LASTEXITCODE -ne 0) {
 	throw "doc_item_insert failed with exit code $LASTEXITCODE"
+}
+
+if (-not $NoPostEdit) {
+	& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "doc_post_edit.ps1") -Paths $Path
+	if ($LASTEXITCODE -ne 0) {
+		throw "doc_item_insert post-edit pipeline failed with exit code $LASTEXITCODE"
+	}
 }

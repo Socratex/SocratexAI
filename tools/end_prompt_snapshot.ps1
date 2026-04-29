@@ -1,6 +1,6 @@
 param(
 	[string]$OutputPath = "",
-	[string]$CompletionSoundScriptPath = "$env:USERPROFILE\.codex\tools\Start-CodexCompletionSound.ps1",
+	[string]$CompletionSoundScriptPath = $env:CODEX_COMPLETION_SOUND_SCRIPT,
 	[int]$StateTailLines = 80,
 	[int]$MaxListItems = 40,
 	[switch]$NoSound
@@ -274,7 +274,7 @@ try {
 }
 
 if (-not $NoSound) {
-	if (Test-Path -LiteralPath $CompletionSoundScriptPath) {
+	if (-not [string]::IsNullOrWhiteSpace($CompletionSoundScriptPath) -and (Test-Path -LiteralPath $CompletionSoundScriptPath)) {
 		Start-Process powershell.exe -ArgumentList @(
 			"-ExecutionPolicy",
 			"Bypass",

@@ -58,6 +58,7 @@ items:
       
       Execute the next active pass from `_PLAN.yaml`.
       
+      For any pass that implements a new feature, first verify that the pass still represents the most future-proof and maintainable path. If a better enabling contract, data-flow change, ownership boundary, or proven architecture pattern should happen first, update or propose the better sequence before implementation.
       Order:
       
       1. Read `STATE.yaml`.
@@ -65,7 +66,7 @@ items:
       3. Select the first active pass.
       4. Read only the smallest relevant context files.
       5. Implement the scoped change.
-      6. Run the relevant quality gate.
+      6. Run the relevant quality gate at the end of the pass, or after a coherent change block when the pass is broad.
       7. Update `STATE.yaml`.
       8. Remove completed passes from `_PLAN.yaml`.
       9. Record shipped user-visible changes or major fixes in `CHANGELOG.yaml` when `changelog.enabled` is not `no`.
@@ -101,6 +102,7 @@ items:
       
       Work from `BUGS.yaml`.
       
+      Treat each bug report as a signal about system design, not only as a local defect. Before patching, check whether the bug exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness.
       Order:
       
       1. Read `BUGS.yaml`.
@@ -277,4 +279,3 @@ items:
       7. Clear `_INSTRUCTIONS.md` after successful defragmentation.
       8. Remove completed entries from `_INSTRUCTION-QUEUE.yaml` after execution.
       
-

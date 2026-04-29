@@ -110,6 +110,30 @@ def read_item_payload(args: argparse.Namespace) -> dict[str, Any]:
     return payload
 
 
+def read_bulk_payload(path: Path) -> dict[str, dict[str, Any]]:
+    payload = load_yaml(path)
+    if isinstance(payload, dict) and isinstance(payload.get("items"), dict):
+        payload = payload["items"]
+    if not isinstance(payload, dict):
+        raise ValueError("--items-file must contain a YAML mapping or an items mapping.")
+
+    items: dict[str, dict[str, Any]] = {}
+    for key, item in payload.items():
+        item_key = str(key).strip()
+        if not item_key:
+            raise ValueError("--items-file contains an empty item key.")
+        if item_key == "quick_index":
+            raise ValueError("Do not bulk-insert quick_index; it is generated from index/items.")
+        if not isinstance(item, dict):
+            raise ValueError(f"Bulk item must be a mapping: {item_key}")
+        if str(item.get("title", "")).strip() == "":
+            raise ValueError(f"Bulk item must contain a non-empty title: {item_key}")
+        items[item_key] = copy.deepcopy(item)
+    if not items:
+        raise ValueError("--items-file contains no items.")
+    return items
+
+
 def command_insert(args: argparse.Namespace) -> None:
     path = Path(args.path)
     document = normalize_document(load_yaml(path))
@@ -121,6 +145,42 @@ def command_insert(args: argparse.Namespace) -> None:
     document = apply_order(document, keys)
     write_yaml(path, document)
     print(f"OK: inserted {args.key} into {path}")
+
+
+def place_keys(keys: list[str], new_keys: list[str], position: str, before: str, after: str) -> list[str]:
+    result = [candidate for candidate in keys if candidate not in new_keys]
+    if before:
+        if before not in result:
+            raise ValueError(f"Before key does not exist: {before}")
+        insertion_index = result.index(before)
+    elif after:
+        if after not in result:
+            raise ValueError(f"After key does not exist: {after}")
+        insertion_index = result.index(after) + 1
+    elif position == "start":
+        insertion_index = 1 if result and result[0] == "quick_index" else 0
+    elif position == "end":
+        insertion_index = len(result)
+    else:
+        raise ValueError("Use --position start/end or --before/--after.")
+    return result[:insertion_index] + new_keys + result[insertion_index:]
+
+
+def command_bulk_insert(args: argparse.Namespace) -> None:
+    path = Path(args.path)
+    document = normalize_document(load_yaml(path))
+    items = document["items"]
+    bulk_items = read_bulk_payload(Path(args.items_file))
+    for key in bulk_items.keys():
+        if key in items and not args.replace:
+            raise ValueError(f"Item already exists: {key}")
+
+    for key, item in bulk_items.items():
+        items[key] = item
+    keys = place_keys(item_keys(document), list(bulk_items.keys()), args.position, args.before, args.after)
+    document = apply_order(document, keys)
+    write_yaml(path, document)
+    print(f"OK: inserted {len(bulk_items)} item(s) into {path}")
 
 
 def command_move(args: argparse.Namespace) -> None:
@@ -180,6 +240,13 @@ def main() -> None:
     insert.add_argument("--replace", action="store_true")
     add_position_arguments(insert)
     insert.set_defaults(func=command_insert)
+
+    bulk_insert = subparsers.add_parser("bulk-insert")
+    bulk_insert.add_argument("path")
+    bulk_insert.add_argument("items_file")
+    bulk_insert.add_argument("--replace", action="store_true")
+    add_position_arguments(bulk_insert)
+    bulk_insert.set_defaults(func=command_bulk_insert)
 
     move = subparsers.add_parser("move")
     move.add_argument("path")

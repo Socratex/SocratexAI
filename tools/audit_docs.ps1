@@ -186,6 +186,10 @@ try {
     Test-ContainsText -Text $contract -Needle "epistemic_skeptic" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "Tool-First YAML" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "doc_item_migrate.ps1" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "doc_item_bulk_insert.ps1" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "transaction wrappers" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "full-text grep tools" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "doc_route.ps1" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> Brief" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> State" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "## <emoji> Problem" -Label "core/AGENT-CONTRACT.yaml"
@@ -198,6 +202,9 @@ try {
     Test-ContainsText -Text $contract -Needle "SCRIPT-FALLBACK.yaml" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "Build-vs-borrow discipline" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "Future-fit check" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "primary steer-direction" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "AAA-grade architectural practices" -Label "core/AGENT-CONTRACT.yaml"
+    Test-ContainsText -Text $contract -Needle "For programming bug reports" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "DDD-ADIV" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "core/PROMOTION-RULES.yaml" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "core/FILE-FORMATS.yaml" -Label "core/AGENT-CONTRACT.yaml"
@@ -248,11 +255,21 @@ try {
 
         Test-ContainsText -Text $codeWorkflow -Needle "Command Classifier" -Label "project/code/WORKFLOW.yaml"
         Test-ContainsText -Text $codeWorkflow -Needle "Script-First Execution" -Label "project/code/WORKFLOW.yaml"
+        Test-ContainsText -Text $codeWorkflow -Needle "Verification Boundary" -Label "project/code/WORKFLOW.yaml"
+        Test-ContainsText -Text $codeWorkflow -Needle "doc_item_bulk_insert.ps1" -Label "project/code/WORKFLOW.yaml"
+        Test-ContainsText -Text $codeWorkflow -Needle "transaction wrappers" -Label "project/code/WORKFLOW.yaml"
+        Test-ContainsText -Text $codeWorkflow -Needle "Select-String" -Label "project/code/WORKFLOW.yaml"
+        Test-ContainsText -Text $codeWorkflow -Needle "doc_search.ps1" -Label "project/code/WORKFLOW.yaml"
+        Test-ContainsText -Text $codeWorkflow -Needle "AAA-grade architecture" -Label "project/code/WORKFLOW.yaml"
+        Test-ContainsText -Text $codeWorkflow -Needle "For bug reports" -Label "project/code/WORKFLOW.yaml"
         Test-ContainsText -Text $codeWorkflow -Needle "Branch-Scoped Workflow" -Label "project/code/WORKFLOW.yaml"
         Test-ContainsText -Text $codeWorkflow -Needle "ROI Workflow" -Label "project/code/WORKFLOW.yaml"
         Test-ContainsText -Text $codeWorkflow -Needle "Task Work Tracking" -Label "project/code/WORKFLOW.yaml"
         Test-ContainsText -Text $codeWorkflow -Needle "Context Cost Control" -Label "project/code/WORKFLOW.yaml"
         Test-ContainsText -Text $branchMode -Needle "Branch Mode" -Label "project/code/BRANCH-MODE.yaml"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "project/generic/PACK.yaml") -Needle "steer-direction checkpoints" -Label "project/generic/PACK.yaml"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "project/personal/PACK.yaml") -Needle "steer-direction checkpoints" -Label "project/personal/PACK.yaml"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "project/creative/PACK.yaml") -Needle "steer-direction checkpoints" -Label "project/creative/PACK.yaml"
 
         foreach ($command in @("CONTINUE", "PLAN", "BUG", "REVIEW", "AUDIT", "FINISH", "COMMIT", "LOG", "DIAGNOSTICS", "PROMPT", "INSTRUCTIONS")) {
             Test-ContainsText -Text $codeCommands -Needle "## $command" -Label "project/code/COMMANDS.yaml"
@@ -283,7 +300,7 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_post_edit.ps1", "doc_item_bulk_insert.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
             }

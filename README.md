@@ -128,7 +128,9 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active gamedev source pipeline.
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
-Structured YAML tools apply to every project type, including non-code projects, for agent-only structured YAML files. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_move`, and `doc_item_migrate` whenever practical.
+Structured YAML tools apply to every project type, including non-code projects, for agent-only structured YAML files. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_bulk_insert`, `doc_item_move`, and `doc_item_migrate` whenever practical.
+
+Document edit scripts are transactional by default: they should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output. Agents should not compose manual read/edit/normalize/cache/check queues after a successful document edit tool.
 
 When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater, reinitialize newly introduced missing artifacts when needed, then run audit and activation check.
 

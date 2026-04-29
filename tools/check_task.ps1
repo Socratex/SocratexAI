@@ -101,7 +101,12 @@ try {
 		}
 	}
 
-	Invoke-CheckCommand -Label "git diff --check" -Command "git" -Arguments @("diff", "--check")
+	$diffCheckArgs = @("-c", "core.safecrlf=false", "diff", "--check")
+	if ($checkPaths.Count -gt 0) {
+		$diffCheckArgs += "--"
+		$diffCheckArgs += $checkPaths
+	}
+	Invoke-CheckCommand -Label "git diff --check" -Command "git" -Arguments $diffCheckArgs
 
 	if (-not $NoLineIndex) {
 		Invoke-CheckCommand -Label "code line index check" -Command "powershell" -Arguments @(

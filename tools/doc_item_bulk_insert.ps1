@@ -1,15 +1,12 @@
 param(
 	[Parameter(Mandatory = $true)]
-	[string]$Source,
+	[string]$Path,
 	[Parameter(Mandatory = $true)]
-	[string]$Target,
-	[Parameter(Mandatory = $true)]
-	[string]$Key,
+	[string]$ItemsFile,
 	[ValidateSet("start", "end")]
 	[string]$Position = "end",
 	[string]$Before = "",
 	[string]$After = "",
-	[switch]$KeepSource,
 	[switch]$Replace,
 	[switch]$NoPostEdit
 )
@@ -23,20 +20,19 @@ if (-not (Test-Path -LiteralPath $python)) {
 }
 
 $script = Join-Path $PSScriptRoot "doc_item.py"
-$arguments = @($script, "migrate", $Source, $Target, $Key, "--position", $Position)
+$arguments = @($script, "bulk-insert", $Path, $ItemsFile, "--position", $Position)
 if ($Before -ne "") { $arguments += @("--before", $Before) }
 if ($After -ne "") { $arguments += @("--after", $After) }
-if ($KeepSource) { $arguments += "--keep-source" }
 if ($Replace) { $arguments += "--replace" }
 
 & $python @arguments
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_item_migrate failed with exit code $LASTEXITCODE"
+	throw "doc_item_bulk_insert failed with exit code $LASTEXITCODE"
 }
 
 if (-not $NoPostEdit) {
-	& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "doc_post_edit.ps1") -Paths $Source,$Target
+	& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "doc_post_edit.ps1") -Paths $Path
 	if ($LASTEXITCODE -ne 0) {
-		throw "doc_item_migrate post-edit pipeline failed with exit code $LASTEXITCODE"
+		throw "doc_item_bulk_insert post-edit pipeline failed with exit code $LASTEXITCODE"
 	}
 }

@@ -68,13 +68,28 @@ function Get-TrackedCodePaths {
 	return @($tracked + $untracked | Where-Object { Test-CodePath -Path $_ } | Sort-Object -Unique)
 }
 
+function Invoke-GitQuiet {
+	param(
+		[string[]]$Arguments
+	)
+
+	$previousErrorActionPreference = $ErrorActionPreference
+	$ErrorActionPreference = "Continue"
+	try {
+		return @(& git @Arguments 2>$null)
+	} finally {
+		$script:LastGitQuietExitCode = $LASTEXITCODE
+		$ErrorActionPreference = $previousErrorActionPreference
+	}
+}
+
 function Get-ChangedCodePaths {
-	$changed = @(git -C $repoRoot diff --name-only)
-	if ($LASTEXITCODE -ne 0) {
+	$changed = @(Invoke-GitQuiet -Arguments @("-C", $repoRoot, "diff", "--name-only"))
+	if ($script:LastGitQuietExitCode -ne 0) {
 		throw "git diff failed."
 	}
-	$changed += @(git -C $repoRoot diff --cached --name-only)
-	if ($LASTEXITCODE -ne 0) {
+	$changed += @(Invoke-GitQuiet -Arguments @("-C", $repoRoot, "diff", "--cached", "--name-only"))
+	if ($script:LastGitQuietExitCode -ne 0) {
 		throw "git diff --cached failed."
 	}
 	$changed += @(git -C $repoRoot ls-files --others --exclude-standard)
@@ -376,11 +391,15 @@ try {
 	$indexJson = ($payload | ConvertTo-Json -Depth 5) + "`n"
 	$largeRecords = @($payload.files | Where-Object { $_.large } | Sort-Object @{ Expression = "lines"; Descending = $true }, @{ Expression = "path"; Descending = $false })
 	$largeDocument = Build-LargeFilesDocument -LargeRecords $largeRecords
+	$indexJson = $indexJson -replace "`r`n", "`n"
+	$largeDocument = $largeDocument -replace "`r`n", "`n"
 
 	$indexFullPath = Join-Path $repoRoot $IndexPath
 	$largeFullPath = Join-Path $repoRoot $LargeFilesPath
 	$currentIndex = if (Test-Path -LiteralPath $indexFullPath -PathType Leaf) { Get-Content -Raw -LiteralPath $indexFullPath -Encoding UTF8 } else { "" }
 	$currentLarge = if (Test-Path -LiteralPath $largeFullPath -PathType Leaf) { Get-Content -Raw -LiteralPath $largeFullPath -Encoding UTF8 } else { "" }
+	$currentIndex = $currentIndex -replace "`r`n", "`n"
+	$currentLarge = $currentLarge -replace "`r`n", "`n"
 
 	$needsWrite = ($currentIndex -ne $indexJson) -or ($currentLarge -ne $largeDocument)
 	if ($Check) {
@@ -399,6 +418,8 @@ try {
 		$payload = Build-IndexPayload -Records $records
 		$indexJson = ($payload | ConvertTo-Json -Depth 5) + "`n"
 	}
+	$indexJson = $indexJson -replace "`r`n", "`n"
+	$largeDocument = $largeDocument -replace "`r`n", "`n"
 	[System.IO.File]::WriteAllText($indexFullPath, $indexJson, $utf8NoBom)
 	[System.IO.File]::WriteAllText($largeFullPath, $largeDocument, $utf8NoBom)
 

@@ -86,6 +86,14 @@ items:
 
       It applies to programming and non-programming projects. For non-code work, research known operating models, best practices, templates, industry workflows, review rubrics, genre conventions, decision frameworks, and borrowed systems before inventing a custom process.
 
+      Treat this as the primary steer-direction for new feature requests, bug reports, suggestions, and architecture or process discussions.
+
+      For programming feature requests, first check whether the feature can be implemented in the most future-proof, maintainable, high-leverage way that fits the current project profile and architecture. Bias toward AAA-grade architectural practices when the project is game/software related: explicit ownership, data flow, contracts, toolability, diagnostics, performance budget, deterministic behavior where relevant, testability, and low retrofit cost. If the user's requested implementation path is weaker than a better future-facing sequence, propose the better sequence before executing.
+
+      For programming bug reports, first check whether the issue exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness. Prefer a fix that removes the class of bug or improves diagnosis without over-expanding scope. Avoid patching symptoms when a small future-proof boundary or invariant fix is the better move.
+
+      For non-programming requests and problem reports, apply the same steer-direction through the project's domain: first check known best practices, proven operating models, standard templates, review gates, risk controls, and sustainable workflow design. Prefer the future-proof, low-maintenance, high-clarity path over literal execution of a weaker requested process.
+
       Apply these checks before custom design:
 
       - Known solutions check: identify whether an established pattern, practice, workflow, tool, or archetype already solves the problem well enough.
@@ -228,11 +236,16 @@ items:
       Default tool discipline:
 
       - Use `tools/doc_keys.ps1` and `tools/doc_read.ps1` for selective reads when a YAML document is structured.
-      - Use `tools/doc_item_insert.ps1` for controlled item insertion.
+      - Use `tools/doc_item_insert.ps1` for controlled single-item insertion.
+      - Use `tools/doc_item_bulk_insert.ps1` for controlled multi-item insertion into one document.
       - Use `tools/doc_item_move.ps1` for moving items inside one YAML document.
       - Use `tools/doc_item_migrate.ps1` for moving or copying items between YAML documents.
-      - Use `tools/audit_docs.ps1` after project memory or pipeline documents change when practical.
+      - Treat document edit tools as transaction wrappers: the tool should own its write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.
+      - Do not compose manual read/edit/normalize/cache/check/read command queues after a successful transactional document edit tool.
+      - Use full `tools/audit_docs.ps1` at the final verification boundary, not after every item edit.
       - Use `tools/reinitialize_pipeline.ps1` when newly introduced initialized artifacts need to be added without overwriting existing memory.
+
+      For structured YAML documents, full-text grep tools such as `Select-String`, `grep`, or `rg` are fallback tools, not the default read path. Use `tools/doc_read.ps1` when the stable key is known, `tools/doc_keys.ps1` when the local key list is needed, and `tools/doc_route.ps1` or `tools/doc_search.ps1` when searching by intent or phrase. Use text grep on YAML only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.
 
       Manual YAML edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.yaml`.
 

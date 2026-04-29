@@ -1,6 +1,7 @@
 param(
 	[string[]]$Paths = @("**/*.yaml", "**/*.yml"),
-	[switch]$Check
+	[switch]$Check,
+	[switch]$NoPostEdit
 )
 
 Set-StrictMode -Version Latest
@@ -23,7 +24,28 @@ if ($Check) {
 }
 $arguments += $Paths
 
-& $python @arguments
-if ($LASTEXITCODE -ne 0) {
-	throw "docs_migrator failed with exit code $LASTEXITCODE"
+$output = @(& $python @arguments)
+$exitCode = $LASTEXITCODE
+foreach ($line in $output) {
+	Write-Host $line
+}
+if ($exitCode -ne 0) {
+	throw "docs_migrator failed with exit code $exitCode"
+}
+
+if ((-not $Check) -and (-not $NoPostEdit)) {
+	$changedPaths = @($output | Where-Object {
+		$trimmed = $_.Trim()
+		$trimmed.Length -gt 0 -and
+			-not $trimmed.StartsWith("OK:") -and
+			-not $trimmed.StartsWith("WARNING:") -and
+			(Test-Path -LiteralPath $trimmed -PathType Leaf)
+	})
+
+	if ($changedPaths.Count -gt 0) {
+		& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "doc_post_edit.ps1") -Paths $changedPaths
+		if ($LASTEXITCODE -ne 0) {
+			throw "docs_migrator post-edit pipeline failed with exit code $LASTEXITCODE"
+		}
+	}
 }

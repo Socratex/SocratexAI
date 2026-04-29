@@ -6,10 +6,12 @@ commands:
   audit_docs:
     description: Run SocratexPipeline document audit.
     command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1"
+  transactional_doc_tools:
+    description: Check transactional document edit tools in dry-check mode.
+    command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/docs_slim.ps1 -Check -Paths project/code/WORKFLOW.yaml; powershell -NoProfile -ExecutionPolicy Bypass -File tools/docs_migrator.ps1 -Check -Paths project/code/WORKFLOW.yaml"
   init_dry_run:
     description: Smoke-test code project initialization without writing files.
     command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/Initialize-SocratexPipeline.ps1 -ProjectName 'Demo Project' -Language 'English' -AiMode Enterprise -KeepPacks code -CreateFiles -CompileAgent -RunAudit -DryRun"
 notes:
   - Providers differ; CI should translate these commands into the provider's shell syntax.
   - The audit command is the canonical minimum self-check.
-
