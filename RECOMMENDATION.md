@@ -51,3 +51,16 @@ That means:
 - DDD-ADIV is defined as a practical engineering default,
 - the first-run initializer can produce a usable project without manual cleanup.
 
+## Learning Inbox Recommendation
+
+Use GitHub Issues as the shared network inbox for cross-project pipeline learning.
+
+The recommended pattern is:
+
+- local project generates a structured learning report,
+- source pipeline publishes it into one stable `SocratexPipeline Learning Inbox` issue,
+- duplicate reports are skipped by hash,
+- Discord or email stays optional alerting, not the durable inbox,
+- reusable features are promoted only after review.
+
+This keeps learning visible across machines and projects without turning every candidate into a separate notification.

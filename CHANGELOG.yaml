@@ -92,3 +92,7 @@ entries:
     date: 2026-04-30
     feature: 'pipeline_featurelist_sync_and_learning'
     change: 'Added sync_pipeline_featurelist.ps1 to generate installed project pipeline_featurelist.json files with same/missing/extra comparison against the installed source manifest. Added learn_pipeline_features.ps1 so the source pipeline can inspect feature IDs from any project and selectively add reusable non-project-specific features to the canonical source manifest. Hooked pipeline featurelist sync into initialization, import, update, and reinitialization flows so new and refreshed projects get instance-style comparison manifests automatically. Updated update protocol and agent contract so SocratexPipeline learns reusable features from instances first, then propagates them through future updates. Why: SocratexPipeline should learn reusable pipeline behavior from any project instance and then teach other projects through the canonical source feature list and sync flow.'
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'github_issue_learning_inbox'
+    change: 'Added structured pipeline learning reports for project feature intake. Added GitHub Issue publisher that creates or updates one SocratexPipeline Learning Inbox issue and skips duplicate reports by hash. Updated update protocol, agent contract, audit coverage, source feature list, and recommendation docs for GitHub-Issue-based learning intake. Why: Cross-project pipeline learning needs a durable network inbox that agents can read later without spamming separate notifications.'

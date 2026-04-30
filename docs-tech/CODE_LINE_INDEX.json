@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-04-30T02:24:20+02:00",
+    "generatedAt":  "2026-04-30T02:34:14+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -10,7 +10,7 @@
                   },
                   {
                       "path":  "tools/audit_docs.ps1",
-                      "lines":  359,
+                      "lines":  360,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -23,6 +23,12 @@
                   {
                       "path":  "tools/import_existing_project.ps1",
                       "lines":  262,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/publish_pipeline_learning_issue.ps1",
+                      "lines":  207,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -47,6 +53,12 @@
                   {
                       "path":  "tools/finish_subtask.ps1",
                       "lines":  148,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/report_pipeline_learning.ps1",
+                      "lines":  125,
                       "extension":  ".ps1",
                       "large":  false
                   },
