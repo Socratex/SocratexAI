@@ -6,6 +6,12 @@
   "features": [
     "adapter_pack_bootstrap",
     "agent_contract_and_core_protocols",
+    "future_first_implementation_steering",
+    "ddd_adiv_design_default",
+    "borrowed_before_bespoke",
+    "script_first_execution",
+    "repair_automation_before_manual_recovery",
+    "evidence_driven_debugging",
     "yaml_workflow_router",
     "tool_first_yaml_document_workflow",
     "document_cache_and_audit",

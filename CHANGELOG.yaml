@@ -84,3 +84,7 @@ entries:
     date: 2026-04-30
     feature: 'compact_pipeline_featurelist'
     change: 'Simplified pipeline_featurelist.json to a source-only canonical feature-id list with no project-instance references or redundant descriptions. Why: SocratexPipeline is the source pipeline and should not know about Riftbound Vanguard or any specific instance that consumes it.'
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'semantic_pipeline_feature_ids'
+    change: 'Expanded source pipeline_featurelist.json with semantic capability IDs for future-first steering, DDD-ADIV, borrowed-before-bespoke, script-first execution, automation repair before manual recovery, and evidence-driven debugging. Why: The source manifest should define canonical pipeline behavior, not only canonical tools.'
