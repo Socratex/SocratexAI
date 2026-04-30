@@ -33,6 +33,7 @@
     "pipeline_feature_learning_loop",
     "pipeline_learning_reports",
     "prefilled_github_issue_learning_inbox",
-    "self_describing_learning_issues"
+    "self_describing_learning_issues",
+    "pipeline_featurelist_update_guard"
   ]
 }

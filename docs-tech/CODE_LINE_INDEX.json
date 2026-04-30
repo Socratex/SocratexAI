@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-04-30T15:43:49+02:00",
+    "generatedAt":  "2026-04-30T16:00:49+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -33,20 +33,20 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/check_task.ps1",
+                      "lines":  174,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/reinitialize_pipeline.ps1",
                       "lines":  174,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_task.ps1",
-                      "lines":  163,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
                       "path":  "tools/finish_task.ps1",
-                      "lines":  152,
+                      "lines":  162,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -89,6 +89,12 @@
                   {
                       "path":  "tools/doctor.ps1",
                       "lines":  86,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/check_pipeline_featurelist_update.ps1",
+                      "lines":  82,
                       "extension":  ".ps1",
                       "large":  false
                   },

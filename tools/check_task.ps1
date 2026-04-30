@@ -17,6 +17,7 @@ $markdownEmojiScript = Join-Path $PSScriptRoot "normalize_markdown_emoji.ps1"
 $auditScript = Join-Path $PSScriptRoot "audit_docs.ps1"
 $lineIndexScript = Join-Path $PSScriptRoot "update_code_line_index.ps1"
 $utf8WriteCheckScript = Join-Path $PSScriptRoot "check_utf8_writes.ps1"
+$pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
 
 function Invoke-CheckCommand {
 	param(
@@ -135,6 +136,17 @@ try {
 		)
 		$utf8WriteArgs += $checkPaths
 		Invoke-CheckCommand -Label "PowerShell UTF-8 write check" -Command "powershell" -Arguments $utf8WriteArgs
+	}
+
+	if ($checkPaths.Count -gt 0 -and (Test-Path -LiteralPath $pipelineFeatureListCheckScript)) {
+		$pipelineFeatureListArgs = @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$pipelineFeatureListCheckScript
+		)
+		Invoke-CheckCommand -Label "pipeline feature list guard" -Command "powershell" -Arguments $pipelineFeatureListArgs
 	}
 
 	if (-not $NoLineIndex) {

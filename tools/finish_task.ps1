@@ -21,6 +21,7 @@ $textNormalizeScript = Join-Path $PSScriptRoot "normalize_text_files.ps1"
 $docCacheScript = Join-Path $PSScriptRoot "doc_build_cache.ps1"
 $qualityScript = Join-Path $PSScriptRoot "run_quality_gate.ps1"
 $outputScript = Join-Path $PSScriptRoot "end_prompt_snapshot.ps1"
+$pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
 
 function Invoke-RepoCommand {
 	param(
@@ -103,6 +104,16 @@ try {
 
 	if (Test-Path -LiteralPath ".git") {
 		Invoke-RepoCommand -Label "git diff --check" -Command "git" -Arguments @("diff", "--check")
+	}
+
+	if ((Test-Path -LiteralPath ".git") -and (Test-Path -LiteralPath $pipelineFeatureListCheckScript)) {
+		Invoke-RepoCommand -Label "pipeline feature list guard" -Command "powershell" -Arguments @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$pipelineFeatureListCheckScript
+		)
 	}
 
 	if ((Test-Path -LiteralPath ".git") -and (-not $NoLineIndex)) {

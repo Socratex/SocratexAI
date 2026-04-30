@@ -135,6 +135,8 @@ items:
 
       Apply selected reusable features to the source manifest with `-Apply -IncludeFeatures <ids>` or `-Apply -AcceptAll` only after excluding project/domain-specific features.
 
+      Pipeline-owned improvements under `tools/`, `core/`, `project/`, `templates/`, or `adapters/` must update `pipeline_featurelist.json`; `tools/check_pipeline_featurelist_update.ps1` enforces this only for pipeline-owned changed paths, so ordinary project tasks do not need feature-list edits.
+
       After the source learns new canonical feature IDs, future project updates and reinitialization should run `tools/sync_pipeline_featurelist.ps1` so installed projects can compare themselves against the new source feature list.
 
   workflow:
