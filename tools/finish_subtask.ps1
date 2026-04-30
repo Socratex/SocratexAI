@@ -54,8 +54,8 @@ function Test-GeneratedArtifactPath {
 
 function Get-GitChangedPaths {
 	$paths = @()
-	$paths += @(Invoke-GitLines -Arguments @("diff", "--name-only", "--diff-filter=ACMR"))
-	$paths += @(Invoke-GitLines -Arguments @("diff", "--cached", "--name-only", "--diff-filter=ACMR"))
+	$paths += @(Invoke-GitLines -Arguments @("diff", "--name-only", "--diff-filter=ACMRD"))
+	$paths += @(Invoke-GitLines -Arguments @("diff", "--cached", "--name-only", "--diff-filter=ACMRD"))
 	$paths += @(Invoke-GitLines -Arguments @("ls-files", "--others", "--exclude-standard"))
 	return @($paths | Sort-Object -Unique)
 }
