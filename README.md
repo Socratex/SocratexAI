@@ -167,6 +167,10 @@ Current version: `0.2.0-alpha`.
 
 See `VERSION` and `QUALITY-GATE.yaml`.
 
+## Author
+
+SocratexDevSolutions Michał Jasiński.
+
 ## License
 
 MIT. See `LICENSE`.

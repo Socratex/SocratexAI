@@ -104,3 +104,7 @@ entries:
     date: 2026-04-30
     feature: 'self_describing_learning_issues'
     change: 'Expanded prefilled GitHub learning issues with self-contained instructions. Added issue fields for what AI learned, changed scripts or files, reporter notes, tool behavior, and maintainer promotion steps. Updated source feature list, update protocol, and recommendation docs for self-describing learning intake. Why: Learning issues should be understandable without attachments and should tell maintainers exactly what to review and how to promote reusable features.'
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'author_metadata'
+    change: 'Added SocratexDevSolutions Michał Jasiński as the public SocratexPipeline author in README and LICENSE metadata. Why: Public pipeline distribution should identify the author/owner clearly.'
