@@ -80,3 +80,7 @@ entries:
     date: 2026-04-30
     feature: 'generic_done_and_doctor_pipeline'
     change: 'Added generic tools/done.ps1, tools/doctor.ps1, UTF-8 write helpers, and check_utf8_writes.ps1 to the source pipeline. Updated code workflow, Git rules, command docs, pack instructions, and agent contract so Git-backed code work closes through tools/done.ps1 and repeatable finalizer failures are fixed in tooling. Updated pipeline_featurelist.json so non-Godot reusable features are source-owned while Godot helpers remain Riftbound-specific. Why: Reusable pipeline improvements should live in SocratexPipeline, while only project/domain-specific Godot automation should remain in Riftbound Vanguard.'
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'compact_pipeline_featurelist'
+    change: 'Simplified pipeline_featurelist.json to a source-only canonical feature-id list with no project-instance references or redundant descriptions. Why: SocratexPipeline is the source pipeline and should not know about Riftbound Vanguard or any specific instance that consumes it.'
