@@ -108,3 +108,7 @@ entries:
     date: 2026-04-30
     feature: 'author_metadata'
     change: 'Added SocratexDevSolutions Michał Jasiński as the public SocratexPipeline author in README and LICENSE metadata. Why: Public pipeline distribution should identify the author/owner clearly.'
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'ignored_directory_gitignore_contract'
+    change: 'Added /ignored/ to source .gitignore and audit coverage so ignored pipeline working files remain outside version control. Why: The pipeline contract is that ignored/ is local working memory, not versioned project state.'

@@ -1,16 +1,16 @@
 {
-    "generatedAt":  "2026-04-30T03:11:40+02:00",
+    "generatedAt":  "2026-04-30T15:43:49+02:00",
     "threshold":  300,
     "files":  [
                   {
-                      "path":  "tools/Initialize-SocratexPipeline.ps1",
+                      "path":  "tools/audit_docs.ps1",
                       "lines":  361,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
-                      "path":  "tools/audit_docs.ps1",
-                      "lines":  360,
+                      "path":  "tools/Initialize-SocratexPipeline.ps1",
+                      "lines":  361,
                       "extension":  ".ps1",
                       "large":  true
                   },

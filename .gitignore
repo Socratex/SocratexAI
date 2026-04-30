@@ -1,6 +1,7 @@
 # Local/generated pipeline artifacts
 SocratexAI/
 pipeline-snapshots/
+/ignored/
 *.old
 *.tmp
 *.bak

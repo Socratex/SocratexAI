@@ -179,6 +179,7 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "CHANGELOG.yaml") -Needle "0.2.0-alpha" -Label "CHANGELOG.yaml"
     Test-ContainsText -Text (Get-RepoText -RelativePath "LICENSE") -Needle "MIT License" -Label "LICENSE"
     Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.yaml") -Needle "audit_docs" -Label "QUALITY-GATE.yaml"
+    Test-ContainsText -Text (Get-RepoText -RelativePath ".gitignore") -Needle "/ignored/" -Label ".gitignore"
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
 
     Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.yaml"
