@@ -63,7 +63,7 @@ Write-Host "Source: $SourceRoot"
 Write-Host "Target: $TargetRoot"
 Write-Host "Install root: $InstallRoot"
 
-foreach ($path in @("core", "tools", "templates", "docs", "adapters", "PUBLIC-BOOTSTRAP.md", "README.md", "RECOMMENDATION.md")) {
+foreach ($path in @("core", "tools", "templates", "docs", "adapters", "PUBLIC-BOOTSTRAP.md", "README.md", "RECOMMENDATION.md", "pipeline_featurelist.json")) {
     $sourcePath = Join-Path $SourceRoot $path
     if (Test-Path -LiteralPath $sourcePath) {
         Copy-Tree -SourcePath $sourcePath -DestinationPath (Join-Path $InstallRoot $path)
@@ -87,6 +87,10 @@ if (Test-Path -LiteralPath (Join-Path $SourceRoot "templates\SOCRATEX.md")) {
 if (-not $DryRun) {
     if ($ReinitializeNew) {
         & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\reinitialize_pipeline.ps1") -TargetPath $TargetRoot -Packs $Packs
+    }
+    $syncFeatureListScript = Join-Path $InstallRoot "tools\sync_pipeline_featurelist.ps1"
+    if (Test-Path -LiteralPath $syncFeatureListScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
     }
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\set_directives.ps1") -TargetPath $TargetRoot -Mode $DirectiveMode -DirectiveFiles $DirectiveFiles
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\audit_docs.ps1")

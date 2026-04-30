@@ -188,4 +188,11 @@ foreach ($pack in $Packs) {
     }
 }
 
+if (-not $DryRun) {
+    $syncFeatureListScript = Join-Path $InstallRoot "tools\sync_pipeline_featurelist.ps1"
+    if (Test-Path -LiteralPath $syncFeatureListScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
+    }
+}
+
 Write-Host "Reinitialization complete. Existing project memory was preserved."

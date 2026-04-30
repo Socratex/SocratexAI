@@ -88,3 +88,7 @@ entries:
     date: 2026-04-30
     feature: 'semantic_pipeline_feature_ids'
     change: 'Expanded source pipeline_featurelist.json with semantic capability IDs for future-first steering, DDD-ADIV, borrowed-before-bespoke, script-first execution, automation repair before manual recovery, and evidence-driven debugging. Why: The source manifest should define canonical pipeline behavior, not only canonical tools.'
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'pipeline_featurelist_sync_and_learning'
+    change: 'Added sync_pipeline_featurelist.ps1 to generate installed project pipeline_featurelist.json files with same/missing/extra comparison against the installed source manifest. Added learn_pipeline_features.ps1 so the source pipeline can inspect feature IDs from any project and selectively add reusable non-project-specific features to the canonical source manifest. Hooked pipeline featurelist sync into initialization, import, update, and reinitialization flows so new and refreshed projects get instance-style comparison manifests automatically. Updated update protocol and agent contract so SocratexPipeline learns reusable features from instances first, then propagates them through future updates. Why: SocratexPipeline should learn reusable pipeline behavior from any project instance and then teach other projects through the canonical source feature list and sync flow.'

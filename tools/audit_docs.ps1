@@ -219,6 +219,8 @@ try {
     Test-ContainsText -Text $updateProtocol -Needle "pipeline.update_source" -Label "core/UPDATE-PROTOCOL.yaml"
     Test-ContainsText -Text $updateProtocol -Needle "update_pipeline_from_link.ps1" -Label "core/UPDATE-PROTOCOL.yaml"
     Test-ContainsText -Text $updateProtocol -Needle "reinitialize_pipeline.ps1" -Label "core/UPDATE-PROTOCOL.yaml"
+    Test-ContainsText -Text $updateProtocol -Needle "pipeline_featurelist.json" -Label "core/UPDATE-PROTOCOL.yaml"
+    Test-ContainsText -Text $updateProtocol -Needle "learn_pipeline_features.ps1" -Label "core/UPDATE-PROTOCOL.yaml"
     Test-ContainsText -Text $removalProtocol -Needle "remove_pipeline.ps1" -Label "core/REMOVAL-PROTOCOL.yaml"
     Test-ContainsText -Text $removalProtocol -Needle "Default Preservation" -Label "core/REMOVAL-PROTOCOL.yaml"
     Test-ContainsText -Text $projectProfile -Needle "Profile-Fit Check" -Label "core/PROJECT-PROFILE.yaml"
@@ -300,7 +302,7 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_post_edit.ps1", "doc_item_bulk_insert.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_post_edit.ps1", "doc_item_bulk_insert.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
             }

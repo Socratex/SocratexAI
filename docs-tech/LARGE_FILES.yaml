@@ -23,7 +23,8 @@ items:
 
       | Lines | File | Why It Is Large |
       | ---: | --- | --- |
-      | 0 | _(none)_ | No tracked code files exceed the threshold. |
+      | 361 | `tools/Initialize-SocratexPipeline.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
+      | 359 | `tools/audit_docs.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
   maintenance:
     title: 🛠 Maintenance
     content: |

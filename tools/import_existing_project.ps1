@@ -134,6 +134,8 @@ foreach ($path in @("core", "adapters", "tools")) {
     Copy-ItemSafe -Source (Join-Path $SourceRoot $path) -Destination (Join-Path $InstallRoot $path)
 }
 
+Copy-ItemSafe -Source (Join-Path $SourceRoot "pipeline_featurelist.json") -Destination (Join-Path $InstallRoot "pipeline_featurelist.json")
+
 if (-not $DryRun) {
     New-Item -ItemType Directory -Force -Path (Join-Path $InstallRoot "project") | Out-Null
 }
@@ -201,6 +203,10 @@ if ($CreateProjectFiles) {
 }
 
 if (-not $DryRun) {
+    $syncFeatureListScript = Join-Path $InstallRoot "tools\sync_pipeline_featurelist.ps1"
+    if (Test-Path -LiteralPath $syncFeatureListScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
+    }
     $hasCodePack = $Packs -contains "code"
     $configPath = if ($hasCodePack) {
         Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"

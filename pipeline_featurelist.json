@@ -28,6 +28,8 @@
     "directive_compiler_and_setter",
     "prompt_and_output_snapshots",
     "changelog_entry_helper",
-    "pipeline_featurelist_manifest"
+    "pipeline_featurelist_manifest",
+    "pipeline_featurelist_instance_generation",
+    "pipeline_feature_learning_loop"
   ]
 }

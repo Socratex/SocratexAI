@@ -1,11 +1,35 @@
 {
-    "generatedAt":  "2026-04-30T02:09:22+02:00",
+    "generatedAt":  "2026-04-30T02:24:20+02:00",
     "threshold":  300,
     "files":  [
+                  {
+                      "path":  "tools/Initialize-SocratexPipeline.ps1",
+                      "lines":  361,
+                      "extension":  ".ps1",
+                      "large":  true
+                  },
+                  {
+                      "path":  "tools/audit_docs.ps1",
+                      "lines":  359,
+                      "extension":  ".ps1",
+                      "large":  true
+                  },
                   {
                       "path":  "tools/doc_tool.py",
                       "lines":  295,
                       "extension":  ".py",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/import_existing_project.ps1",
+                      "lines":  262,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/reinitialize_pipeline.ps1",
+                      "lines":  174,
+                      "extension":  ".ps1",
                       "large":  false
                   },
                   {
@@ -22,13 +46,31 @@
                   },
                   {
                       "path":  "tools/finish_subtask.ps1",
-                      "lines":  144,
+                      "lines":  148,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
                       "path":  "tools/add_changelog_entry.ps1",
                       "lines":  112,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/sync_pipeline_featurelist.ps1",
+                      "lines":  103,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/learn_pipeline_features.ps1",
+                      "lines":  97,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/check_utf8_writes.ps1",
+                      "lines":  86,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -45,6 +87,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/update_pipeline_from_link.ps1",
+                      "lines":  78,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/done.ps1",
                       "lines":  67,
                       "extension":  ".ps1",
@@ -53,12 +101,6 @@
                   {
                       "path":  "tools/commit_task.ps1",
                       "lines":  61,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/check_utf8_writes.ps1",
-                      "lines":  46,
                       "extension":  ".ps1",
                       "large":  false
                   },

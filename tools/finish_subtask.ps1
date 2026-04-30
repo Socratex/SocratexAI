@@ -27,7 +27,11 @@ function Invoke-GitLines {
 	if ($exitCode -ne 0) {
 		throw "git $($Arguments -join ' ') failed: $($output -join "`n")"
 	}
-	return @($output | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
+	return @($output | Where-Object {
+		$line = [string]$_
+		-not [string]::IsNullOrWhiteSpace($line) -and
+			$line -notmatch "^warning: in the working copy of '.+', (CRLF|LF) will be replaced by (LF|CRLF) the next time Git touches it$"
+	})
 }
 
 function Test-GeneratedArtifactPath {

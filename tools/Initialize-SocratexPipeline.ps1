@@ -332,6 +332,15 @@ $runtimeStatusYaml
         Set-Content -LiteralPath (Join-Path $InstallRoot "PIPELINE-CONFIG.yaml") -Value $configYaml -NoNewline
     }
 
+    if (-not $DryRun -and (Test-Path -LiteralPath (Join-Path $Root "pipeline_featurelist.json"))) {
+        New-Item -ItemType Directory -Force -Path $InstallRoot | Out-Null
+        Copy-Item -LiteralPath (Join-Path $Root "pipeline_featurelist.json") -Destination (Join-Path $InstallRoot "pipeline_featurelist.json") -Force
+        $syncFeatureListScript = Join-Path $Root "tools\sync_pipeline_featurelist.ps1"
+        if (Test-Path -LiteralPath $syncFeatureListScript) {
+            & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $Root
+        }
+    }
+
     if ($keep.ContainsKey("code") -and $BranchMode -eq "branch_scoped") {
         if ($DryRun) {
             Write-Output "Would initialize root ignored/ai-socratex branch memory."

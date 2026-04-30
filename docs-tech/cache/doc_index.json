@@ -987,6 +987,7 @@
         "purpose",
         "source_resolution",
         "update_command",
+        "feature_learning",
         "workflow",
         "safety"
       ],
@@ -1025,6 +1026,12 @@
           "path": "items.update_command",
           "title": "Update Command",
           "ref": "items.update_command",
+          "status": ""
+        },
+        "feature_learning": {
+          "path": "items.feature_learning",
+          "title": "Feature Learning",
+          "ref": "items.feature_learning",
           "status": ""
         },
         "workflow": {
