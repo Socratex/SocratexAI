@@ -127,6 +127,12 @@ items:
 
       This is the only supported public network intake path for now. It does not require a GitHub token in the pipeline and does not write through an API; the user reviews the prefilled issue and submits it from the browser.
 
+      When the report comes from a concrete AI improvement, include a short explanation and changed scripts:
+
+      ```powershell
+      powershell -NoProfile -ExecutionPolicy Bypass -File tools/open_pipeline_learning_issue.ps1 -ProjectPath "<project>" -LearnedSummary "<what AI learned>" -ChangedScripts @("tools/example.ps1") -Open
+      ```
+
       Apply selected reusable features to the source manifest with `-Apply -IncludeFeatures <ids>` or `-Apply -AcceptAll` only after excluding project/domain-specific features.
 
       After the source learns new canonical feature IDs, future project updates and reinitialization should run `tools/sync_pipeline_featurelist.ps1` so installed projects can compare themselves against the new source feature list.

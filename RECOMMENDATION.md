@@ -59,6 +59,7 @@ The recommended pattern is:
 
 - local project generates a structured learning report,
 - pipeline opens a prefilled GitHub Issue URL,
+- issue body explains what AI learned, what scripts/files changed, and how the maintainer should review/promote the feature,
 - the user reviews and submits the issue manually,
 - the pipeline does not ship with a shared write token,
 - Discord, email, API writers, and committed inbox JSON are not supported public intake paths for now,

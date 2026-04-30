@@ -100,3 +100,7 @@ entries:
     date: 2026-04-30
     feature: 'prefilled_github_issue_learning_intake'
     change: 'Replaced token-based GitHub Issue publishing with a no-token prefilled GitHub Issue URL workflow. Added open_pipeline_learning_issue.ps1 as the only supported public network intake path for pipeline improvement reports. Marked local learning/inbox JSON reports as ignored working artifacts and updated protocol, recommendation, audit, and source feature IDs. Why: Public pipeline improvement intake should not require embedded write credentials or a hosted endpoint.'
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'self_describing_learning_issues'
+    change: 'Expanded prefilled GitHub learning issues with self-contained instructions. Added issue fields for what AI learned, changed scripts or files, reporter notes, tool behavior, and maintainer promotion steps. Updated source feature list, update protocol, and recommendation docs for self-describing learning intake. Why: Learning issues should be understandable without attachments and should tell maintainers exactly what to review and how to promote reusable features.'
