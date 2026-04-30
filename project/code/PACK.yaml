@@ -157,7 +157,8 @@ items:
 
       For the normal task flow, gather context first, make the code and document edits for the current scope, then run one git-based batch finalizer near the end. The finalizer should discover changed files from git, normalize text, rebuild document caches, refresh code-line indexes, run checks, and report status through repository scripts instead of requiring manual normalizer/cache/index command chains.
 
-      If a repeated finalizer failure requires manual recovery, fix or extend the relevant script so future equivalent work is handled automatically.
+      Prefer `tools/done.ps1 -Message "<message>"` for Git-backed task closure when available.
+      If `tools/done.ps1` or a lower-level finalizer fails on a repeatable mechanical issue, fix or extend the relevant script so future equivalent work is handled automatically before rerunning the finalizer.
       
       For compact changed-path checks during a verification boundary, prefer a helper such as:
       
@@ -368,4 +369,3 @@ items:
       
       If verification is impossible or skipped, report it explicitly.
       
-

@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-04-30T02:01:42+02:00",
+    "generatedAt":  "2026-04-30T02:09:22+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -9,14 +9,14 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/finish_task.ps1",
-                      "lines":  152,
+                      "path":  "tools/check_task.ps1",
+                      "lines":  163,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_task.ps1",
-                      "lines":  150,
+                      "path":  "tools/finish_task.ps1",
+                      "lines":  152,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -33,8 +33,38 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/doctor.ps1",
+                      "lines":  86,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/Utf8File.ps1",
+                      "lines":  81,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/done.ps1",
+                      "lines":  67,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/commit_task.ps1",
                       "lines":  61,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/check_utf8_writes.ps1",
+                      "lines":  46,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/write_utf8_file.ps1",
+                      "lines":  24,
                       "extension":  ".ps1",
                       "large":  false
                   }

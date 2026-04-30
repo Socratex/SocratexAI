@@ -76,3 +76,7 @@ entries:
     date: 2026-04-30
     feature: 'pipeline_featurelist_manifest'
     change: 'Added root pipeline_featurelist.json to track source pipeline features and compare them against Riftbound Vanguard. Updated changelog helper to support CHANGELOG.yaml entries instead of assuming Markdown changelog format. Why: Source pipeline upgrades need a machine-readable feature manifest and a working changelog writer for YAML changelog files.'
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'generic_done_and_doctor_pipeline'
+    change: 'Added generic tools/done.ps1, tools/doctor.ps1, UTF-8 write helpers, and check_utf8_writes.ps1 to the source pipeline. Updated code workflow, Git rules, command docs, pack instructions, and agent contract so Git-backed code work closes through tools/done.ps1 and repeatable finalizer failures are fixed in tooling. Updated pipeline_featurelist.json so non-Godot reusable features are source-owned while Godot helpers remain Riftbound-specific. Why: Reusable pipeline improvements should live in SocratexPipeline, while only project/domain-specific Godot automation should remain in Riftbound Vanguard.'

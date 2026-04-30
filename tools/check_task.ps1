@@ -16,6 +16,7 @@ $textNormalizeScript = Join-Path $PSScriptRoot "normalize_text_files.ps1"
 $markdownEmojiScript = Join-Path $PSScriptRoot "normalize_markdown_emoji.ps1"
 $auditScript = Join-Path $PSScriptRoot "audit_docs.ps1"
 $lineIndexScript = Join-Path $PSScriptRoot "update_code_line_index.ps1"
+$utf8WriteCheckScript = Join-Path $PSScriptRoot "check_utf8_writes.ps1"
 
 function Invoke-CheckCommand {
 	param(
@@ -122,6 +123,19 @@ try {
 		$diffCheckArgs += $checkPaths
 	}
 	Invoke-CheckCommand -Label "git diff --check" -Command "git" -Arguments $diffCheckArgs
+
+	if ($checkPaths.Count -gt 0 -and (Test-Path -LiteralPath $utf8WriteCheckScript)) {
+		$utf8WriteArgs = @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$utf8WriteCheckScript,
+			"-Paths"
+		)
+		$utf8WriteArgs += $checkPaths
+		Invoke-CheckCommand -Label "PowerShell UTF-8 write check" -Command "powershell" -Arguments $utf8WriteArgs
+	}
 
 	if (-not $NoLineIndex) {
 		Invoke-CheckCommand -Label "code line index refresh" -Command "powershell" -Arguments @(

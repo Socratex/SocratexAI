@@ -174,10 +174,10 @@ items:
       Default helper:
       
       ```powershell
-      powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_task.ps1
+      powershell -NoProfile -ExecutionPolicy Bypass -File tools/done.ps1 -Message "<message>"
       ```
       
-      Use `-Quality` to run the detected or configured quality gate.
+      Use lower-level `tools/finish_task.ps1` only for no-commit checks or when debugging the finalizer.
       
   commit:
     title: 'COMMIT'
@@ -198,7 +198,7 @@ items:
       Default helper:
       
       ```powershell
-      powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_subtask.ps1 -Message "<message>"
+      powershell -NoProfile -ExecutionPolicy Bypass -File tools/done.ps1 -Message "<message>"
       ```
       
   log:
