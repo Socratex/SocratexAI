@@ -72,3 +72,7 @@ entries:
     date: 2026-04-28
     feature: script_fallback
     change: Added script fallback discipline and runtime status detection.
+  - version: '0.2.0-alpha'
+    date: 2026-04-30
+    feature: 'pipeline_featurelist_manifest'
+    change: 'Added root pipeline_featurelist.json to track source pipeline features and compare them against Riftbound Vanguard. Updated changelog helper to support CHANGELOG.yaml entries instead of assuming Markdown changelog format. Why: Source pipeline upgrades need a machine-readable feature manifest and a working changelog writer for YAML changelog files.'

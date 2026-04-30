@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-04-29T15:23:28+02:00",
+    "generatedAt":  "2026-04-30T02:01:42+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -23,6 +23,12 @@
                   {
                       "path":  "tools/finish_subtask.ps1",
                       "lines":  144,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/add_changelog_entry.ps1",
+                      "lines":  112,
                       "extension":  ".ps1",
                       "large":  false
                   },

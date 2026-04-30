@@ -1,6 +1,8 @@
 param(
 	[string[]]$Summary = @(),
 	[string]$Why = "",
+	[string]$Feature = "manual_changelog_entry",
+	[string]$Version = "0.2.0-alpha",
 	[string]$Timestamp = "",
 	[string]$Path = "CHANGELOG.yaml"
 )
@@ -17,6 +19,67 @@ function Get-ChangelogDate {
 	return [datetime]::ParseExact($DateText, "yyyy-MM-dd HH:mm", [System.Globalization.CultureInfo]::InvariantCulture)
 }
 
+function Test-ChangelogDate {
+	param([string]$DateText)
+
+	if ([string]::IsNullOrWhiteSpace($DateText)) {
+		return $true
+	}
+
+	$parsed = [datetime]::MinValue
+	return [datetime]::TryParseExact(
+		$DateText,
+		"yyyy-MM-dd HH:mm",
+		[System.Globalization.CultureInfo]::InvariantCulture,
+		[System.Globalization.DateTimeStyles]::None,
+		[ref]$parsed
+	)
+}
+
+function Convert-ToYamlSingleQuoted {
+	param([string]$Value)
+
+	return "'" + $Value.Replace("'", "''") + "'"
+}
+
+function Add-YamlChangelogEntry {
+	param(
+		[string]$Content,
+		[string]$FullPath,
+		[datetime]$EntryDate,
+		[string]$EntryFeature,
+		[string]$EntryVersion,
+		[string[]]$EntrySummary,
+		[string]$EntryWhy
+	)
+
+	if ($Content -notmatch '(?m)^summary:\s+' -or $Content -notmatch '(?m)^entries:\s*$') {
+		throw "YAML changelog must contain top-level summary and entries fields."
+	}
+
+	$change = ($EntrySummary -join " ").Trim()
+	if (-not [string]::IsNullOrWhiteSpace($EntryWhy)) {
+		$change = "$change Why: $($EntryWhy.Trim())"
+	}
+
+	$entryLines = @(
+		("  - version: " + (Convert-ToYamlSingleQuoted -Value $EntryVersion)),
+		("    date: " + $EntryDate.ToString("yyyy-MM-dd")),
+		("    feature: " + (Convert-ToYamlSingleQuoted -Value $EntryFeature)),
+		("    change: " + (Convert-ToYamlSingleQuoted -Value $change))
+	)
+
+	$newline = [Environment]::NewLine
+	$newEntry = [string]::Join($newline, $entryLines)
+	$newContent = $Content.TrimEnd() + $newline + $newEntry + $newline
+	[System.IO.File]::WriteAllText($FullPath, $newContent, $utf8NoBom)
+	Write-Host "OK: appended YAML changelog entry for $EntryFeature."
+}
+
+if (-not (Test-ChangelogDate -DateText $Timestamp)) {
+	throw "Invalid -Timestamp value '$Timestamp'. If this was intended as another summary line, pass -Summary as an explicit array: -Summary @('line one','line two')."
+}
+
 if ($Summary.Count -eq 0) {
 	throw "At least one -Summary line is required."
 }
@@ -28,12 +91,18 @@ if ($trimmedSummary.Count -eq 0) {
 
 $autoTimestamp = [string]::IsNullOrWhiteSpace($Timestamp)
 $entryDate = if ($autoTimestamp) { Get-Date } else { Get-ChangelogDate -DateText $Timestamp }
-$fullPath = Join-Path $repoRoot $Path
+$fullPath = if ([System.IO.Path]::IsPathRooted($Path)) { $Path } else { Join-Path $repoRoot $Path }
 if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
 	throw "Missing changelog file: $Path"
 }
 
 $content = Get-Content -Raw -LiteralPath $fullPath -Encoding UTF8
+
+if ([System.IO.Path]::GetExtension($fullPath) -in @(".yaml", ".yml")) {
+	Add-YamlChangelogEntry -Content $content -FullPath $fullPath -EntryDate $entryDate -EntryFeature $Feature -EntryVersion $Version -EntrySummary $trimmedSummary -EntryWhy $Why
+	exit 0
+}
+
 if ($content -notmatch '^# Changelog\s*') {
 	throw "Changelog must start with '# Changelog'."
 }
