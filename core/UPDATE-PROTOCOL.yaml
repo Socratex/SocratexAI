@@ -113,19 +113,19 @@ items:
       powershell -NoProfile -ExecutionPolicy Bypass -File tools/learn_pipeline_features.ps1 -ProjectPath "<project>"
       ```
 
-      For structured intake that an agent can read later, generate a JSON learning report with:
+      For structured local intake that an agent can read later, generate a JSON learning report with:
 
       ```powershell
       powershell -NoProfile -ExecutionPolicy Bypass -File tools/report_pipeline_learning.ps1 -ProjectPath "<project>" -OutputPath "learning/inbox/<project>.json"
       ```
 
-      For a shared network inbox, publish or update one GitHub Issue instead of creating separate notifications:
+      For public pipeline improvement intake, use only a prefilled GitHub Issue URL:
 
       ```powershell
-      powershell -NoProfile -ExecutionPolicy Bypass -File tools/publish_pipeline_learning_issue.ps1 -ProjectPath "<project>"
+      powershell -NoProfile -ExecutionPolicy Bypass -File tools/open_pipeline_learning_issue.ps1 -ProjectPath "<project>" -Open
       ```
 
-      The GitHub publisher uses `GITHUB_TOKEN` or `GH_TOKEN`, updates the single `SocratexPipeline Learning Inbox` issue, and skips duplicate reports by hash unless `-Force` is passed.
+      This is the only supported public network intake path for now. It does not require a GitHub token in the pipeline and does not write through an API; the user reviews the prefilled issue and submits it from the browser.
 
       Apply selected reusable features to the source manifest with `-Apply -IncludeFeatures <ids>` or `-Apply -AcceptAll` only after excluding project/domain-specific features.
 

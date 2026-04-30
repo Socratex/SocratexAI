@@ -11,6 +11,7 @@ DIAGNOSTICS-SUMMARY.json
 OUTPUT
 CONSOLE-LOG
 CONSOLE-LOG-SUMMARY
+learning/inbox/*.json
 logs/*
 !logs/.gitkeep
 
@@ -23,4 +24,3 @@ Thumbs.db
 __pycache__/
 *.pyc
 .pytest_cache/
-

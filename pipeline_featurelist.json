@@ -32,6 +32,6 @@
     "pipeline_featurelist_instance_generation",
     "pipeline_feature_learning_loop",
     "pipeline_learning_reports",
-    "github_issue_learning_inbox"
+    "prefilled_github_issue_learning_inbox"
   ]
 }

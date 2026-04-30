@@ -53,14 +53,15 @@ That means:
 
 ## Learning Inbox Recommendation
 
-Use GitHub Issues as the shared network inbox for cross-project pipeline learning.
+Use prefilled GitHub Issues as the only public network intake path for cross-project pipeline learning for now.
 
 The recommended pattern is:
 
 - local project generates a structured learning report,
-- source pipeline publishes it into one stable `SocratexPipeline Learning Inbox` issue,
-- duplicate reports are skipped by hash,
-- Discord or email stays optional alerting, not the durable inbox,
+- pipeline opens a prefilled GitHub Issue URL,
+- the user reviews and submits the issue manually,
+- the pipeline does not ship with a shared write token,
+- Discord, email, API writers, and committed inbox JSON are not supported public intake paths for now,
 - reusable features are promoted only after review.
 
-This keeps learning visible across machines and projects without turning every candidate into a separate notification.
+This keeps learning visible across machines and projects without requiring a hosted endpoint or embedding a public write token.
