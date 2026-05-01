@@ -1,5 +1,9 @@
 summary: SocratexAI pipeline product changelog.
 entries:
+  - version: '0.2.0-alpha'
+    date: 2026-05-01
+    feature: 'priority_orchestration_and_team_roles'
+    change: 'Added reusable ORCHESTRATION.yaml and on-demand team role templates for product, technical, performance, experience, and pipeline review. Hooked them into initialization, import, reinitialization, DOCS templates, code workflow routing, agent contract, README, public bootstrap, and pipeline_featurelist.json. Why: Long-running Codex workspaces need owner-written priority steering and role-specific review lenses without loading every role as default context.'
   - version: 0.2.0-alpha
     date: 2026-04-29
     feature: git_batch_finishers

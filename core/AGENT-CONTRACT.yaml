@@ -141,6 +141,7 @@ items:
       Use these concepts regardless of file names:
 
       - Active state: the current checkpoint, next action, blockers, and risks.
+      - Orchestration: owner-written active pain points, priority challenge rules, and team-on-demand routing.
       - Execution plan: active and near-future passes.
       - Backlog: valuable work not yet selected for execution.
       - Decision log: durable choices and why they were made.
@@ -148,19 +149,16 @@ items:
       - Context capsules: short technical or domain memory that prevents rereading or repeated mistakes.
       - Completion log: shipped outcomes and major fixes.
 
-      Read `core/PROMOTION-RULES.yaml` before moving work between memory layers.
-
-      Read `core/PROJECT-PROFILE.yaml` when `PIPELINE-CONFIG.yaml` contains `project_profile`.
-
-      Read `core/ROI-BIAS.yaml` before ranking recommendations, planning work, or reviewing tradeoffs.
-
-      Read `core/SCRIPT-FALLBACK.yaml` before bypassing any script that cannot run.
-
-      Read `core/TASK-WORK.yaml` before broad multi-step work that needs a temporary micro-task plan.
-
-      Read `core/INSTRUCTION-CAPTURE.yaml` before rewriting files that collect raw user instructions.
-
-      Read `core/FILE-FORMATS.yaml` before creating or renaming project memory files.
+      Required selective reads:
+      - `core/PROMOTION-RULES.yaml` before moving work between memory layers.
+      - `core/PROJECT-PROFILE.yaml` when `PIPELINE-CONFIG.yaml` contains `project_profile`.
+      - `core/ROI-BIAS.yaml` before ranking recommendations, planning work, or reviewing tradeoffs.
+      - `core/SCRIPT-FALLBACK.yaml` before bypassing any script that cannot run.
+      - `core/TASK-WORK.yaml` before broad multi-step work that needs a temporary micro-task plan.
+      - `core/INSTRUCTION-CAPTURE.yaml` before rewriting files that collect raw user instructions.
+      - `core/FILE-FORMATS.yaml` before creating or renaming project memory files.
+      - `ORCHESTRATION.yaml` after active state only when priority steering, feature triage, planning, or broad project-risk judgment matters.
+      - `team/*.yaml` only on demand: when the user names a role, asks for team-style review, or `ORCHESTRATION.yaml` routes the task to that role. Treat team files as decision lenses, not default context.
   execution_passes:
     title: Execution Passes
     format: markdown-section

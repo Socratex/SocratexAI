@@ -221,6 +221,13 @@ if ($CreateFiles) {
         Copy-TemplateFile -TemplateName "PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
     }
 
+    Copy-TemplateFile -TemplateName "ORCHESTRATION.yaml" -DestinationRelativePath "ORCHESTRATION.yaml"
+    Copy-TemplateFile -TemplateName "team\product.yaml" -DestinationRelativePath "team\product.yaml"
+    Copy-TemplateFile -TemplateName "team\technical.yaml" -DestinationRelativePath "team\technical.yaml"
+    Copy-TemplateFile -TemplateName "team\performance.yaml" -DestinationRelativePath "team\performance.yaml"
+    Copy-TemplateFile -TemplateName "team\experience.yaml" -DestinationRelativePath "team\experience.yaml"
+    Copy-TemplateFile -TemplateName "team\pipeline.yaml" -DestinationRelativePath "team\pipeline.yaml"
+
     if ($keep.ContainsKey("code") -and $AiMode -ne "Lite") {
         Copy-TemplateFile -TemplateName "_PROMPTS.md" -DestinationRelativePath "_PROMPTS.md"
         Copy-CodeTemplateFile -TemplateName "_PROMPT-QUEUE.yaml" -DestinationRelativePath "_PROMPT-QUEUE.yaml"

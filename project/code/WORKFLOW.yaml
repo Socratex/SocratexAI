@@ -51,12 +51,14 @@ items:
       1. `AGENTS.md`
       2. `STATE.yaml`
       3. `PIPELINE-CONFIG.yaml`
-      4. `core/PROJECT-PROFILE.yaml` when `project_profile` exists
-      5. `core/ROI-BIAS.yaml`
-      6. `core/TASK-WORK.yaml` for broad multi-step work
-      7. `_PLAN.yaml`
-      8. smallest relevant file under `context-docs/`
-      9. source files in the touched ownership slice
+      4. `ORCHESTRATION.yaml` only when priority steering, feature triage, planning, or broad project-risk judgment matters
+      5. `team/*.yaml` only when the user names a role, asks for team-style review, or ORCHESTRATION.yaml routes the task to that role
+      6. `core/PROJECT-PROFILE.yaml` when `project_profile` exists
+      7. `core/ROI-BIAS.yaml`
+      8. `core/TASK-WORK.yaml` for broad multi-step work
+      9. `_PLAN.yaml`
+      10. smallest relevant file under `context-docs/`
+      11. source files in the touched ownership slice
 
       For broad architecture, ownership, persistence, API, build, toolchain, or registry work, also read:
 
@@ -118,14 +120,16 @@ items:
       5. For software and game projects, use AAA-grade architecture as the steer-direction where appropriate: explicit ownership, data flow, contracts, diagnostics, performance budget, toolability, deterministic behavior where relevant, testability, and low retrofit cost.
       6. For bug reports, first check whether the bug exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness; prefer the smallest fix that removes the bug class or improves diagnosis.
       7. Check whether a known solution, pattern, or tool is cheaper than custom design.
-      8. Check whether a future-facing prerequisite should happen before the requested implementation.
-      9. For broad multi-step work, create or refresh `docs-tech/cache/current_task.yaml` and split the request into micro-tasks.
-      10. For structural or multi-boundary work, write a short impact note or plan before editing.
-      11. Rank recommendations or candidate passes by ROI when there are multiple options.
-      12. Implement within the scoped boundary, updating micro-task status when task work tracking is active.
-      13. Verify with the strongest practical gate at a natural verification boundary.
-      14. Update only the memory layers whose current truth changed.
-      15. Finish with concrete changed files, verification, residual risk, and ROI Picks when follow-up recommendations exist.
+      8. For planning or feature triage, check `ORCHESTRATION.yaml` before changing active plan or backlog; challenge the request when it bypasses a higher-priority active pain point.
+      9. Load `team/*.yaml` role lenses only on demand or when orchestration routing selects them.
+      10. Check whether a future-facing prerequisite should happen before the requested implementation.
+      11. For broad multi-step work, create or refresh `docs-tech/cache/current_task.yaml` and split the request into micro-tasks.
+      12. For structural or multi-boundary work, write a short impact note or plan before editing.
+      13. Rank recommendations or candidate passes by ROI when there are multiple options.
+      14. Implement within the scoped boundary, updating micro-task status when task work tracking is active.
+      15. Verify with the strongest practical gate at a natural verification boundary.
+      16. Update only the memory layers whose current truth changed.
+      17. Finish with concrete changed files, verification, residual risk, and ROI Picks when follow-up recommendations exist.
   script_first_execution:
     title: Script-First Execution
     format: markdown-section

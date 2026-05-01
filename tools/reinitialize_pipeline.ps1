@@ -157,6 +157,13 @@ Write-Host "Changelog enabled: $changelogEnabled"
 
 Ensure-ConfigDefaults -Text $configText -ChangelogEnabled $changelogEnabled
 
+Ensure-Template -TemplateRelativePath "ORCHESTRATION.yaml" -DestinationRelativePath "ORCHESTRATION.yaml"
+Ensure-Template -TemplateRelativePath "team/product.yaml" -DestinationRelativePath "team/product.yaml"
+Ensure-Template -TemplateRelativePath "team/technical.yaml" -DestinationRelativePath "team/technical.yaml"
+Ensure-Template -TemplateRelativePath "team/performance.yaml" -DestinationRelativePath "team/performance.yaml"
+Ensure-Template -TemplateRelativePath "team/experience.yaml" -DestinationRelativePath "team/experience.yaml"
+Ensure-Template -TemplateRelativePath "team/pipeline.yaml" -DestinationRelativePath "team/pipeline.yaml"
+
 foreach ($pack in $Packs) {
     if ($pack -eq "code") {
         Ensure-Template -TemplateRelativePath "code/DOCS.yaml" -DestinationRelativePath "DOCS.yaml"

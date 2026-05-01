@@ -170,6 +170,12 @@ if ($CreateProjectFiles) {
             "_INSTRUCTIONS.md" = "_INSTRUCTIONS.md"
             "code/_INSTRUCTION-QUEUE.yaml" = "_INSTRUCTION-QUEUE.yaml"
             "code/PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"
+            "ORCHESTRATION.yaml" = "ORCHESTRATION.yaml"
+            "team/product.yaml" = "team\product.yaml"
+            "team/technical.yaml" = "team\technical.yaml"
+            "team/performance.yaml" = "team\performance.yaml"
+            "team/experience.yaml" = "team\experience.yaml"
+            "team/pipeline.yaml" = "team\pipeline.yaml"
             "code/context-docs/TECHNICAL.yaml" = "context-docs\TECHNICAL.yaml"
             "code/context-docs/FROZEN_LAYERS.yaml" = "context-docs\FROZEN_LAYERS.yaml"
             "logs-.gitkeep" = "logs\.gitkeep"
@@ -185,6 +191,12 @@ if ($CreateProjectFiles) {
             "JOURNAL.md" = "JOURNAL.md"
             "REVIEW.md" = "REVIEW.md"
             "PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"
+            "ORCHESTRATION.yaml" = "ORCHESTRATION.yaml"
+            "team/product.yaml" = "team\product.yaml"
+            "team/technical.yaml" = "team\technical.yaml"
+            "team/performance.yaml" = "team\performance.yaml"
+            "team/experience.yaml" = "team\experience.yaml"
+            "team/pipeline.yaml" = "team\pipeline.yaml"
         }
     }
 

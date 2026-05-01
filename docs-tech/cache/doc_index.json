@@ -2427,6 +2427,35 @@
       "keys": {}
     },
     {
+      "path": "templates/ORCHESTRATION.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "usage",
+        "responsibility_boundaries",
+        "active_pain_points",
+        "priority_rules",
+        "agent_behavior",
+        "team_on_demand"
+      ],
+      "keys": {
+        "example_missing_core_loop": {
+          "path": "active_pain_points.0",
+          "title": "",
+          "ref": "active_pain_points.0",
+          "status": "example_replace_me"
+        },
+        "example_quality_or_reliability": {
+          "path": "active_pain_points.1",
+          "title": "",
+          "ref": "active_pain_points.1",
+          "status": "example_replace_me"
+        }
+      }
+    },
+    {
       "path": "templates/PIPELINE-CONFIG.yaml",
       "document": {},
       "routing": {},
@@ -2510,6 +2539,86 @@
           "status": ""
         }
       }
+    },
+    {
+      "path": "templates/team/experience.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/team/performance.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/team/pipeline.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/team/product.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "templates/team/technical.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "keys": {}
     }
   ]
 }

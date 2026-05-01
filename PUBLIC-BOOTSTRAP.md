@@ -188,6 +188,8 @@ For programming projects:
 10. Apply directive merge or replace mode.
 11. Run document audit when possible.
 12. Activate the installed pipeline for the current and future sessions.
+
+Installed projects also receive `ORCHESTRATION.yaml` and `team/*.yaml` role lenses. These are not default context for every prompt. Use `ORCHESTRATION.yaml` when priority steering or broad project-risk judgment matters, and load a `team/` role only when the user asks for that lens or orchestration routes the task to it.
 13. End with first useful work pass recommendations and ROI Picks.
 
 For non-programming projects:

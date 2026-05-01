@@ -4,6 +4,8 @@ SocratexPipeline is a modular project runtime for long-running AI-assisted work.
 
 It is not a prompt pack. It gives AI agents a durable operating layer: state, plans, registries, diagnostics, quality gates, update rules, and safe directive routing across long projects.
 
+It also installs a reusable project orchestration layer: `ORCHESTRATION.yaml` for owner-written active pain points and priority challenge rules, plus on-demand `team/*.yaml` role lenses for product, technical, performance, experience, and pipeline review.
+
 ## Why
 
 AI agents often lose context, mix backlog with active work, forget verification, overwrite local conventions, or bury project rules inside one giant instruction file.
@@ -59,7 +61,7 @@ ignored/ai-socratex/
 - `project/` contains modular project packs.
 - `adapters/` contains thin adapter files for specific agents.
 - `initializer/` contains the first-run setup workflow.
-- `templates/` contains source templates copied into initialized projects.
+- `templates/` contains source templates copied into initialized projects, including `ORCHESTRATION.yaml` and on-demand `team/` role lenses.
 - `tools/` contains helper scripts.
 - `temp/trash/` receives first-run initializer files after setup.
 
@@ -129,6 +131,8 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
 Structured YAML tools apply to every project type, including non-code projects, for agent-only structured YAML files. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_bulk_insert`, `doc_item_move`, and `doc_item_migrate` whenever practical.
+
+`ORCHESTRATION.yaml` is intentionally opt-in context. Agents should read it for planning, priority, roadmap, feature-triage, and broad project-risk decisions, not for every narrow local edit. `team/*.yaml` files are loaded only when requested or routed by orchestration.
 
 Document edit scripts are transactional by default: they should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output. Agents should not compose manual read/edit/normalize/cache/check queues after a successful document edit tool.
 

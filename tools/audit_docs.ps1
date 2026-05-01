@@ -314,6 +314,11 @@ try {
                 Add-Error "Missing prompt workflow template: $template"
             }
         }
+        foreach ($template in @("templates/ORCHESTRATION.yaml", "templates/team/product.yaml", "templates/team/technical.yaml", "templates/team/performance.yaml", "templates/team/experience.yaml", "templates/team/pipeline.yaml")) {
+            if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
+                Add-Error "Missing orchestration/team template: $template"
+            }
+        }
         foreach ($template in @("templates/DOCS.yaml", "templates/STATE.md", "templates/_PLAN.md", "templates/BACKLOG.md", "templates/DECISIONS.md", "templates/ISSUES.md", "templates/JOURNAL.md", "templates/REVIEW.md", "templates/PIPELINE-CONFIG.yaml")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
                 Add-Error "Missing non-code user-facing template: $template"
@@ -336,6 +341,12 @@ try {
         Test-ContainsText -Text $pipelineConfigTemplate -Needle "profile: standard" -Label "templates/code/PIPELINE-CONFIG.yaml"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle ".old" -Label "tools/set_directives.ps1"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle "SOCRATEX.md" -Label "tools/set_directives.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/Initialize-SocratexPipeline.ps1") -Needle "ORCHESTRATION.yaml" -Label "tools/Initialize-SocratexPipeline.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/Initialize-SocratexPipeline.ps1") -Needle "team\pipeline.yaml" -Label "tools/Initialize-SocratexPipeline.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/import_existing_project.ps1") -Needle "ORCHESTRATION.yaml" -Label "tools/import_existing_project.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/import_existing_project.ps1") -Needle "team/pipeline.yaml" -Label "tools/import_existing_project.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/reinitialize_pipeline.ps1") -Needle "ORCHESTRATION.yaml" -Label "tools/reinitialize_pipeline.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/reinitialize_pipeline.ps1") -Needle "team/pipeline.yaml" -Label "tools/reinitialize_pipeline.ps1"
     }
 
     if ($Initialized) {

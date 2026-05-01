@@ -1,16 +1,16 @@
 {
-    "generatedAt":  "2026-04-30T16:00:49+02:00",
+    "generatedAt":  "2026-05-01T15:55:42+02:00",
     "threshold":  300,
     "files":  [
                   {
                       "path":  "tools/audit_docs.ps1",
-                      "lines":  361,
+                      "lines":  372,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
                       "path":  "tools/Initialize-SocratexPipeline.ps1",
-                      "lines":  361,
+                      "lines":  367,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -22,7 +22,7 @@
                   },
                   {
                       "path":  "tools/import_existing_project.ps1",
-                      "lines":  262,
+                      "lines":  274,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -33,13 +33,13 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_task.ps1",
-                      "lines":  174,
+                      "path":  "tools/reinitialize_pipeline.ps1",
+                      "lines":  180,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/reinitialize_pipeline.ps1",
+                      "path":  "tools/check_task.ps1",
                       "lines":  174,
                       "extension":  ".ps1",
                       "large":  false

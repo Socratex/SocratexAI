@@ -2,7 +2,7 @@
   "schema": "socratex-pipeline-featurelist/v2",
   "pipeline_id": "socratex_pipeline",
   "role": "source",
-  "updated_at": "2026-04-30",
+  "updated_at": "2026-05-01",
   "features": [
     "adapter_pack_bootstrap",
     "agent_contract_and_core_protocols",
@@ -34,6 +34,8 @@
     "pipeline_learning_reports",
     "prefilled_github_issue_learning_inbox",
     "self_describing_learning_issues",
-    "pipeline_featurelist_update_guard"
+    "pipeline_featurelist_update_guard",
+    "priority_orchestration_layer",
+    "on_demand_team_role_lenses"
   ]
 }
