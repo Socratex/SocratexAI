@@ -25,6 +25,7 @@
     "pipeline_update_and_removal_protocols",
     "pipeline_update_artifact_sync",
     "pipeline_source_text_normalization",
+    "pipeline_template_eof_normalization",
     "initializer_and_reinitializer",
     "branch_memory_initialization",
     "directive_compiler_and_setter",
