@@ -97,10 +97,16 @@
           "ref": "items.tagged_rules.value.3",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.load_standards_before_code": {
           "path": "items.tagged_rules.value.4",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Load Engineering Standards Before Code Work",
           "ref": "items.tagged_rules.value.4",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "items.tagged_rules.value.5",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "items.tagged_rules.value.5",
           "status": ""
         }
       }
@@ -2558,10 +2564,16 @@
           "ref": "items.tagged_rules.value.3",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.load_standards_before_code": {
           "path": "items.tagged_rules.value.4",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Load Engineering Standards Before Code Work",
           "ref": "items.tagged_rules.value.4",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "items.tagged_rules.value.5",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "items.tagged_rules.value.5",
           "status": ""
         }
       }

@@ -1,6 +1,6 @@
 {
     "schema":  "socratex-compiled-agent-checksum/v1",
-    "generated_at":  "source-af7ab37c62d7",
+    "generated_at":  "source-ce0aadd9e52e",
     "source_hashes":  {
                           "AGENTS.md":  "87c9889516eeb05876609129d3432f0c0a93e88b421949941ddb588361aafead",
                           "README.md":  "0c6eb448b9eed07cc97ebe0f611dcc145362a924288e49a4dd3b40b1d2bc8389",
@@ -12,7 +12,7 @@
                           "core/ROI-BIAS.yaml":  "2290b8e8a4725b70849747128c0aef125f4c019ad42610e079ade3c251df62cf",
                           "core/TASK-WORK.yaml":  "1df08791db9a6d3f76fd131170bd15d33aa9955ca0409ebca6c0c7158c6b384d",
                           "core/SCRIPT-FALLBACK.yaml":  "ea9440d715cf101b6d20d2876f287e0719aeddf780c0094d09b0e07a48c52827",
-                          "context-docs/ENGINEERING.yaml":  "487f9c412efdc8c0f0c65149bdd7e184ab9059da8051481002ac24f76d1de564",
+                          "context-docs/ENGINEERING.yaml":  "b705ddb2f5c43b5bdaa1809c0b9a538edcb07a2911ddc2baabc031b44bc05756",
                           "docs-tech/KNOWLEDGE-VIEWS.yaml":  "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
                           "tools/knowledge_index.py":  "90b6078c343a57f5bccb6321506625b544effb607a54215c2573f14760e7c912",
                           "tools/knowledge_select.ps1":  "f3495af169dc534c03787325cba8d8bee3e26873b2da24d68c9aebbc8dff9e21",
@@ -23,25 +23,25 @@
                           "tools/knowledge_file_select.ps1":  "46443874c53e23d0572dba88c791ba8c3a6f1738468013bdd1b248d96fd68907",
                           "templates/ORCHESTRATION.yaml":  "558c169c0f97d75f2f694bd51f61f112430a5aaac0d605e938969346e65b0c0a",
                           "templates/docs-tech/KNOWLEDGE-VIEWS.yaml":  "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
-                          "templates/code/context-docs/ENGINEERING.yaml":  "487f9c412efdc8c0f0c65149bdd7e184ab9059da8051481002ac24f76d1de564",
+                          "templates/code/context-docs/ENGINEERING.yaml":  "b705ddb2f5c43b5bdaa1809c0b9a538edcb07a2911ddc2baabc031b44bc05756",
                           "templates/team/product.yaml":  "ce0ac98ea0f545b9946e5582c6db66de6889d09f5cce0c02169539c4cf3afb19",
                           "templates/team/technical.yaml":  "5a2919fdd9de49abae12bb481a4c3cf67e96e14bb05c79fb5a2e629cdd319354",
                           "templates/team/performance.yaml":  "8cf2c247430f6a1512039729e0c349cbf7ad48f1216041ad6e26dc16589af6ea",
                           "templates/team/experience.yaml":  "c545d151ac9a72f9791dd4fec379feb496a09ef28f8162c14288aa5903d10853",
                           "templates/team/pipeline.yaml":  "a221b4f560bd7051d13205bd6f5b48bc8f3986c47535face95f0e7dfaedc9962",
                           "project/code/PACK.yaml":  "fbf99c03ee8a26159080e6b0385c2f2a9e9b0ac68c605f13d24428d3f44c77cd",
-                          "project/code/WORKFLOW.yaml":  "b286b95534b86d36ede5db83232f925d95a78c7d64d3f84c044e1cdd2e4029ea",
+                          "project/code/WORKFLOW.yaml":  "d17e1b9247faaad905ad2214d0c77af458b9a286cad85129c320b718aef8214a",
                           "project/generic/PACK.yaml":  "e9d07fd409a3e207f33d74e000512aa7eb5f99b386b08667c4c4923f17a4c330",
                           "project/personal/PACK.yaml":  "491a3ff4cf7ac66ae8db219dc17b57bdfdbe00e4826f279acbcc56a813f29b87",
                           "project/creative/PACK.yaml":  "574ecc534d317c688c824b752ca99682584c9444daee0293475a63982d11d04a"
                       },
     "output_hashes":  {
                           "README.md":  "9709e65473328c523ba6efc15f853da80ead1555f0dca9135bcd1d2b5e8794a1",
-                          "INDEX.yaml":  "faf7f863ed0fa810b786fc7333d179579ca7811ec98cc13dcbdc4ed480842f47",
-                          "codex/ENTRYPOINT.md":  "a4be3133ffedfd112af077bdfce1111bc0875d03cf3dc27ca53bb5a636317aa6",
-                          "codex/RULES.compiled.md":  "947d1680bc638ce3bfa998c73fd40a3a9c8f953ff27bbc75524491636b82cbb0",
-                          "codex/WORKFLOW.compiled.md":  "b8dc122d93b8c80d7e804e6722339ac7eb022a4901f66de29a7cf247ba13fb3e",
-                          "codex/ORCHESTRATION.compiled.md":  "b6584e20e98af7a1c719ad1a3b6d090d7bcfd9423d06b341559d0da11e6f166d",
-                          "codex/TEAM.compiled.md":  "a01691245631b4c100b3a603e19bc3a4f94817047e842955298575db894375e1"
+                          "INDEX.yaml":  "c054fe6efa03a93968f2ff40d175ba8d0451925199a648efbb6831478dcfdb74",
+                          "codex/ENTRYPOINT.md":  "964c2e9c891f1409de786ecab3b56a401825d3170b4b7889148b961168b027fb",
+                          "codex/RULES.compiled.md":  "4f30b12d26dba980473e3b7f6695638f0cef5f98c8ff4aacb0b8abc1a868f9e3",
+                          "codex/WORKFLOW.compiled.md":  "7e7f24c0a170ae8c5f4fc2902d4f197858097468686d6b06dd896c0dafd45079",
+                          "codex/ORCHESTRATION.compiled.md":  "fea2bc54908a7f56eda31a925c1a23ad1aa96867d1f9073c71ad9d20be1711f2",
+                          "codex/TEAM.compiled.md":  "cec006987989ca8e2990b8e1ede2454dc6a9d9e7bde8537beb1bd728fff22221"
                       }
 }

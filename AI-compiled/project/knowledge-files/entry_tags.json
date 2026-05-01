@@ -88,5 +88,30 @@
     "document_path": "context-docs/ENGINEERING.yaml",
     "entry_name": "engineering.workflow.knowledge_views",
     "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "workflow"
   }
 ]

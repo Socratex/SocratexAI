@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-af7ab37c62d7
+Generated: source-ce0aadd9e52e
 
 ## Source of Truth
 
@@ -153,6 +153,7 @@ body: |-
     "priority_orchestration_layer",
     "on_demand_team_role_lenses",
     "compiled_agent_instruction_layer",
+    "code_task_engineering_standards_preload",
     "compiled_sqlite_knowledge_index",
     "knowledge_document_hash_gate",
     "knowledge_entry_tag_queries",

@@ -1,6 +1,6 @@
 # Compiled Workflow for Codex
 
-Generated: source-af7ab37c62d7
+Generated: source-ce0aadd9e52e
 
 ## Code Read Order
 
@@ -22,6 +22,13 @@ body: |
   9. `_PLAN.yaml`
   10. smallest relevant file under `context-docs/`
   11. source files in the touched ownership slice
+
+  For every programming implementation, code modification, refactor, bugfix, or code review task, treat compiled engineering standards as high-priority context before editing code:
+
+  1. Run `tools/knowledge_check.ps1` when relying on existing compiled knowledge and the project provides it.
+  2. Load all currently compiled engineering, coding, and architecture rules with `tools/knowledge_select.ps1 -Tags engineering,coding,architecture -Match any -Type rule`.
+  3. Also load the most relevant named view when it exists, such as `architecture_godot`, `performance`, `debugging`, or another project-specific architecture/performance view.
+  4. If SQLite is unavailable, use `tools/knowledge_file_select.ps1` with the same tag/type intent.
 
   For broad architecture, ownership, persistence, API, build, toolchain, or registry work, also read:
 
@@ -55,20 +62,21 @@ body: |
   1. Start from the smallest state source that answers the question.
   2. Identify the ownership slice.
   3. Check existing scripts and project automation before doing repeatable work manually.
-  4. For every new feature request, suggestion, or architecture discussion, first check whether the requested work can be implemented in the most future-proof, maintainable, profile-fitting way before executing the literal request.
-  5. For software and game projects, use AAA-grade architecture as the steer-direction where appropriate: explicit ownership, data flow, contracts, diagnostics, performance budget, toolability, deterministic behavior where relevant, testability, and low retrofit cost.
-  6. For bug reports, first check whether the bug exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness; prefer the smallest fix that removes the bug class or improves diagnosis.
-  7. Check whether a known solution, pattern, or tool is cheaper than custom design.
-  8. For planning or feature triage, check `ORCHESTRATION.yaml` before changing active plan or backlog; challenge the request when it bypasses a higher-priority active pain point.
-  9. Load `team/*.yaml` role lenses only on demand or when orchestration routing selects them.
-  10. Check whether a future-facing prerequisite should happen before the requested implementation.
-  11. For broad multi-step work, create or refresh `docs-tech/cache/current_task.yaml` and split the request into micro-tasks.
-  12. For structural or multi-boundary work, write a short impact note or plan before editing.
-  13. Rank recommendations or candidate passes by ROI when there are multiple options.
-  14. Implement within the scoped boundary, updating micro-task status when task work tracking is active.
-  15. Verify with the strongest practical gate at a natural verification boundary.
-  16. Update only the memory layers whose current truth changed.
-  17. Finish with concrete changed files, verification, residual risk, and ROI Picks when follow-up recommendations exist.
+  4. Before editing code, load compiled engineering, coding, and architecture rules when the project provides a knowledge layer; keep those rules active as implementation constraints, not optional background reading.
+  5. For every new feature request, suggestion, or architecture discussion, first check whether the requested work can be implemented in the most future-proof, maintainable, profile-fitting way before executing the literal request.
+  6. For software and game projects, use AAA-grade architecture as the steer-direction where appropriate: explicit ownership, data flow, contracts, diagnostics, performance budget, toolability, deterministic behavior where relevant, testability, and low retrofit cost.
+  7. For bug reports, first check whether the bug exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness; prefer the smallest fix that removes the bug class or improves diagnosis.
+  8. Check whether a known solution, pattern, or tool is cheaper than custom design.
+  9. For planning or feature triage, check `ORCHESTRATION.yaml` before changing active plan or backlog; challenge the request when it bypasses a higher-priority active pain point.
+  10. Load `team/*.yaml` role lenses only on demand or when orchestration routing selects them.
+  11. Check whether a future-facing prerequisite should happen before the requested implementation.
+  12. For broad multi-step work, create or refresh `docs-tech/cache/current_task.yaml` and split the request into micro-tasks.
+  13. For structural or multi-boundary work, write a short impact note or plan before editing.
+  14. Rank recommendations or candidate passes by ROI when there are multiple options.
+  15. Implement within the scoped boundary, updating micro-task status when task work tracking is active.
+  16. Verify with the strongest practical gate at a natural verification boundary.
+  17. Update only the memory layers whose current truth changed.
+  18. Finish with concrete changed files, verification, residual risk, and ROI Picks when follow-up recommendations exist.
 
 
 ## Verification Boundary

@@ -97,6 +97,31 @@ items:
           - path: context-docs/ENGINEERING.yaml
             selector: tagged_rules
             note: Source pipeline file-fallback rule.
+      - id: engineering.workflow.load_standards_before_code
+        type: rule
+        subtype: workflow_rule
+        title: Load Engineering Standards Before Code Work
+        summary: Programming work should load compiled engineering, coding, and architecture guidance before source edits.
+        rule: For implementation, refactor, bugfix, or code review tasks, load the broad rules slice with `tools/knowledge_select.ps1 -Tags engineering,coding,architecture -Match any -Type rule` before editing code, then load task-specific views or tags as needed.
+        rationale: Professional code quality depends on keeping ownership, architecture, readability, diagnostics, verification, and project best practices active in context during implementation.
+        priority: must
+        source_of_truth: context-docs/ENGINEERING.yaml
+        load_at_start: true
+        stability: durable
+        tags:
+          - engineering
+          - workflow
+          - coding
+          - architecture
+          - docs-workflow
+        source_refs:
+          - path: project/code/WORKFLOW.yaml
+            selector: read_order
+            note: Code workflow read-order requirement for programming tasks.
+          - path: project/code/WORKFLOW.yaml
+            selector: script_first_execution
+            is_duplicate: true
+            note: Script-first workflow repeats the preferred query command.
       - id: engineering.coding.explicit_diagnosable_flow
         type: rule
         subtype: coding_rule

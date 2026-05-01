@@ -46,5 +46,21 @@
     "note": "Code-project workflow repeats the same future-fit and diagnostic bias.",
     "path": "project/code/WORKFLOW.yaml",
     "selector": "general_workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "is_duplicate": false,
+    "note": "Code workflow read-order requirement for programming tasks.",
+    "path": "project/code/WORKFLOW.yaml",
+    "selector": "read_order"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "is_duplicate": true,
+    "note": "Script-first workflow repeats the preferred query command.",
+    "path": "project/code/WORKFLOW.yaml",
+    "selector": "script_first_execution"
   }
 ]
