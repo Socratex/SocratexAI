@@ -62,5 +62,13 @@
     "note": "Script-first workflow repeats the preferred query command.",
     "path": "project/code/WORKFLOW.yaml",
     "selector": "script_first_execution"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "is_duplicate": true,
+    "note": "Canonical helper for loading the code-task engineering context slice.",
+    "path": "tools/knowledge_code_context.ps1",
+    "selector": "script"
   }
 ]

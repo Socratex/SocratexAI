@@ -102,7 +102,7 @@ items:
         subtype: workflow_rule
         title: Load Engineering Standards Before Code Work
         summary: Programming work should load compiled engineering, coding, and architecture guidance before source edits.
-        rule: For implementation, refactor, bugfix, or code review tasks, load the broad rules slice with `tools/knowledge_select.ps1 -Tags engineering,coding,architecture -Match any -Type rule` before editing code, then load task-specific views or tags as needed.
+        rule: For implementation, refactor, bugfix, or code review tasks, prefer `tools/knowledge_code_context.ps1` before editing code. If the wrapper is unavailable, load the broad rules slice with `tools/knowledge_select.ps1 -Tags engineering,coding,architecture -Match any -Type rule`, then load task-specific views or tags as needed.
         rationale: Professional code quality depends on keeping ownership, architecture, readability, diagnostics, verification, and project best practices active in context during implementation.
         priority: must
         source_of_truth: context-docs/ENGINEERING.yaml
@@ -122,6 +122,9 @@ items:
             selector: script_first_execution
             is_duplicate: true
             note: Script-first workflow repeats the preferred query command.
+          - path: tools/knowledge_code_context.ps1
+            selector: script
+            note: Canonical helper for loading the code-task engineering context slice.
       - id: engineering.coding.explicit_diagnosable_flow
         type: rule
         subtype: coding_rule

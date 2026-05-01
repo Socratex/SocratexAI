@@ -1,6 +1,14 @@
 summary: SocratexAI pipeline product changelog.
 entries:
   - version: '0.2.0-alpha'
+    date: 2026-05-02
+    feature: 'code_task_engineering_standards_preload'
+    change: 'Added code-task engineering standards preload as a source pipeline feature. Code workflow now requires agents to load compiled engineering, coding, and architecture rules before implementation, refactor, bugfix, or code review work, and tools/knowledge_code_context.ps1 provides a canonical wrapper with SQLite check, broad rule selection, optional named views, and JSON-file fallback support. Why: Professional code work should keep project architecture, ownership, readability, diagnostics, verification, and best-practice rules active in context instead of relying on visible chat memory.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-02
+    feature: 'code_task_engineering_context_loader'
+    change: 'Added tools/knowledge_code_context.ps1 as the canonical source-pipeline helper for loading code-task engineering standards. The helper checks compiled knowledge freshness, returns the engineering/coding/architecture rule slice, supports optional named views, keeps JSON output parseable, and falls back to compiled JSON knowledge files when SQLite select fails. Why: Code-quality preload should be a scriptable workflow primitive, not a long command agents must reconstruct from memory.'
+  - version: '0.2.0-alpha'
     date: 2026-05-01
     feature: 'private_working_memory_cache_boundary'
     change: 'Excluded ignored/ private working files from generated document cache indexing and added audit coverage so local pitch, planning, scratch, and private strategy files cannot leak into tracked cache artifacts. Why: Public SocratexPipeline users should be able to update from Git without receiving maintainer-private working material.'

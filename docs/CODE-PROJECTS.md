@@ -43,6 +43,8 @@ For code projects, the agent reads:
 ## Helper Scripts
 
 ```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture_godot,performance
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/task_snapshot.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_quality_gate.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_task.ps1 -Quality
@@ -71,6 +73,8 @@ The agent uses it to filter known solutions. Legacy and low-test projects bias t
 For every new feature request, suggestion, or architecture discussion, the agent should first check whether the requested work can be implemented in the most future-proof, maintainable, profile-fitting way.
 
 For software and game projects, use AAA-grade architecture as the steer-direction when appropriate: explicit ownership, data flow, contracts, diagnostics, performance budget, toolability, deterministic behavior where relevant, testability, and low retrofit cost.
+
+Before implementation, refactor, bugfix, or code review work, the agent should load compiled engineering standards with `tools/knowledge_code_context.ps1` when available. This keeps engineering, coding, architecture, diagnostics, and verification rules active while source code is being changed.
 
 For bug reports, first check whether the bug exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness. Prefer the smallest fix that removes the bug class or improves diagnosis instead of only patching the symptom.
 

@@ -167,6 +167,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instruc
 For direct knowledge-layer work:
 
 ```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture_godot,performance
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -View session_start
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -Tags engineering,workflow
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_check.ps1

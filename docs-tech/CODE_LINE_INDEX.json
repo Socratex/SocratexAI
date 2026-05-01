@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-02T01:22:26+02:00",
+    "generatedAt":  "2026-05-02T01:42:35+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -149,6 +149,12 @@
                   {
                       "path":  "tools/commit_task.ps1",
                       "lines":  61,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_code_context.ps1",
+                      "lines":  60,
                       "extension":  ".ps1",
                       "large":  false
                   },
