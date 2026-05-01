@@ -182,10 +182,26 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath ".gitignore") -Needle "/ignored/" -Label ".gitignore"
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "AI-compiled" -Label "README.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "evals/" -Label "README.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.yaml") -Needle "eval_framework" -Label "QUALITY-GATE.yaml"
     foreach ($compiledFile in @("AI-compiled/README.md", "AI-compiled/INDEX.yaml", "AI-compiled/codex/ENTRYPOINT.md", "AI-compiled/codex/RULES.compiled.md", "AI-compiled/codex/WORKFLOW.compiled.md", "AI-compiled/codex/ORCHESTRATION.compiled.md", "AI-compiled/codex/TEAM.compiled.md", "AI-compiled/checksum.json", "AI-compiled/compile-report.json")) {
         if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $compiledFile))) {
             Add-Error "Missing compiled AI instruction artifact: $compiledFile"
         }
+    }
+    foreach ($evalFile in @("evals/README.md", "evals/personas.yaml", "evals/expected-behaviors.yaml", "evals/scoring.md", "evals/results/baseline.yaml", "evals/results/with-pipeline.yaml")) {
+        if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $evalFile))) {
+            Add-Error "Missing eval framework artifact: $evalFile"
+        }
+    }
+    $evalCheckScript = Join-Path $repoRoot "tools/check_evals.ps1"
+    if (Test-Path -LiteralPath $evalCheckScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $evalCheckScript
+        if ($LASTEXITCODE -ne 0) {
+            Add-Error "Eval framework check failed with exit code $LASTEXITCODE"
+        }
+    } else {
+        Add-Error "Missing eval framework checker: tools/check_evals.ps1"
     }
 
     Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.yaml"
@@ -310,7 +326,7 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_post_edit.ps1", "doc_item_bulk_insert.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_post_edit.ps1", "doc_item_bulk_insert.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1", "check_evals.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
             }

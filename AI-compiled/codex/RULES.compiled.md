@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-3e9be254ee6a
+Generated: source-186ef47da162
 
 ## Source of Truth
 
@@ -147,7 +147,8 @@ body: |-
     "pipeline_featurelist_update_guard",
     "priority_orchestration_layer",
     "on_demand_team_role_lenses",
-    "compiled_agent_instruction_layer"
+    "compiled_agent_instruction_layer",
+    "manual_codex_workspace_eval_framework"
   ]
 }
 

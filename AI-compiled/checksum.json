@@ -1,9 +1,9 @@
 {
     "schema":  "socratex-compiled-agent-checksum/v1",
-    "generated_at":  "source-3e9be254ee6a",
+    "generated_at":  "source-186ef47da162",
     "source_hashes":  {
                           "AGENTS.md":  "87c9889516eeb05876609129d3432f0c0a93e88b421949941ddb588361aafead",
-                          "README.md":  "fb1e1c42f094ab6af5c6419d1983e85c4d132d788ad9f3195024757b1ecfac1c",
+                          "README.md":  "276a9827b9790dea667831454371efa902fab6d87aafac2abb656935e2abe32d",
                           "PUBLIC-BOOTSTRAP.md":  "b078b04250c2f2445758fe0e49443c8a3c8fa0675d8c024fb14c836bc7e7e184",
                           "core/AGENT-CONTRACT.yaml":  "619ff01763c5454172b8e4f8a356a4e85acbb29edee7482b10faa330656a5880",
                           "core/MEMORY-MODEL.yaml":  "a2f97dfa20aea44cb0dda3ecfbfdd2dfc55bf2de36b2735931bb9525ea677687",
@@ -26,11 +26,11 @@
                       },
     "output_hashes":  {
                           "README.md":  "9709e65473328c523ba6efc15f853da80ead1555f0dca9135bcd1d2b5e8794a1",
-                          "INDEX.yaml":  "25cc7cc0fbcb4ee041e45686151240f8714f3d1bf7bcc5a22591edd2cb8e2afd",
-                          "codex/ENTRYPOINT.md":  "fb1e960e30ab7ab4f494a2228d3de241a26dd830499469923f405f64f852c5f9",
-                          "codex/RULES.compiled.md":  "e6e67a1d5968e2741da394dadab10dec183ea269c1485ebcf32f36e6e23d7eb2",
-                          "codex/WORKFLOW.compiled.md":  "0db8f81fff48f8b9bb6b4c4fa9b3cbc205cbf5457fe7f9fd06cee8e9698d260d",
-                          "codex/ORCHESTRATION.compiled.md":  "2203dffbaf0e890a1da077f059466cfaf15cd8e66f4a2a5399f789e021db30f3",
-                          "codex/TEAM.compiled.md":  "6a758b7b0bfa172e516430be0acf3f5f70c17f905b9f1a2e608e117226ffeec2"
+                          "INDEX.yaml":  "97badc7b1480f5cfa0a56ab280c52f996cdbfe6bc2a46bc52e163053674ed2f3",
+                          "codex/ENTRYPOINT.md":  "26f552d48ca69363609ef99a418c07ffa169869f80f716deb49e3686f257f0eb",
+                          "codex/RULES.compiled.md":  "db535424dcbe1e3a1e8e6a5a44b7af05a157a4bfbf45ee00a1b5a03a1f54f5a1",
+                          "codex/WORKFLOW.compiled.md":  "a5145930cc58dddb95ecba4b8f0244c4b026af5548824eceb381285bb6b662d9",
+                          "codex/ORCHESTRATION.compiled.md":  "9a54d2b66b7b3abd2d4dc6568ea53271a702656a2da615ee04237c4909fd2be9",
+                          "codex/TEAM.compiled.md":  "3b32a261e7d2b0777e5153d5383e917926f6985564bb0fe522b0d83135ced3c4"
                       }
 }

@@ -1121,6 +1121,213 @@
       }
     },
     {
+      "path": "evals/expected-behaviors.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "scoring_scale",
+        "scenarios"
+      ],
+      "keys": {
+        "priority_conflict": {
+          "path": "scenarios.0",
+          "title": "",
+          "ref": "scenarios.0",
+          "status": ""
+        },
+        "low_friction_adoption": {
+          "path": "scenarios.1",
+          "title": "",
+          "ref": "scenarios.1",
+          "status": ""
+        },
+        "on_demand_team": {
+          "path": "scenarios.2",
+          "title": "",
+          "ref": "scenarios.2",
+          "status": ""
+        },
+        "finish_boundary": {
+          "path": "scenarios.3",
+          "title": "",
+          "ref": "scenarios.3",
+          "status": ""
+        },
+        "document_ownership": {
+          "path": "scenarios.4",
+          "title": "",
+          "ref": "scenarios.4",
+          "status": ""
+        },
+        "compiled_instruction_layer": {
+          "path": "scenarios.5",
+          "title": "",
+          "ref": "scenarios.5",
+          "status": ""
+        },
+        "three_tier_fit": {
+          "path": "scenarios.6",
+          "title": "",
+          "ref": "scenarios.6",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "evals/personas.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "purpose",
+        "personas"
+      ],
+      "keys": {
+        "power_user_socratex": {
+          "path": "personas.0",
+          "title": "",
+          "ref": "personas.0",
+          "status": ""
+        },
+        "builder_user_kuba": {
+          "path": "personas.1",
+          "title": "",
+          "ref": "personas.1",
+          "status": ""
+        },
+        "basic_user_emcia": {
+          "path": "personas.2",
+          "title": "",
+          "ref": "personas.2",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "evals/results/baseline.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "run",
+        "results"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "evals/results/with-pipeline.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "run",
+        "results"
+      ],
+      "keys": {}
+    },
+    {
+      "path": "ignored/pitch/TARGETS.yaml",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "meta",
+        "positioning",
+        "primary_target",
+        "secondary_target",
+        "access_ask",
+        "message_hierarchy",
+        "claims_policy",
+        "outreach_order",
+        "success_definition"
+      ],
+      "keys": {
+        "low_friction": {
+          "path": "positioning.differentiators.0",
+          "title": "",
+          "ref": "positioning.differentiators.0",
+          "status": ""
+        },
+        "automation_heavy": {
+          "path": "positioning.differentiators.1",
+          "title": "",
+          "ref": "positioning.differentiators.1",
+          "status": ""
+        },
+        "versatile": {
+          "path": "positioning.differentiators.2",
+          "title": "",
+          "ref": "positioning.differentiators.2",
+          "status": ""
+        },
+        "packaged_best_practices": {
+          "path": "positioning.differentiators.3",
+          "title": "",
+          "ref": "positioning.differentiators.3",
+          "status": ""
+        },
+        "agent_readable": {
+          "path": "positioning.differentiators.4",
+          "title": "",
+          "ref": "positioning.differentiators.4",
+          "status": ""
+        },
+        "auditable": {
+          "path": "positioning.differentiators.5",
+          "title": "",
+          "ref": "positioning.differentiators.5",
+          "status": ""
+        },
+        "codex_product_app_skills": {
+          "path": "primary_target",
+          "title": "",
+          "ref": "primary_target",
+          "status": ""
+        },
+        "codex_sdk_agent_harness": {
+          "path": "secondary_target",
+          "title": "",
+          "ref": "secondary_target",
+          "status": ""
+        },
+        "prepare_evals": {
+          "path": "outreach_order.0",
+          "title": "",
+          "ref": "outreach_order.0",
+          "status": ""
+        },
+        "prepare_case_study": {
+          "path": "outreach_order.1",
+          "title": "",
+          "ref": "outreach_order.1",
+          "status": ""
+        },
+        "write_one_pager": {
+          "path": "outreach_order.2",
+          "title": "",
+          "ref": "outreach_order.2",
+          "status": ""
+        },
+        "write_technical_brief": {
+          "path": "outreach_order.3",
+          "title": "",
+          "ref": "outreach_order.3",
+          "status": ""
+        },
+        "direct_or_public_route": {
+          "path": "outreach_order.4",
+          "title": "",
+          "ref": "outreach_order.4",
+          "status": ""
+        }
+      }
+    },
+    {
       "path": "ignored/PLAN.yaml",
       "document": {},
       "routing": {},
@@ -1179,17 +1386,29 @@
           "ref": "current_state.already_done.3",
           "status": ""
         },
-        "step_1": {
-          "path": "next_action",
+        "done_5": {
+          "path": "current_state.already_done.4",
           "title": "",
-          "ref": "next_action",
+          "ref": "current_state.already_done.4",
           "status": ""
+        },
+        "done_6": {
+          "path": "current_state.already_done.5",
+          "title": "",
+          "ref": "current_state.already_done.5",
+          "status": ""
+        },
+        "step_1": {
+          "path": "steps.0",
+          "title": "",
+          "ref": "steps.0",
+          "status": "completed"
         },
         "step_2": {
           "path": "steps.1",
           "title": "",
           "ref": "steps.1",
-          "status": "pending"
+          "status": "completed"
         },
         "eval_priority_conflict": {
           "path": "steps.1.test_cases.0",
@@ -1234,10 +1453,10 @@
           "status": ""
         },
         "step_3": {
-          "path": "steps.2",
+          "path": "next_action",
           "title": "",
-          "ref": "steps.2",
-          "status": "pending"
+          "ref": "next_action",
+          "status": ""
         },
         "step_4": {
           "path": "steps.3",

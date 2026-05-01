@@ -1,10 +1,10 @@
 {
-    "generatedAt":  "2026-05-01T18:04:59+02:00",
+    "generatedAt":  "2026-05-01T20:02:25+02:00",
     "threshold":  300,
     "files":  [
                   {
                       "path":  "tools/audit_docs.ps1",
-                      "lines":  383,
+                      "lines":  399,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -101,6 +101,12 @@
                   {
                       "path":  "tools/check_pipeline_featurelist_update.ps1",
                       "lines":  85,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/check_evals.ps1",
+                      "lines":  83,
                       "extension":  ".ps1",
                       "large":  false
                   },

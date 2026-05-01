@@ -23,7 +23,7 @@ items:
 
       | Lines | File | Why It Is Large |
       | ---: | --- | --- |
-      | 383 | `tools/audit_docs.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
+      | 399 | `tools/audit_docs.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
       | 367 | `tools/Initialize-SocratexPipeline.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
       | 344 | `tools/recompile_ai_instructions.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
   maintenance:

@@ -6,6 +6,9 @@ commands:
   audit_docs:
     description: Run SocratexPipeline document audit.
     command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1"
+  eval_framework:
+    description: Check manual eval framework structure and internal links.
+    command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_evals.ps1"
   transactional_doc_tools:
     description: Check transactional document edit tools in dry-check mode.
     command: "powershell -NoProfile -ExecutionPolicy Bypass -File tools/docs_slim.ps1 -Check -Paths project/code/WORKFLOW.yaml; powershell -NoProfile -ExecutionPolicy Bypass -File tools/docs_migrator.ps1 -Check -Paths project/code/WORKFLOW.yaml"

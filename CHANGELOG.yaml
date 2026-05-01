@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: '0.2.0-alpha'
     date: 2026-05-01
+    feature: 'manual_codex_workspace_eval_framework'
+    change: 'Added a manual eval framework for comparing baseline Codex behavior against with-pipeline behavior across priority conflict handling, low-friction adoption, on-demand team lenses, finalizer discipline, document ownership, compiled instruction handling, and three-tier user fit. Added a structural eval checker, README guidance, quality-gate entry, audit coverage, and feature-list tracking. Why: The Codex product/app/Skills pitch needs evidence that SocratexPipeline packages best practices into behavior improvements instead of only describing a good workflow.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-01
     feature: 'compiled_agent_instruction_layer'
     change: 'Added generated AI-compiled Codex instructions, a recompile command, a drift check, finalizer integration, audit coverage, README/bootstrap guidance, and feature-list tracking. Why: Human-editable source instructions and agent-optimized runtime instructions need separate layers so Codex can start from compact, English, ordered context without making generated files a second source of truth.'
   - version: '0.2.0-alpha'

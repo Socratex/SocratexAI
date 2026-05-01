@@ -51,7 +51,7 @@ function Test-PipelineOwnedPath {
 	param([string]$Path)
 
 	$normalized = $Path.TrimStart("./")
-	if ($normalized -match '^(SocratexAI/)?(tools|core|project|templates|adapters)/') {
+	if ($normalized -match '^(SocratexAI/)?(tools|core|project|templates|adapters|evals)/') {
 		return $true
 	}
 	if ($normalized -match '^(SocratexAI/)?AI-compiled/') {

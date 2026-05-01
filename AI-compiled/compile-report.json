@@ -1,6 +1,6 @@
 {
     "schema":  "socratex-compiled-agent-instructions/v1",
-    "generated_at":  "source-3e9be254ee6a",
+    "generated_at":  "source-186ef47da162",
     "role":  "generated_agent_cache",
     "source_of_truth":  "source instruction files outside AI-compiled",
     "do_not_edit_manually":  true,
@@ -24,7 +24,7 @@
     "check_command":  "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1",
     "sources":  {
                     "AGENTS.md":  "87c9889516eeb05876609129d3432f0c0a93e88b421949941ddb588361aafead",
-                    "README.md":  "fb1e1c42f094ab6af5c6419d1983e85c4d132d788ad9f3195024757b1ecfac1c",
+                    "README.md":  "276a9827b9790dea667831454371efa902fab6d87aafac2abb656935e2abe32d",
                     "PUBLIC-BOOTSTRAP.md":  "b078b04250c2f2445758fe0e49443c8a3c8fa0675d8c024fb14c836bc7e7e184",
                     "core/AGENT-CONTRACT.yaml":  "619ff01763c5454172b8e4f8a356a4e85acbb29edee7482b10faa330656a5880",
                     "core/MEMORY-MODEL.yaml":  "a2f97dfa20aea44cb0dda3ecfbfdd2dfc55bf2de36b2735931bb9525ea677687",

@@ -8,6 +8,8 @@ It also installs a reusable project orchestration layer: `ORCHESTRATION.yaml` fo
 
 For agent runtime, SocratexPipeline keeps a generated `AI-compiled/` layer. Source documents remain human-editable and authoritative; `AI-compiled/` is compact, English, read-optimized context for agents such as Codex.
 
+SocratexPipeline also includes a manual `evals/` framework for comparing baseline agent behavior against with-pipeline behavior. The evals focus on priority routing, low-friction adoption, team-role loading, finalization boundaries, document ownership, compiled-instruction handling, and three-tier user fit.
+
 ## Why
 
 AI agents often lose context, mix backlog with active work, forget verification, overwrite local conventions, or bury project rules inside one giant instruction file.
@@ -63,6 +65,7 @@ ignored/ai-socratex/
 - `project/` contains modular project packs.
 - `adapters/` contains thin adapter files for specific agents.
 - `AI-compiled/` contains generated read-optimized instructions for agents.
+- `evals/` contains manual Codex workspace evals, scoring, personas, prompts, and baseline/with-pipeline result files.
 - `initializer/` contains the first-run setup workflow.
 - `templates/` contains source templates copied into initialized projects, including `ORCHESTRATION.yaml` and on-demand `team/` role lenses.
 - `tools/` contains helper scripts.
@@ -147,6 +150,12 @@ To check for drift without writing files:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1
+```
+
+To check the eval framework structure:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_evals.ps1
 ```
 
 Document edit scripts are transactional by default: they should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output. Agents should not compose manual read/edit/normalize/cache/check queues after a successful document edit tool.

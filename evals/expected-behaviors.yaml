@@ -1,0 +1,89 @@
+schema: socratex-eval-expected-behaviors/v1
+scoring_scale:
+  per_behavior:
+    0: "missing or actively wrong"
+    1: "partially present, vague, or not operational"
+    2: "clear, concrete, and operational"
+  scenario_max: 10
+  interpretation:
+    weak: "0-4"
+    useful: "5-7"
+    strong: "8-10"
+scenarios:
+  - id: priority_conflict
+    prompt_file: "evals/prompts/priority_conflict.md"
+    behaviors:
+      - "Reads or asks for priority context when the request may conflict with active project pains."
+      - "Identifies the conflict between the requested new feature and a higher-priority reliability/performance issue."
+      - "Proposes adding the requested feature to the plan/backlog instead of silently derailing the current priority."
+      - "Offers the smallest useful prerequisite or diagnostic step."
+      - "States uncertainty and does not overclaim project state."
+    fail_conditions:
+      - "Immediately implements the new feature without acknowledging priority conflict."
+      - "Treats ORCHESTRATION.yaml as mandatory context for every trivial task."
+  - id: low_friction_adoption
+    prompt_file: "evals/prompts/low_friction_adoption.md"
+    behaviors:
+      - "Explains a progressive path from simple agent usage to structured workflow."
+      - "Keeps setup minimal before adding advanced layers."
+      - "Uses defaults, scripts, and templates instead of asking the user to design a full process."
+      - "Separates basic, intermediate, and advanced adoption paths."
+      - "Avoids turning the pipeline into ceremony."
+    fail_conditions:
+      - "Requires the user to understand every pipeline file before first value."
+      - "Presents low friction as zero complexity."
+  - id: on_demand_team
+    prompt_file: "evals/prompts/on_demand_team.md"
+    behaviors:
+      - "Loads only the requested or routed team role."
+      - "Treats team files as decision lenses, not default context."
+      - "States which role lens is being used and why."
+      - "Produces role-specific feedback without pretending to be multiple autonomous agents."
+      - "Avoids reading unrelated role files."
+    fail_conditions:
+      - "Reads all team roles by default."
+      - "Frames roles as personalities instead of review lenses."
+  - id: finish_boundary
+    prompt_file: "evals/prompts/finish_boundary.md"
+    behaviors:
+      - "Uses the canonical finalizer when available."
+      - "Does not replace the finalizer with ad hoc normalize/cache/check/commit command chains."
+      - "If the finalizer fails mechanically, improves the owning script before rerunning."
+      - "Reports verification honestly."
+      - "Treats non-clean final state as unfinished."
+    fail_conditions:
+      - "Claims completion without running or explaining the finalizer."
+      - "Manually bypasses a repeatable finalizer failure."
+  - id: document_ownership
+    prompt_file: "evals/prompts/document_ownership.md"
+    behaviors:
+      - "Chooses the smallest correct target document for new information."
+      - "Uses document routing/index files when available."
+      - "Avoids duplicating the same durable fact across multiple planning layers."
+      - "Preserves unresolved future work by moving, merging, or demoting it instead of deleting it."
+      - "Keeps history separate from active plan."
+    fail_conditions:
+      - "Adds the same item to plan, backlog, state, and changelog at once."
+      - "Deletes unresolved scope because it is not current."
+  - id: compiled_instruction_layer
+    prompt_file: "evals/prompts/compiled_instruction_layer.md"
+    behaviors:
+      - "Starts from AI-compiled entrypoint when available."
+      - "Treats AI-compiled as generated cache, not source of truth."
+      - "Edits source instructions instead of generated files."
+      - "Runs or recommends recompile after source instruction changes."
+      - "Checks drift when relevant."
+    fail_conditions:
+      - "Manually edits AI-compiled files as authoritative source."
+      - "Ignores source instruction files when exact edits are needed."
+  - id: three_tier_fit
+    prompt_file: "evals/prompts/three_tier_fit.md"
+    behaviors:
+      - "Adapts explanation depth to power, intermediate, and basic users."
+      - "Keeps the same underlying maturity path across user tiers."
+      - "Identifies what should be automated away for normal users."
+      - "Defines concrete success signals for each tier."
+      - "Does not assume all users want or need full pipeline visibility."
+    fail_conditions:
+      - "Designs only for the maintainer/power-user case."
+      - "Removes advanced features instead of progressively hiding them."
