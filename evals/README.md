@@ -2,11 +2,11 @@
 
 These evals test whether SocratexPipeline improves long-running Codex workspace behavior.
 
-They are intentionally manual first. The goal is to create a clear, inspectable proof package before adding runner infrastructure.
+They are intentionally manual first. The goal is to create a clear, inspectable validation package before adding runner infrastructure.
 
 ## Scope
 
-This framework evaluates behavior that matters for Codex product, app, Skills, and agent-harness workflows:
+This framework evaluates behavior that matters for long-running Codex workspace use:
 
 - priority routing instead of blind task acceptance
 - low-friction adoption from simple prompts to structured workflow
@@ -41,8 +41,8 @@ A useful result needs:
 - scored behavior
 - concrete failure notes
 
-## Pitch Use
+## Public Use
 
-These evals support the pitch claim that SocratexPipeline is a low-friction maturity path from ad hoc Codex usage to structured, auditable, long-running agent workflows.
+These evals help maintainers and users check whether SocratexPipeline behaves like a low-friction maturity path from ad hoc Codex usage to structured, auditable, long-running agent workflows.
 
 They do not claim that SocratexPipeline invents new agent primitives. They test whether packaging best practices into defaults, scripts, and project-local conventions makes mature behavior easier to obtain.

@@ -180,6 +180,10 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "LICENSE") -Needle "MIT License" -Label "LICENSE"
     Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.yaml") -Needle "audit_docs" -Label "QUALITY-GATE.yaml"
     Test-ContainsText -Text (Get-RepoText -RelativePath ".gitignore") -Needle "/ignored/" -Label ".gitignore"
+    $docIndex = Get-OptionalRepoText -RelativePath "docs-tech/cache/doc_index.json"
+    if ($docIndex -match '"path":\s*"ignored/') {
+        Add-Error "docs-tech/cache/doc_index.json must not index ignored/ private working files."
+    }
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "AI-compiled" -Label "README.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "evals/" -Label "README.md"

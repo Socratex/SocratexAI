@@ -1,10 +1,10 @@
 {
-    "generatedAt":  "2026-05-01T20:02:25+02:00",
+    "generatedAt":  "2026-05-01T20:07:19+02:00",
     "threshold":  300,
     "files":  [
                   {
                       "path":  "tools/audit_docs.ps1",
-                      "lines":  399,
+                      "lines":  403,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -22,9 +22,9 @@
                   },
                   {
                       "path":  "tools/doc_tool.py",
-                      "lines":  295,
+                      "lines":  304,
                       "extension":  ".py",
-                      "large":  false
+                      "large":  true
                   },
                   {
                       "path":  "tools/import_existing_project.ps1",

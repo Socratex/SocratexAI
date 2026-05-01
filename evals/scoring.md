@@ -46,4 +46,4 @@ For each scenario, record:
 - observed behavior change
 - whether the improvement is due to pipeline artifacts, model behavior, or both
 
-The pitch should use conservative language unless multiple scenarios show repeatable improvement.
+Public claims should use conservative language unless multiple scenarios show repeatable improvement.

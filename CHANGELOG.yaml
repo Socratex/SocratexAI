@@ -2,8 +2,12 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: '0.2.0-alpha'
     date: 2026-05-01
+    feature: 'private_working_memory_cache_boundary'
+    change: 'Excluded ignored/ private working files from generated document cache indexing and added audit coverage so local pitch, planning, scratch, and private strategy files cannot leak into tracked cache artifacts. Why: Public SocratexPipeline users should be able to update from Git without receiving maintainer-private working material.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-01
     feature: 'manual_codex_workspace_eval_framework'
-    change: 'Added a manual eval framework for comparing baseline Codex behavior against with-pipeline behavior across priority conflict handling, low-friction adoption, on-demand team lenses, finalizer discipline, document ownership, compiled instruction handling, and three-tier user fit. Added a structural eval checker, README guidance, quality-gate entry, audit coverage, and feature-list tracking. Why: The Codex product/app/Skills pitch needs evidence that SocratexPipeline packages best practices into behavior improvements instead of only describing a good workflow.'
+    change: 'Added a manual eval framework for comparing baseline Codex behavior against with-pipeline behavior across priority conflict handling, low-friction adoption, on-demand team lenses, finalizer discipline, document ownership, compiled instruction handling, and three-tier user fit. Added a structural eval checker, README guidance, quality-gate entry, audit coverage, and feature-list tracking. Why: SocratexPipeline needs reusable validation artifacts so maintainers and users can check whether packaged best practices create observable behavior improvements instead of only describing a good workflow.'
   - version: '0.2.0-alpha'
     date: 2026-05-01
     feature: 'compiled_agent_instruction_layer'

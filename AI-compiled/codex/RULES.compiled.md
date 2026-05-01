@@ -148,7 +148,8 @@ body: |-
     "priority_orchestration_layer",
     "on_demand_team_role_lenses",
     "compiled_agent_instruction_layer",
-    "manual_codex_workspace_eval_framework"
+    "manual_codex_workspace_eval_framework",
+    "private_working_memory_cache_boundary"
   ]
 }
 

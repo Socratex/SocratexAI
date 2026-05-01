@@ -11,6 +11,7 @@ import yaml
 LONG_TEXT_LIMIT = 120
 EXCLUDED_CACHE_PARTS = {
     ".git",
+    "ignored",
     "Tools/Python312",
     "Tools/python-installer",
     "Tools/tmp",
@@ -291,8 +292,16 @@ def expand_paths(patterns: list[str]) -> list[Path]:
 
 
 def is_excluded_cache_path(path: Path) -> bool:
-    normalized = path.as_posix()
-    return any(f"/{part}/" in normalized or normalized.endswith(f"/{part}") for part in EXCLUDED_CACHE_PARTS)
+    normalized_parts = {part.replace("\\", "/").lower() for part in path.parts}
+    normalized_path = path.as_posix().lower()
+    for excluded in EXCLUDED_CACHE_PARTS:
+        normalized_excluded = excluded.replace("\\", "/").lower()
+        if "/" in normalized_excluded:
+            if normalized_excluded in normalized_path:
+                return True
+        elif normalized_excluded in normalized_parts:
+            return True
+    return False
 
 
 def command_keys(args: argparse.Namespace) -> None:
