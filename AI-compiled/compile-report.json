@@ -1,6 +1,6 @@
 {
     "schema":  "socratex-compiled-agent-instructions/v1",
-    "generated_at":  "source-186ef47da162",
+    "generated_at":  "source-b48d89344d63",
     "role":  "generated_agent_cache",
     "source_of_truth":  "source instruction files outside AI-compiled",
     "do_not_edit_manually":  true,
@@ -25,24 +25,24 @@
     "sources":  {
                     "AGENTS.md":  "87c9889516eeb05876609129d3432f0c0a93e88b421949941ddb588361aafead",
                     "README.md":  "276a9827b9790dea667831454371efa902fab6d87aafac2abb656935e2abe32d",
-                    "PUBLIC-BOOTSTRAP.md":  "b078b04250c2f2445758fe0e49443c8a3c8fa0675d8c024fb14c836bc7e7e184",
+                    "PUBLIC-BOOTSTRAP.md":  "bb2db4149296a6cdcb28811e65c86534f7589a73dfa9905f68e47243e42a6465",
                     "core/AGENT-CONTRACT.yaml":  "619ff01763c5454172b8e4f8a356a4e85acbb29edee7482b10faa330656a5880",
-                    "core/MEMORY-MODEL.yaml":  "a2f97dfa20aea44cb0dda3ecfbfdd2dfc55bf2de36b2735931bb9525ea677687",
-                    "core/PROMOTION-RULES.yaml":  "33ccc830ff0a3dea491bfa35e6fbf152fe3ff587793900e52f9cb26de3073f96",
-                    "core/FILE-FORMATS.yaml":  "39a5dc8c561fd82921140626cb1b8ef1c3b56bfdb5cf6d83fcd6c37aa0fc72ec",
-                    "core/ROI-BIAS.yaml":  "884fe5dc1e24dc6ac6d8d9a54ba0b0413287ed11f33d705153ea59e8741aab50",
-                    "core/TASK-WORK.yaml":  "9d63431db0774a28df42df5dd9287f4b78a27fc5ed6e4bf1ec972bbbadc3d45b",
-                    "core/SCRIPT-FALLBACK.yaml":  "22dea9a25677c17c93b9be46624f83989106beae76240149d34b859058ab70cc",
+                    "core/MEMORY-MODEL.yaml":  "96c3b2aa3ec8bb1bcf62c0699698086d20d40f777d120161fa2c46d318ef7522",
+                    "core/PROMOTION-RULES.yaml":  "66a7811205e438cb465472efcf41893199081db0cabc2515ff99385f4320c9b9",
+                    "core/FILE-FORMATS.yaml":  "d79b5a99ccdf77f27acb462006e811f3909bcdb5b2338d98e3ab0236a8bf7067",
+                    "core/ROI-BIAS.yaml":  "2290b8e8a4725b70849747128c0aef125f4c019ad42610e079ade3c251df62cf",
+                    "core/TASK-WORK.yaml":  "1df08791db9a6d3f76fd131170bd15d33aa9955ca0409ebca6c0c7158c6b384d",
+                    "core/SCRIPT-FALLBACK.yaml":  "ea9440d715cf101b6d20d2876f287e0719aeddf780c0094d09b0e07a48c52827",
                     "templates/ORCHESTRATION.yaml":  "558c169c0f97d75f2f694bd51f61f112430a5aaac0d605e938969346e65b0c0a",
                     "templates/team/product.yaml":  "ce0ac98ea0f545b9946e5582c6db66de6889d09f5cce0c02169539c4cf3afb19",
                     "templates/team/technical.yaml":  "5a2919fdd9de49abae12bb481a4c3cf67e96e14bb05c79fb5a2e629cdd319354",
                     "templates/team/performance.yaml":  "8cf2c247430f6a1512039729e0c349cbf7ad48f1216041ad6e26dc16589af6ea",
                     "templates/team/experience.yaml":  "c545d151ac9a72f9791dd4fec379feb496a09ef28f8162c14288aa5903d10853",
                     "templates/team/pipeline.yaml":  "a221b4f560bd7051d13205bd6f5b48bc8f3986c47535face95f0e7dfaedc9962",
-                    "project/code/PACK.yaml":  "da7d3bd36feaa2e20baff1b6eb51f08fb613e01b14f25a6476447e77ea6c235c",
+                    "project/code/PACK.yaml":  "fbf99c03ee8a26159080e6b0385c2f2a9e9b0ac68c605f13d24428d3f44c77cd",
                     "project/code/WORKFLOW.yaml":  "150e287e8fb463858a0263da5858485a719f08a30095918ac30440e07c942432",
-                    "project/generic/PACK.yaml":  "8910189c1b3fe7fae704e4c0ea819b524f93c65ac64f0f33a224f6b2bcc8712c",
-                    "project/personal/PACK.yaml":  "d63b76d523b5abd83a01fd85e698f172503baa3268b1453ba8f826f0c4fde03c",
-                    "project/creative/PACK.yaml":  "9ded8abdc89cd6ae2c26d09ec96a4b3600df700f44238631ac0cd58150f405f0"
+                    "project/generic/PACK.yaml":  "e9d07fd409a3e207f33d74e000512aa7eb5f99b386b08667c4c4923f17a4c330",
+                    "project/personal/PACK.yaml":  "491a3ff4cf7ac66ae8db219dc17b57bdfdbe00e4826f279acbcc56a813f29b87",
+                    "project/creative/PACK.yaml":  "574ecc534d317c688c824b752ca99682584c9444daee0293475a63982d11d04a"
                 }
 }

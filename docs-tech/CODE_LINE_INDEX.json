@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-01T21:32:18+02:00",
+    "generatedAt":  "2026-05-01T21:33:59+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -123,6 +123,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/init_branch_memory.ps1",
+                      "lines":  79,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/done.ps1",
                       "lines":  67,
                       "extension":  ".ps1",
@@ -131,6 +137,18 @@
                   {
                       "path":  "tools/commit_task.ps1",
                       "lines":  61,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/run_quality_gate.ps1",
+                      "lines":  41,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/init_task_work.ps1",
+                      "lines":  29,
                       "extension":  ".ps1",
                       "large":  false
                   },

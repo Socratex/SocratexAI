@@ -1,4 +1,4 @@
-﻿schema: socratex-document/v1
+schema: socratex-document/v1
 title: 'Frozen Layers'
 index:
   - quick_index
@@ -15,13 +15,11 @@ items:
     format: 'markdown-section'
     body: |
       # Frozen Layers
-      
+
   summary:
     title: 'Summary'
     format: 'markdown-section'
     body: |
       ## Summary
-      
+
       Working layers that should not be changed casually.
-      
-      

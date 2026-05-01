@@ -31,4 +31,3 @@ TBD
 ## Promotion Candidates
 
 - TBD
-

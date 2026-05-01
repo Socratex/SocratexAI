@@ -33,4 +33,3 @@ $content = $content.Replace("title: TBD", "title: $Title")
 $content = $content.Replace("source_request: TBD", "source_request: $SourceRequest")
 Set-Content -LiteralPath $targetPath -Value $content -Encoding UTF8 -NoNewline
 Write-Host "Created task work file: $targetPath"
-

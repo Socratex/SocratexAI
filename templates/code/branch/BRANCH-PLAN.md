@@ -19,4 +19,3 @@ TBD
 ## Open Questions
 
 - TBD
-

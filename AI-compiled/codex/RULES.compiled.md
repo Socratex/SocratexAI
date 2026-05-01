@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-186ef47da162
+Generated: source-b48d89344d63
 
 ## Source of Truth
 
@@ -134,6 +134,7 @@ body: |-
     "generic_multi_stack_quality_gate",
     "pipeline_update_and_removal_protocols",
     "pipeline_update_artifact_sync",
+    "pipeline_source_text_normalization",
     "initializer_and_reinitializer",
     "branch_memory_initialization",
     "directive_compiler_and_setter",

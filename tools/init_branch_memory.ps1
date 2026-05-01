@@ -93,4 +93,3 @@ Write-Host "Branch memory ready:"
 Write-Host "  state: $statePath"
 Write-Host "  plan:  $planPath"
 Write-Host "  todo:  $todoPath"
-

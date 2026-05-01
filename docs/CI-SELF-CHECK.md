@@ -39,4 +39,3 @@ For GitLab CI, create `.gitlab-ci.yml`.
 For other providers, map the same checks into their shell runner format.
 
 Do not commit provider-specific CI files unless the project has chosen that provider.
-

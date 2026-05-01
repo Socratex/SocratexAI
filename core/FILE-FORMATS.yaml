@@ -100,4 +100,3 @@ items:
       2. Convert agent-only structured registries first.
       3. Keep forced entrypoints, user scratches, and non-code user-facing memory as Markdown.
       4. Update the audit rules and initializer together.
-

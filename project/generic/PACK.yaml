@@ -1,4 +1,4 @@
-﻿schema: socratex-document/v1
+schema: socratex-document/v1
 title: 'Project Pack: Generic'
 index:
   - quick_index
@@ -21,17 +21,17 @@ items:
     format: 'markdown-section'
     body: |
       # Project Pack: Generic
-      
+
   purpose:
     title: 'Purpose'
     format: 'markdown-section'
     body: |
       ## Purpose
-      
+
       Use this pack for non-code projects that still need execution discipline.
-      
+
       Examples:
-      
+
       - research,
       - writing,
       - operations,
@@ -39,13 +39,13 @@ items:
       - launches,
       - learning plans,
       - administrative projects.
-      
+
   recommended_files:
     title: 'Recommended Files'
     format: 'markdown-section'
     body: |
       ## Recommended Files
-      
+
       - `DOCS.yaml`
       - `STATE.md`
       - `_PLAN.md`
@@ -58,13 +58,13 @@ items:
       - agent-only `context-docs/*.yaml`
 
       Read `DOCS.yaml` before reading, creating, renaming, or updating project documents so the agent chooses the correct source and write target.
-      
+
   execution_defaults:
     title: 'Execution Defaults'
     format: 'markdown-section'
     body: |
       ## Execution Defaults
-      
+
       - Convert vague intent into explicit outcomes.
       - Research known solutions, proven workflows, archetypes, templates, and borrowed systems before inventing a bespoke approach.
       - Treat new requests, suggestions, and problem reports as steer-direction checkpoints: first ask whether the requested path is the most future-proof, low-maintenance, high-clarity way to reach the outcome.
@@ -77,20 +77,18 @@ items:
       - Run document audit after changing pipeline or agent-managed memory when practical.
       - Keep context short enough for fast resumption.
       - Prefer artifacts over discussion.
-      
+
   review_gate:
     title: 'Review Gate'
     format: 'markdown-section'
     body: |
       ## Review Gate
-      
+
       Check:
-      
+
       - Is the next action concrete?
       - Is the expected artifact named?
       - Are blockers real or speculative?
       - Are dependencies external or internal?
       - Is the current plan still aligned with the target?
       - Is unresolved work preserved somewhere appropriate?
-      
-      

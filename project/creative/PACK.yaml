@@ -1,4 +1,4 @@
-﻿schema: socratex-document/v1
+schema: socratex-document/v1
 title: 'Project Pack: Creative'
 index:
   - quick_index
@@ -21,23 +21,23 @@ items:
     format: 'markdown-section'
     body: |
       # Project Pack: Creative
-      
+
   purpose:
     title: 'Purpose'
     format: 'markdown-section'
     body: |
       ## Purpose
-      
+
       Use this pack for music, writing, design, visual art, video, worldbuilding, and other creative projects.
-      
+
       The pack exists to preserve direction, taste, references, iteration history, and release readiness.
-      
+
   recommended_files:
     title: 'Recommended Files'
     format: 'markdown-section'
     body: |
       ## Recommended Files
-      
+
       - `DOCS.yaml`
       - `STATE.md`
       - `DIRECTION.md`
@@ -50,13 +50,13 @@ items:
       - `PIPELINE-CONFIG.yaml`
 
       Read `DOCS.yaml` before reading, creating, renaming, or updating project documents so the agent chooses the correct source and write target.
-      
+
   creative_defaults:
     title: 'Creative Defaults'
     format: 'markdown-section'
     body: |
       ## Creative Defaults
-      
+
       - Keep the current creative target explicit.
       - Research known creative workflows, reference systems, genre conventions, production archetypes, and borrowed release/review practices before inventing a custom process.
       - Treat new requests, suggestions, and problem reports as steer-direction checkpoints: first ask whether the requested path protects the creative direction, reduces future friction, and follows proven production or review practice.
@@ -70,19 +70,17 @@ items:
       - Record feedback without automatically obeying it.
       - Prefer concrete artifacts over abstract planning.
       - Treat dissatisfaction as useful data when it names a contrast, missing quality, or unwanted effect.
-      
+
   review_gate:
     title: 'Review Gate'
     format: 'markdown-section'
     body: |
       ## Review Gate
-      
+
       Check:
-      
+
       - Does the work match the intended direction?
       - Are references visible and relevant?
       - Is feedback specific enough to act on?
       - Is the current version shippable, exploratory, or discarded?
       - Is the next iteration focused on one meaningful improvement?
-      
-      
