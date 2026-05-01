@@ -1,0 +1,50 @@
+[
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_file_fallback",
+    "is_duplicate": false,
+    "note": "Source pipeline file-fallback rule.",
+    "path": "context-docs/ENGINEERING.yaml",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_hash_gate",
+    "is_duplicate": false,
+    "note": "Source pipeline starter rule.",
+    "path": "context-docs/ENGINEERING.yaml",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
+    "is_duplicate": false,
+    "note": "Source pipeline starter rule.",
+    "path": "context-docs/ENGINEERING.yaml",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_views",
+    "is_duplicate": false,
+    "note": "Source pipeline starter rule.",
+    "path": "context-docs/ENGINEERING.yaml",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.coding.explicit_diagnosable_flow",
+    "is_duplicate": false,
+    "note": "Consolidated from the shared agent contract.",
+    "path": "core/AGENT-CONTRACT.yaml",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.coding.explicit_diagnosable_flow",
+    "is_duplicate": true,
+    "note": "Code-project workflow repeats the same future-fit and diagnostic bias.",
+    "path": "project/code/WORKFLOW.yaml",
+    "selector": "general_workflow"
+  }
+]

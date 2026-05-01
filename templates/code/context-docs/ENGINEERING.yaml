@@ -77,6 +77,26 @@ items:
           - path: context-docs/ENGINEERING.yaml
             selector: tagged_rules
             note: Source pipeline starter rule.
+      - id: engineering.workflow.knowledge_file_fallback
+        type: rule
+        subtype: workflow_rule
+        title: Use File Knowledge Fallback When SQLite Is Unavailable
+        summary: The JSON table fallback mirrors the core SQLite table model but intentionally omits named views.
+        rule: If SQLite cannot be used, read compiled knowledge from `AI-compiled/project/knowledge-files/` with `tools/knowledge_file_select.ps1`; query by tags, type, source path, document path, entry name, or startup flag instead of named views.
+        rationale: Some hosts may not allow SQLite writes or may lock the database file, but agents still need a compact compiled knowledge layer.
+        priority: should
+        source_of_truth: context-docs/ENGINEERING.yaml
+        load_at_start: true
+        stability: durable
+        tags:
+          - engineering
+          - workflow
+          - docs-workflow
+          - verification
+        source_refs:
+          - path: context-docs/ENGINEERING.yaml
+            selector: tagged_rules
+            note: Source pipeline file-fallback rule.
       - id: engineering.coding.explicit_diagnosable_flow
         type: rule
         subtype: coding_rule

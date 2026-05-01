@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-cdf23628038d
+Generated: source-af7ab37c62d7
 
 ## Source of Truth
 
@@ -95,7 +95,7 @@ body: |-
   - If `tools/done.ps1` or an owned finalizer fails on a repeatable mechanical issue, improve the script before rerunning instead of preserving manual recovery steps.
   - Use `pipeline_featurelist.json` as the compact source/instance comparison layer; `tools/open_pipeline_learning_issue.ps1` is the only public network intake path for pipeline improvement reports, while `tools/learn_pipeline_features.ps1` is the maintainer-side promotion tool for reviewed reusable feature IDs.
   - Use `tools/knowledge_select.ps1` to load compiled SQLite knowledge by named view, tag, type, source path, document path, entry name, or startup flag before expanding into heavier source documents.
-  - Treat `AI-compiled/project/knowledge.sqlite` as generated compiled output, not source of truth; edit YAML/Markdown source documents first, then refresh with `tools/knowledge_compile.ps1` or targeted `tools/knowledge_upsert.ps1 -Path <document>`, and use `tools/knowledge_check.ps1` before trusting an existing database.
+  - Treat `AI-compiled/project/knowledge.sqlite` as generated output, not source of truth; edit sources first, refresh with `tools/knowledge_compile.ps1` or targeted upserts, check with `tools/knowledge_check.ps1`, and use `AI-compiled/project/knowledge-files/` plus `knowledge_file_*` scripts when SQLite is unavailable.
   For structured YAML documents, full-text grep tools such as `Select-String`, `grep`, or `rg` are fallback tools, not the default read path. Use `tools/doc_read.ps1` when the stable key is known, `tools/doc_keys.ps1` when the local key list is needed, and `tools/doc_route.ps1` or `tools/doc_search.ps1` when searching by intent or phrase. Use text grep on YAML only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.
   Manual YAML edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.yaml`.
   Never silently bypass a relevant tool in a non-code project just because the project is not programming-related.
@@ -159,6 +159,7 @@ body: |-
     "knowledge_context_views",
     "knowledge_entry_type_taxonomy",
     "knowledge_upsert_delete_rename_scripts",
+    "knowledge_file_fallback_tables",
     "manual_codex_workspace_eval_framework",
     "private_working_memory_cache_boundary"
   ]

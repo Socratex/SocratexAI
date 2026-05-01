@@ -1,10 +1,10 @@
 {
-    "generatedAt":  "2026-05-02T01:12:29+02:00",
+    "generatedAt":  "2026-05-02T01:22:26+02:00",
     "threshold":  300,
     "files":  [
                   {
                       "path":  "tools/knowledge_index.py",
-                      "lines":  839,
+                      "lines":  1208,
                       "extension":  ".py",
                       "large":  true
                   },
@@ -22,7 +22,7 @@
                   },
                   {
                       "path":  "tools/recompile_ai_instructions.ps1",
-                      "lines":  366,
+                      "lines":  369,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -142,13 +142,19 @@
                   },
                   {
                       "path":  "tools/knowledge_select.ps1",
-                      "lines":  64,
+                      "lines":  66,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
                       "path":  "tools/commit_task.ps1",
                       "lines":  61,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_file_select.ps1",
+                      "lines":  60,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -165,8 +171,26 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/knowledge_compile.ps1",
+                      "lines":  34,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/knowledge_delete.ps1",
                       "lines":  33,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_file_delete.ps1",
+                      "lines":  33,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_check.ps1",
+                      "lines":  30,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -177,8 +201,20 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/knowledge_file_upsert.ps1",
+                      "lines":  29,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/knowledge_upsert.ps1",
                       "lines":  29,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_file_rename.ps1",
+                      "lines":  27,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -201,14 +237,20 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_check.ps1",
+                      "path":  "tools/knowledge_file_check.ps1",
                       "lines":  21,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_compile.ps1",
+                      "path":  "tools/knowledge_file_compile.ps1",
                       "lines":  21,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_file_query.ps1",
+                      "lines":  19,
                       "extension":  ".ps1",
                       "large":  false
                   },

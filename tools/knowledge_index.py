@@ -14,6 +14,7 @@ SCHEMA = "socratex-knowledge-index/v3"
 COMPILER_VERSION = "3"
 DEFAULT_DB_PATH = "AI-compiled/project/knowledge.sqlite"
 DEFAULT_MANIFEST_PATH = "AI-compiled/project/knowledge-manifest.json"
+DEFAULT_FILE_DIR = "AI-compiled/project/knowledge-files"
 DEFAULT_VIEWS_PATH = "docs-tech/KNOWLEDGE-VIEWS.yaml"
 
 TAG_DESCRIPTIONS = {
@@ -754,6 +755,345 @@ def check_database(repo_root: Path, db_path: Path) -> int:
     return 0
 
 
+def file_table_paths(file_dir: Path) -> dict[str, Path]:
+    return {
+        "metadata": file_dir / "metadata.json",
+        "documents": file_dir / "documents.json",
+        "entries": file_dir / "entries.json",
+        "tags": file_dir / "tags.json",
+        "entry_tags": file_dir / "entry_tags.json",
+        "entry_sources": file_dir / "entry_sources.json",
+        "manifest": file_dir / "manifest.json",
+    }
+
+
+def table_sort_key(row: dict[str, Any]) -> tuple[str, ...]:
+    return tuple(str(row.get(key, "")) for key in ("path", "document_path", "entry_name", "name", "tag", "key"))
+
+
+def normalize_file_store(store: dict[str, Any]) -> dict[str, Any]:
+    for table in ("documents", "entries", "tags", "entry_tags", "entry_sources"):
+        store.setdefault(table, [])
+        store[table] = sorted(store[table], key=table_sort_key)
+    store.setdefault("metadata", {})
+    return store
+
+
+def build_file_store(entries: list[dict[str, Any]], document_hashes: dict[str, str]) -> dict[str, Any]:
+    now = utc_now()
+    tags = dict(TAG_DESCRIPTIONS)
+    entry_rows: list[dict[str, Any]] = []
+    entry_tag_rows: list[dict[str, Any]] = []
+    entry_source_rows: list[dict[str, Any]] = []
+    for entry in entries:
+        entry_rows.append(
+            {
+                "document_path": entry["document_path"],
+                "name": entry["name"],
+                "type": entry["type"],
+                "subtype": entry["subtype"],
+                "title": entry["title"],
+                "summary": entry["summary"],
+                "compiled_content": entry["compiled_content"],
+                "priority": entry["priority"],
+                "source_of_truth": entry["source_of_truth"],
+                "load_at_start": bool(entry["load_at_start"]),
+                "stability": entry["stability"],
+                "source_selector": entry["source_selector"],
+                "compiled_at": now,
+            }
+        )
+        for tag in entry["tags"]:
+            tags.setdefault(tag, "")
+            entry_tag_rows.append({"document_path": entry["document_path"], "entry_name": entry["name"], "tag": tag})
+        for source in entry["sources"]:
+            entry_source_rows.append(
+                {
+                    "document_path": entry["document_path"],
+                    "entry_name": entry["name"],
+                    "path": source["path"],
+                    "selector": source["selector"],
+                    "is_duplicate": bool(source["is_duplicate"]),
+                    "note": source["note"],
+                }
+            )
+    store = {
+        "metadata": {
+            "schema": f"{SCHEMA}-file",
+            "compiler_version": COMPILER_VERSION,
+            "compiled_at": now,
+        },
+        "documents": [
+            {"path": path, "hash": current_hash, "compiled_at": now}
+            for path, current_hash in sorted(document_hashes.items())
+        ],
+        "entries": entry_rows,
+        "tags": [{"tag": tag, "description": description} for tag, description in sorted(tags.items())],
+        "entry_tags": entry_tag_rows,
+        "entry_sources": entry_source_rows,
+    }
+    store = normalize_file_store(store)
+    store["metadata"]["signature"] = build_file_signature(store)
+    return store
+
+
+def build_file_signature(store: dict[str, Any]) -> str:
+    payload = {
+        "schema": store.get("metadata", {}).get("schema", f"{SCHEMA}-file"),
+        "compiler_version": store.get("metadata", {}).get("compiler_version", COMPILER_VERSION),
+        "documents": [
+            {"path": row["path"], "hash": row["hash"]}
+            for row in store.get("documents", [])
+        ],
+        "entries": [
+            {"document_path": row["document_path"], "name": row["name"], "compiled_content": row["compiled_content"]}
+            for row in store.get("entries", [])
+        ],
+        "tags": [
+            {"document_path": row["document_path"], "entry_name": row["entry_name"], "tag": row["tag"]}
+            for row in store.get("entry_tags", [])
+        ],
+    }
+    return sha256_text(json.dumps(payload, ensure_ascii=False, sort_keys=True))
+
+
+def write_file_store(file_dir: Path, store: dict[str, Any]) -> None:
+    file_dir.mkdir(parents=True, exist_ok=True)
+    store = normalize_file_store(store)
+    store["metadata"]["signature"] = build_file_signature(store)
+    paths = file_table_paths(file_dir)
+    for table in ("metadata", "documents", "entries", "tags", "entry_tags", "entry_sources"):
+        write_text_if_changed(paths[table], json.dumps(store[table], ensure_ascii=False, indent=2, sort_keys=True) + "\n")
+    manifest = {
+        "schema": f"{SCHEMA}-file-manifest",
+        "compiler_version": COMPILER_VERSION,
+        "generated_at": utc_now(),
+        "file_dir": normalize_path(str(file_dir)),
+        "tables": {
+            table: normalize_path(str(paths[table]))
+            for table in ("metadata", "documents", "entries", "tags", "entry_tags", "entry_sources")
+        },
+        "documents": store["documents"],
+        "entries": [
+            {
+                "document_path": row["document_path"],
+                "name": row["name"],
+                "type": row["type"],
+                "subtype": row.get("subtype", ""),
+                "load_at_start": row["load_at_start"],
+            }
+            for row in store["entries"]
+        ],
+        "tags": store["tags"],
+    }
+    write_text_if_changed(paths["manifest"], json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
+
+
+def read_json_file(path: Path, default: Any) -> Any:
+    if not path.exists():
+        return default
+    return json.loads(read_text(path))
+
+
+def read_file_store(file_dir: Path) -> dict[str, Any]:
+    paths = file_table_paths(file_dir)
+    store = {
+        "metadata": read_json_file(paths["metadata"], {}),
+        "documents": read_json_file(paths["documents"], []),
+        "entries": read_json_file(paths["entries"], []),
+        "tags": read_json_file(paths["tags"], []),
+        "entry_tags": read_json_file(paths["entry_tags"], []),
+        "entry_sources": read_json_file(paths["entry_sources"], []),
+    }
+    return normalize_file_store(store)
+
+
+def rebuild_file_store(repo_root: Path, file_dir: Path) -> None:
+    entries, document_hashes = collect_all_entries(repo_root)
+    store = build_file_store(entries, document_hashes)
+    write_file_store(file_dir, store)
+    print("Rebuilt compiled knowledge file fallback.")
+    print(f"knowledge entries: {len(entries)}")
+    print(f"knowledge documents: {len(document_hashes)}")
+
+
+def check_file_store(repo_root: Path, file_dir: Path) -> int:
+    paths = file_table_paths(file_dir)
+    missing_tables = [
+        table
+        for table in ("metadata", "documents", "entries", "tags", "entry_tags", "entry_sources")
+        if not paths[table].exists()
+    ]
+    if missing_tables:
+        print(f"Knowledge file fallback missing table(s): {', '.join(missing_tables)}")
+        print("Run: tools/knowledge_file_compile.ps1")
+        return 1
+    store = read_file_store(file_dir)
+    problems: list[str] = []
+    rows = store["documents"]
+    if not rows:
+        problems.append("Knowledge file fallback has no source documents.")
+    file_paths = {str(row["path"]) for row in rows}
+    for row in rows:
+        path = str(row["path"])
+        expected_hash = str(row["hash"])
+        source_path = repo_root / path
+        if not source_path.exists():
+            problems.append(f"missing source document: {path}")
+            continue
+        actual_hash = sha256_file(source_path) or ""
+        if actual_hash != expected_hash:
+            problems.append(f"stale source document: {path} file-cache={expected_hash[:12]} file={actual_hash[:12]}")
+    referenced_paths = {
+        str(row["path"])
+        for row in store["entry_sources"]
+        if str(row["path"]) and not should_skip_source(str(row["path"]))
+    }
+    for path in sorted(referenced_paths - file_paths):
+        source_path = repo_root / path
+        if source_path.exists():
+            problems.append(f"referenced source not tracked in documents table: {path}")
+    if problems:
+        print("Knowledge file fallback is not current:")
+        for problem in problems:
+            print(f"- {problem}")
+        print("")
+        print("Recommended repair:")
+        print("- Run `tools/knowledge_file_upsert.ps1 -Path <document>` for stale tracked documents.")
+        print("- Run `tools/knowledge_file_compile.ps1` for a full rebuild.")
+        print("- Run `tools/knowledge_file_delete.ps1 -Path <document>` for intentionally removed documents.")
+        return 1
+    print("OK: knowledge file fallback document hashes match source files.")
+    return 0
+
+
+def upsert_file_paths(repo_root: Path, file_dir: Path, paths: list[str]) -> None:
+    store = read_file_store(file_dir)
+    now = utc_now()
+    changed_entries = 0
+    document_rows = {row["path"]: row for row in store["documents"]}
+    for document_path in paths:
+        relative = normalize_path(document_path)
+        document_hash, entries, related_hashes = collect_document_entries(repo_root, relative)
+        store["entries"] = [row for row in store["entries"] if row["document_path"] != relative]
+        store["entry_tags"] = [row for row in store["entry_tags"] if row["document_path"] != relative]
+        store["entry_sources"] = [row for row in store["entry_sources"] if row["document_path"] != relative]
+        for tracked_path, current_hash in sorted({**related_hashes, relative: document_hash}.items()):
+            document_rows[tracked_path] = {"path": tracked_path, "hash": current_hash, "compiled_at": now}
+        partial = build_file_store(entries, {relative: document_hash})
+        store["entries"].extend(partial["entries"])
+        store["entry_tags"].extend(partial["entry_tags"])
+        store["entry_sources"].extend(partial["entry_sources"])
+        existing_tags = {row["tag"]: row for row in store["tags"]}
+        for tag_row in partial["tags"]:
+            existing_tags[tag_row["tag"]] = tag_row
+        store["tags"] = list(existing_tags.values())
+        changed_entries += len(entries)
+        print(f"Upserted file fallback {relative}: {len(entries)} entr{'y' if len(entries) == 1 else 'ies'}")
+    store["documents"] = list(document_rows.values())
+    store["metadata"] = {"schema": f"{SCHEMA}-file", "compiler_version": COMPILER_VERSION, "compiled_at": now}
+    write_file_store(file_dir, store)
+    print(f"File fallback upsert complete: {changed_entries} entr{'y' if changed_entries == 1 else 'ies'}")
+
+
+def delete_file_entry_or_document(file_dir: Path, document_path: str, entry_name: str) -> None:
+    store = read_file_store(file_dir)
+    relative = normalize_path(document_path)
+    if entry_name:
+        store["entries"] = [row for row in store["entries"] if not (row["document_path"] == relative and row["name"] == entry_name)]
+        store["entry_tags"] = [row for row in store["entry_tags"] if not (row["document_path"] == relative and row["entry_name"] == entry_name)]
+        store["entry_sources"] = [row for row in store["entry_sources"] if not (row["document_path"] == relative and row["entry_name"] == entry_name)]
+        print(f"Deleted file fallback entry {relative}::{entry_name}")
+    else:
+        store["documents"] = [row for row in store["documents"] if row["path"] != relative]
+        store["entries"] = [row for row in store["entries"] if row["document_path"] != relative]
+        store["entry_tags"] = [row for row in store["entry_tags"] if row["document_path"] != relative]
+        store["entry_sources"] = [row for row in store["entry_sources"] if row["document_path"] != relative]
+        print(f"Deleted file fallback document {relative}")
+    write_file_store(file_dir, store)
+
+
+def rename_file_document(file_dir: Path, old_path: str, new_path: str) -> None:
+    store = read_file_store(file_dir)
+    old_relative = normalize_path(old_path)
+    new_relative = normalize_path(new_path)
+    found = False
+    for row in store["documents"]:
+        if row["path"] == old_relative:
+            row["path"] = new_relative
+            found = True
+    if not found:
+        raise ValueError(f"Document not found in knowledge file fallback: {old_relative}")
+    for row in store["entries"]:
+        if row["document_path"] == old_relative:
+            row["document_path"] = new_relative
+        if row.get("source_of_truth") == old_relative:
+            row["source_of_truth"] = new_relative
+    for table in ("entry_tags", "entry_sources"):
+        for row in store[table]:
+            if row["document_path"] == old_relative:
+                row["document_path"] = new_relative
+    for row in store["entry_sources"]:
+        if row["path"] == old_relative:
+            row["path"] = new_relative
+    write_file_store(file_dir, store)
+    print(f"Renamed file fallback knowledge document {old_relative} -> {new_relative}")
+
+
+def select_file_entries(
+    file_dir: Path,
+    tags: list[str],
+    match: str,
+    entry_type: str,
+    load_at_start: bool,
+    source_path: str,
+    document_path: str,
+    name: str,
+    view_id: str,
+) -> list[dict[str, Any]]:
+    if view_id:
+        raise ValueError("File fallback does not support named views. Query tags/type/load-at-start instead.")
+    store = read_file_store(file_dir)
+    tag_rows_by_entry: dict[tuple[str, str], list[str]] = {}
+    for row in store["entry_tags"]:
+        tag_rows_by_entry.setdefault((row["document_path"], row["entry_name"]), []).append(row["tag"])
+    source_rows_by_entry: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    for row in store["entry_sources"]:
+        source_rows_by_entry.setdefault((row["document_path"], row["entry_name"]), []).append(dict(row))
+    normalized_tags = normalize_tags(tags)
+    normalized_source = normalize_path(source_path) if source_path else ""
+    normalized_document = normalize_path(document_path) if document_path else ""
+    normalized_type = normalize_type(entry_type) if entry_type else ""
+    results: list[dict[str, Any]] = []
+    for row in store["entries"]:
+        entry_tags = sorted(tag_rows_by_entry.get((row["document_path"], row["name"]), []))
+        entry_sources = source_rows_by_entry.get((row["document_path"], row["name"]), [])
+        if normalized_type and row["type"] != normalized_type:
+            continue
+        if load_at_start and not bool(row["load_at_start"]):
+            continue
+        if normalized_document and row["document_path"] != normalized_document:
+            continue
+        if name and row["name"] != name:
+            continue
+        if normalized_source and normalized_source not in {source["path"] for source in entry_sources}:
+            continue
+        if normalized_tags:
+            if match == "all" and any(tag not in entry_tags for tag in normalized_tags):
+                continue
+            if match == "any" and not any(tag in entry_tags for tag in normalized_tags):
+                continue
+        entry = dict(row)
+        entry["load_at_start"] = bool(entry["load_at_start"])
+        entry["tags"] = entry_tags
+        entry["sources"] = entry_sources
+        for source in entry["sources"]:
+            source["is_duplicate"] = bool(source["is_duplicate"])
+        results.append(entry)
+    priority_order = {"must": 0, "should": 1, "prefer": 2, "avoid": 3}
+    return sorted(results, key=lambda entry: (priority_order.get(entry["priority"], 4), entry["document_path"], entry["name"]))
+
+
 def select_entries(
     db_path: Path,
     tags: list[str],
@@ -864,10 +1204,31 @@ def render_select(entries: list[dict[str, Any]], output_format: str) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=["compile", "rebuild", "check", "select", "query", "upsert", "delete", "rename"])
+    parser.add_argument(
+        "mode",
+        choices=[
+            "compile",
+            "rebuild",
+            "check",
+            "select",
+            "query",
+            "upsert",
+            "delete",
+            "rename",
+            "file-compile",
+            "file-rebuild",
+            "file-check",
+            "file-select",
+            "file-query",
+            "file-upsert",
+            "file-delete",
+            "file-rename",
+        ],
+    )
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--db", default=DEFAULT_DB_PATH)
     parser.add_argument("--manifest", default=DEFAULT_MANIFEST_PATH)
+    parser.add_argument("--file-dir", default=DEFAULT_FILE_DIR)
     parser.add_argument("--path", action="append", default=[])
     parser.add_argument("--old-path", default="")
     parser.add_argument("--new-path", default="")
@@ -885,15 +1246,35 @@ def main() -> None:
     repo_root = Path(args.repo_root).resolve()
     db_path = (repo_root / args.db).resolve()
     manifest_path = (repo_root / args.manifest).resolve()
+    file_dir = (repo_root / args.file_dir).resolve()
 
     if args.mode in ("compile", "rebuild"):
         rebuild_database(repo_root, db_path, manifest_path)
         return
+    if args.mode in ("file-compile", "file-rebuild"):
+        rebuild_file_store(repo_root, file_dir)
+        return
     if args.mode == "check":
         raise SystemExit(check_database(repo_root, db_path))
+    if args.mode == "file-check":
+        raise SystemExit(check_file_store(repo_root, file_dir))
     if args.mode in ("select", "query"):
         entries = select_entries(
             db_path,
+            args.tags,
+            args.match,
+            args.type,
+            args.load_at_start,
+            args.source_path,
+            args.document_path,
+            args.name,
+            args.view,
+        )
+        sys.stdout.write(render_select(entries, args.format))
+        return
+    if args.mode in ("file-select", "file-query"):
+        entries = select_file_entries(
+            file_dir,
             args.tags,
             args.match,
             args.type,
@@ -910,16 +1291,32 @@ def main() -> None:
             raise SystemExit("upsert requires --path")
         upsert_paths(repo_root, db_path, manifest_path, args.path)
         return
+    if args.mode == "file-upsert":
+        if not args.path:
+            raise SystemExit("file-upsert requires --path")
+        upsert_file_paths(repo_root, file_dir, args.path)
+        return
     if args.mode == "delete":
         if not args.path:
             raise SystemExit("delete requires --path")
         for path in args.path:
             delete_entry_or_document(db_path, manifest_path, path, args.name)
         return
+    if args.mode == "file-delete":
+        if not args.path:
+            raise SystemExit("file-delete requires --path")
+        for path in args.path:
+            delete_file_entry_or_document(file_dir, path, args.name)
+        return
     if args.mode == "rename":
         if not args.old_path or not args.new_path:
             raise SystemExit("rename requires --old-path and --new-path")
         rename_document(db_path, manifest_path, args.old_path, args.new_path)
+        return
+    if args.mode == "file-rename":
+        if not args.old_path or not args.new_path:
+            raise SystemExit("file-rename requires --old-path and --new-path")
+        rename_file_document(file_dir, args.old_path, args.new_path)
         return
 
 

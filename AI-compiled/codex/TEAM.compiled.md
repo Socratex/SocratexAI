@@ -1,6 +1,6 @@
 # Compiled Team Role Lenses
 
-Generated: source-cdf23628038d
+Generated: source-af7ab37c62d7
 
 Team files are on-demand decision lenses. Load only when the user names a role, asks for team-style review, or ORCHESTRATION.yaml routes the task to that role.
 

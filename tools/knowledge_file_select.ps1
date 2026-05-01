@@ -3,12 +3,10 @@ param(
 	[ValidateSet("all", "any")]
 	[string]$Match = "all",
 	[string]$Type = "",
-	[string]$View = "",
 	[switch]$LoadAtStart,
 	[string]$SourcePath = "",
 	[string]$DocumentPath = "",
 	[string]$Name = "",
-	[switch]$FileFallback,
 	[ValidateSet("markdown", "json")]
 	[string]$Format = "markdown"
 )
@@ -22,7 +20,7 @@ $python = Join-Path $PSScriptRoot "Python312\python.exe"
 if (-not (Test-Path -LiteralPath $python -PathType Leaf)) {
 	$pythonCommand = Get-Command python -ErrorAction SilentlyContinue
 	if ($null -eq $pythonCommand) {
-		throw "Python is required for knowledge index selects."
+		throw "Python is required for knowledge file fallback selects."
 	}
 	$python = $pythonCommand.Source
 }
@@ -35,13 +33,9 @@ foreach ($tag in $Tags) {
 	$tagValues += @($tag.Split(",") | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" })
 }
 
-$mode = if ($FileFallback) { "file-select" } else { "select" }
-$arguments = @($tool, $mode, "--repo-root", $repoRoot, "--match", $Match, "--format", $Format)
+$arguments = @($tool, "file-select", "--repo-root", $repoRoot, "--match", $Match, "--format", $Format)
 if ($Type -ne "") {
 	$arguments += @("--type", $Type)
-}
-if ($View -ne "") {
-	$arguments += @("--view", $View)
 }
 if ($LoadAtStart) {
 	$arguments += "--load-at-start"

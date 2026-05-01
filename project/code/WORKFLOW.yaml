@@ -154,6 +154,8 @@ items:
 
       Treat `AI-compiled/project/knowledge.sqlite` as a generated SQLite index. Source documents remain authoritative; refresh the index with `tools/knowledge_compile.ps1` or targeted `tools/knowledge_upsert.ps1 -Path <document>` after source changes.
 
+      If SQLite is unavailable or locked, use the file fallback under `AI-compiled/project/knowledge-files/` with `tools/knowledge_file_select.ps1`, `tools/knowledge_file_check.ps1`, and related `knowledge_file_*` scripts. The fallback uses the same table-shaped data model but does not support named views.
+
       For editing structured YAML documents, use the document item tools instead of ad hoc inline PowerShell for structural item edits. Treat them as transaction wrappers that edit, normalize as UTF-8, rebuild cache when applicable, run compact local checks, and print a final result.
 
       For adding multiple keyed items to one structured YAML document, use `tools/doc_item_bulk_insert.ps1`.

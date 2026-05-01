@@ -91,10 +91,16 @@
           "ref": "items.tagged_rules.value.2",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.knowledge_file_fallback": {
           "path": "items.tagged_rules.value.3",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
           "ref": "items.tagged_rules.value.3",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "items.tagged_rules.value.4",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "items.tagged_rules.value.4",
           "status": ""
         }
       }
@@ -2546,10 +2552,16 @@
           "ref": "items.tagged_rules.value.2",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.knowledge_file_fallback": {
           "path": "items.tagged_rules.value.3",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
           "ref": "items.tagged_rules.value.3",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "items.tagged_rules.value.4",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "items.tagged_rules.value.4",
           "status": ""
         }
       }

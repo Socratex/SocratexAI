@@ -1,0 +1,110 @@
+[
+  {
+    "description": "Scene/runtime adapter boundaries.",
+    "tag": "adapters"
+  },
+  {
+    "description": "Durable architecture and ownership rules.",
+    "tag": "architecture"
+  },
+  {
+    "description": "Prefer proven external patterns before custom systems when they reduce risk.",
+    "tag": "borrowed-before-bespoke"
+  },
+  {
+    "description": "Code readability and implementation rules.",
+    "tag": "coding"
+  },
+  {
+    "description": "Comment policy and documentation-in-code rules.",
+    "tag": "comments"
+  },
+  {
+    "description": "C# domain and validation rules.",
+    "tag": "csharp"
+  },
+  {
+    "description": "Data owns truth before scene projection.",
+    "tag": "data-first"
+  },
+  {
+    "description": "Interactive debugging and failure investigation.",
+    "tag": "debugging"
+  },
+  {
+    "description": "Logging, debug, and observability rules.",
+    "tag": "diagnostics"
+  },
+  {
+    "description": "Documentation workflow, source-of-truth, and finalizer rules.",
+    "tag": "docs-workflow"
+  },
+  {
+    "description": "General engineering standards.",
+    "tag": "engineering"
+  },
+  {
+    "description": "Explicit control/data/state flow.",
+    "tag": "explicit-flow"
+  },
+  {
+    "description": "Game-development-specific engineering rules.",
+    "tag": "gamedev"
+  },
+  {
+    "description": "Godot runtime, scene, and tool rules.",
+    "tag": "godot"
+  },
+  {
+    "description": "Long-term maintenance and traceability rules.",
+    "tag": "maintainability"
+  },
+  {
+    "description": "Source-of-truth and subsystem ownership rules.",
+    "tag": "ownership"
+  },
+  {
+    "description": "Runtime cost, budgets, and profiling rules.",
+    "tag": "performance"
+  },
+  {
+    "description": "Save/load, durable state, and reload rules.",
+    "tag": "persistence"
+  },
+  {
+    "description": "Human and agent readability rules.",
+    "tag": "readability"
+  },
+  {
+    "description": "Runtime lifecycle and gameplay execution rules.",
+    "tag": "runtime"
+  },
+  {
+    "description": "Godot scene glue and adapter rules.",
+    "tag": "scene-glue"
+  },
+  {
+    "description": "Knowledge that should be loaded at the beginning of session context building.",
+    "tag": "session-start"
+  },
+  {
+    "description": "Automated or manual verification rules.",
+    "tag": "tests"
+  },
+  {
+    "description": "Top-down source organization.",
+    "tag": "top-down"
+  },
+  {
+    "description": "Verification strategy and quality gates.",
+    "tag": "verification"
+  },
+  {
+    "description": "",
+    "tag": "workflow"
+  },
+  {
+    "description": "World generation, route graph, biome, and generated-state rules.",
+    "tag": "worldgen"
+  }
+]

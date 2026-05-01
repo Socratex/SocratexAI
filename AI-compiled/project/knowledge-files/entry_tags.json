@@ -1,0 +1,92 @@
+[
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.coding.explicit_diagnosable_flow",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.coding.explicit_diagnosable_flow",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.coding.explicit_diagnosable_flow",
+    "tag": "diagnostics"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.coding.explicit_diagnosable_flow",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_file_fallback",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_file_fallback",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_file_fallback",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_file_fallback",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_hash_gate",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_hash_gate",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_hash_gate",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_views",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_views",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.knowledge_views",
+    "tag": "workflow"
+  }
+]

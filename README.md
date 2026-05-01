@@ -10,6 +10,8 @@ For agent runtime, SocratexPipeline keeps a generated `AI-compiled/` layer. Sour
 
 SocratexPipeline also compiles tagged project knowledge into `AI-compiled/project/knowledge.sqlite`. Agents can query it with `tools/knowledge_select.ps1` by named view, tags, type, source document, or startup flag, while source YAML/Markdown documents remain the only editable source of truth.
 
+When SQLite is unavailable, SocratexPipeline writes a file fallback under `AI-compiled/project/knowledge-files/`. It mirrors the database tables as JSON files, except named views are intentionally unavailable; agents query it with `tools/knowledge_file_select.ps1`.
+
 SocratexPipeline also includes a manual `evals/` framework for comparing baseline agent behavior against with-pipeline behavior. The evals focus on priority routing, low-friction adoption, team-role loading, finalization boundaries, document ownership, compiled-instruction handling, and three-tier user fit.
 
 ## Why
@@ -168,6 +170,8 @@ For direct knowledge-layer work:
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -View session_start
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -Tags engineering,workflow
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_check.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_file_select.ps1 -Tags engineering,workflow
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_file_check.ps1
 ```
 
 To check the eval framework structure:

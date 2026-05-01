@@ -47,6 +47,7 @@
     "knowledge_context_views",
     "knowledge_entry_type_taxonomy",
     "knowledge_upsert_delete_rename_scripts",
+    "knowledge_file_fallback_tables",
     "manual_codex_workspace_eval_framework",
     "private_working_memory_cache_boundary"
   ]
