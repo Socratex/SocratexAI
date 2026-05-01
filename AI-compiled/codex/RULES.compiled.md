@@ -133,6 +133,7 @@ body: |-
     "toolchain_doctor",
     "generic_multi_stack_quality_gate",
     "pipeline_update_and_removal_protocols",
+    "pipeline_update_artifact_sync",
     "initializer_and_reinitializer",
     "branch_memory_initialization",
     "directive_compiler_and_setter",

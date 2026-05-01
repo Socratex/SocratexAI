@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-01T20:07:19+02:00",
+    "generatedAt":  "2026-05-01T21:32:18+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -87,6 +87,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/update_pipeline_from_link.ps1",
+                      "lines":  96,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/check_utf8_writes.ps1",
                       "lines":  86,
                       "extension":  ".ps1",
@@ -113,12 +119,6 @@
                   {
                       "path":  "tools/Utf8File.ps1",
                       "lines":  81,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/update_pipeline_from_link.ps1",
-                      "lines":  78,
                       "extension":  ".ps1",
                       "large":  false
                   },

@@ -34,8 +34,16 @@ function Copy-Tree {
         return
     }
 
+    if (Test-Path -LiteralPath $SourcePath -PathType Container) {
+        New-Item -ItemType Directory -Force -Path $DestinationPath | Out-Null
+        foreach ($child in Get-ChildItem -LiteralPath $SourcePath -Force) {
+            Copy-Item -LiteralPath $child.FullName -Destination $DestinationPath -Recurse -Force
+        }
+        return
+    }
+
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $DestinationPath) | Out-Null
-    Copy-Item -LiteralPath $SourcePath -Destination $DestinationPath -Recurse -Force
+    Copy-Item -LiteralPath $SourcePath -Destination $DestinationPath -Force
 }
 
 function Resolve-SourceRoot {
@@ -63,20 +71,30 @@ Write-Host "Source: $SourceRoot"
 Write-Host "Target: $TargetRoot"
 Write-Host "Install root: $InstallRoot"
 
-foreach ($path in @("core", "tools", "templates", "docs", "adapters", "PUBLIC-BOOTSTRAP.md", "README.md", "RECOMMENDATION.md", "pipeline_featurelist.json")) {
+foreach ($path in @(
+    ".gitignore",
+    "AI-compiled",
+    "adapters",
+    "core",
+    "docs",
+    "docs-tech",
+    "evals",
+    "initializer",
+    "learning",
+    "project",
+    "templates",
+    "tools",
+    "LICENSE",
+    "PUBLIC-BOOTSTRAP.md",
+    "QUALITY-GATE.yaml",
+    "README.md",
+    "RECOMMENDATION.md",
+    "VERSION",
+    "pipeline_featurelist.json"
+)) {
     $sourcePath = Join-Path $SourceRoot $path
     if (Test-Path -LiteralPath $sourcePath) {
         Copy-Tree -SourcePath $sourcePath -DestinationPath (Join-Path $InstallRoot $path)
-    }
-}
-
-if (-not $DryRun) {
-    New-Item -ItemType Directory -Force -Path (Join-Path $InstallRoot "project") | Out-Null
-}
-foreach ($pack in $Packs) {
-    $sourcePack = Join-Path $SourceRoot "project\$pack"
-    if (Test-Path -LiteralPath $sourcePack) {
-        Copy-Tree -SourcePath $sourcePack -DestinationPath (Join-Path $InstallRoot "project\$pack")
     }
 }
 
