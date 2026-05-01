@@ -1,6 +1,6 @@
 {
     "schema":  "socratex-compiled-agent-instructions/v1",
-    "generated_at":  "source-ca0424b72102",
+    "generated_at":  "source-f4645ee9ece2",
     "role":  "generated_agent_cache",
     "source_of_truth":  "source instruction files outside AI-compiled",
     "do_not_edit_manually":  true,
@@ -35,7 +35,7 @@
                     "core/SCRIPT-FALLBACK.yaml":  "ea9440d715cf101b6d20d2876f287e0719aeddf780c0094d09b0e07a48c52827",
                     "context-docs/ENGINEERING.yaml":  "0d5dd752b027b193846a6d1fffc734963564541af035fb9749b93a8c1b5e7794",
                     "docs-tech/KNOWLEDGE-VIEWS.yaml":  "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
-                    "tools/knowledge_index.py":  "90b6078c343a57f5bccb6321506625b544effb607a54215c2573f14760e7c912",
+                    "tools/knowledge_index.py":  "815317ccdda2045a2b045a716ba9b417acdf0c13af495e7efe10940e2493c64c",
                     "tools/knowledge_select.ps1":  "f3495af169dc534c03787325cba8d8bee3e26873b2da24d68c9aebbc8dff9e21",
                     "tools/knowledge_compile.ps1":  "cd5cab6f620aaaf65c08ac32001c68de5c71fbff10e1ca24b3f76e872d24431d",
                     "tools/knowledge_check.ps1":  "42d788cca5122aaeebf62ac282b2903c9d25360fcc33e4f8daa81dac7aa1159e",

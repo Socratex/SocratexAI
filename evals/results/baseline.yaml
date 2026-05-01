@@ -35,3 +35,19 @@ results:
     score: null
     observations: []
     failure_notes: []
+  - scenario: code_engineering_context_preload
+    score: null
+    observations: []
+    failure_notes: []
+  - scenario: knowledge_freshness_and_fallback
+    score: null
+    observations: []
+    failure_notes: []
+  - scenario: knowledge_entry_lifecycle
+    score: null
+    observations: []
+    failure_notes: []
+  - scenario: pipeline_update_artifact_sync
+    score: null
+    observations: []
+    failure_notes: []

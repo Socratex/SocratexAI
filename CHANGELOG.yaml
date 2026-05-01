@@ -2,6 +2,14 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: '0.2.0-alpha'
     date: 2026-05-02
+    feature: 'private_working_memory_knowledge_boundary'
+    change: 'Excluded ignored/ private working files from compiled knowledge discovery and added audit coverage for generated knowledge manifest and file fallback tables. Why: local eval runs, pitch notes, scratch plans, and maintainer-private material must not leak into tracked AI-compiled knowledge artifacts used by public pipeline consumers.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-02
+    feature: 'knowledge_and_engineering_eval_coverage'
+    change: 'Expanded the manual eval framework with scenarios for code engineering context preload, compiled knowledge freshness and fallback, knowledge entry lifecycle, and pipeline update artifact synchronization. Updated eval result placeholders, the eval checker, README scope, source feature list, and local baseline runbook prompts. Why: Recent knowledge-layer and engineering-context features need eval coverage before baseline and with-pipeline comparisons are meaningful.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-02
     feature: 'code_task_engineering_standards_preload'
     change: 'Added code-task engineering standards preload as a source pipeline feature. Code workflow now requires agents to load compiled engineering, coding, and architecture rules before implementation, refactor, bugfix, or code review work, and tools/knowledge_code_context.ps1 provides a canonical wrapper with SQLite check, broad rule selection, optional named views, and JSON-file fallback support. Why: Professional code work should keep project architecture, ownership, readability, diagnostics, verification, and best-practice rules active in context instead of relying on visible chat memory.'
   - version: '0.2.0-alpha'

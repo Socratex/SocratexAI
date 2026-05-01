@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-ca0424b72102
+Generated: source-f4645ee9ece2
 
 ## Source of Truth
 
@@ -163,6 +163,8 @@ body: |-
     "knowledge_upsert_delete_rename_scripts",
     "knowledge_file_fallback_tables",
     "manual_codex_workspace_eval_framework",
+    "knowledge_and_engineering_eval_coverage",
+    "private_working_memory_knowledge_boundary",
     "private_working_memory_cache_boundary"
   ]
 }

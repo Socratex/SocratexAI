@@ -119,6 +119,7 @@ def should_skip_source(relative_path: str) -> bool:
     return (
         path.startswith("AI-compiled/")
         or path.startswith("docs-tech/cache/")
+        or path.startswith("ignored/")
         or path.startswith("templates/")
         or path.startswith("tools/tmp/")
         or path.endswith("/manifest.json")

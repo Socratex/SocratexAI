@@ -1337,6 +1337,30 @@
           "title": "",
           "ref": "scenarios.6",
           "status": ""
+        },
+        "code_engineering_context_preload": {
+          "path": "scenarios.7",
+          "title": "",
+          "ref": "scenarios.7",
+          "status": ""
+        },
+        "knowledge_freshness_and_fallback": {
+          "path": "scenarios.8",
+          "title": "",
+          "ref": "scenarios.8",
+          "status": ""
+        },
+        "knowledge_entry_lifecycle": {
+          "path": "scenarios.9",
+          "title": "",
+          "ref": "scenarios.9",
+          "status": ""
+        },
+        "pipeline_update_artifact_sync": {
+          "path": "scenarios.10",
+          "title": "",
+          "ref": "scenarios.10",
+          "status": ""
         }
       }
     },

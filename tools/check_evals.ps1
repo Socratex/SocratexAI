@@ -36,7 +36,11 @@ $scenarioIds = @(
 	"finish_boundary",
 	"document_ownership",
 	"compiled_instruction_layer",
-	"three_tier_fit"
+	"three_tier_fit",
+	"code_engineering_context_preload",
+	"knowledge_freshness_and_fallback",
+	"knowledge_entry_lifecycle",
+	"pipeline_update_artifact_sync"
 )
 
 $requiredFiles = @(

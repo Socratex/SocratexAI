@@ -184,6 +184,12 @@ try {
     if ($docIndex -match '"path":\s*"ignored/') {
         Add-Error "docs-tech/cache/doc_index.json must not index ignored/ private working files."
     }
+    foreach ($knowledgeArtifact in @("AI-compiled/project/knowledge-manifest.json", "AI-compiled/project/knowledge-files/documents.json", "AI-compiled/project/knowledge-files/manifest.json")) {
+        $knowledgeText = Get-OptionalRepoText -RelativePath $knowledgeArtifact
+        if ($knowledgeText -match '"path":\s*"ignored/') {
+            Add-Error "$knowledgeArtifact must not index ignored/ private working files."
+        }
+    }
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "AI-compiled" -Label "README.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "evals/" -Label "README.md"

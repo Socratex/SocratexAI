@@ -1,16 +1,16 @@
 {
-    "generatedAt":  "2026-05-02T01:42:35+02:00",
+    "generatedAt":  "2026-05-02T01:54:59+02:00",
     "threshold":  300,
     "files":  [
                   {
                       "path":  "tools/knowledge_index.py",
-                      "lines":  1208,
+                      "lines":  1209,
                       "extension":  ".py",
                       "large":  true
                   },
                   {
                       "path":  "tools/audit_docs.ps1",
-                      "lines":  408,
+                      "lines":  414,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -99,6 +99,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/check_evals.ps1",
+                      "lines":  87,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/check_utf8_writes.ps1",
                       "lines":  86,
                       "extension":  ".ps1",
@@ -113,12 +119,6 @@
                   {
                       "path":  "tools/check_pipeline_featurelist_update.ps1",
                       "lines":  85,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/check_evals.ps1",
-                      "lines":  83,
                       "extension":  ".ps1",
                       "large":  false
                   },

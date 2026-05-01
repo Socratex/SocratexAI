@@ -14,6 +14,10 @@ This framework evaluates behavior that matters for long-running Codex workspace 
 - completion discipline through project finalizers
 - document ownership and non-duplication
 - compiled instruction usage without treating generated files as source of truth
+- engineering standards preload before code work
+- compiled knowledge freshness, SQLite use, and file fallback behavior
+- controlled knowledge entry lifecycle through scripts
+- pipeline update artifact synchronization
 - fit across power, moderately technical, and basic users
 
 ## How to Run

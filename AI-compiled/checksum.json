@@ -1,6 +1,6 @@
 {
     "schema":  "socratex-compiled-agent-checksum/v1",
-    "generated_at":  "source-ca0424b72102",
+    "generated_at":  "source-f4645ee9ece2",
     "source_hashes":  {
                           "AGENTS.md":  "87c9889516eeb05876609129d3432f0c0a93e88b421949941ddb588361aafead",
                           "README.md":  "a0f42b088e0180a3537912e50e71ac04feb9ebb1d6a4c58b24ddc5f804dbe242",
@@ -14,7 +14,7 @@
                           "core/SCRIPT-FALLBACK.yaml":  "ea9440d715cf101b6d20d2876f287e0719aeddf780c0094d09b0e07a48c52827",
                           "context-docs/ENGINEERING.yaml":  "0d5dd752b027b193846a6d1fffc734963564541af035fb9749b93a8c1b5e7794",
                           "docs-tech/KNOWLEDGE-VIEWS.yaml":  "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
-                          "tools/knowledge_index.py":  "90b6078c343a57f5bccb6321506625b544effb607a54215c2573f14760e7c912",
+                          "tools/knowledge_index.py":  "815317ccdda2045a2b045a716ba9b417acdf0c13af495e7efe10940e2493c64c",
                           "tools/knowledge_select.ps1":  "f3495af169dc534c03787325cba8d8bee3e26873b2da24d68c9aebbc8dff9e21",
                           "tools/knowledge_compile.ps1":  "cd5cab6f620aaaf65c08ac32001c68de5c71fbff10e1ca24b3f76e872d24431d",
                           "tools/knowledge_check.ps1":  "42d788cca5122aaeebf62ac282b2903c9d25360fcc33e4f8daa81dac7aa1159e",
@@ -37,11 +37,11 @@
                       },
     "output_hashes":  {
                           "README.md":  "9709e65473328c523ba6efc15f853da80ead1555f0dca9135bcd1d2b5e8794a1",
-                          "INDEX.yaml":  "3d4d011b38f27d52f75e73020e5299439b9129816b89a6e5a5935bfb3968a8b7",
-                          "codex/ENTRYPOINT.md":  "49167e5acdcdd02582aec62d7ea33f82b44a60e941b75f1533f3cad25674f1de",
-                          "codex/RULES.compiled.md":  "4350be05b845089a24889a40e481ac5e96536889b57dba881e5b22f82f2fa4ef",
-                          "codex/WORKFLOW.compiled.md":  "9e38e51dcae8d41387c54f227734fbec68402e61ce7fa869166802c6e8c354be",
-                          "codex/ORCHESTRATION.compiled.md":  "a1f95a2fe957a52a4d549be9bd6392244fa740271a6213252180b023afce8a68",
-                          "codex/TEAM.compiled.md":  "930abbfebfb6f9317880c5fb3c2a348be188038ebf9470c7a69ce2ef5c9ac231"
+                          "INDEX.yaml":  "bf7526a50864a9eb3535c26e6c628072e47d7c4a761ed4f396be9eb3388e83fd",
+                          "codex/ENTRYPOINT.md":  "897df07b528b3e665b5736d342bd2e9c35c5e45bba3893751c3cb91ded9867cd",
+                          "codex/RULES.compiled.md":  "d25aa4285cdab17b4a8d3e6e67627b02ff9e580ac2ebbd8ee333627cb9816754",
+                          "codex/WORKFLOW.compiled.md":  "09f0eee452a12fff0cb210cd1c84f2980078f0f47ae964ab60fa63aaeab5c7c8",
+                          "codex/ORCHESTRATION.compiled.md":  "e20c757b3539a67a1b6dc5afb2ba40df6bee900074e72cbbfb43911c3684b9bf",
+                          "codex/TEAM.compiled.md":  "f3085e772e91ad1af8e3443f6a5550fb2dfce6f9c8df00ac86585bd6b044dc31"
                       }
 }

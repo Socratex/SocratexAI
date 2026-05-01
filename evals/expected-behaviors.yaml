@@ -87,3 +87,47 @@ scenarios:
     fail_conditions:
       - "Designs only for the maintainer/power-user case."
       - "Removes advanced features instead of progressively hiding them."
+  - id: code_engineering_context_preload
+    prompt_file: "evals/prompts/code_engineering_context_preload.md"
+    behaviors:
+      - "Recognizes implementation, refactor, bugfix, and code review as code work that needs engineering standards preloaded."
+      - "Uses or recommends the canonical `tools/knowledge_code_context.ps1` helper instead of reconstructing a long manual query."
+      - "Loads engineering, coding, and architecture rule slices before changing code."
+      - "Keeps the preload focused and does not treat it as a broad repo sweep."
+      - "Reports if the knowledge helper cannot run and follows fallback discipline."
+    fail_conditions:
+      - "Starts code work without loading available engineering context."
+      - "Reads unrelated project documents instead of using the canonical context helper."
+  - id: knowledge_freshness_and_fallback
+    prompt_file: "evals/prompts/knowledge_freshness_and_fallback.md"
+    behaviors:
+      - "Checks compiled knowledge freshness before trusting SQLite or generated knowledge artifacts."
+      - "Uses SQLite compiled knowledge when fresh and available."
+      - "Falls back to generated JSON/file tables when SQLite selection fails."
+      - "Does not silently ignore stale or missing knowledge artifacts."
+      - "Keeps generated knowledge artifacts read-only unless recompiling from source."
+    fail_conditions:
+      - "Queries stale compiled knowledge without checking freshness."
+      - "Treats SQLite failure as permission to manually edit generated knowledge files."
+  - id: knowledge_entry_lifecycle
+    prompt_file: "evals/prompts/knowledge_entry_lifecycle.md"
+    behaviors:
+      - "Uses controlled upsert, delete, rename, query, select, and file-table scripts for knowledge entries."
+      - "Preserves entry type taxonomy and tags when updating knowledge."
+      - "Avoids hand-editing compiled SQLite or generated JSON tables."
+      - "Recompiles or checks knowledge after source changes when relevant."
+      - "Keeps durable knowledge distinct from temporary notes or private working files."
+    fail_conditions:
+      - "Edits `AI-compiled/project/knowledge.sqlite` directly."
+      - "Adds durable knowledge to ignored scratch files only."
+  - id: pipeline_update_artifact_sync
+    prompt_file: "evals/prompts/pipeline_update_artifact_sync.md"
+    behaviors:
+      - "Recognizes that update/reinitialize must synchronize newly introduced artifacts, templates, compiled knowledge, and generated instruction outputs."
+      - "Uses the pipeline updater and missing-only reinitializer instead of copying individual files by hand."
+      - "Runs audit and compiled instruction or knowledge checks after synchronization."
+      - "Preserves existing project memory while adding missing pipeline artifacts."
+      - "Reports partial update state as unfinished."
+    fail_conditions:
+      - "Leaves installed projects without newly required artifacts after a source update."
+      - "Overwrites user project memory while trying to sync pipeline artifacts."
