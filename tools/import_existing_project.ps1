@@ -130,7 +130,7 @@ Write-Host "==> importing SocratexPipeline into existing project"
 Write-Host "Target: $TargetRoot"
 Write-Host "Install root: $InstallRoot"
 
-foreach ($path in @("core", "adapters", "tools")) {
+foreach ($path in @("AI-compiled", "core", "adapters", "docs-tech", "templates", "tools")) {
     Copy-ItemSafe -Source (Join-Path $SourceRoot $path) -Destination (Join-Path $InstallRoot $path)
 }
 
@@ -171,11 +171,13 @@ if ($CreateProjectFiles) {
             "code/_INSTRUCTION-QUEUE.yaml" = "_INSTRUCTION-QUEUE.yaml"
             "code/PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"
             "ORCHESTRATION.yaml" = "ORCHESTRATION.yaml"
+            "docs-tech/KNOWLEDGE-VIEWS.yaml" = "docs-tech\KNOWLEDGE-VIEWS.yaml"
             "team/product.yaml" = "team\product.yaml"
             "team/technical.yaml" = "team\technical.yaml"
             "team/performance.yaml" = "team\performance.yaml"
             "team/experience.yaml" = "team\experience.yaml"
             "team/pipeline.yaml" = "team\pipeline.yaml"
+            "code/context-docs/ENGINEERING.yaml" = "context-docs\ENGINEERING.yaml"
             "code/context-docs/TECHNICAL.yaml" = "context-docs\TECHNICAL.yaml"
             "code/context-docs/FROZEN_LAYERS.yaml" = "context-docs\FROZEN_LAYERS.yaml"
             "logs-.gitkeep" = "logs\.gitkeep"
@@ -192,6 +194,7 @@ if ($CreateProjectFiles) {
             "REVIEW.md" = "REVIEW.md"
             "PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"
             "ORCHESTRATION.yaml" = "ORCHESTRATION.yaml"
+            "docs-tech/KNOWLEDGE-VIEWS.yaml" = "docs-tech\KNOWLEDGE-VIEWS.yaml"
             "team/product.yaml" = "team\product.yaml"
             "team/technical.yaml" = "team\technical.yaml"
             "team/performance.yaml" = "team\performance.yaml"
@@ -218,6 +221,13 @@ if (-not $DryRun) {
     $syncFeatureListScript = Join-Path $InstallRoot "tools\sync_pipeline_featurelist.ps1"
     if (Test-Path -LiteralPath $syncFeatureListScript) {
         & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
+    }
+    $knowledgeCompileScript = Join-Path $InstallRoot "tools\knowledge_compile.ps1"
+    if (Test-Path -LiteralPath $knowledgeCompileScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
+        if ($LASTEXITCODE -ne 0) {
+            throw "knowledge_compile failed with exit code $LASTEXITCODE"
+        }
     }
     $hasCodePack = $Packs -contains "code"
     $configPath = if ($hasCodePack) {

@@ -1,6 +1,6 @@
 schema: socratex-compiled-agent-index/v1
 role: generated_agent_cache
-generated_at: source-b48d89344d63
+generated_at: source-cdf23628038d
 do_not_edit_manually: true
 targets:
   - codex

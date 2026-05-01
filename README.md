@@ -8,6 +8,8 @@ It also installs a reusable project orchestration layer: `ORCHESTRATION.yaml` fo
 
 For agent runtime, SocratexPipeline keeps a generated `AI-compiled/` layer. Source documents remain human-editable and authoritative; `AI-compiled/` is compact, English, read-optimized context for agents such as Codex.
 
+SocratexPipeline also compiles tagged project knowledge into `AI-compiled/project/knowledge.sqlite`. Agents can query it with `tools/knowledge_select.ps1` by named view, tags, type, source document, or startup flag, while source YAML/Markdown documents remain the only editable source of truth.
+
 SocratexPipeline also includes a manual `evals/` framework for comparing baseline agent behavior against with-pipeline behavior. The evals focus on priority routing, low-friction adoption, team-role loading, finalization boundaries, document ownership, compiled-instruction handling, and three-tier user fit.
 
 ## Why
@@ -146,10 +148,26 @@ After changing source instructions, templates, core docs, project packs, or adap
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1
 ```
 
+This also refreshes the compiled SQLite knowledge database when `tools/knowledge_compile.ps1` is present.
+
+Equivalent full compile/check wrapper:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/compile.ps1
+```
+
 To check for drift without writing files:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1
+```
+
+For direct knowledge-layer work:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -View session_start
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -Tags engineering,workflow
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_check.ps1
 ```
 
 To check the eval framework structure:

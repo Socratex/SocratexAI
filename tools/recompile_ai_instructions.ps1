@@ -9,6 +9,8 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
 $outputRoot = Join-Path $repoRoot $OutputDir
+$knowledgeCompileScript = Join-Path $PSScriptRoot "knowledge_compile.ps1"
+$knowledgeCheckScript = Join-Path $PSScriptRoot "knowledge_check.ps1"
 
 function Get-RepoText {
 	param([string]$RelativePath)
@@ -121,7 +123,15 @@ function Get-SourceManifest {
 		"core/ROI-BIAS.yaml",
 		"core/TASK-WORK.yaml",
 		"core/SCRIPT-FALLBACK.yaml",
+		"context-docs/ENGINEERING.yaml",
+		"docs-tech/KNOWLEDGE-VIEWS.yaml",
+		"tools/knowledge_index.py",
+		"tools/knowledge_select.ps1",
+		"tools/knowledge_compile.ps1",
+		"tools/knowledge_check.ps1",
 		"templates/ORCHESTRATION.yaml",
+		"templates/docs-tech/KNOWLEDGE-VIEWS.yaml",
+		"templates/code/context-docs/ENGINEERING.yaml",
 		"templates/team/product.yaml",
 		"templates/team/technical.yaml",
 		"templates/team/performance.yaml",
@@ -403,6 +413,12 @@ if ($Check) {
 		Write-Host "Run: powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1"
 		exit 1
 	}
+	if (Test-Path -LiteralPath $knowledgeCheckScript -PathType Leaf) {
+		& powershell -NoProfile -ExecutionPolicy Bypass -File $knowledgeCheckScript
+		if ($LASTEXITCODE -ne 0) {
+			exit $LASTEXITCODE
+		}
+	}
 	Write-Host "OK: compiled agent instructions are current."
 	exit 0
 }
@@ -416,6 +432,13 @@ foreach ($file in $compiledFiles) {
 	$path = Join-Path $outputRoot $file.RelativePath
 	New-Item -ItemType Directory -Force -Path (Split-Path -Parent $path) | Out-Null
 	[System.IO.File]::WriteAllText($path, $file.FileContent, [System.Text.UTF8Encoding]::new($false))
+}
+
+if (Test-Path -LiteralPath $knowledgeCompileScript -PathType Leaf) {
+	& powershell -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
+	if ($LASTEXITCODE -ne 0) {
+		exit $LASTEXITCODE
+	}
 }
 
 Write-Host "OK: recompiled AI instructions into $OutputDir"

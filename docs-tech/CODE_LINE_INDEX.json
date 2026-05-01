@@ -1,22 +1,28 @@
 {
-    "generatedAt":  "2026-05-01T21:33:59+02:00",
+    "generatedAt":  "2026-05-02T01:12:29+02:00",
     "threshold":  300,
     "files":  [
                   {
+                      "path":  "tools/knowledge_index.py",
+                      "lines":  839,
+                      "extension":  ".py",
+                      "large":  true
+                  },
+                  {
                       "path":  "tools/audit_docs.ps1",
-                      "lines":  403,
+                      "lines":  408,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
                       "path":  "tools/Initialize-SocratexPipeline.ps1",
-                      "lines":  367,
+                      "lines":  373,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
                       "path":  "tools/recompile_ai_instructions.ps1",
-                      "lines":  344,
+                      "lines":  366,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -28,7 +34,13 @@
                   },
                   {
                       "path":  "tools/import_existing_project.ps1",
-                      "lines":  274,
+                      "lines":  284,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/reinitialize_pipeline.ps1",
+                      "lines":  189,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -41,12 +53,6 @@
                   {
                       "path":  "tools/finish_task.ps1",
                       "lines":  182,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/reinitialize_pipeline.ps1",
-                      "lines":  180,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -75,6 +81,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/update_pipeline_from_link.ps1",
+                      "lines":  110,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/sync_pipeline_featurelist.ps1",
                       "lines":  103,
                       "extension":  ".ps1",
@@ -83,12 +95,6 @@
                   {
                       "path":  "tools/learn_pipeline_features.ps1",
                       "lines":  97,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/update_pipeline_from_link.ps1",
-                      "lines":  96,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -135,8 +141,20 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/knowledge_select.ps1",
+                      "lines":  64,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/commit_task.ps1",
                       "lines":  61,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_query.ps1",
+                      "lines":  60,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -147,14 +165,50 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/knowledge_delete.ps1",
+                      "lines":  33,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/init_task_work.ps1",
                       "lines":  29,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
+                      "path":  "tools/knowledge_upsert.ps1",
+                      "lines":  29,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_rename.ps1",
+                      "lines":  27,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/write_utf8_file.ps1",
                       "lines":  24,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/compile.ps1",
+                      "lines":  23,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_check.ps1",
+                      "lines":  21,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/knowledge_compile.ps1",
+                      "lines":  21,
                       "extension":  ".ps1",
                       "large":  false
                   },

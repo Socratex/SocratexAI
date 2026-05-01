@@ -84,6 +84,7 @@ foreach ($path in @(
     "project",
     "templates",
     "tools",
+    "AGENTS.md",
     "LICENSE",
     "PUBLIC-BOOTSTRAP.md",
     "QUALITY-GATE.yaml",
@@ -110,8 +111,21 @@ if (-not $DryRun) {
     if (Test-Path -LiteralPath $syncFeatureListScript) {
         & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
     }
+    $knowledgeCompileScript = Join-Path $InstallRoot "tools\knowledge_compile.ps1"
+    if (Test-Path -LiteralPath $knowledgeCompileScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
+        if ($LASTEXITCODE -ne 0) {
+            throw "knowledge_compile failed with exit code $LASTEXITCODE"
+        }
+    }
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\set_directives.ps1") -TargetPath $TargetRoot -Mode $DirectiveMode -DirectiveFiles $DirectiveFiles
+    if ($LASTEXITCODE -ne 0) {
+        throw "set_directives failed with exit code $LASTEXITCODE"
+    }
     & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $InstallRoot "tools\audit_docs.ps1")
+    if ($LASTEXITCODE -ne 0) {
+        throw "audit_docs failed with exit code $LASTEXITCODE"
+    }
 }
 
 Write-Host "Pipeline update complete. SocratexAI is active for this project; future sessions should start from SOCRATEX.md."

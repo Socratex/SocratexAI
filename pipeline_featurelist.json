@@ -2,7 +2,7 @@
   "schema": "socratex-pipeline-featurelist/v2",
   "pipeline_id": "socratex_pipeline",
   "role": "source",
-  "updated_at": "2026-05-01",
+  "updated_at": "2026-05-02",
   "features": [
     "adapter_pack_bootstrap",
     "agent_contract_and_core_protocols",
@@ -41,6 +41,12 @@
     "priority_orchestration_layer",
     "on_demand_team_role_lenses",
     "compiled_agent_instruction_layer",
+    "compiled_sqlite_knowledge_index",
+    "knowledge_document_hash_gate",
+    "knowledge_entry_tag_queries",
+    "knowledge_context_views",
+    "knowledge_entry_type_taxonomy",
+    "knowledge_upsert_delete_rename_scripts",
     "manual_codex_workspace_eval_framework",
     "private_working_memory_cache_boundary"
   ]

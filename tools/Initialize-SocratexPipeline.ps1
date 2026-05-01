@@ -227,6 +227,7 @@ if ($CreateFiles) {
     Copy-TemplateFile -TemplateName "team\performance.yaml" -DestinationRelativePath "team\performance.yaml"
     Copy-TemplateFile -TemplateName "team\experience.yaml" -DestinationRelativePath "team\experience.yaml"
     Copy-TemplateFile -TemplateName "team\pipeline.yaml" -DestinationRelativePath "team\pipeline.yaml"
+    Copy-TemplateFile -TemplateName "docs-tech\KNOWLEDGE-VIEWS.yaml" -DestinationRelativePath "docs-tech\KNOWLEDGE-VIEWS.yaml"
 
     if ($keep.ContainsKey("code") -and $AiMode -ne "Lite") {
         Copy-TemplateFile -TemplateName "_PROMPTS.md" -DestinationRelativePath "_PROMPTS.md"
@@ -239,6 +240,7 @@ if ($CreateFiles) {
         if ($UseChangelog -ne "no") {
             Copy-CodeTemplateFile -TemplateName "CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
         }
+        Copy-CodeTemplateFile -TemplateName "context-docs\ENGINEERING.yaml" -DestinationRelativePath "context-docs\ENGINEERING.yaml"
         Copy-CodeTemplateFile -TemplateName "context-docs\TECHNICAL.yaml" -DestinationRelativePath "context-docs\TECHNICAL.yaml"
         Copy-CodeTemplateFile -TemplateName "context-docs\FROZEN_LAYERS.yaml" -DestinationRelativePath "context-docs\FROZEN_LAYERS.yaml"
         Copy-TemplateFile -TemplateName "logs-.gitkeep" -DestinationRelativePath "logs\.gitkeep"
@@ -345,6 +347,10 @@ $runtimeStatusYaml
         $syncFeatureListScript = Join-Path $Root "tools\sync_pipeline_featurelist.ps1"
         if (Test-Path -LiteralPath $syncFeatureListScript) {
             & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $Root
+        }
+        $knowledgeCompileScript = Join-Path $Root "tools\knowledge_compile.ps1"
+        if (Test-Path -LiteralPath $knowledgeCompileScript) {
+            & powershell -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
         }
     }
 

@@ -23,9 +23,10 @@ items:
 
       | Lines | File | Why It Is Large |
       | ---: | --- | --- |
-      | 403 | `tools/audit_docs.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
-      | 367 | `tools/Initialize-SocratexPipeline.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
-      | 344 | `tools/recompile_ai_instructions.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
+      | 839 | `tools/knowledge_index.py` | Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic. |
+      | 408 | `tools/audit_docs.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
+      | 373 | `tools/Initialize-SocratexPipeline.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
+      | 366 | `tools/recompile_ai_instructions.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
       | 304 | `tools/doc_tool.py` | Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic. |
   maintenance:
     title: 🛠 Maintenance

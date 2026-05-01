@@ -150,6 +150,10 @@ items:
 
       For structured YAML document search, use `tools/doc_route.ps1` or `tools/doc_search.ps1` before text grep. `Select-String`, `grep`, and `rg` are fallback tools for YAML: use them only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.
 
+      For compiled context lookup, use `tools/knowledge_select.ps1` before broad document reads when a named view or tag query can answer the task. Useful defaults are `-View session_start`, `-View debugging`, `-View performance`, `-View docs_workflow`, and project-specific views such as `architecture_godot` or `worldgen` when matching entries exist.
+
+      Treat `AI-compiled/project/knowledge.sqlite` as a generated SQLite index. Source documents remain authoritative; refresh the index with `tools/knowledge_compile.ps1` or targeted `tools/knowledge_upsert.ps1 -Path <document>` after source changes.
+
       For editing structured YAML documents, use the document item tools instead of ad hoc inline PowerShell for structural item edits. Treat them as transaction wrappers that edit, normalize as UTF-8, rebuild cache when applicable, run compact local checks, and print a final result.
 
       For adding multiple keyed items to one structured YAML document, use `tools/doc_item_bulk_insert.ps1`.

@@ -163,6 +163,7 @@ Ensure-Template -TemplateRelativePath "team/technical.yaml" -DestinationRelative
 Ensure-Template -TemplateRelativePath "team/performance.yaml" -DestinationRelativePath "team/performance.yaml"
 Ensure-Template -TemplateRelativePath "team/experience.yaml" -DestinationRelativePath "team/experience.yaml"
 Ensure-Template -TemplateRelativePath "team/pipeline.yaml" -DestinationRelativePath "team/pipeline.yaml"
+Ensure-Template -TemplateRelativePath "docs-tech/KNOWLEDGE-VIEWS.yaml" -DestinationRelativePath "docs-tech/KNOWLEDGE-VIEWS.yaml"
 
 foreach ($pack in $Packs) {
     if ($pack -eq "code") {
@@ -177,6 +178,7 @@ foreach ($pack in $Packs) {
         Ensure-Template -TemplateRelativePath "code/_PROMPT-QUEUE.yaml" -DestinationRelativePath "_PROMPT-QUEUE.yaml"
         Ensure-Template -TemplateRelativePath "code/_INSTRUCTION-QUEUE.yaml" -DestinationRelativePath "_INSTRUCTION-QUEUE.yaml"
         Ensure-Template -TemplateRelativePath "code/current_task.yaml" -DestinationRelativePath "docs-tech/cache/current_task.yaml"
+        Ensure-Template -TemplateRelativePath "code/context-docs/ENGINEERING.yaml" -DestinationRelativePath "context-docs/ENGINEERING.yaml"
         Ensure-Template -TemplateRelativePath "code/context-docs/TECHNICAL.yaml" -DestinationRelativePath "context-docs/TECHNICAL.yaml"
         Ensure-Template -TemplateRelativePath "code/context-docs/FROZEN_LAYERS.yaml" -DestinationRelativePath "context-docs/FROZEN_LAYERS.yaml"
         if ($changelogEnabled) {
@@ -199,6 +201,13 @@ if (-not $DryRun) {
     $syncFeatureListScript = Join-Path $InstallRoot "tools\sync_pipeline_featurelist.ps1"
     if (Test-Path -LiteralPath $syncFeatureListScript) {
         & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
+    }
+    $knowledgeCompileScript = Join-Path $InstallRoot "tools\knowledge_compile.ps1"
+    if (Test-Path -LiteralPath $knowledgeCompileScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
+        if ($LASTEXITCODE -ne 0) {
+            throw "knowledge_compile failed with exit code $LASTEXITCODE"
+        }
     }
 }
 
