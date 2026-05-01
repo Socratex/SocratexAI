@@ -1,6 +1,8 @@
 # SocratexPipeline Agent Entry
 
-Read `core/AGENT-CONTRACT.yaml` first.
+Read `AI-compiled/codex/ENTRYPOINT.md` first when it exists. Treat `AI-compiled/` as generated read-optimized context; edit source instructions, then run `tools/recompile_ai_instructions.ps1`.
+
+Read `core/AGENT-CONTRACT.yaml` when source-level detail or edits are needed.
 
 If `initializer/FIRST-RUN.md` exists, this is an uninitialized skeleton. Follow `initializer/FIRST-RUN.md` before doing normal project work.
 

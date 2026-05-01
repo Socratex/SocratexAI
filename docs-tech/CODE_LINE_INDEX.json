@@ -1,16 +1,22 @@
 {
-    "generatedAt":  "2026-05-01T15:55:42+02:00",
+    "generatedAt":  "2026-05-01T18:04:59+02:00",
     "threshold":  300,
     "files":  [
                   {
                       "path":  "tools/audit_docs.ps1",
-                      "lines":  372,
+                      "lines":  383,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
                       "path":  "tools/Initialize-SocratexPipeline.ps1",
                       "lines":  367,
+                      "extension":  ".ps1",
+                      "large":  true
+                  },
+                  {
+                      "path":  "tools/recompile_ai_instructions.ps1",
+                      "lines":  344,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -33,6 +39,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/finish_task.ps1",
+                      "lines":  182,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/reinitialize_pipeline.ps1",
                       "lines":  180,
                       "extension":  ".ps1",
@@ -41,12 +53,6 @@
                   {
                       "path":  "tools/check_task.ps1",
                       "lines":  174,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/finish_task.ps1",
-                      "lines":  162,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -94,7 +100,7 @@
                   },
                   {
                       "path":  "tools/check_pipeline_featurelist_update.ps1",
-                      "lines":  82,
+                      "lines":  85,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -125,6 +131,12 @@
                   {
                       "path":  "tools/write_utf8_file.ps1",
                       "lines":  24,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/check_compiled_instructions.ps1",
+                      "lines":  13,
                       "extension":  ".ps1",
                       "large":  false
                   }

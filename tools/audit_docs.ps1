@@ -181,6 +181,12 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.yaml") -Needle "audit_docs" -Label "QUALITY-GATE.yaml"
     Test-ContainsText -Text (Get-RepoText -RelativePath ".gitignore") -Needle "/ignored/" -Label ".gitignore"
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "AI-compiled" -Label "README.md"
+    foreach ($compiledFile in @("AI-compiled/README.md", "AI-compiled/INDEX.yaml", "AI-compiled/codex/ENTRYPOINT.md", "AI-compiled/codex/RULES.compiled.md", "AI-compiled/codex/WORKFLOW.compiled.md", "AI-compiled/codex/ORCHESTRATION.compiled.md", "AI-compiled/codex/TEAM.compiled.md", "AI-compiled/checksum.json", "AI-compiled/compile-report.json")) {
+        if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $compiledFile))) {
+            Add-Error "Missing compiled AI instruction artifact: $compiledFile"
+        }
+    }
 
     Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.yaml"
     Test-ContainsText -Text $contract -Needle "Communication Profiles" -Label "core/AGENT-CONTRACT.yaml"
@@ -307,6 +313,11 @@ try {
         foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_post_edit.ps1", "doc_item_bulk_insert.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
+            }
+        }
+        foreach ($tool in @("recompile_ai_instructions.ps1", "check_compiled_instructions.ps1")) {
+            if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
+                Add-Error "Missing compiled-instructions tool: tools/$tool"
             }
         }
         foreach ($template in @("templates/_PROMPTS.md", "templates/code/_PROMPT-QUEUE.yaml", "templates/code/current_task.yaml", "templates/code/branch/BRANCH-STATE.md", "templates/code/branch/BRANCH-PLAN.md", "templates/code/branch/BRANCH-TODO.md")) {

@@ -54,6 +54,9 @@ function Test-PipelineOwnedPath {
 	if ($normalized -match '^(SocratexAI/)?(tools|core|project|templates|adapters)/') {
 		return $true
 	}
+	if ($normalized -match '^(SocratexAI/)?AI-compiled/') {
+		return $true
+	}
 	if ($normalized -match '^(SocratexAI/)?(AGENTS\.md|PUBLIC-BOOTSTRAP\.md|QUALITY-GATE\.yaml|pipeline_featurelist\.json)$') {
 		return $true
 	}

@@ -36,6 +36,7 @@
     "self_describing_learning_issues",
     "pipeline_featurelist_update_guard",
     "priority_orchestration_layer",
-    "on_demand_team_role_lenses"
+    "on_demand_team_role_lenses",
+    "compiled_agent_instruction_layer"
   ]
 }

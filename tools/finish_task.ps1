@@ -22,6 +22,8 @@ $docCacheScript = Join-Path $PSScriptRoot "doc_build_cache.ps1"
 $qualityScript = Join-Path $PSScriptRoot "run_quality_gate.ps1"
 $outputScript = Join-Path $PSScriptRoot "end_prompt_snapshot.ps1"
 $pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
+$compiledInstructionsRecompileScript = Join-Path $PSScriptRoot "recompile_ai_instructions.ps1"
+$compiledInstructionsCheckScript = Join-Path $PSScriptRoot "check_compiled_instructions.ps1"
 
 function Invoke-RepoCommand {
 	param(
@@ -97,6 +99,16 @@ try {
 		Invoke-ChangedTextNormalization -Label "post-generator text normalization refresh"
 	}
 
+	if (Test-Path -LiteralPath $compiledInstructionsRecompileScript) {
+		Invoke-RepoCommand -Label "compiled AI instructions refresh" -Command "powershell" -Arguments @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$compiledInstructionsRecompileScript
+		)
+	}
+
 	& powershell -NoProfile -ExecutionPolicy Bypass -File $taskSnapshotScript
 	if ($LASTEXITCODE -ne 0) {
 		throw "task snapshot failed with exit code $LASTEXITCODE"
@@ -113,6 +125,16 @@ try {
 			"Bypass",
 			"-File",
 			$pipelineFeatureListCheckScript
+		)
+	}
+
+	if (Test-Path -LiteralPath $compiledInstructionsCheckScript) {
+		Invoke-RepoCommand -Label "compiled AI instructions check" -Command "powershell" -Arguments @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$compiledInstructionsCheckScript
 		)
 	}
 
