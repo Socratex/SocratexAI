@@ -85,28 +85,34 @@
           "ref": "items.tagged_rules.value.1",
           "status": ""
         },
-        "engineering.workflow.knowledge_hash_gate": {
+        "engineering.workflow.context_tags_before_response": {
           "path": "items.tagged_rules.value.2",
-          "title": "Validate Source Hashes Before Trusting SQLite",
+          "title": "Context Tags Before Response",
           "ref": "items.tagged_rules.value.2",
           "status": ""
         },
-        "engineering.workflow.knowledge_file_fallback": {
+        "engineering.workflow.knowledge_hash_gate": {
           "path": "items.tagged_rules.value.3",
-          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
+          "title": "Validate Source Hashes Before Trusting SQLite",
           "ref": "items.tagged_rules.value.3",
           "status": ""
         },
-        "engineering.workflow.load_standards_before_code": {
+        "engineering.workflow.knowledge_file_fallback": {
           "path": "items.tagged_rules.value.4",
-          "title": "Load Engineering Standards Before Code Work",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
           "ref": "items.tagged_rules.value.4",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.load_standards_before_code": {
           "path": "items.tagged_rules.value.5",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Load Engineering Standards Before Code Work",
           "ref": "items.tagged_rules.value.5",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "items.tagged_rules.value.6",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "items.tagged_rules.value.6",
           "status": ""
         }
       }
@@ -2576,28 +2582,34 @@
           "ref": "items.tagged_rules.value.1",
           "status": ""
         },
-        "engineering.workflow.knowledge_hash_gate": {
+        "engineering.workflow.context_tags_before_response": {
           "path": "items.tagged_rules.value.2",
-          "title": "Validate Source Hashes Before Trusting SQLite",
+          "title": "Context Tags Before Response",
           "ref": "items.tagged_rules.value.2",
           "status": ""
         },
-        "engineering.workflow.knowledge_file_fallback": {
+        "engineering.workflow.knowledge_hash_gate": {
           "path": "items.tagged_rules.value.3",
-          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
+          "title": "Validate Source Hashes Before Trusting SQLite",
           "ref": "items.tagged_rules.value.3",
           "status": ""
         },
-        "engineering.workflow.load_standards_before_code": {
+        "engineering.workflow.knowledge_file_fallback": {
           "path": "items.tagged_rules.value.4",
-          "title": "Load Engineering Standards Before Code Work",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
           "ref": "items.tagged_rules.value.4",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.load_standards_before_code": {
           "path": "items.tagged_rules.value.5",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Load Engineering Standards Before Code Work",
           "ref": "items.tagged_rules.value.5",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "items.tagged_rules.value.6",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "items.tagged_rules.value.6",
           "status": ""
         }
       }

@@ -58,6 +58,35 @@ items:
           - path: context-docs/ENGINEERING.yaml
             selector: tagged_rules
             note: Source pipeline starter rule.
+      - id: engineering.workflow.context_tags_before_response
+        type: rule
+        subtype: workflow_rule
+        title: Context Tags Before Response
+        summary: Commands and substantive questions should route through main workflow context, prompt-derived tags, and compiled notes before answer or execution.
+        rule: For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text with `tools/context_tags.ps1` when available, then query compiled notes with `tools/knowledge_select.ps1 -Tags <tags> -Match any` before answering or executing. Use tag-selected notes as routing and risk context; read exact source documents before edits, high-stakes claims, or ambiguity resolution.
+        rationale: Prompt-derived tags make compiled knowledge useful beyond broad startup slices and reduce missed workflow, architecture, diagnostic, or documentation constraints.
+        priority: must
+        source_of_truth: context-docs/ENGINEERING.yaml
+        load_at_start: true
+        stability: durable
+        tags:
+          - engineering
+          - workflow
+          - docs-workflow
+          - compiled-context
+          - knowledge
+        source_refs:
+          - path: core/AGENT-CONTRACT.yaml
+            selector: operating_principles
+            note: Shared contract requires tag-derived context before substantive answers and commands.
+          - path: project/code/WORKFLOW.yaml
+            selector: read_order
+            is_duplicate: true
+            note: Code workflow defines the executable context-tag pass.
+          - path: tools/context_tags.ps1
+            selector: script
+            is_duplicate: true
+            note: Source pipeline helper for deriving context tags from user text.
       - id: engineering.workflow.knowledge_hash_gate
         type: rule
         subtype: verification_rule

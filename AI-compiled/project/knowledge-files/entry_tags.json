@@ -21,6 +21,31 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "tag": "compiled-context"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "tag": "knowledge"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "tag": "docs-workflow"
   },

@@ -1,10 +1,10 @@
 {
-    "generatedAt":  "2026-05-02T01:54:59+02:00",
+    "generatedAt":  "2026-05-02T02:43:50+02:00",
     "threshold":  300,
     "files":  [
                   {
                       "path":  "tools/knowledge_index.py",
-                      "lines":  1209,
+                      "lines":  1213,
                       "extension":  ".py",
                       "large":  true
                   },
@@ -22,7 +22,7 @@
                   },
                   {
                       "path":  "tools/recompile_ai_instructions.ps1",
-                      "lines":  369,
+                      "lines":  370,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -83,6 +83,12 @@
                   {
                       "path":  "tools/update_pipeline_from_link.ps1",
                       "lines":  110,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/context_tags.ps1",
+                      "lines":  105,
                       "extension":  ".ps1",
                       "large":  false
                   },

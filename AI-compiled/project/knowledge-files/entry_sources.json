@@ -41,11 +41,27 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "is_duplicate": false,
+    "note": "Shared contract requires tag-derived context before substantive answers and commands.",
+    "path": "core/AGENT-CONTRACT.yaml",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "is_duplicate": true,
     "note": "Code-project workflow repeats the same future-fit and diagnostic bias.",
     "path": "project/code/WORKFLOW.yaml",
     "selector": "general_workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "is_duplicate": true,
+    "note": "Code workflow defines the executable context-tag pass.",
+    "path": "project/code/WORKFLOW.yaml",
+    "selector": "read_order"
   },
   {
     "document_path": "context-docs/ENGINEERING.yaml",
@@ -62,6 +78,14 @@
     "note": "Script-first workflow repeats the preferred query command.",
     "path": "project/code/WORKFLOW.yaml",
     "selector": "script_first_execution"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "is_duplicate": true,
+    "note": "Source pipeline helper for deriving context tags from user text.",
+    "path": "tools/context_tags.ps1",
+    "selector": "script"
   },
   {
     "document_path": "context-docs/ENGINEERING.yaml",

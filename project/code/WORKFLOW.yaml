@@ -67,6 +67,14 @@ items:
       3. If the wrapper is unavailable, run `tools/knowledge_check.ps1`, then load all currently compiled engineering, coding, and architecture rules with `tools/knowledge_select.ps1 -Tags engineering,coding,architecture -Match any -Type rule`.
       4. If SQLite is unavailable, use `tools/knowledge_file_select.ps1` with the same tag/type intent.
 
+      For every user command or substantive question, perform a context-tag pass before answering or executing:
+
+      1. Load the main workflow and instruction documents required by the active adapter/project profile.
+      2. Run `tools/context_tags.ps1 <user text>` when available to derive relevant compiled-knowledge tags from the user's command or question.
+      3. Query notes from the compiled knowledge layer with `tools/knowledge_select.ps1 -Tags <tags> -Match any`; if SQLite is unavailable, use `tools/knowledge_file_select.ps1` with the same tag intent.
+      4. Use those notes to choose the smallest correct workflow, reads, risks, and implementation boundary before answering or editing.
+      5. Do not let tag-selected notes replace exact source reads when changing source files, making high-stakes claims, or resolving ambiguity.
+
       For broad architecture, ownership, persistence, API, build, toolchain, or registry work, also read:
 
       1. `core/PROMOTION-RULES.yaml`
@@ -159,6 +167,8 @@ items:
       For structured YAML document search, use `tools/doc_route.ps1` or `tools/doc_search.ps1` before text grep. `Select-String`, `grep`, and `rg` are fallback tools for YAML: use them only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.
 
       For compiled context lookup, use `tools/knowledge_select.ps1` before broad document reads when a named view or tag query can answer the task. Useful defaults are `-View session_start`, `-View debugging`, `-View performance`, `-View docs_workflow`, and project-specific views such as `architecture_godot` or `worldgen` when matching entries exist.
+
+      Before answering a substantive question or executing a user command, use `tools/context_tags.ps1 <user text>` when available to derive context tags, then query `tools/knowledge_select.ps1 -Tags <tags> -Match any` for the relevant compiled notes. If the tagger is unavailable, create or repair it before falling back to manual tag selection when the current task is about pipeline context acquisition.
 
       For programming tasks, always prefer loading the broad engineering standards slice before code edits with `tools/knowledge_code_context.ps1`. If the wrapper is unavailable, use `tools/knowledge_select.ps1 -Tags engineering,coding,architecture -Match any -Type rule`. Treat the returned rules and best practices as active implementation constraints for code quality, ownership, architecture, readability, diagnostics, and verification.
 

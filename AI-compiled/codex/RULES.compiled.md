@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-f4645ee9ece2
+Generated: source-6306f2f4337f
 
 ## Source of Truth
 
@@ -43,6 +43,7 @@ body: |
   - Prefer high-ROI improvements over comprehensive but low-impact passes.
   - When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.
   - Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.
+  - For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text when a tag extractor is available, then query the compiled knowledge layer by those tags before answering or executing. Treat tag-selected notes as routing context, not a replacement for exact source reads when edits or high-stakes claims depend on source truth.
 
 
 title: Project Memory Layers
@@ -159,6 +160,7 @@ body: |-
     "knowledge_document_hash_gate",
     "knowledge_entry_tag_queries",
     "knowledge_context_views",
+    "context_tagged_knowledge_prelude",
     "knowledge_entry_type_taxonomy",
     "knowledge_upsert_delete_rename_scripts",
     "knowledge_file_fallback_tables",

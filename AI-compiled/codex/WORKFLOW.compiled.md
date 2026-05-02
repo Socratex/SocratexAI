@@ -1,6 +1,6 @@
 # Compiled Workflow for Codex
 
-Generated: source-f4645ee9ece2
+Generated: source-6306f2f4337f
 
 ## Code Read Order
 
@@ -29,6 +29,14 @@ body: |
   2. Pass the most relevant named view when it exists, such as `-Views architecture_godot`, `-Views performance`, `-Views debugging`, or another project-specific architecture/performance view.
   3. If the wrapper is unavailable, run `tools/knowledge_check.ps1`, then load all currently compiled engineering, coding, and architecture rules with `tools/knowledge_select.ps1 -Tags engineering,coding,architecture -Match any -Type rule`.
   4. If SQLite is unavailable, use `tools/knowledge_file_select.ps1` with the same tag/type intent.
+
+  For every user command or substantive question, perform a context-tag pass before answering or executing:
+
+  1. Load the main workflow and instruction documents required by the active adapter/project profile.
+  2. Run `tools/context_tags.ps1 <user text>` when available to derive relevant compiled-knowledge tags from the user's command or question.
+  3. Query notes from the compiled knowledge layer with `tools/knowledge_select.ps1 -Tags <tags> -Match any`; if SQLite is unavailable, use `tools/knowledge_file_select.ps1` with the same tag intent.
+  4. Use those notes to choose the smallest correct workflow, reads, risks, and implementation boundary before answering or editing.
+  5. Do not let tag-selected notes replace exact source reads when changing source files, making high-stakes claims, or resolving ambiguity.
 
   For broad architecture, ownership, persistence, API, build, toolchain, or registry work, also read:
 

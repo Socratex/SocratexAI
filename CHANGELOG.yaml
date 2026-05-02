@@ -148,3 +148,7 @@ entries:
     date: 2026-04-30
     feature: 'pipeline_featurelist_update_guard'
     change: 'Added a pipeline feature-list guard that runs only for pipeline-owned changes. Hooked the guard into check_task.ps1 and finish_task.ps1 so changes under tools/core/project/templates/adapters require pipeline_featurelist.json updates. Kept ordinary project-task paths out of the guard so normal work does not need feature-list edits. Why: Pipeline improvements should update the feature manifest, while ordinary project work should not be burdened by source-pipeline bookkeeping.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-02
+    feature: 'context_tagged_knowledge_prelude'
+    change: 'Added tools/context_tags.ps1 and a workflow rule requiring substantive commands and questions to derive prompt tags, query compiled knowledge notes, and load relevant context before answer or execution. Why: Compiled knowledge should actively route ordinary agent work instead of only serving broad startup or manual tag queries.'

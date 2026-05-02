@@ -126,6 +126,7 @@ function Get-SourceManifest {
 		"context-docs/ENGINEERING.yaml",
 		"docs-tech/KNOWLEDGE-VIEWS.yaml",
 		"tools/knowledge_index.py",
+		"tools/context_tags.ps1",
 		"tools/knowledge_select.ps1",
 		"tools/knowledge_compile.ps1",
 		"tools/knowledge_check.ps1",

@@ -20,6 +20,10 @@
     "tag": "comments"
   },
   {
+    "description": "Compiled context, generated knowledge, and instruction cache workflows.",
+    "tag": "compiled-context"
+  },
+  {
     "description": "C# domain and validation rules.",
     "tag": "csharp"
   },
@@ -40,6 +44,10 @@
     "tag": "docs-workflow"
   },
   {
+    "description": "Documentation and durable memory file rules.",
+    "tag": "documentation"
+  },
+  {
     "description": "General engineering standards.",
     "tag": "engineering"
   },
@@ -56,6 +64,10 @@
     "tag": "godot"
   },
   {
+    "description": "Compiled knowledge index, tag query, and note-selection rules.",
+    "tag": "knowledge"
+  },
+  {
     "description": "Long-term maintenance and traceability rules.",
     "tag": "maintainability"
   },
@@ -70,6 +82,10 @@
   {
     "description": "Save/load, durable state, and reload rules.",
     "tag": "persistence"
+  },
+  {
+    "description": "Planning, pass selection, and priority sequencing rules.",
+    "tag": "planning"
   },
   {
     "description": "Human and agent readability rules.",
