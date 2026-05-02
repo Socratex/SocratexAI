@@ -162,6 +162,33 @@ items:
           - path: tools/check_code_context_gate.ps1
             selector: script
             note: Verification guard for changed-code tasks.
+      - id: engineering.workflow.normalized_content_hashes
+        type: rule
+        subtype: workflow_rule
+        title: Normalized Content Hashes For Compiled Knowledge
+        summary: Compiled knowledge and instruction freshness hashes ignore mechanical text drift but preserve semantic whitespace.
+        rule: >-
+          Use normalized text-content hashes for compiled knowledge, file fallback tables, compiled instruction checksums, and generated instruction source manifests: remove UTF-8 BOM, fold CRLF/CR to LF, trim trailing spaces and tabs per line, and ignore excess final blank lines.
+          Do not use file modification timestamps for freshness, and do not strip all whitespace, because those approaches respectively create false invalidations and hide semantic changes in YAML, Python, PowerShell, and other whitespace-sensitive formats.
+        rationale: Compiled outputs should rebuild when source meaning changes, not when editor or line-ending cleanup changes; preserving indentation and interior whitespace keeps the hash safe for whitespace-sensitive files.
+        priority: must
+        source_of_truth: context-docs/ENGINEERING.yaml
+        load_at_start: true
+        stability: durable
+        tags:
+          - engineering
+          - workflow
+          - tooling
+          - compiled-context
+          - knowledge
+          - hashing
+        source_refs:
+          - path: tools/knowledge_index.py
+            selector: normalized_hash_text
+            note: Knowledge SQLite and file fallback source freshness use the normalized hash policy.
+          - path: tools/recompile_ai_instructions.ps1
+            selector: ConvertTo-NormalizedHashText
+            note: Compiled instruction source manifests and checksums use the same normalized hash policy.
       - id: engineering.coding.explicit_diagnosable_flow
         type: rule
         subtype: coding_rule

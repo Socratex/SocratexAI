@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: '0.2.0-alpha'
     date: 2026-05-02
+    feature: 'normalized_compiled_content_hashes'
+    change: 'Changed compiled knowledge and compiled instruction freshness checks to use normalized text-content hashes instead of raw byte hashes. The normalized hash removes UTF-8 BOM, folds CRLF/CR to LF, trims trailing spaces and tabs per line, and ignores excess final blank lines while preserving indentation and interior whitespace. Why: compiled outputs should rebuild on meaningful source changes without false drift from line endings or editor cleanup, and timestamps or fully whitespace-stripped hashes are not safe enough for source freshness.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-02
     feature: 'routing_eval_freeze'
     change: 'Promoted task-type routing and unknown-task workflow routing into the source code-project pack and orchestration template, added final eval scenarios for those routing behaviors, and documented an eval freeze with a real-usage failure taxonomy. Why: The pipeline is moving from build-out to daily use, so eval coverage should focus on whole-workflow behavior and future eval additions should come from repeated real failures rather than every new implementation detail.'
   - version: '0.2.0-alpha'

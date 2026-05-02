@@ -1,10 +1,10 @@
 {
-    "generatedAt":  "2026-05-02T04:02:35+02:00",
+    "generatedAt":  "2026-05-02T22:20:31+02:00",
     "threshold":  300,
     "files":  [
                   {
                       "path":  "tools/knowledge_index.py",
-                      "lines":  1213,
+                      "lines":  1222,
                       "extension":  ".py",
                       "large":  true
                   },
@@ -15,14 +15,14 @@
                       "large":  true
                   },
                   {
-                      "path":  "tools/Initialize-SocratexPipeline.ps1",
-                      "lines":  373,
+                      "path":  "tools/recompile_ai_instructions.ps1",
+                      "lines":  388,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
-                      "path":  "tools/recompile_ai_instructions.ps1",
-                      "lines":  370,
+                      "path":  "tools/Initialize-SocratexPipeline.ps1",
+                      "lines":  373,
                       "extension":  ".ps1",
                       "large":  true
                   },

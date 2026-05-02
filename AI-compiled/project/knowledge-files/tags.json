@@ -80,6 +80,10 @@
     "tag": "godot"
   },
   {
+    "description": "",
+    "tag": "hashing"
+  },
+  {
     "description": "Compiled knowledge index, tag query, and note-selection rules.",
     "tag": "knowledge"
   },
@@ -122,6 +126,10 @@
   {
     "description": "Automated or manual verification rules.",
     "tag": "tests"
+  },
+  {
+    "description": "",
+    "tag": "tooling"
   },
   {
     "description": "Top-down source organization.",

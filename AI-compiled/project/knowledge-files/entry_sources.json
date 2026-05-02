@@ -102,5 +102,21 @@
     "note": "Canonical helper for loading the code-task engineering context slice.",
     "path": "tools/knowledge_code_context.ps1",
     "selector": "script"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "is_duplicate": false,
+    "note": "Knowledge SQLite and file fallback source freshness use the normalized hash policy.",
+    "path": "tools/knowledge_index.py",
+    "selector": "normalized_hash_text"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "is_duplicate": true,
+    "note": "Compiled instruction source manifests and checksums use the same normalized hash policy.",
+    "path": "tools/recompile_ai_instructions.ps1",
+    "selector": "ConvertTo-NormalizedHashText"
   }
 ]

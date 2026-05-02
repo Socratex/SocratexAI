@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-7d8f2ae3a6b7
+Generated: source-4aaba7544ccb
 
 ## Source of Truth
 
@@ -168,6 +168,7 @@ body: |-
     "knowledge_entry_type_taxonomy",
     "knowledge_upsert_delete_rename_scripts",
     "knowledge_file_fallback_tables",
+    "normalized_compiled_content_hashes",
     "manual_codex_workspace_eval_framework",
     "knowledge_and_engineering_eval_coverage",
     "context_tagged_prelude_eval_coverage",

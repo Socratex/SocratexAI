@@ -163,5 +163,35 @@
     "document_path": "context-docs/ENGINEERING.yaml",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "tag": "compiled-context"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "tag": "hashing"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "tag": "knowledge"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "tag": "tooling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "tag": "workflow"
   }
 ]

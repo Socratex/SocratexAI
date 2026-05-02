@@ -88,14 +88,34 @@ function New-CompiledFile {
 function ConvertTo-Hash {
 	param([string]$Text)
 
+	$normalizedText = ConvertTo-NormalizedHashText -Text $Text
 	$sha = [System.Security.Cryptography.SHA256]::Create()
 	try {
-		$bytes = [System.Text.Encoding]::UTF8.GetBytes($Text)
+		$bytes = [System.Text.Encoding]::UTF8.GetBytes($normalizedText)
 		$hashBytes = $sha.ComputeHash($bytes)
 		return ([System.BitConverter]::ToString($hashBytes)).Replace("-", "").ToLowerInvariant()
 	} finally {
 		$sha.Dispose()
 	}
+}
+
+function ConvertTo-NormalizedHashText {
+	param([string]$Text)
+
+	if ($Text.Length -gt 0 -and $Text[0] -eq [char]0xFEFF) {
+		$Text = $Text.Substring(1)
+	}
+	$Text = $Text -replace "`r`n", "`n"
+	$Text = $Text -replace "`r", "`n"
+	$lines = $Text -split "`n", -1
+	for ($i = 0; $i -lt $lines.Count; $i++) {
+		$lines[$i] = [regex]::Replace($lines[$i], "[ `t]+$", "")
+	}
+	$normalized = ($lines -join "`n").TrimEnd("`n")
+	if ($normalized.Length -gt 0) {
+		$normalized = $normalized + "`n"
+	}
+	return $normalized
 }
 
 function Get-RelativeHash {

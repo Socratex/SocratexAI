@@ -109,10 +109,16 @@
           "ref": "items.tagged_rules.value.5",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.normalized_content_hashes": {
           "path": "items.tagged_rules.value.6",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Normalized Content Hashes For Compiled Knowledge",
           "ref": "items.tagged_rules.value.6",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "items.tagged_rules.value.7",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "items.tagged_rules.value.7",
           "status": ""
         }
       }
@@ -2638,10 +2644,16 @@
           "ref": "items.tagged_rules.value.5",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.normalized_content_hashes": {
           "path": "items.tagged_rules.value.6",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Normalized Content Hashes For Compiled Knowledge",
           "ref": "items.tagged_rules.value.6",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "items.tagged_rules.value.7",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "items.tagged_rules.value.7",
           "status": ""
         }
       }

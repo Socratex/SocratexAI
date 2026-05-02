@@ -1,6 +1,6 @@
 {
     "schema":  "socratex-compiled-agent-checksum/v1",
-    "generated_at":  "source-7d8f2ae3a6b7",
+    "generated_at":  "source-4aaba7544ccb",
     "source_hashes":  {
                           "AGENTS.md":  "c875ebe4f4cdd887bfdc643a65bff7e9a97a6b2df1f99a0957e5ecc8375197c8",
                           "README.md":  "a0f42b088e0180a3537912e50e71ac04feb9ebb1d6a4c58b24ddc5f804dbe242",
@@ -12,9 +12,9 @@
                           "core/ROI-BIAS.yaml":  "2290b8e8a4725b70849747128c0aef125f4c019ad42610e079ade3c251df62cf",
                           "core/TASK-WORK.yaml":  "1df08791db9a6d3f76fd131170bd15d33aa9955ca0409ebca6c0c7158c6b384d",
                           "core/SCRIPT-FALLBACK.yaml":  "ea9440d715cf101b6d20d2876f287e0719aeddf780c0094d09b0e07a48c52827",
-                          "context-docs/ENGINEERING.yaml":  "c557a6cfbd9b743ef9025b564d065cf23062eaf2932ecb95783a5de23a8c52b3",
+                          "context-docs/ENGINEERING.yaml":  "7d12608b91fea1ab2d768aaf355f21a8f55888f7f7418e22c98eb4d2a9f7a90f",
                           "docs-tech/KNOWLEDGE-VIEWS.yaml":  "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
-                          "tools/knowledge_index.py":  "0f3bb5b7f02bddb631b2e6bd3e96b0d7c6bfc412290fa68d542053ed1aef0151",
+                          "tools/knowledge_index.py":  "239b1e6b4ccfd1c374e50c43e7edf36bcac430e5bbf02eba712ab783fa3aad81",
                           "tools/context_tags.ps1":  "620cefd0347aa278bdc1fc5fc62953d2548e777a7abe3a466f4728f9084fb8de",
                           "tools/knowledge_select.ps1":  "f3495af169dc534c03787325cba8d8bee3e26873b2da24d68c9aebbc8dff9e21",
                           "tools/knowledge_compile.ps1":  "cd5cab6f620aaaf65c08ac32001c68de5c71fbff10e1ca24b3f76e872d24431d",
@@ -24,7 +24,7 @@
                           "tools/knowledge_file_select.ps1":  "46443874c53e23d0572dba88c791ba8c3a6f1738468013bdd1b248d96fd68907",
                           "templates/ORCHESTRATION.yaml":  "4c26909b4a6c1cb8c9f7182e36604bcf7c74fa4b9e0b8208db2281695c974de4",
                           "templates/docs-tech/KNOWLEDGE-VIEWS.yaml":  "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
-                          "templates/code/context-docs/ENGINEERING.yaml":  "c557a6cfbd9b743ef9025b564d065cf23062eaf2932ecb95783a5de23a8c52b3",
+                          "templates/code/context-docs/ENGINEERING.yaml":  "7d12608b91fea1ab2d768aaf355f21a8f55888f7f7418e22c98eb4d2a9f7a90f",
                           "templates/team/product.yaml":  "ce0ac98ea0f545b9946e5582c6db66de6889d09f5cce0c02169539c4cf3afb19",
                           "templates/team/technical.yaml":  "5a2919fdd9de49abae12bb481a4c3cf67e96e14bb05c79fb5a2e629cdd319354",
                           "templates/team/performance.yaml":  "8cf2c247430f6a1512039729e0c349cbf7ad48f1216041ad6e26dc16589af6ea",
@@ -37,12 +37,12 @@
                           "project/creative/PACK.yaml":  "574ecc534d317c688c824b752ca99682584c9444daee0293475a63982d11d04a"
                       },
     "output_hashes":  {
-                          "README.md":  "9709e65473328c523ba6efc15f853da80ead1555f0dca9135bcd1d2b5e8794a1",
-                          "INDEX.yaml":  "3107f7014ec2700798b3521c32296e0b1d0533cd8559bbe6176442a9407b9ac3",
-                          "codex/ENTRYPOINT.md":  "d10e7c7076723e397afecb490b9a5424e1d5a7a896f3f2c31cc3a89fc5d8b04f",
-                          "codex/RULES.compiled.md":  "cbce42b7f77503d5ae62f3e3f9bd13974dc526eda523f484f7f2e231ce23871f",
-                          "codex/WORKFLOW.compiled.md":  "7db50188e1870766ffe3257e9a4019753447621a005dae00216fe5a170f3814e",
-                          "codex/ORCHESTRATION.compiled.md":  "7e06e477a45360240864b6e998414f3fa1f9c8685c22a8e0210b5e675e89167c",
-                          "codex/TEAM.compiled.md":  "9794947775f01f2e0f07df3366cd53c03c7cb8a137462370ef2128b1413b2918"
+                          "README.md":  "a288be637d288cac3afbb71d1e2a89f40b078856773e5c97a2a136a5bb68e024",
+                          "INDEX.yaml":  "822f9dc50dce16a5fc23ab00590c19be2b4b7c61e6a29c46badcfcef42c25165",
+                          "codex/ENTRYPOINT.md":  "12553ca4ac5c1c69de09606b396cd014c82b3ce5192813e7d517ef2eb20407a9",
+                          "codex/RULES.compiled.md":  "8371651737b23600429e677b9e551ba66660bed775cf6b81370faa658029f4f3",
+                          "codex/WORKFLOW.compiled.md":  "6eafe324d9cc0d0c0c57d998299b0442a91e10e76788ecc10a4534cb35a9e592",
+                          "codex/ORCHESTRATION.compiled.md":  "0fc363853ec3f231a1ff29910577705cbfd1c49c777cdf205466416bca7e8653",
+                          "codex/TEAM.compiled.md":  "245f205b2f159de11393e7dbead064340341aea381d16b1dd22445301c411787"
                       }
 }

@@ -23,10 +23,10 @@ items:
 
       | Lines | File | Why It Is Large |
       | ---: | --- | --- |
-      | 1213 | `tools/knowledge_index.py` | Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic. |
+      | 1222 | `tools/knowledge_index.py` | Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic. |
       | 414 | `tools/audit_docs.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
+      | 388 | `tools/recompile_ai_instructions.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
       | 373 | `tools/Initialize-SocratexPipeline.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
-      | 370 | `tools/recompile_ai_instructions.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |
       | 304 | `tools/doc_tool.py` | Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic. |
   maintenance:
     title: 🛠 Maintenance
