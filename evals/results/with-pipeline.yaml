@@ -51,3 +51,7 @@ results:
     score: null
     observations: []
     failure_notes: []
+  - scenario: context_tagged_knowledge_prelude
+    score: null
+    observations: []
+    failure_notes: []

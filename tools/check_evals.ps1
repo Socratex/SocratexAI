@@ -40,7 +40,8 @@ $scenarioIds = @(
 	"code_engineering_context_preload",
 	"knowledge_freshness_and_fallback",
 	"knowledge_entry_lifecycle",
-	"pipeline_update_artifact_sync"
+	"pipeline_update_artifact_sync",
+	"context_tagged_knowledge_prelude"
 )
 
 $requiredFiles = @(

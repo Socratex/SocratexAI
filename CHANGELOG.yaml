@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: '0.2.0-alpha'
     date: 2026-05-02
+    feature: 'context_tagged_prelude_eval_coverage'
+    change: 'Added eval coverage for the context-tagged knowledge prelude, including a public prompt, expected behaviors, result placeholders, checker registration, README scope update, source feature-list entry, and local baseline-runbook prompt. Why: Prompt-derived context tags are now a distinct pipeline promise and should be measured separately from broad engineering preload and knowledge freshness/fallback behavior.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-02
     feature: 'private_working_memory_knowledge_boundary'
     change: 'Excluded ignored/ private working files from compiled knowledge discovery and added audit coverage for generated knowledge manifest and file fallback tables. Why: local eval runs, pitch notes, scratch plans, and maintainer-private material must not leak into tracked AI-compiled knowledge artifacts used by public pipeline consumers.'
   - version: '0.2.0-alpha'

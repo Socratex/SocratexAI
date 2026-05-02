@@ -18,6 +18,7 @@ This framework evaluates behavior that matters for long-running Codex workspace 
 - compiled knowledge freshness, SQLite use, and file fallback behavior
 - controlled knowledge entry lifecycle through scripts
 - pipeline update artifact synchronization
+- context-tagged knowledge prelude before substantive answers or execution
 - fit across power, moderately technical, and basic users
 
 ## How to Run
