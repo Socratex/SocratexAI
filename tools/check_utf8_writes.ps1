@@ -44,7 +44,7 @@ function Get-AddedLineNumbers {
 			$currentNewLine += 1
 		}
 	}
-	return $lineNumbers
+	return ,$lineNumbers
 }
 
 Push-Location -LiteralPath $repoRoot

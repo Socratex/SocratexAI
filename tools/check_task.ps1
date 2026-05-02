@@ -106,7 +106,7 @@ try {
 		)
 		if ($checkPaths.Count -gt 0) {
 			$codeContextArgs += "-Paths"
-			$codeContextArgs += $checkPaths
+			$codeContextArgs += ($checkPaths -join ",")
 		}
 		Invoke-CheckCommand -Label "compiled code-guidance context gate" -Command "powershell" -Arguments $codeContextArgs
 	}
