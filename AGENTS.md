@@ -36,3 +36,5 @@ For code projects, also read:
 - `core/SCRIPT-FALLBACK.yaml`
 
 Adapter-specific files under `adapters/` are intentionally thin pointers. The shared contract in `core/AGENT-CONTRACT.yaml` is the source of truth.
+
+For any task that may touch source code, run `tools/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. Treat additional named views as additive only; `tools/check_task.ps1` enforces the fresh full-guidance marker for changed-code tasks.

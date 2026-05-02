@@ -117,12 +117,32 @@
   {
     "document_path": "context-docs/ENGINEERING.yaml",
     "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "aaa-gamedev"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "architecture"
   },
   {
     "document_path": "context-docs/ENGINEERING.yaml",
     "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "borrowed-before-bespoke"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "ddd-adiv"
   },
   {
     "document_path": "context-docs/ENGINEERING.yaml",
@@ -133,6 +153,11 @@
     "document_path": "context-docs/ENGINEERING.yaml",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "future-first"
   },
   {
     "document_path": "context-docs/ENGINEERING.yaml",

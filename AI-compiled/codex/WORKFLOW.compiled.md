@@ -1,6 +1,6 @@
 # Compiled Workflow for Codex
 
-Generated: source-6abcc7950c55
+Generated: source-7d8f2ae3a6b7
 
 ## Code Read Order
 
@@ -23,12 +23,13 @@ body: |
   10. smallest relevant file under `context-docs/`
   11. source files in the touched ownership slice
 
-  For every programming implementation, code modification, refactor, bugfix, or code review task, treat compiled engineering standards as high-priority context before editing code:
+  For every programming implementation, code modification, refactor, bugfix, code review, or any task that may touch source code, load the full compiled code-guidance set before the first code read/write that could lead to an edit:
 
-  1. Prefer `tools/knowledge_code_context.ps1` when available.
-  2. Pass the most relevant named view when it exists, such as `-Views architecture_godot`, `-Views performance`, `-Views debugging`, or another project-specific architecture/performance view.
-  3. If the wrapper is unavailable, run `tools/knowledge_check.ps1`, then load all currently compiled engineering, coding, and architecture rules with `tools/knowledge_select.ps1 -Tags engineering,coding,architecture -Match any -Type rule`.
+  1. Prefer `tools/knowledge_code_context.ps1` when available. It must load the full base guidance slice and write the local `ignored/code_context_gate.json` marker after success.
+  2. Pass the most relevant named view when it exists, such as `-Views architecture_godot`, `-Views performance`, `-Views debugging`, or another project-specific architecture/performance view. Treat views as additive task context, not replacements for the full base set.
+  3. If the wrapper is unavailable, run `tools/knowledge_check.ps1`, then load all currently compiled engineering, coding, architecture, best-practices, borrowed-before-bespoke, AAA/production gamedev, DDD-ADIV, future-first, data-first ownership, runtime, diagnostics, performance, and verification rules.
   4. If SQLite is unavailable, use `tools/knowledge_file_select.ps1` with the same tag/type intent.
+  5. `tools/check_task.ps1` should fail changed-code checks when the fresh full-guidance marker is missing, stale, or does not include the required base tags.
 
   For every user command or substantive question, perform a context-tag pass before answering or executing:
 
@@ -70,7 +71,7 @@ body: |
   1. Start from the smallest state source that answers the question.
   2. Identify the ownership slice.
   3. Check existing scripts and project automation before doing repeatable work manually.
-  4. Before editing code, load compiled engineering, coding, and architecture rules when the project provides a knowledge layer; prefer `tools/knowledge_code_context.ps1` and keep the returned rules active as implementation constraints, not optional background reading.
+  4. Before any code touch, load the full compiled code-guidance set when the project provides a knowledge layer; prefer `tools/knowledge_code_context.ps1` and keep the returned rules active as implementation constraints, not optional background reading.
   5. For every new feature request, suggestion, or architecture discussion, first check whether the requested work can be implemented in the most future-proof, maintainable, profile-fitting way before executing the literal request.
   6. For software and game projects, use AAA-grade architecture as the steer-direction where appropriate: explicit ownership, data flow, contracts, diagnostics, performance budget, toolability, deterministic behavior where relevant, testability, and low retrofit cost.
   7. For bug reports, first check whether the bug exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness; prefer the smallest fix that removes the bug class or improves diagnosis.

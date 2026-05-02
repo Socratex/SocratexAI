@@ -1,11 +1,19 @@
 [
   {
+    "description": "",
+    "tag": "aaa-gamedev"
+  },
+  {
     "description": "Scene/runtime adapter boundaries.",
     "tag": "adapters"
   },
   {
     "description": "Durable architecture and ownership rules.",
     "tag": "architecture"
+  },
+  {
+    "description": "",
+    "tag": "best-practices"
   },
   {
     "description": "Prefer proven external patterns before custom systems when they reduce risk.",
@@ -32,6 +40,10 @@
     "tag": "data-first"
   },
   {
+    "description": "",
+    "tag": "ddd-adiv"
+  },
+  {
     "description": "Interactive debugging and failure investigation.",
     "tag": "debugging"
   },
@@ -54,6 +66,10 @@
   {
     "description": "Explicit control/data/state flow.",
     "tag": "explicit-flow"
+  },
+  {
+    "description": "",
+    "tag": "future-first"
   },
   {
     "description": "Game-development-specific engineering rules.",

@@ -44,6 +44,7 @@
     "compiled_agent_instruction_layer",
     "code_task_engineering_standards_preload",
     "code_task_engineering_context_loader",
+    "full_code_guidance_context_gate",
     "code_task_type_router",
     "compiled_sqlite_knowledge_index",
     "knowledge_document_hash_gate",

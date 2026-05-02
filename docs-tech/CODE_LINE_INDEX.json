@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-02T03:25:41+02:00",
+    "generatedAt":  "2026-05-02T04:02:35+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -39,6 +39,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/check_task.ps1",
+                      "lines":  189,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/reinitialize_pipeline.ps1",
                       "lines":  189,
                       "extension":  ".ps1",
@@ -53,12 +59,6 @@
                   {
                       "path":  "tools/finish_task.ps1",
                       "lines":  182,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/check_task.ps1",
-                      "lines":  174,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -87,6 +87,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/knowledge_code_context.ps1",
+                      "lines":  106,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/context_tags.ps1",
                       "lines":  105,
                       "extension":  ".ps1",
@@ -95,6 +101,12 @@
                   {
                       "path":  "tools/sync_pipeline_featurelist.ps1",
                       "lines":  103,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/check_code_context_gate.ps1",
+                      "lines":  101,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -155,12 +167,6 @@
                   {
                       "path":  "tools/commit_task.ps1",
                       "lines":  61,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/knowledge_code_context.ps1",
-                      "lines":  60,
                       "extension":  ".ps1",
                       "large":  false
                   },

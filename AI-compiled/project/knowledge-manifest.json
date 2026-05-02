@@ -3,188 +3,193 @@
   "database_path": "C:/Users/micha/Mój dysk/v2/Projects/SocratexPipeline/AI-compiled/project/knowledge.sqlite",
   "documents": [
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "79ffa6125723898fc78b925d7c3edaf4d655d478f1035b148b3bb51db5fe2bf5",
       "path": "CHANGELOG.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "cb01a9ce65cb3a219a24238ab7a5124b3453bb7071a505cf8b00cb345d7aa91d",
       "path": "QUALITY-GATE.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
-      "hash": "367cd31e67db23de8c700a86ee5a21ea474011b4cde338c2bdc3c060ce6260a8",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
+      "hash": "c557a6cfbd9b743ef9025b564d065cf23062eaf2932ecb95783a5de23a8c52b3",
       "path": "context-docs/ENGINEERING.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "7d350fe748de36b09cabcf9b6e94012c49e538feb8f739ef6b71411d10e74d14",
       "path": "core/ACTIVATION-CHECK.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "ab9d82a89ee10c8de702ab1d9b62129473a1828c5f6fac6f5c8e98ea0f5c892b",
       "path": "core/AGENT-CONTRACT.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "90f3c86fce12c386eac244e5627da56e72389018ed9d9043b739e47283a96ea0",
       "path": "core/COMMANDS.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "71f93658cff607f6b132940152c98d0b8a90283bb801d4c9d2ddcb7fb5be8f85",
       "path": "core/CONTEXT-COMPACTION.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "d79b5a99ccdf77f27acb462006e811f3909bcdb5b2338d98e3ab0236a8bf7067",
       "path": "core/FILE-FORMATS.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "304427528eacdfd70c182b5850b9c7c04edd39d7ee8dd6e319733408d2dfa2b2",
       "path": "core/INSTRUCTION-CAPTURE.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "96c3b2aa3ec8bb1bcf62c0699698086d20d40f777d120161fa2c46d318ef7522",
       "path": "core/MEMORY-MODEL.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "7ba1fee9c621b848fe6b891845561c0218aff7d97af951ab4a3b1495d20f048b",
       "path": "core/PROJECT-PROFILE.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "66a7811205e438cb465472efcf41893199081db0cabc2515ff99385f4320c9b9",
       "path": "core/PROMOTION-RULES.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "882764a4ffe0667adf73f6b50ef76dd477c2b8124d7ec8722c130e62fda98b1b",
       "path": "core/REMOVAL-PROTOCOL.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "2290b8e8a4725b70849747128c0aef125f4c019ad42610e079ade3c251df62cf",
       "path": "core/ROI-BIAS.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "ea9440d715cf101b6d20d2876f287e0719aeddf780c0094d09b0e07a48c52827",
       "path": "core/SCRIPT-FALLBACK.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "1df08791db9a6d3f76fd131170bd15d33aa9955ca0409ebca6c0c7158c6b384d",
       "path": "core/TASK-WORK.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "ee905ba8cd46d55163ca67582c9139c385540a56b7ed8770cf0055bf731349eb",
       "path": "core/UPDATE-PROTOCOL.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
       "path": "docs-tech/KNOWLEDGE-VIEWS.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "4be2e4b2015f5b6d83d3e94993dfc54fae5d1a53bf605151fd92de3574741954",
       "path": "evals/expected-behaviors.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "1ee1aaa4263da09fc0c493e6c117a53c5a0ad594f5558c69399806dd40e87652",
       "path": "evals/personas.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "9cd3372b4fc705c0bb0291df5e9573310f52a604b2c62611ebfb6af76190d39f",
       "path": "evals/results/baseline.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "d675b4ba448f5a4fafa1096f38ad6f22767d02be4ddb9dd580a9cab4e52a87c0",
       "path": "evals/results/with-pipeline.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "770450f83d9cf4d6a0b4a96a5c899aacb37e45b794b5afb8bc7331e50cf0fd25",
       "path": "project/code/BRANCH-MODE.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "c89e7df8ba57748916055f4cb486c97099c0c89db9b03315dfd3e033d522cda8",
       "path": "project/code/COMMANDS.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "4a3de6b74aa8e4e845d4d1066a48d3a5008fcb81443814e12eede2cb8a62f9b3",
       "path": "project/code/DDD-ADIV.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "70d01c9dff0e9f711062408e0017231b7821d2eecda31d9ccc08ff66376c2e10",
       "path": "project/code/DIAGNOSTICS.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "1e091f819df14be13c408bbfa7b98c425017de43687c7d8cbf1461424ab0fd44",
       "path": "project/code/FROZEN-LAYERS.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "50c90fefec80fd4ca4d05c424d98ac643a5c501a6b7927f2db25f7520f429710",
       "path": "project/code/GIT.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "f0a39a759c3edb6fea1a267ff9cf3f30e376ee2487b18dc3767b1a199110cc60",
       "path": "project/code/INSTRUCTION-CAPTURE.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "f13837984e1a2f5909cff36cfdf3b9ed3136d36c110bd4ac48463c07c20cc41d",
       "path": "project/code/PACK.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "0a4644278faa58895aa94d667140fc6a233baccc7811a8898e3cd9c95d0d75f0",
       "path": "project/code/REGISTRIES.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
-      "hash": "f57a456206a6e4f08d0c5ce885274f75eec62225defdbb305075812fb39f0227",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
+      "hash": "2c501eabab0284051cd3f0162dab555a0a348a249b4af0553ed905b1bb5155de",
       "path": "project/code/WORKFLOW.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "574ecc534d317c688c824b752ca99682584c9444daee0293475a63982d11d04a",
       "path": "project/creative/PACK.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "e9d07fd409a3e207f33d74e000512aa7eb5f99b386b08667c4c4923f17a4c330",
       "path": "project/generic/PACK.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "491a3ff4cf7ac66ae8db219dc17b57bdfdbe00e4826f279acbcc56a813f29b87",
       "path": "project/personal/PACK.yaml"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
+      "hash": "1fb75f779b00d4cf35b208c23ca2f81f2d61b629318ebd3ce1a88f2a00c3841e",
+      "path": "tools/check_code_context_gate.ps1"
+    },
+    {
+      "compiled_at": "2026-05-02T02:02:41+00:00",
       "hash": "620cefd0347aa278bdc1fc5fc62953d2548e777a7abe3a466f4728f9084fb8de",
       "path": "tools/context_tags.ps1"
     },
     {
-      "compiled_at": "2026-05-02T01:25:47+00:00",
-      "hash": "033e2b9140432c58eba5ff3dabce4b7b0afd810be916cca46975ad7cba5fd822",
+      "compiled_at": "2026-05-02T02:02:41+00:00",
+      "hash": "cfab83612f3d5bb3ffbb9edff774daf9d956d3cb91a1ba6b6884f175a8d7495f",
       "path": "tools/knowledge_code_context.ps1"
     }
   ],
@@ -239,9 +244,13 @@
       "type": "rule"
     }
   ],
-  "generated_at": "2026-05-02T01:25:47+00:00",
+  "generated_at": "2026-05-02T02:02:41+00:00",
   "schema": "socratex-knowledge-index/v3-manifest",
   "tags": [
+    {
+      "description": "",
+      "tag": "aaa-gamedev"
+    },
     {
       "description": "Scene/runtime adapter boundaries.",
       "tag": "adapters"
@@ -249,6 +258,10 @@
     {
       "description": "Durable architecture and ownership rules.",
       "tag": "architecture"
+    },
+    {
+      "description": "",
+      "tag": "best-practices"
     },
     {
       "description": "Prefer proven external patterns before custom systems when they reduce risk.",
@@ -275,6 +288,10 @@
       "tag": "data-first"
     },
     {
+      "description": "",
+      "tag": "ddd-adiv"
+    },
+    {
       "description": "Interactive debugging and failure investigation.",
       "tag": "debugging"
     },
@@ -297,6 +314,10 @@
     {
       "description": "Explicit control/data/state flow.",
       "tag": "explicit-flow"
+    },
+    {
+      "description": "",
+      "tag": "future-first"
     },
     {
       "description": "Game-development-specific engineering rules.",

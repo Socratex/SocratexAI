@@ -18,6 +18,7 @@ $auditScript = Join-Path $PSScriptRoot "audit_docs.ps1"
 $lineIndexScript = Join-Path $PSScriptRoot "update_code_line_index.ps1"
 $utf8WriteCheckScript = Join-Path $PSScriptRoot "check_utf8_writes.ps1"
 $pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
+$codeContextGateScript = Join-Path $PSScriptRoot "check_code_context_gate.ps1"
 
 function Invoke-CheckCommand {
 	param(
@@ -94,6 +95,21 @@ function Invoke-TextNormalization {
 Push-Location -LiteralPath $repoRoot
 try {
 	$checkPaths = @(Get-CheckPaths)
+
+	if (Test-Path -LiteralPath $codeContextGateScript -PathType Leaf) {
+		$codeContextArgs = @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$codeContextGateScript
+		)
+		if ($checkPaths.Count -gt 0) {
+			$codeContextArgs += "-Paths"
+			$codeContextArgs += $checkPaths
+		}
+		Invoke-CheckCommand -Label "compiled code-guidance context gate" -Command "powershell" -Arguments $codeContextArgs
+	}
 
 	Invoke-TextNormalization -Label "text normalization refresh"
 	Invoke-TextNormalization -Label "text normalization check" -Check

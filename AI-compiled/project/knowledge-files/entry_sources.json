@@ -81,6 +81,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.yaml",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "is_duplicate": true,
+    "note": "Verification guard for changed-code tasks.",
+    "path": "tools/check_code_context_gate.ps1",
+    "selector": "script"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.yaml",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "is_duplicate": true,
     "note": "Source pipeline helper for deriving context tags from user text.",
