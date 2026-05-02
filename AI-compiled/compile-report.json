@@ -1,6 +1,6 @@
 {
     "schema":  "socratex-compiled-agent-instructions/v1",
-    "generated_at":  "source-6306f2f4337f",
+    "generated_at":  "source-6abcc7950c55",
     "role":  "generated_agent_cache",
     "source_of_truth":  "source instruction files outside AI-compiled",
     "do_not_edit_manually":  true,
@@ -43,7 +43,7 @@
                     "tools/knowledge_file_compile.ps1":  "f609d67aab6b1e43998179df9d7507d9c3672fb49152a5a717a5c4bc6bf4198b",
                     "tools/knowledge_file_check.ps1":  "659c2595cb18629080f26945c9a693f4ba41ea4430f16b9141fcf539beede8e7",
                     "tools/knowledge_file_select.ps1":  "46443874c53e23d0572dba88c791ba8c3a6f1738468013bdd1b248d96fd68907",
-                    "templates/ORCHESTRATION.yaml":  "558c169c0f97d75f2f694bd51f61f112430a5aaac0d605e938969346e65b0c0a",
+                    "templates/ORCHESTRATION.yaml":  "4c26909b4a6c1cb8c9f7182e36604bcf7c74fa4b9e0b8208db2281695c974de4",
                     "templates/docs-tech/KNOWLEDGE-VIEWS.yaml":  "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
                     "templates/code/context-docs/ENGINEERING.yaml":  "367cd31e67db23de8c700a86ee5a21ea474011b4cde338c2bdc3c060ce6260a8",
                     "templates/team/product.yaml":  "ce0ac98ea0f545b9946e5582c6db66de6889d09f5cce0c02169539c4cf3afb19",
@@ -51,8 +51,8 @@
                     "templates/team/performance.yaml":  "8cf2c247430f6a1512039729e0c349cbf7ad48f1216041ad6e26dc16589af6ea",
                     "templates/team/experience.yaml":  "c545d151ac9a72f9791dd4fec379feb496a09ef28f8162c14288aa5903d10853",
                     "templates/team/pipeline.yaml":  "a221b4f560bd7051d13205bd6f5b48bc8f3986c47535face95f0e7dfaedc9962",
-                    "project/code/PACK.yaml":  "fbf99c03ee8a26159080e6b0385c2f2a9e9b0ac68c605f13d24428d3f44c77cd",
-                    "project/code/WORKFLOW.yaml":  "ba95f96d427c72b64d546c78f4771257d7523590ea7091f822a597df2fa20619",
+                    "project/code/PACK.yaml":  "f13837984e1a2f5909cff36cfdf3b9ed3136d36c110bd4ac48463c07c20cc41d",
+                    "project/code/WORKFLOW.yaml":  "f57a456206a6e4f08d0c5ce885274f75eec62225defdbb305075812fb39f0227",
                     "project/generic/PACK.yaml":  "e9d07fd409a3e207f33d74e000512aa7eb5f99b386b08667c4c4923f17a4c330",
                     "project/personal/PACK.yaml":  "491a3ff4cf7ac66ae8db219dc17b57bdfdbe00e4826f279acbcc56a813f29b87",
                     "project/creative/PACK.yaml":  "574ecc534d317c688c824b752ca99682584c9444daee0293475a63982d11d04a"

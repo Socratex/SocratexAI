@@ -41,7 +41,9 @@ $scenarioIds = @(
 	"knowledge_freshness_and_fallback",
 	"knowledge_entry_lifecycle",
 	"pipeline_update_artifact_sync",
-	"context_tagged_knowledge_prelude"
+	"context_tagged_knowledge_prelude",
+	"task_type_router",
+	"unknown_task_routing"
 )
 
 $requiredFiles = @(
@@ -86,7 +88,7 @@ foreach ($personaId in @("power_user_socratex", "builder_user_kuba", "basic_user
 }
 
 $readme = $fileText["$EvalDir/README.md"]
-foreach ($needle in @("manual first", "baseline", "with-pipeline", "low-friction maturity path")) {
+foreach ($needle in @("manual first", "baseline", "with-pipeline", "low-friction maturity path", "missed_context", "do not add new synthetic scenarios")) {
 	if ($readme -notmatch [regex]::Escape($needle)) {
 		Add-CheckError "README.md missing required phrase: $needle"
 	}

@@ -2,6 +2,10 @@ summary: SocratexAI pipeline product changelog.
 entries:
   - version: '0.2.0-alpha'
     date: 2026-05-02
+    feature: 'routing_eval_freeze'
+    change: 'Promoted task-type routing and unknown-task workflow routing into the source code-project pack and orchestration template, added final eval scenarios for those routing behaviors, and documented an eval freeze with a real-usage failure taxonomy. Why: The pipeline is moving from build-out to daily use, so eval coverage should focus on whole-workflow behavior and future eval additions should come from repeated real failures rather than every new implementation detail.'
+  - version: '0.2.0-alpha'
+    date: 2026-05-02
     feature: 'context_tagged_prelude_eval_coverage'
     change: 'Added eval coverage for the context-tagged knowledge prelude, including a public prompt, expected behaviors, result placeholders, checker registration, README scope update, source feature-list entry, and local baseline-runbook prompt. Why: Prompt-derived context tags are now a distinct pipeline promise and should be measured separately from broad engineering preload and knowledge freshness/fallback behavior.'
   - version: '0.2.0-alpha'

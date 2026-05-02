@@ -55,3 +55,11 @@ results:
     score: null
     observations: []
     failure_notes: []
+  - scenario: task_type_router
+    score: null
+    observations: []
+    failure_notes: []
+  - scenario: unknown_task_routing
+    score: null
+    observations: []
+    failure_notes: []

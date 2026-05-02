@@ -142,3 +142,25 @@ scenarios:
     fail_conditions:
       - "Answers or edits without using the available context-tag prelude."
       - "Treats tag-selected notes as a replacement for exact source reads before source edits."
+  - id: task_type_router
+    prompt_file: "evals/prompts/task_type_router.md"
+    behaviors:
+      - "Classifies the request before broad reads or edits."
+      - "Chooses the smallest useful context for the mixed bugfix and plan-impact task."
+      - "Loads code engineering context before source edits when available."
+      - "Separates immediate bugfix work from any durable plan or architecture update."
+      - "Avoids reading unrelated documents or sweeping the repository without evidence."
+    fail_conditions:
+      - "Starts broad repository exploration without first selecting a task route."
+      - "Treats the bugfix, architecture concern, and plan update as one unbounded task."
+  - id: unknown_task_routing
+    prompt_file: "evals/prompts/unknown_task_routing.md"
+    behaviors:
+      - "Recognizes that the request does not clearly match a known task type."
+      - "Avoids broad reads, speculative edits, or unbounded refactors."
+      - "Proposes a concrete workflow with goal, sources, scope boundary, completion criteria, verification, and likely memory updates."
+      - "Asks for approval before execution unless the proposed work is small, local, reversible, and low-risk."
+      - "Keeps the response actionable instead of turning the ambiguity into generic advice."
+    fail_conditions:
+      - "Begins implementing arbitrary improvements without a scoped workflow."
+      - "Asks vague clarification questions without proposing a concrete route."

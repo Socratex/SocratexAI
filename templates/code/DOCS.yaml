@@ -32,11 +32,11 @@ documents:
     read_when: At session start after DOCS.yaml.
     write_when: Active objective, checkpoint, blocker, risk, verification status, or next action changes.
   ORCHESTRATION.yaml:
-    role: Manual priority-orchestration layer for current pain points, priority challenge rules, and project-risk steering.
+    role: Manual priority-orchestration layer for current pain points, priority challenge rules, task routing, and project-risk steering.
     audience: ai
     format: yaml
-    read_when: Planning, feature triage, priority decisions, roadmap changes, or broad product-risk judgment.
-    write_when: Owner changes active pain points, priority rules, or team-on-demand routing.
+    read_when: Planning, feature triage, priority decisions, roadmap changes, broad product-risk judgment, or unknown task-type routing.
+    write_when: Owner changes active pain points, priority rules, task routing, or team-on-demand routing.
   team/*.yaml:
     role: On-demand decision-role lenses.
     audience: ai

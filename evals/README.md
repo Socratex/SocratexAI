@@ -19,6 +19,8 @@ This framework evaluates behavior that matters for long-running Codex workspace 
 - controlled knowledge entry lifecycle through scripts
 - pipeline update artifact synchronization
 - context-tagged knowledge prelude before substantive answers or execution
+- task-type routing before broad reads or edits
+- unknown-task workflow proposal before speculative execution
 - fit across power, moderately technical, and basic users
 
 ## How to Run
@@ -32,6 +34,27 @@ This framework evaluates behavior that matters for long-running Codex workspace 
 7. Compare behavior against `evals/expected-behaviors.yaml` and `evals/scoring.md`.
 
 Do not give credit for claims the agent makes without concrete action, routing, verification, or a correct refusal to overreach.
+
+## Eval Freeze
+
+This scenario set is intentionally capped for the current pipeline stage.
+
+Do not add new synthetic scenarios for every new script, generated file, or small workflow refinement.
+
+Only add a new eval when real usage exposes a repeated failure pattern that is not covered by the current scenarios.
+
+## Real Usage Failure Taxonomy
+
+When using SocratexPipeline in real projects, classify failures before expanding the eval suite:
+
+- `missed_context`: the agent missed relevant state, instructions, plans, or knowledge.
+- `wrong_routing`: the agent chose the wrong task type or workflow.
+- `overread`: the agent loaded too much unrelated context.
+- `underread`: the agent acted without enough source or evidence.
+- `wrong_document`: the agent wrote durable information to the wrong memory layer.
+- `bad_priority_challenge`: the agent failed to challenge, or over-challenged, priority.
+- `finish_failure`: the agent skipped, bypassed, or mishandled the finalizer/check boundary.
+- `too_much_ceremony`: the pipeline added process cost without improving the outcome.
 
 ## Evidence Standard
 

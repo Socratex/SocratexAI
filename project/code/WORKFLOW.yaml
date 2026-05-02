@@ -4,6 +4,7 @@ index:
 - summary
 - read_order
 - command_classifier
+- task_type_router
 - general_workflow
 - script_first_execution
 - verification_boundary
@@ -19,6 +20,7 @@ items:
       - Summary
       - Read Order
       - Command Classifier
+      - Task Type Router
       - General Workflow
       - Script-First Execution
       - Verification Boundary
@@ -122,6 +124,30 @@ items:
       `PROMPT`: execute or defragment raw prompt intake from `_PROMPTS.md` and `_PROMPT-QUEUE.yaml`.
 
       `INSTRUCTIONS`: defragment raw user instructions, sort them by dependency/future-change cost, promote them into the correct layer, and clear completed intake.
+  task_type_router:
+    title: Task Type Router
+    format: markdown-section
+    body: |
+      ## Task Type Router
+
+      Use this router for programming projects in any language, framework, or runtime.
+
+      Keep routing lightweight: choose the task type, load the smallest useful context, then execute through the owning workflow. Do not duplicate framework-specific implementation doctrine here.
+
+      If a request does not fit any listed type, do not start broad reads or edits. State the mismatch, propose the best workflow with goal, sources, scope, completion criteria, verification, and likely memory updates, then ask the user to approve unless the task is small, local, reversible, and low-risk.
+
+      | Task type | Read first | Do |
+      |---|---|---|
+      | Implement feature | `STATE.yaml`, `_PLAN.yaml`, `ORCHESTRATION.yaml` when priority matters, smallest relevant `context-docs/`, then owning source files | Check priority and prerequisites, choose the owning boundary, prefer standard framework/library mechanisms when they fit, implement the smallest maintainable change, verify at the right gate |
+      | Analyze bug | `BUGS.yaml` or issue source, `STATE.yaml`, diagnostics if present, smallest relevant context/source slice | Separate observed behavior from hypothesis, reproduce or inspect evidence, fix root cause at the owning boundary, add targeted diagnostics if confidence is low |
+      | Analyze logs/crash/trace | `project/code/DIAGNOSTICS.yaml`, supplied logs/traces, `BUGS.yaml` if tracked | Extract current errors and timestamps, identify highest-leverage failing lifecycle, suggest or apply the smallest source-owned fix/evidence step |
+      | Analyze performance | `context-docs/PERFORMANCE.yaml` when present, relevant telemetry/profiling output, owning source slice | Report measured units, separate data from inference, look for hot paths, allocation churn, sync I/O, excessive polling, N+1 calls, cache misses, and framework misuse |
+      | Audit | `DOCS.yaml`, `project/code/WORKFLOW.yaml`, audit scripts/configs | Run the relevant audit when available, fix local hard failures, report soft warnings as recommendations |
+      | Discuss vision/product direction | `ORCHESTRATION.yaml`, target/vision/product docs when present | Keep it conversational, separate facts from recommendations, do not edit plan or backlog without consent |
+      | Update documents | `DOCS.yaml`, target owning document, duplicate-candidate workflow when available | Choose one owner document, avoid duplicate memory, update generated caches only through tools |
+      | Update plan | `STATE.yaml`, `ORCHESTRATION.yaml`, `_PLAN.yaml`, `TODO.yaml` or backlog when needed | Preserve unresolved future scope, sequence by dependency and future-change cost, ask before material priority changes |
+      | Analyze plan | `STATE.yaml`, `ORCHESTRATION.yaml`, `_PLAN.yaml`, target/backlog docs when relevant | Identify missing prerequisites, stale passes, priority conflicts, risk concentration, and unclear verification |
+      | Analyze vision/architecture direction | target/vision docs, `ORCHESTRATION.yaml`, relevant architecture/decision records | Distinguish current target from long-horizon ideas, identify conflicts and tradeoffs, promote only after user approval |
   general_workflow:
     title: General Workflow
     format: markdown-section

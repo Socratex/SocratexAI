@@ -18,6 +18,16 @@ responsibility_boundaries:
     - Not a second backlog.
     - Not a changelog.
     - Not a technical source of truth.
+task_routing:
+  main_rule: >
+    Use this section to select the broad task type, minimum context, and workflow when the project does not already provide a narrower command or workflow router.
+  minimal_read_rule: >
+    Read the smallest set of documents sufficient for the decision. Expand context only when task type, risk, priority conflict, or implementation ambiguity requires it.
+  when_task_type_is_unknown:
+    - Do not begin broad reads, edits, or refactors.
+    - State that the request does not clearly match the current routing types.
+    - Propose the best workflow with goal, required sources, scope boundary, completion criteria, verification, and likely memory updates.
+    - Ask the user to approve the workflow unless the task is small, local, reversible, and low-risk.
 active_pain_points:
   - id: example_missing_core_loop
     name: Example missing core loop

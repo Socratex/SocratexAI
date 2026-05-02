@@ -10,6 +10,7 @@ index:
   - script_first_automation_directive
   - ddd_adiv_recommendation
   - known_solution_bias
+  - task_type_routing
   - profile_aware_defaults
   - change_strategy
   - task_gating
@@ -28,6 +29,7 @@ items:
       - script_first_automation_directive
       - ddd_adiv_recommendation
       - known_solution_bias
+      - task_type_routing
       - profile_aware_defaults
       - change_strategy
       - task_gating
@@ -240,6 +242,24 @@ items:
       Use the standard solution when it is cheaper and clearer than bespoke architecture.
 
       If rejecting a known solution, state the constraint that makes it a poor fit.
+
+  task_type_routing:
+    title: 'Task Type Routing'
+    format: 'markdown-section'
+    body: |
+      ## Task Type Routing
+
+      For programming projects, classify the request before reading widely or editing.
+
+      The default language/framework-agnostic route is:
+
+      1. Identify whether the task is feature implementation, bug analysis, diagnostics/log analysis, performance analysis, audit, vision/product discussion, document update, plan update, plan analysis, or vision/architecture analysis.
+      2. Load the smallest context for that task type: current state, orchestration only when priority steering matters, active plan/backlog when sequencing matters, bug/diagnostic registries when evidence matters, and the smallest owning source/context slice before code edits.
+      3. Apply code standards through the project knowledge layer when available.
+      4. Execute through the owning boundary, using standard framework/library mechanisms before custom infrastructure when they fit.
+      5. Verify with a task-appropriate gate and update only the memory layers whose current truth changed.
+
+      If the request does not fit a known task type, stop before broad reads or edits, name the ambiguity, propose a concrete workflow, and ask for approval unless the work is small, local, reversible, and low-risk.
 
   profile_aware_defaults:
     title: 'Profile-Aware Defaults'

@@ -1373,6 +1373,18 @@
           "title": "",
           "ref": "scenarios.11",
           "status": ""
+        },
+        "task_type_router": {
+          "path": "scenarios.12",
+          "title": "",
+          "ref": "scenarios.12",
+          "status": ""
+        },
+        "unknown_task_routing": {
+          "path": "scenarios.13",
+          "title": "",
+          "ref": "scenarios.13",
+          "status": ""
         }
       }
     },
@@ -1956,6 +1968,7 @@
         "script_first_automation_directive",
         "ddd_adiv_recommendation",
         "known_solution_bias",
+        "task_type_routing",
         "profile_aware_defaults",
         "change_strategy",
         "task_gating",
@@ -2022,6 +2035,12 @@
           "path": "items.known_solution_bias",
           "title": "Known-Solution Bias",
           "ref": "items.known_solution_bias",
+          "status": ""
+        },
+        "task_type_routing": {
+          "path": "items.task_type_routing",
+          "title": "Task Type Routing",
+          "ref": "items.task_type_routing",
           "status": ""
         },
         "profile_aware_defaults": {
@@ -2143,6 +2162,7 @@
         "summary",
         "read_order",
         "command_classifier",
+        "task_type_router",
         "general_workflow",
         "script_first_execution",
         "verification_boundary",
@@ -2186,6 +2206,12 @@
           "path": "items.command_classifier",
           "title": "Command Classifier",
           "ref": "items.command_classifier",
+          "status": ""
+        },
+        "task_type_router": {
+          "path": "items.task_type_router",
+          "title": "Task Type Router",
+          "ref": "items.task_type_router",
           "status": ""
         },
         "general_workflow": {
@@ -2934,6 +2960,7 @@
         "summary",
         "usage",
         "responsibility_boundaries",
+        "task_routing",
         "active_pain_points",
         "priority_rules",
         "agent_behavior",

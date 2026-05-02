@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-6306f2f4337f
+Generated: source-6abcc7950c55
 
 ## Source of Truth
 
@@ -152,10 +152,12 @@ body: |-
     "self_describing_learning_issues",
     "pipeline_featurelist_update_guard",
     "priority_orchestration_layer",
+    "orchestration_unknown_task_routing",
     "on_demand_team_role_lenses",
     "compiled_agent_instruction_layer",
     "code_task_engineering_standards_preload",
     "code_task_engineering_context_loader",
+    "code_task_type_router",
     "compiled_sqlite_knowledge_index",
     "knowledge_document_hash_gate",
     "knowledge_entry_tag_queries",
@@ -167,6 +169,8 @@ body: |-
     "manual_codex_workspace_eval_framework",
     "knowledge_and_engineering_eval_coverage",
     "context_tagged_prelude_eval_coverage",
+    "routing_eval_coverage",
+    "eval_freeze_and_real_usage_failure_taxonomy",
     "private_working_memory_knowledge_boundary",
     "private_working_memory_cache_boundary"
   ]
