@@ -306,6 +306,12 @@
       "date": "2026-05-05",
       "feature": "cheap_idempotent_pipeline_update",
       "change": "Hardened featurelist learning and sync scripts to read both current root features manifests and older index/content instance manifests. This lets cheap updates recover older child projects instead of failing before replacing their root featurelist comparison file. Why: Old SocratexPipeline children may still have pre-v3 or project-shaped featurelists, so update intake must normalize them cheaply instead of assuming the newest schema."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-05",
+      "feature": "legacy_feature_manifest_update_recovery",
+      "change": "Preserve project-owned index/content/metadata featurelist shape during cheap child pipeline updates. Recover list-document output when target DOCS.json declares pipeline_featurelist.json as a canonical project document. Why: Old or partially updated child workspaces should update cheaply without manual manifest migration or losing local feature descriptions."
     }
   ]
 }

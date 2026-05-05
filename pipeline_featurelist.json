@@ -4991,7 +4991,8 @@
         "Read feature IDs from root features when present.",
         "Fallback to content.features for old instance manifests.",
         "Fallback pipeline_id from metadata or project folder name when old manifests lack root pipeline_id.",
-        "Run report and sync tools against an old child manifest before publishing update hardening."
+        "Run report and sync tools against an old child manifest before publishing update hardening.",
+        "Preserve or recover project-owned list-document root shape when DOCS.json declares pipeline_featurelist.json as index/content/metadata."
       ],
       "verification_commands": [
         "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/sync_pipeline_featurelist.ps1 -TargetPath <old-project> -SourceFeatureListPath pipeline_featurelist.json -DryRun",

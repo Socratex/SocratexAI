@@ -76,6 +76,83 @@ function Get-FeatureContracts {
 	return $contracts
 }
 
+function Get-PipelineId {
+	param(
+		[object]$FeatureList,
+		[string]$Fallback
+	)
+
+	if ($null -ne $FeatureList -and $FeatureList.PSObject.Properties.Name -contains "pipeline_id") {
+		$value = ([string]$FeatureList.pipeline_id).Trim()
+		if ($value.Length -gt 0) {
+			return $value
+		}
+	}
+	if ($null -ne $FeatureList -and $FeatureList.PSObject.Properties.Name -contains "metadata") {
+		$metadata = $FeatureList.metadata
+		if ($null -ne $metadata -and $metadata.PSObject.Properties.Name -contains "pipeline_id") {
+			$value = ([string]$metadata.pipeline_id).Trim()
+			if ($value.Length -gt 0) {
+				return $value
+			}
+		}
+	}
+	return $Fallback
+}
+
+function Test-ListDocumentFeatureManifest {
+	param([object]$FeatureList)
+
+	if ($null -eq $FeatureList) {
+		return $false
+	}
+	$names = @($FeatureList.PSObject.Properties.Name)
+	if (-not ($names -contains "index") -or -not ($names -contains "content") -or -not ($names -contains "metadata")) {
+		return $false
+	}
+	$content = $FeatureList.content
+	return ($null -ne $content -and $content.PSObject.Properties.Name -contains "features")
+}
+
+function Test-TargetRequiresListDocumentFeatureManifest {
+	param([string]$RootPath)
+
+	$docsPath = Join-Path $RootPath "DOCS.json"
+	if (-not (Test-Path -LiteralPath $docsPath -PathType Leaf)) {
+		return $false
+	}
+	try {
+		$docs = Read-JsonFile -Path $docsPath
+		if (-not ($docs.PSObject.Properties.Name -contains "content")) {
+			return $false
+		}
+		$content = $docs.content
+		if ($null -eq $content -or -not ($content.PSObject.Properties.Name -contains "pipeline_featurelist.json")) {
+			return $false
+		}
+		$description = (@($content."pipeline_featurelist.json") -join "`n").ToLowerInvariant()
+		return (
+			($description.Contains("root") -and $description.Contains("index") -and $description.Contains("content") -and $description.Contains("metadata")) -or
+			$description.Contains("canonical json document shape")
+		)
+	} catch {
+		return $false
+	}
+}
+
+function ConvertTo-OrderedHashtable {
+	param([object]$Value)
+
+	$result = [ordered]@{}
+	if ($null -eq $Value) {
+		return $result
+	}
+	foreach ($property in $Value.PSObject.Properties) {
+		$result[[string]$property.Name] = $property.Value
+	}
+	return $result
+}
+
 $targetRoot = Resolve-Path -LiteralPath $TargetPath
 if ([string]::IsNullOrWhiteSpace($OutputPath)) {
 	$OutputPath = Join-Path $targetRoot "pipeline_featurelist.json"
@@ -98,10 +175,16 @@ if ($sourceFeatures.Count -eq 0) {
 
 $existingFeatures = @()
 $existingContracts = [ordered]@{}
+$existing = $null
+$preserveListDocumentShape = $false
 if (Test-Path -LiteralPath $OutputPath -PathType Leaf) {
 	$existing = Read-JsonFile -Path $OutputPath
 	$existingFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList $existing)
 	$existingContracts = Get-FeatureContracts -FeatureList $existing
+	$preserveListDocumentShape = Test-ListDocumentFeatureManifest -FeatureList $existing
+}
+if (-not $preserveListDocumentShape) {
+	$preserveListDocumentShape = Test-TargetRequiresListDocumentFeatureManifest -RootPath $targetRoot
 }
 
 $features = [System.Collections.Generic.List[string]]::new()
@@ -128,21 +211,86 @@ if ([string]::IsNullOrWhiteSpace($PipelineId)) {
 	$PipelineId = Get-DefaultPipelineId -RootPath $targetRoot
 }
 
-$payload = [ordered]@{
-	schema = "socratex-pipeline-featurelist/v2"
-	pipeline_id = $PipelineId
-	role = "instance"
-	source_pipeline_id = [string]$source.pipeline_id
-	updated_at = (Get-Date).ToString("yyyy-MM-dd")
-	features = @($features)
-	comparison_to_source = [ordered]@{
-		same_as_source = ($missing.Count -eq 0 -and $extra.Count -eq 0)
-		same = @($same)
-		missing_from_instance = @($missing)
-		extra_in_instance = @($extra)
+$sourcePipelineId = Get-PipelineId -FeatureList $source -Fallback "socratex_pipeline"
+$comparison = [ordered]@{
+	same_as_source = ($missing.Count -eq 0 -and $extra.Count -eq 0)
+	same = @($same)
+	missing_from_instance = @($missing)
+	extra_in_instance = @($extra)
+}
+
+if ($preserveListDocumentShape) {
+	$indexValues = @()
+	if ($null -ne $existing -and $existing.PSObject.Properties.Name -contains "index") {
+		$indexValues = @($existing.index)
+	}
+	$index = [System.Collections.Generic.List[string]]::new()
+	foreach ($value in (Convert-ToFeatureList -Values $indexValues)) {
+		$index.Add($value) | Out-Null
+	}
+	foreach ($requiredKey in @("features", "comparison_to_source")) {
+		if (-not $index.Contains($requiredKey)) {
+			$index.Add($requiredKey) | Out-Null
+		}
+	}
+	if ($extraContracts.Count -gt 0 -and -not $index.Contains("feature_contracts")) {
+		$index.Add("feature_contracts") | Out-Null
+	}
+
+	$content = [ordered]@{}
+	$existingContent = [ordered]@{}
+	if ($null -ne $existing -and $existing.PSObject.Properties.Name -contains "content") {
+		$existingContent = ConvertTo-OrderedHashtable -Value $existing.content
+	}
+	foreach ($property in $existingContent.Keys) {
+		if (-not $index.Contains($property)) {
+			$index.Add($property) | Out-Null
+		}
+	}
+	foreach ($property in $index) {
+		if ($property -eq "features") {
+			$content[$property] = @($features)
+		} elseif ($property -eq "comparison_to_source") {
+			$content[$property] = $comparison
+		} elseif ($property -eq "feature_contracts" -and $extraContracts.Count -gt 0) {
+			$content[$property] = $extraContracts
+		} elseif ($existingContent.Contains($property)) {
+			$content[$property] = $existingContent[$property]
+		} else {
+			$content[$property] = @()
+		}
+	}
+
+	$metadata = [ordered]@{}
+	if ($null -ne $existing -and $existing.PSObject.Properties.Name -contains "metadata") {
+		$metadata = ConvertTo-OrderedHashtable -Value $existing.metadata
+	}
+	if (-not $metadata.Contains("schema")) {
+		$metadata["schema"] = "socratex-pipeline-featurelist/v2"
+	}
+	$metadata["pipeline_id"] = $PipelineId
+	$metadata["role"] = "instance"
+	$metadata["source_pipeline_id"] = $sourcePipelineId
+	$metadata["updated_at"] = (Get-Date).ToString("yyyy-MM-dd")
+	$metadata["comparison_contract"] = "features is the cheap comparison layer; project-owned content keeps its local list-document shape."
+
+	$payload = [ordered]@{
+		index = @($index.ToArray())
+		content = $content
+		metadata = $metadata
+	}
+} else {
+	$payload = [ordered]@{
+		schema = "socratex-pipeline-featurelist/v2"
+		pipeline_id = $PipelineId
+		role = "instance"
+		source_pipeline_id = $sourcePipelineId
+		updated_at = (Get-Date).ToString("yyyy-MM-dd")
+		features = @($features)
+		comparison_to_source = $comparison
 	}
 }
-if ($extraContracts.Count -gt 0) {
+if (-not $preserveListDocumentShape -and $extraContracts.Count -gt 0) {
 	$payload.feature_contracts = $extraContracts
 	$payload.metadata = [ordered]@{
 		comparison_contract = "Use features and comparison_to_source for cheap comparison; preserve feature_contracts only for instance-owned extra features that may be promoted upstream."

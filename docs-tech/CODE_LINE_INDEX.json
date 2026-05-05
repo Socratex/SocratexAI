@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T05:20:59+02:00",
+    "generatedAt":  "2026-05-05T05:32:02+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -47,6 +47,12 @@
                   {
                       "path":  "tools/repo/check_pipeline_feature_contracts.ps1",
                       "lines":  292,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/repo/sync_pipeline_featurelist.ps1",
+                      "lines":  280,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -131,12 +137,6 @@
                   {
                       "path":  "tools/pipeline/update_pipeline_from_link.ps1",
                       "lines":  147,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/repo/sync_pipeline_featurelist.ps1",
-                      "lines":  144,
                       "extension":  ".ps1",
                       "large":  false
                   },
