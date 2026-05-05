@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-40a91165fe34
+Generated: source-67e4a38fec5e
 
 ## Source of Truth
 
@@ -4963,6 +4963,7 @@ Generated: source-40a91165fe34
           "tools/repo/sync_pipeline_featurelist.ps1",
           "tools/repo/check_pipeline_feature_contracts.ps1",
           "tools/pipeline/set_directives.ps1",
+          "PUBLIC-BOOTSTRAP.md",
           "core/UPDATE-PROTOCOL.json",
           "SCRIPTS.json"
         ],
@@ -4983,6 +4984,7 @@ Generated: source-40a91165fe34
           ]
         },
         "required_docs": [
+          "PUBLIC-BOOTSTRAP.md",
           "core/UPDATE-PROTOCOL.json",
           "pipeline_featurelist.json",
           "SCRIPTS.json"
@@ -4992,6 +4994,7 @@ Generated: source-40a91165fe34
           "Keep update cheap by default; do not run knowledge compilation or full audit unless -FullVerify is passed.",
           "Preserve project-owned root configuration and memory outside SocratexAI.",
           "Support local path, zip, and shallow Git sources for low-friction updates.",
+          "Keep PUBLIC-BOOTSTRAP.md aligned with the cheap public update command and FullVerify/ReinitializeNew opt-ins.",
           "Verify changed update artifacts with check_pipeline_feature_contracts.ps1."
         ],
         "verification_commands": [

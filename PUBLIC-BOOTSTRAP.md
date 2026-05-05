@@ -183,7 +183,10 @@ For programming projects:
 5. Install code pack files under `SocratexAI/project/code/`.
 6. Install tools under `SocratexAI/tools/`.
 7. Create `SocratexAI/DOCS.json` as the document role index.
-8. Create `SocratexAI/PIPELINE-CONFIG.json` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
+8. Create `SocratexAI/PIPELINE-CONFIG.json` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, `changelog.enabled`, and pipeline update source fields.
+   - Set `pipeline.public_bootstrap_url` to `https://raw.githubusercontent.com/Socratex/SocratexAI/main/PUBLIC-BOOTSTRAP.md`.
+   - Set `pipeline.update_source` to `https://github.com/Socratex/SocratexAI.git` when Git is available.
+   - Set `pipeline.update_command` to the cheap update command shown in the update section unless the user explicitly wants a custom source.
 9. If `workflow.branch_mode` is `branch_scoped`, create committed directives under `.aiassistant/socratex/`, create local branch memory under `ignored/ai-socratex/`, and ensure `/ignored` is gitignored.
 10. Apply directive merge or replace mode.
 11. Run document audit when possible.
@@ -234,7 +237,23 @@ Use these tools when available:
 
 When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.json`.
 
-The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user.
+Cheap update is the default. It should refresh the managed `SocratexAI/` package, preserve project-owned configuration and memory, refresh the instance feature list, update directives, and run the cheap feature-contract check. It should not rebuild compiled knowledge or run the full audit unless the user asks for full verification or the cheap check fails.
+
+Preferred public update command:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source "https://github.com/Socratex/SocratexAI.git" -SourceMode Git
+```
+
+Use full verification only when the user has enough time/budget or when debugging the update itself:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source "https://github.com/Socratex/SocratexAI.git" -SourceMode Git -FullVerify
+```
+
+Use `-ReinitializeNew` only when the update explicitly introduces newly initialized files that should be created in the project root. Reinitialization must be missing-only and must not overwrite project memory.
+
+The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user. If `pipeline.public_bootstrap_url` points to this raw bootstrap file, prefer the Git repository source above for the actual update package.
 
 If the updated pipeline includes initializer artifacts missing from the installed project, run `tools/pipeline/reinitialize_pipeline.ps1` in missing-only mode after update.
 

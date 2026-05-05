@@ -318,6 +318,12 @@
       "date": "2026-05-05",
       "feature": "canonical_index_content_metadata_document_schema",
       "change": "Promoted index/content/metadata from a child-project convention into the canonical source pipeline feature manifest shape. Moved source pipeline_featurelist.json feature IDs under content.features and artifact contracts under content.feature_contracts with backward-compatible readers for older root manifests. Why: Feature comparison and synchronization should be a stable low-cost structured document operation, not a Riftbound-only exception."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-05",
+      "feature": "cheap_idempotent_pipeline_update",
+      "change": "Updated PUBLIC-BOOTSTRAP.md so raw-link setup documents the cheap Git update command as the default. Added FullVerify and ReinitializeNew as explicit opt-ins and records update_source/public_bootstrap_url in PIPELINE-CONFIG.json during setup. Why: Users who install from the public bootstrap link should receive the low-budget update path without needing a separate source-pipeline explanation."
     }
   ]
 }

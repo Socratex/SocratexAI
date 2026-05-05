@@ -1,6 +1,6 @@
 {
     "schema":  "socratex-compiled-agent-instructions/v1",
-    "generated_at":  "source-40a91165fe34",
+    "generated_at":  "source-67e4a38fec5e",
     "role":  "generated_agent_cache",
     "source_of_truth":  "source instruction files outside AI-compiled",
     "do_not_edit_manually":  true,
@@ -26,7 +26,7 @@
     "sources":  {
                     "AGENTS.md":  "f17717c0fb04cbc9687fbb06b5df5212e9b83327fee5ea1943c688b25a40fd1e",
                     "README.md":  "8b91bc9a9d2654bd3eb260243591a67ac1291c7e7d4ffa73c746c7c5865fd747",
-                    "PUBLIC-BOOTSTRAP.md":  "91ae9fa9ca969b53cb24e039250faa0d0b971a2549a113cbbb42b23d42c97e24",
+                    "PUBLIC-BOOTSTRAP.md":  "3eec0279ad450567afbfc1d1a9d7ab97d92237967c233469fb61b283b537b793",
                     "DOCS.json":  "258979826fa56e0d13c29e6b5fc881936ad28086bcfa9291c801d859ce649b52",
                     "WORKFLOW.json":  "7a25588389d6a832ad4fb91d6e55de2a3f8ec632084938e93ec9f38778508cb3",
                     "COMMANDS.json":  "7ae768535f5e697de610b6351a040ff4757683690240ca225c2d7a3931bf0f0d",
