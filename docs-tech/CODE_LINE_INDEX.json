@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T05:09:03+02:00",
+    "generatedAt":  "2026-05-05T05:18:09+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -123,6 +123,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/pipeline/update_pipeline_from_link.ps1",
+                      "lines":  147,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/text/repair_mojibake.ps1",
                       "lines":  139,
                       "extension":  ".ps1",
@@ -215,12 +221,6 @@
                   {
                       "path":  "tools/setup/install_powershell.ps1",
                       "lines":  91,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/pipeline/update_pipeline_from_link.ps1",
-                      "lines":  90,
                       "extension":  ".ps1",
                       "large":  false
                   },

@@ -294,6 +294,12 @@
             "date": "2026-05-05",
             "feature": "feature_artifact_contracts",
             "change": "Added feature artifact contracts to pipeline_featurelist.json while preserving the compact features index for cheap comparison. Added check_pipeline_feature_contracts.ps1 and wired it into audit/update guards so pipeline-owned changes must map to a feature contract. Updated feature learning and instance sync so upstream promotion requires contracts and instance extra-feature contracts are preserved. Why: Feature IDs alone allowed source and child pipelines to look synchronized while required scripts, catalogs, docs, templates, or cleanup logic could be missing."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-05",
+            "feature": "cheap_idempotent_pipeline_update",
+            "change": "Made update_pipeline_from_link.ps1 cheap by default: managed mirror, featurelist sync, directive refresh, and feature-contract check now run without rebuilding knowledge or full audit unless -FullVerify is passed. Added Auto/LocalPath/Zip/Git source modes with shallow Git clone support and documented Git as the preferred public update source. Updated feature contracts and script metadata so cheap update behavior is tracked as a synchronized source-to-child feature. Why: Low-limit child projects should be able to update old SocratexAI installs cheaply and predictably while preserving project-owned configuration and memory."
         }
     ]
 }

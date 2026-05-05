@@ -605,7 +605,29 @@
         },
         "update_pipeline_from_link.ps1": {
             "path": "tools/pipeline/update_pipeline_from_link.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Cheaply update an installed SocratexAI package from a local path, zip URL, or shallow Git source while preserving project-owned configuration and memory.",
+            "input": {
+                "required": [
+                    "-Source"
+                ],
+                "optional": [
+                    "-TargetPath",
+                    "-SourceMode",
+                    "-GitRef",
+                    "-Packs",
+                    "-DirectiveMode",
+                    "-DirectiveFiles",
+                    "-ReinitializeNew",
+                    "-FullVerify",
+                    "-DryRun"
+                ],
+                "rule": "Default mode is cheap: managed package mirror, featurelist sync, directive refresh, and feature-contract check. Use -FullVerify only for heavy post-update verification."
+            },
+            "output": {
+                "success": "Mirrors managed SocratexAI paths, preserves project-owned files, runs cheap checks, and reports skipped full verification unless -FullVerify was used.",
+                "failure": "Throws on unresolved source, unsafe sync, failed reinitialization, failed directive update, failed feature-contract check, or failed full verification."
+            }
         },
         "upgrade_from_riftbound.ps1": {
             "path": "tools/pipeline/upgrade_from_riftbound.ps1",
@@ -626,7 +648,7 @@
         "sync_managed_pipeline_package.ps1": {
             "path": "tools/pipeline/sync_managed_pipeline_package.ps1",
             "category": "pipeline",
-            "description": "Mirror the managed SocratexAI package from source into an installed child pipeline, removing obsolete files inside managed paths.",
+            "description": "Mirror source-owned SocratexAI package paths into an installed child pipeline, deleting stale files only inside managed paths.",
             "input": {
                 "required": [
                     "-SourceRoot",
@@ -636,7 +658,7 @@
                     "-ManagedPaths",
                     "-DryRun"
                 ],
-                "rule": "Use only for managed SocratexAI package paths; project memory outside SocratexAI remains owned by the child project."
+                "rule": "Use only for source-owned SocratexAI package paths; project memory and configuration outside SocratexAI remain child-owned."
             },
             "output": {
                 "success": "Prints mirrored managed paths and OK when complete.",

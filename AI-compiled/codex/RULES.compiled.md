@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-764529d39991
+Generated: source-e099949950be
 
 ## Source of Truth
 
@@ -144,7 +144,8 @@ Generated: source-764529d39991
         "managed_pipeline_package_mirror_sync",
         "full_update_artifact_parity_contract",
         "managed_pipeline_root_catalog_sync",
-        "feature_artifact_contracts"
+        "feature_artifact_contracts",
+        "cheap_idempotent_pipeline_update"
     ],
     "feature_contracts": {
         "adapter_pack_bootstrap": {
@@ -1073,7 +1074,9 @@ Generated: source-764529d39991
                 "tools/repo/check_pipeline_feature_contracts.ps1",
                 "SCRIPTS.json",
                 "CHANGELOG.json",
-                "tools/documents/audit_docs.ps1"
+                "tools/documents/audit_docs.ps1",
+                "tools/pipeline/update_pipeline_from_link.ps1",
+                "tools/pipeline/sync_managed_pipeline_package.ps1"
             ],
             "required_scripts": [
                 "sync_managed_pipeline_package.ps1",
@@ -1151,7 +1154,9 @@ Generated: source-764529d39991
                 "tools/repo/check_pipeline_feature_contracts.ps1",
                 "SCRIPTS.json",
                 "CHANGELOG.json",
-                "tools/documents/audit_docs.ps1"
+                "tools/documents/audit_docs.ps1",
+                "tools/pipeline/update_pipeline_from_link.ps1",
+                "tools/pipeline/sync_managed_pipeline_package.ps1"
             ],
             "required_scripts": [
                 "sync_managed_pipeline_package.ps1",
@@ -4690,7 +4695,9 @@ Generated: source-764529d39991
                 "project/personal",
                 "project/creative",
                 "templates/code",
-                "tools/documents/audit_docs.ps1"
+                "tools/documents/audit_docs.ps1",
+                "tools/pipeline/update_pipeline_from_link.ps1",
+                "tools/pipeline/sync_managed_pipeline_package.ps1"
             ],
             "required_scripts": [
                 "sync_managed_pipeline_package.ps1",
@@ -4849,7 +4856,9 @@ Generated: source-764529d39991
                 "tools/repo/check_pipeline_feature_contracts.ps1",
                 "SCRIPTS.json",
                 "CHANGELOG.json",
-                "tools/documents/audit_docs.ps1"
+                "tools/documents/audit_docs.ps1",
+                "tools/pipeline/update_pipeline_from_link.ps1",
+                "tools/pipeline/sync_managed_pipeline_package.ps1"
             ],
             "required_scripts": [
                 "sync_managed_pipeline_package.ps1",
@@ -4961,6 +4970,52 @@ Generated: source-764529d39991
                 "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
             ],
             "known_failure_if_missing": "Source and child pipelines can report matching feature IDs while the behavior is absent, stale, or only partially copied."
+        },
+        "cheap_idempotent_pipeline_update": {
+            "summary": "Installed child pipelines update cheaply by default: shallow Git/local/zip source resolution, managed SocratexAI package mirror, project configuration preservation, compact featurelist refresh, directive refresh, and cheap feature-contract verification; expensive rebuilds are opt-in.",
+            "required_paths": [
+                "pipeline_featurelist.json",
+                "tools/pipeline/update_pipeline_from_link.ps1",
+                "tools/pipeline/sync_managed_pipeline_package.ps1",
+                "tools/repo/sync_pipeline_featurelist.ps1",
+                "tools/repo/check_pipeline_feature_contracts.ps1",
+                "tools/pipeline/set_directives.ps1",
+                "core/UPDATE-PROTOCOL.json",
+                "SCRIPTS.json"
+            ],
+            "required_scripts": [
+                "update_pipeline_from_link.ps1",
+                "sync_managed_pipeline_package.ps1",
+                "sync_pipeline_featurelist.ps1",
+                "check_pipeline_feature_contracts.ps1",
+                "set_directives.ps1"
+            ],
+            "required_catalog_entries": {
+                "SCRIPTS": [
+                    "update_pipeline_from_link.ps1",
+                    "sync_managed_pipeline_package.ps1",
+                    "sync_pipeline_featurelist.ps1",
+                    "check_pipeline_feature_contracts.ps1",
+                    "set_directives.ps1"
+                ]
+            },
+            "required_docs": [
+                "core/UPDATE-PROTOCOL.json",
+                "pipeline_featurelist.json",
+                "SCRIPTS.json"
+            ],
+            "sync_direction": "source_to_child",
+            "promotion_checklist": [
+                "Keep update cheap by default; do not run knowledge compilation or full audit unless -FullVerify is passed.",
+                "Preserve project-owned root configuration and memory outside SocratexAI.",
+                "Support local path, zip, and shallow Git sources for low-friction updates.",
+                "Verify changed update artifacts with check_pipeline_feature_contracts.ps1."
+            ],
+            "verification_commands": [
+                "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1 -Paths tools/pipeline/update_pipeline_from_link.ps1,tools/pipeline/sync_managed_pipeline_package.ps1,core/UPDATE-PROTOCOL.json,SCRIPTS.json,pipeline_featurelist.json",
+                "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+            ],
+            "known_failure_if_missing": "Old or low-budget child projects may spend unnecessary AI/tool time on full rebuilds, overwrite project-owned state, or fail to receive structural source changes from Git cheaply."
         }
     }
 }
