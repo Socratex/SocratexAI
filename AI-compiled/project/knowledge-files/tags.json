@@ -9,6 +9,10 @@
   },
   {
     "description": "",
+    "tag": "automation"
+  },
+  {
+    "description": "",
     "tag": "best-practices"
   },
   {
@@ -114,6 +118,10 @@
   {
     "description": "Runtime lifecycle and gameplay execution rules.",
     "tag": "runtime"
+  },
+  {
+    "description": "",
+    "tag": "scripts"
   },
   {
     "description": "Knowledge that should be loaded at the beginning of session context building.",

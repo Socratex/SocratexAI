@@ -1,6 +1,22 @@
 [
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "is_duplicate": true,
+    "note": "Script catalog can carry exact input/output contracts for fragile invocation shapes.",
+    "path": "SCRIPTS.json",
+    "selector": "metadata.script_io_contract"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "is_duplicate": false,
+    "note": "Source workflow rule makes tool hardening the default response to repeatable tool-result errors.",
+    "path": "WORKFLOW.json",
+    "selector": "tool_error_hardening"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "is_duplicate": false,
     "note": "Source pipeline file-fallback rule.",

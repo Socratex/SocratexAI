@@ -29,6 +29,17 @@
         "insert_checked_document_list_item.ps1",
         "document_list_item_edit_engine.py",
         "review_document_list_candidates.ps1",
+        "json_list_doc.py",
+        "json_refresh_index.ps1",
+        "json_migrate_content.ps1",
+        "json_read.ps1",
+        "json_item_insert.ps1",
+        "json_item_set.ps1",
+        "json_item_move.ps1",
+        "json_item_delete.ps1",
+        "json_line_insert.ps1",
+        "json_line_set.ps1",
+        "json_line_move.ps1",
         "run_document_post_edit_checks.ps1",
         "read_document_item.ps1",
         "read_document_items_by_title.ps1",
@@ -179,6 +190,118 @@
         },
         "review_document_list_candidates.ps1": {
             "path": "tools/review_document_list_candidates.ps1"
+        },
+        "json_list_doc.py": {
+            "path": "tools/json_list_doc.py",
+            "description": "Edit and read list-style JSON source documents while preserving collection order and root indexes.",
+            "input": {
+                "commands": [
+                    "read",
+                    "insert-entry",
+                    "set-entry",
+                    "move-entry",
+                    "delete-entry",
+                    "refresh-index",
+                    "migrate-content",
+                    "insert-line",
+                    "set-line",
+                    "move-line"
+                ],
+                "value_sources": [
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "preferred_structured_value_source": "--value-json-file or --value-json-stdin for multiline, nested, or quote-heavy JSON.",
+                "rule": "Use exactly one value source per insert-entry or set-entry call."
+            },
+            "output": {
+                "read": "JSON payload printed to stdout.",
+                "mutation_success": "OK: operation target.",
+                "failure": "Non-zero exit with ERROR message on stderr/stdout from the Python wrapper."
+            }
+        },
+        "json_refresh_index.ps1": {
+            "path": "tools/json_refresh_index.ps1",
+            "description": "Refresh a root index from a JSON document collection such as content."
+        },
+        "json_migrate_content.ps1": {
+            "path": "tools/json_migrate_content.ps1",
+            "description": "Move an old root collection into the canonical content object and rebuild index."
+        },
+        "json_read.ps1": {
+            "path": "tools/json_read.ps1",
+            "description": "Read a JSON document index, entry, or line from a selected collection."
+        },
+        "json_item_insert.ps1": {
+            "path": "tools/json_item_insert.ps1",
+            "description": "Insert a JSON entry at start, end, before, or after another entry.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Collection",
+                    "-Position",
+                    "-Reference",
+                    "-Text",
+                    "-ValueJson",
+                    "-ValueJsonFile",
+                    "-ValueJsonStdin"
+                ],
+                "preferred_structured_value_source": "Use -ValueJsonFile or -ValueJsonStdin for multiline, nested, or quote-heavy JSON.",
+                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
+            },
+            "output": {
+                "success": "OK: inserted key.",
+                "failure": "Throws json_item_insert failed with the child process exit code."
+            }
+        },
+        "json_item_set.ps1": {
+            "path": "tools/json_item_set.ps1",
+            "description": "Replace or rename a JSON entry in a selected collection.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Collection",
+                    "-NewKey",
+                    "-Text",
+                    "-ValueJson",
+                    "-ValueJsonFile",
+                    "-ValueJsonStdin"
+                ],
+                "preferred_structured_value_source": "Use -ValueJsonFile or -ValueJsonStdin for multiline, nested, or quote-heavy JSON.",
+                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
+            },
+            "output": {
+                "success": "OK: updated key.",
+                "failure": "Throws json_item_set failed with the child process exit code."
+            }
+        },
+        "json_item_move.ps1": {
+            "path": "tools/json_item_move.ps1",
+            "description": "Move a JSON entry relative to another entry."
+        },
+        "json_item_delete.ps1": {
+            "path": "tools/json_item_delete.ps1",
+            "description": "Delete a JSON entry and refresh collection ordering."
+        },
+        "json_line_insert.ps1": {
+            "path": "tools/json_line_insert.ps1",
+            "description": "Insert one or more lines into a list-valued JSON entry."
+        },
+        "json_line_set.ps1": {
+            "path": "tools/json_line_set.ps1",
+            "description": "Replace one line inside a list-valued JSON entry."
+        },
+        "json_line_move.ps1": {
+            "path": "tools/json_line_move.ps1",
+            "description": "Move one line inside a list-valued JSON entry."
         },
         "run_document_post_edit_checks.ps1": {
             "path": "tools/run_document_post_edit_checks.ps1"
@@ -376,6 +499,11 @@
         "context_loading": {
             "default": "index_only",
             "content_read": "only when exact metadata for a specific script is needed"
+        },
+        "script_io_contract": {
+            "purpose": "Describe stable invocation contracts for scripts whose argument shape is not obvious from the script name alone.",
+            "default_context_rule": "The default SCRIPTS context remains name/index-only; read input/output only before invoking a script whose argument shape is not obvious.",
+            "structured_json_rule": "For long, multiline, nested, or quote-heavy JSON, prefer file/stdin value inputs over inline shell arguments."
         }
     }
 }

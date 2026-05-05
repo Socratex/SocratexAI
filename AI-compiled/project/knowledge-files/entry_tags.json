@@ -46,6 +46,41 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "tag": "automation"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "tag": "scripts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "tag": "tooling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "tag": "docs-workflow"
   },

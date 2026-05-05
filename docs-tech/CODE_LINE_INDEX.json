@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T03:31:39+02:00",
+    "generatedAt":  "2026-05-05T04:22:06+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -36,6 +36,12 @@
                       "path":  "tools/Initialize-SocratexPipeline.ps1",
                       "lines":  354,
                       "extension":  ".ps1",
+                      "large":  true
+                  },
+                  {
+                      "path":  "tools/json_list_doc.py",
+                      "lines":  343,
+                      "extension":  ".py",
                       "large":  true
                   },
                   {
@@ -369,6 +375,18 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/json_item_insert.ps1",
+                      "lines":  43,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/json_item_set.ps1",
+                      "lines":  41,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/run_quality_gate.ps1",
                       "lines":  41,
                       "extension":  ".ps1",
@@ -447,6 +465,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/json_line_insert.ps1",
+                      "lines":  29,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/knowledge_file_upsert.ps1",
                       "lines":  29,
                       "extension":  ".ps1",
@@ -455,6 +479,12 @@
                   {
                       "path":  "tools/knowledge_upsert.ps1",
                       "lines":  29,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/json_line_move.ps1",
+                      "lines":  28,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -495,8 +525,26 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/json_item_move.ps1",
+                      "lines":  24,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/json_line_set.ps1",
+                      "lines":  24,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/write_utf8_file.ps1",
                       "lines":  24,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/json_read.ps1",
+                      "lines":  22,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -519,6 +567,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/json_item_delete.ps1",
+                      "lines":  20,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/list_document_keys.ps1",
                       "lines":  20,
                       "extension":  ".ps1",
@@ -533,6 +587,18 @@
                   {
                       "path":  "tools/knowledge_file_query.ps1",
                       "lines":  19,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/json_refresh_index.ps1",
+                      "lines":  18,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/json_migrate_content.ps1",
+                      "lines":  17,
                       "extension":  ".ps1",
                       "large":  false
                   },

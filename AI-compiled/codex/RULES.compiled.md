@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-497156e27702
+Generated: source-7904821fd5f8
 
 ## Source of Truth
 
@@ -115,7 +115,11 @@ Generated: source-497156e27702
         "workflow_current_rule_contract_cleanup",
         "generic_programming_default_pack",
         "explicit_gamedev_project_pack",
-        "json_document_normalizer"
+        "json_document_normalizer",
+        "json_list_document_tools",
+        "json_tool_file_stdin_value_inputs",
+        "script_input_output_contracts",
+        "default_tool_error_hardening"
     ]
 }
 

@@ -626,6 +626,12 @@
           "title": "Explicit Diagnosable Flow",
           "ref": "items.tagged_rules.value.7",
           "status": ""
+        },
+        "engineering.workflow.default_tool_error_hardening": {
+          "path": "items.tagged_rules.value.8",
+          "title": "Default Tool Error Hardening",
+          "ref": "items.tagged_rules.value.8",
+          "status": ""
         }
       }
     },
@@ -3509,6 +3515,17 @@
         "insert_checked_document_list_item.ps1",
         "document_list_item_edit_engine.py",
         "review_document_list_candidates.ps1",
+        "json_list_doc.py",
+        "json_refresh_index.ps1",
+        "json_migrate_content.ps1",
+        "json_read.ps1",
+        "json_item_insert.ps1",
+        "json_item_set.ps1",
+        "json_item_move.ps1",
+        "json_item_delete.ps1",
+        "json_line_insert.ps1",
+        "json_line_set.ps1",
+        "json_line_move.ps1",
         "run_document_post_edit_checks.ps1",
         "read_document_item.ps1",
         "read_document_items_by_title.ps1",
@@ -3750,6 +3767,72 @@
           "path": "content.review_document_list_candidates.ps1",
           "title": "",
           "ref": "content.review_document_list_candidates.ps1",
+          "status": ""
+        },
+        "json_list_doc.py": {
+          "path": "content.json_list_doc.py",
+          "title": "",
+          "ref": "content.json_list_doc.py",
+          "status": ""
+        },
+        "json_refresh_index.ps1": {
+          "path": "content.json_refresh_index.ps1",
+          "title": "",
+          "ref": "content.json_refresh_index.ps1",
+          "status": ""
+        },
+        "json_migrate_content.ps1": {
+          "path": "content.json_migrate_content.ps1",
+          "title": "",
+          "ref": "content.json_migrate_content.ps1",
+          "status": ""
+        },
+        "json_read.ps1": {
+          "path": "content.json_read.ps1",
+          "title": "",
+          "ref": "content.json_read.ps1",
+          "status": ""
+        },
+        "json_item_insert.ps1": {
+          "path": "content.json_item_insert.ps1",
+          "title": "",
+          "ref": "content.json_item_insert.ps1",
+          "status": ""
+        },
+        "json_item_set.ps1": {
+          "path": "content.json_item_set.ps1",
+          "title": "",
+          "ref": "content.json_item_set.ps1",
+          "status": ""
+        },
+        "json_item_move.ps1": {
+          "path": "content.json_item_move.ps1",
+          "title": "",
+          "ref": "content.json_item_move.ps1",
+          "status": ""
+        },
+        "json_item_delete.ps1": {
+          "path": "content.json_item_delete.ps1",
+          "title": "",
+          "ref": "content.json_item_delete.ps1",
+          "status": ""
+        },
+        "json_line_insert.ps1": {
+          "path": "content.json_line_insert.ps1",
+          "title": "",
+          "ref": "content.json_line_insert.ps1",
+          "status": ""
+        },
+        "json_line_set.ps1": {
+          "path": "content.json_line_set.ps1",
+          "title": "",
+          "ref": "content.json_line_set.ps1",
+          "status": ""
+        },
+        "json_line_move.ps1": {
+          "path": "content.json_line_move.ps1",
+          "title": "",
+          "ref": "content.json_line_move.ps1",
           "status": ""
         },
         "run_document_post_edit_checks.ps1": {
@@ -5462,7 +5545,8 @@
         "workflow_workflow_contract",
         "generic_programming_baseline",
         "project_type_routing",
-        "finish_contract"
+        "finish_contract",
+        "tool_error_hardening"
       ],
       "top_level_keys": [
         "index",
@@ -5510,6 +5594,12 @@
           "path": "content.finish_contract",
           "title": "Finish Contract",
           "ref": "content.finish_contract",
+          "status": ""
+        },
+        "tool_error_hardening": {
+          "path": "content.tool_error_hardening",
+          "title": "Tool Error Hardening",
+          "ref": "content.tool_error_hardening",
           "status": ""
         }
       }

@@ -28,7 +28,8 @@
             "workflow_workflow_contract",
             "generic_programming_baseline",
             "project_type_routing",
-            "finish_contract"
+            "finish_contract",
+            "tool_error_hardening"
         ],
         "COMMANDS.json": [
             "CONTEXT",
@@ -87,6 +88,17 @@
             "insert_checked_document_list_item.ps1",
             "document_list_item_edit_engine.py",
             "review_document_list_candidates.ps1",
+            "json_list_doc.py",
+            "json_refresh_index.ps1",
+            "json_migrate_content.ps1",
+            "json_read.ps1",
+            "json_item_insert.ps1",
+            "json_item_set.ps1",
+            "json_item_move.ps1",
+            "json_item_delete.ps1",
+            "json_line_insert.ps1",
+            "json_line_set.ps1",
+            "json_line_move.ps1",
             "run_document_post_edit_checks.ps1",
             "read_document_item.ps1",
             "read_document_items_by_title.ps1",

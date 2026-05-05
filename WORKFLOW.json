@@ -6,7 +6,8 @@
         "workflow_workflow_contract",
         "generic_programming_baseline",
         "project_type_routing",
-        "finish_contract"
+        "finish_contract",
+        "tool_error_hardening"
     ],
     "content": {
         "quick_index": {
@@ -50,6 +51,10 @@
         "finish_contract": {
             "title": "Finish Contract",
             "rule": "Run finalize_task_check_commit_push.ps1 near the end of any changed-file scope that should be committed and pushed. If it fails because tooling assumes legacy formats, fix the owning tool and rerun the finalizer."
+        },
+        "tool_error_hardening": {
+            "title": "Tool Error Hardening",
+            "rule": "When an owned repository script fails because input was easy to pass incorrectly, validation was missing, output was unclear, path/encoding/quoting handling was fragile, or the process failure is likely to recur, default to hardening the owning script, wrapper, help text, validation, or SCRIPTS.json input/output contract before retrying or immediately after unblocking the task. Treat manual recovery as temporary unless the failure is clearly a one-off typo, missing user data, or larger than the current task scope. Prefer file/stdin/structured inputs over fragile inline quoting for complex JSON."
         }
     },
     "metadata": {

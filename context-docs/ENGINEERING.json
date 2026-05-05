@@ -270,6 +270,41 @@
                             "note": "Code-project workflow repeats the same future-fit and diagnostic bias."
                         }
                     ]
+                },
+                {
+                    "id": "engineering.workflow.default_tool_error_hardening",
+                    "type": "rule",
+                    "subtype": "workflow_rule",
+                    "title": "Default Tool Error Hardening",
+                    "summary": "Tool invocation failures should default to hardening the owning script or contract, not repeating manual recovery.",
+                    "rule": "When an owned repository script or tool fails because an input was easy to pass incorrectly, quoting/encoding/path handling was fragile, validation was missing, output was unclear, or a process failure is likely to recur, default to fixing or extending the owning script, wrapper, help/validation, or SCRIPTS.json input/output contract before retrying or immediately after unblocking the task. Treat manual recovery as temporary; keep it only when the failure is clearly a one-off typo, missing user-provided data, or the tool-hardening scope would be materially larger than the current task.",
+                    "rationale": "Repeatable tool friction is pipeline debt. Encoding the fix into scripts and script contracts reduces future prompt cost and prevents agents from memorizing brittle workarounds.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "workflow",
+                        "tooling",
+                        "automation",
+                        "scripts",
+                        "docs-workflow",
+                        "verification"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "WORKFLOW.json",
+                            "selector": "tool_error_hardening",
+                            "note": "Source workflow rule makes tool hardening the default response to repeatable tool-result errors."
+                        },
+                        {
+                            "path": "SCRIPTS.json",
+                            "selector": "metadata.script_io_contract",
+                            "is_duplicate": true,
+                            "note": "Script catalog can carry exact input/output contracts for fragile invocation shapes."
+                        }
+                    ]
                 }
             ]
         },
