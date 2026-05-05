@@ -1,615 +1,615 @@
 {
-    "generatedAt":  "2026-05-05T04:22:06+02:00",
+    "generatedAt":  "2026-05-05T04:36:57+02:00",
     "threshold":  300,
     "files":  [
                   {
-                      "path":  "tools/knowledge_index.py",
+                      "path":  "tools/knowledge/knowledge_index.py",
                       "lines":  1235,
                       "extension":  ".py",
                       "large":  true
                   },
                   {
-                      "path":  "tools/audit_docs.ps1",
-                      "lines":  414,
+                      "path":  "tools/documents/audit_docs.ps1",
+                      "lines":  440,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
-                      "path":  "tools/rebuild_ai_compiled_context.ps1",
+                      "path":  "tools/pipeline/rebuild_ai_compiled_context.ps1",
                       "lines":  398,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
-                      "path":  "tools/document_read_cache_engine.py",
+                      "path":  "tools/documents/document_read_cache_engine.py",
                       "lines":  369,
                       "extension":  ".py",
                       "large":  true
                   },
                   {
-                      "path":  "tools/update_code_line_index.ps1",
+                      "path":  "tools/codebase/update_code_line_index.ps1",
                       "lines":  356,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
-                      "path":  "tools/Initialize-SocratexPipeline.ps1",
-                      "lines":  354,
+                      "path":  "tools/pipeline/Initialize-SocratexPipeline.ps1",
+                      "lines":  355,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
-                      "path":  "tools/json_list_doc.py",
+                      "path":  "tools/documents/json_list_doc.py",
                       "lines":  343,
                       "extension":  ".py",
                       "large":  true
                   },
                   {
-                      "path":  "tools/import_existing_project.ps1",
-                      "lines":  260,
+                      "path":  "tools/pipeline/import_existing_project.ps1",
+                      "lines":  261,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/end_prompt_snapshot.ps1",
-                      "lines":  251,
+                      "path":  "tools/repo/end_prompt_snapshot.ps1",
+                      "lines":  252,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/document_list_item_edit_engine.py",
+                      "path":  "tools/documents/document_list_item_edit_engine.py",
                       "lines":  243,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_task.ps1",
+                      "path":  "tools/repo/check_task.ps1",
                       "lines":  231,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/normalize_markdown_emoji.ps1",
+                      "path":  "tools/documents/normalize_markdown_emoji.ps1",
                       "lines":  220,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/audit_json_docs.py",
+                      "path":  "tools/documents/audit_json_docs.py",
                       "lines":  219,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/document_item_edit_engine.py",
+                      "path":  "tools/documents/document_item_edit_engine.py",
                       "lines":  218,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/reinitialize_pipeline.ps1",
+                      "path":  "tools/pipeline/reinitialize_pipeline.ps1",
                       "lines":  190,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/open_pipeline_learning_issue.ps1",
+                      "path":  "tools/repo/open_pipeline_learning_issue.ps1",
                       "lines":  183,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/run_final_task_checks.ps1",
+                      "path":  "tools/repo/run_final_task_checks.ps1",
                       "lines":  182,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/document_structure_normalizer_engine.py",
+                      "path":  "tools/documents/document_structure_normalizer_engine.py",
                       "lines":  170,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/finalize_changed_files_commit_push.ps1",
+                      "path":  "tools/repo/finalize_changed_files_commit_push.ps1",
                       "lines":  148,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/repair_mojibake.ps1",
+                      "path":  "tools/text/repair_mojibake.ps1",
                       "lines":  139,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/document_schema_migration_engine.py",
+                      "path":  "tools/documents/document_schema_migration_engine.py",
                       "lines":  138,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/run_interactive_setup.ps1",
-                      "lines":  134,
+                      "path":  "tools/setup/run_interactive_setup.ps1",
+                      "lines":  135,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_evals.ps1",
+                      "path":  "tools/quality/check_evals.ps1",
                       "lines":  129,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/report_pipeline_learning.ps1",
+                      "path":  "tools/repo/report_pipeline_learning.ps1",
                       "lines":  125,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/update_pipeline_from_link.ps1",
+                      "path":  "tools/pipeline/update_pipeline_from_link.ps1",
                       "lines":  110,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/add_changelog_entry.ps1",
+                      "path":  "tools/repo/add_changelog_entry.ps1",
                       "lines":  109,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/context_tags.ps1",
+                      "path":  "tools/knowledge/context_tags.ps1",
                       "lines":  104,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_code_context.ps1",
+                      "path":  "tools/knowledge/knowledge_code_context.ps1",
                       "lines":  104,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/sync_pipeline_featurelist.ps1",
+                      "path":  "tools/repo/sync_pipeline_featurelist.ps1",
                       "lines":  103,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_code_context_gate.ps1",
+                      "path":  "tools/pipeline/remove_pipeline.ps1",
+                      "lines":  101,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/codebase/check_code_context_gate.ps1",
                       "lines":  100,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/generate_embedded_config_payload.py",
+                      "path":  "tools/pipeline/generate_embedded_config_payload.py",
                       "lines":  100,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/remove_pipeline.ps1",
-                      "lines":  99,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/learn_pipeline_features.ps1",
+                      "path":  "tools/repo/learn_pipeline_features.ps1",
                       "lines":  97,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/install_powershell.ps1",
+                      "path":  "tools/documents/review_document_list_candidates.ps1",
                       "lines":  91,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/review_document_list_candidates.ps1",
+                      "path":  "tools/setup/install_powershell.ps1",
                       "lines":  91,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_toolchain_health.ps1",
-                      "lines":  86,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/check_utf8_writes.ps1",
-                      "lines":  86,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/pipeline_bootstrap_index.py",
+                      "path":  "tools/pipeline/pipeline_bootstrap_index.py",
                       "lines":  86,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_pipeline_featurelist_update.ps1",
+                      "path":  "tools/repo/check_toolchain_health.ps1",
+                      "lines":  86,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/text/check_utf8_writes.ps1",
+                      "lines":  86,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/repo/check_pipeline_featurelist_update.ps1",
                       "lines":  85,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/utf8_file_helpers.ps1",
+                      "path":  "tools/text/utf8_file_helpers.ps1",
                       "lines":  81,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/run_document_post_edit_checks.ps1",
+                      "path":  "tools/documents/run_document_post_edit_checks.ps1",
                       "lines":  80,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/init_branch_memory.ps1",
-                      "lines":  79,
+                      "path":  "tools/pipeline/init_branch_memory.ps1",
+                      "lines":  80,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/normalize_text_files.ps1",
+                      "path":  "tools/text/normalize_text_files.ps1",
                       "lines":  75,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/console_summary.ps1",
-                      "lines":  72,
+                      "path":  "tools/diagnostics/console_summary.ps1",
+                      "lines":  73,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/generate_installed_agent_instructions.ps1",
-                      "lines":  68,
+                      "path":  "tools/pipeline/generate_installed_agent_instructions.ps1",
+                      "lines":  69,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/finalize_task_check_commit_push.ps1",
+                      "path":  "tools/repo/finalize_task_check_commit_push.ps1",
                       "lines":  67,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_runtime.py",
+                      "path":  "tools/knowledge/knowledge_select.ps1",
+                      "lines":  66,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/quality/check_runtime.py",
                       "lines":  66,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/configure_powershell_utf8.ps1",
+                      "path":  "tools/setup/configure_powershell_utf8.ps1",
                       "lines":  66,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_select.ps1",
-                      "lines":  66,
+                      "path":  "tools/diagnostics/log_summary.ps1",
+                      "lines":  64,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/log_summary.ps1",
-                      "lines":  63,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/legacy_commit_task_compatibility_wrapper.ps1",
+                      "path":  "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
                       "lines":  61,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_file_select.ps1",
+                      "path":  "tools/knowledge/knowledge_file_select.ps1",
                       "lines":  60,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_query.ps1",
+                      "path":  "tools/knowledge/knowledge_query.ps1",
                       "lines":  60,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/detect_project_stack.ps1",
+                      "path":  "tools/pipeline/set_directives.ps1",
                       "lines":  58,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/set_directives.ps1",
-                      "lines":  56,
+                      "path":  "tools/setup/detect_project_stack.ps1",
+                      "lines":  58,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/insert_checked_document_list_item.ps1",
-                      "lines":  51,
+                      "path":  "tools/documents/insert_checked_document_list_item.ps1",
+                      "lines":  52,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/normalize_json_files.py",
+                      "path":  "tools/text/normalize_json_files.py",
                       "lines":  51,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/run_quality_fix.ps1",
+                      "path":  "tools/quality/run_quality_fix.ps1",
                       "lines":  48,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/upgrade_from_riftbound.ps1",
+                      "path":  "tools/pipeline/upgrade_from_riftbound.ps1",
                       "lines":  46,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/migrate_document_schema.ps1",
+                      "path":  "tools/documents/migrate_document_schema.ps1",
                       "lines":  45,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/normalize_document_structure.ps1",
+                      "path":  "tools/documents/normalize_document_structure.ps1",
                       "lines":  45,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/insert_document_item.ps1",
+                      "path":  "tools/documents/insert_document_item.ps1",
                       "lines":  43,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_item_insert.ps1",
+                      "path":  "tools/documents/json_item_insert.ps1",
                       "lines":  43,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_item_set.ps1",
+                      "path":  "tools/documents/json_item_set.ps1",
                       "lines":  41,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/run_quality_gate.ps1",
+                      "path":  "tools/quality/run_quality_gate.ps1",
                       "lines":  41,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/migrate_document_item.ps1",
+                      "path":  "tools/documents/migrate_document_item.ps1",
                       "lines":  37,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/compile_pipeline_context.ps1",
+                      "path":  "tools/pipeline/compile_pipeline_context.ps1",
                       "lines":  36,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/insert_document_list_item.ps1",
+                      "path":  "tools/documents/insert_document_list_item.ps1",
                       "lines":  35,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_compile.ps1",
+                      "path":  "tools/knowledge/knowledge_compile.ps1",
                       "lines":  34,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/migrate_ai_pipeline.ps1",
+                      "path":  "tools/pipeline/migrate_ai_pipeline.ps1",
                       "lines":  34,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/bulk_insert_document_items.ps1",
+                      "path":  "tools/documents/bulk_insert_document_items.ps1",
                       "lines":  33,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_delete.ps1",
+                      "path":  "tools/knowledge/knowledge_delete.ps1",
                       "lines":  33,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_file_delete.ps1",
+                      "path":  "tools/knowledge/knowledge_file_delete.ps1",
                       "lines":  33,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_document_list_item_duplicates.ps1",
+                      "path":  "tools/documents/check_document_list_item_duplicates.ps1",
                       "lines":  32,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/move_document_item.ps1",
+                      "path":  "tools/documents/move_document_item.ps1",
                       "lines":  31,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_check.ps1",
+                      "path":  "tools/knowledge/knowledge_check.ps1",
                       "lines":  30,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/init_task_work.ps1",
+                      "path":  "tools/pipeline/init_task_work.ps1",
+                      "lines":  30,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/documents/json_line_insert.ps1",
                       "lines":  29,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_line_insert.ps1",
+                      "path":  "tools/knowledge/knowledge_file_upsert.ps1",
                       "lines":  29,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_file_upsert.ps1",
+                      "path":  "tools/knowledge/knowledge_upsert.ps1",
                       "lines":  29,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_upsert.ps1",
-                      "lines":  29,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/json_line_move.ps1",
+                      "path":  "tools/documents/json_line_move.ps1",
                       "lines":  28,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/build_document_cache.ps1",
+                      "path":  "tools/documents/build_document_cache.ps1",
                       "lines":  27,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_file_rename.ps1",
+                      "path":  "tools/knowledge/knowledge_file_rename.ps1",
                       "lines":  27,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_rename.ps1",
+                      "path":  "tools/knowledge/knowledge_rename.ps1",
                       "lines":  27,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/task_snapshot.ps1",
+                      "path":  "tools/repo/task_snapshot.ps1",
                       "lines":  27,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/pipeline_bootstrap_index.ps1",
+                      "path":  "tools/pipeline/pipeline_bootstrap_index.ps1",
                       "lines":  26,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/normalize_json_files.ps1",
+                      "path":  "tools/text/normalize_json_files.ps1",
                       "lines":  25,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_item_move.ps1",
+                      "path":  "tools/documents/json_item_move.ps1",
                       "lines":  24,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_line_set.ps1",
+                      "path":  "tools/documents/json_line_set.ps1",
                       "lines":  24,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/write_utf8_file.ps1",
+                      "path":  "tools/text/write_utf8_file.ps1",
                       "lines":  24,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_read.ps1",
+                      "path":  "tools/documents/json_read.ps1",
                       "lines":  22,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/read_document_item.ps1",
+                      "path":  "tools/documents/read_document_item.ps1",
                       "lines":  22,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_file_check.ps1",
+                      "path":  "tools/knowledge/knowledge_file_check.ps1",
                       "lines":  21,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_file_compile.ps1",
+                      "path":  "tools/knowledge/knowledge_file_compile.ps1",
                       "lines":  21,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_item_delete.ps1",
+                      "path":  "tools/documents/json_item_delete.ps1",
                       "lines":  20,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/list_document_keys.ps1",
+                      "path":  "tools/documents/list_document_keys.ps1",
                       "lines":  20,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/read_document_items_by_title.ps1",
+                      "path":  "tools/documents/read_document_items_by_title.ps1",
                       "lines":  20,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/knowledge_file_query.ps1",
+                      "path":  "tools/knowledge/knowledge_file_query.ps1",
                       "lines":  19,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_refresh_index.ps1",
+                      "path":  "tools/documents/json_refresh_index.ps1",
                       "lines":  18,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/json_migrate_content.ps1",
+                      "path":  "tools/documents/json_migrate_content.ps1",
                       "lines":  17,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_ai_compiled_context.ps1",
+                      "path":  "tools/pipeline/check_ai_compiled_context.ps1",
                       "lines":  13,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/normalize_documents.bat",
+                      "path":  "tools/text/normalize_documents.bat",
                       "lines":  4,
                       "extension":  ".bat",
                       "large":  false

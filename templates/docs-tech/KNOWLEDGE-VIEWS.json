@@ -12,7 +12,7 @@
         },
         "purpose": {
             "title": "Purpose",
-            "content": "This file defines named SQLite knowledge views used by `tools/knowledge_select.ps1 -View <id>`.\n\nViews are source configuration, not cache. The compiled database materializes `views` and `view_entries` during `tools/knowledge_compile.ps1`, `tools/knowledge_upsert.ps1`, `tools/knowledge_delete.ps1`, and `tools/knowledge_rename.ps1`.\n"
+            "content": "This file defines named SQLite knowledge views used by `tools/knowledge/knowledge_select.ps1 -View <id>`.\n\nViews are source configuration, not cache. The compiled database materializes `views` and `view_entries` during `tools/knowledge/knowledge_compile.ps1`, `tools/knowledge/knowledge_upsert.ps1`, `tools/knowledge/knowledge_delete.ps1`, and `tools/knowledge/knowledge_rename.ps1`.\n"
         },
         "view_contract": {
             "title": "View Contract",

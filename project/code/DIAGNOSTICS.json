@@ -52,7 +52,7 @@
         "generic_command": {
             "title": "Generic Command",
             "format": "markdown-section",
-            "body": "## Generic Command\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/log_summary.ps1 -Description \"<what to diagnose>\"\n```\n\nThe default output is `DIAGNOSTICS-SUMMARY.json`.\n"
+            "body": "## Generic Command\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/diagnostics/log_summary.ps1 -Description \"<what to diagnose>\"\n```\n\nThe default output is `DIAGNOSTICS-SUMMARY.json`.\n"
         },
         "human_readable_reporting": {
             "title": "Human-Readable Reporting",

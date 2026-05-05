@@ -8,9 +8,9 @@ It also installs a reusable project workflow layer: `WORKFLOW.json` for owner-wr
 
 For agent runtime, SocratexPipeline keeps a generated `AI-compiled/` layer. Source documents remain human-editable and authoritative; `AI-compiled/` is compact, English, read-optimized context for agents such as Codex.
 
-SocratexPipeline also compiles tagged project knowledge into `AI-compiled/project/knowledge.sqlite`. Agents can query it with `tools/knowledge_select.ps1` by named view, tags, type, source document, or startup flag, while source JSON/Markdown documents remain the only editable source of truth.
+SocratexPipeline also compiles tagged project knowledge into `AI-compiled/project/knowledge.sqlite`. Agents can query it with `tools/knowledge/knowledge_select.ps1` by named view, tags, type, source document, or startup flag, while source JSON/Markdown documents remain the only editable source of truth.
 
-When SQLite is unavailable, SocratexPipeline writes a file fallback under `AI-compiled/project/knowledge-files/`. It mirrors the database tables as JSON files, except named views are intentionally unavailable; agents query it with `tools/knowledge_file_select.ps1`.
+When SQLite is unavailable, SocratexPipeline writes a file fallback under `AI-compiled/project/knowledge-files/`. It mirrors the database tables as JSON files, except named views are intentionally unavailable; agents query it with `tools/knowledge/knowledge_file_select.ps1`.
 
 SocratexPipeline also includes a manual `evals/` framework for comparing baseline agent behavior against with-pipeline behavior. The evals focus on priority routing, low-friction adoption, team-role loading, finalization boundaries, document ownership, compiled-instruction handling, and three-tier user fit.
 
@@ -99,7 +99,7 @@ Code projects can store `project_profile`, `runtime_status`, and `workflow.branc
 
 The agent uses `project_profile` to filter known solutions, `ROI-BIAS.md` to rank recommendations, and `SCRIPT-FALLBACK.md` when tools cannot run.
 
-PowerShell 7 (`pwsh`) is the preferred automation runtime. During setup, the agent should check it first, run `tools/install_powershell.ps1` when missing, and recommend lite/no-tools mode, a supported host/container, or porting scripts if the target system cannot support PowerShell.
+PowerShell 7 (`pwsh`) is the preferred automation runtime. During setup, the agent should check it first, run `tools/setup/install_powershell.ps1` when missing, and recommend lite/no-tools mode, a supported host/container, or porting scripts if the target system cannot support PowerShell.
 
 If the AI environment is limited, read `tools/lite-option/README.md` before selecting artifacts.
 
@@ -134,11 +134,11 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 
 ## Update, Upgrade, Migrate
 
-- `SocratexAI/tools/update_pipeline_from_link.ps1`: public user update from a latest pipeline source.
-- `SocratexAI/tools/reinitialize_pipeline.ps1`: missing-only reinitialization after setup or update.
-- `SocratexAI/tools/remove_pipeline.ps1`: remove the installed pipeline through a bounded remover.
-- `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active reference source pipeline.
-- `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
+- `SocratexAI/tools/pipeline/update_pipeline_from_link.ps1`: public user update from a latest pipeline source.
+- `SocratexAI/tools/pipeline/reinitialize_pipeline.ps1`: missing-only reinitialization after setup or update.
+- `SocratexAI/tools/pipeline/remove_pipeline.ps1`: remove the installed pipeline through a bounded remover.
+- `SocratexAI/tools/pipeline/upgrade_from_riftbound.ps1`: maintainer upgrade from the active reference source pipeline.
+- `SocratexAI/tools/pipeline/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
 Structured JSON tools apply to every project type, including non-code projects, for agent-only structured JSON files. Use `read_document_item`, `list_document_keys`, `insert_document_item`, `bulk_insert_document_items`, `move_document_item`, and `migrate_document_item` whenever practical.
 
@@ -147,59 +147,59 @@ Structured JSON tools apply to every project type, including non-code projects, 
 After changing source instructions, templates, core docs, project packs, or adapter rules, run:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/rebuild_ai_compiled_context.ps1
 ```
 
-This also refreshes the compiled SQLite knowledge database when `tools/knowledge_compile.ps1` is present.
+This also refreshes the compiled SQLite knowledge database when `tools/knowledge/knowledge_compile.ps1` is present.
 
 Equivalent full compile/check wrapper:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/compile_pipeline_context.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1
 ```
 
 To check for drift without writing files:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_ai_compiled_context.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1
 ```
 
 For direct knowledge-layer work:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture,performance
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -View session_start
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -Tags engineering,workflow
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_check.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_file_select.ps1 -Tags engineering,workflow
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_file_check.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_code_context.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_code_context.ps1 -Views architecture,performance
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -View session_start
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -Tags engineering,workflow
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_check.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_file_select.ps1 -Tags engineering,workflow
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_file_check.ps1
 ```
 
 To check the eval framework structure:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_evals.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/check_evals.ps1
 ```
 
 Document edit scripts are transactional by default: they should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output. Agents should not compose manual read/edit/normalize/cache/check queues after a successful document edit tool.
 
 When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.json`, resolve `pipeline.update_source`, run the updater, reinitialize newly introduced missing artifacts when needed, then run audit and activation check.
 
-When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/remove_pipeline.ps1`.
+When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/pipeline/remove_pipeline.ps1`.
 
 ## Code Audit
 
 For code-project document consistency, run:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1
 ```
 
 After first-run initialization, use:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1 -Initialized
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1 -Initialized
 ```
 
 ## Code Helpers
@@ -207,10 +207,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1 -Initia
 For programming projects:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/task_snapshot.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_quality_gate.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_final_task_checks.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/legacy_commit_task_compatibility_wrapper.ps1 -Message "<message>" -Paths <explicit paths>
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/task_snapshot.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/run_final_task_checks.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/legacy_commit_task_compatibility_wrapper.ps1 -Message "<message>" -Paths <explicit paths>
 ```
 
 ## Version

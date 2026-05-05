@@ -1,0 +1,77 @@
+param(
+    [string[]]$Packs = @("generic"),
+    [string]$OutputPath = "AGENTS.md"
+)
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+$Root = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+. (Join-Path $Root "tools\text\utf8_file_helpers.ps1")
+
+$normalizedPacks = @()
+foreach ($pack in $Packs) {
+    $normalizedPacks += ($pack -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+}
+
+$lines = New-Object System.Collections.Generic.List[string]
+$lines.Add("# Agent Instructions") | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/AGENT-CONTRACT.json` first.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `DOCS.json` before reading, creating, renaming, or updating project documents. Use it to choose what to read and where to write new information.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Then read the active state file as the compact active project state. For code projects, use `STATE.json`; for non-code user-facing memory, use `STATE.md`.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/MEMORY-MODEL.json` for active state, branch-scoped state, plans, decisions, and context capsules.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Use `core/ACTIVATION-CHECK.json` after the first prompt handled under an installed pipeline to verify the rules are loaded.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Use `core/UPDATE-PROTOCOL.json` when the user asks to update, refresh, reinstall, or pull the latest pipeline.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Use `core/REMOVAL-PROTOCOL.json` when the user asks to remove, uninstall, delete, or disable the pipeline.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/PROMOTION-RULES.json` before moving work between memory layers.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/PROJECT-PROFILE.json` when `PIPELINE-CONFIG.json` contains `project_profile`.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/ROI-BIAS.json` before ranking recommendations, planning work, or reviewing tradeoffs.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Read `core/SCRIPT-FALLBACK.json` before bypassing any script that cannot run.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add('Use `core/CONTEXT-COMPACTION.json` during long or drift-prone sessions.') | Out-Null
+$lines.Add("") | Out-Null
+$lines.Add("## Active Project Packs") | Out-Null
+$lines.Add("") | Out-Null
+
+foreach ($pack in $normalizedPacks) {
+    $packPath = "project/$pack/PACK.json"
+    if (-not (Test-Path -LiteralPath (Join-Path $Root $packPath))) {
+        throw "Unknown or unavailable pack: $pack"
+    }
+
+    $lines.Add("- ``$packPath``") | Out-Null
+}
+
+if ($normalizedPacks -contains "code") {
+    $lines.Add("") | Out-Null
+    $lines.Add("## Code Project Reads") | Out-Null
+    $lines.Add("") | Out-Null
+    foreach ($path in @(
+        "project/code/WORKFLOW.json",
+        "project/code/BRANCH-MODE.json",
+        "project/code/COMMANDS.json",
+        "project/code/REGISTRIES.json",
+        "project/code/DDD-ADIV.json",
+        "project/code/GIT.json",
+        "project/code/FROZEN-LAYERS.json",
+        "project/code/INSTRUCTION-CAPTURE.json",
+        "project/code/DIAGNOSTICS.json"
+    )) {
+        $lines.Add("- ``$path``") | Out-Null
+    }
+}
+
+$output = Join-Path $Root $OutputPath
+Write-Utf8File -Path $output -Value ([string]::Join([Environment]::NewLine, $lines)) -NoNewline
+Write-Host "Compiled agent instructions: $OutputPath"

@@ -100,7 +100,7 @@
     "entry_name": "engineering.workflow.load_standards_before_code",
     "is_duplicate": true,
     "note": "Verification guard for changed-code tasks.",
-    "path": "tools/check_code_context_gate.ps1",
+    "path": "tools/codebase/check_code_context_gate.ps1",
     "selector": "script"
   },
   {
@@ -108,7 +108,7 @@
     "entry_name": "engineering.workflow.context_tags_before_response",
     "is_duplicate": true,
     "note": "Source pipeline helper for deriving context tags from user text.",
-    "path": "tools/context_tags.ps1",
+    "path": "tools/knowledge/context_tags.ps1",
     "selector": "script"
   },
   {
@@ -116,7 +116,7 @@
     "entry_name": "engineering.workflow.load_standards_before_code",
     "is_duplicate": true,
     "note": "Canonical helper for loading the code-task engineering context slice.",
-    "path": "tools/knowledge_code_context.ps1",
+    "path": "tools/knowledge/knowledge_code_context.ps1",
     "selector": "script"
   },
   {
@@ -124,7 +124,7 @@
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "is_duplicate": false,
     "note": "Knowledge SQLite and file fallback source freshness use the normalized hash policy.",
-    "path": "tools/knowledge_index.py",
+    "path": "tools/knowledge/knowledge_index.py",
     "selector": "normalized_hash_text"
   },
   {
@@ -132,7 +132,7 @@
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "is_duplicate": true,
     "note": "Compiled instruction source manifests and checksums use the same normalized hash policy.",
-    "path": "tools/rebuild_ai_compiled_context.ps1",
+    "path": "tools/pipeline/rebuild_ai_compiled_context.ps1",
     "selector": "ConvertTo-NormalizedHashText"
   }
 ]

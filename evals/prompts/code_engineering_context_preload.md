@@ -7,7 +7,7 @@ A user asks:
 The project has:
 
 ```text
-tools/knowledge_code_context.ps1
+tools/knowledge/knowledge_code_context.ps1
 AI-compiled/project/knowledge.sqlite
 AI-compiled/project/knowledge-files/
 context-docs/ENGINEERING.json

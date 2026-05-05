@@ -2,6 +2,12 @@
     "summary": "SocratexAI pipeline product changelog.",
     "entries": [
         {
+            "date": "2026-05-05",
+            "type": "feature",
+            "feature": "categorized_tool_scripts",
+            "change": "Moved source pipeline scripts from one flat tools directory into categorized tools/<category>/ folders and updated SCRIPTS.json, path references, templates, and compiled-context inputs to use the categorized paths. Why: the reusable pipeline should mirror the maintainable script ownership pattern already proven in Riftbound, while keeping a compact script index for agents."
+        },
+        {
             "version": "0.2.0-alpha",
             "date": "2026-05-05",
             "feature": "json_tool_hardening_and_document_tools",
@@ -41,13 +47,13 @@
             "version": "0.2.0-alpha",
             "date": "2026-05-02",
             "feature": "code_task_engineering_standards_preload",
-            "change": "Added code-task engineering standards preload as a source pipeline feature. Code workflow now requires agents to load compiled engineering, coding, and architecture rules before implementation, refactor, bugfix, or code review work, and tools/knowledge_code_context.ps1 provides a canonical wrapper with SQLite check, broad rule selection, optional named views, and JSON-file fallback support. Why: Professional code work should keep project architecture, ownership, readability, diagnostics, verification, and best-practice rules active in context instead of relying on visible chat memory."
+            "change": "Added code-task engineering standards preload as a source pipeline feature. Code workflow now requires agents to load compiled engineering, coding, and architecture rules before implementation, refactor, bugfix, or code review work, and tools/knowledge/knowledge_code_context.ps1 provides a canonical wrapper with SQLite check, broad rule selection, optional named views, and JSON-file fallback support. Why: Professional code work should keep project architecture, ownership, readability, diagnostics, verification, and best-practice rules active in context instead of relying on visible chat memory."
         },
         {
             "version": "0.2.0-alpha",
             "date": "2026-05-02",
             "feature": "code_task_engineering_context_loader",
-            "change": "Added tools/knowledge_code_context.ps1 as the canonical source-pipeline helper for loading code-task engineering standards. The helper checks compiled knowledge freshness, returns the engineering/coding/architecture rule slice, supports optional named views, keeps JSON output parseable, and falls back to compiled JSON knowledge files when SQLite select fails. Why: Code-quality preload should be a scriptable workflow primitive, not a long command agents must reconstruct from memory."
+            "change": "Added tools/knowledge/knowledge_code_context.ps1 as the canonical source-pipeline helper for loading code-task engineering standards. The helper checks compiled knowledge freshness, returns the engineering/coding/architecture rule slice, supports optional named views, keeps JSON output parseable, and falls back to compiled JSON knowledge files when SQLite select fails. Why: Code-quality preload should be a scriptable workflow primitive, not a long command agents must reconstruct from memory."
         },
         {
             "version": "0.2.0-alpha",
@@ -191,7 +197,7 @@
             "version": "0.2.0-alpha",
             "date": "2026-04-30",
             "feature": "generic_done_and_doctor_pipeline",
-            "change": "Added generic tools/finalize_task_check_commit_push.ps1, tools/check_toolchain_health.ps1, UTF-8 write helpers, and check_utf8_writes.ps1 to the source pipeline. Updated code workflow, Git rules, command docs, pack instructions, and agent contract so Git-backed code work closes through tools/finalize_task_check_commit_push.ps1 and repeatable finalizer failures are fixed in tooling. Updated pipeline_featurelist.json so reusable features are source-owned while project-specific helpers remain outside the reusable source pipeline. Why: Reusable pipeline improvements should live in SocratexPipeline, while only project/domain-specific domain-specific automation should remain in its owning project."
+            "change": "Added generic tools/repo/finalize_task_check_commit_push.ps1, tools/repo/check_toolchain_health.ps1, UTF-8 write helpers, and check_utf8_writes.ps1 to the source pipeline. Updated code workflow, Git rules, command docs, pack instructions, and agent contract so Git-backed code work closes through tools/repo/finalize_task_check_commit_push.ps1 and repeatable finalizer failures are fixed in tooling. Updated pipeline_featurelist.json so reusable features are source-owned while project-specific helpers remain outside the reusable source pipeline. Why: Reusable pipeline improvements should live in SocratexPipeline, while only project/domain-specific domain-specific automation should remain in its owning project."
         },
         {
             "version": "0.2.0-alpha",
@@ -251,7 +257,7 @@
             "version": "0.2.0-alpha",
             "date": "2026-05-02",
             "feature": "context_tagged_knowledge_prelude",
-            "change": "Added tools/context_tags.ps1 and a workflow rule requiring substantive commands and questions to derive prompt tags, query compiled knowledge notes, and load relevant context before answer or execution. Why: Compiled knowledge should actively route ordinary agent work instead of only serving broad startup or manual tag queries."
+            "change": "Added tools/knowledge/context_tags.ps1 and a workflow rule requiring substantive commands and questions to derive prompt tags, query compiled knowledge notes, and load relevant context before answer or execution. Why: Compiled knowledge should actively route ordinary agent work instead of only serving broad startup or manual tag queries."
         },
         {
             "version": "0.2.0-alpha",

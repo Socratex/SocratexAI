@@ -23,7 +23,7 @@
                     "subtype": "workflow_rule",
                     "title": "SQLite Knowledge Is Generated",
                     "summary": "The SQLite knowledge database is a compiled index, not a manually edited source of truth.",
-                    "rule": "Edit source documents first, then refresh `AI-compiled/project/knowledge.sqlite` with `tools/knowledge_compile.ps1` for a full rebuild or `tools/knowledge_upsert.ps1 -Path <document>` for a targeted document update.",
+                    "rule": "Edit source documents first, then refresh `AI-compiled/project/knowledge.sqlite` with `tools/knowledge/knowledge_compile.ps1` for a full rebuild or `tools/knowledge/knowledge_upsert.ps1 -Path <document>` for a targeted document update.",
                     "rationale": "This preserves readable source documents while giving agents fast tag, type, source, and startup-context queries.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -49,7 +49,7 @@
                     "subtype": "workflow_rule",
                     "title": "Query Context Through Named Views",
                     "summary": "Use named knowledge views for common context lanes before broader document reads.",
-                    "rule": "Prefer `tools/knowledge_select.ps1 -View <view_id>` for prepared context lanes such as `session_start`, `debugging`, `performance`, and `docs_workflow`; use tag/type/source queries when the task needs a narrower slice.",
+                    "rule": "Prefer `tools/knowledge/knowledge_select.ps1 -View <view_id>` for prepared context lanes such as `session_start`, `debugging`, `performance`, and `docs_workflow`; use tag/type/source queries when the task needs a narrower slice.",
                     "rationale": "Named views reduce context cost and make repeated agent startup/query behavior consistent across projects.",
                     "priority": "should",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -74,7 +74,7 @@
                     "subtype": "workflow_rule",
                     "title": "Context Tags Before Response",
                     "summary": "Commands and substantive questions should route through main workflow context, prompt-derived tags, and compiled notes before answer or execution.",
-                    "rule": "For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text with `tools/context_tags.ps1` when available, then query compiled notes with `tools/knowledge_select.ps1 -Tags <tags> -Match any` before answering or executing. Use tag-selected notes as routing and risk context; read exact source documents before edits, high-stakes claims, or ambiguity resolution.",
+                    "rule": "For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text with `tools/knowledge/context_tags.ps1` when available, then query compiled notes with `tools/knowledge/knowledge_select.ps1 -Tags <tags> -Match any` before answering or executing. Use tag-selected notes as routing and risk context; read exact source documents before edits, high-stakes claims, or ambiguity resolution.",
                     "rationale": "Prompt-derived tags make compiled knowledge useful beyond broad startup slices and reduce missed workflow, architecture, diagnostic, or documentation constraints.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -100,7 +100,7 @@
                             "note": "Code workflow defines the executable context-tag pass."
                         },
                         {
-                            "path": "tools/context_tags.ps1",
+                            "path": "tools/knowledge/context_tags.ps1",
                             "selector": "script",
                             "is_duplicate": true,
                             "note": "Source pipeline helper for deriving context tags from user text."
@@ -113,7 +113,7 @@
                     "subtype": "verification_rule",
                     "title": "Validate Source Hashes Before Trusting SQLite",
                     "summary": "A compiled knowledge database is trustworthy only when its tracked source hashes match current documents.",
-                    "rule": "Run `tools/knowledge_check.ps1` before relying on existing compiled knowledge; if stale documents are reported, refresh them with `tools/knowledge_upsert.ps1 -Path <document>` or rebuild with `tools/knowledge_compile.ps1`.",
+                    "rule": "Run `tools/knowledge/knowledge_check.ps1` before relying on existing compiled knowledge; if stale documents are reported, refresh them with `tools/knowledge/knowledge_upsert.ps1 -Path <document>` or rebuild with `tools/knowledge/knowledge_compile.ps1`.",
                     "rationale": "Hash checks prevent agents from reading stale compiled knowledge after source documents change.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -138,7 +138,7 @@
                     "subtype": "workflow_rule",
                     "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
                     "summary": "The JSON table fallback mirrors the core SQLite table model but intentionally omits named views.",
-                    "rule": "If SQLite cannot be used, read compiled knowledge from `AI-compiled/project/knowledge-files/` with `tools/knowledge_file_select.ps1`; query by tags, type, source path, document path, entry name, or startup flag instead of named views.",
+                    "rule": "If SQLite cannot be used, read compiled knowledge from `AI-compiled/project/knowledge-files/` with `tools/knowledge/knowledge_file_select.ps1`; query by tags, type, source path, document path, entry name, or startup flag instead of named views.",
                     "rationale": "Some hosts may not allow SQLite writes or may lock the database file, but agents still need a compact compiled knowledge layer.",
                     "priority": "should",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -164,7 +164,7 @@
                     "subtype": "workflow_rule",
                     "title": "Load Engineering Standards Before Code Work",
                     "summary": "Any code-touching task must load the full compiled code-guidance set before source edits.",
-                    "rule": "For implementation, refactor, bugfix, code review, or any task that may touch source code, run `tools/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. The loaded base set must include engineering, coding, architecture, best practices, borrowed-before-bespoke, production-grade software engineering, DDD-ADIV, future-first, data-first ownership, runtime boundaries, diagnostics, performance, and verification rules. Additional task views may be added, but they must not replace the full base set. `tools/check_task.ps1` should fail changed-code checks when the fresh `ignored/code_context_gate.json` marker from that helper is missing, loaded for another HEAD, or incomplete.",
+                    "rule": "For implementation, refactor, bugfix, code review, or any task that may touch source code, run `tools/knowledge/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. The loaded base set must include engineering, coding, architecture, best practices, borrowed-before-bespoke, production-grade software engineering, DDD-ADIV, future-first, data-first ownership, runtime boundaries, diagnostics, performance, and verification rules. Additional task views may be added, but they must not replace the full base set. `tools/repo/check_task.ps1` should fail changed-code checks when the fresh `ignored/code_context_gate.json` marker from that helper is missing, loaded for another HEAD, or incomplete.",
                     "rationale": "Professional code quality depends on keeping the complete active project engineering standard in context every time, not on a narrow subset or visible-chat memory.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -195,12 +195,12 @@
                             "note": "Script-first workflow repeats the preferred query command."
                         },
                         {
-                            "path": "tools/knowledge_code_context.ps1",
+                            "path": "tools/knowledge/knowledge_code_context.ps1",
                             "selector": "script",
                             "note": "Canonical helper for loading the code-task engineering context slice."
                         },
                         {
-                            "path": "tools/check_code_context_gate.ps1",
+                            "path": "tools/codebase/check_code_context_gate.ps1",
                             "selector": "script",
                             "note": "Verification guard for changed-code tasks."
                         }
@@ -228,12 +228,12 @@
                     ],
                     "source_refs": [
                         {
-                            "path": "tools/knowledge_index.py",
+                            "path": "tools/knowledge/knowledge_index.py",
                             "selector": "normalized_hash_text",
                             "note": "Knowledge SQLite and file fallback source freshness use the normalized hash policy."
                         },
                         {
-                            "path": "tools/rebuild_ai_compiled_context.ps1",
+                            "path": "tools/pipeline/rebuild_ai_compiled_context.ps1",
                             "selector": "ConvertTo-NormalizedHashText",
                             "note": "Compiled instruction source manifests and checksums use the same normalized hash policy."
                         }

@@ -33,12 +33,12 @@
         "command": {
             "title": "Command",
             "format": "markdown-section",
-            "body": "## Command\n\nPrefer:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .\n```\n\nUse `-DryRun` first when the user asks what would be removed.\n\nUse `-RestoreOldDirectives` when existing directive snapshots such as `AGENTS.md.old` should be restored.\n\nUse `-RemoveLocalWorkingFiles` only when the user explicitly wants branch-scoped local working memory removed too.\n"
+            "body": "## Command\n\nPrefer:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/remove_pipeline.ps1 -TargetPath .\n```\n\nUse `-DryRun` first when the user asks what would be removed.\n\nUse `-RestoreOldDirectives` when existing directive snapshots such as `AGENTS.md.old` should be restored.\n\nUse `-RemoveLocalWorkingFiles` only when the user explicitly wants branch-scoped local working memory removed too.\n"
         },
         "workflow": {
             "title": "Workflow",
             "format": "markdown-section",
-            "body": "## Workflow\n\n1. Read root `SOCRATEX.md`.\n2. Read installed pipeline config when available.\n3. Explain that removal will use `SocratexAI/tools/remove_pipeline.ps1`.\n4. Run a dry run if the request is ambiguous or high-risk.\n5. Run the remover script.\n6. Report removed paths, preserved paths, restored directives, and any manual cleanup still needed.\n"
+            "body": "## Workflow\n\n1. Read root `SOCRATEX.md`.\n2. Read installed pipeline config when available.\n3. Explain that removal will use `SocratexAI/tools/pipeline/remove_pipeline.ps1`.\n4. Run a dry run if the request is ambiguous or high-risk.\n5. Run the remover script.\n6. Report removed paths, preserved paths, restored directives, and any manual cleanup still needed.\n"
         },
         "default_preservation": {
             "title": "Default Preservation",

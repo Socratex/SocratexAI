@@ -43,7 +43,7 @@
         "staging_rules": {
             "title": "Staging Rules",
             "format": "markdown-section",
-            "body": "## Staging Rules\n\n- Prefer `tools/finalize_task_check_commit_push.ps1 -Message \"<message>\"` for task closure.\n- Let `tools/finalize_task_check_commit_push.ps1` discover changed files from git, run the batch finalizer with quality, stage intentional non-local-artifact changes, verify, commit, and push.\n- Stage only explicit paths when using lower-level manual git commands.\n- Do not stage generated artifacts unless intentionally part of the change.\n- Do not stage unrelated formatting churn.\n- Inspect `git status` before staging.\n- Prefer path-bounded helper scripts over broad `git add .`.\n"
+            "body": "## Staging Rules\n\n- Prefer `tools/repo/finalize_task_check_commit_push.ps1 -Message \"<message>\"` for task closure.\n- Let `tools/repo/finalize_task_check_commit_push.ps1` discover changed files from git, run the batch finalizer with quality, stage intentional non-local-artifact changes, verify, commit, and push.\n- Stage only explicit paths when using lower-level manual git commands.\n- Do not stage generated artifacts unless intentionally part of the change.\n- Do not stage unrelated formatting churn.\n- Inspect `git status` before staging.\n- Prefer path-bounded helper scripts over broad `git add .`.\n"
         },
         "commit_rules": {
             "title": "Commit Rules",

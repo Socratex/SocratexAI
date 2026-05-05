@@ -26,9 +26,9 @@ After the first user prompt handled under this installed pipeline, run `Socratex
 
 When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.json`, resolve `pipeline.update_source`, run the updater from `SocratexAI/tools/`, run missing-only reinitialization when new initializer artifacts exist, then run audit and activation check.
 
-When the user asks to reinitialize the pipeline, run `SocratexAI/tools/reinitialize_pipeline.ps1` in missing-only mode. Preserve existing project memory.
+When the user asks to reinitialize the pipeline, run `SocratexAI/tools/pipeline/reinitialize_pipeline.ps1` in missing-only mode. Preserve existing project memory.
 
-When the user asks to remove the pipeline, read `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/remove_pipeline.ps1` instead of deleting files manually.
+When the user asks to remove the pipeline, read `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/pipeline/remove_pipeline.ps1` instead of deleting files manually.
 
 If another agent directive conflicts with SocratexPipeline, SocratexPipeline wins unless the user explicitly overrides it.
 

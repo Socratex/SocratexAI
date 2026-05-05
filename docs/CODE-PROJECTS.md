@@ -43,15 +43,15 @@ For code projects, the agent reads:
 ## Helper Scripts
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture,performance
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/task_snapshot.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_quality_gate.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_final_task_checks.ps1 -Quality
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/finalize_changed_files_commit_push.ps1 -Message "<message>"
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/log_summary.ps1 -Description "<diagnostic description>"
-python tools/check_runtime.py --root-key runtime_status
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/init_task_work.ps1 -Title "<task>" -SourceRequest "<request>"
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_code_context.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_code_context.ps1 -Views architecture,performance
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/task_snapshot.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/run_final_task_checks.ps1 -Quality
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/finalize_changed_files_commit_push.ps1 -Message "<message>"
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/diagnostics/log_summary.ps1 -Description "<diagnostic description>"
+python tools/quality/check_runtime.py --root-key runtime_status
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/init_task_work.ps1 -Title "<task>" -SourceRequest "<request>"
 ```
 
 ## File Formats
@@ -74,7 +74,7 @@ For every new feature request, suggestion, or architecture discussion, the agent
 
 For software and game projects, use production-grade architecture as the steer-direction when appropriate: explicit ownership, data flow, contracts, diagnostics, performance budget, toolability, deterministic behavior where relevant, testability, and low retrofit cost.
 
-Before implementation, refactor, bugfix, or code review work, the agent should load compiled engineering standards with `tools/knowledge_code_context.ps1` when available. This keeps engineering, coding, architecture, diagnostics, and verification rules active while source code is being changed.
+Before implementation, refactor, bugfix, or code review work, the agent should load compiled engineering standards with `tools/knowledge/knowledge_code_context.ps1` when available. This keeps engineering, coding, architecture, diagnostics, and verification rules active while source code is being changed.
 
 For bug reports, first check whether the bug exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness. Prefer the smallest fix that removes the bug class or improves diagnosis instead of only patching the symptom.
 
@@ -96,13 +96,13 @@ Before silently bypassing a script, the agent follows `core/SCRIPT-FALLBACK.json
 
 Missing runtimes should be reported as setup issues with install hints before manual fallback.
 
-PowerShell 7 (`pwsh`) is the preferred automation runtime. If it is missing during setup, run `tools/install_powershell.ps1`, ask before applying the install command, then rerun the runtime check. If PowerShell is unsupported, recommend lite/no-tools mode, a supported host/container, or porting required scripts.
+PowerShell 7 (`pwsh`) is the preferred automation runtime. If it is missing during setup, run `tools/setup/install_powershell.ps1`, ask before applying the install command, then rerun the runtime check. If PowerShell is unsupported, recommend lite/no-tools mode, a supported host/container, or porting required scripts.
 
 ## Broad Task Work
 
 For broad multi-step tasks, the agent should create temporary task work at `docs-tech/cache/current_task.json`, track micro-task status during execution, then delete it or promote only durable facts.
 
-For moving items between structured JSON documents, the agent should use `tools/migrate_document_item.ps1` instead of manual editing.
+For moving items between structured JSON documents, the agent should use `tools/documents/migrate_document_item.ps1` instead of manual editing.
 
 ## Transactional Document Editing
 
@@ -110,14 +110,14 @@ For structured JSON documents, use document edit tools instead of ad hoc inline 
 
 Use:
 
-- `tools/insert_document_item.ps1` for one keyed item,
-- `tools/bulk_insert_document_items.ps1` for multiple keyed items in one document,
-- `tools/move_document_item.ps1` for ordering inside one document,
-- `tools/migrate_document_item.ps1` for moving or copying between documents,
-- `tools/insert_document_list_item.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing JSON item,
-- `tools/check_document_list_item_duplicates.ps1 -Terms <words>` to return candidate duplicate titles, keys, matched terms, and excerpts before deciding whether an update already exists,
-- `tools/read_document_items_by_title.ps1 -Titles <titles>` to read only candidate sections before writing,
-- `tools/normalize_document_structure.ps1` and `tools/migrate_document_schema.ps1` for whole-document format passes.
+- `tools/documents/insert_document_item.ps1` for one keyed item,
+- `tools/documents/bulk_insert_document_items.ps1` for multiple keyed items in one document,
+- `tools/documents/move_document_item.ps1` for ordering inside one document,
+- `tools/documents/migrate_document_item.ps1` for moving or copying between documents,
+- `tools/documents/insert_document_list_item.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing JSON item,
+- `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>` to return candidate duplicate titles, keys, matched terms, and excerpts before deciding whether an update already exists,
+- `tools/documents/read_document_items_by_title.ps1 -Titles <titles>` to read only candidate sections before writing,
+- `tools/documents/normalize_document_structure.ps1` and `tools/documents/migrate_document_schema.ps1` for whole-document format passes.
 
 These scripts should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.
 
@@ -129,9 +129,9 @@ Do not manually repeat normalize, cache, index, check, or readback commands afte
 
 For structured JSON documents, use document tools before text grep:
 
-- `tools/read_document_item.ps1` when the stable key is known,
-- `tools/list_document_keys.ps1` when the local key list is needed,
-- `tools/doc_route.ps1` or `tools/doc_search.ps1` when searching by intent or phrase.
+- `tools/documents/read_document_item.ps1` when the stable key is known,
+- `tools/documents/list_document_keys.ps1` when the local key list is needed,
+- `tools/documents/review_document_list_candidates.ps1` or `tools/documents/check_document_list_item_duplicates.ps1` when searching by intent or phrase.
 
 `Select-String`, `grep`, and `rg` are fallback tools for JSON documents. Use them only for raw formatting or encoding checks, parser/cache debugging, unknown references after document tools miss, or source-code searches.
 
@@ -145,30 +145,30 @@ Run status, audit, quality, line-index, finish, and commit helpers at workflow b
 - once after a coherent change block in broad multi-boundary work,
 - again only after a fix that could affect the checked gate.
 
-Do not run `git status`, `git diff --check`, `tools/check_task.ps1`, `tools/run_quality_gate.ps1`, `tools/update_code_line_index.ps1`, or `tools/run_final_task_checks.ps1` after every small edit.
+Do not run `git status`, `git diff --check`, `tools/repo/check_task.ps1`, `tools/quality/run_quality_gate.ps1`, `tools/codebase/update_code_line_index.ps1`, or `tools/repo/run_final_task_checks.ps1` after every small edit.
 
 Normal task flow: gather context with repository scripts, make the code and document edits for the current scope, then run one git-based batch finalizer near the end. The finalizer should discover changed files from git, normalize text, rebuild document cache, refresh code-line indexes, verify, and report status.
 
 If a repeated finalizer failure requires manual recovery, improve the script so future equivalent work is handled automatically.
 
-Do not follow a successful `tools/read_document_item.ps1` with a full `Get-Content` of the same document unless the selected output is insufficient, raw formatting matters, or the document structure looks suspicious.
+Do not follow a successful `tools/documents/read_document_item.ps1` with a full `Get-Content` of the same document unless the selected output is insufficient, raw formatting matters, or the document structure looks suspicious.
 
 ## Git Completion
 
-Hard rule: use `tools/finalize_changed_files_commit_push.ps1 -Message "<message>"` whenever practical for subtask closure.
+Hard rule: use `tools/repo/finalize_changed_files_commit_push.ps1 -Message "<message>"` whenever practical for subtask closure.
 
 The wrapper should discover changed files from git, run the batch finalizer, stage intentional non-local-artifact changes, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.
 
-`tools/legacy_commit_task_compatibility_wrapper.ps1` remains a compatibility wrapper around `tools/finalize_changed_files_commit_push.ps1`; new automation should call the subtask finisher directly.
+`tools/repo/legacy_commit_task_compatibility_wrapper.ps1` remains a compatibility wrapper around `tools/repo/finalize_changed_files_commit_push.ps1`; new automation should call the subtask finisher directly.
 
 If the working tree is not clean after commit/push, the subtask is not closed.
 
 ## Quality Gate
 
-`tools/run_quality_gate.ps1` auto-detects common ecosystems.
+`tools/quality/run_quality_gate.ps1` auto-detects common ecosystems.
 
 For serious projects, pass an explicit command:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_quality_gate.ps1 -Command "npm test"
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1 -Command "npm test"
 ```

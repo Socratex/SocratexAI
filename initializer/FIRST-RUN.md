@@ -55,9 +55,9 @@ If the context is programming, also ask:
    - team size: solo / small / medium / large
    - velocity expectation: experimental / iterating / shipping / maintenance
    - highest current pain
-   - stack tags, suggested from `tools/detect_project_stack.ps1` when practical
-18. Run `tools/check_runtime.py` when practical and record runtime availability.
-   - If PowerShell 7 (`pwsh`) is missing, run `tools/install_powershell.ps1` to produce an install plan.
+   - stack tags, suggested from `tools/setup/detect_project_stack.ps1` when practical
+18. Run `tools/quality/check_runtime.py` when practical and record runtime availability.
+   - If PowerShell 7 (`pwsh`) is missing, run `tools/setup/install_powershell.ps1` to produce an install plan.
    - Ask for explicit user approval before installing with `-Apply`.
    - If PowerShell is unsupported, recommend lite/no-tools mode, a supported host/container, or porting required scripts.
 19. Which branch workflow mode should this project use?
@@ -85,8 +85,8 @@ After receiving answers:
 10. Create `PIPELINE-CONFIG.json` with selected packs, language, operating mode, Git preference, and first-session success criteria.
 11. Create `PIPELINE-CONFIG.json`; for code projects include `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
 12. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
-13. Compile project-local agent instructions with `tools/generate_installed_agent_instructions.ps1` when practical.
-14. Run `tools/audit_docs.ps1 -Initialized` for initialized projects when practical.
+13. Compile project-local agent instructions with `tools/pipeline/generate_installed_agent_instructions.ps1` when practical.
+14. Run `tools/documents/audit_docs.ps1 -Initialized` for initialized projects when practical.
 15. Activate the initialized pipeline for the current and future sessions.
 16. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
 17. For code projects, include the three most relevant known-solution families for the project profile and ROI Picks for the first useful work pass.

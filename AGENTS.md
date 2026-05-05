@@ -1,6 +1,6 @@
 # SocratexPipeline Agent Entry
 
-Read `AI-compiled/codex/ENTRYPOINT.md` first when it exists. Treat `AI-compiled/` as generated read-optimized context; edit source instructions, then run `tools/rebuild_ai_compiled_context.ps1`.
+Read `AI-compiled/codex/ENTRYPOINT.md` first when it exists. Treat `AI-compiled/` as generated read-optimized context; edit source instructions, then run `tools/pipeline/rebuild_ai_compiled_context.ps1`.
 
 For source-pipeline work, load `docs-tech/PIPELINE-BOOTSTRAP.json` at the start of every substantive prompt. Use `DOCS.json`, `WORKFLOW.json`, `COMMANDS.json`, `FLOWS.json`, and `SCRIPTS.json` as the always-available routing indexes before selecting detailed reads or scripts. In default context, `COMMANDS.json` and `SCRIPTS.json` mean index-only name lists; read their content only when exact command or script metadata is explicitly needed.
 
@@ -39,4 +39,4 @@ For code projects, also read:
 
 Adapter-specific files under `adapters/` are intentionally thin pointers. The shared contract in `core/AGENT-CONTRACT.json` is the source of truth.
 
-For any task that may touch source code, run `tools/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. Treat additional named views as additive only; `tools/check_task.ps1` enforces the fresh full-guidance marker for changed-code tasks.
+For any task that may touch source code, run `tools/knowledge/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. Treat additional named views as additive only; `tools/repo/check_task.ps1` enforces the fresh full-guidance marker for changed-code tasks.

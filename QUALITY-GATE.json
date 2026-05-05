@@ -7,19 +7,19 @@
         },
         "audit_docs": {
             "description": "Run SocratexPipeline document audit.",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1"
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
         },
         "eval_framework": {
             "description": "Check manual eval framework structure and internal links.",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_evals.ps1"
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/check_evals.ps1"
         },
         "transactional_doc_tools": {
             "description": "Check transactional document edit tools in dry-check mode.",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/normalize_document_structure.ps1 -Check -Paths project/code/WORKFLOW.json; powershell -NoProfile -ExecutionPolicy Bypass -File tools/migrate_document_schema.ps1 -Check -Paths project/code/WORKFLOW.json"
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/normalize_document_structure.ps1 -Check -Paths project/code/WORKFLOW.json; powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/migrate_document_schema.ps1 -Check -Paths project/code/WORKFLOW.json"
         },
         "init_dry_run": {
             "description": "Smoke-test code project initialization without writing files.",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/Initialize-SocratexPipeline.ps1 -ProjectName 'Demo Project' -Language 'English' -AiMode Enterprise -KeepPacks code -CreateFiles -CompileAgent -RunAudit -DryRun"
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/Initialize-SocratexPipeline.ps1 -ProjectName 'Demo Project' -Language 'English' -AiMode Enterprise -KeepPacks code -CreateFiles -CompileAgent -RunAudit -DryRun"
         }
     },
     "notes": [

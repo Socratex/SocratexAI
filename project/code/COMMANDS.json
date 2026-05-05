@@ -67,17 +67,17 @@
         "audit": {
             "title": "AUDIT",
             "format": "markdown-section",
-            "body": "## AUDIT\n\nRun the code-project document consistency audit.\n\nDefault command:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1\n```\n\nUse `-Strict` when warnings should fail the audit.\n\nUse `-Initialized` after first-run setup.\n"
+            "body": "## AUDIT\n\nRun the code-project document consistency audit.\n\nDefault command:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1\n```\n\nUse `-Strict` when warnings should fail the audit.\n\nUse `-Initialized` after first-run setup.\n"
         },
         "finish": {
             "title": "FINISH",
             "format": "markdown-section",
-            "body": "## FINISH\n\nClose the current programming task.\n\nOrder:\n\n1. Run the strongest practical quality gate.\n2. Run `tools/audit_docs.ps1` when project memory changed.\n3. Update `STATE.json`.\n4. Update `_PLAN.json` if passes were completed or reshaped.\n5. Update `CHANGELOG.json` for shipped behavior or major fixes when `changelog.enabled` is not `no`.\n6. Report changed files and unverified areas.\n7. Include ROI Picks when follow-up recommendations remain.\n\nDefault helper:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/finalize_task_check_commit_push.ps1 -Message \"<message>\"\n```\n\nUse lower-level `tools/run_final_task_checks.ps1` only for no-commit checks or when debugging the finalizer.\n"
+            "body": "## FINISH\n\nClose the current programming task.\n\nOrder:\n\n1. Run the strongest practical quality gate.\n2. Run `tools/documents/audit_docs.ps1` when project memory changed.\n3. Update `STATE.json`.\n4. Update `_PLAN.json` if passes were completed or reshaped.\n5. Update `CHANGELOG.json` for shipped behavior or major fixes when `changelog.enabled` is not `no`.\n6. Report changed files and unverified areas.\n7. Include ROI Picks when follow-up recommendations remain.\n\nDefault helper:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/finalize_task_check_commit_push.ps1 -Message \"<message>\"\n```\n\nUse lower-level `tools/repo/run_final_task_checks.ps1` only for no-commit checks or when debugging the finalizer.\n"
         },
         "commit": {
             "title": "COMMIT",
             "format": "markdown-section",
-            "body": "## COMMIT\n\nCreate a bounded source-control commit when the project uses Git.\n\nRules:\n\n- prefer the git-based subtask finisher,\n- let the finisher discover changed files from git and run the batch finalizer,\n- avoid generated or temporary files unless intentionally part of the change,\n- do not commit unrelated user changes,\n- mention skipped verification.\n\nDefault helper:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/finalize_task_check_commit_push.ps1 -Message \"<message>\"\n```\n"
+            "body": "## COMMIT\n\nCreate a bounded source-control commit when the project uses Git.\n\nRules:\n\n- prefer the git-based subtask finisher,\n- let the finisher discover changed files from git and run the batch finalizer,\n- avoid generated or temporary files unless intentionally part of the change,\n- do not commit unrelated user changes,\n- mention skipped verification.\n\nDefault helper:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/finalize_task_check_commit_push.ps1 -Message \"<message>\"\n```\n"
         },
         "log": {
             "title": "LOG",
@@ -87,7 +87,7 @@
         "diagnostics": {
             "title": "DIAGNOSTICS",
             "format": "markdown-section",
-            "body": "## DIAGNOSTICS\n\nAnalyze diagnostic evidence from `logs/` or a supplied file.\n\nOrder:\n\n1. Read `project/code/DIAGNOSTICS.json`.\n2. Ensure root-level `logs/` exists if diagnostics will be collected.\n3. Run `tools/log_summary.ps1 -Description \"<description>\"` when practical.\n4. Inspect the freshest relevant evidence.\n5. Identify the smallest source-owned fix or the smallest useful diagnostic addition.\n6. Run the relevant quality gate.\n7. Update `BUGS.json`, `ISSUES.json`, `STATE.json`, or `context-docs/TECHNICAL.json` only when current truth changed.\n"
+            "body": "## DIAGNOSTICS\n\nAnalyze diagnostic evidence from `logs/` or a supplied file.\n\nOrder:\n\n1. Read `project/code/DIAGNOSTICS.json`.\n2. Ensure root-level `logs/` exists if diagnostics will be collected.\n3. Run `tools/diagnostics/log_summary.ps1 -Description \"<description>\"` when practical.\n4. Inspect the freshest relevant evidence.\n5. Identify the smallest source-owned fix or the smallest useful diagnostic addition.\n6. Run the relevant quality gate.\n7. Update `BUGS.json`, `ISSUES.json`, `STATE.json`, or `context-docs/TECHNICAL.json` only when current truth changed.\n"
         },
         "prompt": {
             "title": "PROMPT",

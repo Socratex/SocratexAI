@@ -1,7 +1,7 @@
 {
     "schema":  "socratex-compiled-agent-index/v1",
     "role":  "generated_agent_cache",
-    "generated_at":  "source-7904821fd5f8",
+    "generated_at":  "source-283e56270ce2",
     "do_not_edit_manually":  true,
     "targets":  [
                     "codex"
@@ -9,6 +9,6 @@
     "entrypoints":  {
                         "codex":  "codex/ENTRYPOINT.md"
                     },
-    "recompile_command":  "powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1",
-    "check_command":  "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_ai_compiled_context.ps1"
+    "recompile_command":  "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/rebuild_ai_compiled_context.ps1",
+    "check_command":  "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1"
 }

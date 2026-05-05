@@ -90,7 +90,7 @@ For programming context, ask these questions before programming operation questi
    - `shipping`
    - `maintenance`
 9. Highest current pain: free text.
-10. Stack tags: auto-suggest using `tools/detect_project_stack.ps1` when possible, then ask the user to verify or edit the list.
+10. Stack tags: auto-suggest using `tools/setup/detect_project_stack.ps1` when possible, then ask the user to verify or edit the list.
 
 Store answers in `PIPELINE-CONFIG.json` under `project_profile`.
 
@@ -101,7 +101,7 @@ After the profile interview, list the three most relevant known-solution familie
 After Project Profile Interview and before programming questions, run the runtime check when tools are available:
 
 ```powershell
-python tools/check_runtime.py --root-key runtime_status
+python tools/quality/check_runtime.py --root-key runtime_status
 ```
 
 Report missing runtimes or libraries.
@@ -110,9 +110,9 @@ If something is missing, follow `core/SCRIPT-FALLBACK.json`: propose installing 
 
 If PowerShell 7 (`pwsh`) is missing, treat it as the first setup improvement:
 
-1. Run `tools/install_powershell.ps1` when PowerShell-compatible shell execution is available.
+1. Run `tools/setup/install_powershell.ps1` when PowerShell-compatible shell execution is available.
 2. Present the detected install command and ask for explicit approval before using `-Apply`.
-3. After installation, rerun `tools/check_runtime.py --root-key runtime_status`.
+3. After installation, rerun `tools/quality/check_runtime.py --root-key runtime_status`.
 4. If the platform cannot support PowerShell, recommend one of:
    - use lite/no-tools mode,
    - run SocratexAI from a supported host or container,
@@ -191,7 +191,7 @@ For programming projects:
 
 Installed projects also receive `WORKFLOW.json` and `team/*.json` role lenses. These are not default context for every prompt. Use `WORKFLOW.json` when priority steering or broad project-risk judgment matters, and load a `team/` role only when the user asks for that lens or workflow routes the task to it.
 
-Source pipeline repositories may include `AI-compiled/`, a generated agent-readable instruction cache. Treat it as read-only generated context. If source instructions change, run `tools/rebuild_ai_compiled_context.ps1`.
+Source pipeline repositories may include `AI-compiled/`, a generated agent-readable instruction cache. Treat it as read-only generated context. If source instructions change, run `tools/pipeline/rebuild_ai_compiled_context.ps1`.
 13. End with first useful work pass recommendations and ROI Picks.
 
 For non-programming projects:
@@ -227,17 +227,17 @@ Report this handoff explicitly:
 
 Use these tools when available:
 
-- `tools/update_pipeline_from_link.ps1`: update a user's project from the latest public pipeline source.
-- `tools/reinitialize_pipeline.ps1`: add newly introduced initialized artifacts without overwriting existing project memory.
-- `tools/upgrade_from_riftbound.ps1`: maintainer-only upgrade from the active reference source pipeline.
-- `tools/migrate_ai_pipeline.ps1`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
+- `tools/pipeline/update_pipeline_from_link.ps1`: update a user's project from the latest public pipeline source.
+- `tools/pipeline/reinitialize_pipeline.ps1`: add newly introduced initialized artifacts without overwriting existing project memory.
+- `tools/pipeline/upgrade_from_riftbound.ps1`: maintainer-only upgrade from the active reference source pipeline.
+- `tools/pipeline/migrate_ai_pipeline.ps1`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
 
 When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.json`.
 
 The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user.
 
-If the updated pipeline includes initializer artifacts missing from the installed project, run `tools/reinitialize_pipeline.ps1` in missing-only mode after update.
+If the updated pipeline includes initializer artifacts missing from the installed project, run `tools/pipeline/reinitialize_pipeline.ps1` in missing-only mode after update.
 
 If no source is configured, ask for the URL or local source path before changing files.
 
-When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.json` and run `tools/remove_pipeline.ps1` from the installed `SocratexAI/tools/` directory.
+When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.json` and run `tools/pipeline/remove_pipeline.ps1` from the installed `SocratexAI/tools/` directory.

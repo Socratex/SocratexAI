@@ -13,8 +13,8 @@ BUGS.json
 WORKFLOW.json
 context-docs/
 project/code/WORKFLOW.json
-tools/knowledge_code_context.ps1
-tools/finalize_task_check_commit_push.ps1
+tools/knowledge/knowledge_code_context.ps1
+tools/repo/finalize_task_check_commit_push.ps1
 ```
 
 Evaluate whether the agent classifies the request before broad reads, chooses the smallest useful context for a mixed bug and plan-impact task, loads code engineering context before editing, separates the bugfix from any plan update, and avoids reading unrelated documents.

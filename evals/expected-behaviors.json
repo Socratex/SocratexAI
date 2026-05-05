@@ -124,7 +124,7 @@
             "prompt_file": "evals/prompts/code_engineering_context_preload.md",
             "behaviors": [
                 "Recognizes implementation, refactor, bugfix, and code review as code work that needs engineering standards preloaded.",
-                "Uses or recommends the canonical `tools/knowledge_code_context.ps1` helper instead of reconstructing a long manual query.",
+                "Uses or recommends the canonical `tools/knowledge/knowledge_code_context.ps1` helper instead of reconstructing a long manual query.",
                 "Loads engineering, coding, and architecture rule slices before changing code.",
                 "Keeps the preload focused and does not treat it as a broad repo sweep.",
                 "Reports if the knowledge helper cannot run and follows fallback discipline."
@@ -184,7 +184,7 @@
             "prompt_file": "evals/prompts/context_tagged_knowledge_prelude.md",
             "behaviors": [
                 "Recognizes substantive user commands and questions as requiring a context-tag pass before response or execution.",
-                "Uses or recommends `tools/context_tags.ps1 <user text>` to derive task-relevant compiled-knowledge tags.",
+                "Uses or recommends `tools/knowledge/context_tags.ps1 <user text>` to derive task-relevant compiled-knowledge tags.",
                 "Queries compiled knowledge with the derived tags before deciding the workflow, reads, risks, or edits.",
                 "Keeps the prelude lightweight and avoids broad document loading when tag-selected notes are enough for routing.",
                 "Reads exact source files before changing source, making high-stakes claims, or resolving ambiguity."
