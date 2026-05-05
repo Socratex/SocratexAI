@@ -24,7 +24,7 @@
         },
         "pipeline_bootstrap_directive": {
             "title": "Pipeline Bootstrap Directive",
-            "rule": "At the start of every source-pipeline prompt, load the compact indexes for DOCS.json, WORKFLOW.json, COMMANDS.json, FLOWS.json, and SCRIPTS.json before selecting reads, tools, or execution order."
+            "rule": "At the start of every source-pipeline prompt, load the compact indexes for DOCS.json, WORKFLOW.json, COMMANDS.json, FLOWS.json, and SCRIPTS.json before selecting reads, tools, or execution order. COMMANDS.json and SCRIPTS.json must be loaded into default context as index-only name lists; read their content only when a specific command or script needs exact metadata."
         },
         "json_source_contract": {
             "title": "JSON Source Contract",

@@ -2,7 +2,7 @@
 
 Read `AI-compiled/codex/ENTRYPOINT.md` first when it exists. Treat `AI-compiled/` as generated read-optimized context; edit source instructions, then run `tools/recompile_ai_instructions.ps1`.
 
-For source-pipeline work, load `docs-tech/PIPELINE-BOOTSTRAP.json` at the start of every substantive prompt. Use `DOCS.json`, `WORKFLOW.json`, `COMMANDS.json`, `FLOWS.json`, and `SCRIPTS.json` as the always-available routing indexes before selecting detailed reads or scripts.
+For source-pipeline work, load `docs-tech/PIPELINE-BOOTSTRAP.json` at the start of every substantive prompt. Use `DOCS.json`, `WORKFLOW.json`, `COMMANDS.json`, `FLOWS.json`, and `SCRIPTS.json` as the always-available routing indexes before selecting detailed reads or scripts. In default context, `COMMANDS.json` and `SCRIPTS.json` mean index-only name lists; read their content only when exact command or script metadata is explicitly needed.
 
 Read `core/AGENT-CONTRACT.json` when source-level detail or edits are needed.
 

@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-d0f1833c482c
+Generated: source-6fde61a99447
 
 ## Source of Truth
 
@@ -107,6 +107,7 @@ Generated: source-d0f1833c482c
         "private_working_memory_cache_boundary",
         "json_contract_source_pipeline",
         "source_pipeline_bootstrap_index",
+        "index_only_command_script_context",
         "root_command_flow_script_catalogs",
         "generic_programming_default_pack",
         "explicit_gamedev_project_pack",

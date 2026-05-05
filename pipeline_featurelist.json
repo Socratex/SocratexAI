@@ -65,6 +65,7 @@
         "private_working_memory_cache_boundary",
         "json_contract_source_pipeline",
         "source_pipeline_bootstrap_index",
+        "index_only_command_script_context",
         "root_command_flow_script_catalogs",
         "generic_programming_default_pack",
         "explicit_gamedev_project_pack",

@@ -24,7 +24,7 @@
         },
         "COMMANDS.json": {
             "role": "Root command keyword index.",
-            "read": "when a prompt matches a command keyword"
+            "read": "index only in default context; read content only for exact metadata about a matched command"
         },
         "FLOWS.json": {
             "role": "Root ordered execution flows.",
@@ -32,7 +32,7 @@
         },
         "SCRIPTS.json": {
             "role": "Root script availability index.",
-            "read": "before manual repeatable work"
+            "read": "index only in default context; read content only for exact metadata about a specific script"
         },
         "pipeline_featurelist.json": {
             "role": "Canonical source-pipeline feature manifest.",

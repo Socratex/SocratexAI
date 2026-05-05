@@ -1675,16 +1675,28 @@
         "documents"
       ],
       "keys": {
-        "schema_version": {
-          "path": "schema_version",
-          "title": "schema_version",
-          "ref": "schema_version",
+        "path": {
+          "path": "items.path",
+          "title": "",
+          "ref": "items.path",
           "status": ""
         },
-        "documents": {
-          "path": "documents",
-          "title": "documents",
-          "ref": "documents",
+        "title": {
+          "path": "items.title",
+          "title": "",
+          "ref": "items.title",
+          "status": ""
+        },
+        "ref": {
+          "path": "items.ref",
+          "title": "",
+          "ref": "items.ref",
+          "status": ""
+        },
+        "status": {
+          "path": "items.status",
+          "title": "",
+          "ref": "items.status",
           "status": ""
         }
       }

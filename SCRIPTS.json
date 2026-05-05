@@ -372,6 +372,10 @@
             "title": "Source Pipeline Script Index",
             "type": "script_index",
             "language": "en"
+        },
+        "context_loading": {
+            "default": "index_only",
+            "content_read": "only when exact metadata for a specific script is needed"
         }
     }
 }

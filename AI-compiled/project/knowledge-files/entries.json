@@ -1,6 +1,6 @@
 [
   {
-    "compiled_at": "2026-05-05T00:35:03+00:00",
+    "compiled_at": "2026-05-05T01:18:51+00:00",
     "compiled_content": "## engineering.coding.explicit_diagnosable_flow - Explicit Diagnosable Flow\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `engineering`, `coding`, `architecture`, `diagnostics`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nPrefer explicit data flow, ownership, boundaries, and verification over hidden or clever behavior.\n\nKeep implementation easy to trace mechanically: clear entry points, explicit state changes, source-of-truth ownership, boundary normalization, and verification attached to risky behavior.\n\nRationale: SocratexPipeline is meant to preserve long-running agent continuity; implicit systems make that continuity fragile.\n\nSources:\n- `core/AGENT-CONTRACT.json` `operating_principles` - Consolidated from the shared agent contract.\n- `project/code/WORKFLOW.json` `general_workflow` duplicate - Code-project workflow repeats the same future-fit and diagnostic bias.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -15,7 +15,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-05T00:35:03+00:00",
+    "compiled_at": "2026-05-05T01:18:51+00:00",
     "compiled_content": "## engineering.workflow.context_tags_before_response - Context Tags Before Response\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `docs-workflow`, `compiled-context`, `knowledge`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nCommands and substantive questions should route through main workflow context, prompt-derived tags, and compiled notes before answer or execution.\n\nFor every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text with `tools/context_tags.ps1` when available, then query compiled notes with `tools/knowledge_select.ps1 -Tags <tags> -Match any` before answering or executing. Use tag-selected notes as routing and risk context; read exact source documents before edits, high-stakes claims, or ambiguity resolution.\n\nRationale: Prompt-derived tags make compiled knowledge useful beyond broad startup slices and reduce missed workflow, architecture, diagnostic, or documentation constraints.\n\nSources:\n- `core/AGENT-CONTRACT.json` `operating_principles` - Shared contract requires tag-derived context before substantive answers and commands.\n- `project/code/WORKFLOW.json` `read_order` duplicate - Code workflow defines the executable context-tag pass.\n- `tools/context_tags.ps1` `script` duplicate - Source pipeline helper for deriving context tags from user text.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -30,7 +30,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-05T00:35:03+00:00",
+    "compiled_at": "2026-05-05T01:18:51+00:00",
     "compiled_content": "## engineering.workflow.knowledge_file_fallback - Use File Knowledge Fallback When SQLite Is Unavailable\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `docs-workflow`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nThe JSON table fallback mirrors the core SQLite table model but intentionally omits named views.\n\nIf SQLite cannot be used, read compiled knowledge from `AI-compiled/project/knowledge-files/` with `tools/knowledge_file_select.ps1`; query by tags, type, source path, document path, entry name, or startup flag instead of named views.\n\nRationale: Some hosts may not allow SQLite writes or may lock the database file, but agents still need a compact compiled knowledge layer.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Source pipeline file-fallback rule.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -45,7 +45,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-05T00:35:03+00:00",
+    "compiled_at": "2026-05-05T01:18:51+00:00",
     "compiled_content": "## engineering.workflow.knowledge_hash_gate - Validate Source Hashes Before Trusting SQLite\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `verification_rule`\n- load_at_start: `true`\n- tags: `engineering`, `verification`, `docs-workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nA compiled knowledge database is trustworthy only when its tracked source hashes match current documents.\n\nRun `tools/knowledge_check.ps1` before relying on existing compiled knowledge; if stale documents are reported, refresh them with `tools/knowledge_upsert.ps1 -Path <document>` or rebuild with `tools/knowledge_compile.ps1`.\n\nRationale: Hash checks prevent agents from reading stale compiled knowledge after source documents change.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Source pipeline starter rule.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -60,7 +60,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-05T00:35:03+00:00",
+    "compiled_at": "2026-05-05T01:18:51+00:00",
     "compiled_content": "## engineering.workflow.knowledge_sqlite_generated_layer - SQLite Knowledge Is Generated\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `docs-workflow`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nThe SQLite knowledge database is a compiled index, not a manually edited source of truth.\n\nEdit source documents first, then refresh `AI-compiled/project/knowledge.sqlite` with `tools/knowledge_compile.ps1` for a full rebuild or `tools/knowledge_upsert.ps1 -Path <document>` for a targeted document update.\n\nRationale: This preserves readable source documents while giving agents fast tag, type, source, and startup-context queries.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Source pipeline starter rule.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -75,7 +75,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-05T00:35:03+00:00",
+    "compiled_at": "2026-05-05T01:18:51+00:00",
     "compiled_content": "## engineering.workflow.knowledge_views - Query Context Through Named Views\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `docs-workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nUse named knowledge views for common context lanes before broader document reads.\n\nPrefer `tools/knowledge_select.ps1 -View <view_id>` for prepared context lanes such as `session_start`, `debugging`, `performance`, and `docs_workflow`; use tag/type/source queries when the task needs a narrower slice.\n\nRationale: Named views reduce context cost and make repeated agent startup/query behavior consistent across projects.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Source pipeline starter rule.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -90,7 +90,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-05T00:35:03+00:00",
+    "compiled_at": "2026-05-05T01:18:51+00:00",
     "compiled_content": "## engineering.workflow.load_standards_before_code - Load Engineering Standards Before Code Work\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `coding`, `architecture`, `best-practices`, `borrowed-before-bespoke`, `production-grade`, `ddd-adiv`, `future-first`, `docs-workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nAny code-touching task must load the full compiled code-guidance set before source edits.\n\nFor implementation, refactor, bugfix, code review, or any task that may touch source code, run `tools/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. The loaded base set must include engineering, coding, architecture, best practices, borrowed-before-bespoke, production-grade software engineering, DDD-ADIV, future-first, data-first ownership, runtime boundaries, diagnostics, performance, and verification rules. Additional task views may be added, but they must not replace the full base set. `tools/check_task.ps1` should fail changed-code checks when the fresh `ignored/code_context_gate.json` marker from that helper is missing, loaded for another HEAD, or incomplete.\n\nRationale: Professional code quality depends on keeping the complete active project engineering standard in context every time, not on a narrow subset or visible-chat memory.\n\nSources:\n- `project/code/WORKFLOW.json` `read_order` - Code workflow read-order requirement for programming tasks.\n- `project/code/WORKFLOW.json` `script_first_execution` duplicate - Script-first workflow repeats the preferred query command.\n- `tools/knowledge_code_context.ps1` `script` duplicate - Canonical helper for loading the code-task engineering context slice.\n- `tools/check_code_context_gate.ps1` `script` duplicate - Verification guard for changed-code tasks.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -105,7 +105,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-05T00:35:03+00:00",
+    "compiled_at": "2026-05-05T01:18:51+00:00",
     "compiled_content": "## engineering.workflow.normalized_content_hashes - Normalized Content Hashes For Compiled Knowledge\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `tooling`, `compiled-context`, `knowledge`, `hashing`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nCompiled knowledge and instruction freshness hashes ignore mechanical text drift but preserve semantic whitespace.\n\nUse normalized text-content hashes for compiled knowledge, file fallback tables, compiled instruction checksums, and generated instruction source manifests: remove UTF-8 BOM, fold CRLF/CR to LF, trim trailing spaces and tabs per line, and ignore excess final blank lines. Do not use file modification timestamps for freshness, and do not strip all whitespace, because those approaches respectively create false invalidations and hide semantic changes in JSON, Python, PowerShell, and other whitespace-sensitive formats.\n\nRationale: Compiled outputs should rebuild when source meaning changes, not when editor or line-ending cleanup changes; preserving indentation and interior whitespace keeps the hash safe for whitespace-sensitive files.\n\nSources:\n- `tools/knowledge_index.py` `normalized_hash_text` - Knowledge SQLite and file fallback source freshness use the normalized hash policy.\n- `tools/recompile_ai_instructions.ps1` `ConvertTo-NormalizedHashText` duplicate - Compiled instruction source manifests and checksums use the same normalized hash policy.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,

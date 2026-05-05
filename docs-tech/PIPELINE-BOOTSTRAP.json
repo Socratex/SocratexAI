@@ -160,6 +160,7 @@
         },
         "contract": [
             "Load this bootstrap index at the start of every source-pipeline prompt before selecting a command, flow, script, workflow row, or document route.",
+            "COMMANDS.json and SCRIPTS.json are default-context index-only documents: load their names, not their content, unless exact metadata for a specific command or script is needed.",
             "Use WORKFLOW.json and FLOWS.json for every source-pipeline prompt: WORKFLOW defines classification and guardrails; FLOWS defines ordered execution steps.",
             "Use COMMANDS.json when a prompt matches a command keyword, SCRIPTS.json when choosing tools, and DOCS.json when document ownership or routing matters.",
             "If a needed command, flow, script, workflow rule, or document route is missing, report the missing contract before executing the prompt."

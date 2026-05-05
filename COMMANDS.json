@@ -60,6 +60,10 @@
             "title": "Source Pipeline Commands",
             "type": "command_index",
             "language": "en"
+        },
+        "context_loading": {
+            "default": "index_only",
+            "content_read": "only when exact metadata for a matched command is needed"
         }
     }
 }
