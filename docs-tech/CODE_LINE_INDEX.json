@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T04:36:57+02:00",
+    "generatedAt":  "2026-05-05T04:45:49+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -46,7 +46,7 @@
                   },
                   {
                       "path":  "tools/pipeline/import_existing_project.ps1",
-                      "lines":  261,
+                      "lines":  279,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -147,12 +147,6 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/pipeline/update_pipeline_from_link.ps1",
-                      "lines":  110,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
                       "path":  "tools/repo/add_changelog_entry.ps1",
                       "lines":  109,
                       "extension":  ".ps1",
@@ -213,6 +207,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/pipeline/update_pipeline_from_link.ps1",
+                      "lines":  90,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/pipeline/pipeline_bootstrap_index.py",
                       "lines":  86,
                       "extension":  ".py",
@@ -251,6 +251,12 @@
                   {
                       "path":  "tools/pipeline/init_branch_memory.ps1",
                       "lines":  80,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/pipeline/sync_managed_pipeline_package.ps1",
+                      "lines":  79,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -351,12 +357,6 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/pipeline/upgrade_from_riftbound.ps1",
-                      "lines":  46,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
                       "path":  "tools/documents/migrate_document_schema.ps1",
                       "lines":  45,
                       "extension":  ".ps1",
@@ -400,6 +400,12 @@
                   },
                   {
                       "path":  "tools/pipeline/compile_pipeline_context.ps1",
+                      "lines":  36,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/pipeline/upgrade_from_riftbound.ps1",
                       "lines":  36,
                       "extension":  ".ps1",
                       "large":  false

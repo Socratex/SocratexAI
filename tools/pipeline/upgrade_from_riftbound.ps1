@@ -29,26 +29,16 @@ if ($DryRun) {
         Remove-Item -LiteralPath $ReferenceTools -Recurse -Force
     }
     New-Item -ItemType Directory -Force -Path $ReferenceTools | Out-Null
-    Get-ChildItem -LiteralPath $SourceTools -File | ForEach-Object {
-        Copy-Item -LiteralPath $_.FullName -Destination $ReferenceTools -Force
+    foreach ($child in Get-ChildItem -LiteralPath $SourceTools -Force) {
+        Copy-Item -LiteralPath $child.FullName -Destination $ReferenceTools -Recurse -Force
     }
 }
 
-$existingToolNames = @(Get-ChildItem -LiteralPath $TargetTools -File | ForEach-Object Name)
-Get-ChildItem -LiteralPath $SourceTools -File | ForEach-Object {
-    if ($existingToolNames -contains $_.Name) {
-        return
-    }
-    if ($DryRun) {
-        Write-Host "Would import new tool: $($_.Name)"
-    } else {
-        Copy-Item -LiteralPath $_.FullName -Destination $TargetTools -Force
-        Write-Host "Imported new tool: $($_.Name)"
-    }
-}
+Write-Host "Riftbound tools were refreshed as a recursive reference tree."
+Write-Host "Reusable source changes must be ported into categorized source tools explicitly, then cataloged in SCRIPTS.json and pipeline_featurelist.json."
 
 if (-not $DryRun) {
-    & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $TargetTools "audit_docs.ps1")
+    & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $TargetTools "documents\audit_docs.ps1")
 }
 
 Write-Host "Maintainer upgrade complete."

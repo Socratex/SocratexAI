@@ -23,29 +23,6 @@ $TargetRoot = Resolve-Path -LiteralPath $TargetPath
 $InstallRoot = Join-Path $TargetRoot "SocratexAI"
 $TempRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("socratex-pipeline-update-" + [guid]::NewGuid().ToString("N"))
 
-function Copy-Tree {
-    param(
-        [string]$SourcePath,
-        [string]$DestinationPath
-    )
-
-    if ($DryRun) {
-        Write-Host "Would copy: $SourcePath -> $DestinationPath"
-        return
-    }
-
-    if (Test-Path -LiteralPath $SourcePath -PathType Container) {
-        New-Item -ItemType Directory -Force -Path $DestinationPath | Out-Null
-        foreach ($child in Get-ChildItem -LiteralPath $SourcePath -Force) {
-            Copy-Item -LiteralPath $child.FullName -Destination $DestinationPath -Recurse -Force
-        }
-        return
-    }
-
-    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $DestinationPath) | Out-Null
-    Copy-Item -LiteralPath $SourcePath -Destination $DestinationPath -Force
-}
-
 function Resolve-SourceRoot {
     param([string]$SourceValue)
 
@@ -71,36 +48,36 @@ Write-Host "Source: $SourceRoot"
 Write-Host "Target: $TargetRoot"
 Write-Host "Install root: $InstallRoot"
 
-foreach ($path in @(
-    ".gitignore",
-    "AI-compiled",
-    "adapters",
-    "core",
-    "docs",
-    "docs-tech",
-    "evals",
-    "initializer",
-    "learning",
-    "project",
-    "templates",
-    "tools",
-    "AGENTS.md",
-    "LICENSE",
-    "PUBLIC-BOOTSTRAP.md",
-    "QUALITY-GATE.json",
-    "README.md",
-    "RECOMMENDATION.md",
-    "VERSION",
-    "pipeline_featurelist.json"
-)) {
-    $sourcePath = Join-Path $SourceRoot $path
-    if (Test-Path -LiteralPath $sourcePath) {
-        Copy-Tree -SourcePath $sourcePath -DestinationPath (Join-Path $InstallRoot $path)
-    }
+$syncPackageScript = Join-Path $SourceRoot "tools\pipeline\sync_managed_pipeline_package.ps1"
+if (-not (Test-Path -LiteralPath $syncPackageScript)) {
+    throw "Update source is missing required managed package sync script: $syncPackageScript"
+}
+
+$syncArgs = @(
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    $syncPackageScript,
+    "-SourceRoot",
+    $SourceRoot,
+    "-InstallRoot",
+    $InstallRoot
+)
+if ($DryRun) {
+    $syncArgs += "-DryRun"
+}
+& powershell @syncArgs
+if ($LASTEXITCODE -ne 0) {
+    throw "sync_managed_pipeline_package failed with exit code $LASTEXITCODE"
 }
 
 if (Test-Path -LiteralPath (Join-Path $SourceRoot "templates\SOCRATEX.md")) {
-    Copy-Tree -SourcePath (Join-Path $SourceRoot "templates\SOCRATEX.md") -DestinationPath (Join-Path $TargetRoot "SOCRATEX.md")
+    if ($DryRun) {
+        Write-Host "Would copy root controller: $(Join-Path $SourceRoot 'templates\SOCRATEX.md') -> $(Join-Path $TargetRoot 'SOCRATEX.md')"
+    } else {
+        Copy-Item -LiteralPath (Join-Path $SourceRoot "templates\SOCRATEX.md") -Destination (Join-Path $TargetRoot "SOCRATEX.md") -Force
+    }
 }
 
 if (-not $DryRun) {

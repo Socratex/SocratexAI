@@ -131,11 +131,28 @@ Write-Host "==> importing SocratexPipeline into existing project"
 Write-Host "Target: $TargetRoot"
 Write-Host "Install root: $InstallRoot"
 
-foreach ($path in @("AI-compiled", "core", "adapters", "docs-tech", "templates", "tools")) {
-    Copy-ItemSafe -Source (Join-Path $SourceRoot $path) -Destination (Join-Path $InstallRoot $path)
+$syncPackageScript = Join-Path $SourceRoot "tools\pipeline\sync_managed_pipeline_package.ps1"
+if (-not (Test-Path -LiteralPath $syncPackageScript)) {
+    throw "Missing managed package sync script: $syncPackageScript"
 }
-
-Copy-ItemSafe -Source (Join-Path $SourceRoot "pipeline_featurelist.json") -Destination (Join-Path $InstallRoot "pipeline_featurelist.json")
+$syncArgs = @(
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    $syncPackageScript,
+    "-SourceRoot",
+    $SourceRoot,
+    "-InstallRoot",
+    $InstallRoot
+)
+if ($DryRun) {
+    $syncArgs += "-DryRun"
+}
+& powershell @syncArgs
+if ($LASTEXITCODE -ne 0) {
+    throw "sync_managed_pipeline_package failed with exit code $LASTEXITCODE"
+}
 
 if (-not $DryRun) {
     New-Item -ItemType Directory -Force -Path (Join-Path $InstallRoot "project") | Out-Null

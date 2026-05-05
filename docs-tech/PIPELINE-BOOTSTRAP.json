@@ -160,7 +160,8 @@
             "upgrade_from_riftbound.ps1",
             "utf8_file_helpers.ps1",
             "run_interactive_setup.ps1",
-            "write_utf8_file.ps1"
+            "write_utf8_file.ps1",
+            "sync_managed_pipeline_package.ps1"
         ]
     },
     "metadata": {
