@@ -31,6 +31,24 @@ function Convert-ToFeatureList {
 	return @($result)
 }
 
+function Get-FeatureValues {
+	param([object]$FeatureList)
+
+	if ($null -eq $FeatureList) {
+		return @()
+	}
+	if ($FeatureList.PSObject.Properties.Name -contains "features") {
+		return @($FeatureList.features)
+	}
+	if ($FeatureList.PSObject.Properties.Name -contains "content") {
+		$content = $FeatureList.content
+		if ($null -ne $content -and $content.PSObject.Properties.Name -contains "features") {
+			return @($content.features)
+		}
+	}
+	return @()
+}
+
 function Test-ExcludedFeature {
 	param(
 		[string]$Feature,
@@ -90,6 +108,33 @@ function Get-FeatureContracts {
 	return $contracts
 }
 
+function Get-FeatureListId {
+	param(
+		[object]$FeatureList,
+		[string]$FallbackPath
+	)
+
+	if ($null -ne $FeatureList) {
+		if ($FeatureList.PSObject.Properties.Name -contains "pipeline_id" -and -not [string]::IsNullOrWhiteSpace([string]$FeatureList.pipeline_id)) {
+			return [string]$FeatureList.pipeline_id
+		}
+		if ($FeatureList.PSObject.Properties.Name -contains "metadata") {
+			$metadata = $FeatureList.metadata
+			if ($null -ne $metadata -and $metadata.PSObject.Properties.Name -contains "pipeline_id" -and -not [string]::IsNullOrWhiteSpace([string]$metadata.pipeline_id)) {
+				return [string]$metadata.pipeline_id
+			}
+		}
+	}
+
+	$name = Split-Path -Leaf $FallbackPath
+	$id = $name.ToLowerInvariant() -replace '[^a-z0-9]+', '_'
+	$id = $id.Trim('_')
+	if ([string]::IsNullOrWhiteSpace($id)) {
+		return "project_pipeline"
+	}
+	return $id
+}
+
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
 if ([string]::IsNullOrWhiteSpace($SourceFeatureListPath)) {
 	$SourceFeatureListPath = Join-Path $repoRoot "pipeline_featurelist.json"
@@ -101,9 +146,11 @@ $ExcludePatterns = @(Normalize-PatternList -Patterns $ExcludePatterns)
 
 $source = Read-JsonFile -Path $SourceFeatureListPath
 $project = Read-JsonFile -Path $projectFeatureListPath
+$sourcePipelineId = Get-FeatureListId -FeatureList $source -FallbackPath (Split-Path -Parent $SourceFeatureListPath)
+$projectPipelineId = Get-FeatureListId -FeatureList $project -FallbackPath $projectRoot
 
-$sourceFeatures = Convert-ToFeatureList -Values @($source.features)
-$projectFeatures = Convert-ToFeatureList -Values @($project.features)
+$sourceFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList $source)
+$projectFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList $project)
 $projectContracts = Get-FeatureContracts -FeatureList $project
 $candidateFeatures = @($projectFeatures | Where-Object { $sourceFeatures -notcontains $_ })
 $missingFromProject = @($sourceFeatures | Where-Object { $projectFeatures -notcontains $_ })
@@ -123,8 +170,8 @@ $reviewCandidates = @($candidates | Where-Object { $_.status -eq "review_candida
 $excludedCandidates = @($candidates | Where-Object { $_.status -eq "excluded_by_pattern" } | ForEach-Object { $_.id })
 
 $hashPayload = [ordered]@{
-	source_pipeline_id = [string]$source.pipeline_id
-	project_pipeline_id = [string]$project.pipeline_id
+	source_pipeline_id = $sourcePipelineId
+	project_pipeline_id = $projectPipelineId
 	project_features_not_in_source = @($candidateFeatures)
 	source_features_not_in_project = @($missingFromProject)
 }
@@ -137,8 +184,8 @@ $payload = [ordered]@{
 	source_featurelist_path = [string](Resolve-Path -LiteralPath $SourceFeatureListPath)
 	project_path = [string]$projectRoot
 	project_featurelist_path = [string](Resolve-Path -LiteralPath $projectFeatureListPath)
-	source_pipeline_id = [string]$source.pipeline_id
-	project_pipeline_id = [string]$project.pipeline_id
+	source_pipeline_id = $sourcePipelineId
+	project_pipeline_id = $projectPipelineId
 	candidate_count = $candidateFeatures.Count
 	review_candidate_count = $reviewCandidates.Count
 	excluded_candidate_count = $excludedCandidates.Count

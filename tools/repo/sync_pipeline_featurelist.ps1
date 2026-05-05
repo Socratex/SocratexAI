@@ -32,6 +32,24 @@ function Convert-ToFeatureList {
 	return @($result)
 }
 
+function Get-FeatureValues {
+	param([object]$FeatureList)
+
+	if ($null -eq $FeatureList) {
+		return @()
+	}
+	if ($FeatureList.PSObject.Properties.Name -contains "features") {
+		return @($FeatureList.features)
+	}
+	if ($FeatureList.PSObject.Properties.Name -contains "content") {
+		$content = $FeatureList.content
+		if ($null -ne $content -and $content.PSObject.Properties.Name -contains "features") {
+			return @($content.features)
+		}
+	}
+	return @()
+}
+
 function Get-DefaultPipelineId {
 	param([string]$RootPath)
 
@@ -73,7 +91,7 @@ if ([string]::IsNullOrWhiteSpace($SourceFeatureListPath)) {
 }
 
 $source = Read-JsonFile -Path $SourceFeatureListPath
-$sourceFeatures = Convert-ToFeatureList -Values @($source.features)
+$sourceFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList $source)
 if ($sourceFeatures.Count -eq 0) {
 	throw "Source feature list has no features: $SourceFeatureListPath"
 }
@@ -82,7 +100,7 @@ $existingFeatures = @()
 $existingContracts = [ordered]@{}
 if (Test-Path -LiteralPath $OutputPath -PathType Leaf) {
 	$existing = Read-JsonFile -Path $OutputPath
-	$existingFeatures = Convert-ToFeatureList -Values @($existing.features)
+	$existingFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList $existing)
 	$existingContracts = Get-FeatureContracts -FeatureList $existing
 }
 

@@ -33,6 +33,24 @@ function Convert-ToFeatureList {
 	return @($result)
 }
 
+function Get-FeatureValues {
+	param([object]$FeatureList)
+
+	if ($null -eq $FeatureList) {
+		return @()
+	}
+	if ($FeatureList.PSObject.Properties.Name -contains "features") {
+		return @($FeatureList.features)
+	}
+	if ($FeatureList.PSObject.Properties.Name -contains "content") {
+		$content = $FeatureList.content
+		if ($null -ne $content -and $content.PSObject.Properties.Name -contains "features") {
+			return @($content.features)
+		}
+	}
+	return @()
+}
+
 function Test-ExcludedFeature {
 	param(
 		[string]$Feature,
@@ -75,8 +93,8 @@ $projectFeatureListPath = Join-Path $projectRoot "pipeline_featurelist.json"
 $source = Read-JsonFile -Path $SourceFeatureListPath
 $project = Read-JsonFile -Path $projectFeatureListPath
 
-$sourceFeatures = Convert-ToFeatureList -Values @($source.features)
-$projectFeatures = Convert-ToFeatureList -Values @($project.features)
+$sourceFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList $source)
+$projectFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList $project)
 $candidateFeatures = @($projectFeatures | Where-Object { $sourceFeatures -notcontains $_ })
 
 $selected = [System.Collections.Generic.List[string]]::new()

@@ -2345,21 +2345,15 @@
       "routing": {},
       "toc": [],
       "top_level_keys": [
-        "metadata",
         "schema",
         "pipeline_id",
         "role",
         "updated_at",
         "features",
-        "feature_contracts"
+        "feature_contracts",
+        "metadata"
       ],
       "keys": {
-        "metadata": {
-          "path": "metadata",
-          "title": "metadata",
-          "ref": "metadata",
-          "status": ""
-        },
         "schema": {
           "path": "schema",
           "title": "schema",
@@ -2394,6 +2388,12 @@
           "path": "feature_contracts",
           "title": "feature_contracts",
           "ref": "feature_contracts",
+          "status": ""
+        },
+        "metadata": {
+          "path": "metadata",
+          "title": "metadata",
+          "ref": "metadata",
           "status": ""
         }
       }
