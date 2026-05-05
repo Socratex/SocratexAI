@@ -15,7 +15,7 @@
         },
         "transactional_doc_tools": {
             "description": "Check transactional document edit tools in dry-check mode.",
-            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/docs_slim.ps1 -Check -Paths project/code/WORKFLOW.json; powershell -NoProfile -ExecutionPolicy Bypass -File tools/docs_migrator.ps1 -Check -Paths project/code/WORKFLOW.json"
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/normalize_document_structure.ps1 -Check -Paths project/code/WORKFLOW.json; powershell -NoProfile -ExecutionPolicy Bypass -File tools/migrate_document_schema.ps1 -Check -Paths project/code/WORKFLOW.json"
         },
         "init_dry_run": {
             "description": "Smoke-test code project initialization without writing files.",

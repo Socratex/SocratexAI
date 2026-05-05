@@ -191,7 +191,7 @@ For programming projects:
 
 Installed projects also receive `WORKFLOW.json` and `team/*.json` role lenses. These are not default context for every prompt. Use `WORKFLOW.json` when priority steering or broad project-risk judgment matters, and load a `team/` role only when the user asks for that lens or workflow routes the task to it.
 
-Source pipeline repositories may include `AI-compiled/`, a generated agent-readable instruction cache. Treat it as read-only generated context. If source instructions change, run `tools/recompile_ai_instructions.ps1`.
+Source pipeline repositories may include `AI-compiled/`, a generated agent-readable instruction cache. Treat it as read-only generated context. If source instructions change, run `tools/rebuild_ai_compiled_context.ps1`.
 13. End with first useful work pass recommendations and ROI Picks.
 
 For non-programming projects:

@@ -1,6 +1,6 @@
 # Compiled Workflow for Codex
 
-Generated: source-6fde61a99447
+Generated: source-497156e27702
 
 ## Code Read Order
 
@@ -23,7 +23,7 @@ Generated: source-6fde61a99447
 {
     "title": "Verification Boundary",
     "format": "markdown-section",
-    "body": "## Verification Boundary\n\nTreat status, audit, quality, line-index, and finish scripts as boundary tools, not as reflex tools after every small edit.\n\nDefault cadence:\n\n1. Use targeted reads, outlines, search, and diffs while exploring and editing.\n2. Make all code and document edits for the current scope before running broad checks.\n3. Run `tools/done.ps1 -Message \"<message>\"` near the end of the scope when a Git-backed task should be committed and pushed. It should discover changed files from git, normalize text, rebuild document cache, refresh code-line indexes, run audit/quality, stage intentional files, commit, push, and report status.\n4. For broad multi-boundary tasks, run one finalizer after each coherent subtask block before moving to the next block.\n5. Rerun a gate only after fixing something that could plausibly affect that gate.\n\nAvoid full-file reads immediately after a successful structured read unless the structured output is missing the needed section, the document shape is suspicious, or exact raw formatting matters.\n\nDo not manually repeat normalize/cache/index/check steps after each micro-edit or after a successful transactional document edit tool unless the wrapper failed, `-NoPostEdit` was intentionally used, or a broader verification boundary requires it.\n\nIf `tools/done.ps1` or an owned finalizer fails on a repeated mechanical issue, update the script so the same class of issue is handled automatically before rerunning the finalizer.\n"
+    "body": "## Verification Boundary\n\nTreat status, audit, quality, line-index, and finish scripts as boundary tools, not as reflex tools after every small edit.\n\nDefault cadence:\n\n1. Use targeted reads, outlines, search, and diffs while exploring and editing.\n2. Make all code and document edits for the current scope before running broad checks.\n3. Run `tools/finalize_task_check_commit_push.ps1 -Message \"<message>\"` near the end of the scope when a Git-backed task should be committed and pushed. It should discover changed files from git, normalize text, rebuild document cache, refresh code-line indexes, run audit/quality, stage intentional files, commit, push, and report status.\n4. For broad multi-boundary tasks, run one finalizer after each coherent subtask block before moving to the next block.\n5. Rerun a gate only after fixing something that could plausibly affect that gate.\n\nAvoid full-file reads immediately after a successful structured read unless the structured output is missing the needed section, the document shape is suspicious, or exact raw formatting matters.\n\nDo not manually repeat normalize/cache/index/check steps after each micro-edit or after a successful transactional document edit tool unless the wrapper failed, `-NoPostEdit` was intentionally used, or a broader verification boundary requires it.\n\nIf `tools/finalize_task_check_commit_push.ps1` or an owned finalizer fails on a repeated mechanical issue, update the script so the same class of issue is handled automatically before rerunning the finalizer.\n"
 }
 
 ## Recompile Command
@@ -31,11 +31,11 @@ Generated: source-6fde61a99447
 Use this command after changing source instructions, templates, core docs, project packs, or compiled-output rules:
 
 ~~~powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1
 ~~~
 
 Use this command to check for drift:
 
 ~~~powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_ai_compiled_context.ps1
 ~~~

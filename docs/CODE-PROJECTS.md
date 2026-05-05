@@ -47,8 +47,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture,performance
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/task_snapshot.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_quality_gate.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_task.ps1 -Quality
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_subtask.ps1 -Message "<message>"
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_final_task_checks.ps1 -Quality
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/finalize_changed_files_commit_push.ps1 -Message "<message>"
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/log_summary.ps1 -Description "<diagnostic description>"
 python tools/check_runtime.py --root-key runtime_status
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/init_task_work.ps1 -Title "<task>" -SourceRequest "<request>"
@@ -102,7 +102,7 @@ PowerShell 7 (`pwsh`) is the preferred automation runtime. If it is missing duri
 
 For broad multi-step tasks, the agent should create temporary task work at `docs-tech/cache/current_task.json`, track micro-task status during execution, then delete it or promote only durable facts.
 
-For moving items between structured JSON documents, the agent should use `tools/doc_item_migrate.ps1` instead of manual editing.
+For moving items between structured JSON documents, the agent should use `tools/migrate_document_item.ps1` instead of manual editing.
 
 ## Transactional Document Editing
 
@@ -110,18 +110,18 @@ For structured JSON documents, use document edit tools instead of ad hoc inline 
 
 Use:
 
-- `tools/doc_item_insert.ps1` for one keyed item,
-- `tools/doc_item_bulk_insert.ps1` for multiple keyed items in one document,
-- `tools/doc_item_move.ps1` for ordering inside one document,
-- `tools/doc_item_migrate.ps1` for moving or copying between documents,
-- `tools/doc_list_insert.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing JSON item,
-- `tools/doc_list_check.ps1 -Terms <words>` to return candidate duplicate titles, keys, matched terms, and excerpts before deciding whether an update already exists,
-- `tools/doc_read_titles.ps1 -Titles <titles>` to read only candidate sections before writing,
-- `tools/docs_slim.ps1` and `tools/docs_migrator.ps1` for whole-document format passes.
+- `tools/insert_document_item.ps1` for one keyed item,
+- `tools/bulk_insert_document_items.ps1` for multiple keyed items in one document,
+- `tools/move_document_item.ps1` for ordering inside one document,
+- `tools/migrate_document_item.ps1` for moving or copying between documents,
+- `tools/insert_document_list_item.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing JSON item,
+- `tools/check_document_list_item_duplicates.ps1 -Terms <words>` to return candidate duplicate titles, keys, matched terms, and excerpts before deciding whether an update already exists,
+- `tools/read_document_items_by_title.ps1 -Titles <titles>` to read only candidate sections before writing,
+- `tools/normalize_document_structure.ps1` and `tools/migrate_document_schema.ps1` for whole-document format passes.
 
 These scripts should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.
 
-Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title flow by default: derive likely duplicate words, run `doc_list_check`, read candidates with `doc_read_titles`, then write once with a transactional insert or item script.
+Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title flow by default: derive likely duplicate words, run `check_document_list_item_duplicates`, read candidates with `read_document_items_by_title`, then write once with a transactional insert or item script.
 
 Do not manually repeat normalize, cache, index, check, or readback commands after a successful transactional document edit unless the wrapper failed, `-NoPostEdit` was intentionally used, or a broader verification boundary requires it.
 
@@ -129,8 +129,8 @@ Do not manually repeat normalize, cache, index, check, or readback commands afte
 
 For structured JSON documents, use document tools before text grep:
 
-- `tools/doc_read.ps1` when the stable key is known,
-- `tools/doc_keys.ps1` when the local key list is needed,
+- `tools/read_document_item.ps1` when the stable key is known,
+- `tools/list_document_keys.ps1` when the local key list is needed,
 - `tools/doc_route.ps1` or `tools/doc_search.ps1` when searching by intent or phrase.
 
 `Select-String`, `grep`, and `rg` are fallback tools for JSON documents. Use them only for raw formatting or encoding checks, parser/cache debugging, unknown references after document tools miss, or source-code searches.
@@ -145,21 +145,21 @@ Run status, audit, quality, line-index, finish, and commit helpers at workflow b
 - once after a coherent change block in broad multi-boundary work,
 - again only after a fix that could affect the checked gate.
 
-Do not run `git status`, `git diff --check`, `tools/check_task.ps1`, `tools/run_quality_gate.ps1`, `tools/update_code_line_index.ps1`, or `tools/finish_task.ps1` after every small edit.
+Do not run `git status`, `git diff --check`, `tools/check_task.ps1`, `tools/run_quality_gate.ps1`, `tools/update_code_line_index.ps1`, or `tools/run_final_task_checks.ps1` after every small edit.
 
 Normal task flow: gather context with repository scripts, make the code and document edits for the current scope, then run one git-based batch finalizer near the end. The finalizer should discover changed files from git, normalize text, rebuild document cache, refresh code-line indexes, verify, and report status.
 
 If a repeated finalizer failure requires manual recovery, improve the script so future equivalent work is handled automatically.
 
-Do not follow a successful `tools/doc_read.ps1` with a full `Get-Content` of the same document unless the selected output is insufficient, raw formatting matters, or the document structure looks suspicious.
+Do not follow a successful `tools/read_document_item.ps1` with a full `Get-Content` of the same document unless the selected output is insufficient, raw formatting matters, or the document structure looks suspicious.
 
 ## Git Completion
 
-Hard rule: use `tools/finish_subtask.ps1 -Message "<message>"` whenever practical for subtask closure.
+Hard rule: use `tools/finalize_changed_files_commit_push.ps1 -Message "<message>"` whenever practical for subtask closure.
 
 The wrapper should discover changed files from git, run the batch finalizer, stage intentional non-local-artifact changes, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.
 
-`tools/commit_task.ps1` remains a compatibility wrapper around `tools/finish_subtask.ps1`; new automation should call the subtask finisher directly.
+`tools/legacy_commit_task_compatibility_wrapper.ps1` remains a compatibility wrapper around `tools/finalize_changed_files_commit_push.ps1`; new automation should call the subtask finisher directly.
 
 If the working tree is not clean after commit/push, the subtask is not closed.
 

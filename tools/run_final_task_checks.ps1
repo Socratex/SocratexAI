@@ -18,12 +18,12 @@ $taskSnapshotScript = Join-Path $PSScriptRoot "task_snapshot.ps1"
 $auditScript = Join-Path $PSScriptRoot "audit_docs.ps1"
 $lineIndexScript = Join-Path $PSScriptRoot "update_code_line_index.ps1"
 $textNormalizeScript = Join-Path $PSScriptRoot "normalize_text_files.ps1"
-$docCacheScript = Join-Path $PSScriptRoot "doc_build_cache.ps1"
+$docCacheScript = Join-Path $PSScriptRoot "build_document_cache.ps1"
 $qualityScript = Join-Path $PSScriptRoot "run_quality_gate.ps1"
 $outputScript = Join-Path $PSScriptRoot "end_prompt_snapshot.ps1"
 $pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
-$compiledInstructionsRecompileScript = Join-Path $PSScriptRoot "recompile_ai_instructions.ps1"
-$compiledInstructionsCheckScript = Join-Path $PSScriptRoot "check_compiled_instructions.ps1"
+$compiledInstructionsRecompileScript = Join-Path $PSScriptRoot "rebuild_ai_compiled_context.ps1"
+$compiledInstructionsCheckScript = Join-Path $PSScriptRoot "check_ai_compiled_context.ps1"
 
 function Invoke-RepoCommand {
 	param(

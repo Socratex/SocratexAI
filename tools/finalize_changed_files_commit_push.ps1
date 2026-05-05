@@ -13,7 +13,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
-$finishScript = Join-Path $PSScriptRoot "finish_task.ps1"
+$finishScript = Join-Path $PSScriptRoot "run_final_task_checks.ps1"
 
 function Invoke-GitLines {
 	param([string[]]$Arguments)

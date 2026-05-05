@@ -13,7 +13,7 @@ if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"
 }
 
-$script = Join-Path $PSScriptRoot "docs_migrator.py"
+$script = Join-Path $PSScriptRoot "document_schema_migration_engine.py"
 $arguments = @(
 	$script,
 	"--repo-root",
@@ -30,7 +30,7 @@ foreach ($line in $output) {
 	Write-Host $line
 }
 if ($exitCode -ne 0) {
-	throw "docs_migrator failed with exit code $exitCode"
+	throw "migrate_document_schema failed with exit code $exitCode"
 }
 
 if ((-not $Check) -and (-not $NoPostEdit)) {
@@ -43,9 +43,9 @@ if ((-not $Check) -and (-not $NoPostEdit)) {
 	})
 
 	if ($changedPaths.Count -gt 0) {
-		& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "doc_post_edit.ps1") -Paths $changedPaths
+		& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "run_document_post_edit_checks.ps1") -Paths $changedPaths
 		if ($LASTEXITCODE -ne 0) {
-			throw "docs_migrator post-edit pipeline failed with exit code $LASTEXITCODE"
+			throw "migrate_document_schema post-edit pipeline failed with exit code $LASTEXITCODE"
 		}
 	}
 }

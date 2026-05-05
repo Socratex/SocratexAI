@@ -140,14 +140,14 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active reference source pipeline.
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
-Structured JSON tools apply to every project type, including non-code projects, for agent-only structured JSON files. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_bulk_insert`, `doc_item_move`, and `doc_item_migrate` whenever practical.
+Structured JSON tools apply to every project type, including non-code projects, for agent-only structured JSON files. Use `read_document_item`, `list_document_keys`, `insert_document_item`, `bulk_insert_document_items`, `move_document_item`, and `migrate_document_item` whenever practical.
 
 `WORKFLOW.json` is intentionally opt-in context. Agents should read it for planning, priority, roadmap, feature-triage, and broad project-risk decisions, not for every narrow local edit. `team/*.json` files are loaded only when requested or routed by workflow.
 
 After changing source instructions, templates, core docs, project packs, or adapter rules, run:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1
 ```
 
 This also refreshes the compiled SQLite knowledge database when `tools/knowledge_compile.ps1` is present.
@@ -155,13 +155,13 @@ This also refreshes the compiled SQLite knowledge database when `tools/knowledge
 Equivalent full compile/check wrapper:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/compile.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/compile_pipeline_context.ps1
 ```
 
 To check for drift without writing files:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_ai_compiled_context.ps1
 ```
 
 For direct knowledge-layer work:
@@ -209,8 +209,8 @@ For programming projects:
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/task_snapshot.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_quality_gate.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_task.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/commit_task.ps1 -Message "<message>" -Paths <explicit paths>
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_final_task_checks.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/legacy_commit_task_compatibility_wrapper.ps1 -Message "<message>" -Paths <explicit paths>
 ```
 
 ## Version

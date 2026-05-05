@@ -20,7 +20,7 @@ if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"
 }
 
-$script = Join-Path $PSScriptRoot "doc_list_item.py"
+$script = Join-Path $PSScriptRoot "document_list_item_edit_engine.py"
 $arguments = @($script, "check", $Path, "--scope", $Scope)
 if ($Key -ne "") { $arguments += @("--key", $Key) }
 if ($Text -ne "") { $arguments += @("--text", $Text) }
@@ -32,5 +32,5 @@ if ($FailOnDuplicate) { $arguments += "--fail-on-duplicate" }
 
 & $python @arguments
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_list_check failed with exit code $LASTEXITCODE"
+	throw "check_document_list_item_duplicates failed with exit code $LASTEXITCODE"
 }

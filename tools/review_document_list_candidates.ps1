@@ -15,12 +15,12 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$checkScript = Join-Path $PSScriptRoot "doc_list_check.ps1"
+$checkScript = Join-Path $PSScriptRoot "check_document_list_item_duplicates.ps1"
 $python = Join-Path $PSScriptRoot "Python312\python.exe"
 if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"
 }
-$docListItemScript = Join-Path $PSScriptRoot "doc_list_item.py"
+$docListItemScript = Join-Path $PSScriptRoot "document_list_item_edit_engine.py"
 
 function Convert-JsonOutput {
 	param(
@@ -65,7 +65,7 @@ if ($Terms.Count -gt 0) { $checkArgs += @("-Terms") + $Terms }
 
 $candidateOutput = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $checkScript @checkArgs)
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_list_review check failed with exit code $LASTEXITCODE"
+	throw "review_document_list_candidates check failed with exit code $LASTEXITCODE"
 }
 $candidates = @(Convert-JsonOutput -Lines $candidateOutput)
 
@@ -75,7 +75,7 @@ if ($Terms.Count -gt 0 -and $candidates.Count -gt 0) {
 	$readArgs = @($docListItemScript, "read-titles", $Path, "--titles") + $titles + @("--json")
 	$itemOutput = @(& $python @readArgs)
 	if ($LASTEXITCODE -ne 0) {
-		throw "doc_list_review read-titles failed with exit code $LASTEXITCODE"
+		throw "review_document_list_candidates read-titles failed with exit code $LASTEXITCODE"
 	}
 	$items = @(Convert-JsonOutput -Lines $itemOutput)
 }
@@ -93,11 +93,11 @@ if ($Json) {
 		$readArgs = @($docListItemScript, "read-titles", $Path, "--titles") + $titles
 		& $python @readArgs
 		if ($LASTEXITCODE -ne 0) {
-			throw "doc_list_review read-titles failed with exit code $LASTEXITCODE"
+			throw "review_document_list_candidates read-titles failed with exit code $LASTEXITCODE"
 		}
 	}
 }
 
 if ($FailOnDuplicate -and $candidates.Count -gt 0) {
-	throw "doc_list_review found $($candidates.Count) candidate duplicate(s)"
+	throw "review_document_list_candidates found $($candidates.Count) candidate duplicate(s)"
 }

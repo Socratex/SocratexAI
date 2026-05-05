@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import docs_slim
+import document_structure_normalizer_engine as document_structure
 
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -20,7 +20,7 @@ def load_document(path: Path) -> Any:
 
 
 def write_document(path: Path, value: Any) -> None:
-    docs_slim.write_document(path, value)
+    document_structure.write_document(path, value)
 
 
 def normalize_document(document: Any) -> dict[str, Any]:
@@ -30,7 +30,7 @@ def normalize_document(document: Any) -> dict[str, Any]:
         document["items"] = {}
     if not isinstance(document["items"], dict):
         raise ValueError("Document items must be a mapping.")
-    return docs_slim.slim_document(document)
+    return document_structure.slim_document(document)
 
 
 def normalize_text(value: str) -> str:
@@ -250,7 +250,7 @@ def command_insert(args: argparse.Namespace) -> None:
         set_item_content(item, content.rstrip() + "\n" + line)
     else:
         set_item_content(item, line)
-    document = docs_slim.slim_document(document)
+    document = document_structure.slim_document(document)
     write_document(path, document)
     print(f"OK: inserted list item into {path}#{args.key}")
 

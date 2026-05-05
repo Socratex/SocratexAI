@@ -9,7 +9,7 @@ This guide shows how to initialize SocratexPipeline for a new project.
 Run the wizard:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/wizard.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_interactive_setup.ps1
 ```
 
 The first question asks for the language used in project conversation and status updates.

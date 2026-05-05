@@ -21,7 +21,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$insertScript = Join-Path $PSScriptRoot "doc_list_insert.ps1"
+$insertScript = Join-Path $PSScriptRoot "insert_document_list_item.ps1"
 $checkScript = Join-Path $PSScriptRoot "check_task.ps1"
 
 $insertArgs = @(
@@ -40,7 +40,7 @@ if ($AllowDuplicate) { $insertArgs += "-AllowDuplicate" }
 
 & powershell -NoProfile -ExecutionPolicy Bypass -File $insertScript @insertArgs
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_list_insert_checked insert failed with exit code $LASTEXITCODE"
+	throw "insert_checked_document_list_item insert failed with exit code $LASTEXITCODE"
 }
 
 $checkArgs = @("-Paths", $Path)
@@ -53,5 +53,5 @@ if ($NoStatus) { $checkArgs += "-NoStatus" }
 
 & powershell -NoProfile -ExecutionPolicy Bypass -File $checkScript @checkArgs
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_list_insert_checked task check failed with exit code $LASTEXITCODE"
+	throw "insert_checked_document_list_item task check failed with exit code $LASTEXITCODE"
 }

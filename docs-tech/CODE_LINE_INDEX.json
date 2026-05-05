@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T03:18:44+02:00",
+    "generatedAt":  "2026-05-05T03:31:39+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -15,13 +15,13 @@
                       "large":  true
                   },
                   {
-                      "path":  "tools/recompile_ai_instructions.ps1",
+                      "path":  "tools/rebuild_ai_compiled_context.ps1",
                       "lines":  398,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
-                      "path":  "tools/doc_tool.py",
+                      "path":  "tools/document_read_cache_engine.py",
                       "lines":  369,
                       "extension":  ".py",
                       "large":  true
@@ -51,7 +51,7 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_list_item.py",
+                      "path":  "tools/document_list_item_edit_engine.py",
                       "lines":  243,
                       "extension":  ".py",
                       "large":  false
@@ -75,7 +75,7 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_item.py",
+                      "path":  "tools/document_item_edit_engine.py",
                       "lines":  218,
                       "extension":  ".py",
                       "large":  false
@@ -93,19 +93,19 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/finish_task.ps1",
+                      "path":  "tools/run_final_task_checks.ps1",
                       "lines":  182,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/docs_slim.py",
+                      "path":  "tools/document_structure_normalizer_engine.py",
                       "lines":  170,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/finish_subtask.ps1",
+                      "path":  "tools/finalize_changed_files_commit_push.ps1",
                       "lines":  148,
                       "extension":  ".ps1",
                       "large":  false
@@ -117,13 +117,13 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/docs_migrator.py",
+                      "path":  "tools/document_schema_migration_engine.py",
                       "lines":  138,
                       "extension":  ".py",
                       "large":  false
                   },
                   {
-                      "path":  "tools/wizard.ps1",
+                      "path":  "tools/run_interactive_setup.ps1",
                       "lines":  134,
                       "extension":  ".ps1",
                       "large":  false
@@ -195,25 +195,25 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_list_review.ps1",
-                      "lines":  91,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
                       "path":  "tools/install_powershell.ps1",
                       "lines":  91,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_utf8_writes.ps1",
+                      "path":  "tools/review_document_list_candidates.ps1",
+                      "lines":  91,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/check_toolchain_health.ps1",
                       "lines":  86,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/doctor.ps1",
+                      "path":  "tools/check_utf8_writes.ps1",
                       "lines":  86,
                       "extension":  ".ps1",
                       "large":  false
@@ -231,13 +231,13 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/Utf8File.ps1",
+                      "path":  "tools/utf8_file_helpers.ps1",
                       "lines":  81,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_post_edit.ps1",
+                      "path":  "tools/run_document_post_edit_checks.ps1",
                       "lines":  80,
                       "extension":  ".ps1",
                       "large":  false
@@ -261,13 +261,13 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/compile_agent_instructions.ps1",
+                      "path":  "tools/generate_installed_agent_instructions.ps1",
                       "lines":  68,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/done.ps1",
+                      "path":  "tools/finalize_task_check_commit_push.ps1",
                       "lines":  67,
                       "extension":  ".ps1",
                       "large":  false
@@ -297,7 +297,7 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/commit_task.ps1",
+                      "path":  "tools/legacy_commit_task_compatibility_wrapper.ps1",
                       "lines":  61,
                       "extension":  ".ps1",
                       "large":  false
@@ -327,7 +327,7 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_list_insert_checked.ps1",
+                      "path":  "tools/insert_checked_document_list_item.ps1",
                       "lines":  51,
                       "extension":  ".ps1",
                       "large":  false
@@ -351,19 +351,19 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/docs_migrator.ps1",
+                      "path":  "tools/migrate_document_schema.ps1",
                       "lines":  45,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/docs_slim.ps1",
+                      "path":  "tools/normalize_document_structure.ps1",
                       "lines":  45,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_item_insert.ps1",
+                      "path":  "tools/insert_document_item.ps1",
                       "lines":  43,
                       "extension":  ".ps1",
                       "large":  false
@@ -375,19 +375,19 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_item_migrate.ps1",
+                      "path":  "tools/migrate_document_item.ps1",
                       "lines":  37,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/compile.ps1",
+                      "path":  "tools/compile_pipeline_context.ps1",
                       "lines":  36,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_list_insert.ps1",
+                      "path":  "tools/insert_document_list_item.ps1",
                       "lines":  35,
                       "extension":  ".ps1",
                       "large":  false
@@ -405,7 +405,7 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_item_bulk_insert.ps1",
+                      "path":  "tools/bulk_insert_document_items.ps1",
                       "lines":  33,
                       "extension":  ".ps1",
                       "large":  false
@@ -423,13 +423,13 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_list_check.ps1",
+                      "path":  "tools/check_document_list_item_duplicates.ps1",
                       "lines":  32,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_item_move.ps1",
+                      "path":  "tools/move_document_item.ps1",
                       "lines":  31,
                       "extension":  ".ps1",
                       "large":  false
@@ -459,7 +459,7 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_build_cache.ps1",
+                      "path":  "tools/build_document_cache.ps1",
                       "lines":  27,
                       "extension":  ".ps1",
                       "large":  false
@@ -501,7 +501,7 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_read.ps1",
+                      "path":  "tools/read_document_item.ps1",
                       "lines":  22,
                       "extension":  ".ps1",
                       "large":  false
@@ -519,13 +519,13 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_keys.ps1",
+                      "path":  "tools/list_document_keys.ps1",
                       "lines":  20,
                       "extension":  ".ps1",
                       "large":  false
                   },
                   {
-                      "path":  "tools/doc_read_titles.ps1",
+                      "path":  "tools/read_document_items_by_title.ps1",
                       "lines":  20,
                       "extension":  ".ps1",
                       "large":  false
@@ -537,7 +537,7 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/check_compiled_instructions.ps1",
+                      "path":  "tools/check_ai_compiled_context.ps1",
                       "lines":  13,
                       "extension":  ".ps1",
                       "large":  false

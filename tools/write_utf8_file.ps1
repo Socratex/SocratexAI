@@ -12,7 +12,7 @@ param(
 begin {
 	Set-StrictMode -Version Latest
 	$ErrorActionPreference = "Stop"
-	. (Join-Path $PSScriptRoot "Utf8File.ps1")
+	. (Join-Path $PSScriptRoot "utf8_file_helpers.ps1")
 	$lines = [System.Collections.Generic.List[string]]::new()
 }
 

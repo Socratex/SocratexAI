@@ -15,7 +15,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
-$finishSubtaskScript = Join-Path $PSScriptRoot "finish_subtask.ps1"
+$finishSubtaskScript = Join-Path $PSScriptRoot "finalize_changed_files_commit_push.ps1"
 
 if ([string]::IsNullOrWhiteSpace($Message)) {
 	throw "Commit message must not be empty."
@@ -24,9 +24,9 @@ if ([string]::IsNullOrWhiteSpace($Message)) {
 Push-Location -LiteralPath $repoRoot
 try {
 	if ($Paths.Count -gt 0) {
-		Write-Host "commit_task.ps1 delegates to finish_subtask.ps1; explicit -Paths are accepted for compatibility but staging is git-derived."
+		Write-Host "legacy_commit_task_compatibility_wrapper.ps1 delegates to finalize_changed_files_commit_push.ps1; explicit -Paths are accepted for compatibility but staging is git-derived."
 	} else {
-		Write-Host "commit_task.ps1 delegates to finish_subtask.ps1; prefer finish_subtask.ps1 for new automation."
+		Write-Host "legacy_commit_task_compatibility_wrapper.ps1 delegates to finalize_changed_files_commit_push.ps1; prefer finalize_changed_files_commit_push.ps1 for new automation."
 	}
 
 	$finishSubtaskArgs = @(
@@ -60,7 +60,7 @@ try {
 
 	& powershell @finishSubtaskArgs
 	if ($LASTEXITCODE -ne 0) {
-		throw "finish_subtask failed with exit code $LASTEXITCODE"
+		throw "finalize_changed_files_commit_push failed with exit code $LASTEXITCODE"
 	}
 } finally {
 	Pop-Location

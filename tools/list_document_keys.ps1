@@ -1,8 +1,6 @@
 param(
 	[Parameter(Mandatory = $true)]
 	[string]$Path,
-	[Parameter(Mandatory = $true)]
-	[string[]]$Titles,
 	[switch]$Json
 )
 
@@ -14,11 +12,13 @@ if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"
 }
 
-$script = Join-Path $PSScriptRoot "doc_list_item.py"
-$arguments = @($script, "read-titles", $Path, "--titles") + $Titles
-if ($Json) { $arguments += "--json" }
+$script = Join-Path $PSScriptRoot "document_read_cache_engine.py"
+$arguments = @($script, "keys", $Path)
+if ($Json) {
+	$arguments += "--json"
+}
 
 & $python @arguments
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_read_titles failed with exit code $LASTEXITCODE"
+	throw "list_document_keys failed with exit code $LASTEXITCODE"
 }

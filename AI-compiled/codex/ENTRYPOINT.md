@@ -1,12 +1,12 @@
 # Compiled Codex Entrypoint
 
-Generated: source-6fde61a99447
+Generated: source-497156e27702
 
 This directory is generated. Do not edit it by hand.
 Edit source instructions, then run:
 
 ~~~powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1
 ~~~
 
 Primary rule: use these compiled files for fast agent orientation, then read source files only when exact details or edits are needed.

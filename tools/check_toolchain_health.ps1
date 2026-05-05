@@ -67,7 +67,7 @@ try {
 	$pythonPath = Find-CommandPath -CandidateNames @("python", "py")
 	Write-CheckResult -Name "python" -Ok (-not [string]::IsNullOrWhiteSpace($pythonPath)) -Detail $pythonPath
 
-	$doneScript = Join-Path $PSScriptRoot "done.ps1"
+	$doneScript = Join-Path $PSScriptRoot "finalize_task_check_commit_push.ps1"
 	Write-CheckResult -Name "done finalizer" -Ok (Test-Path -LiteralPath $doneScript) -Detail $doneScript
 
 	$workflowPath = Join-Path $repoRoot "project\code\WORKFLOW.json"
@@ -76,7 +76,7 @@ try {
 	$agentContractPath = Join-Path $repoRoot "core\AGENT-CONTRACT.json"
 	Write-CheckResult -Name "agent contract" -Ok (Test-Path -LiteralPath $agentContractPath) -Detail $agentContractPath
 
-	$docToolPath = Join-Path $PSScriptRoot "doc_tool.py"
+	$docToolPath = Join-Path $PSScriptRoot "document_read_cache_engine.py"
 	Write-CheckResult -Name "doc tool" -Ok (Test-Path -LiteralPath $docToolPath) -Detail $docToolPath
 
 	$checkUtf8Script = Join-Path $PSScriptRoot "check_utf8_writes.ps1"

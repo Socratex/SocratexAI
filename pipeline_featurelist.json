@@ -67,6 +67,8 @@
         "source_pipeline_bootstrap_index",
         "index_only_command_script_context",
         "root_command_flow_script_catalogs",
+        "self_describing_script_name_catalog",
+        "script_named_flow_steps",
         "generic_programming_default_pack",
         "explicit_gamedev_project_pack",
         "json_document_normalizer"

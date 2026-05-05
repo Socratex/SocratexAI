@@ -24,7 +24,7 @@ if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"
 }
 
-$script = Join-Path $PSScriptRoot "doc_item.py"
+$script = Join-Path $PSScriptRoot "document_item_edit_engine.py"
 $arguments = @($script, "insert", $Path, $Key, "--position", $Position)
 if ($Title -ne "") { $arguments += @("--title", $Title) }
 if ($Content -ne "") { $arguments += @("--content", $Content) }
@@ -37,12 +37,12 @@ if ($Replace) { $arguments += "--replace" }
 
 & $python @arguments
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_item_insert failed with exit code $LASTEXITCODE"
+	throw "insert_document_item failed with exit code $LASTEXITCODE"
 }
 
 if (-not $NoPostEdit) {
-	& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "doc_post_edit.ps1") -Paths $Path
+	& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "run_document_post_edit_checks.ps1") -Paths $Path
 	if ($LASTEXITCODE -ne 0) {
-		throw "doc_item_insert post-edit pipeline failed with exit code $LASTEXITCODE"
+		throw "insert_document_item post-edit pipeline failed with exit code $LASTEXITCODE"
 	}
 }

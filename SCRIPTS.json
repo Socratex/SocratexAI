@@ -4,44 +4,44 @@
         "audit_docs.ps1",
         "audit_json_docs.py",
         "check_code_context_gate.ps1",
-        "check_compiled_instructions.ps1",
+        "check_ai_compiled_context.ps1",
         "check_evals.ps1",
         "check_pipeline_featurelist_update.ps1",
         "check_runtime.py",
         "check_task.ps1",
         "check_utf8_writes.ps1",
-        "commit_task.ps1",
-        "compile.ps1",
-        "compile_agent_instructions.ps1",
+        "legacy_commit_task_compatibility_wrapper.ps1",
+        "compile_pipeline_context.ps1",
+        "generate_installed_agent_instructions.ps1",
         "configure_powershell_utf8.ps1",
         "console_summary.ps1",
         "context_tags.ps1",
         "detect_project_stack.ps1",
-        "doc_build_cache.ps1",
-        "doc_item.py",
-        "doc_item_bulk_insert.ps1",
-        "doc_item_insert.ps1",
-        "doc_item_migrate.ps1",
-        "doc_item_move.ps1",
-        "doc_keys.ps1",
-        "doc_list_check.ps1",
-        "doc_list_insert.ps1",
-        "doc_list_insert_checked.ps1",
-        "doc_list_item.py",
-        "doc_list_review.ps1",
-        "doc_post_edit.ps1",
-        "doc_read.ps1",
-        "doc_read_titles.ps1",
-        "doc_tool.py",
-        "docs_migrator.ps1",
-        "docs_migrator.py",
-        "docs_slim.ps1",
-        "docs_slim.py",
-        "doctor.ps1",
-        "done.ps1",
+        "build_document_cache.ps1",
+        "document_item_edit_engine.py",
+        "bulk_insert_document_items.ps1",
+        "insert_document_item.ps1",
+        "migrate_document_item.ps1",
+        "move_document_item.ps1",
+        "list_document_keys.ps1",
+        "check_document_list_item_duplicates.ps1",
+        "insert_document_list_item.ps1",
+        "insert_checked_document_list_item.ps1",
+        "document_list_item_edit_engine.py",
+        "review_document_list_candidates.ps1",
+        "run_document_post_edit_checks.ps1",
+        "read_document_item.ps1",
+        "read_document_items_by_title.ps1",
+        "document_read_cache_engine.py",
+        "migrate_document_schema.ps1",
+        "document_schema_migration_engine.py",
+        "normalize_document_structure.ps1",
+        "document_structure_normalizer_engine.py",
+        "check_toolchain_health.ps1",
+        "finalize_task_check_commit_push.ps1",
         "end_prompt_snapshot.ps1",
-        "finish_subtask.ps1",
-        "finish_task.ps1",
+        "finalize_changed_files_commit_push.ps1",
+        "run_final_task_checks.ps1",
         "generate_embedded_config_payload.py",
         "import_existing_project.ps1",
         "init_branch_memory.ps1",
@@ -75,7 +75,7 @@
         "open_pipeline_learning_issue.ps1",
         "pipeline_bootstrap_index.ps1",
         "pipeline_bootstrap_index.py",
-        "recompile_ai_instructions.ps1",
+        "rebuild_ai_compiled_context.ps1",
         "reinitialize_pipeline.ps1",
         "remove_pipeline.ps1",
         "repair_mojibake.ps1",
@@ -88,8 +88,8 @@
         "update_code_line_index.ps1",
         "update_pipeline_from_link.ps1",
         "upgrade_from_riftbound.ps1",
-        "Utf8File.ps1",
-        "wizard.ps1",
+        "utf8_file_helpers.ps1",
+        "run_interactive_setup.ps1",
         "write_utf8_file.ps1"
     ],
     "content": {
@@ -105,8 +105,8 @@
         "check_code_context_gate.ps1": {
             "path": "tools/check_code_context_gate.ps1"
         },
-        "check_compiled_instructions.ps1": {
-            "path": "tools/check_compiled_instructions.ps1"
+        "check_ai_compiled_context.ps1": {
+            "path": "tools/check_ai_compiled_context.ps1"
         },
         "check_evals.ps1": {
             "path": "tools/check_evals.ps1"
@@ -123,14 +123,14 @@
         "check_utf8_writes.ps1": {
             "path": "tools/check_utf8_writes.ps1"
         },
-        "commit_task.ps1": {
-            "path": "tools/commit_task.ps1"
+        "legacy_commit_task_compatibility_wrapper.ps1": {
+            "path": "tools/legacy_commit_task_compatibility_wrapper.ps1"
         },
-        "compile.ps1": {
-            "path": "tools/compile.ps1"
+        "compile_pipeline_context.ps1": {
+            "path": "tools/compile_pipeline_context.ps1"
         },
-        "compile_agent_instructions.ps1": {
-            "path": "tools/compile_agent_instructions.ps1"
+        "generate_installed_agent_instructions.ps1": {
+            "path": "tools/generate_installed_agent_instructions.ps1"
         },
         "configure_powershell_utf8.ps1": {
             "path": "tools/configure_powershell_utf8.ps1"
@@ -144,80 +144,80 @@
         "detect_project_stack.ps1": {
             "path": "tools/detect_project_stack.ps1"
         },
-        "doc_build_cache.ps1": {
-            "path": "tools/doc_build_cache.ps1"
+        "build_document_cache.ps1": {
+            "path": "tools/build_document_cache.ps1"
         },
-        "doc_item.py": {
-            "path": "tools/doc_item.py"
+        "document_item_edit_engine.py": {
+            "path": "tools/document_item_edit_engine.py"
         },
-        "doc_item_bulk_insert.ps1": {
-            "path": "tools/doc_item_bulk_insert.ps1"
+        "bulk_insert_document_items.ps1": {
+            "path": "tools/bulk_insert_document_items.ps1"
         },
-        "doc_item_insert.ps1": {
-            "path": "tools/doc_item_insert.ps1"
+        "insert_document_item.ps1": {
+            "path": "tools/insert_document_item.ps1"
         },
-        "doc_item_migrate.ps1": {
-            "path": "tools/doc_item_migrate.ps1"
+        "migrate_document_item.ps1": {
+            "path": "tools/migrate_document_item.ps1"
         },
-        "doc_item_move.ps1": {
-            "path": "tools/doc_item_move.ps1"
+        "move_document_item.ps1": {
+            "path": "tools/move_document_item.ps1"
         },
-        "doc_keys.ps1": {
-            "path": "tools/doc_keys.ps1"
+        "list_document_keys.ps1": {
+            "path": "tools/list_document_keys.ps1"
         },
-        "doc_list_check.ps1": {
-            "path": "tools/doc_list_check.ps1"
+        "check_document_list_item_duplicates.ps1": {
+            "path": "tools/check_document_list_item_duplicates.ps1"
         },
-        "doc_list_insert.ps1": {
-            "path": "tools/doc_list_insert.ps1"
+        "insert_document_list_item.ps1": {
+            "path": "tools/insert_document_list_item.ps1"
         },
-        "doc_list_insert_checked.ps1": {
-            "path": "tools/doc_list_insert_checked.ps1"
+        "insert_checked_document_list_item.ps1": {
+            "path": "tools/insert_checked_document_list_item.ps1"
         },
-        "doc_list_item.py": {
-            "path": "tools/doc_list_item.py"
+        "document_list_item_edit_engine.py": {
+            "path": "tools/document_list_item_edit_engine.py"
         },
-        "doc_list_review.ps1": {
-            "path": "tools/doc_list_review.ps1"
+        "review_document_list_candidates.ps1": {
+            "path": "tools/review_document_list_candidates.ps1"
         },
-        "doc_post_edit.ps1": {
-            "path": "tools/doc_post_edit.ps1"
+        "run_document_post_edit_checks.ps1": {
+            "path": "tools/run_document_post_edit_checks.ps1"
         },
-        "doc_read.ps1": {
-            "path": "tools/doc_read.ps1"
+        "read_document_item.ps1": {
+            "path": "tools/read_document_item.ps1"
         },
-        "doc_read_titles.ps1": {
-            "path": "tools/doc_read_titles.ps1"
+        "read_document_items_by_title.ps1": {
+            "path": "tools/read_document_items_by_title.ps1"
         },
-        "doc_tool.py": {
-            "path": "tools/doc_tool.py"
+        "document_read_cache_engine.py": {
+            "path": "tools/document_read_cache_engine.py"
         },
-        "docs_migrator.ps1": {
-            "path": "tools/docs_migrator.ps1"
+        "migrate_document_schema.ps1": {
+            "path": "tools/migrate_document_schema.ps1"
         },
-        "docs_migrator.py": {
-            "path": "tools/docs_migrator.py"
+        "document_schema_migration_engine.py": {
+            "path": "tools/document_schema_migration_engine.py"
         },
-        "docs_slim.ps1": {
-            "path": "tools/docs_slim.ps1"
+        "normalize_document_structure.ps1": {
+            "path": "tools/normalize_document_structure.ps1"
         },
-        "docs_slim.py": {
-            "path": "tools/docs_slim.py"
+        "document_structure_normalizer_engine.py": {
+            "path": "tools/document_structure_normalizer_engine.py"
         },
-        "doctor.ps1": {
-            "path": "tools/doctor.ps1"
+        "check_toolchain_health.ps1": {
+            "path": "tools/check_toolchain_health.ps1"
         },
-        "done.ps1": {
-            "path": "tools/done.ps1"
+        "finalize_task_check_commit_push.ps1": {
+            "path": "tools/finalize_task_check_commit_push.ps1"
         },
         "end_prompt_snapshot.ps1": {
             "path": "tools/end_prompt_snapshot.ps1"
         },
-        "finish_subtask.ps1": {
-            "path": "tools/finish_subtask.ps1"
+        "finalize_changed_files_commit_push.ps1": {
+            "path": "tools/finalize_changed_files_commit_push.ps1"
         },
-        "finish_task.ps1": {
-            "path": "tools/finish_task.ps1"
+        "run_final_task_checks.ps1": {
+            "path": "tools/run_final_task_checks.ps1"
         },
         "generate_embedded_config_payload.py": {
             "path": "tools/generate_embedded_config_payload.py"
@@ -318,8 +318,8 @@
         "pipeline_bootstrap_index.py": {
             "path": "tools/pipeline_bootstrap_index.py"
         },
-        "recompile_ai_instructions.ps1": {
-            "path": "tools/recompile_ai_instructions.ps1"
+        "rebuild_ai_compiled_context.ps1": {
+            "path": "tools/rebuild_ai_compiled_context.ps1"
         },
         "reinitialize_pipeline.ps1": {
             "path": "tools/reinitialize_pipeline.ps1"
@@ -357,11 +357,11 @@
         "upgrade_from_riftbound.ps1": {
             "path": "tools/upgrade_from_riftbound.ps1"
         },
-        "Utf8File.ps1": {
-            "path": "tools/Utf8File.ps1"
+        "utf8_file_helpers.ps1": {
+            "path": "tools/utf8_file_helpers.ps1"
         },
-        "wizard.ps1": {
-            "path": "tools/wizard.ps1"
+        "run_interactive_setup.ps1": {
+            "path": "tools/run_interactive_setup.ps1"
         },
         "write_utf8_file.ps1": {
             "path": "tools/write_utf8_file.ps1"

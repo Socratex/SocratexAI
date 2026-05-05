@@ -16,7 +16,7 @@
     ],
     "content": {
         "CONTEXT": {
-            "purpose": "Load workflow, prompt tags, and knowledge context before answering or editing."
+            "purpose": "Load docs-tech/PIPELINE-BOOTSTRAP.json, then use context_tags.ps1 and knowledge_select.ps1 when routed context is needed."
         },
         "CONTINUE": {
             "purpose": "Execute the next active pass from the current plan."
@@ -34,10 +34,10 @@
             "purpose": "Run audit_docs.ps1 and fix local hard failures."
         },
         "FINISH": {
-            "purpose": "Run done.ps1 or the project finalizer."
+            "purpose": "Run finalize_task_check_commit_push.ps1 for check, commit, and push."
         },
         "COMMIT": {
-            "purpose": "Create a bounded Git commit through the finalizer path."
+            "purpose": "Create a bounded Git commit through finalize_changed_files_commit_push.ps1 or finalize_task_check_commit_push.ps1."
         },
         "LOG": {
             "purpose": "Inspect supplied diagnostics and apply the smallest source-owned fix or evidence step."
@@ -52,7 +52,7 @@
             "purpose": "Defragment raw user instructions and promote them into the correct layer."
         },
         "COMPILE": {
-            "purpose": "Rebuild generated instruction and knowledge caches."
+            "purpose": "Run compile_pipeline_context.ps1 to rebuild generated instruction and knowledge caches."
         }
     },
     "metadata": {

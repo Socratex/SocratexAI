@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
 $normalizeScript = Join-Path $PSScriptRoot "normalize_text_files.ps1"
-$cacheScript = Join-Path $PSScriptRoot "doc_build_cache.ps1"
+$cacheScript = Join-Path $PSScriptRoot "build_document_cache.ps1"
 $checkScript = Join-Path $PSScriptRoot "check_task.ps1"
 
 function Get-RelativePath {
@@ -41,7 +41,7 @@ try {
 	}
 
 	if ($normalizedPaths.Count -eq 0) {
-		throw "doc_post_edit requires at least one path."
+		throw "run_document_post_edit_checks requires at least one path."
 	}
 
 	Write-Host "==> doc post-edit"

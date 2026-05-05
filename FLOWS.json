@@ -17,40 +17,46 @@
                 "split into independent intents",
                 "classify each intent through WORKFLOW.json",
                 "execute in dependency order",
-                "verify and report one coherent result"
+                "run check_task.ps1 at the final verification boundary when files changed",
+                "report one coherent result"
             ]
         },
         "direct_answer": {
             "then": [
-                "load bootstrap indexes",
+                "load docs-tech/PIPELINE-BOOTSTRAP.json",
+                "run context_tags.ps1 when the prompt needs routed context",
+                "run knowledge_select.ps1 with derived tags when source rules are needed",
                 "answer from loaded context",
                 "state uncertainty or missing contract when relevant"
             ]
         },
         "documentation_edit": {
             "then": [
-                "load DOCS.json",
-                "read target owner document",
-                "use JSON-aware document tooling",
-                "normalize and verify"
+                "load DOCS.json index",
+                "read target owner document with list_document_keys.ps1 or read_document_item.ps1",
+                "edit structured documents with insert_document_item.ps1, move_document_item.ps1, migrate_document_item.ps1, or insert_checked_document_list_item.ps1 when their contract fits",
+                "run normalize_json_files.ps1 after JSON edits",
+                "run check_task.ps1 at the final verification boundary"
             ]
         },
         "implementation": {
             "then": [
                 "load WORKFLOW.json",
-                "load code guidance when source code may change",
-                "inspect scripts before manual work",
+                "run knowledge_code_context.ps1 before source-code reads or edits",
+                "inspect SCRIPTS.json index before manual work",
                 "edit scoped files",
-                "verify"
+                "run check_task.ps1 at the final verification boundary"
             ]
         },
         "broad_refactor": {
             "then": [
                 "confirm high-cost scope when not already confirmed",
                 "create passes",
+                "run knowledge_code_context.ps1 before source-code reads or edits",
                 "edit in coherent slices",
                 "update affected contracts",
-                "finalize"
+                "run check_task.ps1 after each intentional verification boundary",
+                "run finalize_task_check_commit_push.ps1 when commit and push are required"
             ]
         },
         "pipeline_upgrade": {
@@ -60,13 +66,16 @@
                 "port routing/index scripts",
                 "generalize default code behavior",
                 "add explicit project types",
-                "recompile generated outputs",
-                "run finalizer"
+                "run pipeline_bootstrap_index.ps1 after routing or index changes",
+                "run normalize_json_files.ps1 after JSON contract changes",
+                "run compile_pipeline_context.ps1 after source instruction, template, pack, or compiled-context changes",
+                "run finalize_task_check_commit_push.ps1"
             ]
         },
         "review": {
             "then": [
                 "inspect diff or target files",
+                "use list_document_keys.ps1 or read_document_item.ps1 for structured document reads",
                 "lead with findings",
                 "include verification gaps",
                 "avoid unrelated rewrites"
@@ -74,16 +83,16 @@
         },
         "quality_diagnostics": {
             "then": [
-                "run the relevant script",
+                "run check_task.ps1 -Audit for repository quality diagnostics",
+                "run check_ai_compiled_context.ps1 or compile_pipeline_context.ps1 for compiled-context drift",
                 "inspect failures",
                 "fix repeatable tooling failures in the owning tool",
-                "rerun"
+                "rerun the failing script"
             ]
         },
         "compile_command": {
             "then": [
-                "run recompile_ai_instructions.ps1",
-                "run knowledge checks",
+                "run compile_pipeline_context.ps1",
                 "report generated drift"
             ]
         },

@@ -383,7 +383,7 @@ if ($CompileAgent) {
     if ($DryRun) {
         Write-Output "Would compile AGENTS.md for packs: $([string]::Join(', ', $KeepPacks))"
     } else {
-        & (Join-Path $PSScriptRoot "compile_agent_instructions.ps1") -Packs $KeepPacks -OutputPath "AGENTS.md"
+        & (Join-Path $PSScriptRoot "generate_installed_agent_instructions.ps1") -Packs $KeepPacks -OutputPath "AGENTS.md"
     }
 }
 

@@ -38,7 +38,7 @@ function Get-Section {
 		[string]$Selector
 	)
 
-	$script = Join-Path $PSScriptRoot "doc_read.ps1"
+	$script = Join-Path $PSScriptRoot "read_document_item.ps1"
 	if (-not (Test-Path -LiteralPath $script -PathType Leaf)) {
 		return ""
 	}
@@ -218,7 +218,7 @@ This directory is generated. Do not edit it by hand.
 Edit source instructions, then run:
 
 ~~~powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1
 ~~~
 
 Primary rule: use these compiled files for fast agent orientation, then read source files only when exact details or edits are needed.
@@ -288,13 +288,13 @@ $codeWorkflowVerification
 Use this command after changing source instructions, templates, core docs, project packs, or compiled-output rules:
 
 ~~~powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1
 ~~~
 
 Use this command to check for drift:
 
 ~~~powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_ai_compiled_context.ps1
 ~~~
 "@
 
@@ -363,8 +363,8 @@ $teamBody
 			"codex/CONTEXTUAL-WORKFLOW.compiled.md",
 			"codex/TEAM.compiled.md"
 		)
-		recompile_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1"
-		check_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1"
+		recompile_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1"
+		check_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_ai_compiled_context.ps1"
 		sources = $sourceManifest
 	}
 	$indexJson = $index | ConvertTo-Json -Depth 8
@@ -377,7 +377,7 @@ Generated read-optimized agent instructions.
 Do not edit this directory manually. Edit source instructions and run:
 
 ~~~powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1
 ~~~
 
 Codex starts at `codex/ENTRYPOINT.md`.
@@ -391,8 +391,8 @@ Codex starts at `codex/ENTRYPOINT.md`.
 		entrypoints = [ordered]@{
 			codex = "codex/ENTRYPOINT.md"
 		}
-		recompile_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1"
-		check_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1"
+		recompile_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1"
+		check_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_ai_compiled_context.ps1"
 	}
 	$compiledIndex = $compiledIndexPayload | ConvertTo-Json -Depth 8
 	$files = @()
@@ -444,7 +444,7 @@ if ($Check) {
 		foreach ($item in $drift) {
 			Write-Host " - $item"
 		}
-		Write-Host "Run: powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1"
+		Write-Host "Run: powershell -NoProfile -ExecutionPolicy Bypass -File tools/rebuild_ai_compiled_context.ps1"
 		exit 1
 	}
 	if (Test-Path -LiteralPath $knowledgeCheckScript -PathType Leaf) {

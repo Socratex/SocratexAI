@@ -185,7 +185,7 @@
             "version": "0.2.0-alpha",
             "date": "2026-04-30",
             "feature": "generic_done_and_doctor_pipeline",
-            "change": "Added generic tools/done.ps1, tools/doctor.ps1, UTF-8 write helpers, and check_utf8_writes.ps1 to the source pipeline. Updated code workflow, Git rules, command docs, pack instructions, and agent contract so Git-backed code work closes through tools/done.ps1 and repeatable finalizer failures are fixed in tooling. Updated pipeline_featurelist.json so reusable features are source-owned while project-specific helpers remain outside the reusable source pipeline. Why: Reusable pipeline improvements should live in SocratexPipeline, while only project/domain-specific domain-specific automation should remain in its owning project."
+            "change": "Added generic tools/finalize_task_check_commit_push.ps1, tools/check_toolchain_health.ps1, UTF-8 write helpers, and check_utf8_writes.ps1 to the source pipeline. Updated code workflow, Git rules, command docs, pack instructions, and agent contract so Git-backed code work closes through tools/finalize_task_check_commit_push.ps1 and repeatable finalizer failures are fixed in tooling. Updated pipeline_featurelist.json so reusable features are source-owned while project-specific helpers remain outside the reusable source pipeline. Why: Reusable pipeline improvements should live in SocratexPipeline, while only project/domain-specific domain-specific automation should remain in its owning project."
         },
         {
             "version": "0.2.0-alpha",
@@ -239,13 +239,19 @@
             "version": "0.2.0-alpha",
             "date": "2026-04-30",
             "feature": "pipeline_featurelist_update_guard",
-            "change": "Added a pipeline feature-list guard that runs only for pipeline-owned changes. Hooked the guard into check_task.ps1 and finish_task.ps1 so changes under tools/core/project/templates/adapters require pipeline_featurelist.json updates. Kept ordinary project-task paths out of the guard so normal work does not need feature-list edits. Why: Pipeline improvements should update the feature manifest, while ordinary project work should not be burdened by source-pipeline bookkeeping."
+            "change": "Added a pipeline feature-list guard that runs only for pipeline-owned changes. Hooked the guard into check_task.ps1 and run_final_task_checks.ps1 so changes under tools/core/project/templates/adapters require pipeline_featurelist.json updates. Kept ordinary project-task paths out of the guard so normal work does not need feature-list edits. Why: Pipeline improvements should update the feature manifest, while ordinary project work should not be burdened by source-pipeline bookkeeping."
         },
         {
             "version": "0.2.0-alpha",
             "date": "2026-05-02",
             "feature": "context_tagged_knowledge_prelude",
             "change": "Added tools/context_tags.ps1 and a workflow rule requiring substantive commands and questions to derive prompt tags, query compiled knowledge notes, and load relevant context before answer or execution. Why: Compiled knowledge should actively route ordinary agent work instead of only serving broad startup or manual tag queries."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-05",
+            "feature": "self_describing_script_name_catalog",
+            "change": "Renamed ambiguous source-pipeline scripts to self-describing names and updated command, flow, workflow, pack, and documentation references to the new names. Why: The default SCRIPTS index is loaded without descriptions, so script names must be clear enough for agents to choose the right tool from the name alone."
         }
     ]
 }

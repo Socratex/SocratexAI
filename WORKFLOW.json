@@ -6,7 +6,6 @@
         "workflow_workflow_contract",
         "generic_programming_baseline",
         "project_type_routing",
-        "broad_upgrade_passes",
         "finish_contract"
     ],
     "content": {
@@ -18,7 +17,6 @@
                 "workflow_workflow_contract",
                 "generic_programming_baseline",
                 "project_type_routing",
-                "broad_upgrade_passes",
                 "finish_contract"
             ]
         },
@@ -49,21 +47,9 @@
             ],
             "rule": "Select project packs by project profile. Use gamedev only when the project is explicitly a game, simulation, or game-adjacent interactive project."
         },
-        "broad_upgrade_passes": {
-            "title": "Current Broad Upgrade Passes",
-            "passes": [
-                "Audit source state",
-                "Migrate structured docs to JSON",
-                "Port Riftbound-style indexes and script routing",
-                "Generalize programming defaults",
-                "Add gamedev project type",
-                "Verify English-only source content",
-                "Recompile, verify, commit, and push"
-            ]
-        },
         "finish_contract": {
             "title": "Finish Contract",
-            "rule": "Run the source-pipeline finalizer near the end of the scope. If it fails because tooling assumes legacy formats, fix the owning tool and rerun."
+            "rule": "Run finalize_task_check_commit_push.ps1 near the end of any changed-file scope that should be committed and pushed. If it fails because tooling assumes legacy formats, fix the owning tool and rerun the finalizer."
         }
     },
     "metadata": {

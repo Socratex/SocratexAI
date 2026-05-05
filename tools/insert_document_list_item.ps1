@@ -21,7 +21,7 @@ if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"
 }
 
-$script = Join-Path $PSScriptRoot "doc_list_item.py"
+$script = Join-Path $PSScriptRoot "document_list_item_edit_engine.py"
 $arguments = @($script, "insert", $Path, $Key, "--text", $Text, "--scope", $DuplicateScope)
 if ($Url -ne "") { $arguments += @("--url", $Url) }
 if ($CreateTitle -ne "") { $arguments += @("--create-title", $CreateTitle) }
@@ -29,12 +29,12 @@ if ($AllowDuplicate) { $arguments += "--allow-duplicate" }
 
 & $python @arguments
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_list_insert failed with exit code $LASTEXITCODE"
+	throw "insert_document_list_item failed with exit code $LASTEXITCODE"
 }
 
 if (-not $NoPostEdit) {
-	& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "doc_post_edit.ps1") -Paths $Path
+	& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "run_document_post_edit_checks.ps1") -Paths $Path
 	if ($LASTEXITCODE -ne 0) {
-		throw "doc_list_insert post-edit pipeline failed with exit code $LASTEXITCODE"
+		throw "insert_document_list_item post-edit pipeline failed with exit code $LASTEXITCODE"
 	}
 }

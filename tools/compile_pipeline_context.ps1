@@ -6,8 +6,8 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$recompileScript = Join-Path $PSScriptRoot "recompile_ai_instructions.ps1"
-$checkScript = Join-Path $PSScriptRoot "check_compiled_instructions.ps1"
+$recompileScript = Join-Path $PSScriptRoot "rebuild_ai_compiled_context.ps1"
+$checkScript = Join-Path $PSScriptRoot "check_ai_compiled_context.ps1"
 $bootstrapScript = Join-Path $PSScriptRoot "pipeline_bootstrap_index.ps1"
 
 if ($Check) {

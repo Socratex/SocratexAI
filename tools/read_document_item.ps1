@@ -14,7 +14,7 @@ if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"
 }
 
-$script = Join-Path $PSScriptRoot "doc_tool.py"
+$script = Join-Path $PSScriptRoot "document_read_cache_engine.py"
 $arguments = @($script, "read", $Path, $Selector)
 if ($Json) {
 	$arguments += "--json"
@@ -22,5 +22,5 @@ if ($Json) {
 
 & $python @arguments
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_read failed with exit code $LASTEXITCODE"
+	throw "read_document_item failed with exit code $LASTEXITCODE"
 }

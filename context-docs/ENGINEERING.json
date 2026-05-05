@@ -233,7 +233,7 @@
                             "note": "Knowledge SQLite and file fallback source freshness use the normalized hash policy."
                         },
                         {
-                            "path": "tools/recompile_ai_instructions.ps1",
+                            "path": "tools/rebuild_ai_compiled_context.ps1",
                             "selector": "ConvertTo-NormalizedHashText",
                             "note": "Compiled instruction source manifests and checksums use the same normalized hash policy."
                         }

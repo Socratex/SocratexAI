@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import docs_slim
+import document_structure_normalizer_engine as document_structure
 
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -17,7 +17,7 @@ def load_document(path: Path) -> Any:
 
 
 def write_document(path: Path, value: Any) -> None:
-    docs_slim.write_document(path, value)
+    document_structure.write_document(path, value)
 
 
 def normalize_document(document: Any) -> dict[str, Any]:
@@ -27,7 +27,7 @@ def normalize_document(document: Any) -> dict[str, Any]:
         document["items"] = {}
     if not isinstance(document["items"], dict):
         raise ValueError("Document items must be a mapping.")
-    return docs_slim.slim_document(document)
+    return document_structure.slim_document(document)
 
 
 def item_keys(document: dict[str, Any]) -> list[str]:
@@ -78,7 +78,7 @@ def apply_order(document: dict[str, Any], keys: list[str]) -> dict[str, Any]:
         keys = ["quick_index"] + keys
     document["index"] = keys
     document["items"] = reorder_mapping(document["items"], keys)
-    return docs_slim.slim_document(document)
+    return document_structure.slim_document(document)
 
 
 def read_item_payload(args: argparse.Namespace) -> dict[str, Any]:

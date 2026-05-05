@@ -6,8 +6,8 @@ A project has:
 AGENTS.md
 AI-compiled/codex/ENTRYPOINT.md
 AI-compiled/codex/RULES.compiled.md
-tools/recompile_ai_instructions.ps1
-tools/check_compiled_instructions.ps1
+tools/rebuild_ai_compiled_context.ps1
+tools/check_ai_compiled_context.ps1
 core/AGENT-CONTRACT.json
 ```
 

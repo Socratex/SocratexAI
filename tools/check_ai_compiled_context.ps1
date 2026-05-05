@@ -5,7 +5,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$script = Join-Path $PSScriptRoot "recompile_ai_instructions.ps1"
+$script = Join-Path $PSScriptRoot "rebuild_ai_compiled_context.ps1"
 if (-not (Test-Path -LiteralPath $script -PathType Leaf)) {
 	throw "Missing recompile script: $script"
 }

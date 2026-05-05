@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-import docs_slim
+import document_structure_normalizer_engine as document_structure
 
 
 EXCLUDED_PARTS = {".git", "Tools/Python312", "Tools/python-installer", "Tools/tmp"}
@@ -138,7 +138,7 @@ def migrate_document(data: Any) -> Any:
     }
     if passthrough:
         migrated["extra"] = passthrough
-    return docs_slim.slim_document(migrated)
+    return document_structure.slim_document(migrated)
 
 
 def command_migrate(args: argparse.Namespace) -> None:

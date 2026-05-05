@@ -218,8 +218,8 @@ try {
     Test-ContainsText -Text $contract -Needle "Communication Profiles" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "epistemic_skeptic" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "Tool-First JSON" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "doc_item_migrate.ps1" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "doc_item_bulk_insert.ps1" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "migrate_document_item.ps1" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "bulk_insert_document_items.ps1" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "transaction wrappers" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "full-text grep tools" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "doc_route.ps1" -Label "core/AGENT-CONTRACT.json"
@@ -261,7 +261,7 @@ try {
     Test-ContainsText -Text $roiBias -Needle "ROI Picks" -Label "core/ROI-BIAS.json"
     Test-ContainsText -Text $scriptFallback -Needle "Never claim a script ran when it did not run" -Label "core/SCRIPT-FALLBACK.json"
     Test-ContainsText -Text $taskWork -Needle "docs-tech/cache/current_task.json" -Label "core/TASK-WORK.json"
-    Test-ContainsText -Text $taskWork -Needle "doc_item_migrate.ps1" -Label "core/TASK-WORK.json"
+    Test-ContainsText -Text $taskWork -Needle "migrate_document_item.ps1" -Label "core/TASK-WORK.json"
     Test-ContainsText -Text $instructionCapture -Needle "Defragmentation" -Label "core/INSTRUCTION-CAPTURE.json"
     Test-ContainsText -Text $instructionCapture -Needle "Cleaning Rules" -Label "core/INSTRUCTION-CAPTURE.json"
 
@@ -284,7 +284,7 @@ try {
         Test-ContainsText -Text $codePack -Needle "Task Gating" -Label "project/code/PACK.json"
         Test-ContainsText -Text $codePack -Needle "Reporting" -Label "project/code/PACK.json"
         Test-ContainsText -Text $codePack -Needle "Use existing project scripts and pipeline tools whenever practical" -Label "project/code/PACK.json"
-        Test-ContainsText -Text $codePack -Needle "doc_item_migrate.ps1" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "migrate_document_item.ps1" -Label "project/code/PACK.json"
         Test-ContainsText -Text $codePack -Needle "Architecture archetypes check" -Label "project/code/PACK.json"
         Test-ContainsText -Text $codePack -Needle "DDD alignment" -Label "project/code/PACK.json"
         Test-ContainsText -Text $codePack -Needle "Future-fit check" -Label "project/code/PACK.json"
@@ -292,7 +292,7 @@ try {
         Test-ContainsText -Text $codeWorkflow -Needle "Command Classifier" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "Script-First Execution" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "Verification Boundary" -Label "project/code/WORKFLOW.json"
-        Test-ContainsText -Text $codeWorkflow -Needle "doc_item_bulk_insert.ps1" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "bulk_insert_document_items.ps1" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "transaction wrappers" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "Select-String" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "doc_search.ps1" -Label "project/code/WORKFLOW.json"
@@ -336,12 +336,12 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "doc_post_edit.ps1", "doc_item_bulk_insert.ps1", "doc_item_migrate.ps1", "doc_item_move.ps1", "doc_item_insert.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1", "check_evals.ps1", "compile.ps1", "knowledge_compile.ps1", "knowledge_check.ps1", "knowledge_select.ps1", "knowledge_upsert.ps1", "knowledge_delete.ps1", "knowledge_rename.ps1", "knowledge_query.ps1", "knowledge_file_compile.ps1", "knowledge_file_check.ps1", "knowledge_file_select.ps1", "knowledge_file_upsert.ps1", "knowledge_file_delete.ps1", "knowledge_file_rename.ps1", "knowledge_file_query.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "run_document_post_edit_checks.ps1", "bulk_insert_document_items.ps1", "migrate_document_item.ps1", "move_document_item.ps1", "insert_document_item.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1", "check_evals.ps1", "compile_pipeline_context.ps1", "knowledge_compile.ps1", "knowledge_check.ps1", "knowledge_select.ps1", "knowledge_upsert.ps1", "knowledge_delete.ps1", "knowledge_rename.ps1", "knowledge_query.ps1", "knowledge_file_compile.ps1", "knowledge_file_check.ps1", "knowledge_file_select.ps1", "knowledge_file_upsert.ps1", "knowledge_file_delete.ps1", "knowledge_file_rename.ps1", "knowledge_file_query.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing public pipeline tool: tools/$tool"
             }
         }
-        foreach ($tool in @("recompile_ai_instructions.ps1", "check_compiled_instructions.ps1")) {
+        foreach ($tool in @("rebuild_ai_compiled_context.ps1", "check_ai_compiled_context.ps1")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                 Add-Error "Missing compiled-instructions tool: tools/$tool"
             }
@@ -409,7 +409,7 @@ try {
         }
 
         if ($codePackActive) {
-            foreach ($tool in @("task_snapshot.ps1", "run_quality_gate.ps1", "finish_task.ps1", "commit_task.ps1", "compile_agent_instructions.ps1", "log_summary.ps1", "wizard.ps1", "import_existing_project.ps1")) {
+            foreach ($tool in @("task_snapshot.ps1", "run_quality_gate.ps1", "run_final_task_checks.ps1", "legacy_commit_task_compatibility_wrapper.ps1", "generate_installed_agent_instructions.ps1", "log_summary.ps1", "run_interactive_setup.ps1", "import_existing_project.ps1")) {
                 if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "tools/$tool"))) {
                     Add-Error "Initialized code project is missing tool: tools/$tool"
                 }

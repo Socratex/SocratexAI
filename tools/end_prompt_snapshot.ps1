@@ -211,7 +211,7 @@ function Add-StateTail {
 		return
 	}
 
-	$docRead = Join-Path $PSScriptRoot "doc_read.ps1"
+	$docRead = Join-Path $PSScriptRoot "read_document_item.ps1"
 	if (Test-Path -LiteralPath $docRead) {
 		foreach ($selector in @("current", "immediate_focus", "risks")) {
 			$Lines.Add("")

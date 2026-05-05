@@ -12,7 +12,7 @@ if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"
 }
 
-$script = Join-Path $PSScriptRoot "doc_tool.py"
+$script = Join-Path $PSScriptRoot "document_read_cache_engine.py"
 $arguments = @(
 	$script,
 	"build-cache"
@@ -27,5 +27,5 @@ $arguments += @(
 
 & $python @arguments
 if ($LASTEXITCODE -ne 0) {
-	throw "doc_build_cache failed with exit code $LASTEXITCODE"
+	throw "build_document_cache failed with exit code $LASTEXITCODE"
 }

@@ -85,7 +85,7 @@ After receiving answers:
 10. Create `PIPELINE-CONFIG.json` with selected packs, language, operating mode, Git preference, and first-session success criteria.
 11. Create `PIPELINE-CONFIG.json`; for code projects include `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
 12. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
-13. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
+13. Compile project-local agent instructions with `tools/generate_installed_agent_instructions.ps1` when practical.
 14. Run `tools/audit_docs.ps1 -Initialized` for initialized projects when practical.
 15. Activate the initialized pipeline for the current and future sessions.
 16. End by proposing recommendations to improve the initialized pipeline toward the full SocratexPipeline reference level.
