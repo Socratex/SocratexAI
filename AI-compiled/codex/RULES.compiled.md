@@ -122,7 +122,8 @@ Generated: source-500751ba57c5
     "default_tool_error_hardening",
     "categorized_tool_scripts",
     "managed_pipeline_package_mirror_sync",
-    "full_update_artifact_parity_contract"
+    "full_update_artifact_parity_contract",
+    "managed_pipeline_root_catalog_sync"
   ]
 }
 

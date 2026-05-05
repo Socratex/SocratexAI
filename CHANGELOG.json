@@ -4,6 +4,12 @@
     {
       "date": "2026-05-05",
       "type": "feature",
+      "feature": "managed_pipeline_root_catalog_sync",
+      "change": "Extended managed package sync to include source root routing catalogs such as DOCS.json, WORKFLOW.json, COMMANDS.json, FLOWS.json, SCRIPTS.json, and CHANGELOG.json so installed child pipelines receive the full executable pipeline contract, not only tools and templates."
+    },
+    {
+      "date": "2026-05-05",
+      "type": "feature",
       "feature": "full_update_artifact_parity_contract",
       "change": "Documented full update parity as a source pipeline feature: feature promotion is not complete unless the required scripts, templates, general documents, compiled context inputs, and update/audit contracts are promoted with the feature ID."
     },

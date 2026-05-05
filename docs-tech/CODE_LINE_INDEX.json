@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T04:45:49+02:00",
+    "generatedAt":  "2026-05-05T04:47:16+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -231,6 +231,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/pipeline/sync_managed_pipeline_package.ps1",
+                      "lines":  85,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/repo/check_pipeline_featurelist_update.ps1",
                       "lines":  85,
                       "extension":  ".ps1",
@@ -251,12 +257,6 @@
                   {
                       "path":  "tools/pipeline/init_branch_memory.ps1",
                       "lines":  80,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/pipeline/sync_managed_pipeline_package.ps1",
-                      "lines":  79,
                       "extension":  ".ps1",
                       "large":  false
                   },

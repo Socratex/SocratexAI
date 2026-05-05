@@ -19,12 +19,18 @@ param(
         "templates",
         "tools",
         "AGENTS.md",
+        "CHANGELOG.json",
+        "COMMANDS.json",
+        "DOCS.json",
+        "FLOWS.json",
         "LICENSE",
         "PUBLIC-BOOTSTRAP.md",
         "QUALITY-GATE.json",
         "README.md",
         "RECOMMENDATION.md",
+        "SCRIPTS.json",
         "VERSION",
+        "WORKFLOW.json",
         "pipeline_featurelist.json"
     ),
 
