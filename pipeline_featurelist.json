@@ -69,6 +69,8 @@
         "root_command_flow_script_catalogs",
         "self_describing_script_name_catalog",
         "script_named_flow_steps",
+        "command_script_named_execution",
+        "workflow_current_rule_contract_cleanup",
         "generic_programming_default_pack",
         "explicit_gamedev_project_pack",
         "json_document_normalizer"
