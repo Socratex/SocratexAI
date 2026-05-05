@@ -1,0 +1,49 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "code_projects",
+        "non_code_projects",
+        "migration_rule"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "code_projects",
+                "non_code_projects",
+                "migration_rule"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# File Formats\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nThis file defines format choices across SocratexPipeline project types.\n"
+        },
+        "code_projects": {
+            "title": "Code Projects",
+            "format": "markdown-section",
+            "body": "## Code Projects\n\nCode projects should use JSON for standardized project memory, registries, configuration, indexes, diagnostics, and AI-readable structured documents.\n\nUse Markdown in code projects only for scratch-style files:\n\n- raw user instruction intake,\n- temporary notes,\n- rough drafts,\n- human scratchpads,\n- short README-style user-facing docs when no structured state is stored.\n\nPreferred code-project formats:\n\n- `DOCS.json`\n- `STATE.json`\n- `_PLAN.json`\n- `TODO.json`\n- `BUGS.json`\n- `BUGS-SOLVED.json`\n- `CHANGELOG.json` when `changelog.enabled` is not `no`\n- `DECISIONS.json`\n- `PIPELINE-CONFIG.json`\n- `context-docs/*.json`\n- generated indexes or caches as `.json`\n- diagnostics summaries as `.json` when machine-read, `.json` when agent-read\n"
+        },
+        "non_code_projects": {
+            "title": "Non-Code Projects",
+            "format": "markdown-section",
+            "body": "## Non-Code Projects\n\nNon-code projects should use Markdown for files the user is expected to read or edit directly.\n\nUse Markdown for:\n\n- forced agent entrypoints such as `SOCRATEX.md`, `AGENTS.md`, `CLAUDE.md`, or provider-specific instruction files,\n- user scratch files and raw prompt intake,\n- user-facing non-code project memory such as `STATE.md`, `_PLAN.md`, `BACKLOG.md`, `DECISIONS.md`, `ISSUES.md`, `JOURNAL.md`, and `REVIEW.md`,\n- final prose artifacts and public documentation.\n\nUse JSON for files managed only by the agent:\n\n- `DOCS.json`,\n- `PIPELINE-CONFIG.json`,\n- `_INSTRUCTION-QUEUE.json`,\n- generated caches and indexes,\n- agent-only `context-docs/*.json`,\n- large AI-only internal memory files,\n- machine-readable diagnostics or summaries.\n\nIf both the user and the agent read a file, prefer Markdown in non-code projects unless the user explicitly wants structured JSON.\n"
+        },
+        "migration_rule": {
+            "title": "Migration Rule",
+            "format": "markdown-section",
+            "body": "## Migration Rule\n\nWhen converting a project from Markdown to JSON:\n\n1. Preserve all unresolved requirements.\n2. Convert agent-only structured registries first.\n3. Keep forced entrypoints, user scratches, and non-code user-facing memory as Markdown.\n4. Update the audit rules and initializer together.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "File Formats"
+}

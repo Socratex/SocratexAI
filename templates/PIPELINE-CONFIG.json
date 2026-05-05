@@ -1,0 +1,77 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "language",
+        "active_project_packs",
+        "ai_operating_mode",
+        "git",
+        "first_target",
+        "first_session_success_criteria",
+        "communication"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "language",
+                "active_project_packs",
+                "ai_operating_mode",
+                "git",
+                "first_target",
+                "first_session_success_criteria",
+                "communication"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Pipeline Config\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nInitialized project configuration for SocratexPipeline.\n"
+        },
+        "language": {
+            "title": "Language",
+            "format": "markdown-section",
+            "body": "## Language\n\nTBD.\n"
+        },
+        "active_project_packs": {
+            "title": "Active Project Packs",
+            "format": "markdown-section",
+            "body": "## Active Project Packs\n\nTBD.\n"
+        },
+        "ai_operating_mode": {
+            "title": "AI Operating Mode",
+            "format": "markdown-section",
+            "body": "## AI Operating Mode\n\nTBD.\n"
+        },
+        "git": {
+            "title": "Git",
+            "format": "markdown-section",
+            "body": "## Git\n\nTBD.\n"
+        },
+        "first_target": {
+            "title": "First Target",
+            "format": "markdown-section",
+            "body": "## First Target\n\nTBD.\n"
+        },
+        "first_session_success_criteria": {
+            "title": "First-Session Success Criteria",
+            "format": "markdown-section",
+            "body": "## First-Session Success Criteria\n\nTBD.\n"
+        },
+        "communication": {
+            "title": "Communication",
+            "format": "markdown-section",
+            "body": "## Communication\n\nprofile: standard\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Pipeline Config"
+}

@@ -1,0 +1,49 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_pairing",
+        "gamedev_defaults",
+        "verification"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "recommended_pairing",
+                "gamedev_defaults",
+                "verification"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Project Pack: Gamedev\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nUse this pack only when the initialized project is explicitly a game or game-adjacent interactive simulation.\n\nThis pack adds game-development constraints without making any specific engine the default.\n"
+        },
+        "recommended_pairing": {
+            "title": "Recommended Pairing",
+            "format": "markdown-section",
+            "body": "## Recommended Pairing\n\nUse `gamedev` together with `code` for game software projects.\n\nThe `code` pack remains the generic programming baseline. This pack adds domain-specific concerns such as loops, frames, input, assets, deterministic state, simulation, content pipelines, build exports, profiling, and player-facing validation.\n"
+        },
+        "gamedev_defaults": {
+            "title": "Gamedev Defaults",
+            "format": "markdown-section",
+            "body": "## Gamedev Defaults\n\n- Keep simulation state and presentation glue separate when the engine allows it.\n- Make lifecycle boundaries explicit: boot, load, update, pause, save, unload, and shutdown.\n- Treat frame budget, allocation behavior, asset loading, and input latency as first-class constraints.\n- Prefer engine-native systems and proven game architecture patterns before custom infrastructure.\n- Keep data contracts explicit for content, save data, procedural generation, and editor/export tooling.\n- Add diagnostics that explain runtime state without flooding the main loop.\n"
+        },
+        "verification": {
+            "title": "Verification",
+            "format": "markdown-section",
+            "body": "## Verification\n\nUse the strongest practical game-project gate available:\n\n- unit or domain tests,\n- content validation,\n- asset import/export checks,\n- build/export smoke test,\n- frame-time or memory profiling,\n- replay or deterministic fixture checks,\n- manual playtest focused on the changed loop.\n\nIf the project has an engine-specific test runner or export command, prefer that command over generic manual checks.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Project Pack: Gamedev"
+}

@@ -1,0 +1,105 @@
+{
+    "index": [
+        "multi_prompt",
+        "direct_answer",
+        "documentation_edit",
+        "implementation",
+        "broad_refactor",
+        "pipeline_upgrade",
+        "review",
+        "quality_diagnostics",
+        "compile_command",
+        "manual_mode"
+    ],
+    "content": {
+        "multi_prompt": {
+            "then": [
+                "split into independent intents",
+                "classify each intent through WORKFLOW.json",
+                "execute in dependency order",
+                "verify and report one coherent result"
+            ]
+        },
+        "direct_answer": {
+            "then": [
+                "load bootstrap indexes",
+                "answer from loaded context",
+                "state uncertainty or missing contract when relevant"
+            ]
+        },
+        "documentation_edit": {
+            "then": [
+                "load DOCS.json",
+                "read target owner document",
+                "use JSON-aware document tooling",
+                "normalize and verify"
+            ]
+        },
+        "implementation": {
+            "then": [
+                "load WORKFLOW.json",
+                "load code guidance when source code may change",
+                "inspect scripts before manual work",
+                "edit scoped files",
+                "verify"
+            ]
+        },
+        "broad_refactor": {
+            "then": [
+                "confirm high-cost scope when not already confirmed",
+                "create passes",
+                "edit in coherent slices",
+                "update affected contracts",
+                "finalize"
+            ]
+        },
+        "pipeline_upgrade": {
+            "then": [
+                "audit source state",
+                "migrate structured contracts to JSON",
+                "port routing/index scripts",
+                "generalize default code behavior",
+                "add explicit project types",
+                "recompile generated outputs",
+                "run finalizer"
+            ]
+        },
+        "review": {
+            "then": [
+                "inspect diff or target files",
+                "lead with findings",
+                "include verification gaps",
+                "avoid unrelated rewrites"
+            ]
+        },
+        "quality_diagnostics": {
+            "then": [
+                "run the relevant script",
+                "inspect failures",
+                "fix repeatable tooling failures in the owning tool",
+                "rerun"
+            ]
+        },
+        "compile_command": {
+            "then": [
+                "run recompile_ai_instructions.ps1",
+                "run knowledge checks",
+                "report generated drift"
+            ]
+        },
+        "manual_mode": {
+            "then": [
+                "state why no script applies",
+                "keep edits scoped",
+                "recommend a script if repetition is likely"
+            ]
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Source Pipeline Flows",
+            "type": "flow_index",
+            "language": "en"
+        }
+    }
+}

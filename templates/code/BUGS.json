@@ -1,0 +1,17 @@
+{
+    "summary": "Active confirmed or likely defects.",
+    "bugs": {
+        "bug_1": {
+            "title": "Short title",
+            "status": "active",
+            "observed_behavior": "TBD",
+            "expected_behavior": "TBD",
+            "reproduction": "TBD",
+            "evidence": "TBD",
+            "current_hypothesis": "TBD",
+            "attempted_fixes": [],
+            "verification": "not_verified",
+            "next_action": "TBD"
+        }
+    }
+}

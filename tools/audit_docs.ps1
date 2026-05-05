@@ -126,59 +126,59 @@ try {
     Write-Host "==> audit docs"
 
     $agents = Get-RepoText -RelativePath "AGENTS.md"
-    $contract = Get-RepoText -RelativePath "core/AGENT-CONTRACT.yaml"
-    $fileFormats = Get-RepoText -RelativePath "core/FILE-FORMATS.yaml"
-    $promotionRules = Get-RepoText -RelativePath "core/PROMOTION-RULES.yaml"
-    $contextCompaction = Get-RepoText -RelativePath "core/CONTEXT-COMPACTION.yaml"
-    $memoryModel = Get-RepoText -RelativePath "core/MEMORY-MODEL.yaml"
-    $activationCheck = Get-RepoText -RelativePath "core/ACTIVATION-CHECK.yaml"
-    $updateProtocol = Get-RepoText -RelativePath "core/UPDATE-PROTOCOL.yaml"
-    $removalProtocol = Get-RepoText -RelativePath "core/REMOVAL-PROTOCOL.yaml"
-    $projectProfile = Get-RepoText -RelativePath "core/PROJECT-PROFILE.yaml"
-    $roiBias = Get-RepoText -RelativePath "core/ROI-BIAS.yaml"
-    $scriptFallback = Get-RepoText -RelativePath "core/SCRIPT-FALLBACK.yaml"
-    $taskWork = Get-RepoText -RelativePath "core/TASK-WORK.yaml"
-    $instructionCapture = Get-RepoText -RelativePath "core/INSTRUCTION-CAPTURE.yaml"
-    $codePackActive = Test-Path -LiteralPath (Join-Path $repoRoot "project/code/PACK.yaml")
-    $codePack = if ($codePackActive) { Get-RepoText -RelativePath "project/code/PACK.yaml" } else { "" }
-    $codeWorkflow = if ($codePackActive) { Get-RepoText -RelativePath "project/code/WORKFLOW.yaml" } else { "" }
-    $branchMode = if ($codePackActive) { Get-RepoText -RelativePath "project/code/BRANCH-MODE.yaml" } else { "" }
-    $codeCommands = if ($codePackActive) { Get-RepoText -RelativePath "project/code/COMMANDS.yaml" } else { "" }
-    $codeRegistries = if ($codePackActive) { Get-RepoText -RelativePath "project/code/REGISTRIES.yaml" } else { "" }
-    $dddAdiv = if ($codePackActive) { Get-RepoText -RelativePath "project/code/DDD-ADIV.yaml" } else { "" }
-    $gitRules = if ($codePackActive) { Get-RepoText -RelativePath "project/code/GIT.yaml" } else { "" }
-    $frozenLayers = if ($codePackActive) { Get-RepoText -RelativePath "project/code/FROZEN-LAYERS.yaml" } else { "" }
-    $codeInstructionCapture = if ($codePackActive) { Get-RepoText -RelativePath "project/code/INSTRUCTION-CAPTURE.yaml" } else { "" }
-    $codeDiagnostics = if ($codePackActive) { Get-RepoText -RelativePath "project/code/DIAGNOSTICS.yaml" } else { "" }
+    $contract = Get-RepoText -RelativePath "core/AGENT-CONTRACT.json"
+    $fileFormats = Get-RepoText -RelativePath "core/FILE-FORMATS.json"
+    $promotionRules = Get-RepoText -RelativePath "core/PROMOTION-RULES.json"
+    $contextCompaction = Get-RepoText -RelativePath "core/CONTEXT-COMPACTION.json"
+    $memoryModel = Get-RepoText -RelativePath "core/MEMORY-MODEL.json"
+    $activationCheck = Get-RepoText -RelativePath "core/ACTIVATION-CHECK.json"
+    $updateProtocol = Get-RepoText -RelativePath "core/UPDATE-PROTOCOL.json"
+    $removalProtocol = Get-RepoText -RelativePath "core/REMOVAL-PROTOCOL.json"
+    $projectProfile = Get-RepoText -RelativePath "core/PROJECT-PROFILE.json"
+    $roiBias = Get-RepoText -RelativePath "core/ROI-BIAS.json"
+    $scriptFallback = Get-RepoText -RelativePath "core/SCRIPT-FALLBACK.json"
+    $taskWork = Get-RepoText -RelativePath "core/TASK-WORK.json"
+    $instructionCapture = Get-RepoText -RelativePath "core/INSTRUCTION-CAPTURE.json"
+    $codePackActive = Test-Path -LiteralPath (Join-Path $repoRoot "project/code/PACK.json")
+    $codePack = if ($codePackActive) { Get-RepoText -RelativePath "project/code/PACK.json" } else { "" }
+    $codeWorkflow = if ($codePackActive) { Get-RepoText -RelativePath "project/code/WORKFLOW.json" } else { "" }
+    $branchMode = if ($codePackActive) { Get-RepoText -RelativePath "project/code/BRANCH-MODE.json" } else { "" }
+    $codeCommands = if ($codePackActive) { Get-RepoText -RelativePath "project/code/COMMANDS.json" } else { "" }
+    $codeRegistries = if ($codePackActive) { Get-RepoText -RelativePath "project/code/REGISTRIES.json" } else { "" }
+    $dddAdiv = if ($codePackActive) { Get-RepoText -RelativePath "project/code/DDD-ADIV.json" } else { "" }
+    $gitRules = if ($codePackActive) { Get-RepoText -RelativePath "project/code/GIT.json" } else { "" }
+    $frozenLayers = if ($codePackActive) { Get-RepoText -RelativePath "project/code/FROZEN-LAYERS.json" } else { "" }
+    $codeInstructionCapture = if ($codePackActive) { Get-RepoText -RelativePath "project/code/INSTRUCTION-CAPTURE.json" } else { "" }
+    $codeDiagnostics = if ($codePackActive) { Get-RepoText -RelativePath "project/code/DIAGNOSTICS.json" } else { "" }
 
-    Test-ContainsText -Text $agents -Needle "core/AGENT-CONTRACT.yaml" -Label "AGENTS.md"
-    Test-ContainsText -Text $agents -Needle "core/MEMORY-MODEL.yaml" -Label "AGENTS.md"
-    Test-ContainsText -Text $agents -Needle "core/ACTIVATION-CHECK.yaml" -Label "AGENTS.md"
-    Test-ContainsText -Text $agents -Needle "core/UPDATE-PROTOCOL.yaml" -Label "AGENTS.md"
-    Test-ContainsText -Text $agents -Needle "core/REMOVAL-PROTOCOL.yaml" -Label "AGENTS.md"
-    Test-ContainsText -Text $agents -Needle "core/TASK-WORK.yaml" -Label "AGENTS.md"
-    Test-ContainsText -Text $agents -Needle "core/PROMOTION-RULES.yaml" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/AGENT-CONTRACT.json" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/MEMORY-MODEL.json" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/ACTIVATION-CHECK.json" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/UPDATE-PROTOCOL.json" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/REMOVAL-PROTOCOL.json" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/TASK-WORK.json" -Label "AGENTS.md"
+    Test-ContainsText -Text $agents -Needle "core/PROMOTION-RULES.json" -Label "AGENTS.md"
     $publicBootstrap = Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text $publicBootstrap -Needle "Project Profile Interview" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text $publicBootstrap -Needle "Runtime Check" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text $publicBootstrap -Needle "Post-Setup Activation" -Label "PUBLIC-BOOTSTRAP.md"
-    Test-ContainsText -Text $publicBootstrap -Needle "ACTIVATION-CHECK.yaml" -Label "PUBLIC-BOOTSTRAP.md"
+    Test-ContainsText -Text $publicBootstrap -Needle "ACTIVATION-CHECK.json" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text $publicBootstrap -Needle "Future sessions should start from SOCRATEX.md" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text $publicBootstrap -Needle "Programming Questions" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text $publicBootstrap -Needle "branch_scoped" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "Update, Upgrade, Migrate" -Label "PUBLIC-BOOTSTRAP.md"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "UPDATE-PROTOCOL.yaml" -Label "PUBLIC-BOOTSTRAP.md"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "REMOVAL-PROTOCOL.yaml" -Label "PUBLIC-BOOTSTRAP.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "UPDATE-PROTOCOL.json" -Label "PUBLIC-BOOTSTRAP.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "REMOVAL-PROTOCOL.json" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "PUBLIC-BOOTSTRAP.md") -Needle "Directive Merge Modes" -Label "PUBLIC-BOOTSTRAP.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "SocratexAI/" -Label "templates/SOCRATEX.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "activation point" -Label "templates/SOCRATEX.md"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "ACTIVATION-CHECK.yaml" -Label "templates/SOCRATEX.md"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "UPDATE-PROTOCOL.yaml" -Label "templates/SOCRATEX.md"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "REMOVAL-PROTOCOL.yaml" -Label "templates/SOCRATEX.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "ACTIVATION-CHECK.json" -Label "templates/SOCRATEX.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "UPDATE-PROTOCOL.json" -Label "templates/SOCRATEX.md"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "REMOVAL-PROTOCOL.json" -Label "templates/SOCRATEX.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "VERSION") -Needle "0.2.0-alpha" -Label "VERSION"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "CHANGELOG.yaml") -Needle "0.2.0-alpha" -Label "CHANGELOG.yaml"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "CHANGELOG.json") -Needle "0.2.0-alpha" -Label "CHANGELOG.json"
     Test-ContainsText -Text (Get-RepoText -RelativePath "LICENSE") -Needle "MIT License" -Label "LICENSE"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.yaml") -Needle "audit_docs" -Label "QUALITY-GATE.yaml"
+    Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.json") -Needle "audit_docs" -Label "QUALITY-GATE.json"
     Test-ContainsText -Text (Get-RepoText -RelativePath ".gitignore") -Needle "/ignored/" -Label ".gitignore"
     $docIndex = Get-OptionalRepoText -RelativePath "docs-tech/cache/doc_index.json"
     if ($docIndex -match '"path":\s*"ignored/') {
@@ -193,13 +193,13 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "docs/CI-SELF-CHECK.md") -Needle "Provider Guidance" -Label "docs/CI-SELF-CHECK.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "AI-compiled" -Label "README.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "README.md") -Needle "evals/" -Label "README.md"
-    Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.yaml") -Needle "eval_framework" -Label "QUALITY-GATE.yaml"
-    foreach ($compiledFile in @("AI-compiled/README.md", "AI-compiled/INDEX.yaml", "AI-compiled/codex/ENTRYPOINT.md", "AI-compiled/codex/RULES.compiled.md", "AI-compiled/codex/WORKFLOW.compiled.md", "AI-compiled/codex/ORCHESTRATION.compiled.md", "AI-compiled/codex/TEAM.compiled.md", "AI-compiled/checksum.json", "AI-compiled/compile-report.json")) {
+    Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.json") -Needle "eval_framework" -Label "QUALITY-GATE.json"
+    foreach ($compiledFile in @("AI-compiled/README.md", "AI-compiled/INDEX.json", "AI-compiled/codex/ENTRYPOINT.md", "AI-compiled/codex/RULES.compiled.md", "AI-compiled/codex/WORKFLOW.compiled.md", "AI-compiled/codex/CONTEXTUAL-WORKFLOW.compiled.md", "AI-compiled/codex/TEAM.compiled.md", "AI-compiled/checksum.json", "AI-compiled/compile-report.json")) {
         if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $compiledFile))) {
             Add-Error "Missing compiled AI instruction artifact: $compiledFile"
         }
     }
-    foreach ($evalFile in @("evals/README.md", "evals/personas.yaml", "evals/expected-behaviors.yaml", "evals/scoring.md", "evals/results/baseline.yaml", "evals/results/with-pipeline.yaml")) {
+    foreach ($evalFile in @("evals/README.md", "evals/personas.json", "evals/expected-behaviors.json", "evals/scoring.md", "evals/results/baseline.json", "evals/results/with-pipeline.json")) {
         if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $evalFile))) {
             Add-Error "Missing eval framework artifact: $evalFile"
         }
@@ -214,121 +214,121 @@ try {
         Add-Error "Missing eval framework checker: tools/check_evals.ps1"
     }
 
-    Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "Communication Profiles" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "epistemic_skeptic" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "Tool-First YAML" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "doc_item_migrate.ps1" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "doc_item_bulk_insert.ps1" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "transaction wrappers" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "full-text grep tools" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "doc_route.ps1" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "## <emoji> Brief" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "## <emoji> State" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "## <emoji> Problem" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "## <emoji> Suggestion" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "## <emoji> Summary" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "configured pipeline language" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "Primary Known-Solutions Directive" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "Profile-fit check" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "ROI Picks" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "SCRIPT-FALLBACK.yaml" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "Build-vs-borrow discipline" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "Future-fit check" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "primary steer-direction" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "AAA-grade architectural practices" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "For programming bug reports" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "DDD-ADIV" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "core/PROMOTION-RULES.yaml" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $contract -Needle "core/FILE-FORMATS.yaml" -Label "core/AGENT-CONTRACT.yaml"
-    Test-ContainsText -Text $fileFormats -Needle "Code Projects" -Label "core/FILE-FORMATS.yaml"
-    Test-ContainsText -Text $fileFormats -Needle "YAML and JSON" -Label "core/FILE-FORMATS.yaml"
-    Test-ContainsText -Text $contextCompaction -Needle "When to Recommend a Hard Reset" -Label "core/CONTEXT-COMPACTION.yaml"
-    Test-ContainsText -Text $memoryModel -Needle "Branch-Scoped Active State" -Label "core/MEMORY-MODEL.yaml"
-    Test-ContainsText -Text $activationCheck -Needle "Required Checks" -Label "core/ACTIVATION-CHECK.yaml"
-    Test-ContainsText -Text $activationCheck -Needle "communication format" -Label "core/ACTIVATION-CHECK.yaml"
-    Test-ContainsText -Text $activationCheck -Needle "emoji rule" -Label "core/ACTIVATION-CHECK.yaml"
-    Test-ContainsText -Text $updateProtocol -Needle "Source Resolution" -Label "core/UPDATE-PROTOCOL.yaml"
-    Test-ContainsText -Text $updateProtocol -Needle "pipeline.update_source" -Label "core/UPDATE-PROTOCOL.yaml"
-    Test-ContainsText -Text $updateProtocol -Needle "update_pipeline_from_link.ps1" -Label "core/UPDATE-PROTOCOL.yaml"
-    Test-ContainsText -Text $updateProtocol -Needle "reinitialize_pipeline.ps1" -Label "core/UPDATE-PROTOCOL.yaml"
-    Test-ContainsText -Text $updateProtocol -Needle "pipeline_featurelist.json" -Label "core/UPDATE-PROTOCOL.yaml"
-    Test-ContainsText -Text $updateProtocol -Needle "learn_pipeline_features.ps1" -Label "core/UPDATE-PROTOCOL.yaml"
-    Test-ContainsText -Text $updateProtocol -Needle "open_pipeline_learning_issue.ps1" -Label "core/UPDATE-PROTOCOL.yaml"
-    Test-ContainsText -Text $removalProtocol -Needle "remove_pipeline.ps1" -Label "core/REMOVAL-PROTOCOL.yaml"
-    Test-ContainsText -Text $removalProtocol -Needle "Default Preservation" -Label "core/REMOVAL-PROTOCOL.yaml"
-    Test-ContainsText -Text $projectProfile -Needle "Profile-Fit Check" -Label "core/PROJECT-PROFILE.yaml"
-    Test-ContainsText -Text $roiBias -Needle "ROI Picks" -Label "core/ROI-BIAS.yaml"
-    Test-ContainsText -Text $scriptFallback -Needle "Never claim a script ran when it did not run" -Label "core/SCRIPT-FALLBACK.yaml"
-    Test-ContainsText -Text $taskWork -Needle "docs-tech/cache/current_task.yaml" -Label "core/TASK-WORK.yaml"
-    Test-ContainsText -Text $taskWork -Needle "doc_item_migrate.ps1" -Label "core/TASK-WORK.yaml"
-    Test-ContainsText -Text $instructionCapture -Needle "Defragmentation" -Label "core/INSTRUCTION-CAPTURE.yaml"
-    Test-ContainsText -Text $instructionCapture -Needle "Cleaning Rules" -Label "core/INSTRUCTION-CAPTURE.yaml"
+    Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Communication Profiles" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "epistemic_skeptic" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Tool-First JSON" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "doc_item_migrate.ps1" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "doc_item_bulk_insert.ps1" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "transaction wrappers" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "full-text grep tools" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "doc_route.ps1" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Brief" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "## <emoji> State" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Problem" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Suggestion" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "## <emoji> Summary" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "configured pipeline language" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Primary Known-Solutions Directive" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Profile-fit check" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "ROI Picks" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "SCRIPT-FALLBACK.json" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Build-vs-borrow discipline" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Future-fit check" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "primary steer-direction" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "production-grade architectural practices" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "For programming bug reports" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "DDD-ADIV" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "core/PROMOTION-RULES.json" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "core/FILE-FORMATS.json" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $fileFormats -Needle "Code Projects" -Label "core/FILE-FORMATS.json"
+    Test-ContainsText -Text $fileFormats -Needle "JSON" -Label "core/FILE-FORMATS.json"
+    Test-ContainsText -Text $contextCompaction -Needle "When to Recommend a Hard Reset" -Label "core/CONTEXT-COMPACTION.json"
+    Test-ContainsText -Text $memoryModel -Needle "Branch-Scoped Active State" -Label "core/MEMORY-MODEL.json"
+    Test-ContainsText -Text $activationCheck -Needle "Required Checks" -Label "core/ACTIVATION-CHECK.json"
+    Test-ContainsText -Text $activationCheck -Needle "communication format" -Label "core/ACTIVATION-CHECK.json"
+    Test-ContainsText -Text $activationCheck -Needle "emoji rule" -Label "core/ACTIVATION-CHECK.json"
+    Test-ContainsText -Text $updateProtocol -Needle "Source Resolution" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "pipeline.update_source" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "update_pipeline_from_link.ps1" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "reinitialize_pipeline.ps1" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "pipeline_featurelist.json" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "learn_pipeline_features.ps1" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "open_pipeline_learning_issue.ps1" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $removalProtocol -Needle "remove_pipeline.ps1" -Label "core/REMOVAL-PROTOCOL.json"
+    Test-ContainsText -Text $removalProtocol -Needle "Default Preservation" -Label "core/REMOVAL-PROTOCOL.json"
+    Test-ContainsText -Text $projectProfile -Needle "Profile-Fit Check" -Label "core/PROJECT-PROFILE.json"
+    Test-ContainsText -Text $roiBias -Needle "ROI Picks" -Label "core/ROI-BIAS.json"
+    Test-ContainsText -Text $scriptFallback -Needle "Never claim a script ran when it did not run" -Label "core/SCRIPT-FALLBACK.json"
+    Test-ContainsText -Text $taskWork -Needle "docs-tech/cache/current_task.json" -Label "core/TASK-WORK.json"
+    Test-ContainsText -Text $taskWork -Needle "doc_item_migrate.ps1" -Label "core/TASK-WORK.json"
+    Test-ContainsText -Text $instructionCapture -Needle "Defragmentation" -Label "core/INSTRUCTION-CAPTURE.json"
+    Test-ContainsText -Text $instructionCapture -Needle "Cleaning Rules" -Label "core/INSTRUCTION-CAPTURE.json"
 
-    Test-ContainsText -Text $promotionRules -Needle "BACKLOG to PLAN" -Label "core/PROMOTION-RULES.yaml"
-    Test-ContainsText -Text $promotionRules -Needle "PLAN to STATE" -Label "core/PROMOTION-RULES.yaml"
-    Test-ContainsText -Text $promotionRules -Needle "BRANCH STATE to durable memory" -Label "core/PROMOTION-RULES.yaml"
-    Test-ContainsText -Text $promotionRules -Needle "PLAN or BACKLOG to DECISIONS" -Label "core/PROMOTION-RULES.yaml"
-    Test-ContainsText -Text $promotionRules -Needle "context-docs/" -Label "core/PROMOTION-RULES.yaml"
+    Test-ContainsText -Text $promotionRules -Needle "BACKLOG to PLAN" -Label "core/PROMOTION-RULES.json"
+    Test-ContainsText -Text $promotionRules -Needle "PLAN to STATE" -Label "core/PROMOTION-RULES.json"
+    Test-ContainsText -Text $promotionRules -Needle "BRANCH STATE to durable memory" -Label "core/PROMOTION-RULES.json"
+    Test-ContainsText -Text $promotionRules -Needle "PLAN or BACKLOG to DECISIONS" -Label "core/PROMOTION-RULES.json"
+    Test-ContainsText -Text $promotionRules -Needle "context-docs/" -Label "core/PROMOTION-RULES.json"
 
     if ($codePackActive) {
-        Test-ContainsText -Text $agents -Needle "project/code/COMMANDS.yaml" -Label "AGENTS.md"
-        Test-ContainsText -Text $agents -Needle "project/code/WORKFLOW.yaml" -Label "AGENTS.md"
-        Test-ContainsText -Text $agents -Needle "core/FILE-FORMATS.yaml" -Label "AGENTS.md"
+        Test-ContainsText -Text $agents -Needle "project/code/COMMANDS.json" -Label "AGENTS.md"
+        Test-ContainsText -Text $agents -Needle "project/code/WORKFLOW.json" -Label "AGENTS.md"
+        Test-ContainsText -Text $agents -Needle "core/FILE-FORMATS.json" -Label "AGENTS.md"
 
-        Test-ContainsText -Text $codePack -Needle "Required Reads for Code Projects" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Profile-Aware Defaults" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Organize code top-down" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Known-Solution Bias" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Script-First Automation Directive" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Task Gating" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Reporting" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Use existing project scripts and pipeline tools whenever practical" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "doc_item_migrate.ps1" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Architecture archetypes check" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "DDD alignment" -Label "project/code/PACK.yaml"
-        Test-ContainsText -Text $codePack -Needle "Future-fit check" -Label "project/code/PACK.yaml"
+        Test-ContainsText -Text $codePack -Needle "Required Reads for Code Projects" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Profile-Aware Defaults" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Organize code top-down" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Known-Solution Bias" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Script-First Automation Directive" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Task Gating" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Reporting" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Use existing project scripts and pipeline tools whenever practical" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "doc_item_migrate.ps1" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Architecture archetypes check" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "DDD alignment" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Future-fit check" -Label "project/code/PACK.json"
 
-        Test-ContainsText -Text $codeWorkflow -Needle "Command Classifier" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "Script-First Execution" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "Verification Boundary" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "doc_item_bulk_insert.ps1" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "transaction wrappers" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "Select-String" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "doc_search.ps1" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "AAA-grade architecture" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "For bug reports" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "Branch-Scoped Workflow" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "ROI Workflow" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "Task Work Tracking" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $codeWorkflow -Needle "Context Cost Control" -Label "project/code/WORKFLOW.yaml"
-        Test-ContainsText -Text $branchMode -Needle "Branch Mode" -Label "project/code/BRANCH-MODE.yaml"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "project/generic/PACK.yaml") -Needle "steer-direction checkpoints" -Label "project/generic/PACK.yaml"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "project/personal/PACK.yaml") -Needle "steer-direction checkpoints" -Label "project/personal/PACK.yaml"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "project/creative/PACK.yaml") -Needle "steer-direction checkpoints" -Label "project/creative/PACK.yaml"
+        Test-ContainsText -Text $codeWorkflow -Needle "Command Classifier" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "Script-First Execution" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "Verification Boundary" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "doc_item_bulk_insert.ps1" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "transaction wrappers" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "Select-String" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "doc_search.ps1" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "production-grade architecture" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "For bug reports" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "Branch-Scoped Workflow" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "ROI Workflow" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "Task Work Tracking" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "Context Cost Control" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $branchMode -Needle "Branch Mode" -Label "project/code/BRANCH-MODE.json"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "project/generic/PACK.json") -Needle "steer-direction checkpoints" -Label "project/generic/PACK.json"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "project/personal/PACK.json") -Needle "steer-direction checkpoints" -Label "project/personal/PACK.json"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "project/creative/PACK.json") -Needle "steer-direction checkpoints" -Label "project/creative/PACK.json"
 
         foreach ($command in @("CONTINUE", "PLAN", "BUG", "REVIEW", "AUDIT", "FINISH", "COMMIT", "LOG", "DIAGNOSTICS", "PROMPT", "INSTRUCTIONS")) {
-            Test-ContainsText -Text $codeCommands -Needle "## $command" -Label "project/code/COMMANDS.yaml"
+            Test-ContainsText -Text $codeCommands -Needle "## $command" -Label "project/code/COMMANDS.json"
         }
 
-        Test-ContainsText -Text $codeRegistries -Needle "Bug Registry" -Label "project/code/REGISTRIES.yaml"
-        Test-ContainsText -Text $codeRegistries -Needle "Solved Bug Registry" -Label "project/code/REGISTRIES.yaml"
-        Test-ContainsText -Text $codeRegistries -Needle "Changelog Registry" -Label "project/code/REGISTRIES.yaml"
+        Test-ContainsText -Text $codeRegistries -Needle "Bug Registry" -Label "project/code/REGISTRIES.json"
+        Test-ContainsText -Text $codeRegistries -Needle "Solved Bug Registry" -Label "project/code/REGISTRIES.json"
+        Test-ContainsText -Text $codeRegistries -Needle "Changelog Registry" -Label "project/code/REGISTRIES.json"
 
-        Test-ContainsText -Text $dddAdiv -Needle "Domain-Driven" -Label "project/code/DDD-ADIV.yaml"
-        Test-ContainsText -Text $dddAdiv -Needle "Architecture-Decisive" -Label "project/code/DDD-ADIV.yaml"
-        Test-ContainsText -Text $dddAdiv -Needle "Invariant-Visible" -Label "project/code/DDD-ADIV.yaml"
-        Test-ContainsText -Text $dddAdiv -Needle "Known-Solutions Alignment" -Label "project/code/DDD-ADIV.yaml"
-        Test-ContainsText -Text $dddAdiv -Needle "future fit" -Label "project/code/DDD-ADIV.yaml"
+        Test-ContainsText -Text $dddAdiv -Needle "Domain-Driven" -Label "project/code/DDD-ADIV.json"
+        Test-ContainsText -Text $dddAdiv -Needle "Architecture-Decisive" -Label "project/code/DDD-ADIV.json"
+        Test-ContainsText -Text $dddAdiv -Needle "Invariant-Visible" -Label "project/code/DDD-ADIV.json"
+        Test-ContainsText -Text $dddAdiv -Needle "Known-Solutions Alignment" -Label "project/code/DDD-ADIV.json"
+        Test-ContainsText -Text $dddAdiv -Needle "future fit" -Label "project/code/DDD-ADIV.json"
 
-        Test-ContainsText -Text $gitRules -Needle "Worktree Rules" -Label "project/code/GIT.yaml"
-        Test-ContainsText -Text $frozenLayers -Needle "Default Contract" -Label "project/code/FROZEN-LAYERS.yaml"
-        Test-ContainsText -Text $codeInstructionCapture -Needle "Code Sorting Rules" -Label "project/code/INSTRUCTION-CAPTURE.yaml"
-        Test-ContainsText -Text $codeInstructionCapture -Needle "_PROMPTS.md" -Label "project/code/INSTRUCTION-CAPTURE.yaml"
-        Test-ContainsText -Text $codeDiagnostics -Needle "Required Project Setup" -Label "project/code/DIAGNOSTICS.yaml"
-        Test-ContainsText -Text $codeDiagnostics -Needle "tools/log_summary.ps1" -Label "project/code/DIAGNOSTICS.yaml"
-        Test-ContainsText -Text $codeDiagnostics -Needle "DIAGNOSTICS-SUMMARY.json" -Label "project/code/DIAGNOSTICS.yaml"
-        Test-ContainsText -Text $codeDiagnostics -Needle "Human-Readable Reporting" -Label "project/code/DIAGNOSTICS.yaml"
+        Test-ContainsText -Text $gitRules -Needle "Worktree Rules" -Label "project/code/GIT.json"
+        Test-ContainsText -Text $frozenLayers -Needle "Default Contract" -Label "project/code/FROZEN-LAYERS.json"
+        Test-ContainsText -Text $codeInstructionCapture -Needle "Code Sorting Rules" -Label "project/code/INSTRUCTION-CAPTURE.json"
+        Test-ContainsText -Text $codeInstructionCapture -Needle "_PROMPTS.md" -Label "project/code/INSTRUCTION-CAPTURE.json"
+        Test-ContainsText -Text $codeDiagnostics -Needle "Required Project Setup" -Label "project/code/DIAGNOSTICS.json"
+        Test-ContainsText -Text $codeDiagnostics -Needle "tools/log_summary.ps1" -Label "project/code/DIAGNOSTICS.json"
+        Test-ContainsText -Text $codeDiagnostics -Needle "DIAGNOSTICS-SUMMARY.json" -Label "project/code/DIAGNOSTICS.json"
+        Test-ContainsText -Text $codeDiagnostics -Needle "Human-Readable Reporting" -Label "project/code/DIAGNOSTICS.json"
 
         foreach ($doc in @("docs/GETTING-STARTED.md", "docs/CODE-PROJECTS.md", "docs/MODES.md", "docs/IMPORT-EXISTING-PROJECT.md", "docs/PUBLIC-USAGE.md")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $doc))) {
@@ -346,56 +346,56 @@ try {
                 Add-Error "Missing compiled-instructions tool: tools/$tool"
             }
         }
-        foreach ($template in @("templates/_PROMPTS.md", "templates/code/_PROMPT-QUEUE.yaml", "templates/code/current_task.yaml", "templates/code/branch/BRANCH-STATE.md", "templates/code/branch/BRANCH-PLAN.md", "templates/code/branch/BRANCH-TODO.md")) {
+        foreach ($template in @("templates/_PROMPTS.md", "templates/code/_PROMPT-QUEUE.json", "templates/code/current_task.json", "templates/code/branch/BRANCH-STATE.md", "templates/code/branch/BRANCH-PLAN.md", "templates/code/branch/BRANCH-TODO.md")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
                 Add-Error "Missing prompt workflow template: $template"
             }
         }
-        foreach ($template in @("templates/ORCHESTRATION.yaml", "templates/team/product.yaml", "templates/team/technical.yaml", "templates/team/performance.yaml", "templates/team/experience.yaml", "templates/team/pipeline.yaml")) {
+        foreach ($template in @("templates/WORKFLOW.json", "templates/team/product.json", "templates/team/technical.json", "templates/team/performance.json", "templates/team/experience.json", "templates/team/pipeline.json")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
-                Add-Error "Missing orchestration/team template: $template"
+                Add-Error "Missing workflow/team template: $template"
             }
         }
-        foreach ($template in @("templates/docs-tech/KNOWLEDGE-VIEWS.yaml", "templates/code/context-docs/ENGINEERING.yaml")) {
+        foreach ($template in @("templates/docs-tech/KNOWLEDGE-VIEWS.json", "templates/code/context-docs/ENGINEERING.json")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
                 Add-Error "Missing knowledge template: $template"
             }
         }
-        foreach ($template in @("templates/DOCS.yaml", "templates/STATE.md", "templates/_PLAN.md", "templates/BACKLOG.md", "templates/DECISIONS.md", "templates/ISSUES.md", "templates/JOURNAL.md", "templates/REVIEW.md", "templates/PIPELINE-CONFIG.yaml")) {
+        foreach ($template in @("templates/DOCS.json", "templates/STATE.md", "templates/_PLAN.md", "templates/BACKLOG.md", "templates/DECISIONS.md", "templates/ISSUES.md", "templates/JOURNAL.md", "templates/REVIEW.md", "templates/PIPELINE-CONFIG.json")) {
             if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $template))) {
                 Add-Error "Missing non-code user-facing template: $template"
             }
         }
-        if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "templates/code/DOCS.yaml"))) {
-            Add-Error "Missing code document role template: templates/code/DOCS.yaml"
+        if (-not (Test-Path -LiteralPath (Join-Path $repoRoot "templates/code/DOCS.json"))) {
+            Add-Error "Missing code document role template: templates/code/DOCS.json"
         }
-        $pipelineConfigTemplate = Get-RepoText -RelativePath "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "project_profile:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "runtime_status:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "install_supported:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "fallback_recommendation:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "branch_mode:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "update_source:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "remove_command:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "reinitialize_command:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "changelog:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "communication:" -Label "templates/code/PIPELINE-CONFIG.yaml"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle "profile: standard" -Label "templates/code/PIPELINE-CONFIG.yaml"
+        $pipelineConfigTemplate = Get-RepoText -RelativePath "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"project_profile"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"runtime_status"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"install_supported"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"fallback_recommendation"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"branch_mode"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"update_source"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"remove_command"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"reinitialize_command"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"changelog"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"communication"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"profile": "standard"' -Label "templates/code/PIPELINE-CONFIG.json"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle ".old" -Label "tools/set_directives.ps1"
         Test-ContainsText -Text (Get-RepoText -RelativePath "tools/set_directives.ps1") -Needle "SOCRATEX.md" -Label "tools/set_directives.ps1"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/Initialize-SocratexPipeline.ps1") -Needle "ORCHESTRATION.yaml" -Label "tools/Initialize-SocratexPipeline.ps1"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/Initialize-SocratexPipeline.ps1") -Needle "team\pipeline.yaml" -Label "tools/Initialize-SocratexPipeline.ps1"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/import_existing_project.ps1") -Needle "ORCHESTRATION.yaml" -Label "tools/import_existing_project.ps1"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/import_existing_project.ps1") -Needle "team/pipeline.yaml" -Label "tools/import_existing_project.ps1"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/reinitialize_pipeline.ps1") -Needle "ORCHESTRATION.yaml" -Label "tools/reinitialize_pipeline.ps1"
-        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/reinitialize_pipeline.ps1") -Needle "team/pipeline.yaml" -Label "tools/reinitialize_pipeline.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/Initialize-SocratexPipeline.ps1") -Needle "WORKFLOW.json" -Label "tools/Initialize-SocratexPipeline.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/Initialize-SocratexPipeline.ps1") -Needle "team\pipeline.json" -Label "tools/Initialize-SocratexPipeline.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/import_existing_project.ps1") -Needle "WORKFLOW.json" -Label "tools/import_existing_project.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/import_existing_project.ps1") -Needle "team/pipeline.json" -Label "tools/import_existing_project.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/reinitialize_pipeline.ps1") -Needle "WORKFLOW.json" -Label "tools/reinitialize_pipeline.ps1"
+        Test-ContainsText -Text (Get-RepoText -RelativePath "tools/reinitialize_pipeline.ps1") -Needle "team/pipeline.json" -Label "tools/reinitialize_pipeline.ps1"
     }
 
     if ($Initialized) {
         $requiredInitializedFiles = if ($codePackActive) {
-            @("DOCS.yaml", "STATE.yaml", "_PLAN.yaml", "DECISIONS.yaml", "PIPELINE-CONFIG.yaml")
+            @("DOCS.json", "STATE.json", "_PLAN.json", "DECISIONS.json", "PIPELINE-CONFIG.json")
         } else {
-            @("DOCS.yaml", "STATE.md", "_PLAN.md", "DECISIONS.md", "PIPELINE-CONFIG.yaml")
+            @("DOCS.json", "STATE.md", "_PLAN.md", "DECISIONS.md", "PIPELINE-CONFIG.json")
         }
 
         foreach ($requiredFile in $requiredInitializedFiles) {
@@ -430,12 +430,12 @@ try {
         Test-OpeningTocEmoji -File $file
     }
 
-    Test-FileSoftLimit -RelativePath "STATE.yaml" -SoftLimit $StateSoftLimit -Purpose "active state should stay compact"
+    Test-FileSoftLimit -RelativePath "STATE.json" -SoftLimit $StateSoftLimit -Purpose "active state should stay compact"
     Test-FileSoftLimit -RelativePath "STATE.md" -SoftLimit $StateSoftLimit -Purpose "active state should stay compact"
-    Test-FileSoftLimit -RelativePath "core/AGENT-CONTRACT.yaml" -SoftLimit 340 -Purpose "the shared contract should stay readable through thin adapters"
+    Test-FileSoftLimit -RelativePath "core/AGENT-CONTRACT.json" -SoftLimit 340 -Purpose "the shared contract should stay readable through thin adapters"
 
-    if ((Test-Path -LiteralPath "_PLAN.yaml") -and -not ((Get-Content -Raw -LiteralPath "_PLAN.yaml") -match 'pass_index')) {
-        Add-Warning "_PLAN.yaml does not mention pass_index."
+    if ((Test-Path -LiteralPath "_PLAN.json") -and -not ((Get-Content -Raw -LiteralPath "_PLAN.json") -match 'pass_index')) {
+        Add-Warning "_PLAN.json does not mention pass_index."
     }
 
     if ((Test-Path -LiteralPath "_PLAN.md") -and -not ((Get-Content -Raw -LiteralPath "_PLAN.md") -match 'Pass Index')) {

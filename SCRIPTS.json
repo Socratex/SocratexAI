@@ -1,0 +1,377 @@
+{
+    "index": [
+        "add_changelog_entry.ps1",
+        "audit_docs.ps1",
+        "audit_json_docs.py",
+        "check_code_context_gate.ps1",
+        "check_compiled_instructions.ps1",
+        "check_evals.ps1",
+        "check_pipeline_featurelist_update.ps1",
+        "check_runtime.py",
+        "check_task.ps1",
+        "check_utf8_writes.ps1",
+        "commit_task.ps1",
+        "compile.ps1",
+        "compile_agent_instructions.ps1",
+        "configure_powershell_utf8.ps1",
+        "console_summary.ps1",
+        "context_tags.ps1",
+        "detect_project_stack.ps1",
+        "doc_build_cache.ps1",
+        "doc_item.py",
+        "doc_item_bulk_insert.ps1",
+        "doc_item_insert.ps1",
+        "doc_item_migrate.ps1",
+        "doc_item_move.ps1",
+        "doc_keys.ps1",
+        "doc_list_check.ps1",
+        "doc_list_insert.ps1",
+        "doc_list_insert_checked.ps1",
+        "doc_list_item.py",
+        "doc_list_review.ps1",
+        "doc_post_edit.ps1",
+        "doc_read.ps1",
+        "doc_read_titles.ps1",
+        "doc_tool.py",
+        "docs_migrator.ps1",
+        "docs_migrator.py",
+        "docs_slim.ps1",
+        "docs_slim.py",
+        "doctor.ps1",
+        "done.ps1",
+        "end_prompt_snapshot.ps1",
+        "finish_subtask.ps1",
+        "finish_task.ps1",
+        "generate_embedded_config_payload.py",
+        "import_existing_project.ps1",
+        "init_branch_memory.ps1",
+        "init_task_work.ps1",
+        "Initialize-SocratexPipeline.ps1",
+        "install_powershell.ps1",
+        "knowledge_check.ps1",
+        "knowledge_code_context.ps1",
+        "knowledge_compile.ps1",
+        "knowledge_delete.ps1",
+        "knowledge_file_check.ps1",
+        "knowledge_file_compile.ps1",
+        "knowledge_file_delete.ps1",
+        "knowledge_file_query.ps1",
+        "knowledge_file_rename.ps1",
+        "knowledge_file_select.ps1",
+        "knowledge_file_upsert.ps1",
+        "knowledge_index.py",
+        "knowledge_query.ps1",
+        "knowledge_rename.ps1",
+        "knowledge_select.ps1",
+        "knowledge_upsert.ps1",
+        "learn_pipeline_features.ps1",
+        "log_summary.ps1",
+        "migrate_ai_pipeline.ps1",
+        "normalize_documents.bat",
+        "normalize_json_files.ps1",
+        "normalize_json_files.py",
+        "normalize_markdown_emoji.ps1",
+        "normalize_text_files.ps1",
+        "open_pipeline_learning_issue.ps1",
+        "pipeline_bootstrap_index.ps1",
+        "pipeline_bootstrap_index.py",
+        "recompile_ai_instructions.ps1",
+        "reinitialize_pipeline.ps1",
+        "remove_pipeline.ps1",
+        "repair_mojibake.ps1",
+        "report_pipeline_learning.ps1",
+        "run_quality_fix.ps1",
+        "run_quality_gate.ps1",
+        "set_directives.ps1",
+        "sync_pipeline_featurelist.ps1",
+        "task_snapshot.ps1",
+        "update_code_line_index.ps1",
+        "update_pipeline_from_link.ps1",
+        "upgrade_from_riftbound.ps1",
+        "Utf8File.ps1",
+        "wizard.ps1",
+        "write_utf8_file.ps1"
+    ],
+    "content": {
+        "add_changelog_entry.ps1": {
+            "path": "tools/add_changelog_entry.ps1"
+        },
+        "audit_docs.ps1": {
+            "path": "tools/audit_docs.ps1"
+        },
+        "audit_json_docs.py": {
+            "path": "tools/audit_json_docs.py"
+        },
+        "check_code_context_gate.ps1": {
+            "path": "tools/check_code_context_gate.ps1"
+        },
+        "check_compiled_instructions.ps1": {
+            "path": "tools/check_compiled_instructions.ps1"
+        },
+        "check_evals.ps1": {
+            "path": "tools/check_evals.ps1"
+        },
+        "check_pipeline_featurelist_update.ps1": {
+            "path": "tools/check_pipeline_featurelist_update.ps1"
+        },
+        "check_runtime.py": {
+            "path": "tools/check_runtime.py"
+        },
+        "check_task.ps1": {
+            "path": "tools/check_task.ps1"
+        },
+        "check_utf8_writes.ps1": {
+            "path": "tools/check_utf8_writes.ps1"
+        },
+        "commit_task.ps1": {
+            "path": "tools/commit_task.ps1"
+        },
+        "compile.ps1": {
+            "path": "tools/compile.ps1"
+        },
+        "compile_agent_instructions.ps1": {
+            "path": "tools/compile_agent_instructions.ps1"
+        },
+        "configure_powershell_utf8.ps1": {
+            "path": "tools/configure_powershell_utf8.ps1"
+        },
+        "console_summary.ps1": {
+            "path": "tools/console_summary.ps1"
+        },
+        "context_tags.ps1": {
+            "path": "tools/context_tags.ps1"
+        },
+        "detect_project_stack.ps1": {
+            "path": "tools/detect_project_stack.ps1"
+        },
+        "doc_build_cache.ps1": {
+            "path": "tools/doc_build_cache.ps1"
+        },
+        "doc_item.py": {
+            "path": "tools/doc_item.py"
+        },
+        "doc_item_bulk_insert.ps1": {
+            "path": "tools/doc_item_bulk_insert.ps1"
+        },
+        "doc_item_insert.ps1": {
+            "path": "tools/doc_item_insert.ps1"
+        },
+        "doc_item_migrate.ps1": {
+            "path": "tools/doc_item_migrate.ps1"
+        },
+        "doc_item_move.ps1": {
+            "path": "tools/doc_item_move.ps1"
+        },
+        "doc_keys.ps1": {
+            "path": "tools/doc_keys.ps1"
+        },
+        "doc_list_check.ps1": {
+            "path": "tools/doc_list_check.ps1"
+        },
+        "doc_list_insert.ps1": {
+            "path": "tools/doc_list_insert.ps1"
+        },
+        "doc_list_insert_checked.ps1": {
+            "path": "tools/doc_list_insert_checked.ps1"
+        },
+        "doc_list_item.py": {
+            "path": "tools/doc_list_item.py"
+        },
+        "doc_list_review.ps1": {
+            "path": "tools/doc_list_review.ps1"
+        },
+        "doc_post_edit.ps1": {
+            "path": "tools/doc_post_edit.ps1"
+        },
+        "doc_read.ps1": {
+            "path": "tools/doc_read.ps1"
+        },
+        "doc_read_titles.ps1": {
+            "path": "tools/doc_read_titles.ps1"
+        },
+        "doc_tool.py": {
+            "path": "tools/doc_tool.py"
+        },
+        "docs_migrator.ps1": {
+            "path": "tools/docs_migrator.ps1"
+        },
+        "docs_migrator.py": {
+            "path": "tools/docs_migrator.py"
+        },
+        "docs_slim.ps1": {
+            "path": "tools/docs_slim.ps1"
+        },
+        "docs_slim.py": {
+            "path": "tools/docs_slim.py"
+        },
+        "doctor.ps1": {
+            "path": "tools/doctor.ps1"
+        },
+        "done.ps1": {
+            "path": "tools/done.ps1"
+        },
+        "end_prompt_snapshot.ps1": {
+            "path": "tools/end_prompt_snapshot.ps1"
+        },
+        "finish_subtask.ps1": {
+            "path": "tools/finish_subtask.ps1"
+        },
+        "finish_task.ps1": {
+            "path": "tools/finish_task.ps1"
+        },
+        "generate_embedded_config_payload.py": {
+            "path": "tools/generate_embedded_config_payload.py"
+        },
+        "import_existing_project.ps1": {
+            "path": "tools/import_existing_project.ps1"
+        },
+        "init_branch_memory.ps1": {
+            "path": "tools/init_branch_memory.ps1"
+        },
+        "init_task_work.ps1": {
+            "path": "tools/init_task_work.ps1"
+        },
+        "Initialize-SocratexPipeline.ps1": {
+            "path": "tools/Initialize-SocratexPipeline.ps1"
+        },
+        "install_powershell.ps1": {
+            "path": "tools/install_powershell.ps1"
+        },
+        "knowledge_check.ps1": {
+            "path": "tools/knowledge_check.ps1"
+        },
+        "knowledge_code_context.ps1": {
+            "path": "tools/knowledge_code_context.ps1"
+        },
+        "knowledge_compile.ps1": {
+            "path": "tools/knowledge_compile.ps1"
+        },
+        "knowledge_delete.ps1": {
+            "path": "tools/knowledge_delete.ps1"
+        },
+        "knowledge_file_check.ps1": {
+            "path": "tools/knowledge_file_check.ps1"
+        },
+        "knowledge_file_compile.ps1": {
+            "path": "tools/knowledge_file_compile.ps1"
+        },
+        "knowledge_file_delete.ps1": {
+            "path": "tools/knowledge_file_delete.ps1"
+        },
+        "knowledge_file_query.ps1": {
+            "path": "tools/knowledge_file_query.ps1"
+        },
+        "knowledge_file_rename.ps1": {
+            "path": "tools/knowledge_file_rename.ps1"
+        },
+        "knowledge_file_select.ps1": {
+            "path": "tools/knowledge_file_select.ps1"
+        },
+        "knowledge_file_upsert.ps1": {
+            "path": "tools/knowledge_file_upsert.ps1"
+        },
+        "knowledge_index.py": {
+            "path": "tools/knowledge_index.py"
+        },
+        "knowledge_query.ps1": {
+            "path": "tools/knowledge_query.ps1"
+        },
+        "knowledge_rename.ps1": {
+            "path": "tools/knowledge_rename.ps1"
+        },
+        "knowledge_select.ps1": {
+            "path": "tools/knowledge_select.ps1"
+        },
+        "knowledge_upsert.ps1": {
+            "path": "tools/knowledge_upsert.ps1"
+        },
+        "learn_pipeline_features.ps1": {
+            "path": "tools/learn_pipeline_features.ps1"
+        },
+        "log_summary.ps1": {
+            "path": "tools/log_summary.ps1"
+        },
+        "migrate_ai_pipeline.ps1": {
+            "path": "tools/migrate_ai_pipeline.ps1"
+        },
+        "normalize_documents.bat": {
+            "path": "tools/normalize_documents.bat"
+        },
+        "normalize_json_files.ps1": {
+            "path": "tools/normalize_json_files.ps1"
+        },
+        "normalize_json_files.py": {
+            "path": "tools/normalize_json_files.py"
+        },
+        "normalize_markdown_emoji.ps1": {
+            "path": "tools/normalize_markdown_emoji.ps1"
+        },
+        "normalize_text_files.ps1": {
+            "path": "tools/normalize_text_files.ps1"
+        },
+        "open_pipeline_learning_issue.ps1": {
+            "path": "tools/open_pipeline_learning_issue.ps1"
+        },
+        "pipeline_bootstrap_index.ps1": {
+            "path": "tools/pipeline_bootstrap_index.ps1"
+        },
+        "pipeline_bootstrap_index.py": {
+            "path": "tools/pipeline_bootstrap_index.py"
+        },
+        "recompile_ai_instructions.ps1": {
+            "path": "tools/recompile_ai_instructions.ps1"
+        },
+        "reinitialize_pipeline.ps1": {
+            "path": "tools/reinitialize_pipeline.ps1"
+        },
+        "remove_pipeline.ps1": {
+            "path": "tools/remove_pipeline.ps1"
+        },
+        "repair_mojibake.ps1": {
+            "path": "tools/repair_mojibake.ps1"
+        },
+        "report_pipeline_learning.ps1": {
+            "path": "tools/report_pipeline_learning.ps1"
+        },
+        "run_quality_fix.ps1": {
+            "path": "tools/run_quality_fix.ps1"
+        },
+        "run_quality_gate.ps1": {
+            "path": "tools/run_quality_gate.ps1"
+        },
+        "set_directives.ps1": {
+            "path": "tools/set_directives.ps1"
+        },
+        "sync_pipeline_featurelist.ps1": {
+            "path": "tools/sync_pipeline_featurelist.ps1"
+        },
+        "task_snapshot.ps1": {
+            "path": "tools/task_snapshot.ps1"
+        },
+        "update_code_line_index.ps1": {
+            "path": "tools/update_code_line_index.ps1"
+        },
+        "update_pipeline_from_link.ps1": {
+            "path": "tools/update_pipeline_from_link.ps1"
+        },
+        "upgrade_from_riftbound.ps1": {
+            "path": "tools/upgrade_from_riftbound.ps1"
+        },
+        "Utf8File.ps1": {
+            "path": "tools/Utf8File.ps1"
+        },
+        "wizard.ps1": {
+            "path": "tools/wizard.ps1"
+        },
+        "write_utf8_file.ps1": {
+            "path": "tools/write_utf8_file.ps1"
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Source Pipeline Script Index",
+            "type": "script_index",
+            "language": "en"
+        }
+    }
+}

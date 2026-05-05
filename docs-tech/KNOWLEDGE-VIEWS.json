@@ -1,0 +1,98 @@
+{
+    "index": [
+        "quick_index",
+        "purpose",
+        "view_contract",
+        "defined_views"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "content": "- Purpose\n- View Contract\n- Defined Views\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "content": "This file defines named SQLite knowledge views used by `tools/knowledge_select.ps1 -View <id>`.\n\nViews are source configuration, not cache. The compiled database materializes `views` and `view_entries` during `tools/knowledge_compile.ps1`, `tools/knowledge_upsert.ps1`, `tools/knowledge_delete.ps1`, and `tools/knowledge_rename.ps1`.\n"
+        },
+        "view_contract": {
+            "title": "View Contract",
+            "content": "Each view selects knowledge entries by tags, type, and optional startup flag.\n\nSupported fields:\n- `id`: stable query id.\n- `title`: human-readable label.\n- `description`: short explanation of when the view should be used.\n- `tags`: many-to-many entry tags used as the primary filter.\n- `match`: `all` requires every tag, `any` accepts any listed tag.\n- `type`: optional entry type filter such as `rule`, `fact`, `decision`, `risk`, or `workflow`.\n- `load_at_start`: optional filter that keeps only entries marked for session startup.\n"
+        },
+        "defined_views": {
+            "title": "Defined Views",
+            "content": "Starter views cover the default context lanes requested for the project knowledge index:\n`session_start`, `architecture`, `debugging`, `performance`, `docs_workflow`, and `domain_modeling`.\n"
+        }
+    },
+    "meta": {
+        "document": {
+            "title": "Knowledge Views",
+            "type": "compiled_knowledge_config",
+            "language": "en"
+        }
+    },
+    "views": [
+        {
+            "id": "session_start",
+            "title": "Session Start",
+            "description": "Core knowledge that should be loaded at the beginning of session context building.",
+            "tags": [
+                "engineering",
+                "workflow",
+                "docs-workflow"
+            ],
+            "match": "any",
+            "load_at_start": true
+        },
+        {
+            "id": "architecture",
+            "title": "Architecture",
+            "description": "Architecture, ownership, runtime, and framework-boundary rules when a project records matching entries.",
+            "tags": [
+                "architecture"
+            ],
+            "match": "all"
+        },
+        {
+            "id": "debugging",
+            "title": "Debugging",
+            "description": "Diagnostics, logging, verification, and failure-investigation guidance.",
+            "tags": [
+                "diagnostics",
+                "verification",
+                "debugging"
+            ],
+            "match": "any"
+        },
+        {
+            "id": "performance",
+            "title": "Performance",
+            "description": "Runtime cost, performance budgets, and performance-sensitive verification guidance.",
+            "tags": [
+                "performance"
+            ],
+            "match": "any"
+        },
+        {
+            "id": "docs_workflow",
+            "title": "Docs Workflow",
+            "description": "Documentation workflow, source-of-truth, finalizer, and compiled-knowledge rules.",
+            "tags": [
+                "docs-workflow",
+                "workflow",
+                "verification"
+            ],
+            "match": "any"
+        },
+        {
+            "id": "domain_modeling",
+            "title": "Worldgen",
+            "description": "Generated-world, route graph, biome, persistence, and durable world-state guidance when a project records domain_modeling entries.",
+            "tags": [
+                "domain_modeling",
+                "persistence",
+                "data-first"
+            ],
+            "match": "any"
+        }
+    ]
+}

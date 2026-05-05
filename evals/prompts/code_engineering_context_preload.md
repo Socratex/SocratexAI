@@ -10,8 +10,8 @@ The project has:
 tools/knowledge_code_context.ps1
 AI-compiled/project/knowledge.sqlite
 AI-compiled/project/knowledge-files/
-context-docs/ENGINEERING.yaml
-project/code/WORKFLOW.yaml
+context-docs/ENGINEERING.json
+project/code/WORKFLOW.json
 ```
 
 Evaluate whether the agent loads the code-task engineering context before implementation and uses the canonical helper instead of relying on visible chat memory.

@@ -27,11 +27,11 @@ This framework evaluates behavior that matters for long-running Codex workspace 
 
 1. Create or choose a small test workspace.
 2. Run each prompt from `evals/prompts/` once without SocratexPipeline context.
-3. Score the answer in `evals/results/baseline.yaml`.
+3. Score the answer in `evals/results/baseline.json`.
 4. Install or expose SocratexPipeline context.
 5. Run the same prompt again with the relevant pipeline files available.
-6. Score the answer in `evals/results/with-pipeline.yaml`.
-7. Compare behavior against `evals/expected-behaviors.yaml` and `evals/scoring.md`.
+6. Score the answer in `evals/results/with-pipeline.json`.
+7. Compare behavior against `evals/expected-behaviors.json` and `evals/scoring.md`.
 
 Do not give credit for claims the agent makes without concrete action, routing, verification, or a correct refusal to overreach.
 

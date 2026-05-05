@@ -13,6 +13,8 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
 $textNormalizeScript = Join-Path $PSScriptRoot "normalize_text_files.ps1"
+$jsonNormalizeScript = Join-Path $PSScriptRoot "normalize_json_files.ps1"
+$bootstrapScript = Join-Path $PSScriptRoot "pipeline_bootstrap_index.ps1"
 $markdownEmojiScript = Join-Path $PSScriptRoot "normalize_markdown_emoji.ps1"
 $auditScript = Join-Path $PSScriptRoot "audit_docs.ps1"
 $lineIndexScript = Join-Path $PSScriptRoot "update_code_line_index.ps1"
@@ -112,7 +114,47 @@ try {
 	}
 
 	Invoke-TextNormalization -Label "text normalization refresh"
+	if ((-not $NoNormalize) -and (Test-Path -LiteralPath $jsonNormalizeScript)) {
+		$jsonArgs = @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$jsonNormalizeScript
+		)
+		Invoke-CheckCommand -Label "JSON normalization refresh" -Command "powershell" -Arguments $jsonArgs
+	}
+	if (Test-Path -LiteralPath $bootstrapScript) {
+		Invoke-CheckCommand -Label "pipeline bootstrap index refresh" -Command "powershell" -Arguments @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$bootstrapScript
+		)
+	}
 	Invoke-TextNormalization -Label "text normalization check" -Check
+	if ((-not $NoNormalize) -and (Test-Path -LiteralPath $jsonNormalizeScript)) {
+		$jsonCheckArgs = @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$jsonNormalizeScript,
+			"-Check"
+		)
+		Invoke-CheckCommand -Label "JSON normalization check" -Command "powershell" -Arguments $jsonCheckArgs
+	}
+	if (Test-Path -LiteralPath $bootstrapScript) {
+		Invoke-CheckCommand -Label "pipeline bootstrap index check" -Command "powershell" -Arguments @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$bootstrapScript,
+			"-Check"
+		)
+	}
 
 	if ($MarkdownEmoji) {
 		if ($checkPaths.Count -gt 0) {

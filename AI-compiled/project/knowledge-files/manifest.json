@@ -2,258 +2,303 @@
   "compiler_version": "3",
   "documents": [
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "aef4b70f7aaf4b074ffa0c310e5d53ca2b59b56b08dd4af58c81e000201e6436",
-      "path": "CHANGELOG.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "a10d7bb9ea62650ce3d4c8c4716404ca870cb16e6c826c1438649f037e8449ab",
+      "path": "CHANGELOG.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "cb01a9ce65cb3a219a24238ab7a5124b3453bb7071a505cf8b00cb345d7aa91d",
-      "path": "QUALITY-GATE.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "6eeb56bc7fc16cb64620dc1dfb20029e6ae7e65285630905895353d7acd65ef8",
+      "path": "COMMANDS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "7d12608b91fea1ab2d768aaf355f21a8f55888f7f7418e22c98eb4d2a9f7a90f",
-      "path": "context-docs/ENGINEERING.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "1acd8dbf6335464a965572001cd2b634e443ee78b36c98178ae2ef47f4d0a001",
+      "path": "DOCS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "7d350fe748de36b09cabcf9b6e94012c49e538feb8f739ef6b71411d10e74d14",
-      "path": "core/ACTIVATION-CHECK.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "d274ab5de5ceb97b758f5d6823e8f1d887c6bf17539e617d714ea5be8e896272",
+      "path": "FLOWS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "ab9d82a89ee10c8de702ab1d9b62129473a1828c5f6fac6f5c8e98ea0f5c892b",
-      "path": "core/AGENT-CONTRACT.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "89869fcd4f730e3d9be949317efb3dfb292a7e1e5b9063c21c7b599c48be25ed",
+      "path": "QUALITY-GATE.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "90f3c86fce12c386eac244e5627da56e72389018ed9d9043b739e47283a96ea0",
-      "path": "core/COMMANDS.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "cc367d6a85c3b01167bd691ac53e9d43bb2735054413abbb62533efbf87dfdb8",
+      "path": "SCRIPTS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "71f93658cff607f6b132940152c98d0b8a90283bb801d4c9d2ddcb7fb5be8f85",
-      "path": "core/CONTEXT-COMPACTION.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "69f9ad31b05838b6400792c0130cd687081b9c1948596cb9b525fb08f661cdce",
+      "path": "WORKFLOW.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "d79b5a99ccdf77f27acb462006e811f3909bcdb5b2338d98e3ab0236a8bf7067",
-      "path": "core/FILE-FORMATS.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "bf1a9dc21b815a3d5cfa60f04fde5226047dfcbeac894e23182f51b8b9b84f46",
+      "path": "context-docs/ENGINEERING.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "304427528eacdfd70c182b5850b9c7c04edd39d7ee8dd6e319733408d2dfa2b2",
-      "path": "core/INSTRUCTION-CAPTURE.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "c3d939fa517db4ddb8682917947ca2cc3c9d985880686b5367601460b5b5d742",
+      "path": "core/ACTIVATION-CHECK.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "96c3b2aa3ec8bb1bcf62c0699698086d20d40f777d120161fa2c46d318ef7522",
-      "path": "core/MEMORY-MODEL.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "aeccbdbdb2dce341a959aab49ee0965a7bf34087b8a52be7942d93faa410436e",
+      "path": "core/AGENT-CONTRACT.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "7ba1fee9c621b848fe6b891845561c0218aff7d97af951ab4a3b1495d20f048b",
-      "path": "core/PROJECT-PROFILE.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "85bd65862ea94b87f08ba1b9659a633da40854671bb9a7f073c3c3011d71a829",
+      "path": "core/COMMANDS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "66a7811205e438cb465472efcf41893199081db0cabc2515ff99385f4320c9b9",
-      "path": "core/PROMOTION-RULES.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "68cc6d338ffb05f910bb94c858ca63885932ca47356db33d4f32d92936af6508",
+      "path": "core/CONTEXT-COMPACTION.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "882764a4ffe0667adf73f6b50ef76dd477c2b8124d7ec8722c130e62fda98b1b",
-      "path": "core/REMOVAL-PROTOCOL.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "4ff9fdd22cf992983f26a312cc64b8b59db8d40161c9e891156d23979f8b8bee",
+      "path": "core/FILE-FORMATS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "2290b8e8a4725b70849747128c0aef125f4c019ad42610e079ade3c251df62cf",
-      "path": "core/ROI-BIAS.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "d998ad92f8dedce9856a46aee6bdabab0468330a590a70c5a1a235b6658de65d",
+      "path": "core/INSTRUCTION-CAPTURE.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "ea9440d715cf101b6d20d2876f287e0719aeddf780c0094d09b0e07a48c52827",
-      "path": "core/SCRIPT-FALLBACK.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "4496293983d003482f7234270a29af74f900a9878f70aa80aee2965c01da7c94",
+      "path": "core/MEMORY-MODEL.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "1df08791db9a6d3f76fd131170bd15d33aa9955ca0409ebca6c0c7158c6b384d",
-      "path": "core/TASK-WORK.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "08e6791e2d7a0679a8cec1a1125d0b98dcdd1b19a42cb462a18aa0268e623152",
+      "path": "core/PROJECT-PROFILE.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "ee905ba8cd46d55163ca67582c9139c385540a56b7ed8770cf0055bf731349eb",
-      "path": "core/UPDATE-PROTOCOL.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "504e7086041db37e699151798a2efe67f9b8c4056094e2203a68354c4ad22680",
+      "path": "core/PROMOTION-RULES.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "7d6f1fbc52c8e2a91fd9e0653eed96256d3148155a11b4487ebf7bc8dfba6d0f",
-      "path": "docs-tech/KNOWLEDGE-VIEWS.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "bb3693eb7e52aa128dd2a380f4a1fa3f6daf61b6e4d766858c8bf612d284984a",
+      "path": "core/REMOVAL-PROTOCOL.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "4be2e4b2015f5b6d83d3e94993dfc54fae5d1a53bf605151fd92de3574741954",
-      "path": "evals/expected-behaviors.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "bd909cd333fc1e0c5af5d120a76669801c8e4129dbf0aceeced6fb4413da3d08",
+      "path": "core/ROI-BIAS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "1ee1aaa4263da09fc0c493e6c117a53c5a0ad594f5558c69399806dd40e87652",
-      "path": "evals/personas.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "1b2286442066135455b944d93eee892d2ce8ae4e6e017067c76b81351cc543b1",
+      "path": "core/SCRIPT-FALLBACK.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "9cd3372b4fc705c0bb0291df5e9573310f52a604b2c62611ebfb6af76190d39f",
-      "path": "evals/results/baseline.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "89b691c08704cf0fde038c4b2a31626e1900e4adeecb8c12f829bf7d17a1b95b",
+      "path": "core/TASK-WORK.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "d675b4ba448f5a4fafa1096f38ad6f22767d02be4ddb9dd580a9cab4e52a87c0",
-      "path": "evals/results/with-pipeline.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "48faf237c87ef7f5cf8a07fde4ba6ac4e714e00eb16655718846286be2929c7e",
+      "path": "core/UPDATE-PROTOCOL.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "770450f83d9cf4d6a0b4a96a5c899aacb37e45b794b5afb8bc7331e50cf0fd25",
-      "path": "project/code/BRANCH-MODE.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "84f0684118eabce0f048a01d6335c67f8e88a69e7726d4a3de417018ab7fa345",
+      "path": "docs-tech/KNOWLEDGE-VIEWS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "c89e7df8ba57748916055f4cb486c97099c0c89db9b03315dfd3e033d522cda8",
-      "path": "project/code/COMMANDS.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "a912132d2c1bab92f84c7648eed5a85e535abe51bd31d2fec1e241e2e63b6924",
+      "path": "docs-tech/PIPELINE-BOOTSTRAP.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "4a3de6b74aa8e4e845d4d1066a48d3a5008fcb81443814e12eede2cb8a62f9b3",
-      "path": "project/code/DDD-ADIV.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "701b97faf673b49bb4906b7ba171de348cec50d4eb2693521cf1461c867c160a",
+      "path": "evals/expected-behaviors.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "70d01c9dff0e9f711062408e0017231b7821d2eecda31d9ccc08ff66376c2e10",
-      "path": "project/code/DIAGNOSTICS.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "e63d77e3f3c870f290f846d27826601b3757d94fae5e44d9c944858cdabca9aa",
+      "path": "evals/personas.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "1e091f819df14be13c408bbfa7b98c425017de43687c7d8cbf1461424ab0fd44",
-      "path": "project/code/FROZEN-LAYERS.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "21c348c435587e448fe41a77e50ab4d3344b3f0892015383ca071bd7dd59697a",
+      "path": "evals/results/baseline.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "50c90fefec80fd4ca4d05c424d98ac643a5c501a6b7927f2db25f7520f429710",
-      "path": "project/code/GIT.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "4dad9ffa3b1d1a1c176e727f40629ea7baa1d8cdd8c4a881dd5ee6465fedf1f5",
+      "path": "evals/results/with-pipeline.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "f0a39a759c3edb6fea1a267ff9cf3f30e376ee2487b18dc3767b1a199110cc60",
-      "path": "project/code/INSTRUCTION-CAPTURE.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "d64f0ecd984aed6920d219c279ffd185191c9f0cc7416ef80bb6df85d353776d",
+      "path": "learning/inbox/life-work-testing-feedback.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "f13837984e1a2f5909cff36cfdf3b9ed3136d36c110bd4ac48463c07c20cc41d",
-      "path": "project/code/PACK.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "8f59c084a615b679d8851caeea8a240219a72509b681c6603c1adeaf4fcd25e7",
+      "path": "pipeline_featurelist.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "0a4644278faa58895aa94d667140fc6a233baccc7811a8898e3cd9c95d0d75f0",
-      "path": "project/code/REGISTRIES.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "3bc27031b79ddfa32a0c9c8a07faa31156ab71b94ebf5583d3f3ff67cb908675",
+      "path": "project/code/BRANCH-MODE.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "2c501eabab0284051cd3f0162dab555a0a348a249b4af0553ed905b1bb5155de",
-      "path": "project/code/WORKFLOW.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "2024711b7d26cca179e146583ca58bc079c36808e9b450944447ec6380ce8a1d",
+      "path": "project/code/COMMANDS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "574ecc534d317c688c824b752ca99682584c9444daee0293475a63982d11d04a",
-      "path": "project/creative/PACK.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "3f12470efdb008bfabd02a3fde1e62542a8f043999671d08fe66cf4313ff00de",
+      "path": "project/code/DDD-ADIV.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "e9d07fd409a3e207f33d74e000512aa7eb5f99b386b08667c4c4923f17a4c330",
-      "path": "project/generic/PACK.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "6c18fa598c150635ef292447ce500d6bb488a13b37d338fb2eef9728c99287fd",
+      "path": "project/code/DIAGNOSTICS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "491a3ff4cf7ac66ae8db219dc17b57bdfdbe00e4826f279acbcc56a813f29b87",
-      "path": "project/personal/PACK.yaml"
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "dd0bf6df21ec4493e944cd21ef534726797729c15e7800171b669fa54e34be7e",
+      "path": "project/code/FROZEN-LAYERS.json"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "1fb75f779b00d4cf35b208c23ca2f81f2d61b629318ebd3ce1a88f2a00c3841e",
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "3f8533679cbbc9035011b47cc789134902f597b6bbf17720f0fad03e5dbef4d7",
+      "path": "project/code/GIT.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "1cb6163049ca201feeb87eb22bb1ca5651d35a52ed762094df0641ad92460673",
+      "path": "project/code/INSTRUCTION-CAPTURE.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "689881340f2dd2993bd43e27767464020114e08921d6a73ca20c691253299601",
+      "path": "project/code/PACK.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "e16d660f97a5e671a8915938afb138d75d66b12b93aeb50bad6a4c9e9bdaee2d",
+      "path": "project/code/REGISTRIES.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "535337d45b52da39431a44a4b499daccce11ef5550eec4bc18950e67eaf1bb08",
+      "path": "project/code/WORKFLOW.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "80d71d37571be1cec1eb55096a7dadb71d51fc06c744bdc24f0c598e1fa742dd",
+      "path": "project/creative/PACK.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "73408f84fdb78df97b28356f469953c0ae9650d0ee77355beb756b7ea5da0743",
+      "path": "project/gamedev/PACK.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "b3acb9fcc11620c5dcebd5dc08239fba9608de86e74340db022ce2b63f9e0b84",
+      "path": "project/generic/PACK.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "4468341fe6114f22262249d15b46e06029a948a042e9a8b8be5a891c5b26237c",
+      "path": "project/personal/PACK.json"
+    },
+    {
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "08505323e164965404ca9fe633690f244bfe0fb538487beaa73c6481de7393f2",
       "path": "tools/check_code_context_gate.ps1"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "620cefd0347aa278bdc1fc5fc62953d2548e777a7abe3a466f4728f9084fb8de",
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "496a7da4724aa0fef1657cf03d04e3a6a3b3871f2e94dc461bd2c0f591bdd2d0",
       "path": "tools/context_tags.ps1"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "cfab83612f3d5bb3ffbb9edff774daf9d956d3cb91a1ba6b6884f175a8d7495f",
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "d08514d711d7414dc011612b389122924697f2af1b5d5e5c05088d96c1daefc2",
       "path": "tools/knowledge_code_context.ps1"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "239b1e6b4ccfd1c374e50c43e7edf36bcac430e5bbf02eba712ab783fa3aad81",
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "71063929a84366a13502f9fbb3df73fc4eb318bf45584050083db45c0f105925",
       "path": "tools/knowledge_index.py"
     },
     {
-      "compiled_at": "2026-05-02T20:20:38+00:00",
-      "hash": "2525b6f0ad2df77177024abc7f0ed029f15514a167cc5bf113ed19edf31ad6d6",
+      "compiled_at": "2026-05-05T00:35:03+00:00",
+      "hash": "6697ebb4c5cde7191845a62289a48e184fcf6e11380a011998b67ad00e58f3d1",
       "path": "tools/recompile_ai_instructions.ps1"
     }
   ],
   "entries": [
     {
-      "document_path": "context-docs/ENGINEERING.yaml",
+      "document_path": "context-docs/ENGINEERING.json",
       "load_at_start": true,
       "name": "engineering.coding.explicit_diagnosable_flow",
       "subtype": "coding_rule",
       "type": "rule"
     },
     {
-      "document_path": "context-docs/ENGINEERING.yaml",
+      "document_path": "context-docs/ENGINEERING.json",
       "load_at_start": true,
       "name": "engineering.workflow.context_tags_before_response",
       "subtype": "workflow_rule",
       "type": "rule"
     },
     {
-      "document_path": "context-docs/ENGINEERING.yaml",
+      "document_path": "context-docs/ENGINEERING.json",
       "load_at_start": true,
       "name": "engineering.workflow.knowledge_file_fallback",
       "subtype": "workflow_rule",
       "type": "rule"
     },
     {
-      "document_path": "context-docs/ENGINEERING.yaml",
+      "document_path": "context-docs/ENGINEERING.json",
       "load_at_start": true,
       "name": "engineering.workflow.knowledge_hash_gate",
       "subtype": "verification_rule",
       "type": "rule"
     },
     {
-      "document_path": "context-docs/ENGINEERING.yaml",
+      "document_path": "context-docs/ENGINEERING.json",
       "load_at_start": true,
       "name": "engineering.workflow.knowledge_sqlite_generated_layer",
       "subtype": "workflow_rule",
       "type": "rule"
     },
     {
-      "document_path": "context-docs/ENGINEERING.yaml",
+      "document_path": "context-docs/ENGINEERING.json",
       "load_at_start": true,
       "name": "engineering.workflow.knowledge_views",
       "subtype": "workflow_rule",
       "type": "rule"
     },
     {
-      "document_path": "context-docs/ENGINEERING.yaml",
+      "document_path": "context-docs/ENGINEERING.json",
       "load_at_start": true,
       "name": "engineering.workflow.load_standards_before_code",
       "subtype": "workflow_rule",
       "type": "rule"
     },
     {
-      "document_path": "context-docs/ENGINEERING.yaml",
+      "document_path": "context-docs/ENGINEERING.json",
       "load_at_start": true,
       "name": "engineering.workflow.normalized_content_hashes",
       "subtype": "workflow_rule",
@@ -261,7 +306,7 @@
     }
   ],
   "file_dir": "C:/Users/micha/Mój dysk/v2/Projects/SocratexPipeline/AI-compiled/project/knowledge-files",
-  "generated_at": "2026-05-02T20:20:38+00:00",
+  "generated_at": "2026-05-05T00:35:03+00:00",
   "schema": "socratex-knowledge-index/v3-file-manifest",
   "tables": {
     "documents": "C:/Users/micha/Mój dysk/v2/Projects/SocratexPipeline/AI-compiled/project/knowledge-files/documents.json",
@@ -272,10 +317,6 @@
     "tags": "C:/Users/micha/Mój dysk/v2/Projects/SocratexPipeline/AI-compiled/project/knowledge-files/tags.json"
   },
   "tags": [
-    {
-      "description": "",
-      "tag": "aaa-gamedev"
-    },
     {
       "description": "Scene/runtime adapter boundaries.",
       "tag": "adapters"
@@ -333,6 +374,10 @@
       "tag": "documentation"
     },
     {
+      "description": "Domain modeling, generated-state, and durable state rules.",
+      "tag": "domain_modeling"
+    },
+    {
       "description": "General engineering standards.",
       "tag": "engineering"
     },
@@ -345,12 +390,8 @@
       "tag": "future-first"
     },
     {
-      "description": "Game-development-specific engineering rules.",
+      "description": "Game-development-specific engineering rules for the gamedev pack.",
       "tag": "gamedev"
-    },
-    {
-      "description": "Godot runtime, scene, and tool rules.",
-      "tag": "godot"
     },
     {
       "description": "",
@@ -381,16 +422,16 @@
       "tag": "planning"
     },
     {
+      "description": "",
+      "tag": "production-grade"
+    },
+    {
       "description": "Human and agent readability rules.",
       "tag": "readability"
     },
     {
       "description": "Runtime lifecycle and gameplay execution rules.",
       "tag": "runtime"
-    },
-    {
-      "description": "Godot scene glue and adapter rules.",
-      "tag": "scene-glue"
     },
     {
       "description": "Knowledge that should be loaded at the beginning of session context building.",
@@ -415,10 +456,6 @@
     {
       "description": "",
       "tag": "workflow"
-    },
-    {
-      "description": "World generation, route graph, biome, and generated-state rules.",
-      "tag": "worldgen"
     }
   ]
 }

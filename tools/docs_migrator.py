@@ -1,9 +1,9 @@
 import argparse
 import copy
+import json
 from pathlib import Path
 from typing import Any
 
-import yaml
 import docs_slim
 
 
@@ -13,16 +13,12 @@ CONTENT_KEYS = ["sections", "current", "checkpoint", "immediate_focus", "non_reg
 REDUNDANT_LEGACY_INDEX_KEYS = ["pass_index", "bug_index"]
 
 
-def load_yaml(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
+def load_document(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def write_yaml(path: Path, value: Any) -> None:
-    path.write_text(
-        yaml.safe_dump(value, allow_unicode=True, sort_keys=False, width=120),
-        encoding="utf-8",
-    )
+def write_document(path: Path, value: Any) -> None:
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=4) + "\n", encoding="utf-8", newline="\n")
 
 
 def repo_relative(path: Path, repo_root: Path) -> str:
@@ -34,11 +30,11 @@ def is_excluded(path: Path, repo_root: Path) -> bool:
     return any(relative == part or relative.startswith(f"{part}/") for part in EXCLUDED_PARTS)
 
 
-def iter_yaml_paths(repo_root: Path, patterns: list[str]) -> list[Path]:
+def iter_document_paths(repo_root: Path, patterns: list[str]) -> list[Path]:
     paths: set[Path] = set()
     for pattern in patterns:
         for path in repo_root.glob(pattern):
-            if path.is_file() and path.suffix in {".yaml", ".yml"} and not is_excluded(path, repo_root):
+            if path.is_file() and path.suffix in {".json", ".json", ".json"} and not is_excluded(path, repo_root):
                 paths.add(path.resolve())
     return sorted(paths)
 
@@ -147,26 +143,26 @@ def migrate_document(data: Any) -> Any:
 
 def command_migrate(args: argparse.Namespace) -> None:
     repo_root = Path(args.repo_root).resolve()
-    paths = iter_yaml_paths(repo_root, args.paths)
+    paths = iter_document_paths(repo_root, args.paths)
     changed: list[str] = []
     for path in paths:
-        original = load_yaml(path)
+        original = load_document(path)
         migrated = migrate_document(original)
         if migrated == original:
             continue
         changed.append(repo_relative(path, repo_root))
         if not args.check:
-            write_yaml(path, migrated)
+            write_document(path, migrated)
     for path in changed:
         print(path)
     if args.check and changed:
         raise SystemExit(1)
-    print(f"OK: {'would migrate' if args.check else 'migrated'} {len(changed)} YAML document(s).")
+    print(f"OK: {'would migrate' if args.check else 'migrated'} {len(changed)} structured document(s).")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Migrate YAML documents to the slim index/items/meta layout.")
-    parser.add_argument("paths", nargs="*", default=["**/*.yaml", "**/*.yml"])
+    parser = argparse.ArgumentParser(description="Migrate structured JSON documents to the slim index/items/meta layout.")
+    parser.add_argument("paths", nargs="*", default=["**/*.json"])
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()

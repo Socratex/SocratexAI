@@ -16,7 +16,7 @@ Every CI provider should run:
 
 ## Recommended Commands
 
-Read `QUALITY-GATE.yaml` for the canonical self-check command list.
+Read `QUALITY-GATE.json` for the canonical self-check command list.
 
 On Windows PowerShell:
 
@@ -32,9 +32,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/Initialize-SocratexPip
 
 ## Provider Guidance
 
-For GitHub Actions, create `.github/workflows/self-check.yml`.
+For GitHub Actions, create `.github/workflows/self-check.json`.
 
-For GitLab CI, create `.gitlab-ci.yml`.
+For GitLab CI, create `.gitlab-ci.json`.
 
 For other providers, map the same checks into their shell runner format.
 

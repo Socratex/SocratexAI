@@ -8,7 +8,7 @@ AI-compiled/codex/ENTRYPOINT.md
 AI-compiled/codex/RULES.compiled.md
 tools/recompile_ai_instructions.ps1
 tools/check_compiled_instructions.ps1
-core/AGENT-CONTRACT.yaml
+core/AGENT-CONTRACT.json
 ```
 
 A user asks:

@@ -1,0 +1,77 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "value_axes",
+        "cost_axes",
+        "roi_rule",
+        "profile_weight",
+        "roi_picks",
+        "emoji_roi_picks",
+        "anti_pattern"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "value_axes",
+                "cost_axes",
+                "roi_rule",
+                "profile_weight",
+                "roi_picks",
+                "emoji_roi_picks",
+                "anti_pattern"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# ROI Bias\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nUse ROI bias to rank improvements by what pays off now for this project profile.\n\nDo not optimize for what looks elegant in abstraction when another option better improves the project's current correctness, speed, diagnosability, or verifiability.\n"
+        },
+        "value_axes": {
+            "title": "Value Axes",
+            "format": "markdown-section",
+            "body": "## Value Axes\n\n`Quality`: improves correctness, reduces bugs, protects behavior, or prevents regressions.\n\n`Speed`: improves development velocity, iteration time, setup speed, or delivery flow.\n\n`Diagnosability`: makes failures easier to understand, localize, reproduce, or explain.\n\n`Truthfulness`: makes claims about the system easier to verify through tests, assertions, schemas, logs, monitoring, reproducible scripts, or explicit contracts.\n\nUse value marks:\n\n- `++`: large impact,\n- `+`: noticeable impact,\n- `~`: marginal impact.\n"
+        },
+        "cost_axes": {
+            "title": "Cost Axes",
+            "format": "markdown-section",
+            "body": "## Cost Axes\n\n`Effort`: estimated implementation cost.\n\n- `S`: small,\n- `M`: medium,\n- `L`: large,\n- `XL`: very large.\n\n`Risk`: chance of regression, data loss, workflow breakage, or architectural churn.\n\n- `L`: low,\n- `M`: medium,\n- `H`: high.\n\n`Reversibility`: how easy it is to undo or isolate the change.\n\n- `H`: easy to reverse,\n- `M`: moderately reversible,\n- `L`: hard to reverse.\n"
+        },
+        "roi_rule": {
+            "title": "ROI Rule",
+            "format": "markdown-section",
+            "body": "## ROI Rule\n\nA recommendation is worth doing now when:\n\n`(impact_on_value_axes * profile_weight) / (effort * risk * inverse_reversibility)` is high.\n\nThis is a judgment heuristic, not a numeric obligation.\n"
+        },
+        "profile_weight": {
+            "title": "Profile Weight",
+            "format": "markdown-section",
+            "body": "## Profile Weight\n\nLegacy, low-test, custom-framework projects weight `Diagnosability` and `Truthfulness` higher.\n\nGreenfield and early projects weight `Quality` and `Speed` higher, while still preserving verification.\n\nMature projects weight `Quality`, `Risk`, and team coordination cost higher.\n\nSunset projects weight low-risk maintenance and migration leverage higher than broad redesign.\n"
+        },
+        "roi_picks": {
+            "title": "ROI Picks",
+            "format": "markdown-section",
+            "body": "## ROI Picks\n\nAnalysis, review, planning, and finish reports should end with `ROI Picks` when they contain recommendations or next steps.\n\nList one to three improvements worth doing now:\n\n```text\n"
+        },
+        "emoji_roi_picks": {
+            "title": "<emoji> ROI Picks",
+            "format": "markdown-section",
+            "body": "## <emoji> ROI Picks\n1. <improvement> - value: Truthfulness++, Diagnosability+ | cost: Effort=S, Risk=L, Reversibility=H | why now: <one line>\n```\n\nIf no follow-up is worth doing now, say that explicitly.\n"
+        },
+        "anti_pattern": {
+            "title": "Anti-Pattern",
+            "format": "markdown-section",
+            "body": "## Anti-Pattern\n\nFlag recommendations that are abstract-pretty but low ROI for the current profile.\n\nPrefer the improvement that pays off for the user's actual pain, constraints, and verification reality.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "ROI Bias"
+}

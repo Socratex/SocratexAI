@@ -1,0 +1,119 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "required_reads_for_code_projects",
+        "technical_defaults",
+        "script_first_automation_directive",
+        "ddd_adiv_recommendation",
+        "known_solution_bias",
+        "task_type_routing",
+        "profile_aware_defaults",
+        "change_strategy",
+        "task_gating",
+        "reporting",
+        "review_heuristics",
+        "verification"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "recommended_files",
+                "required_reads_for_code_projects",
+                "technical_defaults",
+                "script_first_automation_directive",
+                "ddd_adiv_recommendation",
+                "known_solution_bias",
+                "task_type_routing",
+                "profile_aware_defaults",
+                "change_strategy",
+                "task_gating",
+                "reporting",
+                "review_heuristics",
+                "verification"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Project Pack: Code\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nUse this pack for software projects in any language, framework, or domain.\n\nThe pack is language-agnostic and framework-agnostic. It adds technical execution standards, verification rules, and DDD-ADIV defaults to the core runtime.\n"
+        },
+        "recommended_files": {
+            "title": "Recommended Files",
+            "format": "markdown-section",
+            "body": "## Recommended Files\n\n- `DOCS.json`\n- `WORKFLOW.json`\n- `team/*.json`\n- `STATE.json`\n- `_PLAN.json`\n- `TODO.json`\n- `BUGS.json`\n- `BUGS-SOLVED.json`\n- `CHANGELOG.json` when `changelog.enabled` is not `no`\n- `DECISIONS.json`\n- `PIPELINE-CONFIG.json`\n- `context-docs/TECHNICAL.json`\n- `context-docs/FROZEN_LAYERS.json`\n- `_PROMPTS.md` for raw prompt intake when the user wants a prompt queue.\n- `_PROMPT-QUEUE.json` for defragmented prompt work.\n- `_INSTRUCTIONS.md` for raw scratch intake only\n- `_INSTRUCTION-QUEUE.json`\n- generated indexes and diagnostics as `.json`\n\nRead `DOCS.json` before reading, creating, renaming, or updating project documents so the agent chooses the correct source and write target.\n- `tools/`\n"
+        },
+        "required_reads_for_code_projects": {
+            "title": "Required Reads for Code Projects",
+            "format": "markdown-section",
+            "body": "## Required Reads for Code Projects\n\n- `core/AGENT-CONTRACT.json`\n- `core/FILE-FORMATS.json`\n- `core/PROMOTION-RULES.json`\n- `core/CONTEXT-COMPACTION.json`\n- `project/code/WORKFLOW.json`\n- `project/code/BRANCH-MODE.json` when `workflow.branch_mode` is `branch_scoped`\n- `project/code/COMMANDS.json`\n- `project/code/REGISTRIES.json`\n- `project/code/DDD-ADIV.json`\n- `project/code/GIT.json`\n- `project/code/FROZEN-LAYERS.json`\n- `project/code/INSTRUCTION-CAPTURE.json`\n- `project/code/DIAGNOSTICS.json`\n- `core/PROJECT-PROFILE.json` when `project_profile` exists\n- `core/ROI-BIAS.json`\n- `core/SCRIPT-FALLBACK.json`\n- `core/TASK-WORK.json` for broad multi-step tasks\n- `WORKFLOW.json` when priority steering, feature triage, planning, or broad project-risk judgment matters\n- `team/*.json` only when the user names a role, asks for team-style review, or `WORKFLOW.json` routes the task to that role\n"
+        },
+        "technical_defaults": {
+            "title": "Technical Defaults",
+            "format": "markdown-section",
+            "body": "## Technical Defaults\n\n- Prefer readable, diagnosable code over compact or clever code.\n- Prefer explicit control flow, explicit data flow, explicit ownership, and explicit state transitions.\n- Separate pure domain logic from I/O, framework glue, persistence, engine APIs, and other side effects.\n- Normalize external errors at boundaries.\n- Prefer fail-fast behavior for invalid states.\n- Use guard clauses and small functions over deep nesting.\n- Keep parameter counts and cyclomatic complexity under control.\n- Use typed, linted, formatter-friendly code when the ecosystem supports it.\n- Avoid hidden semantics, ambiguous convention, and runtime-only meaning when a mechanical contract is possible.\n- Organize code top-down when practical: entry points and workflow first, lower-level helpers later.\n- Keep one block focused on one concern and one abstraction level.\n- Extract intent-revealing helpers when a block starts doing multiple jobs.\n- Prefer explicit comparisons and conditions over coercive, ambiguous, or clever expressions.\n- Prefer structured APIs and parsers over ad hoc string manipulation when a reasonable option exists.\n- Isolate nondeterminism and external boundaries behind small, testable interfaces when practical.\n- Comments should explain non-obvious constraints, workarounds, hazards, or tradeoffs; do not restate visible code.\n"
+        },
+        "script_first_automation_directive": {
+            "title": "Script-First Automation Directive",
+            "format": "markdown-section",
+            "body": "## Script-First Automation Directive\n\nUse existing project scripts and pipeline tools whenever practical.\n\nThis is a high-priority programming directive: when a script can safely do the work, prefer the script.\n\nBefore manually performing repeatable work, check `tools/`, package scripts, task runners, Makefiles, CI commands, framework CLIs, and project-specific helper scripts.\n\nPrefer scripts for:\n\n- initialization,\n- audits,\n- quality gates,\n- formatting,\n- tests,\n- diagnostics,\n- snapshots,\n- commits,\n- migrations,\n- generated indexes,\n- documentation normalization.\n\nIf a suitable script exists, use it instead of reimplementing the same workflow manually.\n\nIf a script is skipped, state why: missing dependency, unsafe side effect, wrong scope, platform mismatch, or user instruction.\n\nRun status, check, audit, and quality scripts at verification boundaries instead of after every micro-edit.\n\nFor the normal task flow, gather context first, make the code and document edits for the current scope, then run one git-based batch finalizer near the end. The finalizer should discover changed files from git, normalize text, rebuild document caches, refresh code-line indexes, run checks, and report status through repository scripts instead of requiring manual normalizer/cache/index command chains.\n\nPrefer `tools/done.ps1 -Message \"<message>\"` for Git-backed task closure when available.\nIf `tools/done.ps1` or a lower-level finalizer fails on a repeatable mechanical issue, fix or extend the relevant script so future equivalent work is handled automatically before rerunning the finalizer.\n\nFor compact changed-path checks during a verification boundary, prefer a helper such as:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/check_task.ps1 -Paths <changed paths>\n```\n\nFor structured project documents, generated files, registries, or contract-managed files, prefer repository scripts over manual edits when a relevant script exists.\n\nFor item moves between structured JSON documents, use `tools/doc_item_migrate.ps1`.\n\nFor item ordering inside one structured JSON document, use `tools/doc_item_move.ps1`.\n\nFor controlled insertion into structured JSON documents, use `tools/doc_item_insert.ps1`.\n\nFor one-line list additions inside an existing structured JSON item, use `tools/doc_list_insert_checked.ps1` when available so insertion and compact changed-path verification run as one workflow.\n\nFor candidate-title duplicate review before documentation updates, use `tools/doc_list_review.ps1` when available so duplicate search and candidate section reads run as one workflow.\n\nFor repeated or structurally constrained edits without a script, complete the requested change first, then recommend adding a small script when it would reduce future drift.\n"
+        },
+        "ddd_adiv_recommendation": {
+            "title": "DDD-ADIV Recommendation",
+            "format": "markdown-section",
+            "body": "## DDD-ADIV Recommendation\n\nUse DDD-ADIV as the default design lens:\n\n- model domain concepts explicitly,\n- isolate bounded contexts,\n- protect invariants close to the state they govern,\n- record durable architecture decisions,\n- verify risky behavior with tests, checks, or clear manual validation.\n\nThe full definition lives in `project/code/DDD-ADIV.json`.\n"
+        },
+        "known_solution_bias": {
+            "title": "Known-Solution Bias",
+            "format": "markdown-section",
+            "body": "## Known-Solution Bias\n\nBefore custom implementation, apply the full code known-solutions directive:\n\n- Known solutions check: identify whether established patterns, proven practices, standard tools, or business/software archetypes solve the problem well enough.\n- Architecture archetypes check: compare the problem against recognizable structures such as layered architecture, hexagonal architecture, CQRS, state machines, queues, adapters, repositories, and domain services.\n- Build-vs-borrow discipline: avoid bespoke systems when a framework feature, library, workflow, or design pattern is cheaper, clearer, and easier to maintain.\n- Future-fit check: when the user asks for code work, check whether the requested approach is the best future-facing solution for ownership, invariants, testing, persistence, and extension cost; if not, recommend a better approach or prerequisite first.\n- DDD alignment: use patterns to clarify domain ownership, invariants, boundaries, and language; do not add pattern ceremony that obscures the domain.\n\nExamples:\n\n- domain services,\n- repositories and ports,\n- adapters,\n- layered architecture,\n- hexagonal architecture,\n- CQRS,\n- state machines,\n- command handlers,\n- event queues,\n- schema validation,\n- transaction boundaries,\n- retry/backoff policies,\n- caching,\n- memoization,\n- idempotency keys,\n- migrations,\n- background jobs,\n- test fixtures,\n- golden files,\n- contract tests.\n\nUse the standard solution when it is cheaper and clearer than bespoke architecture.\n\nIf rejecting a known solution, state the constraint that makes it a poor fit.\n"
+        },
+        "task_type_routing": {
+            "title": "Task Type Routing",
+            "format": "markdown-section",
+            "body": "## Task Type Routing\n\nFor programming projects, classify the request before reading widely or editing.\n\nThe default language/framework-agnostic route is:\n\n1. Identify whether the task is feature implementation, bug analysis, diagnostics/log analysis, performance analysis, audit, vision/product discussion, document update, plan update, plan analysis, or vision/architecture analysis.\n2. Load the smallest context for that task type: current state, workflow only when priority steering matters, active plan/backlog when sequencing matters, bug/diagnostic registries when evidence matters, and the smallest owning source/context slice before code edits.\n3. Apply code standards through the project knowledge layer when available.\n4. Execute through the owning boundary, using standard framework/library mechanisms before custom infrastructure when they fit.\n5. Verify with a task-appropriate gate and update only the memory layers whose current truth changed.\n\nIf the request does not fit a known task type, stop before broad reads or edits, name the ambiguity, propose a concrete workflow, and ask for approval unless the work is small, local, reversible, and low-risk.\n"
+        },
+        "profile_aware_defaults": {
+            "title": "Profile-Aware Defaults",
+            "format": "markdown-section",
+            "body": "## Profile-Aware Defaults\n\nUse `project_profile` to choose the right kind of known solution.\n\nFor `legacy` projects:\n\n- prefer minimal-invasive changes,\n- add characterization tests or golden master checks before risky refactors,\n- introduce seams before broad rewrites,\n- use strangler fig and anti-corruption patterns when moving behavior to new boundaries.\n\nFor `none` or `smoke-only` test coverage:\n\n- propose a golden master test, manual reproduction script, or fixture snapshot before non-trivial behavior changes,\n- keep changes small and reversible,\n- report unverified assumptions explicitly.\n\nFor `custom in-house` or `mixed` frameworks:\n\n- isolate framework touchpoints behind adapters,\n- search for injection seams,\n- avoid editing framework core unless that is the explicit task.\n\nFor mature standard frameworks:\n\n- prefer built-in framework mechanisms,\n- follow ecosystem conventions,\n- avoid custom infrastructure when standard extension points fit.\n"
+        },
+        "change_strategy": {
+            "title": "Change Strategy",
+            "format": "markdown-section",
+            "body": "## Change Strategy\n\n- For surgical fixes, make the smallest safe change.\n- For larger work, introduce a clear ownership boundary.\n- Preserve coherent architecture.\n- Do not refactor unrelated areas.\n- Remove dead code, unused imports, duplicate conditions, and temporary diagnostics when touched.\n- Treat syntax errors, type errors, unresolved references, and linter failures as must-fix issues.\n- When existing architecture is coherent, extend it instead of replacing it.\n- When existing architecture is incoherent, prefer one explicit boundary repair over scattered local workarounds.\n- Do not introduce abstractions for vague future needs.\n- Add an abstraction only when it removes real complexity, reduces meaningful duplication, or matches an established local pattern.\n"
+        },
+        "task_gating": {
+            "title": "Task Gating",
+            "format": "markdown-section",
+            "body": "## Task Gating\n\nBefore implementation, check whether the requested work is the best future-facing solution.\n\nIf a cheaper prerequisite, enabling contract, diagnostic step, or architecture cleanup should happen first, recommend it before implementing or make it the first step when it stays inside the user's requested outcome.\n\nUse a short plan-first checkpoint for work that is complex, underspecified, structural, or spans multiple ownership boundaries.\n\nBefore broad implementation, note likely impact when the task touches:\n\n- multiple systems,\n- state transitions,\n- persistence or schemas,\n- randomness, concurrency, async, timing, or scheduling,\n- more than two or three files,\n- public APIs, tool contracts, or registries.\n\nStop and reframe when the requested approach would materially increase coupling, hide side effects, add nondeterminism, or blur ownership.\n\nFor local, reversible, clearly scoped changes, implement directly and report the outcome.\n"
+        },
+        "reporting": {
+            "title": "Reporting",
+            "format": "markdown-section",
+            "body": "## Reporting\n\nFor non-trivial code work, the first execution update should be compact and concrete:\n\n- Usage: whether the task may be expensive in context, tool calls, or time.\n- Impact: the likely blast radius.\n- Domains: the touched ownership areas.\n- Current situation: observed facts.\n- Expected result: what should be true after the change.\n- Applied solutions: known solutions, scripts, or patterns to use.\n\nAfter implementation, report changed files, verification, skipped checks, and residual risk.\n"
+        },
+        "review_heuristics": {
+            "title": "Review Heuristics",
+            "format": "markdown-section",
+            "body": "## Review Heuristics\n\nLead with bugs, regressions, security issues, data-loss risks, and missing verification.\n\nFlag:\n\n- unsafe dynamic execution,\n- injection risks,\n- unintended mass updates or deletes,\n- swallowed exceptions,\n- inconsistent return paths,\n- hidden control flow,\n- concurrency hazards,\n- unbounded resource usage,\n- unclear ownership.\n"
+        },
+        "verification": {
+            "title": "Verification",
+            "format": "markdown-section",
+            "body": "## Verification\n\nUse the strongest practical quality gate available:\n\n- unit tests,\n- integration tests,\n- typecheck,\n- lint,\n- formatter check,\n- build,\n- smoke test,\n- manual reproduction,\n- diff check.\n\nIf verification is impossible or skipped, report it explicitly.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Project Pack: Code"
+}

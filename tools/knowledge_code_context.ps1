@@ -52,18 +52,16 @@ $baseCodeGuidanceTags = @(
 	"architecture",
 	"best-practices",
 	"borrowed-before-bespoke",
-	"aaa-gamedev",
-	"gamedev",
+	"production-grade",
 	"ddd-adiv",
 	"future-first",
 	"data-first",
 	"ownership",
-	"godot",
 	"runtime",
 	"diagnostics",
 	"performance",
 	"verification",
-	"worldgen"
+	"domain_modeling"
 )
 $selectedTags = @($baseCodeGuidanceTags + $AdditionalTags | Where-Object {
 	-not [string]::IsNullOrWhiteSpace($_)

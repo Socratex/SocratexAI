@@ -1,6 +1,6 @@
 param(
 	[string]$OutputDir = "AI-compiled",
-	[string[]]$Packs = @("code", "generic", "personal", "creative"),
+	[string[]]$Packs = @("code", "generic", "personal", "creative", "gamedev"),
 	[switch]$Check
 )
 
@@ -62,7 +62,7 @@ function Get-ExistingPacks {
 		if ($name.Length -eq 0) {
 			continue
 		}
-		if (Test-Path -LiteralPath (Join-Path $repoRoot "project\$name\PACK.yaml") -PathType Leaf) {
+		if (Test-Path -LiteralPath (Join-Path $repoRoot "project\$name\PACK.json") -PathType Leaf) {
 			$result.Add($name) | Out-Null
 		}
 	}
@@ -75,7 +75,7 @@ function New-CompiledFile {
 		[string]$Content
 	)
 
-	if ($RelativePath -match 'WORKFLOW|ORCHESTRATION|TEAM|README|compile-report' -and $Content.Trim().Length -lt 20) {
+	if ($RelativePath -match 'WORKFLOW|TEAM|README|compile-report' -and $Content.Trim().Length -lt 20) {
 		throw "Compiled file content was unexpectedly short for $RelativePath (length=$($Content.Length))."
 	}
 
@@ -136,15 +136,21 @@ function Get-SourceManifest {
 		"AGENTS.md",
 		"README.md",
 		"PUBLIC-BOOTSTRAP.md",
-		"core/AGENT-CONTRACT.yaml",
-		"core/MEMORY-MODEL.yaml",
-		"core/PROMOTION-RULES.yaml",
-		"core/FILE-FORMATS.yaml",
-		"core/ROI-BIAS.yaml",
-		"core/TASK-WORK.yaml",
-		"core/SCRIPT-FALLBACK.yaml",
-		"context-docs/ENGINEERING.yaml",
-		"docs-tech/KNOWLEDGE-VIEWS.yaml",
+		"DOCS.json",
+		"WORKFLOW.json",
+		"COMMANDS.json",
+		"FLOWS.json",
+		"SCRIPTS.json",
+		"docs-tech/PIPELINE-BOOTSTRAP.json",
+		"core/AGENT-CONTRACT.json",
+		"core/MEMORY-MODEL.json",
+		"core/PROMOTION-RULES.json",
+		"core/FILE-FORMATS.json",
+		"core/ROI-BIAS.json",
+		"core/TASK-WORK.json",
+		"core/SCRIPT-FALLBACK.json",
+		"context-docs/ENGINEERING.json",
+		"docs-tech/KNOWLEDGE-VIEWS.json",
 		"tools/knowledge_index.py",
 		"tools/context_tags.ps1",
 		"tools/knowledge_select.ps1",
@@ -153,14 +159,16 @@ function Get-SourceManifest {
 		"tools/knowledge_file_compile.ps1",
 		"tools/knowledge_file_check.ps1",
 		"tools/knowledge_file_select.ps1",
-		"templates/ORCHESTRATION.yaml",
-		"templates/docs-tech/KNOWLEDGE-VIEWS.yaml",
-		"templates/code/context-docs/ENGINEERING.yaml",
-		"templates/team/product.yaml",
-		"templates/team/technical.yaml",
-		"templates/team/performance.yaml",
-		"templates/team/experience.yaml",
-		"templates/team/pipeline.yaml"
+		"tools/pipeline_bootstrap_index.py",
+		"tools/pipeline_bootstrap_index.ps1",
+		"templates/WORKFLOW.json",
+		"templates/docs-tech/KNOWLEDGE-VIEWS.json",
+		"templates/code/context-docs/ENGINEERING.json",
+		"templates/team/product.json",
+		"templates/team/technical.json",
+		"templates/team/performance.json",
+		"templates/team/experience.json",
+		"templates/team/pipeline.json"
 	)) {
 		$hash = Get-RelativeHash -RelativePath $path
 		if ($hash) {
@@ -169,8 +177,8 @@ function Get-SourceManifest {
 	}
 	foreach ($pack in $PackNames) {
 		foreach ($path in @(
-			"project/$pack/PACK.yaml",
-			"project/$pack/WORKFLOW.yaml"
+			"project/$pack/PACK.json",
+			"project/$pack/WORKFLOW.json"
 		)) {
 			$hash = Get-RelativeHash -RelativePath $path
 			if ($hash) {
@@ -193,13 +201,13 @@ function New-CompiledFiles {
 	$sourceHashText = $sourceEntries -join [Environment]::NewLine
 	$generatedAt = "source-" + (ConvertTo-Hash -Text $sourceHashText).Substring(0, 12)
 	$featureList = Get-RepoText -RelativePath "pipeline_featurelist.json"
-	$agentContractPurpose = Get-Section -RelativePath "core/AGENT-CONTRACT.yaml" -Selector "purpose"
-	$agentContractPrinciples = Get-Section -RelativePath "core/AGENT-CONTRACT.yaml" -Selector "operating_principles"
-	$memoryLayers = Get-Section -RelativePath "core/AGENT-CONTRACT.yaml" -Selector "project_memory_layers"
-	$toolFirstYaml = Get-Section -RelativePath "core/AGENT-CONTRACT.yaml" -Selector "tool_first_yaml"
-	$codeWorkflowReadOrder = Get-Section -RelativePath "project/code/WORKFLOW.yaml" -Selector "read_order"
-	$codeWorkflowGeneral = Get-Section -RelativePath "project/code/WORKFLOW.yaml" -Selector "general_workflow"
-	$codeWorkflowVerification = Get-Section -RelativePath "project/code/WORKFLOW.yaml" -Selector "verification_boundary"
+	$agentContractPurpose = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "purpose"
+	$agentContractPrinciples = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "operating_principles"
+	$memoryLayers = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "project_memory_layers"
+	$toolFirstJson = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "tool_first_json"
+	$codeWorkflowReadOrder = Get-Section -RelativePath "project/code/WORKFLOW.json" -Selector "read_order"
+	$codeWorkflowGeneral = Get-Section -RelativePath "project/code/WORKFLOW.json" -Selector "general_workflow"
+	$codeWorkflowVerification = Get-Section -RelativePath "project/code/WORKFLOW.json" -Selector "verification_boundary"
 
 	$entry = @"
 # Compiled Codex Entrypoint
@@ -219,9 +227,10 @@ Read order for Codex:
 
 1. `AI-compiled/codex/RULES.compiled.md`
 2. `AI-compiled/codex/WORKFLOW.compiled.md`
-3. `AI-compiled/codex/ORCHESTRATION.compiled.md` only when priority steering matters
-4. `AI-compiled/codex/TEAM.compiled.md` only when a role is requested or routed
-5. Source files referenced by the compiled layer when implementation requires exact detail
+3. `docs-tech/PIPELINE-BOOTSTRAP.json` for source-pipeline routing indexes
+4. `AI-compiled/codex/CONTEXTUAL-WORKFLOW.compiled.md` only when priority steering matters
+5. `AI-compiled/codex/TEAM.compiled.md` only when a role is requested or routed
+6. Source files referenced by the compiled layer when implementation requires exact detail
 
 Generated checksum data lives in `AI-compiled/checksum.json`.
 "@
@@ -248,7 +257,7 @@ $memoryLayers
 
 ## Tool Discipline
 
-$toolFirstYaml
+$toolFirstJson
 
 ## Feature Manifest
 
@@ -289,12 +298,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instruc
 ~~~
 "@
 
-	$orchestration = @"
-# Compiled Orchestration Rules
+	$workflow = @"
+# Compiled Contextual Workflow Rules
 
 Generated: $generatedAt
 
-`ORCHESTRATION.yaml` is opt-in priority context, not default context.
+`WORKFLOW.json` is opt-in priority context, not default context.
 
 Read it when:
 
@@ -304,22 +313,22 @@ Read it when:
 
 Do not read it for narrow local fixes without priority or planning impact.
 
-Installed projects get `ORCHESTRATION.yaml` from `templates/ORCHESTRATION.yaml`.
+Installed projects get `WORKFLOW.json` from `templates/WORKFLOW.json`.
 "@
 	if ($compiledWorkflowContent.Trim().Length -lt 100) {
 		throw "Compiled workflow content was unexpectedly short."
 	}
-	if ($orchestration.Trim().Length -lt 100) {
-		throw "Compiled orchestration content was unexpectedly short."
+	if ($workflow.Trim().Length -lt 100) {
+		throw "Compiled workflow content was unexpectedly short."
 	}
 
 	$teamFiles = [System.Collections.Generic.List[string]]::new()
 	foreach ($role in @("product", "technical", "performance", "experience", "pipeline")) {
-		$text = Get-RepoText -RelativePath "templates/team/$role.yaml"
+		$text = Get-RepoText -RelativePath "templates/team/$role.json"
 		if ($text.Trim().Length -gt 0) {
 			$teamFiles.Add("## $role") | Out-Null
 			$teamFiles.Add("") | Out-Null
-			$teamFiles.Add('```yaml') | Out-Null
+			$teamFiles.Add('```json') | Out-Null
 			$teamFiles.Add($text.TrimEnd()) | Out-Null
 			$teamFiles.Add('```') | Out-Null
 			$teamFiles.Add("") | Out-Null
@@ -331,7 +340,7 @@ Installed projects get `ORCHESTRATION.yaml` from `templates/ORCHESTRATION.yaml`.
 
 Generated: $generatedAt
 
-Team files are on-demand decision lenses. Load only when the user names a role, asks for team-style review, or `ORCHESTRATION.yaml` routes the task to that role.
+Team files are on-demand decision lenses. Load only when the user names a role, asks for team-style review, or `WORKFLOW.json` routes the task to that role.
 
 $teamBody
 "@
@@ -351,7 +360,7 @@ $teamBody
 			"codex/ENTRYPOINT.md",
 			"codex/RULES.compiled.md",
 			"codex/WORKFLOW.compiled.md",
-			"codex/ORCHESTRATION.compiled.md",
+			"codex/CONTEXTUAL-WORKFLOW.compiled.md",
 			"codex/TEAM.compiled.md"
 		)
 		recompile_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1"
@@ -373,28 +382,29 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructi
 
 Codex starts at `codex/ENTRYPOINT.md`.
 "@
-	$compiledIndex = @"
-schema: socratex-compiled-agent-index/v1
-role: generated_agent_cache
-generated_at: $generatedAt
-do_not_edit_manually: true
-targets:
-  - codex
-entrypoints:
-  codex: codex/ENTRYPOINT.md
-recompile_command: powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1
-check_command: powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1
-"@
+	$compiledIndexPayload = [ordered]@{
+		schema = "socratex-compiled-agent-index/v1"
+		role = "generated_agent_cache"
+		generated_at = $generatedAt
+		do_not_edit_manually = $true
+		targets = @("codex")
+		entrypoints = [ordered]@{
+			codex = "codex/ENTRYPOINT.md"
+		}
+		recompile_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/recompile_ai_instructions.ps1"
+		check_command = "powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_compiled_instructions.ps1"
+	}
+	$compiledIndex = $compiledIndexPayload | ConvertTo-Json -Depth 8
 	$files = @()
 	if ($compiledReadme.Trim().Length -lt 20) {
 		throw "compiledReadme variable unexpectedly short before file creation."
 	}
 	$files += New-CompiledFile -RelativePath "README.md" -Content $compiledReadme
-	$files += New-CompiledFile -RelativePath "INDEX.yaml" -Content $compiledIndex
+	$files += New-CompiledFile -RelativePath "INDEX.json" -Content $compiledIndex
 	$files += New-CompiledFile -RelativePath "codex/ENTRYPOINT.md" -Content $entry
 	$files += New-CompiledFile -RelativePath "codex/RULES.compiled.md" -Content $rules
 	$files += New-CompiledFile -RelativePath "codex/WORKFLOW.compiled.md" -Content $compiledWorkflowContent
-	$files += New-CompiledFile -RelativePath "codex/ORCHESTRATION.compiled.md" -Content $orchestration
+	$files += New-CompiledFile -RelativePath "codex/CONTEXTUAL-WORKFLOW.compiled.md" -Content $workflow
 	$files += New-CompiledFile -RelativePath "codex/TEAM.compiled.md" -Content $team
 
 	$checksums = [ordered]@{}

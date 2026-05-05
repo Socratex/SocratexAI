@@ -1,0 +1,42 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "protocol",
+        "install_hints"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "protocol",
+                "install_hints"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Script Fallback\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nThis protocol preserves script-first discipline when a required runtime or dependency is missing.\n\nMissing tooling is a system setup bug worth fixing, not a permanent constraint.\n"
+        },
+        "protocol": {
+            "title": "Protocol",
+            "format": "markdown-section",
+            "body": "## Protocol\n\nStep 0: Check prerequisites before running a script when the runtime is uncertain.\n\nUse:\n\n```powershell\npython tools/check_runtime.py\n```\n\nStep 1: If the runtime exists, run the script.\n\nStep 2: If the runtime is missing, propose a system improvement first:\n\n- name the missing runtime or library,\n- give an install command for the detected platform when possible,\n- explain which workflows the runtime unlocks,\n- ask the user for an explicit decision before using a manual fallback.\n\nStep 3: Only if the user declines the system improvement, use a manual fallback or skip.\n\nWhen falling back, report:\n\n```text\nexecuted manually, script `<script>` skipped due to missing `<runtime>`, system improvement declined by user\n```\n\nStep 4: Never claim a script ran when it did not run.\n\nPowerShell-first setup:\n\n- `pwsh` is the preferred runtime for SocratexAI tool automation.\n- During setup, check `pwsh` before relying on tool workflows.\n- If `pwsh` is missing, run `tools/install_powershell.ps1` to produce an install plan.\n- Use `tools/install_powershell.ps1 -Apply` only after explicit user approval.\n- If PowerShell is unsupported on the target system, recommend lite/no-tools mode, running SocratexAI from a supported host or container, or porting required scripts to the target shell.\n"
+        },
+        "install_hints": {
+            "title": "Install Hints",
+            "format": "markdown-section",
+            "body": "## Install Hints\n\nPrefer platform-specific install hints when known:\n\n- Python package: `python -m pip install --user <package>`\n- PowerShell on Linux: `sudo snap install powershell --classic`\n- PowerShell on macOS: `brew install --cask powershell`\n- PowerShell on Windows: `winget install --id Microsoft.PowerShell --source winget`, Microsoft Store, or GitHub releases.\n\nIf the platform cannot be detected, provide the generic runtime name and ask the user how they want dependencies installed.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Script Fallback"
+}

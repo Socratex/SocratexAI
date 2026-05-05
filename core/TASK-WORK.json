@@ -1,0 +1,70 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "when_to_use",
+        "default_file",
+        "minimal_schema",
+        "workflow",
+        "promotion",
+        "structured_document_edits"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "when_to_use",
+                "default_file",
+                "minimal_schema",
+                "workflow",
+                "promotion",
+                "structured_document_edits"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Task Work\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nUse this protocol for broad tasks that are too large to safely track only in live chat.\n\nThe agent should create a temporary JSON micro-task file, execute it step by step, update statuses during work, then clean it up or promote only durable facts.\n"
+        },
+        "when_to_use": {
+            "title": "When To Use",
+            "format": "markdown-section",
+            "body": "## When To Use\n\nUse task work tracking when a request:\n\n- touches multiple files, modules, systems, or documents,\n- has several phases,\n- includes many requirements that are easy to forget,\n- requires document migration,\n- may be interrupted,\n- is expected to take longer than one small focused prompt,\n- has unclear risks, open questions, or verification steps.\n\nDo not use it for small, local, reversible edits where the tracking overhead is larger than the task.\n"
+        },
+        "default_file": {
+            "title": "Default File",
+            "format": "markdown-section",
+            "body": "## Default File\n\nFor code projects, use:\n\n```text\ndocs-tech/cache/current_task.json\n```\n\nIf the project uses another cache directory, use the configured equivalent.\n\nThis file is temporary working memory, not project history.\n\nIt should normally be untracked. Commit it only when the project explicitly treats task work files as reviewable artifacts.\n"
+        },
+        "minimal_schema": {
+            "title": "Minimal Schema",
+            "format": "markdown-section",
+            "body": "## Minimal Schema\n\n```json\ntask:\n  title: TBD\n  status: active\n  source_request: TBD\n  done_criteria: []\nmicro_tasks:\n  - key: inspect_context\n    status: pending\n    result: TBD\n  - key: implement_change\n    status: pending\n    result: TBD\n  - key: verify\n    status: pending\n    result: TBD\nquestions: []\nrisks: []\nnext_suggestions: []\n```\n\nStatuses:\n\n- `pending`\n- `active`\n- `done`\n- `blocked`\n- `skipped`\n"
+        },
+        "workflow": {
+            "title": "Workflow",
+            "format": "markdown-section",
+            "body": "## Workflow\n\n1. Create or refresh the temporary task file before broad implementation.\n2. Split the request into small, ordered micro-tasks.\n3. Mark one micro-task `active` at a time.\n4. Update each micro-task with a short result when completed.\n5. Add risks, questions, and verification gaps as they are discovered.\n6. Before final response, verify every required micro-task is `done`, `skipped`, or intentionally deferred.\n7. Remove the temporary file when it has no future value.\n8. Promote only durable facts to the right memory layer.\n"
+        },
+        "promotion": {
+            "title": "Promotion",
+            "format": "markdown-section",
+            "body": "## Promotion\n\nAt the end of the task:\n\n- promote durable technical facts to `context-docs/`,\n- promote durable decisions to `DECISIONS.json` in code projects or `DECISIONS.md` in non-code user-facing memory,\n- promote remaining future work to `_PLAN.json` or `TODO.json` in code projects, or `_PLAN.md` / `BACKLOG.md` in non-code user-facing memory,\n- promote shipped behavior or major fixes to `CHANGELOG.json` in code projects when `changelog.enabled` is not `no`, or to a user-facing Markdown changelog when a non-code project uses one,\n- keep only the compact current checkpoint in `STATE.json` for code projects or `STATE.md` for non-code user-facing memory.\n\nDo not copy the full temporary micro-task file into project memory.\n"
+        },
+        "structured_document_edits": {
+            "title": "Structured Document Edits",
+            "format": "markdown-section",
+            "body": "## Structured Document Edits\n\nFor JSON documents with `index` and `items`, use document item scripts for structural moves:\n\n- `tools/doc_item_migrate.ps1` to move or copy an item between documents,\n- `tools/doc_item_move.ps1` to move an item inside one document,\n- `tools/doc_item_insert.ps1` to add an item at a controlled position,\n- `tools/doc_read.ps1` and `tools/doc_keys.ps1` for selective reads before editing.\n\nManual edits are acceptable when:\n\n- changing the document schema itself,\n- fixing the parser or migration tool,\n- the script is unavailable or broken,\n- doing a very small text correction inside one item and no field-level script exists.\n\nIf a script cannot run because a runtime is missing, follow `core/SCRIPT-FALLBACK.json`.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Task Work"
+}

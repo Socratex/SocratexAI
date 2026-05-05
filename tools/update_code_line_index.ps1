@@ -1,6 +1,6 @@
 param(
 	[string]$IndexPath = "docs-tech/CODE_LINE_INDEX.json",
-	[string]$LargeFilesPath = "docs-tech/LARGE_FILES.yaml",
+	[string]$LargeFilesPath = "docs-tech/LARGE_FILES.json",
 	[int]$LargeFileThreshold = 300,
 	[string[]]$Paths = @(),
 	[switch]$ChangedOnly,
@@ -211,13 +211,13 @@ function Get-LargeFileNote {
 
 	$notes = @{
 		"Game/scripts/world/domain/world_traversal_grammar_contract.gd" = "Traversal grammar source for generated routes, branch shapes, affordance rules, and terrain-readable structure data. It is large because it currently keeps the route vocabulary and generation constraints together as one explicit contract."
-		"Game/scripts/world/infrastructure/world_generator.gd" = "World generator coordinator for deterministic route, chunk, biome, and payload construction. It is large because several generation stages still need a single traceable orchestration path while worldgen contracts are evolving."
-		"Game/scripts/runtime/application/game_root_controller.gd" = "Runtime orchestration hub that wires debug capture, camera/runtime coordination, save/report helpers, and high-level gameplay services. It is large because it still owns several cross-cutting runtime integration points that should only be split when a stable boundary is obvious."
+		"Game/scripts/world/infrastructure/world_generator.gd" = "World generator coordinator for deterministic route, chunk, biome, and payload construction. It is large because several generation stages still need a single traceable workflow path while domain_modeling contracts are evolving."
+		"Game/scripts/runtime/application/game_root_controller.gd" = "Runtime workflow hub that wires debug capture, camera/runtime coordination, save/report helpers, and high-level gameplay services. It is large because it still owns several cross-cutting runtime integration points that should only be split when a stable boundary is obvious."
 		"Game/scripts/player/domain/player_movement_runtime.gd" = "Player movement-state runtime for acceleration, jumping, slopes, contact, and feel-critical movement values. It is large because movement feel is still being tuned and the state transitions need to remain mechanically traceable."
 		"Game/scripts/ui/view/main_menu_controller.gd" = "Main menu and character/setup UI controller. It is large because one scene controller still owns several menu modes and input/view transitions."
 		"Game/scripts/player/application/player_controller.gd" = "Player movement, combat hooks, input application, and runtime state coordination. It is large because player feel is still under active iteration and premature splitting could obscure the control flow."
-		"Game/scripts/enemies/application/enemy_director.gd" = "Enemy spawning, activation, lifecycle, and runtime coordination layer. It is large because enemy orchestration still crosses spawn data, pooling, runtime state, and progression-facing behavior."
-		"Game/scripts/world/domain/world_generation_pipeline.gd" = "World generation orchestration pipeline. It is large because it coordinates route data, biome data, chunk payloads, and deterministic generation contracts."
+		"Game/scripts/enemies/application/enemy_director.gd" = "Enemy spawning, activation, lifecycle, and runtime coordination layer. It is large because enemy workflow still crosses spawn data, pooling, runtime state, and progression-facing behavior."
+		"Game/scripts/world/domain/world_generation_pipeline.gd" = "World generation workflow pipeline. It is large because it coordinates route data, biome data, chunk payloads, and deterministic generation contracts."
 		"Game/scripts/world/application/world_runtime_application.gd" = "Application-facing world runtime coordinator. It is large because it bridges generated world data, active chunk lifecycle, debug hooks, and presentation/runtime services."
 		"Game/scripts/world/infrastructure/world_procedural_structure_pass.gd" = "Procedural structure generation pass for data-backed world dressing and silhouettes. It is large because structure placement still shares deterministic context, biome rules, and payload output in one pass."
 		"Game/scripts/world/application/world_controller.gd" = "World scene controller that applies generated data to active runtime nodes. It is large because it coordinates chunk presentation, lifecycle, and world-facing runtime state."
@@ -237,7 +237,7 @@ function Get-LargeFileNote {
 
 	$extension = [System.IO.Path]::GetExtension($Path)
 	switch ($extension) {
-		".gd" { return "Godot gameplay/runtime script above the size threshold. Keep it documented here until the ownership boundary is clear enough to split without hiding flow." }
+		".gd" { return "Runtime script above the size threshold. Keep it documented here until the ownership boundary is clear enough to split without hiding flow." }
 		".ps1" { return "Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling." }
 		".py" { return "Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic." }
 		default { return "Code file above the size threshold. Keep it documented here until it can be reduced or split cleanly." }
@@ -248,25 +248,6 @@ function Get-Emoji {
 	param([int]$CodePoint)
 
 	return [char]::ConvertFromUtf32($CodePoint)
-}
-
-function Add-YamlLiteralBlock {
-	param(
-		[System.Collections.Generic.List[string]]$Lines,
-		[string]$Key,
-		[string[]]$Content,
-		[int]$Indent = 4
-	)
-
-	$prefix = " " * $Indent
-	$Lines.Add("${prefix}${Key}: |") | Out-Null
-	foreach ($line in $Content) {
-		if ([string]::IsNullOrEmpty($line)) {
-			$Lines.Add("") | Out-Null
-		} else {
-			$Lines.Add("$prefix  $line") | Out-Null
-		}
-	}
 }
 
 function Build-LargeFilesDocument {
@@ -294,51 +275,46 @@ function Build-LargeFilesDocument {
 		}
 	}
 
-	$lines = New-Object System.Collections.Generic.List[string]
-	$lines.Add("index:") | Out-Null
-	$lines.Add("- quick_index") | Out-Null
-	$lines.Add("- summary") | Out-Null
-	$lines.Add("- large_file_index") | Out-Null
-	$lines.Add("- maintenance") | Out-Null
-	$lines.Add("items:") | Out-Null
-	$lines.Add("  quick_index:") | Out-Null
-	$lines.Add("    title: Quick Index") | Out-Null
-	Add-YamlLiteralBlock -Lines $lines -Key "content" -Indent 4 -Content @(
-		"- $pinEmoji Summary",
-		"- $chartEmoji Large File Index",
-		"- $toolEmoji Maintenance"
-	)
-	$lines.Add("  summary:") | Out-Null
-	$lines.Add("    title: $pinEmoji Summary") | Out-Null
-	Add-YamlLiteralBlock -Lines $lines -Key "content" -Indent 4 -Content @(
-		"$pinEmoji Generated index of code files above the large-file threshold.",
-		"",
-		"$pinEmoji This document is generated from ``docs-tech/CODE_LINE_INDEX.json`` by ``Tools/update_code_line_index.ps1``. It tracks code files above $LargeFileThreshold non-empty lines so large files have an explicit reason to stay large or a visible reason to split later."
-	)
-	$lines.Add("  large_file_index:") | Out-Null
-	$lines.Add("    title: $chartEmoji Large File Index") | Out-Null
-	Add-YamlLiteralBlock -Lines $lines -Key "content" -Indent 4 -Content @($tableLines)
-	$lines.Add("  maintenance:") | Out-Null
-	$lines.Add("    title: $toolEmoji Maintenance") | Out-Null
-	Add-YamlLiteralBlock -Lines $lines -Key "content" -Indent 4 -Content @(
-		"$toolEmoji Update this document through the line-index script instead of editing the table manually.",
-		"",
-		"$toolEmoji Use ``Tools/update_code_line_index.ps1`` for a full refresh. Use ``Tools/update_code_line_index.ps1 -ChangedOnly`` when only changed files need to update their index records from the current git diff."
-	)
-	$lines.Add("meta:") | Out-Null
-	$lines.Add("  document:") | Out-Null
-	$lines.Add("    title: $rulerEmoji Large Files") | Out-Null
-	$lines.Add("    type: technical") | Out-Null
-	$lines.Add("    language: en") | Out-Null
-	$lines.Add("  routing:") | Out-Null
-	$lines.Add("    purpose: Generated YAML index of code files above the large-file threshold.") | Out-Null
-	$lines.Add("    read_when:") | Out-Null
-	$lines.Add("    - When checking large source-owned files or deciding whether a file should be split.") | Out-Null
-	$lines.Add("    - When code line index tooling is in scope.") | Out-Null
-	$lines.Add("    do_not_read_when:") | Out-Null
-	$lines.Add("    - When the current task is unrelated to repository size, ownership, or tooling.") | Out-Null
+	$document = [ordered]@{
+		index = @("quick_index", "summary", "large_file_index", "maintenance")
+		items = [ordered]@{
+			quick_index = [ordered]@{
+				title = "Quick Index"
+				content = "- $pinEmoji Summary`n- $chartEmoji Large File Index`n- $toolEmoji Maintenance"
+			}
+			summary = [ordered]@{
+				title = "$pinEmoji Summary"
+				content = "$pinEmoji Generated index of code files above the large-file threshold.`n`n$pinEmoji This document is generated from ``docs-tech/CODE_LINE_INDEX.json`` by ``Tools/update_code_line_index.ps1``. It tracks code files above $LargeFileThreshold non-empty lines so large files have an explicit reason to stay large or a visible reason to split later."
+			}
+			large_file_index = [ordered]@{
+				title = "$chartEmoji Large File Index"
+				content = ($tableLines -join "`n")
+			}
+			maintenance = [ordered]@{
+				title = "$toolEmoji Maintenance"
+				content = "$toolEmoji Update this document through the line-index script instead of editing the table manually.`n`n$toolEmoji Use ``Tools/update_code_line_index.ps1`` for a full refresh. Use ``Tools/update_code_line_index.ps1 -ChangedOnly`` when only changed files need to update their index records from the current git diff."
+			}
+		}
+		meta = [ordered]@{
+			document = [ordered]@{
+				title = "$rulerEmoji Large Files"
+				type = "technical"
+				language = "en"
+			}
+			routing = [ordered]@{
+				purpose = "Generated JSON index of code files above the large-file threshold."
+				read_when = @(
+					"When checking large source-owned files or deciding whether a file should be split.",
+					"When code line index tooling is in scope."
+				)
+				do_not_read_when = @(
+					"When the current task is unrelated to repository size, ownership, or tooling."
+				)
+			}
+		}
+	}
 
-	return ($lines -join "`n") + "`n"
+	return ($document | ConvertTo-Json -Depth 8) + "`n"
 }
 
 Push-Location -LiteralPath $repoRoot

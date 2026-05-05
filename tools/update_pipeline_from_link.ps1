@@ -87,7 +87,7 @@ foreach ($path in @(
     "AGENTS.md",
     "LICENSE",
     "PUBLIC-BOOTSTRAP.md",
-    "QUALITY-GATE.yaml",
+    "QUALITY-GATE.json",
     "README.md",
     "RECOMMENDATION.md",
     "VERSION",

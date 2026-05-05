@@ -5,7 +5,7 @@ from pathlib import Path
 
 EXCLUDED_DIRECTORY_NAMES = {
     ".git",
-    ".godot",
+    ".engine-config",
     ".import",
     ".venv",
     "__pycache__",

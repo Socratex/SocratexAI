@@ -36,7 +36,7 @@ Ask these questions before changing the skeleton:
    - high accountability
 9. What should the agent avoid?
 10. Which artifacts should exist after initialization?
-11. Should the project use `CHANGELOG.yaml` for shipped history?
+11. Should the project use `CHANGELOG.json` for shipped history?
 12. Should the project use Git?
 13. Are there external tools, folders, accounts, or references the agent should know about?
 14. What counts as a successful first session?
@@ -74,16 +74,16 @@ If the context is programming, also ask:
 After receiving answers:
 
 1. Update `README.md` with the actual project identity.
-2. Create `DOCS.yaml` as the document role index.
-3. Create `STATE.yaml` for code projects, or `STATE.md` for non-code user-facing memory.
+2. Create `DOCS.json` as the document role index.
+3. Create `STATE.json` for code projects, or `STATE.md` for non-code user-facing memory.
 4. Create the selected pack's recommended files from `templates/`.
 5. Keep selected packs under `project/`.
 6. Move unselected packs into `temp/trash/project/` unless the user asks to keep them.
 7. Keep adapters thin.
 8. Move `initializer/` into `temp/trash/initializer/`.
-9. Record the initialization decision in `DECISIONS.yaml` for code projects, or `DECISIONS.md` for non-code user-facing memory, if that file exists.
-10. Create `PIPELINE-CONFIG.yaml` with selected packs, language, operating mode, Git preference, and first-session success criteria.
-11. Create `PIPELINE-CONFIG.yaml`; for code projects include `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
+9. Record the initialization decision in `DECISIONS.json` for code projects, or `DECISIONS.md` for non-code user-facing memory, if that file exists.
+10. Create `PIPELINE-CONFIG.json` with selected packs, language, operating mode, Git preference, and first-session success criteria.
+11. Create `PIPELINE-CONFIG.json`; for code projects include `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
 12. For branch-scoped code projects, create `ignored/ai-socratex/` branch memory files and ensure `/ignored` is gitignored when branch files are not English.
 13. Compile project-local agent instructions with `tools/compile_agent_instructions.ps1` when practical.
 14. Run `tools/audit_docs.ps1 -Initialized` for initialized projects when practical.
@@ -99,10 +99,10 @@ Immediately switch the current session to the initialized project pipeline:
 
 1. Re-read root `SOCRATEX.md`.
 2. Follow the read order defined there.
-3. Read `SocratexAI/DOCS.yaml` before reading, creating, renaming, or updating project documents.
-4. For branch-scoped code projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, detect the current branch, and read branch STATE/PLAN.
+3. Read `SocratexAI/DOCS.json` before reading, creating, renaming, or updating project documents.
+4. For branch-scoped code projects, read `.aiassistant/socratex/PIPELINE-CONFIG.json` when present, detect the current branch, and read branch STATE/PLAN.
 5. Use the initialized `SocratexAI/` files for all future work in this project.
-6. After the first user prompt handled under the initialized pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that all rules are loaded, including communication format and emoji rules.
+6. After the first user prompt handled under the initialized pipeline, run `SocratexAI/core/ACTIVATION-CHECK.json` once to verify that all rules are loaded, including communication format and emoji rules.
 7. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
 
 Report this handoff explicitly:

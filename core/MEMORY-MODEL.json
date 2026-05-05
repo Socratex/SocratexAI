@@ -1,0 +1,63 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "active_state",
+        "branch_scoped_active_state",
+        "plan",
+        "backlog",
+        "decisions",
+        "context_capsules"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "active_state",
+                "branch_scoped_active_state",
+                "plan",
+                "backlog",
+                "decisions",
+                "context_capsules"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Memory Model\n"
+        },
+        "active_state": {
+            "title": "Active State",
+            "format": "markdown-section",
+            "body": "## Active State\n\n`DOCS.json` is the document routing map and should be read before reading, creating, renaming, or updating project documents.\n\nThe active state is the first memory file an agent reads after `DOCS.json`.\n\nIt should stay short:\n\n- current objective,\n- current pass,\n- next action,\n- blockers,\n- risks,\n- non-regression reminders.\n"
+        },
+        "branch_scoped_active_state": {
+            "title": "Branch-Scoped Active State",
+            "format": "markdown-section",
+            "body": "## Branch-Scoped Active State\n\nBranch-scoped active state is local working memory for one Git branch.\n\nUse it when the project config sets `workflow.branch_mode` to `branch_scoped`.\n\nIt normally lives under `ignored/ai-socratex/<branch>-STATE.md`.\n\nIt may use the user's prompt language because it is local-only working memory.\n\nIt stores branch facts:\n\n- findings,\n- root causes,\n- changes made,\n- verification,\n- current blockers,\n- durable findings that may need promotion.\n\nIt should not replace durable project memory.\n"
+        },
+        "plan": {
+            "title": "Plan",
+            "format": "markdown-section",
+            "body": "## Plan\n\nThe plan contains only active and future execution passes.\n\nIt is not history.\n\nIn branch-scoped mode, the branch plan lives under `ignored/ai-socratex/<branch>-PLAN.md`.\n\nIt contains next steps only and should be updated continuously during the branch.\n"
+        },
+        "backlog": {
+            "title": "Backlog",
+            "format": "markdown-section",
+            "body": "## Backlog\n\nThe backlog contains valuable work that is not yet committed to the active execution sequence.\n"
+        },
+        "decisions": {
+            "title": "Decisions",
+            "format": "markdown-section",
+            "body": "## Decisions\n\nThe decision log records durable choices that future agents should not silently reverse.\n\nRecord:\n\n- decision,\n- context,\n- rationale,\n- consequences,\n- verification or revisit condition.\n"
+        },
+        "context_capsules": {
+            "title": "Context Capsules",
+            "format": "markdown-section",
+            "body": "## Context Capsules\n\nContext capsules store compact, current-state knowledge.\n\nUse them for:\n\n- invariants,\n- ownership contracts,\n- known traps,\n- source-of-truth paths,\n- performance or process heuristics.\n\nDo not use them for:\n\n- history,\n- scratch notes,\n- duplicated backlog,\n- speculative future roadmaps.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Memory Model"
+}

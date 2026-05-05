@@ -1,0 +1,70 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "init",
+        "continue",
+        "capture",
+        "plan",
+        "review",
+        "audit",
+        "finish"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "init",
+                "continue",
+                "capture",
+                "plan",
+                "review",
+                "audit",
+                "finish"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Core Commands\n\nThese commands are conceptual. A project may implement them as scripts, agent instructions, or manual workflows.\n"
+        },
+        "init": {
+            "title": "INIT",
+            "format": "markdown-section",
+            "body": "## INIT\n\nInitialize a new project from this skeleton.\n\nUse `initializer/FIRST-RUN.md` while it exists.\n"
+        },
+        "continue": {
+            "title": "CONTINUE",
+            "format": "markdown-section",
+            "body": "## CONTINUE\n\nResume the next active pass from the execution plan.\n\nIf no active pass exists, use the active state and backlog to propose the next best target.\n"
+        },
+        "capture": {
+            "title": "CAPTURE",
+            "format": "markdown-section",
+            "body": "## CAPTURE\n\nCapture loose input without immediately executing it.\n\nClassify the input as a task, decision, issue, reference, risk, or backlog item.\n"
+        },
+        "plan": {
+            "title": "PLAN",
+            "format": "markdown-section",
+            "body": "## PLAN\n\nTurn selected backlog or captured input into one or more execution passes.\n"
+        },
+        "review": {
+            "title": "REVIEW",
+            "format": "markdown-section",
+            "body": "## REVIEW\n\nInspect the current artifact, plan, or change set for defects, risks, contradictions, and missing verification.\n"
+        },
+        "audit": {
+            "title": "AUDIT",
+            "format": "markdown-section",
+            "body": "## AUDIT\n\nCheck project memory consistency:\n\n- active state matches the plan,\n- completed work is not still listed as active,\n- unresolved requirements are preserved,\n- decisions with durable impact are recorded,\n- project packs do not duplicate core rules.\n"
+        },
+        "finish": {
+            "title": "FINISH",
+            "format": "markdown-section",
+            "body": "## FINISH\n\nClose the current work unit:\n\n- run the relevant quality gate,\n- update active state,\n- update completion log when something shipped,\n- remove completed active passes,\n- report what changed and what was not verified.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Core Commands"
+}

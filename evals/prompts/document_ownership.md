@@ -2,7 +2,7 @@
 
 A user gives a new idea:
 
-> We should eventually support reusable orchestration packs for Codex workspaces, but not implement it today.
+> We should eventually support reusable workflow packs for Codex workspaces, but not implement it today.
 
 The project has active plan, backlog, state, changelog, decisions, and future vision documents.
 

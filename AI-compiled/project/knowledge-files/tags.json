@@ -1,9 +1,5 @@
 [
   {
-    "description": "",
-    "tag": "aaa-gamedev"
-  },
-  {
     "description": "Scene/runtime adapter boundaries.",
     "tag": "adapters"
   },
@@ -60,6 +56,10 @@
     "tag": "documentation"
   },
   {
+    "description": "Domain modeling, generated-state, and durable state rules.",
+    "tag": "domain_modeling"
+  },
+  {
     "description": "General engineering standards.",
     "tag": "engineering"
   },
@@ -72,12 +72,8 @@
     "tag": "future-first"
   },
   {
-    "description": "Game-development-specific engineering rules.",
+    "description": "Game-development-specific engineering rules for the gamedev pack.",
     "tag": "gamedev"
-  },
-  {
-    "description": "Godot runtime, scene, and tool rules.",
-    "tag": "godot"
   },
   {
     "description": "",
@@ -108,16 +104,16 @@
     "tag": "planning"
   },
   {
+    "description": "",
+    "tag": "production-grade"
+  },
+  {
     "description": "Human and agent readability rules.",
     "tag": "readability"
   },
   {
     "description": "Runtime lifecycle and gameplay execution rules.",
     "tag": "runtime"
-  },
-  {
-    "description": "Godot scene glue and adapter rules.",
-    "tag": "scene-glue"
   },
   {
     "description": "Knowledge that should be loaded at the beginning of session context building.",
@@ -142,9 +138,5 @@
   {
     "description": "",
     "tag": "workflow"
-  },
-  {
-    "description": "World generation, route graph, biome, and generated-state rules.",
-    "tag": "worldgen"
   }
 ]

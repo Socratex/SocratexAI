@@ -92,7 +92,7 @@ For programming context, ask these questions before programming operation questi
 9. Highest current pain: free text.
 10. Stack tags: auto-suggest using `tools/detect_project_stack.ps1` when possible, then ask the user to verify or edit the list.
 
-Store answers in `PIPELINE-CONFIG.yaml` under `project_profile`.
+Store answers in `PIPELINE-CONFIG.json` under `project_profile`.
 
 After the profile interview, list the three most relevant known-solution families for this profile.
 
@@ -106,7 +106,7 @@ python tools/check_runtime.py --root-key runtime_status
 
 Report missing runtimes or libraries.
 
-If something is missing, follow `core/SCRIPT-FALLBACK.yaml`: propose installing the missing runtime before using manual fallback.
+If something is missing, follow `core/SCRIPT-FALLBACK.json`: propose installing the missing runtime before using manual fallback.
 
 If PowerShell 7 (`pwsh`) is missing, treat it as the first setup improvement:
 
@@ -118,20 +118,20 @@ If PowerShell 7 (`pwsh`) is missing, treat it as the first setup improvement:
    - run SocratexAI from a supported host or container,
    - port required scripts to the target shell before relying on automation.
 
-Store the result in `PIPELINE-CONFIG.yaml` under `runtime_status`.
+Store the result in `PIPELINE-CONFIG.json` under `runtime_status`.
 
 ## Programming Questions
 
 If the context is programming, ask:
 
-1. Should the project use `CHANGELOG.yaml` for shipped history?
-   - `yes`: create and maintain `CHANGELOG.yaml` for shipped functionality and major fixes.
+1. Should the project use `CHANGELOG.json` for shipped history?
+   - `yes`: create and maintain `CHANGELOG.json` for shipped functionality and major fixes.
    - `no`: skip changelog files and do not require changelog promotion.
 2. Should the AI commit changes?
 3. Should the AI push changes?
 4. Which branch workflow mode should this project use?
    - `branch_scoped`: use committed directives under `.aiassistant/` and local branch memory under `ignored/ai-socratex/`.
-   - `linear`: use normal `STATE.yaml` and `_PLAN.yaml` under the SocratexAI installation.
+   - `linear`: use normal `STATE.json` and `_PLAN.json` under the SocratexAI installation.
    Default to `branch_scoped` when the user works on Git branches.
 5. Can there be external changes from other people, CI, tools, or branches while the AI is working?
 6. Should the AI force DDD-ADIV as a required design discipline?
@@ -151,7 +151,7 @@ If the context is programming, ask:
 Before installing, inspect the project for common ecosystem signals:
 
 - PHP: `composer.json`, `composer.lock`, `artisan`, `symfony.lock`
-- Node: `package.json`, `pnpm-lock.yaml`, `yarn.lock`
+- Node: `package.json`, `pnpm-lock.json`, `yarn.lock`
 - Python: `pyproject.toml`, `requirements.txt`, `uv.lock`
 - .NET: `*.sln`, `*.csproj`
 - Java: `pom.xml`, `build.gradle`, `build.gradle.kts`
@@ -178,18 +178,18 @@ For programming projects:
 
 1. Create root `SOCRATEX.md`.
 2. Install all pipeline files under `SocratexAI/`.
-3. Create or update YAML/JSON project memory files under `SocratexAI/`.
+3. Create or update JSON project memory files under `SocratexAI/`.
 4. Keep Markdown only for scratch intake, prompt-language branch files, and short user-facing notes.
 5. Install code pack files under `SocratexAI/project/code/`.
 6. Install tools under `SocratexAI/tools/`.
-7. Create `SocratexAI/DOCS.yaml` as the document role index.
-8. Create `SocratexAI/PIPELINE-CONFIG.yaml` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
+7. Create `SocratexAI/DOCS.json` as the document role index.
+8. Create `SocratexAI/PIPELINE-CONFIG.json` with `workflow`, `project_profile`, `runtime_status`, `communication.profile`, and `changelog.enabled`.
 9. If `workflow.branch_mode` is `branch_scoped`, create committed directives under `.aiassistant/socratex/`, create local branch memory under `ignored/ai-socratex/`, and ensure `/ignored` is gitignored.
 10. Apply directive merge or replace mode.
 11. Run document audit when possible.
 12. Activate the installed pipeline for the current and future sessions.
 
-Installed projects also receive `ORCHESTRATION.yaml` and `team/*.yaml` role lenses. These are not default context for every prompt. Use `ORCHESTRATION.yaml` when priority steering or broad project-risk judgment matters, and load a `team/` role only when the user asks for that lens or orchestration routes the task to it.
+Installed projects also receive `WORKFLOW.json` and `team/*.json` role lenses. These are not default context for every prompt. Use `WORKFLOW.json` when priority steering or broad project-risk judgment matters, and load a `team/` role only when the user asks for that lens or workflow routes the task to it.
 
 Source pipeline repositories may include `AI-compiled/`, a generated agent-readable instruction cache. Treat it as read-only generated context. If source instructions change, run `tools/recompile_ai_instructions.ps1`.
 13. End with first useful work pass recommendations and ROI Picks.
@@ -198,11 +198,11 @@ For non-programming projects:
 
 1. Create root `SOCRATEX.md`.
 2. Install all pipeline files under `SocratexAI/`.
-3. Create `SocratexAI/DOCS.yaml` as the document role index.
+3. Create `SocratexAI/DOCS.json` as the document role index.
 4. Use Markdown for user-facing project memory, including state, plan, backlog, decisions, issues, journal, and review files.
-5. Use YAML or JSON for files managed only by the agent, including configuration, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries.
+5. Use JSON for files managed only by the agent, including configuration, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries.
 6. Install only the selected project packs.
-7. Use shared YAML/document tools for agent-only structured YAML files.
+7. Use shared JSON/document tools for agent-only structured JSON files.
 8. Avoid truly code-only tools unless explicitly requested.
 
 ## Post-Setup Activation
@@ -213,10 +213,10 @@ Immediately switch the current session to the installed project pipeline:
 
 1. Re-read root `SOCRATEX.md`.
 2. Follow the read order defined there.
-3. Read `SocratexAI/DOCS.yaml` before reading, creating, renaming, or updating project documents.
-4. For branch-scoped projects, read `.aiassistant/socratex/PIPELINE-CONFIG.yaml` when present, then detect the current branch and read branch STATE/PLAN.
+3. Read `SocratexAI/DOCS.json` before reading, creating, renaming, or updating project documents.
+4. For branch-scoped projects, read `.aiassistant/socratex/PIPELINE-CONFIG.json` when present, then detect the current branch and read branch STATE/PLAN.
 5. Use the installed `SocratexAI/` files for all future work in this project.
-6. After the first user prompt handled under the installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify that all rules are loaded, including communication format and emoji rules.
+6. After the first user prompt handled under the installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.json` once to verify that all rules are loaded, including communication format and emoji rules.
 7. In future sessions, start from root `SOCRATEX.md` or the managed adapter directive that points to it.
 
 Report this handoff explicitly:
@@ -229,10 +229,10 @@ Use these tools when available:
 
 - `tools/update_pipeline_from_link.ps1`: update a user's project from the latest public pipeline source.
 - `tools/reinitialize_pipeline.ps1`: add newly introduced initialized artifacts without overwriting existing project memory.
-- `tools/upgrade_from_riftbound.ps1`: maintainer-only upgrade from the active gamedev source pipeline.
+- `tools/upgrade_from_riftbound.ps1`: maintainer-only upgrade from the active reference source pipeline.
 - `tools/migrate_ai_pipeline.ps1`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
 
-When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.yaml`.
+When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.json`.
 
 The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user.
 
@@ -240,4 +240,4 @@ If the updated pipeline includes initializer artifacts missing from the installe
 
 If no source is configured, ask for the URL or local source path before changing files.
 
-When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.yaml` and run `tools/remove_pipeline.ps1` from the installed `SocratexAI/tools/` directory.
+When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.json` and run `tools/remove_pipeline.ps1` from the installed `SocratexAI/tools/` directory.

@@ -1,0 +1,49 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "code_sorting_rules",
+        "code_promotion_rules",
+        "cleaning_rules"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "code_sorting_rules",
+                "code_promotion_rules",
+                "cleaning_rules"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Code Instruction Capture\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nUse this file for programming-specific handling of raw user instruction buffers.\n\nAlso read `core/INSTRUCTION-CAPTURE.json`.\n\nFor prompt-queue execution, treat `_PROMPTS.md` and `_PROMPT-QUEUE.json` as programming aliases of the same raw-intake workflow:\n\n- `_PROMPTS.md` is immediate raw prompt intake.\n- `_PROMPT-QUEUE.json` is defragmented, sorted prompt work.\n- Use the `PROMPT` command workflow in `project/code/COMMANDS.json`.\n"
+        },
+        "code_sorting_rules": {
+            "title": "Code Sorting Rules",
+            "format": "markdown-section",
+            "body": "## Code Sorting Rules\n\nWhen defragmenting programming instructions, sort pending work in this order:\n\n1. Repository safety, build/test setup, and project contracts.\n2. Documentation that affects agent behavior or source-of-truth paths.\n3. Diagnostics and reproduction scaffolding.\n4. Bug fixes with strong evidence.\n5. Architecture boundaries needed by upcoming work.\n6. Feature implementation.\n7. Refactors that are not blocking current work.\n8. Refinement and optional cleanup.\n"
+        },
+        "code_promotion_rules": {
+            "title": "Code Promotion Rules",
+            "format": "markdown-section",
+            "body": "## Code Promotion Rules\n\nPromote to `_PLAN.json` only when the entry can be executed as a pass.\n\nPromote to `BUGS.json` when the instruction describes a reproducible or likely defect.\n\nPromote to `project/code/DIAGNOSTICS.json` or `logs/` workflow when the instruction primarily asks for evidence analysis.\n\nPromote to `DECISIONS.json` when the instruction makes or requires a durable technical choice.\n\nPromote to `context-docs/TECHNICAL.json` when the instruction reveals a current invariant, ownership contract, or known trap.\n"
+        },
+        "cleaning_rules": {
+            "title": "Cleaning Rules",
+            "format": "markdown-section",
+            "body": "## Cleaning Rules\n\nAfter a code instruction is executed:\n\n- remove it from `_INSTRUCTION-QUEUE.json`,\n- update affected registries,\n- run the relevant quality gate,\n- update `STATE.json`,\n- do not keep completed instruction history in the queue.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Code Instruction Capture"
+}

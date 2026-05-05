@@ -1,10 +1,9 @@
 import argparse
 import copy
+import json
 import sys
 from pathlib import Path
 from typing import Any
-
-import yaml
 
 import docs_slim
 
@@ -13,19 +12,17 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
-def load_yaml(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
+def load_document(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def write_yaml(path: Path, value: Any) -> None:
-    rendered = yaml.dump(value, Dumper=docs_slim.SlimYamlDumper, allow_unicode=True, sort_keys=False, width=1000)
-    path.write_text(rendered, encoding="utf-8")
+def write_document(path: Path, value: Any) -> None:
+    docs_slim.write_document(path, value)
 
 
 def normalize_document(document: Any) -> dict[str, Any]:
     if not isinstance(document, dict):
-        raise ValueError("YAML document must be a mapping.")
+        raise ValueError("Structured document must be a mapping.")
     if "items" not in document:
         document["items"] = {}
     if not isinstance(document["items"], dict):
@@ -86,9 +83,9 @@ def apply_order(document: dict[str, Any], keys: list[str]) -> dict[str, Any]:
 
 def read_item_payload(args: argparse.Namespace) -> dict[str, Any]:
     if args.item_file:
-        payload = load_yaml(Path(args.item_file))
+        payload = load_document(Path(args.item_file))
         if not isinstance(payload, dict):
-            raise ValueError("--item-file must contain a YAML mapping.")
+            raise ValueError("--item-file must contain a mapping.")
         return copy.deepcopy(payload)
 
     title = args.title.strip() if args.title else ""
@@ -111,11 +108,11 @@ def read_item_payload(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def read_bulk_payload(path: Path) -> dict[str, dict[str, Any]]:
-    payload = load_yaml(path)
+    payload = load_document(path)
     if isinstance(payload, dict) and isinstance(payload.get("items"), dict):
         payload = payload["items"]
     if not isinstance(payload, dict):
-        raise ValueError("--items-file must contain a YAML mapping or an items mapping.")
+        raise ValueError("--items-file must contain a mapping or an items mapping.")
 
     items: dict[str, dict[str, Any]] = {}
     for key, item in payload.items():
@@ -136,14 +133,14 @@ def read_bulk_payload(path: Path) -> dict[str, dict[str, Any]]:
 
 def command_insert(args: argparse.Namespace) -> None:
     path = Path(args.path)
-    document = normalize_document(load_yaml(path))
+    document = normalize_document(load_document(path))
     items = document["items"]
     if args.key in items and not args.replace:
         raise ValueError(f"Item already exists: {args.key}")
     items[args.key] = read_item_payload(args)
     keys = place_key(item_keys(document), args.key, args.position, args.before, args.after)
     document = apply_order(document, keys)
-    write_yaml(path, document)
+    write_document(path, document)
     print(f"OK: inserted {args.key} into {path}")
 
 
@@ -168,7 +165,7 @@ def place_keys(keys: list[str], new_keys: list[str], position: str, before: str,
 
 def command_bulk_insert(args: argparse.Namespace) -> None:
     path = Path(args.path)
-    document = normalize_document(load_yaml(path))
+    document = normalize_document(load_document(path))
     items = document["items"]
     bulk_items = read_bulk_payload(Path(args.items_file))
     for key in bulk_items.keys():
@@ -179,26 +176,26 @@ def command_bulk_insert(args: argparse.Namespace) -> None:
         items[key] = item
     keys = place_keys(item_keys(document), list(bulk_items.keys()), args.position, args.before, args.after)
     document = apply_order(document, keys)
-    write_yaml(path, document)
+    write_document(path, document)
     print(f"OK: inserted {len(bulk_items)} item(s) into {path}")
 
 
 def command_move(args: argparse.Namespace) -> None:
     path = Path(args.path)
-    document = normalize_document(load_yaml(path))
+    document = normalize_document(load_document(path))
     if args.key not in document["items"]:
         raise ValueError(f"Item does not exist: {args.key}")
     keys = place_key(item_keys(document), args.key, args.position, args.before, args.after)
     document = apply_order(document, keys)
-    write_yaml(path, document)
+    write_document(path, document)
     print(f"OK: moved {args.key} in {path}")
 
 
 def command_migrate(args: argparse.Namespace) -> None:
     source_path = Path(args.source)
     target_path = Path(args.target)
-    source = normalize_document(load_yaml(source_path))
-    target = normalize_document(load_yaml(target_path))
+    source = normalize_document(load_document(source_path))
+    target = normalize_document(load_document(target_path))
     if args.key not in source["items"]:
         raise ValueError(f"Source item does not exist: {args.key}")
     if args.key in target["items"] and not args.replace:
@@ -213,8 +210,8 @@ def command_migrate(args: argparse.Namespace) -> None:
         source_keys = [key for key in item_keys(source) if key != args.key]
         source = apply_order(source, source_keys)
 
-    write_yaml(source_path, source)
-    write_yaml(target_path, target)
+    write_document(source_path, source)
+    write_document(target_path, target)
     action = "copied" if args.keep_source else "migrated"
     print(f"OK: {action} {args.key} from {source_path} to {target_path}")
 
@@ -226,7 +223,7 @@ def add_position_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Edit slim YAML document items while keeping index and quick_index synchronized.")
+    parser = argparse.ArgumentParser(description="Edit slim structured document items while keeping index and quick_index synchronized.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     insert = subparsers.add_parser("insert")

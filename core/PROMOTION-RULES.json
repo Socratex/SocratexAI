@@ -1,0 +1,84 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "backlog_to_plan",
+        "plan_to_state",
+        "branch_state_to_durable_memory",
+        "plan_to_changelog",
+        "plan_or_backlog_to_decisions",
+        "plan_or_implementation_to_context_docs",
+        "state_to_plan",
+        "decisions_to_plan"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "backlog_to_plan",
+                "plan_to_state",
+                "branch_state_to_durable_memory",
+                "plan_to_changelog",
+                "plan_or_backlog_to_decisions",
+                "plan_or_implementation_to_context_docs",
+                "state_to_plan",
+                "decisions_to_plan"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Promotion Rules\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nProject memory should move through explicit layers instead of being duplicated across files.\n"
+        },
+        "backlog_to_plan": {
+            "title": "BACKLOG to PLAN",
+            "format": "markdown-section",
+            "body": "## BACKLOG to PLAN\n\nPromote backlog into the plan only when the work becomes part of the active execution sequence.\n\nBefore promotion, ensure the item has:\n\n- clear outcome,\n- ownership boundary,\n- known dependencies,\n- verification path,\n- reason it should happen now.\n\nAfter promotion, preserve unresolved scope in the active plan file and remove or shrink the source backlog item so the same work is not tracked twice.\n\nFor code projects, use JSON project memory such as `_PLAN.json`, `TODO.json`, and `DECISIONS.json`.\n\nFor non-code projects, keep user-facing memory in Markdown and agent-only memory in JSON.\n"
+        },
+        "plan_to_state": {
+            "title": "PLAN to STATE",
+            "format": "markdown-section",
+            "body": "## PLAN to STATE\n\nThe active state file should contain only the compact active checkpoint.\n\nMove from the active plan file to the active state file only as:\n\n- current active pass,\n- next action,\n- blocker,\n- risk,\n- non-regression reminder.\n\nDo not copy full pass definitions into active state.\n"
+        },
+        "branch_state_to_durable_memory": {
+            "title": "BRANCH STATE to durable memory",
+            "format": "markdown-section",
+            "body": "## BRANCH STATE to durable memory\n\nWhen a branch is merged or closed, review branch-scoped active state under `ignored/ai-socratex/<branch>-STATE.md`.\n\nPromote only durable information:\n\n- current technical truths to `context-docs/`,\n- architecture or process decisions to `DECISIONS.json` for code projects or `DECISIONS.md` for non-code user-facing memory,\n- shipped user-visible outcomes or major fixes to `CHANGELOG.json` in code projects when `changelog.enabled` is not `no`, or to a user-facing Markdown changelog when a non-code project uses one,\n- unresolved future work to `_PLAN.json` / `TODO.json` for code projects or `_PLAN.md` / `BACKLOG.md` for non-code user-facing memory.\n\nLeave transient debugging notes, dead hypotheses, and local execution history in the branch file as reference unless the user asks to clean it.\n\nDo not leak local prompt-language branch notes into committed review-facing docs unless they are translated and promoted deliberately.\n"
+        },
+        "plan_to_changelog": {
+            "title": "PLAN to CHANGELOG",
+            "format": "markdown-section",
+            "body": "## PLAN to CHANGELOG\n\nWhen a pass is completed and it shipped meaningful functionality, fixed a major issue, or changed durable behavior, record the outcome in the completion log if `changelog.enabled` is not `no`.\n\nThen remove the completed pass from the active plan file.\n\nDo not keep completed-pass history in the active plan file.\n"
+        },
+        "plan_or_backlog_to_decisions": {
+            "title": "PLAN or BACKLOG to DECISIONS",
+            "format": "markdown-section",
+            "body": "## PLAN or BACKLOG to DECISIONS\n\nMove information to the decision log when it becomes a durable choice that future work should respect.\n\nRecord:\n\n- decision,\n- context,\n- rationale,\n- consequences,\n- verification or revisit condition.\n\nDo not record every task as a decision.\n"
+        },
+        "plan_or_implementation_to_context_docs": {
+            "title": "PLAN or IMPLEMENTATION to context-docs",
+            "format": "markdown-section",
+            "body": "## PLAN or IMPLEMENTATION to context-docs\n\nUse `context-docs/` only for current technical or domain memory that prevents repeated rediscovery.\n\nValid content:\n\n- invariants,\n- ownership contracts,\n- source-of-truth paths,\n- known traps,\n- performance heuristics,\n- debugging heuristics.\n\nInvalid content:\n\n- changelog history,\n- scratch notes,\n- duplicated backlog,\n- broad future roadmap,\n- implementation diary.\n"
+        },
+        "state_to_plan": {
+            "title": "STATE to PLAN",
+            "format": "markdown-section",
+            "body": "## STATE to PLAN\n\nIf active state contains future work that is larger than the next immediate action, demote it back to the active plan or backlog.\n\nActive state must stay small enough to read first in every session.\n"
+        },
+        "decisions_to_plan": {
+            "title": "DECISIONS to PLAN",
+            "format": "markdown-section",
+            "body": "## DECISIONS to PLAN\n\nA decision can create follow-up work, but the work belongs in the active plan or backlog, not inside the decision entry.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Promotion Rules"
+}

@@ -1,5 +1,5 @@
 param(
-	[string[]]$Paths = @("**/*.yaml", "**/*.yml"),
+	[string[]]$Paths = @("**/*.json"),
 	[switch]$Check,
 	[switch]$NoPostEdit
 )

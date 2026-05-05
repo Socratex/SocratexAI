@@ -27,15 +27,15 @@ Use Standard or Pro when:
 Recommended minimum for code:
 
 - `AGENTS.md`
-- `STATE.yaml`
-- `_PLAN.yaml`
-- `TODO.yaml`
-- `DECISIONS.yaml`
+- `STATE.json`
+- `_PLAN.json`
+- `TODO.json`
+- `DECISIONS.json`
 
 Optional:
 
-- `CHANGELOG.yaml`
-- `BUGS.yaml`
+- `CHANGELOG.json`
+- `BUGS.json`
 
 ## Tradeoff
 

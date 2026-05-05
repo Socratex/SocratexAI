@@ -1,0 +1,98 @@
+{
+    "summary": "Manual project workflow layer for priority steering.",
+    "usage": {
+        "read_when": [
+            "Planning, priority, roadmap, broad feature triage, or project-risk judgment is needed.",
+            "A user request may conflict with a higher-priority active pain point.",
+            "The agent must decide whether work belongs in the active plan, backlog, issue registry, or decision log."
+        ],
+        "do_not_read_when": [
+            "A narrow local fix has no priority or planning impact.",
+            "The visible state and target files are sufficient for a direct answer.",
+            "A special command workflow already selects a narrower required context."
+        ]
+    },
+    "responsibility_boundaries": {
+        "this_is": [
+            "A human-owned map of current project pressure.",
+            "A priority filter for challenging task order.",
+            "A routing aid for deciding whether new work should interrupt current execution."
+        ],
+        "this_is_not": [
+            "Not a second active plan.",
+            "Not a second backlog.",
+            "Not a changelog.",
+            "Not a technical source of truth."
+        ]
+    },
+    "task_routing": {
+        "main_rule": "Use this section to select the broad task type, minimum context, and workflow when the project does not already provide a narrower command or workflow router.\n",
+        "minimal_read_rule": "Read the smallest set of documents sufficient for the decision. Expand context only when task type, risk, priority conflict, or implementation ambiguity requires it.\n",
+        "when_task_type_is_unknown": [
+            "Do not begin broad reads, edits, or refactors.",
+            "State that the request does not clearly match the current routing types.",
+            "Propose the best workflow with goal, required sources, scope boundary, completion criteria, verification, and likely memory updates.",
+            "Ask the user to approve the workflow unless the task is small, local, reversible, and low-risk."
+        ]
+    },
+    "active_pain_points": [
+        {
+            "id": "example_missing_core_loop",
+            "name": "Example missing core loop",
+            "priority": "critical",
+            "status": "example_replace_me",
+            "owner_note": "Replace this with the project owner's actual current pain point.",
+            "agent_signal": "Before expanding scope, check whether the work moves the project toward a testable loop or validation gate.",
+            "preferred_routing": [
+                "_PLAN.json when this should become active execution work.",
+                "TODO.json or BACKLOG.md when this should remain future work."
+            ]
+        },
+        {
+            "id": "example_quality_or_reliability",
+            "name": "Example quality or reliability blocker",
+            "priority": "high",
+            "status": "example_replace_me",
+            "owner_note": "Replace this with a concrete blocker, defect class, or reliability issue.",
+            "agent_signal": "If a new task bypasses this blocker, explain the tradeoff and ask whether to defer the request.",
+            "preferred_routing": [
+                "BUGS.json or ISSUES.md when this is a tracked defect or active problem.",
+                "DECISIONS.json when the response creates a durable operating or architecture decision."
+            ]
+        }
+    ],
+    "priority_rules": [
+        "Prioritize work that removes active validation blockers.",
+        "Do not expand surface area when a smaller prerequisite would reduce future retrofit cost.",
+        "If the user's requested order is weaker than a better future-facing sequence, say so explicitly.",
+        "If the user intentionally chooses a lower-priority task after the tradeoff is clear, execute it."
+    ],
+    "agent_behavior": {
+        "before_plan_changes": [
+            "Compare the user request against active_pain_points.",
+            "If a higher-priority active pain point conflicts with the request, ask whether to defer the request or route it after the blocker.",
+            "If the request directly supports an active pain point, use that as evidence for doing it now."
+        ],
+        "response_discipline": [
+            "Separate observed repository facts, owner notes, agent inference, and speculation.",
+            "Do not treat example pain points as real facts.",
+            "Do not override explicit user priority after the tradeoff is acknowledged."
+        ],
+        "edit_discipline": [
+            "Preserve owner-written notes unless explicitly asked to update them.",
+            "Do not remove active pain points without owner confirmation."
+        ]
+    },
+    "team_on_demand": {
+        "directory": "team/",
+        "rule": "Load role files only when the user names a role, asks for team-style review, or this file routes the task to a role.",
+        "example_invocations": [
+            "team product",
+            "team technical",
+            "team performance",
+            "team experience",
+            "team pipeline"
+        ],
+        "limitation": "A role is a decision lens and checklist for the current agent response, not a separate independent worker."
+    }
+}

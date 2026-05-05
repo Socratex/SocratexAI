@@ -1,0 +1,97 @@
+{
+    "schema": "socratex-eval-results/v1",
+    "run": {
+        "label": "baseline",
+        "status": "unrun",
+        "context": "Codex or comparable agent without SocratexPipeline context",
+        "date": null,
+        "model_or_surface": null,
+        "notes": "Fill after manual baseline runs. Do not invent scores."
+    },
+    "results": [
+        {
+            "scenario": "priority_conflict",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "low_friction_adoption",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "on_demand_team",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "finish_boundary",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "document_ownership",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "compiled_instruction_layer",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "three_tier_fit",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "code_engineering_context_preload",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "knowledge_freshness_and_fallback",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "knowledge_entry_lifecycle",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "pipeline_update_artifact_sync",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "context_tagged_knowledge_prelude",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "task_type_router",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        },
+        {
+            "scenario": "unknown_task_routing",
+            "score": null,
+            "observations": [],
+            "failure_notes": []
+        }
+    ]
+}

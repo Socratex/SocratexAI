@@ -1,5 +1,5 @@
 param(
-    [string]$Path = "docs-tech\cache\current_task.yaml",
+    [string]$Path = "docs-tech\cache\current_task.json",
     [string]$Title = "TBD",
     [string]$SourceRequest = "TBD",
     [switch]$Force,
@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")
 $targetPath = Join-Path $repoRoot $Path
-$templatePath = Join-Path $repoRoot "templates\code\current_task.yaml"
+$templatePath = Join-Path $repoRoot "templates\code\current_task.json"
 
 if (-not (Test-Path -LiteralPath $templatePath)) {
     throw "Missing task work template: $templatePath"

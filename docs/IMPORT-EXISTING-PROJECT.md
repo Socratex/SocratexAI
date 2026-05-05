@@ -28,12 +28,12 @@ It does not overwrite existing project memory, source files, or documentation.
 
 It installs pipeline-owned files under `SocratexAI/` and creates root `SOCRATEX.md`.
 
-For code imports, standardized project memory is created as YAML and generated diagnostic/index artifacts should be JSON.
+For code imports, standardized project memory is created as JSON and generated diagnostic/index artifacts should be JSON.
 
-After code import, review `SOCRATEX.md`, `SocratexAI/PIPELINE-CONFIG.yaml`, and run:
+After code import, review `SOCRATEX.md`, `SocratexAI/PIPELINE-CONFIG.json`, and run:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/audit_docs.ps1 -Initialized
 ```
 
-For non-code imports, review `SocratexAI/PIPELINE-CONFIG.yaml` instead.
+For non-code imports, review `SocratexAI/PIPELINE-CONFIG.json` instead.

@@ -1,5 +1,5 @@
 param(
-	[string[]]$Paths = @("**\*.yaml", "**\*.yml"),
+	[string[]]$Paths = @("**\*.json"),
 	[string]$OutputDir = "docs-tech\cache"
 )
 

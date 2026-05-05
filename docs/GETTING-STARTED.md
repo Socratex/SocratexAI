@@ -35,7 +35,7 @@ For a standard code project:
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/Initialize-SocratexPipeline.ps1 -ProjectName "My Project" -Language "English" -AiMode Standard -KeepPacks code -CreateFiles -CompileAgent -RunAudit
 ```
 
-This creates standardized code memory as YAML/JSON, with Markdown reserved for scratch intake such as `_INSTRUCTIONS.md`.
+This creates standardized code memory as JSON, with Markdown reserved for scratch intake such as `_INSTRUCTIONS.md`.
 
 For branch-scoped code work, add:
 
@@ -43,7 +43,7 @@ For branch-scoped code work, add:
 -BranchMode branch_scoped
 ```
 
-The project profile and runtime status are stored in `PIPELINE-CONFIG.yaml`.
+The project profile and runtime status are stored in `PIPELINE-CONFIG.json`.
 
 ## After Initialization
 
@@ -57,4 +57,4 @@ Then configure the project-specific quality gate.
 
 After initialization succeeds, the agent should switch the current session to root `SOCRATEX.md` and use the initialized pipeline for all future sessions in that project.
 
-After the first prompt handled under the initialized pipeline, the agent should run `SocratexAI/core/ACTIVATION-CHECK.yaml` once to verify the loaded rules.
+After the first prompt handled under the initialized pipeline, the agent should run `SocratexAI/core/ACTIVATION-CHECK.json` once to verify the loaded rules.

@@ -204,10 +204,10 @@ function Add-DebugLogPairSummary {
 function Add-StateTail {
 	param([System.Collections.Generic.List[string]]$Lines)
 
-	Add-Section -Lines $Lines -Title "docs-tech/STATE.yaml Summary"
-	$statePath = Join-Path $repoRoot "docs-tech/STATE.yaml"
+	Add-Section -Lines $Lines -Title "docs-tech/STATE.json Summary"
+	$statePath = Join-Path $repoRoot "docs-tech/STATE.json"
 	if (-not (Test-Path -LiteralPath $statePath)) {
-		$Lines.Add("docs-tech/STATE.yaml is missing.")
+		$Lines.Add("docs-tech/STATE.json is missing.")
 		return
 	}
 
@@ -222,7 +222,7 @@ function Add-StateTail {
 				"Bypass",
 				"-File",
 				$docRead,
-				"docs-tech/STATE.yaml",
+				"docs-tech/STATE.json",
 				$selector
 			))
 			foreach ($line in ($output | Select-Object -First $StateTailLines)) {
@@ -232,7 +232,7 @@ function Add-StateTail {
 		return
 	}
 
-	$Lines.Add("YAML reader unavailable; using raw tail fallback.")
+	$Lines.Add("JSON reader unavailable; using raw tail fallback.")
 	foreach ($line in (Get-Content -LiteralPath $statePath -Tail $StateTailLines)) {
 		$Lines.Add([string]$line)
 	}

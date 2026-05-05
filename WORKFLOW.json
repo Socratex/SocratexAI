@@ -1,0 +1,76 @@
+{
+    "index": [
+        "quick_index",
+        "pipeline_bootstrap_directive",
+        "json_source_contract",
+        "workflow_workflow_contract",
+        "generic_programming_baseline",
+        "project_type_routing",
+        "broad_upgrade_passes",
+        "finish_contract"
+    ],
+    "content": {
+        "quick_index": {
+            "title": "Quick Index",
+            "items": [
+                "pipeline_bootstrap_directive",
+                "json_source_contract",
+                "workflow_workflow_contract",
+                "generic_programming_baseline",
+                "project_type_routing",
+                "broad_upgrade_passes",
+                "finish_contract"
+            ]
+        },
+        "pipeline_bootstrap_directive": {
+            "title": "Pipeline Bootstrap Directive",
+            "rule": "At the start of every source-pipeline prompt, load the compact indexes for DOCS.json, WORKFLOW.json, COMMANDS.json, FLOWS.json, and SCRIPTS.json before selecting reads, tools, or execution order."
+        },
+        "json_source_contract": {
+            "title": "JSON Source Contract",
+            "rule": "Source-pipeline structured contracts, packs, templates, eval data, caches, and generated indexes use JSON as the canonical format. JSON may be accepted only as backwards-compatible input for older installed projects."
+        },
+        "workflow_workflow_contract": {
+            "title": "Workflow/Workflow Contract",
+            "rule": "WORKFLOW is the unified source for task classification, guardrails, priority steering, and contextual cautions. Do not add a second workflow document for the same purpose."
+        },
+        "generic_programming_baseline": {
+            "title": "Generic Programming Baseline",
+            "rule": "The code pack is generic software engineering. Game-development behavior is not part of the default programming preload and belongs only to the explicit gamedev project pack."
+        },
+        "project_type_routing": {
+            "title": "Project Type Routing",
+            "types": [
+                "code",
+                "generic",
+                "personal",
+                "creative",
+                "gamedev"
+            ],
+            "rule": "Select project packs by project profile. Use gamedev only when the project is explicitly a game, simulation, or game-adjacent interactive project."
+        },
+        "broad_upgrade_passes": {
+            "title": "Current Broad Upgrade Passes",
+            "passes": [
+                "Audit source state",
+                "Migrate structured docs to JSON",
+                "Port Riftbound-style indexes and script routing",
+                "Generalize programming defaults",
+                "Add gamedev project type",
+                "Verify English-only source content",
+                "Recompile, verify, commit, and push"
+            ]
+        },
+        "finish_contract": {
+            "title": "Finish Contract",
+            "rule": "Run the source-pipeline finalizer near the end of the scope. If it fails because tooling assumes legacy formats, fix the owning tool and rerun."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Source Pipeline Workflow",
+            "type": "workflow",
+            "language": "en"
+        }
+    }
+}

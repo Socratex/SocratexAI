@@ -1,86 +1,86 @@
 [
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "is_duplicate": false,
     "note": "Source pipeline file-fallback rule.",
-    "path": "context-docs/ENGINEERING.yaml",
+    "path": "context-docs/ENGINEERING.json",
     "selector": "tagged_rules"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_hash_gate",
     "is_duplicate": false,
     "note": "Source pipeline starter rule.",
-    "path": "context-docs/ENGINEERING.yaml",
+    "path": "context-docs/ENGINEERING.json",
     "selector": "tagged_rules"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
     "is_duplicate": false,
     "note": "Source pipeline starter rule.",
-    "path": "context-docs/ENGINEERING.yaml",
+    "path": "context-docs/ENGINEERING.json",
     "selector": "tagged_rules"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_views",
     "is_duplicate": false,
     "note": "Source pipeline starter rule.",
-    "path": "context-docs/ENGINEERING.yaml",
+    "path": "context-docs/ENGINEERING.json",
     "selector": "tagged_rules"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "is_duplicate": false,
     "note": "Consolidated from the shared agent contract.",
-    "path": "core/AGENT-CONTRACT.yaml",
+    "path": "core/AGENT-CONTRACT.json",
     "selector": "operating_principles"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "is_duplicate": false,
     "note": "Shared contract requires tag-derived context before substantive answers and commands.",
-    "path": "core/AGENT-CONTRACT.yaml",
+    "path": "core/AGENT-CONTRACT.json",
     "selector": "operating_principles"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "is_duplicate": true,
     "note": "Code-project workflow repeats the same future-fit and diagnostic bias.",
-    "path": "project/code/WORKFLOW.yaml",
+    "path": "project/code/WORKFLOW.json",
     "selector": "general_workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "is_duplicate": true,
     "note": "Code workflow defines the executable context-tag pass.",
-    "path": "project/code/WORKFLOW.yaml",
+    "path": "project/code/WORKFLOW.json",
     "selector": "read_order"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "is_duplicate": false,
     "note": "Code workflow read-order requirement for programming tasks.",
-    "path": "project/code/WORKFLOW.yaml",
+    "path": "project/code/WORKFLOW.json",
     "selector": "read_order"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "is_duplicate": true,
     "note": "Script-first workflow repeats the preferred query command.",
-    "path": "project/code/WORKFLOW.yaml",
+    "path": "project/code/WORKFLOW.json",
     "selector": "script_first_execution"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "is_duplicate": true,
     "note": "Verification guard for changed-code tasks.",
@@ -88,7 +88,7 @@
     "selector": "script"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "is_duplicate": true,
     "note": "Source pipeline helper for deriving context tags from user text.",
@@ -96,7 +96,7 @@
     "selector": "script"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "is_duplicate": true,
     "note": "Canonical helper for loading the code-task engineering context slice.",
@@ -104,7 +104,7 @@
     "selector": "script"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "is_duplicate": false,
     "note": "Knowledge SQLite and file fallback source freshness use the normalized hash policy.",
@@ -112,7 +112,7 @@
     "selector": "normalized_hash_text"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "is_duplicate": true,
     "note": "Compiled instruction source manifests and checksums use the same normalized hash policy.",

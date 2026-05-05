@@ -8,24 +8,24 @@ This guide explains the programming-specific SocratexPipeline workflow.
 
 For code projects, the agent reads:
 
-- `core/AGENT-CONTRACT.yaml`
-- `core/FILE-FORMATS.yaml`
-- `core/PROMOTION-RULES.yaml`
-- `core/CONTEXT-COMPACTION.yaml`
-- `core/INSTRUCTION-CAPTURE.yaml`
-- `core/PROJECT-PROFILE.yaml` when `project_profile` exists
-- `core/ROI-BIAS.yaml`
-- `core/SCRIPT-FALLBACK.yaml`
-- `core/TASK-WORK.yaml` for broad multi-step tasks
-- `project/code/WORKFLOW.yaml`
-- `project/code/BRANCH-MODE.yaml` when `workflow.branch_mode` is `branch_scoped`
-- `project/code/COMMANDS.yaml`
-- `project/code/REGISTRIES.yaml`
-- `project/code/DDD-ADIV.yaml`
-- `project/code/GIT.yaml`
-- `project/code/FROZEN-LAYERS.yaml`
-- `project/code/INSTRUCTION-CAPTURE.yaml`
-- `project/code/DIAGNOSTICS.yaml`
+- `core/AGENT-CONTRACT.json`
+- `core/FILE-FORMATS.json`
+- `core/PROMOTION-RULES.json`
+- `core/CONTEXT-COMPACTION.json`
+- `core/INSTRUCTION-CAPTURE.json`
+- `core/PROJECT-PROFILE.json` when `project_profile` exists
+- `core/ROI-BIAS.json`
+- `core/SCRIPT-FALLBACK.json`
+- `core/TASK-WORK.json` for broad multi-step tasks
+- `project/code/WORKFLOW.json`
+- `project/code/BRANCH-MODE.json` when `workflow.branch_mode` is `branch_scoped`
+- `project/code/COMMANDS.json`
+- `project/code/REGISTRIES.json`
+- `project/code/DDD-ADIV.json`
+- `project/code/GIT.json`
+- `project/code/FROZEN-LAYERS.json`
+- `project/code/INSTRUCTION-CAPTURE.json`
+- `project/code/DIAGNOSTICS.json`
 
 ## Main Commands
 
@@ -44,7 +44,7 @@ For code projects, the agent reads:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture_godot,performance
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture,performance
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/task_snapshot.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_quality_gate.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/finish_task.ps1 -Quality
@@ -56,7 +56,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/init_task_work.ps1 -Ti
 
 ## File Formats
 
-Programming projects use YAML and JSON for standardized project memory, registries, diagnostics, configuration, indexes, and AI-readable structured documents.
+Programming projects use JSON for standardized project memory, registries, diagnostics, configuration, indexes, and AI-readable structured documents.
 
 Markdown in programming projects is reserved for scratch intake such as `_INSTRUCTIONS.md`, temporary notes, rough drafts, and short human-facing docs.
 
@@ -64,7 +64,7 @@ Branch-scoped mode also uses Markdown for local prompt-language working files un
 
 ## Project Profile
 
-`PIPELINE-CONFIG.yaml` stores `project_profile`.
+`PIPELINE-CONFIG.json` stores `project_profile`.
 
 The agent uses it to filter known solutions. Legacy and low-test projects bias toward characterization tests, seams, adapters, and minimal-invasive modernization. Greenfield projects can bias toward cleaner DDD-ADIV structure and framework-native foundations.
 
@@ -72,7 +72,7 @@ The agent uses it to filter known solutions. Legacy and low-test projects bias t
 
 For every new feature request, suggestion, or architecture discussion, the agent should first check whether the requested work can be implemented in the most future-proof, maintainable, profile-fitting way.
 
-For software and game projects, use AAA-grade architecture as the steer-direction when appropriate: explicit ownership, data flow, contracts, diagnostics, performance budget, toolability, deterministic behavior where relevant, testability, and low retrofit cost.
+For software and game projects, use production-grade architecture as the steer-direction when appropriate: explicit ownership, data flow, contracts, diagnostics, performance budget, toolability, deterministic behavior where relevant, testability, and low retrofit cost.
 
 Before implementation, refactor, bugfix, or code review work, the agent should load compiled engineering standards with `tools/knowledge_code_context.ps1` when available. This keeps engineering, coding, architecture, diagnostics, and verification rules active while source code is being changed.
 
@@ -92,7 +92,7 @@ ROI Picks rank work by value axes, cost axes, profile fit, and why the improveme
 
 ## Script Fallback
 
-Before silently bypassing a script, the agent follows `core/SCRIPT-FALLBACK.yaml`.
+Before silently bypassing a script, the agent follows `core/SCRIPT-FALLBACK.json`.
 
 Missing runtimes should be reported as setup issues with install hints before manual fallback.
 
@@ -100,13 +100,13 @@ PowerShell 7 (`pwsh`) is the preferred automation runtime. If it is missing duri
 
 ## Broad Task Work
 
-For broad multi-step tasks, the agent should create temporary task work at `docs-tech/cache/current_task.yaml`, track micro-task status during execution, then delete it or promote only durable facts.
+For broad multi-step tasks, the agent should create temporary task work at `docs-tech/cache/current_task.json`, track micro-task status during execution, then delete it or promote only durable facts.
 
-For moving items between structured YAML documents, the agent should use `tools/doc_item_migrate.ps1` instead of manual editing.
+For moving items between structured JSON documents, the agent should use `tools/doc_item_migrate.ps1` instead of manual editing.
 
 ## Transactional Document Editing
 
-For structured YAML documents, use document edit tools instead of ad hoc inline PowerShell or manual command queues.
+For structured JSON documents, use document edit tools instead of ad hoc inline PowerShell or manual command queues.
 
 Use:
 
@@ -114,7 +114,7 @@ Use:
 - `tools/doc_item_bulk_insert.ps1` for multiple keyed items in one document,
 - `tools/doc_item_move.ps1` for ordering inside one document,
 - `tools/doc_item_migrate.ps1` for moving or copying between documents,
-- `tools/doc_list_insert.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing YAML item,
+- `tools/doc_list_insert.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing JSON item,
 - `tools/doc_list_check.ps1 -Terms <words>` to return candidate duplicate titles, keys, matched terms, and excerpts before deciding whether an update already exists,
 - `tools/doc_read_titles.ps1 -Titles <titles>` to read only candidate sections before writing,
 - `tools/docs_slim.ps1` and `tools/docs_migrator.ps1` for whole-document format passes.
@@ -125,15 +125,15 @@ Hard rule: documentation reads/writes outside context capsules and strictly tech
 
 Do not manually repeat normalize, cache, index, check, or readback commands after a successful transactional document edit unless the wrapper failed, `-NoPostEdit` was intentionally used, or a broader verification boundary requires it.
 
-## YAML Read Discipline
+## JSON Read Discipline
 
-For structured YAML documents, use document tools before text grep:
+For structured JSON documents, use document tools before text grep:
 
 - `tools/doc_read.ps1` when the stable key is known,
 - `tools/doc_keys.ps1` when the local key list is needed,
 - `tools/doc_route.ps1` or `tools/doc_search.ps1` when searching by intent or phrase.
 
-`Select-String`, `grep`, and `rg` are fallback tools for YAML documents. Use them only for raw formatting or encoding checks, parser/cache debugging, unknown references after document tools miss, or source-code searches.
+`Select-String`, `grep`, and `rg` are fallback tools for JSON documents. Use them only for raw formatting or encoding checks, parser/cache debugging, unknown references after document tools miss, or source-code searches.
 
 ## Verification Boundary
 

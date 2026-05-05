@@ -12,7 +12,7 @@ $ErrorActionPreference = "Stop"
 $TargetRoot = Resolve-Path -LiteralPath $TargetPath
 $InstallRoot = Join-Path $TargetRoot "SocratexAI"
 $TemplateRoot = Join-Path $InstallRoot "templates"
-$ConfigPath = Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
+$ConfigPath = Join-Path $InstallRoot "PIPELINE-CONFIG.json"
 
 function Read-ConfigText {
     if (Test-Path -LiteralPath $ConfigPath) {
@@ -21,38 +21,21 @@ function Read-ConfigText {
     return ""
 }
 
-function Get-ConfigScalar {
-    param(
-        [string]$Text,
-        [string]$Key,
-        [string]$Default
-    )
-
-    if ($Text -match "(?m)^\s*$([regex]::Escape($Key)):\s*(.+?)\s*$") {
-        return $Matches[1].Trim().Trim('"').Trim("'")
-    }
-    return $Default
-}
-
 function Get-ConfigList {
     param([string]$Text)
 
-    $result = New-Object System.Collections.Generic.List[string]
-    $lines = $Text -split "`r?`n"
-    $inPacks = $false
-    foreach ($line in $lines) {
-        if ($line -match '^active_project_packs:\s*$') {
-            $inPacks = $true
-            continue
-        }
-        if ($inPacks -and $line -match '^\S') {
-            break
-        }
-        if ($inPacks -and $line -match '^\s*-\s*(.+?)\s*$') {
-            $result.Add($Matches[1].Trim()) | Out-Null
-        }
+    if ([string]::IsNullOrWhiteSpace($Text)) {
+        return @()
     }
-    return @($result)
+    try {
+        $config = $Text | ConvertFrom-Json
+        if ($config.active_project_packs) {
+            return @($config.active_project_packs | ForEach-Object { [string]$_ })
+        }
+    } catch {
+        return @()
+    }
+    return @()
 }
 
 function Get-ChangelogEnabled {
@@ -61,9 +44,14 @@ function Get-ChangelogEnabled {
     if ($UseChangelog -ne "auto") {
         return $UseChangelog -eq "yes"
     }
-    if ($Text -match "(?ms)^changelog:\s*\r?\n\s+enabled:\s*(.+?)\s*(\r?\n\S|$)") {
-        $value = $Matches[1].Trim().Trim('"').Trim("'").ToLowerInvariant()
-        return $value -notin @("no", "false", "disabled", "off")
+    try {
+        $config = $Text | ConvertFrom-Json
+        if ($config.changelog -and $null -ne $config.changelog.enabled) {
+            $value = ([string]$config.changelog.enabled).ToLowerInvariant()
+            return $value -notin @("no", "false", "disabled", "off")
+        }
+    } catch {
+        return $true
     }
     return $true
 }
@@ -112,25 +100,37 @@ function Ensure-ConfigDefaults {
         return
     }
 
-    $updated = $Text
-    if ($updated -notmatch "(?m)^changelog:\s*$") {
-        $enabledText = if ($ChangelogEnabled) { "yes" } else { "no" }
-        $updated = $updated.TrimEnd() + "`nchangelog:`n  enabled: $enabledText`n"
-    }
-    if ($updated -notmatch "(?m)^communication:\s*$") {
-        $updated = $updated.TrimEnd() + "`ncommunication:`n  profile: standard`n"
-    }
-    if ($updated -notmatch "(?m)^\s+reinitialize_command:\s*") {
-        $updated = $updated -replace "(?m)^(\s+remove_command:\s*.+)$", "`$1`n  reinitialize_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath ."
+    try {
+        $config = if ([string]::IsNullOrWhiteSpace($Text)) { [pscustomobject]@{} } else { $Text | ConvertFrom-Json }
+    } catch {
+        throw "PIPELINE-CONFIG.json is not valid JSON."
     }
 
-    if ($updated -ne $Text) {
+    $changed = $false
+    if (-not $config.PSObject.Properties.Name.Contains("changelog")) {
+        $config | Add-Member -NotePropertyName "changelog" -NotePropertyValue ([pscustomobject]@{ enabled = $(if ($ChangelogEnabled) { "yes" } else { "no" }) })
+        $changed = $true
+    }
+    if (-not $config.PSObject.Properties.Name.Contains("communication")) {
+        $config | Add-Member -NotePropertyName "communication" -NotePropertyValue ([pscustomobject]@{ profile = "standard" })
+        $changed = $true
+    }
+    if (-not $config.PSObject.Properties.Name.Contains("pipeline")) {
+        $config | Add-Member -NotePropertyName "pipeline" -NotePropertyValue ([pscustomobject]@{})
+        $changed = $true
+    }
+    if (-not $config.pipeline.PSObject.Properties.Name.Contains("reinitialize_command")) {
+        $config.pipeline | Add-Member -NotePropertyName "reinitialize_command" -NotePropertyValue "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath ."
+        $changed = $true
+    }
+
+    if ($changed) {
         if ($DryRun) {
-            Write-Host "Would update PIPELINE-CONFIG.yaml with missing reinitialization defaults."
+            Write-Host "Would update PIPELINE-CONFIG.json with missing reinitialization defaults."
             return
         }
-        Set-Content -LiteralPath $ConfigPath -Value $updated -NoNewline
-        Write-Host "Updated PIPELINE-CONFIG.yaml with missing reinitialization defaults."
+        [System.IO.File]::WriteAllText($ConfigPath, (($config | ConvertTo-Json -Depth 8) + [Environment]::NewLine), [System.Text.UTF8Encoding]::new($false))
+        Write-Host "Updated PIPELINE-CONFIG.json with missing reinitialization defaults."
     }
 }
 
@@ -157,35 +157,35 @@ Write-Host "Changelog enabled: $changelogEnabled"
 
 Ensure-ConfigDefaults -Text $configText -ChangelogEnabled $changelogEnabled
 
-Ensure-Template -TemplateRelativePath "ORCHESTRATION.yaml" -DestinationRelativePath "ORCHESTRATION.yaml"
-Ensure-Template -TemplateRelativePath "team/product.yaml" -DestinationRelativePath "team/product.yaml"
-Ensure-Template -TemplateRelativePath "team/technical.yaml" -DestinationRelativePath "team/technical.yaml"
-Ensure-Template -TemplateRelativePath "team/performance.yaml" -DestinationRelativePath "team/performance.yaml"
-Ensure-Template -TemplateRelativePath "team/experience.yaml" -DestinationRelativePath "team/experience.yaml"
-Ensure-Template -TemplateRelativePath "team/pipeline.yaml" -DestinationRelativePath "team/pipeline.yaml"
-Ensure-Template -TemplateRelativePath "docs-tech/KNOWLEDGE-VIEWS.yaml" -DestinationRelativePath "docs-tech/KNOWLEDGE-VIEWS.yaml"
+Ensure-Template -TemplateRelativePath "WORKFLOW.json" -DestinationRelativePath "WORKFLOW.json"
+Ensure-Template -TemplateRelativePath "team/product.json" -DestinationRelativePath "team/product.json"
+Ensure-Template -TemplateRelativePath "team/technical.json" -DestinationRelativePath "team/technical.json"
+Ensure-Template -TemplateRelativePath "team/performance.json" -DestinationRelativePath "team/performance.json"
+Ensure-Template -TemplateRelativePath "team/experience.json" -DestinationRelativePath "team/experience.json"
+Ensure-Template -TemplateRelativePath "team/pipeline.json" -DestinationRelativePath "team/pipeline.json"
+Ensure-Template -TemplateRelativePath "docs-tech/KNOWLEDGE-VIEWS.json" -DestinationRelativePath "docs-tech/KNOWLEDGE-VIEWS.json"
 
 foreach ($pack in $Packs) {
     if ($pack -eq "code") {
-        Ensure-Template -TemplateRelativePath "code/DOCS.yaml" -DestinationRelativePath "DOCS.yaml"
-        Ensure-Template -TemplateRelativePath "code/STATE.yaml" -DestinationRelativePath "STATE.yaml"
-        Ensure-Template -TemplateRelativePath "code/_PLAN.yaml" -DestinationRelativePath "_PLAN.yaml"
-        Ensure-Template -TemplateRelativePath "code/DECISIONS.yaml" -DestinationRelativePath "DECISIONS.yaml"
-        Ensure-Template -TemplateRelativePath "code/PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
-        Ensure-Template -TemplateRelativePath "code/TODO.yaml" -DestinationRelativePath "TODO.yaml"
-        Ensure-Template -TemplateRelativePath "code/BUGS.yaml" -DestinationRelativePath "BUGS.yaml"
-        Ensure-Template -TemplateRelativePath "code/BUGS-SOLVED.yaml" -DestinationRelativePath "BUGS-SOLVED.yaml"
-        Ensure-Template -TemplateRelativePath "code/_PROMPT-QUEUE.yaml" -DestinationRelativePath "_PROMPT-QUEUE.yaml"
-        Ensure-Template -TemplateRelativePath "code/_INSTRUCTION-QUEUE.yaml" -DestinationRelativePath "_INSTRUCTION-QUEUE.yaml"
-        Ensure-Template -TemplateRelativePath "code/current_task.yaml" -DestinationRelativePath "docs-tech/cache/current_task.yaml"
-        Ensure-Template -TemplateRelativePath "code/context-docs/ENGINEERING.yaml" -DestinationRelativePath "context-docs/ENGINEERING.yaml"
-        Ensure-Template -TemplateRelativePath "code/context-docs/TECHNICAL.yaml" -DestinationRelativePath "context-docs/TECHNICAL.yaml"
-        Ensure-Template -TemplateRelativePath "code/context-docs/FROZEN_LAYERS.yaml" -DestinationRelativePath "context-docs/FROZEN_LAYERS.yaml"
+        Ensure-Template -TemplateRelativePath "code/DOCS.json" -DestinationRelativePath "DOCS.json"
+        Ensure-Template -TemplateRelativePath "code/STATE.json" -DestinationRelativePath "STATE.json"
+        Ensure-Template -TemplateRelativePath "code/_PLAN.json" -DestinationRelativePath "_PLAN.json"
+        Ensure-Template -TemplateRelativePath "code/DECISIONS.json" -DestinationRelativePath "DECISIONS.json"
+        Ensure-Template -TemplateRelativePath "code/PIPELINE-CONFIG.json" -DestinationRelativePath "PIPELINE-CONFIG.json"
+        Ensure-Template -TemplateRelativePath "code/TODO.json" -DestinationRelativePath "TODO.json"
+        Ensure-Template -TemplateRelativePath "code/BUGS.json" -DestinationRelativePath "BUGS.json"
+        Ensure-Template -TemplateRelativePath "code/BUGS-SOLVED.json" -DestinationRelativePath "BUGS-SOLVED.json"
+        Ensure-Template -TemplateRelativePath "code/_PROMPT-QUEUE.json" -DestinationRelativePath "_PROMPT-QUEUE.json"
+        Ensure-Template -TemplateRelativePath "code/_INSTRUCTION-QUEUE.json" -DestinationRelativePath "_INSTRUCTION-QUEUE.json"
+        Ensure-Template -TemplateRelativePath "code/current_task.json" -DestinationRelativePath "docs-tech/cache/current_task.json"
+        Ensure-Template -TemplateRelativePath "code/context-docs/ENGINEERING.json" -DestinationRelativePath "context-docs/ENGINEERING.json"
+        Ensure-Template -TemplateRelativePath "code/context-docs/TECHNICAL.json" -DestinationRelativePath "context-docs/TECHNICAL.json"
+        Ensure-Template -TemplateRelativePath "code/context-docs/FROZEN_LAYERS.json" -DestinationRelativePath "context-docs/FROZEN_LAYERS.json"
         if ($changelogEnabled) {
-            Ensure-Template -TemplateRelativePath "code/CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
+            Ensure-Template -TemplateRelativePath "code/CHANGELOG.json" -DestinationRelativePath "CHANGELOG.json"
         }
     } else {
-        Ensure-Template -TemplateRelativePath "DOCS.yaml" -DestinationRelativePath "DOCS.yaml"
+        Ensure-Template -TemplateRelativePath "DOCS.json" -DestinationRelativePath "DOCS.json"
         Ensure-Template -TemplateRelativePath "STATE.md" -DestinationRelativePath "STATE.md"
         Ensure-Template -TemplateRelativePath "_PLAN.md" -DestinationRelativePath "_PLAN.md"
         Ensure-Template -TemplateRelativePath "DECISIONS.md" -DestinationRelativePath "DECISIONS.md"
@@ -193,7 +193,7 @@ foreach ($pack in $Packs) {
         Ensure-Template -TemplateRelativePath "ISSUES.md" -DestinationRelativePath "ISSUES.md"
         Ensure-Template -TemplateRelativePath "JOURNAL.md" -DestinationRelativePath "JOURNAL.md"
         Ensure-Template -TemplateRelativePath "REVIEW.md" -DestinationRelativePath "REVIEW.md"
-        Ensure-Template -TemplateRelativePath "PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
+        Ensure-Template -TemplateRelativePath "PIPELINE-CONFIG.json" -DestinationRelativePath "PIPELINE-CONFIG.json"
     }
 }
 

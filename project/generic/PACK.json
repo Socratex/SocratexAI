@@ -1,0 +1,49 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "execution_defaults",
+        "review_gate"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "recommended_files",
+                "execution_defaults",
+                "review_gate"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Project Pack: Generic\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nUse this pack for non-code projects that still need execution discipline.\n\nExamples:\n\n- research,\n- writing,\n- operations,\n- business planning,\n- launches,\n- learning plans,\n- administrative projects.\n"
+        },
+        "recommended_files": {
+            "title": "Recommended Files",
+            "format": "markdown-section",
+            "body": "## Recommended Files\n\n- `DOCS.json`\n- `STATE.md`\n- `_PLAN.md`\n- `BACKLOG.md`\n- `DECISIONS.md`\n- `ISSUES.md`\n- `JOURNAL.md`\n- `REVIEW.md`\n- `PIPELINE-CONFIG.json`\n- agent-only `context-docs/*.json`\n\nRead `DOCS.json` before reading, creating, renaming, or updating project documents so the agent chooses the correct source and write target.\n"
+        },
+        "execution_defaults": {
+            "title": "Execution Defaults",
+            "format": "markdown-section",
+            "body": "## Execution Defaults\n\n- Convert vague intent into explicit outcomes.\n- Research known solutions, proven workflows, archetypes, templates, and borrowed systems before inventing a bespoke approach.\n- Treat new requests, suggestions, and problem reports as steer-direction checkpoints: first ask whether the requested path is the most future-proof, low-maintenance, high-clarity way to reach the outcome.\n- Prefer borrowed or adapted practices when they are cheaper, clearer, and easier to maintain than custom process design.\n- Keep one active priority visible.\n- Separate commitments from possibilities.\n- Record decisions that affect future work.\n- Use SocratexAI JSON tools for agent-only structured JSON files when practical: `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_move`, and `doc_item_migrate`.\n- Keep user-facing planning files in Markdown unless the user asks for JSON.\n- Run document audit after changing pipeline or agent-managed memory when practical.\n- Keep context short enough for fast resumption.\n- Prefer artifacts over discussion.\n"
+        },
+        "review_gate": {
+            "title": "Review Gate",
+            "format": "markdown-section",
+            "body": "## Review Gate\n\nCheck:\n\n- Is the next action concrete?\n- Is the expected artifact named?\n- Are blockers real or speculative?\n- Are dependencies external or internal?\n- Is the current plan still aligned with the target?\n- Is unresolved work preserved somewhere appropriate?\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Project Pack: Generic"
+}

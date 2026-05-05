@@ -70,10 +70,10 @@ try {
 	$doneScript = Join-Path $PSScriptRoot "done.ps1"
 	Write-CheckResult -Name "done finalizer" -Ok (Test-Path -LiteralPath $doneScript) -Detail $doneScript
 
-	$workflowPath = Join-Path $repoRoot "project\code\WORKFLOW.yaml"
+	$workflowPath = Join-Path $repoRoot "project\code\WORKFLOW.json"
 	Write-CheckResult -Name "code workflow" -Ok (Test-Path -LiteralPath $workflowPath) -Detail $workflowPath
 
-	$agentContractPath = Join-Path $repoRoot "core\AGENT-CONTRACT.yaml"
+	$agentContractPath = Join-Path $repoRoot "core\AGENT-CONTRACT.json"
 	Write-CheckResult -Name "agent contract" -Ok (Test-Path -LiteralPath $agentContractPath) -Detail $agentContractPath
 
 	$docToolPath = Join-Path $PSScriptRoot "doc_tool.py"

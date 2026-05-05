@@ -105,7 +105,7 @@ function Repair-Text {
 
 function Get-DefaultTargets {
 	$files = New-Object System.Collections.Generic.List[string]
-	$tracked = & git -C $repoRoot ls-files "*.md" "*.yaml" "*.yml" "*.ps1"
+	$tracked = & git -C $repoRoot ls-files "*.md" "*.json" "*.json" "*.ps1"
 	if ($LASTEXITCODE -ne 0) {
 		throw "git ls-files failed."
 	}

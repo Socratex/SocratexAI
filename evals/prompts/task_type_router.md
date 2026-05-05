@@ -7,12 +7,12 @@ A user asks:
 The project has:
 
 ```text
-STATE.yaml
-_PLAN.yaml
-BUGS.yaml
-ORCHESTRATION.yaml
+STATE.json
+_PLAN.json
+BUGS.json
+WORKFLOW.json
 context-docs/
-project/code/WORKFLOW.yaml
+project/code/WORKFLOW.json
 tools/knowledge_code_context.ps1
 tools/done.ps1
 ```

@@ -1,0 +1,171 @@
+{
+    "summary": "Document role index for a code SocratexAI project.",
+    "rules": {
+        "read_before_document_work": true,
+        "update_when_adding_or_renaming_documents": true,
+        "purpose": "Use this file to decide which documents to read, create, update, or avoid before changing project memory, planning work, adding diagnostics, or creating new documentation.\n"
+    },
+    "documents": {
+        "SOCRATEX.md": {
+            "role": "Root activation entrypoint.",
+            "audience": "ai",
+            "format": "markdown",
+            "read_when": "Always first.",
+            "write_when": "Only when pipeline activation rules change."
+        },
+        "PIPELINE-CONFIG.json": {
+            "role": "Installed pipeline configuration.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Before applying configuration-sensitive workflow rules.",
+            "write_when": "Initialization, reinitialization, migration, or explicit configuration updates."
+        },
+        "DOCS.json": {
+            "role": "Document map and routing contract.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Before reading, creating, renaming, or updating project documents.",
+            "write_when": "Any durable document is added, removed, renamed, or its role changes."
+        },
+        "STATE.json": {
+            "role": "Compact active project state.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "At session start after DOCS.json.",
+            "write_when": "Active objective, checkpoint, blocker, risk, verification status, or next action changes."
+        },
+        "WORKFLOW.json": {
+            "role": "Manual priority-workflow layer for current pain points, priority challenge rules, task routing, and project-risk steering.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Planning, feature triage, priority decisions, roadmap changes, broad product-risk judgment, or unknown task-type routing.",
+            "write_when": "Owner changes active pain points, priority rules, task routing, or team-on-demand routing."
+        },
+        "team/*.json": {
+            "role": "On-demand decision-role lenses.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "User names a role, asks for team-style review, or WORKFLOW.json routes the task to that role.",
+            "write_when": "Role responsibilities, prioritized sections, preferred skills, red flags, or veto behavior change."
+        },
+        "_PLAN.json": {
+            "role": "Active and future implementation passes.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Before broad work, planning, or CONTINUE-style execution.",
+            "write_when": "Active passes are added, reshaped, completed, or reordered."
+        },
+        "TODO.json": {
+            "role": "Actionable backlog not yet promoted into the active plan.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "When proposing or selecting future implementation work.",
+            "write_when": "New unresolved implementation work is discovered but not yet ready for the active plan."
+        },
+        "DECISIONS.json": {
+            "role": "Durable architecture, workflow, and implementation decisions.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Before reversing or depending on prior decisions.",
+            "write_when": "A decision affects future code, architecture, tooling, process, or tradeoffs."
+        },
+        "BUGS.json": {
+            "role": "Active bug and diagnostic registry.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Before BUG, diagnostics, or defect-fix workflows.",
+            "write_when": "A bug is found, investigated, updated, or awaits user confirmation."
+        },
+        "BUGS-SOLVED.json": {
+            "role": "Confirmed resolved bug registry.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Only when resolved-bug history is relevant.",
+            "write_when": "User confirms an active bug is resolved."
+        },
+        "CHANGELOG.json": {
+            "role": "Shipped user-visible behavior and major fixes.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Only when shipped-history detail is directly relevant.",
+            "write_when": "Shipped functionality or major fixes land and changelog is enabled."
+        },
+        "_PROMPTS.md": {
+            "role": "Raw user prompt intake.",
+            "audience": "user-and-ai",
+            "format": "markdown",
+            "read_when": "When processing PROMPT-style workflows.",
+            "write_when": "User adds raw prompts for later processing."
+        },
+        "_PROMPT-QUEUE.json": {
+            "role": "Agent-managed prompt queue.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "When PROMPT has no raw prompt or after defragmenting raw prompts.",
+            "write_when": "Defragmenting, sorting, promoting, or completing queued prompts."
+        },
+        "_INSTRUCTIONS.md": {
+            "role": "Raw user instruction intake and scratch capture.",
+            "audience": "user-and-ai",
+            "format": "markdown",
+            "read_when": "When processing pending user instructions.",
+            "write_when": "User provides raw directives that need later capture."
+        },
+        "_INSTRUCTION-QUEUE.json": {
+            "role": "Agent-managed structured instruction queue.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "When processing queued instructions.",
+            "write_when": "Defragmenting, sorting, promoting, or completing queued instructions."
+        },
+        "current_task.json": {
+            "role": "Temporary broad-task micro-task working memory.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "During a broad active task that needs micro-task tracking.",
+            "write_when": "Creating, updating, completing, or retiring broad-task micro-tasks."
+        },
+        "docs-tech/KNOWLEDGE-VIEWS.json": {
+            "role": "Source configuration for named SQLite knowledge views.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "When adding or changing compiled knowledge query lanes.",
+            "write_when": "Startup, architecture, debugging, performance, docs workflow, or domain-specific knowledge views change."
+        },
+        "AI-compiled/project/knowledge.sqlite": {
+            "role": "Generated SQLite knowledge index for tagged project entries.",
+            "audience": "ai",
+            "format": "sqlite",
+            "read_when": "Via tools/knowledge_select.ps1 for fast context lookup by view, tag, type, source, or startup flag.",
+            "write_when": "Never manually; generated by tools/knowledge_compile.ps1 or targeted knowledge upsert/delete/rename scripts."
+        },
+        "AI-compiled/project/knowledge-files/": {
+            "role": "Generated JSON table fallback for tagged project knowledge when SQLite is unavailable.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Via tools/knowledge_file_select.ps1 when SQLite cannot be used; supports tag, type, source, document, entry, and startup queries, but not named views.",
+            "write_when": "Never manually; generated by tools/knowledge_file_compile.ps1 or targeted knowledge_file upsert/delete/rename scripts."
+        },
+        "context-docs/ENGINEERING.json": {
+            "role": "Tagged engineering, architecture, coding, workflow, and verification standards.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "Engineering rules, architecture decisions, coding standards, workflow, diagnostics, or verification matter.",
+            "write_when": "Durable engineering or workflow standards are added, consolidated, or corrected."
+        },
+        "context-docs/*.json": {
+            "role": "Agent-only compact technical context capsules.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "When the relevant subsystem is in scope and STATE.json is insufficient.",
+            "write_when": "Durable current-state technical context would reduce future rereading cost."
+        },
+        "ignored/ai-socratex/*.md": {
+            "role": "Local branch-scoped active state, plan, and TODO files.",
+            "audience": "user-and-ai",
+            "format": "markdown",
+            "read_when": "At session start when workflow.branch_mode is branch_scoped.",
+            "write_when": "Branch-scoped facts, next steps, or ad-hoc work change."
+        }
+    }
+}

@@ -22,7 +22,7 @@ try {
         git status --short
     }
 
-    foreach ($file in @("DOCS.yaml", "STATE.yaml", "_PLAN.yaml", "TODO.yaml", "BUGS.yaml", "STATE.md", "_PLAN.md", "TODO.md", "ISSUES.md")) {
+    foreach ($file in @("DOCS.json", "STATE.json", "_PLAN.json", "TODO.json", "BUGS.json", "STATE.md", "_PLAN.md", "TODO.md", "ISSUES.md")) {
         if (Test-Path -LiteralPath $file) {
             $lineCount = @(Get-Content -LiteralPath $file).Count
             Write-Host "${file}: $lineCount line(s)"

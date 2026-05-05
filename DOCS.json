@@ -1,0 +1,73 @@
+{
+    "index": [
+        "DOCS.json",
+        "WORKFLOW.json",
+        "COMMANDS.json",
+        "FLOWS.json",
+        "SCRIPTS.json",
+        "pipeline_featurelist.json",
+        "core/",
+        "project/",
+        "templates/",
+        "tools/",
+        "docs-tech/",
+        "AI-compiled/"
+    ],
+    "content": {
+        "DOCS.json": {
+            "role": "Root document index for source-pipeline routing.",
+            "read": "at bootstrap or when document ownership is unclear"
+        },
+        "WORKFLOW.json": {
+            "role": "Root workflow guardrails and broad task policy.",
+            "read": "for every substantive source-pipeline prompt"
+        },
+        "COMMANDS.json": {
+            "role": "Root command keyword index.",
+            "read": "when a prompt matches a command keyword"
+        },
+        "FLOWS.json": {
+            "role": "Root ordered execution flows.",
+            "read": "after task classification and before broad edits"
+        },
+        "SCRIPTS.json": {
+            "role": "Root script availability index.",
+            "read": "before manual repeatable work"
+        },
+        "pipeline_featurelist.json": {
+            "role": "Canonical source-pipeline feature manifest.",
+            "read": "when pipeline-owned behavior changes"
+        },
+        "core/": {
+            "role": "Shared agent contracts and protocols.",
+            "read": "when exact source-level behavior is needed"
+        },
+        "project/": {
+            "role": "Project-type packs.",
+            "read": "when pack behavior or project type routing changes"
+        },
+        "templates/": {
+            "role": "Installed-project artifact templates.",
+            "read": "when initialization or reinitialization behavior changes"
+        },
+        "tools/": {
+            "role": "Pipeline automation scripts.",
+            "read": "before editing or bypassing automation"
+        },
+        "docs-tech/": {
+            "role": "Source-pipeline technical indexes, caches, and knowledge views.",
+            "read": "when compiled context or knowledge routing changes"
+        },
+        "AI-compiled/": {
+            "role": "Generated read-optimized instruction and knowledge cache.",
+            "read": "for fast orientation; do not edit by hand"
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Source Pipeline Document Index",
+            "type": "document_index",
+            "language": "en"
+        }
+    }
+}

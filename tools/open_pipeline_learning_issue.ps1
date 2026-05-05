@@ -8,7 +8,7 @@ param(
 	[string]$LearnedSummary = "",
 	[string[]]$ChangedScripts = @(),
 	[string]$ReporterInstruction = "",
-	[string[]]$ExcludePatterns = @("project_specific", "godot", "gdscript", "runtime_diagnostic"),
+	[string[]]$ExcludePatterns = @("project_specific", "runtime_diagnostic"),
 	[switch]$Open
 )
 

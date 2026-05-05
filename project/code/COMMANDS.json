@@ -1,0 +1,105 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "continue",
+        "plan",
+        "bug",
+        "review",
+        "audit",
+        "finish",
+        "commit",
+        "log",
+        "diagnostics",
+        "prompt",
+        "instructions"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "continue",
+                "plan",
+                "bug",
+                "review",
+                "audit",
+                "finish",
+                "commit",
+                "log",
+                "diagnostics",
+                "prompt",
+                "instructions"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Code Commands\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nThis file defines programming-only commands for the code project pack.\n\nThese commands apply only when `project/code` is active.\n\nBefore executing any command manually, check whether a matching script exists in `tools/` or the project's package/task runner and use it when practical.\n"
+        },
+        "continue": {
+            "title": "CONTINUE",
+            "format": "markdown-section",
+            "body": "## CONTINUE\n\nExecute the next active pass from `_PLAN.json`.\n\nFor any pass that implements a new feature, first verify that the pass still represents the most future-proof and maintainable path. If a better enabling contract, data-flow change, ownership boundary, or proven architecture pattern should happen first, update or propose the better sequence before implementation.\nOrder:\n\n1. Read `STATE.json`.\n2. Read `_PLAN.json`.\n3. Select the first active pass.\n4. Read only the smallest relevant context files.\n5. Implement the scoped change.\n6. Run the relevant quality gate at the end of the pass, or after a coherent change block when the pass is broad.\n7. Update `STATE.json`.\n8. Remove completed passes from `_PLAN.json`.\n9. Record shipped user-visible changes or major fixes in `CHANGELOG.json` when `changelog.enabled` is not `no`.\n\nIf no active pass exists, propose the next code target from `TODO.json`; do not silently add it to `_PLAN.json` unless the workflow or user authorizes planning.\n"
+        },
+        "plan": {
+            "title": "PLAN",
+            "format": "markdown-section",
+            "body": "## PLAN\n\nPromote selected code backlog into executable passes.\n\nBefore promotion, score each candidate with ROI metadata from `core/ROI-BIAS.json`.\n\nPrefer high-ROI candidates for the current `project_profile`.\n\nEach pass must define:\n\n- goal,\n- touched domains,\n- scope boundaries,\n- expected outcome,\n- verification,\n- what it intentionally does not do yet.\n"
+        },
+        "bug": {
+            "title": "BUG",
+            "format": "markdown-section",
+            "body": "## BUG\n\nWork from `BUGS.json`.\n\nTreat each bug report as a signal about system design, not only as a local defect. Before patching, check whether the bug exposes a deeper ownership, lifecycle, contract, data-flow, tooling, observability, or architecture weakness.\nOrder:\n\n1. Read `BUGS.json`.\n2. Select the highest-leverage active bug using reproduction likelihood, current project focus, diagnostic readiness, and future-change cost.\n3. Apply the smallest source-owned fix or diagnostic improvement.\n4. Run the relevant quality gate.\n5. Update the bug entry with observation, hypothesis, attempted fix, and verification.\n6. Ask for confirmation before moving the bug to `BUGS-SOLVED.json`.\n\nNever renumber active bugs unless explicitly requested.\n"
+        },
+        "review": {
+            "title": "REVIEW",
+            "format": "markdown-section",
+            "body": "## REVIEW\n\nReview code, plan, or diff as a reviewer.\n\nLead with:\n\n- bugs,\n- regressions,\n- security risks,\n- data-loss risks,\n- missing verification,\n- unclear ownership.\n\nKeep findings tied to concrete files, functions, contracts, or behavior.\n\nEnd with `ROI Picks`: one to three follow-up improvements worth doing now, or state that no follow-up is currently worth doing.\n"
+        },
+        "audit": {
+            "title": "AUDIT",
+            "format": "markdown-section",
+            "body": "## AUDIT\n\nRun the code-project document consistency audit.\n\nDefault command:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/audit_docs.ps1\n```\n\nUse `-Strict` when warnings should fail the audit.\n\nUse `-Initialized` after first-run setup.\n"
+        },
+        "finish": {
+            "title": "FINISH",
+            "format": "markdown-section",
+            "body": "## FINISH\n\nClose the current programming task.\n\nOrder:\n\n1. Run the strongest practical quality gate.\n2. Run `tools/audit_docs.ps1` when project memory changed.\n3. Update `STATE.json`.\n4. Update `_PLAN.json` if passes were completed or reshaped.\n5. Update `CHANGELOG.json` for shipped behavior or major fixes when `changelog.enabled` is not `no`.\n6. Report changed files and unverified areas.\n7. Include ROI Picks when follow-up recommendations remain.\n\nDefault helper:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/done.ps1 -Message \"<message>\"\n```\n\nUse lower-level `tools/finish_task.ps1` only for no-commit checks or when debugging the finalizer.\n"
+        },
+        "commit": {
+            "title": "COMMIT",
+            "format": "markdown-section",
+            "body": "## COMMIT\n\nCreate a bounded source-control commit when the project uses Git.\n\nRules:\n\n- prefer the git-based subtask finisher,\n- let the finisher discover changed files from git and run the batch finalizer,\n- avoid generated or temporary files unless intentionally part of the change,\n- do not commit unrelated user changes,\n- mention skipped verification.\n\nDefault helper:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/done.ps1 -Message \"<message>\"\n```\n"
+        },
+        "log": {
+            "title": "LOG",
+            "format": "markdown-section",
+            "body": "## LOG\n\nAnalyze a supplied diagnostic log, crash log, trace, test output, or runtime dump.\n\n`LOG` requires a non-empty diagnostic description. If the description is missing, ask for it and stop before inspecting files.\n\nOrder:\n\n1. Identify the freshest relevant evidence.\n2. Extract the highest-leverage current error.\n3. Form one concrete hypothesis.\n4. Apply the smallest source-owned fix or add targeted diagnostics.\n5. Run the relevant quality gate.\n6. Update the related registry entry if one exists.\n\nTreat explicit user confirmations such as `fixed`, `resolved`, or equivalent in the user's language as permission to close the active log investigation and clear generated diagnostic captures when the project workflow allows it.\n"
+        },
+        "diagnostics": {
+            "title": "DIAGNOSTICS",
+            "format": "markdown-section",
+            "body": "## DIAGNOSTICS\n\nAnalyze diagnostic evidence from `logs/` or a supplied file.\n\nOrder:\n\n1. Read `project/code/DIAGNOSTICS.json`.\n2. Ensure root-level `logs/` exists if diagnostics will be collected.\n3. Run `tools/log_summary.ps1 -Description \"<description>\"` when practical.\n4. Inspect the freshest relevant evidence.\n5. Identify the smallest source-owned fix or the smallest useful diagnostic addition.\n6. Run the relevant quality gate.\n7. Update `BUGS.json`, `ISSUES.json`, `STATE.json`, or `context-docs/TECHNICAL.json` only when current truth changed.\n"
+        },
+        "prompt": {
+            "title": "PROMPT",
+            "format": "markdown-section",
+            "body": "## PROMPT\n\nResolve raw prompt intake for programming work.\n\nOrder:\n\n1. Inspect `_PROMPTS.md` first when it exists and is not empty.\n2. If it contains one actionable prompt, execute it immediately.\n3. If it contains multiple prompts or separable sections, defragment them into `_PROMPT-QUEUE.json`.\n4. Merge duplicate or overlapping scopes.\n5. Sort pending work by documentation/contracts, diagnostics, architecture prerequisites, implementation, then polish.\n6. Clear `_PROMPTS.md` after successful defragmentation or execution.\n7. If `_PROMPTS.md` is empty, execute the next actionable pass from `_PROMPT-QUEUE.json`.\n8. Remove completed prompt-queue entries while preserving every unresolved future entry.\n\nMention `_PROMPTS.md` and `_PROMPT-QUEUE.json` only during `PROMPT`, or when their content directly affects the current task.\n"
+        },
+        "instructions": {
+            "title": "INSTRUCTIONS",
+            "format": "markdown-section",
+            "body": "## INSTRUCTIONS\n\nDefragment raw user instruction files.\n\nOrder:\n\n1. Read `core/INSTRUCTION-CAPTURE.json`.\n2. Read `project/code/INSTRUCTION-CAPTURE.json`.\n3. Inspect `_INSTRUCTIONS.md` first.\n4. Merge duplicates and split separable work into `_INSTRUCTION-QUEUE.json`.\n5. Promote executable passes into `_PLAN.json` only when they meet the pass contract.\n6. Move bugs, decisions, diagnostics, and context facts into the correct registry.\n7. Clear `_INSTRUCTIONS.md` after successful defragmentation.\n8. Remove completed entries from `_INSTRUCTION-QUEUE.json` after execution.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Code Commands"
+}

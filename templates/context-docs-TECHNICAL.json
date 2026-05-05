@@ -1,0 +1,28 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Technical Context\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nCurrent technical architecture, ownership boundaries, invariants, and known traps.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Technical Context"
+}

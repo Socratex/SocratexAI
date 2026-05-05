@@ -1,0 +1,63 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "bug_registry",
+        "solved_bug_registry",
+        "todo_registry",
+        "changelog_registry",
+        "decision_registry"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "bug_registry",
+                "solved_bug_registry",
+                "todo_registry",
+                "changelog_registry",
+                "decision_registry"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Code Registries\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nThis file defines programming-only registry rules.\n"
+        },
+        "bug_registry": {
+            "title": "Bug Registry",
+            "format": "markdown-section",
+            "body": "## Bug Registry\n\n`BUGS.json` is the active bug registry.\n\nEach active bug should have a stable number:\n\n```json\nbugs:\n  bug_1:\n    title: Short title\n    status: active\n    observed_behavior: TBD\n    expected_behavior: TBD\n    reproduction: TBD\n    evidence: TBD\n    current_hypothesis: TBD\n    attempted_fixes: []\n    verification: not_verified\n    next_action: TBD\n```\n\nRules:\n\n- Do not renumber active bugs.\n- Do not move a bug to `BUGS-SOLVED.json` until the user or reliable verification confirms it is resolved.\n- If a fix attempt fails, update the hypothesis and prefer targeted diagnostics over broad speculative edits.\n- Preserve all still-relevant evidence when merging duplicate bug entries.\n"
+        },
+        "solved_bug_registry": {
+            "title": "Solved Bug Registry",
+            "format": "markdown-section",
+            "body": "## Solved Bug Registry\n\n`BUGS-SOLVED.json` stores confirmed resolved bugs.\n\nRules:\n\n- Preserve the original bug number.\n- Include the resolved status, fix summary, and verification.\n- Do not use it for active diagnostics.\n"
+        },
+        "todo_registry": {
+            "title": "TODO Registry",
+            "format": "markdown-section",
+            "body": "## TODO Registry\n\n`TODO.json` stores actionable code backlog not yet promoted into `_PLAN.json`.\n\nRules:\n\n- Keep items future-facing.\n- Prefer clear ownership and expected outcome.\n- Promote only when the item becomes part of the active execution sequence.\n- Do not store completed work here.\n"
+        },
+        "changelog_registry": {
+            "title": "Changelog Registry",
+            "format": "markdown-section",
+            "body": "## Changelog Registry\n\n`CHANGELOG.json` stores shipped user-visible behavior changes and major fixes when `changelog.enabled` is not `no`.\n\nRules:\n\n- If `changelog.enabled` is `no`, skip this registry and report shipped changes in the final response only.\n- Do not use it as a work queue.\n- Do not record tiny internal churn unless it materially affects users, maintainers, architecture, or risk.\n- Completed-pass history belongs here, not in `_PLAN.json`.\n"
+        },
+        "decision_registry": {
+            "title": "Decision Registry",
+            "format": "markdown-section",
+            "body": "## Decision Registry\n\n`DECISIONS.json` stores durable programming decisions.\n\nUse it for:\n\n- architecture boundaries,\n- source-of-truth choices,\n- persistence or schema decisions,\n- public API contracts,\n- significant tradeoffs,\n- non-obvious constraints.\n\nDo not use it for ordinary implementation notes.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Code Registries"
+}

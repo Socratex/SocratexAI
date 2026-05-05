@@ -1,0 +1,63 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "recommended_files",
+        "defragmentation",
+        "sorting",
+        "cleaning_rules",
+        "promotion_boundary"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "recommended_files",
+                "defragmentation",
+                "sorting",
+                "cleaning_rules",
+                "promotion_boundary"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Instruction Capture\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nUse this workflow for files that collect raw user instructions before they become a standardized plan.\n\nRaw instruction files are not plans. They are intake buffers.\n"
+        },
+        "recommended_files": {
+            "title": "Recommended Files",
+            "format": "markdown-section",
+            "body": "## Recommended Files\n\n- `_INSTRUCTIONS.md`: fresh unprocessed user instructions.\n- `_INSTRUCTION-QUEUE.json`: defragmented, sorted, actionable instruction queue.\n\nProjects may rename these files, but the workflow stays the same.\n"
+        },
+        "defragmentation": {
+            "title": "Defragmentation",
+            "format": "markdown-section",
+            "body": "## Defragmentation\n\nWhen `_INSTRUCTIONS.md` contains multiple prompts, sections, or overlapping requests:\n\n1. Preserve every unresolved requirement.\n2. Merge duplicate or overlapping requests.\n3. Split separable work into clear queue entries.\n4. Move already-standardized plan work into the active plan only when it is ready for execution.\n5. Move backlog-level ideas into the active backlog.\n6. Move durable decisions into the decision log.\n7. Move technical or domain invariants into `context-docs/`.\n\nDo not delete requirements just because wording is messy.\n"
+        },
+        "sorting": {
+            "title": "Sorting",
+            "format": "markdown-section",
+            "body": "## Sorting\n\nSort the resulting queue by future-change cost and dependency order:\n\n1. Documentation, contracts, and source-of-truth clarification.\n2. Diagnostics, bugfixes, and verification gaps.\n3. Enabling architecture and ownership boundaries.\n4. Implementation features.\n5. Refinement and optional cleanup.\n\nIf doing X before Y prevents later coupling, retrofitting, or harder debugging, place X before Y.\n"
+        },
+        "cleaning_rules": {
+            "title": "Cleaning Rules",
+            "format": "markdown-section",
+            "body": "## Cleaning Rules\n\nAfter successful defragmentation:\n\n- clear `_INSTRUCTIONS.md`,\n- keep the instruction queue with unresolved queue entries,\n- preserve all unresolved scope somewhere appropriate,\n- do not delete the source file itself unless the project explicitly does not use instruction capture.\n\nAfter executing a queue entry:\n\n- remove the completed entry from the instruction queue,\n- preserve every unresolved future entry,\n- record shipped behavior or major fixes in the completion log when appropriate.\n\nIf an instruction is already completed:\n\n- say it is already completed,\n- clear or remove that completed instruction from the intake file,\n- do not create duplicate plan or backlog entries.\n"
+        },
+        "promotion_boundary": {
+            "title": "Promotion Boundary",
+            "format": "markdown-section",
+            "body": "## Promotion Boundary\n\nOnly promote raw instructions into the active plan when they have:\n\n- clear outcome,\n- ownership boundary,\n- scope limit,\n- verification path,\n- known non-goals.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Instruction Capture"
+}

@@ -112,9 +112,9 @@ Committed SocratexAI project directives live here.
 Local branch working memory lives under `ignored/ai-socratex/` when branch-scoped mode is active.
 
 "@ -NoNewline
-    $configPath = Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
+    $configPath = Join-Path $InstallRoot "PIPELINE-CONFIG.json"
     if (Test-Path -LiteralPath $configPath) {
-        Copy-Item -LiteralPath $configPath -Destination (Join-Path $assistantRoot "PIPELINE-CONFIG.yaml") -Force
+        Copy-Item -LiteralPath $configPath -Destination (Join-Path $assistantRoot "PIPELINE-CONFIG.json") -Force
     }
     Set-Content -LiteralPath (Join-Path $TargetRoot ".aiassistant\PROJECT.md") -Value @"
 # Project Rules
@@ -157,34 +157,34 @@ if ($CreateProjectFiles) {
     $hasCodePack = $Packs -contains "code"
     $templateMap = if ($hasCodePack) {
         @{
-            "code/DOCS.yaml" = "DOCS.yaml"
-            "code/STATE.yaml" = "STATE.yaml"
-            "code/_PLAN.yaml" = "_PLAN.yaml"
-            "code/TODO.yaml" = "TODO.yaml"
-            "code/DECISIONS.yaml" = "DECISIONS.yaml"
-            "code/CHANGELOG.yaml" = "CHANGELOG.yaml"
-            "code/BUGS.yaml" = "BUGS.yaml"
-            "code/BUGS-SOLVED.yaml" = "BUGS-SOLVED.yaml"
+            "code/DOCS.json" = "DOCS.json"
+            "code/STATE.json" = "STATE.json"
+            "code/_PLAN.json" = "_PLAN.json"
+            "code/TODO.json" = "TODO.json"
+            "code/DECISIONS.json" = "DECISIONS.json"
+            "code/CHANGELOG.json" = "CHANGELOG.json"
+            "code/BUGS.json" = "BUGS.json"
+            "code/BUGS-SOLVED.json" = "BUGS-SOLVED.json"
             "_PROMPTS.md" = "_PROMPTS.md"
-            "code/_PROMPT-QUEUE.yaml" = "_PROMPT-QUEUE.yaml"
+            "code/_PROMPT-QUEUE.json" = "_PROMPT-QUEUE.json"
             "_INSTRUCTIONS.md" = "_INSTRUCTIONS.md"
-            "code/_INSTRUCTION-QUEUE.yaml" = "_INSTRUCTION-QUEUE.yaml"
-            "code/PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"
-            "ORCHESTRATION.yaml" = "ORCHESTRATION.yaml"
-            "docs-tech/KNOWLEDGE-VIEWS.yaml" = "docs-tech\KNOWLEDGE-VIEWS.yaml"
-            "team/product.yaml" = "team\product.yaml"
-            "team/technical.yaml" = "team\technical.yaml"
-            "team/performance.yaml" = "team\performance.yaml"
-            "team/experience.yaml" = "team\experience.yaml"
-            "team/pipeline.yaml" = "team\pipeline.yaml"
-            "code/context-docs/ENGINEERING.yaml" = "context-docs\ENGINEERING.yaml"
-            "code/context-docs/TECHNICAL.yaml" = "context-docs\TECHNICAL.yaml"
-            "code/context-docs/FROZEN_LAYERS.yaml" = "context-docs\FROZEN_LAYERS.yaml"
+            "code/_INSTRUCTION-QUEUE.json" = "_INSTRUCTION-QUEUE.json"
+            "code/PIPELINE-CONFIG.json" = "PIPELINE-CONFIG.json"
+            "WORKFLOW.json" = "WORKFLOW.json"
+            "docs-tech/KNOWLEDGE-VIEWS.json" = "docs-tech\KNOWLEDGE-VIEWS.json"
+            "team/product.json" = "team\product.json"
+            "team/technical.json" = "team\technical.json"
+            "team/performance.json" = "team\performance.json"
+            "team/experience.json" = "team\experience.json"
+            "team/pipeline.json" = "team\pipeline.json"
+            "code/context-docs/ENGINEERING.json" = "context-docs\ENGINEERING.json"
+            "code/context-docs/TECHNICAL.json" = "context-docs\TECHNICAL.json"
+            "code/context-docs/FROZEN_LAYERS.json" = "context-docs\FROZEN_LAYERS.json"
             "logs-.gitkeep" = "logs\.gitkeep"
         }
     } else {
         @{
-            "DOCS.yaml" = "DOCS.yaml"
+            "DOCS.json" = "DOCS.json"
             "STATE.md" = "STATE.md"
             "_PLAN.md" = "_PLAN.md"
             "BACKLOG.md" = "BACKLOG.md"
@@ -192,14 +192,14 @@ if ($CreateProjectFiles) {
             "ISSUES.md" = "ISSUES.md"
             "JOURNAL.md" = "JOURNAL.md"
             "REVIEW.md" = "REVIEW.md"
-            "PIPELINE-CONFIG.yaml" = "PIPELINE-CONFIG.yaml"
-            "ORCHESTRATION.yaml" = "ORCHESTRATION.yaml"
-            "docs-tech/KNOWLEDGE-VIEWS.yaml" = "docs-tech\KNOWLEDGE-VIEWS.yaml"
-            "team/product.yaml" = "team\product.yaml"
-            "team/technical.yaml" = "team\technical.yaml"
-            "team/performance.yaml" = "team\performance.yaml"
-            "team/experience.yaml" = "team\experience.yaml"
-            "team/pipeline.yaml" = "team\pipeline.yaml"
+            "PIPELINE-CONFIG.json" = "PIPELINE-CONFIG.json"
+            "WORKFLOW.json" = "WORKFLOW.json"
+            "docs-tech/KNOWLEDGE-VIEWS.json" = "docs-tech\KNOWLEDGE-VIEWS.json"
+            "team/product.json" = "team\product.json"
+            "team/technical.json" = "team\technical.json"
+            "team/performance.json" = "team\performance.json"
+            "team/experience.json" = "team\experience.json"
+            "team/pipeline.json" = "team\pipeline.json"
         }
     }
 
@@ -231,89 +231,65 @@ if (-not $DryRun) {
     }
     $hasCodePack = $Packs -contains "code"
     $configPath = if ($hasCodePack) {
-        Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
+        Join-Path $InstallRoot "PIPELINE-CONFIG.json"
     } else {
-        Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
+        Join-Path $InstallRoot "PIPELINE-CONFIG.json"
     }
     $shouldWriteConfig = -not (Test-Path -LiteralPath $configPath)
     if (-not $shouldWriteConfig) {
         $existingConfig = Get-Content -Raw -LiteralPath $configPath
-        $shouldWriteConfig = $existingConfig -match "language: TBD"
+        try {
+            $existingConfigJson = $existingConfig | ConvertFrom-Json
+            $shouldWriteConfig = [string]$existingConfigJson.language -eq "TBD"
+        } catch {
+            $shouldWriteConfig = $true
+        }
     }
     if ($shouldWriteConfig) {
-        if ($hasCodePack) {
-            $packLines = ($Packs | ForEach-Object { "  - $_" }) -join [Environment]::NewLine
-            $config = @"
-summary: Imported SocratexPipeline configuration.
-language: $Language
-active_project_packs:
-$packLines
-ai_operating_mode: $AiMode
-communication:
-  profile: standard
-branch_workflow: $BranchMode
-pipeline:
-  version: 0.2.0-alpha
-  update_source: TBD
-  public_bootstrap_url: TBD
-  update_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source "<source>" -Packs code -ReinitializeNew
-  remove_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .
-  reinitialize_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath .
-changelog:
-  enabled: yes
-workflow:
-  branch_mode: $BranchMode
-  branch_files_dir: ignored/ai-socratex
-  branch_state_file: ignored/ai-socratex/<branch>-STATE.md
-  branch_plan_file: ignored/ai-socratex/<branch>-PLAN.md
-  branch_files_language: prompt-language
-project_profile:
-  lifecycle: TBD
-  test_coverage: TBD
-  framework: TBD
-  framework_kind: TBD
-  linter: TBD
-  ci: TBD
-  docs: TBD
-  team_size: TBD
-  velocity: TBD
-  highest_pain: TBD
-  stack: []
-runtime_status:
-  python3:
-    ok: TBD
-    version: TBD
-    install_hint: TBD
-  pwsh:
-    ok: TBD
-    version: TBD
-    install_hint: TBD
-    install_supported: TBD
-    fallback_recommendation: TBD
-  pyyaml:
-    ok: TBD
-    version: TBD
-    install_hint: TBD
-"@
-        } else {
-            $config = @"
-summary: Imported SocratexPipeline configuration.
-language: $Language
-active_project_packs:
-$(($Packs | ForEach-Object { "  - $_" }) -join [Environment]::NewLine)
-ai_operating_mode: $AiMode
-communication:
-  profile: standard
-pipeline:
-  version: 0.2.0-alpha
-  update_source: TBD
-  public_bootstrap_url: TBD
-  update_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source "<source>" -Packs generic -ReinitializeNew
-  remove_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .
-  reinitialize_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath .
-"@
+        $config = [ordered]@{
+            summary = "Imported SocratexPipeline configuration."
+            language = $Language
+            active_project_packs = @($Packs)
+            ai_operating_mode = $AiMode
+            communication = [ordered]@{ profile = "standard" }
+            branch_workflow = $BranchMode
+            pipeline = [ordered]@{
+                version = "0.2.0-alpha"
+                update_source = "TBD"
+                public_bootstrap_url = "TBD"
+                update_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source `"<source>`" -Packs $($Packs[0]) -ReinitializeNew"
+                remove_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath ."
+                reinitialize_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath ."
+            }
         }
-        Set-Content -LiteralPath $configPath -Value $config -NoNewline
+        if ($hasCodePack) {
+            $config["changelog"] = [ordered]@{ enabled = "yes" }
+            $config["workflow"] = [ordered]@{
+                branch_mode = $BranchMode
+                branch_files_dir = "ignored/ai-socratex"
+                branch_state_file = "ignored/ai-socratex/<branch>-STATE.md"
+                branch_plan_file = "ignored/ai-socratex/<branch>-PLAN.md"
+                branch_files_language = "prompt-language"
+            }
+            $config["project_profile"] = [ordered]@{
+                lifecycle = "TBD"
+                test_coverage = "TBD"
+                framework = "TBD"
+                framework_kind = "TBD"
+                linter = "TBD"
+                ci = "TBD"
+                docs = "TBD"
+                team_size = "TBD"
+                velocity = "TBD"
+                highest_pain = "TBD"
+                stack = @()
+            }
+            $config["runtime_status"] = [ordered]@{
+                python3 = [ordered]@{ ok = "TBD"; version = "TBD"; install_hint = "TBD" }
+                pwsh = [ordered]@{ ok = "TBD"; version = "TBD"; install_hint = "TBD"; install_supported = "TBD"; fallback_recommendation = "TBD" }
+            }
+        }
+        [System.IO.File]::WriteAllText($configPath, (($config | ConvertTo-Json -Depth 8) + [Environment]::NewLine), [System.Text.UTF8Encoding]::new($false))
     }
 }
 

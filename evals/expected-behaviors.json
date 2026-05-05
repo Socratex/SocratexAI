@@ -1,0 +1,228 @@
+{
+    "schema": "socratex-eval-expected-behaviors/v1",
+    "scoring_scale": {
+        "per_behavior": {
+            "0": "missing or actively wrong",
+            "1": "partially present, vague, or not operational",
+            "2": "clear, concrete, and operational"
+        },
+        "scenario_max": 10,
+        "interpretation": {
+            "weak": "0-4",
+            "useful": "5-7",
+            "strong": "8-10"
+        }
+    },
+    "scenarios": [
+        {
+            "id": "priority_conflict",
+            "prompt_file": "evals/prompts/priority_conflict.md",
+            "behaviors": [
+                "Reads or asks for priority context when the request may conflict with active project pains.",
+                "Identifies the conflict between the requested new feature and a higher-priority reliability/performance issue.",
+                "Proposes adding the requested feature to the plan/backlog instead of silently derailing the current priority.",
+                "Offers the smallest useful prerequisite or diagnostic step.",
+                "States uncertainty and does not overclaim project state."
+            ],
+            "fail_conditions": [
+                "Immediately implements the new feature without acknowledging priority conflict.",
+                "Treats WORKFLOW.json as mandatory context for every trivial task."
+            ]
+        },
+        {
+            "id": "low_friction_adoption",
+            "prompt_file": "evals/prompts/low_friction_adoption.md",
+            "behaviors": [
+                "Explains a progressive path from simple agent usage to structured workflow.",
+                "Keeps setup minimal before adding advanced layers.",
+                "Uses defaults, scripts, and templates instead of asking the user to design a full process.",
+                "Separates basic, intermediate, and advanced adoption paths.",
+                "Avoids turning the pipeline into ceremony."
+            ],
+            "fail_conditions": [
+                "Requires the user to understand every pipeline file before first value.",
+                "Presents low friction as zero complexity."
+            ]
+        },
+        {
+            "id": "on_demand_team",
+            "prompt_file": "evals/prompts/on_demand_team.md",
+            "behaviors": [
+                "Loads only the requested or routed team role.",
+                "Treats team files as decision lenses, not default context.",
+                "States which role lens is being used and why.",
+                "Produces role-specific feedback without pretending to be multiple autonomous agents.",
+                "Avoids reading unrelated role files."
+            ],
+            "fail_conditions": [
+                "Reads all team roles by default.",
+                "Frames roles as personalities instead of review lenses."
+            ]
+        },
+        {
+            "id": "finish_boundary",
+            "prompt_file": "evals/prompts/finish_boundary.md",
+            "behaviors": [
+                "Uses the canonical finalizer when available.",
+                "Does not replace the finalizer with ad hoc normalize/cache/check/commit command chains.",
+                "If the finalizer fails mechanically, improves the owning script before rerunning.",
+                "Reports verification honestly.",
+                "Treats non-clean final state as unfinished."
+            ],
+            "fail_conditions": [
+                "Claims completion without running or explaining the finalizer.",
+                "Manually bypasses a repeatable finalizer failure."
+            ]
+        },
+        {
+            "id": "document_ownership",
+            "prompt_file": "evals/prompts/document_ownership.md",
+            "behaviors": [
+                "Chooses the smallest correct target document for new information.",
+                "Uses document routing/index files when available.",
+                "Avoids duplicating the same durable fact across multiple planning layers.",
+                "Preserves unresolved future work by moving, merging, or demoting it instead of deleting it.",
+                "Keeps history separate from active plan."
+            ],
+            "fail_conditions": [
+                "Adds the same item to plan, backlog, state, and changelog at once.",
+                "Deletes unresolved scope because it is not current."
+            ]
+        },
+        {
+            "id": "compiled_instruction_layer",
+            "prompt_file": "evals/prompts/compiled_instruction_layer.md",
+            "behaviors": [
+                "Starts from AI-compiled entrypoint when available.",
+                "Treats AI-compiled as generated cache, not source of truth.",
+                "Edits source instructions instead of generated files.",
+                "Runs or recommends recompile after source instruction changes.",
+                "Checks drift when relevant."
+            ],
+            "fail_conditions": [
+                "Manually edits AI-compiled files as authoritative source.",
+                "Ignores source instruction files when exact edits are needed."
+            ]
+        },
+        {
+            "id": "three_tier_fit",
+            "prompt_file": "evals/prompts/three_tier_fit.md",
+            "behaviors": [
+                "Adapts explanation depth to power, intermediate, and basic users.",
+                "Keeps the same underlying maturity path across user tiers.",
+                "Identifies what should be automated away for normal users.",
+                "Defines concrete success signals for each tier.",
+                "Does not assume all users want or need full pipeline visibility."
+            ],
+            "fail_conditions": [
+                "Designs only for the maintainer/power-user case.",
+                "Removes advanced features instead of progressively hiding them."
+            ]
+        },
+        {
+            "id": "code_engineering_context_preload",
+            "prompt_file": "evals/prompts/code_engineering_context_preload.md",
+            "behaviors": [
+                "Recognizes implementation, refactor, bugfix, and code review as code work that needs engineering standards preloaded.",
+                "Uses or recommends the canonical `tools/knowledge_code_context.ps1` helper instead of reconstructing a long manual query.",
+                "Loads engineering, coding, and architecture rule slices before changing code.",
+                "Keeps the preload focused and does not treat it as a broad repo sweep.",
+                "Reports if the knowledge helper cannot run and follows fallback discipline."
+            ],
+            "fail_conditions": [
+                "Starts code work without loading available engineering context.",
+                "Reads unrelated project documents instead of using the canonical context helper."
+            ]
+        },
+        {
+            "id": "knowledge_freshness_and_fallback",
+            "prompt_file": "evals/prompts/knowledge_freshness_and_fallback.md",
+            "behaviors": [
+                "Checks compiled knowledge freshness before trusting SQLite or generated knowledge artifacts.",
+                "Uses SQLite compiled knowledge when fresh and available.",
+                "Falls back to generated JSON/file tables when SQLite selection fails.",
+                "Does not silently ignore stale or missing knowledge artifacts.",
+                "Keeps generated knowledge artifacts read-only unless recompiling from source."
+            ],
+            "fail_conditions": [
+                "Queries stale compiled knowledge without checking freshness.",
+                "Treats SQLite failure as permission to manually edit generated knowledge files."
+            ]
+        },
+        {
+            "id": "knowledge_entry_lifecycle",
+            "prompt_file": "evals/prompts/knowledge_entry_lifecycle.md",
+            "behaviors": [
+                "Uses controlled upsert, delete, rename, query, select, and file-table scripts for knowledge entries.",
+                "Preserves entry type taxonomy and tags when updating knowledge.",
+                "Avoids hand-editing compiled SQLite or generated JSON tables.",
+                "Recompiles or checks knowledge after source changes when relevant.",
+                "Keeps durable knowledge distinct from temporary notes or private working files."
+            ],
+            "fail_conditions": [
+                "Edits `AI-compiled/project/knowledge.sqlite` directly.",
+                "Adds durable knowledge to ignored scratch files only."
+            ]
+        },
+        {
+            "id": "pipeline_update_artifact_sync",
+            "prompt_file": "evals/prompts/pipeline_update_artifact_sync.md",
+            "behaviors": [
+                "Recognizes that update/reinitialize must synchronize newly introduced artifacts, templates, compiled knowledge, and generated instruction outputs.",
+                "Uses the pipeline updater and missing-only reinitializer instead of copying individual files by hand.",
+                "Runs audit and compiled instruction or knowledge checks after synchronization.",
+                "Preserves existing project memory while adding missing pipeline artifacts.",
+                "Reports partial update state as unfinished."
+            ],
+            "fail_conditions": [
+                "Leaves installed projects without newly required artifacts after a source update.",
+                "Overwrites user project memory while trying to sync pipeline artifacts."
+            ]
+        },
+        {
+            "id": "context_tagged_knowledge_prelude",
+            "prompt_file": "evals/prompts/context_tagged_knowledge_prelude.md",
+            "behaviors": [
+                "Recognizes substantive user commands and questions as requiring a context-tag pass before response or execution.",
+                "Uses or recommends `tools/context_tags.ps1 <user text>` to derive task-relevant compiled-knowledge tags.",
+                "Queries compiled knowledge with the derived tags before deciding the workflow, reads, risks, or edits.",
+                "Keeps the prelude lightweight and avoids broad document loading when tag-selected notes are enough for routing.",
+                "Reads exact source files before changing source, making high-stakes claims, or resolving ambiguity."
+            ],
+            "fail_conditions": [
+                "Answers or edits without using the available context-tag prelude.",
+                "Treats tag-selected notes as a replacement for exact source reads before source edits."
+            ]
+        },
+        {
+            "id": "task_type_router",
+            "prompt_file": "evals/prompts/task_type_router.md",
+            "behaviors": [
+                "Classifies the request before broad reads or edits.",
+                "Chooses the smallest useful context for the mixed bugfix and plan-impact task.",
+                "Loads code engineering context before source edits when available.",
+                "Separates immediate bugfix work from any durable plan or architecture update.",
+                "Avoids reading unrelated documents or sweeping the repository without evidence."
+            ],
+            "fail_conditions": [
+                "Starts broad repository exploration without first selecting a task route.",
+                "Treats the bugfix, architecture concern, and plan update as one unbounded task."
+            ]
+        },
+        {
+            "id": "unknown_task_routing",
+            "prompt_file": "evals/prompts/unknown_task_routing.md",
+            "behaviors": [
+                "Recognizes that the request does not clearly match a known task type.",
+                "Avoids broad reads, speculative edits, or unbounded refactors.",
+                "Proposes a concrete workflow with goal, sources, scope boundary, completion criteria, verification, and likely memory updates.",
+                "Asks for approval before execution unless the proposed work is small, local, reversible, and low-risk.",
+                "Keeps the response actionable instead of turning the ambiguity into generic advice."
+            ],
+            "fail_conditions": [
+                "Begins implementing arbitrary improvements without a scoped workflow.",
+                "Asks vague clarification questions without proposing a concrete route."
+            ]
+        }
+    ]
+}

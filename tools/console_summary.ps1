@@ -35,7 +35,7 @@ $lines.Add("")
 $lines.Add("Errors: $($errorMatches.Count)")
 $lines.Add("Warnings: $($warningMatches.Count)")
 
-$startupLines = @($content | Where-Object { $_ -match "Godot Engine|Vulkan " } | Select-Object -Last 6)
+$startupLines = @($content | Where-Object { $_ -match "engine startup|graphics backend " } | Select-Object -Last 6)
 $lines.Add("")
 $lines.Add("## Latest Startup Lines")
 if ($startupLines.Count -eq 0) {

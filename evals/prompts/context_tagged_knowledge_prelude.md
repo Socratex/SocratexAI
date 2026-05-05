@@ -12,8 +12,8 @@ tools/knowledge_select.ps1
 tools/knowledge_file_select.ps1
 AI-compiled/project/knowledge.sqlite
 AI-compiled/project/knowledge-files/
-project/code/WORKFLOW.yaml
-context-docs/ENGINEERING.yaml
+project/code/WORKFLOW.json
+context-docs/ENGINEERING.json
 ```
 
 Evaluate whether the agent derives context tags from the substantive user request, queries the compiled knowledge layer with those tags before answering or editing, keeps the context prelude lightweight, and still reads exact source files before making changes.

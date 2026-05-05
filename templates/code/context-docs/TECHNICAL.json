@@ -1,0 +1,7 @@
+{
+    "summary": "Current technical architecture, ownership boundaries, invariants, and known traps.",
+    "invariants": [],
+    "ownership_contracts": [],
+    "source_of_truth": [],
+    "known_traps": []
+}

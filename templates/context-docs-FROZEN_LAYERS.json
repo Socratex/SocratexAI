@@ -1,0 +1,28 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Frozen Layers\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nWorking layers that should not be changed casually.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Frozen Layers"
+}

@@ -5,9 +5,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import yaml
-
-
 LONG_TEXT_LIMIT = 120
 EXCLUDED_CACHE_PARTS = {
     ".git",
@@ -21,28 +18,12 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
-class DocToolDumper(yaml.SafeDumper):
-    pass
-
-
-def represent_multiline_string(dumper: yaml.Dumper, value: str) -> yaml.ScalarNode:
-    style = "|" if "\n" in value else None
-    return dumper.represent_scalar("tag:yaml.org,2002:str", value, style=style)
-
-
-DocToolDumper.add_representer(str, represent_multiline_string)
-
-
-def load_yaml(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
+def load_document(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def write_value(value: Any, output_json: bool) -> None:
-    if output_json:
-        print(json.dumps(value, ensure_ascii=False, indent=2))
-        return
-    print(yaml.dump(value, Dumper=DocToolDumper, allow_unicode=True, sort_keys=False, width=1000))
+    print(json.dumps(value, ensure_ascii=False, indent=4))
 
 
 def summarize_value(value: Any) -> Any:
@@ -55,7 +36,7 @@ def summarize_value(value: Any) -> Any:
                 summary[key] = [summarize_toc_item(item) for item in child]
             elif key == "index":
                 summary[key] = summarize_index(child)
-            elif key == "items" and isinstance(child, dict):
+            elif key in {"content", "items"} and isinstance(child, dict):
                 summary[key] = {
                     item_key: summarize_item(item_value)
                     for item_key, item_value in child.items()
@@ -127,6 +108,26 @@ def resolve_selector(document: Any, selector: str) -> Any:
     if ref:
         selector = ref
 
+    if isinstance(document, dict):
+        content = document.get("content")
+        if isinstance(content, dict):
+            if selector in content:
+                return content[selector]
+            if selector.startswith("content.") and selector[8:] in content:
+                return content[selector[8:]]
+        docs = document.get("docs")
+        if isinstance(docs, dict):
+            if selector in docs:
+                return docs[selector]
+            if selector.startswith("docs.") and selector[5:] in docs:
+                return docs[selector[5:]]
+        commands = document.get("commands")
+        if isinstance(commands, dict):
+            if selector in commands:
+                return commands[selector]
+            if selector.startswith("commands.") and selector[9:] in commands:
+                return commands[selector[9:]]
+
     current = document
     for part in selector.split("."):
         if isinstance(current, dict):
@@ -152,6 +153,10 @@ def resolve_selector(document: Any, selector: str) -> Any:
 
 def resolve_key_to_ref(document: Any, key: str) -> str:
     if isinstance(document, dict):
+        content = document.get("content")
+        if isinstance(content, dict):
+            if key in content:
+                return f"content.{key}"
         items = document.get("items")
         if isinstance(items, dict) and key in items:
             if isinstance(items[key], dict) and "data" in items[key]:
@@ -170,6 +175,12 @@ def resolve_key_to_ref(document: Any, key: str) -> str:
                         if isinstance(items[item_key], dict) and "data" in items[item_key]:
                             return f"items.{item_key}.data"
                         return f"items.{item_key}"
+        docs = document.get("docs")
+        if isinstance(docs, dict) and key in docs:
+            return f"docs.{key}"
+        commands = document.get("commands")
+        if isinstance(commands, dict) and key in commands:
+            return f"commands.{key}"
     for node in walk_nodes(document):
         if not isinstance(node, dict):
             continue
@@ -191,9 +202,17 @@ def walk_nodes(value: Any):
 
 
 def build_document_cache(path: Path, repo_root: Path) -> dict[str, Any]:
-    document = load_yaml(path)
+    document = load_document(path)
     keys: dict[str, dict[str, Any]] = {}
     collect_keys(document, "", keys)
+    if not keys and isinstance(document, dict):
+        for key in document.keys():
+            keys[str(key)] = {
+                "path": str(key),
+                "title": str(key),
+                "ref": str(key),
+                "status": "",
+            }
     relative_path = path.resolve().relative_to(repo_root.resolve()).as_posix()
     return {
         "path": relative_path,
@@ -210,6 +229,9 @@ def get_document_metadata(document: Any) -> dict[str, Any]:
         return {}
     if isinstance(document.get("document"), dict):
         return document.get("document", {})
+    metadata = document.get("metadata")
+    if isinstance(metadata, dict) and isinstance(metadata.get("document"), dict):
+        return metadata.get("document", {})
     meta = document.get("meta")
     if isinstance(meta, dict) and isinstance(meta.get("document"), dict):
         return meta.get("document", {})
@@ -221,6 +243,10 @@ def get_document_index(document: Any) -> Any:
         return []
     if isinstance(document.get("index"), (dict, list)):
         return document.get("index", [])
+    if isinstance(document.get("content"), dict):
+        return list(document["content"].keys())
+    if isinstance(document.get("docs"), dict):
+        return list(document["docs"].keys())
     if isinstance(document.get("toc"), list):
         return document.get("toc", [])
     return []
@@ -231,6 +257,9 @@ def get_document_routing(document: Any) -> dict[str, Any]:
         return {}
     if isinstance(document.get("routing"), dict):
         return document.get("routing", {})
+    metadata = document.get("metadata")
+    if isinstance(metadata, dict) and isinstance(metadata.get("routing"), dict):
+        return metadata.get("routing", {})
     meta = document.get("meta")
     if isinstance(meta, dict) and isinstance(meta.get("routing"), dict):
         return meta.get("routing", {})
@@ -239,6 +268,35 @@ def get_document_routing(document: Any) -> dict[str, Any]:
 
 def collect_keys(value: Any, path: str, keys: dict[str, dict[str, Any]]) -> None:
     if isinstance(value, dict):
+        content = value.get("content")
+        if isinstance(content, dict):
+            for content_key, content_value in content.items():
+                selector = f"content.{content_key}"
+                title = content_value.get("title", "") if isinstance(content_value, dict) else str(content_key)
+                keys[str(content_key)] = {
+                    "path": selector,
+                    "title": str(title),
+                    "ref": selector,
+                    "status": "",
+                }
+        docs = value.get("docs")
+        if isinstance(docs, dict):
+            for doc_name in docs:
+                keys[str(doc_name)] = {
+                    "path": f"docs.{doc_name}",
+                    "title": str(doc_name),
+                    "ref": f"docs.{doc_name}",
+                    "status": "",
+                }
+        commands = value.get("commands")
+        if isinstance(commands, dict):
+            for command_name in commands:
+                keys[str(command_name)] = {
+                    "path": f"commands.{command_name}",
+                    "title": str(command_name),
+                    "ref": f"commands.{command_name}",
+                    "status": "",
+                }
         items = value.get("items")
         if isinstance(items, dict):
             for item_key, item in items.items():
@@ -305,7 +363,7 @@ def is_excluded_cache_path(path: Path) -> bool:
 
 
 def command_keys(args: argparse.Namespace) -> None:
-    document = load_yaml(Path(args.path))
+    document = load_document(Path(args.path))
     output = {
         "path": str(Path(args.path)),
         "document": get_document_metadata(document),
@@ -318,7 +376,7 @@ def command_keys(args: argparse.Namespace) -> None:
 
 
 def command_read(args: argparse.Namespace) -> None:
-    document = load_yaml(Path(args.path))
+    document = load_document(Path(args.path))
     value = resolve_selector(document, args.selector)
     write_value(value, args.json)
 
@@ -338,7 +396,7 @@ def command_build_cache(args: argparse.Namespace) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="YAML documentation reader/cache helper.")
+    parser = argparse.ArgumentParser(description="Structured JSON documentation reader/cache helper.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     keys_parser = subparsers.add_parser("keys")

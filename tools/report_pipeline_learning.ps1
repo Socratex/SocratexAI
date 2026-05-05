@@ -2,7 +2,7 @@ param(
 	[Parameter(Mandatory = $true)]
 	[string]$ProjectPath,
 	[string]$SourceFeatureListPath = "",
-	[string[]]$ExcludePatterns = @("project_specific", "godot", "gdscript", "runtime_diagnostic"),
+	[string[]]$ExcludePatterns = @("project_specific", "runtime_diagnostic"),
 	[string]$OutputPath = ""
 )
 

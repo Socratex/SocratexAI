@@ -4,11 +4,11 @@ SocratexPipeline is a modular project runtime for long-running AI-assisted work.
 
 It is not a prompt pack. It gives AI agents a durable operating layer: state, plans, registries, diagnostics, quality gates, update rules, and safe directive routing across long projects.
 
-It also installs a reusable project orchestration layer: `ORCHESTRATION.yaml` for owner-written active pain points and priority challenge rules, plus on-demand `team/*.yaml` role lenses for product, technical, performance, experience, and pipeline review.
+It also installs a reusable project workflow layer: `WORKFLOW.json` for owner-written active pain points and priority challenge rules, plus on-demand `team/*.json` role lenses for product, technical, performance, experience, and pipeline review.
 
 For agent runtime, SocratexPipeline keeps a generated `AI-compiled/` layer. Source documents remain human-editable and authoritative; `AI-compiled/` is compact, English, read-optimized context for agents such as Codex.
 
-SocratexPipeline also compiles tagged project knowledge into `AI-compiled/project/knowledge.sqlite`. Agents can query it with `tools/knowledge_select.ps1` by named view, tags, type, source document, or startup flag, while source YAML/Markdown documents remain the only editable source of truth.
+SocratexPipeline also compiles tagged project knowledge into `AI-compiled/project/knowledge.sqlite`. Agents can query it with `tools/knowledge_select.ps1` by named view, tags, type, source document, or startup flag, while source JSON/Markdown documents remain the only editable source of truth.
 
 When SQLite is unavailable, SocratexPipeline writes a file fallback under `AI-compiled/project/knowledge-files/`. It mirrors the database tables as JSON files, except named views are intentionally unavailable; agents query it with `tools/knowledge_file_select.ps1`.
 
@@ -71,7 +71,7 @@ ignored/ai-socratex/
 - `AI-compiled/` contains generated read-optimized instructions for agents.
 - `evals/` contains manual Codex workspace evals, scoring, personas, prompts, and baseline/with-pipeline result files.
 - `initializer/` contains the first-run setup workflow.
-- `templates/` contains source templates copied into initialized projects, including `ORCHESTRATION.yaml` and on-demand `team/` role lenses.
+- `templates/` contains source templates copied into initialized projects, including `WORKFLOW.json` and on-demand `team/` role lenses.
 - `tools/` contains helper scripts.
 - `temp/trash/` receives first-run initializer files after setup.
 
@@ -89,13 +89,13 @@ On first run, the agent should:
 4. Remove unused packs and templates.
 5. Create the project-local files from `templates/`.
 6. Move `initializer/` into `temp/trash/initializer/`.
-7. Create `SocratexAI/DOCS.yaml` as the document role index.
+7. Create `SocratexAI/DOCS.json` as the document role index.
 8. Update the active state file under `SocratexAI/` with the initialized project state.
 9. Switch the current session to root `SOCRATEX.md`.
 
-For code projects, the agent should also read `project/code/COMMANDS.yaml`, `project/code/REGISTRIES.yaml`, `project/code/DDD-ADIV.yaml`, and `core/PROMOTION-RULES.yaml`.
+For code projects, the agent should also read `project/code/COMMANDS.json`, `project/code/REGISTRIES.json`, `project/code/DDD-ADIV.json`, and `core/PROMOTION-RULES.json`.
 
-Code projects can store `project_profile`, `runtime_status`, and `workflow.branch_mode` in `PIPELINE-CONFIG.yaml`.
+Code projects can store `project_profile`, `runtime_status`, and `workflow.branch_mode` in `PIPELINE-CONFIG.json`.
 
 The agent uses `project_profile` to filter known solutions, `ROI-BIAS.md` to rank recommendations, and `SCRIPT-FALLBACK.md` when tools cannot run.
 
@@ -112,9 +112,9 @@ User-facing guides:
 
 Format contract:
 
-- code projects use YAML/JSON for standardized project memory,
+- code projects use JSON for standardized project memory,
 - non-code projects use Markdown for user-facing memory such as state, plan, backlog, decisions, issues, journal, and review,
-- YAML/JSON is used for files managed only by the agent, such as `DOCS.yaml`, config, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries,
+- JSON is used for files managed only by the agent, such as `DOCS.json`, config, queues, caches, indexes, agent-only context docs, diagnostics, and generated summaries,
 - Markdown is also used for forced agent entrypoints, user scratches, prompt drafts, final prose artifacts, public docs, and adapter entrypoints.
 
 ## Pack Model
@@ -137,12 +137,12 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/update_pipeline_from_link.ps1`: public user update from a latest pipeline source.
 - `SocratexAI/tools/reinitialize_pipeline.ps1`: missing-only reinitialization after setup or update.
 - `SocratexAI/tools/remove_pipeline.ps1`: remove the installed pipeline through a bounded remover.
-- `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active gamedev source pipeline.
+- `SocratexAI/tools/upgrade_from_riftbound.ps1`: maintainer upgrade from the active reference source pipeline.
 - `SocratexAI/tools/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 
-Structured YAML tools apply to every project type, including non-code projects, for agent-only structured YAML files. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_bulk_insert`, `doc_item_move`, and `doc_item_migrate` whenever practical.
+Structured JSON tools apply to every project type, including non-code projects, for agent-only structured JSON files. Use `doc_read`, `doc_keys`, `doc_item_insert`, `doc_item_bulk_insert`, `doc_item_move`, and `doc_item_migrate` whenever practical.
 
-`ORCHESTRATION.yaml` is intentionally opt-in context. Agents should read it for planning, priority, roadmap, feature-triage, and broad project-risk decisions, not for every narrow local edit. `team/*.yaml` files are loaded only when requested or routed by orchestration.
+`WORKFLOW.json` is intentionally opt-in context. Agents should read it for planning, priority, roadmap, feature-triage, and broad project-risk decisions, not for every narrow local edit. `team/*.json` files are loaded only when requested or routed by workflow.
 
 After changing source instructions, templates, core docs, project packs, or adapter rules, run:
 
@@ -168,7 +168,7 @@ For direct knowledge-layer work:
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture_godot,performance
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_code_context.ps1 -Views architecture,performance
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -View session_start
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_select.ps1 -Tags engineering,workflow
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge_check.ps1
@@ -184,9 +184,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/check_evals.ps1
 
 Document edit scripts are transactional by default: they should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output. Agents should not compose manual read/edit/normalize/cache/check queues after a successful document edit tool.
 
-When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.yaml`, resolve `pipeline.update_source`, run the updater, reinitialize newly introduced missing artifacts when needed, then run audit and activation check.
+When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.json`, resolve `pipeline.update_source`, run the updater, reinitialize newly introduced missing artifacts when needed, then run audit and activation check.
 
-When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.yaml` and run `SocratexAI/tools/remove_pipeline.ps1`.
+When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/remove_pipeline.ps1`.
 
 ## Code Audit
 
@@ -217,7 +217,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/commit_task.ps1 -Messa
 
 Current version: `0.2.0-alpha`.
 
-See `VERSION` and `QUALITY-GATE.yaml`.
+See `VERSION` and `QUALITY-GATE.json`.
 
 ## Author
 

@@ -1,0 +1,63 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "layout",
+        "session_start",
+        "file_language",
+        "state_and_plan_contract",
+        "branch_end"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "layout",
+                "session_start",
+                "file_language",
+                "state_and_plan_contract",
+                "branch_end"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Branch Mode\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nBranch-scoped mode separates committed project directives from local working memory.\n\nUse it when `PIPELINE-CONFIG.json` contains:\n\n```json\n{\n    \"workflow\": {\n        \"branch_mode\": \"branch_scoped\"\n    }\n}\n```\n"
+        },
+        "layout": {
+            "title": "Layout",
+            "format": "markdown-section",
+            "body": "## Layout\n\nCommitted project directives live under `.aiassistant/`.\n\nLocal branch work lives under `ignored/ai-socratex/` and should be gitignored.\n\nRecommended layout:\n\n```text\n.aiassistant/\n  socratex/AGENTS.md\n  socratex/DOCS.md\n  socratex/PIPELINE-CONFIG.json\n  <project>.md\nignored/ai-socratex/\n  <branch>-STATE.md\n  <branch>-PLAN.md\n  TODO.md\n```\n"
+        },
+        "session_start": {
+            "title": "Session Start",
+            "format": "markdown-section",
+            "body": "## Session Start\n\n1. Detect the current Git branch.\n2. Normalize the branch name for filenames.\n3. Read `ignored/ai-socratex/<branch>-STATE.md` if it exists.\n4. Read `ignored/ai-socratex/<branch>-PLAN.md` if it exists.\n5. Create both files from templates when missing and branch-scoped mode is active.\n\nIf branch detection fails, use `unknown-branch` and report the uncertainty.\n"
+        },
+        "file_language": {
+            "title": "File Language",
+            "format": "markdown-section",
+            "body": "## File Language\n\nFiles under `ignored/ai-socratex/` use the user's prompt language.\n\nThis is intentional because these files are local working memory, not review-facing project directives.\n\nCommitted files under `.aiassistant/` should remain English-only unless the project explicitly chooses another review language.\n"
+        },
+        "state_and_plan_contract": {
+            "title": "State and Plan Contract",
+            "format": "markdown-section",
+            "body": "## State and Plan Contract\n\n`<branch>-STATE.md` stores facts:\n\n- findings,\n- root causes,\n- changes made,\n- verification,\n- current blockers,\n- decisions that may need promotion.\n\n`<branch>-PLAN.md` stores next steps only:\n\n- immediate next action,\n- remaining scoped tasks,\n- checks still needed,\n- open questions.\n\nDo not keep history in the plan.\n\nUpdate branch STATE and PLAN continuously during the branch, not only at the end.\n"
+        },
+        "branch_end": {
+            "title": "Branch End",
+            "format": "markdown-section",
+            "body": "## Branch End\n\nWhen the branch is merged or closed:\n\n- promote durable findings to `context-docs/`,\n- promote durable decisions to `DECISIONS.json`,\n- record shipped outcomes in `CHANGELOG.json` when appropriate and `changelog.enabled` is not `no`,\n- leave local branch files as reference unless the user asks to clean them.\n\nDo not promote every scratch note.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Branch Mode"
+}

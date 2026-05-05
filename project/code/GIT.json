@@ -1,0 +1,56 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "worktree_rules",
+        "branch_rules",
+        "staging_rules",
+        "commit_rules"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "worktree_rules",
+                "branch_rules",
+                "staging_rules",
+                "commit_rules"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Git Safety for Code Projects\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nThis file defines source-control safety rules for programming projects.\n"
+        },
+        "worktree_rules": {
+            "title": "Worktree Rules",
+            "format": "markdown-section",
+            "body": "## Worktree Rules\n\n- Assume the worktree may contain user changes.\n- Do not revert changes you did not make unless explicitly requested.\n- Ignore unrelated dirty files.\n- If user changes touch files you must edit, read them carefully and work with them.\n- If user changes make the task impossible, stop and ask.\n- Never use destructive commands such as `git reset --hard` or checkout-based reverts unless explicitly requested.\n"
+        },
+        "branch_rules": {
+            "title": "Branch Rules",
+            "format": "markdown-section",
+            "body": "## Branch Rules\n\n- Use a project-specific branch prefix when configured.\n- If no prefix is configured, use `work/` or the user's requested convention.\n- Do not create or switch branches when it would hide unresolved local work.\n"
+        },
+        "staging_rules": {
+            "title": "Staging Rules",
+            "format": "markdown-section",
+            "body": "## Staging Rules\n\n- Prefer `tools/done.ps1 -Message \"<message>\"` for task closure.\n- Let `tools/done.ps1` discover changed files from git, run the batch finalizer with quality, stage intentional non-local-artifact changes, verify, commit, and push.\n- Stage only explicit paths when using lower-level manual git commands.\n- Do not stage generated artifacts unless intentionally part of the change.\n- Do not stage unrelated formatting churn.\n- Inspect `git status` before staging.\n- Prefer path-bounded helper scripts over broad `git add .`.\n"
+        },
+        "commit_rules": {
+            "title": "Commit Rules",
+            "format": "markdown-section",
+            "body": "## Commit Rules\n\n- Commit messages should name the behavior or contract changed.\n- Mention skipped verification in the final report.\n- Do not commit when required verification failed unless the user explicitly asks for a checkpoint commit.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Git Safety for Code Projects"
+}

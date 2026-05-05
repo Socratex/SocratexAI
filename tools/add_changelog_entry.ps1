@@ -4,7 +4,7 @@ param(
 	[string]$Feature = "manual_changelog_entry",
 	[string]$Version = "0.2.0-alpha",
 	[string]$Timestamp = "",
-	[string]$Path = "CHANGELOG.yaml"
+	[string]$Path = "CHANGELOG.json"
 )
 
 Set-StrictMode -Version Latest
@@ -36,13 +36,7 @@ function Test-ChangelogDate {
 	)
 }
 
-function Convert-ToYamlSingleQuoted {
-	param([string]$Value)
-
-	return "'" + $Value.Replace("'", "''") + "'"
-}
-
-function Add-YamlChangelogEntry {
+function Add-JsonChangelogEntry {
 	param(
 		[string]$Content,
 		[string]$FullPath,
@@ -53,8 +47,9 @@ function Add-YamlChangelogEntry {
 		[string]$EntryWhy
 	)
 
-	if ($Content -notmatch '(?m)^summary:\s+' -or $Content -notmatch '(?m)^entries:\s*$') {
-		throw "YAML changelog must contain top-level summary and entries fields."
+	$document = $Content | ConvertFrom-Json
+	if (-not $document.PSObject.Properties.Name.Contains("entries")) {
+		throw "JSON changelog must contain top-level entries field."
 	}
 
 	$change = ($EntrySummary -join " ").Trim()
@@ -62,18 +57,17 @@ function Add-YamlChangelogEntry {
 		$change = "$change Why: $($EntryWhy.Trim())"
 	}
 
-	$entryLines = @(
-		("  - version: " + (Convert-ToYamlSingleQuoted -Value $EntryVersion)),
-		("    date: " + $EntryDate.ToString("yyyy-MM-dd")),
-		("    feature: " + (Convert-ToYamlSingleQuoted -Value $EntryFeature)),
-		("    change: " + (Convert-ToYamlSingleQuoted -Value $change))
-	)
-
-	$newline = [Environment]::NewLine
-	$newEntry = [string]::Join($newline, $entryLines)
-	$newContent = $Content.TrimEnd() + $newline + $newEntry + $newline
+	$entries = @($document.entries)
+	$entries += [pscustomobject]@{
+		version = $EntryVersion
+		date = $EntryDate.ToString("yyyy-MM-dd")
+		feature = $EntryFeature
+		change = $change
+	}
+	$document.entries = $entries
+	$newContent = ($document | ConvertTo-Json -Depth 8) + [Environment]::NewLine
 	[System.IO.File]::WriteAllText($FullPath, $newContent, $utf8NoBom)
-	Write-Host "OK: appended YAML changelog entry for $EntryFeature."
+	Write-Host "OK: appended JSON changelog entry for $EntryFeature."
 }
 
 if (-not (Test-ChangelogDate -DateText $Timestamp)) {
@@ -98,8 +92,8 @@ if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
 
 $content = Get-Content -Raw -LiteralPath $fullPath -Encoding UTF8
 
-if ([System.IO.Path]::GetExtension($fullPath) -in @(".yaml", ".yml")) {
-	Add-YamlChangelogEntry -Content $content -FullPath $fullPath -EntryDate $entryDate -EntryFeature $Feature -EntryVersion $Version -EntrySummary $trimmedSummary -EntryWhy $Why
+if ([System.IO.Path]::GetExtension($fullPath) -eq ".json") {
+	Add-JsonChangelogEntry -Content $content -FullPath $fullPath -EntryDate $entryDate -EntryFeature $Feature -EntryVersion $Version -EntrySummary $trimmedSummary -EntryWhy $Why
 	exit 0
 }
 

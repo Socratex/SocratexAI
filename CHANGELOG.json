@@ -1,0 +1,251 @@
+{
+    "summary": "SocratexAI pipeline product changelog.",
+    "entries": [
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-02",
+            "feature": "normalized_compiled_content_hashes",
+            "change": "Changed compiled knowledge and compiled instruction freshness checks to use normalized text-content hashes instead of raw byte hashes. The normalized hash removes UTF-8 BOM, folds CRLF/CR to LF, trims trailing spaces and tabs per line, and ignores excess final blank lines while preserving indentation and interior whitespace. Why: compiled outputs should rebuild on meaningful source changes without false drift from line endings or editor cleanup, and timestamps or fully whitespace-stripped hashes are not safe enough for source freshness."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-02",
+            "feature": "routing_eval_freeze",
+            "change": "Promoted task-type routing and unknown-task workflow routing into the source code-project pack and workflow template, added final eval scenarios for those routing behaviors, and documented an eval freeze with a real-usage failure taxonomy. Why: The pipeline is moving from build-out to daily use, so eval coverage should focus on whole-workflow behavior and future eval additions should come from repeated real failures rather than every new implementation detail."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-02",
+            "feature": "context_tagged_prelude_eval_coverage",
+            "change": "Added eval coverage for the context-tagged knowledge prelude, including a public prompt, expected behaviors, result placeholders, checker registration, README scope update, source feature-list entry, and local baseline-runbook prompt. Why: Prompt-derived context tags are now a distinct pipeline promise and should be measured separately from broad engineering preload and knowledge freshness/fallback behavior."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-02",
+            "feature": "private_working_memory_knowledge_boundary",
+            "change": "Excluded ignored/ private working files from compiled knowledge discovery and added audit coverage for generated knowledge manifest and file fallback tables. Why: local eval runs, pitch notes, scratch plans, and maintainer-private material must not leak into tracked AI-compiled knowledge artifacts used by public pipeline consumers."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-02",
+            "feature": "knowledge_and_engineering_eval_coverage",
+            "change": "Expanded the manual eval framework with scenarios for code engineering context preload, compiled knowledge freshness and fallback, knowledge entry lifecycle, and pipeline update artifact synchronization. Updated eval result placeholders, the eval checker, README scope, source feature list, and local baseline runbook prompts. Why: Recent knowledge-layer and engineering-context features need eval coverage before baseline and with-pipeline comparisons are meaningful."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-02",
+            "feature": "code_task_engineering_standards_preload",
+            "change": "Added code-task engineering standards preload as a source pipeline feature. Code workflow now requires agents to load compiled engineering, coding, and architecture rules before implementation, refactor, bugfix, or code review work, and tools/knowledge_code_context.ps1 provides a canonical wrapper with SQLite check, broad rule selection, optional named views, and JSON-file fallback support. Why: Professional code work should keep project architecture, ownership, readability, diagnostics, verification, and best-practice rules active in context instead of relying on visible chat memory."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-02",
+            "feature": "code_task_engineering_context_loader",
+            "change": "Added tools/knowledge_code_context.ps1 as the canonical source-pipeline helper for loading code-task engineering standards. The helper checks compiled knowledge freshness, returns the engineering/coding/architecture rule slice, supports optional named views, keeps JSON output parseable, and falls back to compiled JSON knowledge files when SQLite select fails. Why: Code-quality preload should be a scriptable workflow primitive, not a long command agents must reconstruct from memory."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-01",
+            "feature": "private_working_memory_cache_boundary",
+            "change": "Excluded ignored/ private working files from generated document cache indexing and added audit coverage so local pitch, planning, scratch, and private strategy files cannot leak into tracked cache artifacts. Why: Public SocratexPipeline users should be able to update from Git without receiving maintainer-private working material."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-01",
+            "feature": "manual_codex_workspace_eval_framework",
+            "change": "Added a manual eval framework for comparing baseline Codex behavior against with-pipeline behavior across priority conflict handling, low-friction adoption, on-demand team lenses, finalizer discipline, document ownership, compiled instruction handling, and three-tier user fit. Added a structural eval checker, README guidance, quality-gate entry, audit coverage, and feature-list tracking. Why: SocratexPipeline needs reusable validation artifacts so maintainers and users can check whether packaged best practices create observable behavior improvements instead of only describing a good workflow."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-01",
+            "feature": "compiled_agent_instruction_layer",
+            "change": "Added generated AI-compiled Codex instructions, a recompile command, a drift check, finalizer integration, audit coverage, README/bootstrap guidance, and feature-list tracking. Why: Human-editable source instructions and agent-optimized runtime instructions need separate layers so Codex can start from compact, English, ordered context without making generated files a second source of truth."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-01",
+            "feature": "priority_workflow_and_team_roles",
+            "change": "Added reusable WORKFLOW.json and on-demand team role templates for product, technical, performance, experience, and pipeline review. Hooked them into initialization, import, reinitialization, DOCS templates, code workflow routing, agent contract, README, public bootstrap, and pipeline_featurelist.json. Why: Long-running Codex workspaces need owner-written priority steering and role-specific review lenses without loading every role as default context."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-29",
+            "feature": "git_batch_finishers",
+            "change": "Added git-derived batch task finalization with finish_task normalization/cache/index refresh, a finish_subtask commit/push wrapper, commit_task compatibility delegation, and LF-stable document cache writes."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "docs_role_index",
+            "change": "Added DOCS.json templates and installation rules so agents use a document role index before reading, creating, renaming, or updating project documents."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "non_code_user_facing_markdown",
+            "change": "Restored Markdown for non-code user-facing state, plan, backlog, decision, issue, journal, review, todo, bug, and changelog templates while keeping agent-only files in JSON."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "non_code_tool_first_json",
+            "change": "Extended tool-first JSON discipline to non-code project packs and shared project memory workflows."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "epistemic_skeptic_profile",
+            "change": "Added an optional truth-first discussion communication profile with skepticism, evidence separation, confidence levels, tables when useful, and validate-criticize-advise ordering."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "non_code_json_and_known_solutions",
+            "change": "Switched standardized non-code project memory to JSON and added explicit known-solutions, borrowed-practices guidance for non-code packs."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "powershell_first_setup",
+            "change": "Added PowerShell-first setup guidance, runtime metadata, and an install helper with unsupported-platform fallback recommendations."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "reinitialization_and_changelog_config",
+            "change": "Added changelog opt-in configuration, missing-only reinitialization, and update flow support for newly introduced initialized artifacts."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "json_agent_docs",
+            "change": "Migrated durable agent-facing pipeline documents from Markdown to JSON while keeping public docs, adapter entrypoints, and scratch templates in Markdown."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "task_work_tracking",
+            "change": "Added broad-task micro-task tracking and structured JSON document movement discipline."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "removal_protocol",
+            "change": "Added a bounded remover script and removal protocol so agents uninstall SocratexAI through tooling instead of manual deletion."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "update_protocol",
+            "change": "Added an explicit pipeline update protocol so agents resolve update source, run the correct updater, audit, and reactivate the installed pipeline."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "activation_check",
+            "change": "Added first-prompt activation verification to confirm installed rules, communication format, emoji rules, and workflow-specific rules are loaded."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "post_setup_activation",
+            "change": "Added explicit activation handoff so agents switch to installed SOCRATEX.md after setup, import, migration, or update."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "branch_scoped_workflow",
+            "change": "Added branch-scoped mode with committed directives and local prompt-language branch memory under ignored/ai-socratex."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "project_profile",
+            "change": "Added Project Profile Interview and profile-aware known-solutions filtering."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "roi_bias",
+            "change": "Added ROI Bias and ROI Picks for review, planning, finish, and recommendation workflows."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-28",
+            "feature": "script_fallback",
+            "change": "Added script fallback discipline and runtime status detection."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "pipeline_featurelist_manifest",
+            "change": "Added root pipeline_featurelist.json to track source pipeline features and compare them against Riftbound Vanguard. Updated changelog helper to support CHANGELOG.json entries instead of assuming Markdown changelog format. Why: Source pipeline upgrades need a machine-readable feature manifest and a working changelog writer for JSON changelog files."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "generic_done_and_doctor_pipeline",
+            "change": "Added generic tools/done.ps1, tools/doctor.ps1, UTF-8 write helpers, and check_utf8_writes.ps1 to the source pipeline. Updated code workflow, Git rules, command docs, pack instructions, and agent contract so Git-backed code work closes through tools/done.ps1 and repeatable finalizer failures are fixed in tooling. Updated pipeline_featurelist.json so reusable features are source-owned while project-specific helpers remain outside the reusable source pipeline. Why: Reusable pipeline improvements should live in SocratexPipeline, while only project/domain-specific domain-specific automation should remain in its owning project."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "compact_pipeline_featurelist",
+            "change": "Simplified pipeline_featurelist.json to a source-only canonical feature-id list with no project-instance references or redundant descriptions. Why: SocratexPipeline is the source pipeline and should not know about Riftbound Vanguard or any specific instance that consumes it."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "semantic_pipeline_feature_ids",
+            "change": "Expanded source pipeline_featurelist.json with semantic capability IDs for future-first steering, DDD-ADIV, borrowed-before-bespoke, script-first execution, automation repair before manual recovery, and evidence-driven debugging. Why: The source manifest should define canonical pipeline behavior, not only canonical tools."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "pipeline_featurelist_sync_and_learning",
+            "change": "Added sync_pipeline_featurelist.ps1 to generate installed project pipeline_featurelist.json files with same/missing/extra comparison against the installed source manifest. Added learn_pipeline_features.ps1 so the source pipeline can inspect feature IDs from any project and selectively add reusable non-project-specific features to the canonical source manifest. Hooked pipeline featurelist sync into initialization, import, update, and reinitialization flows so new and refreshed projects get instance-style comparison manifests automatically. Updated update protocol and agent contract so SocratexPipeline learns reusable features from instances first, then propagates them through future updates. Why: SocratexPipeline should learn reusable pipeline behavior from any project instance and then teach other projects through the canonical source feature list and sync flow."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "github_issue_learning_inbox",
+            "change": "Added structured pipeline learning reports for project feature intake. Added GitHub Issue publisher that creates or updates one SocratexPipeline Learning Inbox issue and skips duplicate reports by hash. Updated update protocol, agent contract, audit coverage, source feature list, and recommendation docs for GitHub-Issue-based learning intake. Why: Cross-project pipeline learning needs a durable network inbox that agents can read later without spamming separate notifications."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "prefilled_github_issue_learning_intake",
+            "change": "Replaced token-based GitHub Issue publishing with a no-token prefilled GitHub Issue URL workflow. Added open_pipeline_learning_issue.ps1 as the only supported public network intake path for pipeline improvement reports. Marked local learning/inbox JSON reports as ignored working artifacts and updated protocol, recommendation, audit, and source feature IDs. Why: Public pipeline improvement intake should not require embedded write credentials or a hosted endpoint."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "self_describing_learning_issues",
+            "change": "Expanded prefilled GitHub learning issues with self-contained instructions. Added issue fields for what AI learned, changed scripts or files, reporter notes, tool behavior, and maintainer promotion steps. Updated source feature list, update protocol, and recommendation docs for self-describing learning intake. Why: Learning issues should be understandable without attachments and should tell maintainers exactly what to review and how to promote reusable features."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "author_metadata",
+            "change": "Added SocratexDevSolutions Michał Jasiński as the public SocratexPipeline author in README and LICENSE metadata. Why: Public pipeline distribution should identify the author/owner clearly."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "ignored_directory_gitignore_contract",
+            "change": "Added /ignored/ to source .gitignore and audit coverage so ignored pipeline working files remain outside version control. Why: The pipeline contract is that ignored/ is local working memory, not versioned project state."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-04-30",
+            "feature": "pipeline_featurelist_update_guard",
+            "change": "Added a pipeline feature-list guard that runs only for pipeline-owned changes. Hooked the guard into check_task.ps1 and finish_task.ps1 so changes under tools/core/project/templates/adapters require pipeline_featurelist.json updates. Kept ordinary project-task paths out of the guard so normal work does not need feature-list edits. Why: Pipeline improvements should update the feature manifest, while ordinary project work should not be burdened by source-pipeline bookkeeping."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-02",
+            "feature": "context_tagged_knowledge_prelude",
+            "change": "Added tools/context_tags.ps1 and a workflow rule requiring substantive commands and questions to derive prompt tags, query compiled knowledge notes, and load relevant context before answer or execution. Why: Compiled knowledge should actively route ordinary agent work instead of only serving broad startup or manual tag queries."
+        }
+    ]
+}

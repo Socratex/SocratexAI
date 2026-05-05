@@ -180,9 +180,9 @@ Committed SocratexAI project directives live here.
 Local branch working memory lives under `ignored/ai-socratex/` when branch-scoped mode is active.
 
 "@ -NoNewline
-    $configPath = Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"
+    $configPath = Join-Path $InstallRoot "PIPELINE-CONFIG.json"
     if (Test-Path -LiteralPath $configPath) {
-        Copy-Item -LiteralPath $configPath -Destination (Join-Path $assistantRoot "PIPELINE-CONFIG.yaml") -Force
+        Copy-Item -LiteralPath $configPath -Destination (Join-Path $assistantRoot "PIPELINE-CONFIG.json") -Force
     }
     $projectFileName = ($ProjectName -replace '[\\/:*?"<>|]', '-').Trim()
     if (-not $projectFileName) {
@@ -206,48 +206,48 @@ if ($CreateFiles) {
     }
 
     if ($keep.ContainsKey("code")) {
-        Copy-CodeTemplateFile -TemplateName "DOCS.yaml" -DestinationRelativePath "DOCS.yaml"
-        Copy-CodeTemplateFile -TemplateName "STATE.yaml" -DestinationRelativePath "STATE.yaml"
-        Copy-CodeTemplateFile -TemplateName "_PLAN.yaml" -DestinationRelativePath "_PLAN.yaml"
-        Copy-CodeTemplateFile -TemplateName "DECISIONS.yaml" -DestinationRelativePath "DECISIONS.yaml"
-        Copy-CodeTemplateFile -TemplateName "PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
+        Copy-CodeTemplateFile -TemplateName "DOCS.json" -DestinationRelativePath "DOCS.json"
+        Copy-CodeTemplateFile -TemplateName "STATE.json" -DestinationRelativePath "STATE.json"
+        Copy-CodeTemplateFile -TemplateName "_PLAN.json" -DestinationRelativePath "_PLAN.json"
+        Copy-CodeTemplateFile -TemplateName "DECISIONS.json" -DestinationRelativePath "DECISIONS.json"
+        Copy-CodeTemplateFile -TemplateName "PIPELINE-CONFIG.json" -DestinationRelativePath "PIPELINE-CONFIG.json"
     } else {
-        Copy-TemplateFile -TemplateName "DOCS.yaml" -DestinationRelativePath "DOCS.yaml"
+        Copy-TemplateFile -TemplateName "DOCS.json" -DestinationRelativePath "DOCS.json"
         Copy-TemplateFile -TemplateName "STATE.md" -DestinationRelativePath "STATE.md"
         Copy-TemplateFile -TemplateName "_PLAN.md" -DestinationRelativePath "_PLAN.md"
         Copy-TemplateFile -TemplateName "DECISIONS.md" -DestinationRelativePath "DECISIONS.md"
         Copy-TemplateFile -TemplateName "JOURNAL.md" -DestinationRelativePath "JOURNAL.md"
         Copy-TemplateFile -TemplateName "REVIEW.md" -DestinationRelativePath "REVIEW.md"
-        Copy-TemplateFile -TemplateName "PIPELINE-CONFIG.yaml" -DestinationRelativePath "PIPELINE-CONFIG.yaml"
+        Copy-TemplateFile -TemplateName "PIPELINE-CONFIG.json" -DestinationRelativePath "PIPELINE-CONFIG.json"
     }
 
-    Copy-TemplateFile -TemplateName "ORCHESTRATION.yaml" -DestinationRelativePath "ORCHESTRATION.yaml"
-    Copy-TemplateFile -TemplateName "team\product.yaml" -DestinationRelativePath "team\product.yaml"
-    Copy-TemplateFile -TemplateName "team\technical.yaml" -DestinationRelativePath "team\technical.yaml"
-    Copy-TemplateFile -TemplateName "team\performance.yaml" -DestinationRelativePath "team\performance.yaml"
-    Copy-TemplateFile -TemplateName "team\experience.yaml" -DestinationRelativePath "team\experience.yaml"
-    Copy-TemplateFile -TemplateName "team\pipeline.yaml" -DestinationRelativePath "team\pipeline.yaml"
-    Copy-TemplateFile -TemplateName "docs-tech\KNOWLEDGE-VIEWS.yaml" -DestinationRelativePath "docs-tech\KNOWLEDGE-VIEWS.yaml"
+    Copy-TemplateFile -TemplateName "WORKFLOW.json" -DestinationRelativePath "WORKFLOW.json"
+    Copy-TemplateFile -TemplateName "team\product.json" -DestinationRelativePath "team\product.json"
+    Copy-TemplateFile -TemplateName "team\technical.json" -DestinationRelativePath "team\technical.json"
+    Copy-TemplateFile -TemplateName "team\performance.json" -DestinationRelativePath "team\performance.json"
+    Copy-TemplateFile -TemplateName "team\experience.json" -DestinationRelativePath "team\experience.json"
+    Copy-TemplateFile -TemplateName "team\pipeline.json" -DestinationRelativePath "team\pipeline.json"
+    Copy-TemplateFile -TemplateName "docs-tech\KNOWLEDGE-VIEWS.json" -DestinationRelativePath "docs-tech\KNOWLEDGE-VIEWS.json"
 
     if ($keep.ContainsKey("code") -and $AiMode -ne "Lite") {
         Copy-TemplateFile -TemplateName "_PROMPTS.md" -DestinationRelativePath "_PROMPTS.md"
-        Copy-CodeTemplateFile -TemplateName "_PROMPT-QUEUE.yaml" -DestinationRelativePath "_PROMPT-QUEUE.yaml"
+        Copy-CodeTemplateFile -TemplateName "_PROMPT-QUEUE.json" -DestinationRelativePath "_PROMPT-QUEUE.json"
         Copy-TemplateFile -TemplateName "_INSTRUCTIONS.md" -DestinationRelativePath "_INSTRUCTIONS.md"
-        Copy-CodeTemplateFile -TemplateName "_INSTRUCTION-QUEUE.yaml" -DestinationRelativePath "_INSTRUCTION-QUEUE.yaml"
-        Copy-CodeTemplateFile -TemplateName "TODO.yaml" -DestinationRelativePath "TODO.yaml"
-        Copy-CodeTemplateFile -TemplateName "BUGS.yaml" -DestinationRelativePath "BUGS.yaml"
-        Copy-CodeTemplateFile -TemplateName "BUGS-SOLVED.yaml" -DestinationRelativePath "BUGS-SOLVED.yaml"
+        Copy-CodeTemplateFile -TemplateName "_INSTRUCTION-QUEUE.json" -DestinationRelativePath "_INSTRUCTION-QUEUE.json"
+        Copy-CodeTemplateFile -TemplateName "TODO.json" -DestinationRelativePath "TODO.json"
+        Copy-CodeTemplateFile -TemplateName "BUGS.json" -DestinationRelativePath "BUGS.json"
+        Copy-CodeTemplateFile -TemplateName "BUGS-SOLVED.json" -DestinationRelativePath "BUGS-SOLVED.json"
         if ($UseChangelog -ne "no") {
-            Copy-CodeTemplateFile -TemplateName "CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
+            Copy-CodeTemplateFile -TemplateName "CHANGELOG.json" -DestinationRelativePath "CHANGELOG.json"
         }
-        Copy-CodeTemplateFile -TemplateName "context-docs\ENGINEERING.yaml" -DestinationRelativePath "context-docs\ENGINEERING.yaml"
-        Copy-CodeTemplateFile -TemplateName "context-docs\TECHNICAL.yaml" -DestinationRelativePath "context-docs\TECHNICAL.yaml"
-        Copy-CodeTemplateFile -TemplateName "context-docs\FROZEN_LAYERS.yaml" -DestinationRelativePath "context-docs\FROZEN_LAYERS.yaml"
+        Copy-CodeTemplateFile -TemplateName "context-docs\ENGINEERING.json" -DestinationRelativePath "context-docs\ENGINEERING.json"
+        Copy-CodeTemplateFile -TemplateName "context-docs\TECHNICAL.json" -DestinationRelativePath "context-docs\TECHNICAL.json"
+        Copy-CodeTemplateFile -TemplateName "context-docs\FROZEN_LAYERS.json" -DestinationRelativePath "context-docs\FROZEN_LAYERS.json"
         Copy-TemplateFile -TemplateName "logs-.gitkeep" -DestinationRelativePath "logs\.gitkeep"
     } elseif ($keep.ContainsKey("code")) {
-        Copy-CodeTemplateFile -TemplateName "TODO.yaml" -DestinationRelativePath "TODO.yaml"
+        Copy-CodeTemplateFile -TemplateName "TODO.json" -DestinationRelativePath "TODO.json"
         if ($UseChangelog -ne "no") {
-            Copy-CodeTemplateFile -TemplateName "CHANGELOG.yaml" -DestinationRelativePath "CHANGELOG.yaml"
+            Copy-CodeTemplateFile -TemplateName "CHANGELOG.json" -DestinationRelativePath "CHANGELOG.json"
         }
     }
 
@@ -256,89 +256,70 @@ if ($CreateFiles) {
         Copy-TemplateFile -TemplateName "ISSUES.md" -DestinationRelativePath "ISSUES.md"
     }
 
-    if (-not $DryRun -and (Test-Path -LiteralPath (Join-Path $InstallRoot "PIPELINE-CONFIG.yaml"))) {
-        $packLines = ($KeepPacks | ForEach-Object { "  - $_" }) -join [Environment]::NewLine
-        $stackLines = if ($StackTags.Count -gt 0) {
-            ($StackTags | ForEach-Object { "    - $_" }) -join [Environment]::NewLine
-        } else {
-            "    []"
+    if (-not $DryRun -and (Test-Path -LiteralPath (Join-Path $InstallRoot "PIPELINE-CONFIG.json"))) {
+        $runtimeStatus = [ordered]@{
+            python3 = [ordered]@{ ok = "TBD"; version = "TBD"; install_hint = "TBD" }
+            pwsh = [ordered]@{ ok = "TBD"; version = "TBD"; install_hint = "TBD"; install_supported = "TBD"; fallback_recommendation = "TBD" }
         }
-        $runtimeStatusYaml = @"
-runtime_status:
-  python3:
-    ok: TBD
-    version: TBD
-    install_hint: TBD
-  pwsh:
-    ok: TBD
-    version: TBD
-    install_hint: TBD
-    install_supported: TBD
-    fallback_recommendation: TBD
-  pyyaml:
-    ok: TBD
-    version: TBD
-    install_hint: TBD
-"@
         $python = Get-Command python -ErrorAction SilentlyContinue
         if ($python) {
             try {
-                $runtimeStatusYaml = & python (Join-Path $PSScriptRoot "check_runtime.py") --root-key runtime_status
-                $runtimeStatusYaml = [string]::Join([Environment]::NewLine, $runtimeStatusYaml)
+                $runtimeJson = [string]::Join([Environment]::NewLine, (& python (Join-Path $PSScriptRoot "check_runtime.py") --root-key runtime_status))
+                $runtimePayload = $runtimeJson | ConvertFrom-Json
+                $runtimeStatus = $runtimePayload.runtime_status
             } catch {
-                $runtimeStatusYaml = $runtimeStatusYaml + [Environment]::NewLine + "  check_error: `"runtime check failed`""
+                $runtimeStatus["check_error"] = "runtime check failed"
             }
         }
-        $configYaml = @"
-summary: Initialized project configuration for SocratexPipeline.
-language: $Language
-active_project_packs:
-$packLines
-ai_operating_mode: $AiMode
-git: $UseGit
-ai_may_commit: $AiMayCommit
-ai_may_push: $AiMayPush
-branch_workflow: $BranchMode
-external_changes_possible: $ExternalChangesPossible
-force_ddd_adiv: $ForceDddAdiv
-import_pipeline_package: $ImportPipelinePackage
-package_manager_detection: $PackageManagerDetection
-directive_mode: $DirectiveMode
-first_target: $FirstTarget
-first_session_success_criteria: $FirstSessionSuccess
-communication:
-  profile: $CommunicationProfile
-changelog:
-  enabled: $UseChangelog
-pipeline:
-  version: 0.2.0-alpha
-  update_source: TBD
-  public_bootstrap_url: TBD
-  update_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source "<source>" -Packs code -ReinitializeNew
-  remove_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath .
-  reinitialize_command: powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath .
-workflow:
-  branch_mode: $BranchMode
-  branch_files_dir: ignored/ai-socratex
-  branch_state_file: ignored/ai-socratex/<branch>-STATE.md
-  branch_plan_file: ignored/ai-socratex/<branch>-PLAN.md
-  branch_files_language: $BranchFilesLanguage
-project_profile:
-  lifecycle: $ProjectLifecycle
-  test_coverage: $TestCoverage
-  framework: $Framework
-  framework_kind: $FrameworkKind
-  linter: $Linter
-  ci: $Ci
-  docs: $Docs
-  team_size: $TeamSize
-  velocity: $Velocity
-  highest_pain: "$HighestPain"
-  stack:
-$stackLines
-$runtimeStatusYaml
-"@
-        Set-Content -LiteralPath (Join-Path $InstallRoot "PIPELINE-CONFIG.yaml") -Value $configYaml -NoNewline
+        $config = [ordered]@{
+            summary = "Initialized project configuration for SocratexPipeline."
+            language = $Language
+            active_project_packs = @($KeepPacks)
+            ai_operating_mode = $AiMode
+            git = $UseGit
+            ai_may_commit = $AiMayCommit
+            ai_may_push = $AiMayPush
+            branch_workflow = $BranchMode
+            external_changes_possible = $ExternalChangesPossible
+            force_ddd_adiv = $ForceDddAdiv
+            import_pipeline_package = $ImportPipelinePackage
+            package_manager_detection = $PackageManagerDetection
+            directive_mode = $DirectiveMode
+            first_target = $FirstTarget
+            first_session_success_criteria = $FirstSessionSuccess
+            communication = [ordered]@{ profile = $CommunicationProfile }
+            changelog = [ordered]@{ enabled = $UseChangelog }
+            pipeline = [ordered]@{
+                version = "0.2.0-alpha"
+                update_source = "TBD"
+                public_bootstrap_url = "TBD"
+                update_command = 'powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/update_pipeline_from_link.ps1 -Source "<source>" -Packs code -ReinitializeNew'
+                remove_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/remove_pipeline.ps1 -TargetPath ."
+                reinitialize_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/reinitialize_pipeline.ps1 -TargetPath ."
+            }
+            workflow = [ordered]@{
+                branch_mode = $BranchMode
+                branch_files_dir = "ignored/ai-socratex"
+                branch_state_file = "ignored/ai-socratex/<branch>-STATE.md"
+                branch_plan_file = "ignored/ai-socratex/<branch>-PLAN.md"
+                branch_files_language = $BranchFilesLanguage
+            }
+            project_profile = [ordered]@{
+                lifecycle = $ProjectLifecycle
+                test_coverage = $TestCoverage
+                framework = $Framework
+                framework_kind = $FrameworkKind
+                linter = $Linter
+                ci = $Ci
+                docs = $Docs
+                team_size = $TeamSize
+                velocity = $Velocity
+                highest_pain = $HighestPain
+                stack = @($StackTags)
+            }
+            runtime_status = $runtimeStatus
+        }
+        [System.IO.File]::WriteAllText((Join-Path $InstallRoot "PIPELINE-CONFIG.json"), (($config | ConvertTo-Json -Depth 8) + [Environment]::NewLine), [System.Text.UTF8Encoding]::new($false))
     }
 
     if (-not $DryRun -and (Test-Path -LiteralPath (Join-Path $Root "pipeline_featurelist.json"))) {

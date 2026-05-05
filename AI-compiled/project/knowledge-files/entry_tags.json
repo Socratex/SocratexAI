@@ -1,196 +1,196 @@
 [
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "tag": "architecture"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "tag": "coding"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "tag": "diagnostics"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "tag": "engineering"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "tag": "compiled-context"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "tag": "docs-workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "tag": "engineering"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "tag": "knowledge"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "tag": "workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "tag": "docs-workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "tag": "engineering"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "tag": "verification"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "tag": "workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_hash_gate",
     "tag": "docs-workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_hash_gate",
     "tag": "engineering"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_hash_gate",
     "tag": "verification"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
     "tag": "docs-workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
     "tag": "engineering"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
     "tag": "verification"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
     "tag": "workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_views",
     "tag": "docs-workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_views",
     "tag": "engineering"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_views",
     "tag": "workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
-    "entry_name": "engineering.workflow.load_standards_before_code",
-    "tag": "aaa-gamedev"
-  },
-  {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "architecture"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "best-practices"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "borrowed-before-bespoke"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "coding"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "ddd-adiv"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "docs-workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "engineering"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "future-first"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "tag": "production-grade"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
     "tag": "workflow"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "tag": "compiled-context"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "tag": "engineering"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "tag": "hashing"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "tag": "knowledge"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "tag": "tooling"
   },
   {
-    "document_path": "context-docs/ENGINEERING.yaml",
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
     "tag": "workflow"
   }

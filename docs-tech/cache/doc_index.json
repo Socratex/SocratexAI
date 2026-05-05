@@ -2,7 +2,132 @@
   "schema_version": 1,
   "documents": [
     {
-      "path": "AI-compiled/INDEX.yaml",
+      "path": "AI-compiled/checksum.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "generated_at",
+        "source_hashes",
+        "output_hashes"
+      ],
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "generated_at": {
+          "path": "generated_at",
+          "title": "generated_at",
+          "ref": "generated_at",
+          "status": ""
+        },
+        "source_hashes": {
+          "path": "source_hashes",
+          "title": "source_hashes",
+          "ref": "source_hashes",
+          "status": ""
+        },
+        "output_hashes": {
+          "path": "output_hashes",
+          "title": "output_hashes",
+          "ref": "output_hashes",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "AI-compiled/compile-report.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "generated_at",
+        "role",
+        "source_of_truth",
+        "do_not_edit_manually",
+        "targets",
+        "packs",
+        "files",
+        "recompile_command",
+        "check_command",
+        "sources"
+      ],
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "generated_at": {
+          "path": "generated_at",
+          "title": "generated_at",
+          "ref": "generated_at",
+          "status": ""
+        },
+        "role": {
+          "path": "role",
+          "title": "role",
+          "ref": "role",
+          "status": ""
+        },
+        "source_of_truth": {
+          "path": "source_of_truth",
+          "title": "source_of_truth",
+          "ref": "source_of_truth",
+          "status": ""
+        },
+        "do_not_edit_manually": {
+          "path": "do_not_edit_manually",
+          "title": "do_not_edit_manually",
+          "ref": "do_not_edit_manually",
+          "status": ""
+        },
+        "targets": {
+          "path": "targets",
+          "title": "targets",
+          "ref": "targets",
+          "status": ""
+        },
+        "packs": {
+          "path": "packs",
+          "title": "packs",
+          "ref": "packs",
+          "status": ""
+        },
+        "files": {
+          "path": "files",
+          "title": "files",
+          "ref": "files",
+          "status": ""
+        },
+        "recompile_command": {
+          "path": "recompile_command",
+          "title": "recompile_command",
+          "ref": "recompile_command",
+          "status": ""
+        },
+        "check_command": {
+          "path": "check_command",
+          "title": "check_command",
+          "ref": "check_command",
+          "status": ""
+        },
+        "sources": {
+          "path": "sources",
+          "title": "sources",
+          "ref": "sources",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "AI-compiled/INDEX.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -16,10 +141,269 @@
         "recompile_command",
         "check_command"
       ],
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "role": {
+          "path": "role",
+          "title": "role",
+          "ref": "role",
+          "status": ""
+        },
+        "generated_at": {
+          "path": "generated_at",
+          "title": "generated_at",
+          "ref": "generated_at",
+          "status": ""
+        },
+        "do_not_edit_manually": {
+          "path": "do_not_edit_manually",
+          "title": "do_not_edit_manually",
+          "ref": "do_not_edit_manually",
+          "status": ""
+        },
+        "targets": {
+          "path": "targets",
+          "title": "targets",
+          "ref": "targets",
+          "status": ""
+        },
+        "entrypoints": {
+          "path": "entrypoints",
+          "title": "entrypoints",
+          "ref": "entrypoints",
+          "status": ""
+        },
+        "recompile_command": {
+          "path": "recompile_command",
+          "title": "recompile_command",
+          "ref": "recompile_command",
+          "status": ""
+        },
+        "check_command": {
+          "path": "check_command",
+          "title": "check_command",
+          "ref": "check_command",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "AI-compiled/project/knowledge-files/documents.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [],
       "keys": {}
     },
     {
-      "path": "CHANGELOG.yaml",
+      "path": "AI-compiled/project/knowledge-files/entries.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [],
+      "keys": {}
+    },
+    {
+      "path": "AI-compiled/project/knowledge-files/entry_sources.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [],
+      "keys": {}
+    },
+    {
+      "path": "AI-compiled/project/knowledge-files/entry_tags.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [],
+      "keys": {}
+    },
+    {
+      "path": "AI-compiled/project/knowledge-files/manifest.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "compiler_version",
+        "documents",
+        "entries",
+        "file_dir",
+        "generated_at",
+        "schema",
+        "tables",
+        "tags"
+      ],
+      "keys": {
+        "compiler_version": {
+          "path": "compiler_version",
+          "title": "compiler_version",
+          "ref": "compiler_version",
+          "status": ""
+        },
+        "documents": {
+          "path": "documents",
+          "title": "documents",
+          "ref": "documents",
+          "status": ""
+        },
+        "entries": {
+          "path": "entries",
+          "title": "entries",
+          "ref": "entries",
+          "status": ""
+        },
+        "file_dir": {
+          "path": "file_dir",
+          "title": "file_dir",
+          "ref": "file_dir",
+          "status": ""
+        },
+        "generated_at": {
+          "path": "generated_at",
+          "title": "generated_at",
+          "ref": "generated_at",
+          "status": ""
+        },
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "tables": {
+          "path": "tables",
+          "title": "tables",
+          "ref": "tables",
+          "status": ""
+        },
+        "tags": {
+          "path": "tags",
+          "title": "tags",
+          "ref": "tags",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "AI-compiled/project/knowledge-files/metadata.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "compiled_at",
+        "compiler_version",
+        "schema",
+        "signature"
+      ],
+      "keys": {
+        "compiled_at": {
+          "path": "compiled_at",
+          "title": "compiled_at",
+          "ref": "compiled_at",
+          "status": ""
+        },
+        "compiler_version": {
+          "path": "compiler_version",
+          "title": "compiler_version",
+          "ref": "compiler_version",
+          "status": ""
+        },
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "signature": {
+          "path": "signature",
+          "title": "signature",
+          "ref": "signature",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "AI-compiled/project/knowledge-files/tags.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [],
+      "keys": {}
+    },
+    {
+      "path": "AI-compiled/project/knowledge-manifest.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "compiler_version",
+        "database_path",
+        "documents",
+        "entries",
+        "generated_at",
+        "schema",
+        "tags",
+        "views"
+      ],
+      "keys": {
+        "compiler_version": {
+          "path": "compiler_version",
+          "title": "compiler_version",
+          "ref": "compiler_version",
+          "status": ""
+        },
+        "database_path": {
+          "path": "database_path",
+          "title": "database_path",
+          "ref": "database_path",
+          "status": ""
+        },
+        "documents": {
+          "path": "documents",
+          "title": "documents",
+          "ref": "documents",
+          "status": ""
+        },
+        "entries": {
+          "path": "entries",
+          "title": "entries",
+          "ref": "entries",
+          "status": ""
+        },
+        "generated_at": {
+          "path": "generated_at",
+          "title": "generated_at",
+          "ref": "generated_at",
+          "status": ""
+        },
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "tags": {
+          "path": "tags",
+          "title": "tags",
+          "ref": "tags",
+          "status": ""
+        },
+        "views": {
+          "path": "views",
+          "title": "views",
+          "ref": "views",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "CHANGELOG.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -27,10 +411,132 @@
         "summary",
         "entries"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "entries": {
+          "path": "entries",
+          "title": "entries",
+          "ref": "entries",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "context-docs/ENGINEERING.yaml",
+      "path": "COMMANDS.json",
+      "document": {
+        "title": "Source Pipeline Commands",
+        "type": "command_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "CONTEXT",
+        "CONTINUE",
+        "PLAN",
+        "BUG",
+        "REVIEW",
+        "AUDIT",
+        "FINISH",
+        "COMMIT",
+        "LOG",
+        "DIAGNOSTICS",
+        "PROMPT",
+        "INSTRUCTIONS",
+        "COMPILE"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "CONTEXT": {
+          "path": "content.CONTEXT",
+          "title": "",
+          "ref": "content.CONTEXT",
+          "status": ""
+        },
+        "CONTINUE": {
+          "path": "content.CONTINUE",
+          "title": "",
+          "ref": "content.CONTINUE",
+          "status": ""
+        },
+        "PLAN": {
+          "path": "content.PLAN",
+          "title": "",
+          "ref": "content.PLAN",
+          "status": ""
+        },
+        "BUG": {
+          "path": "content.BUG",
+          "title": "",
+          "ref": "content.BUG",
+          "status": ""
+        },
+        "REVIEW": {
+          "path": "content.REVIEW",
+          "title": "",
+          "ref": "content.REVIEW",
+          "status": ""
+        },
+        "AUDIT": {
+          "path": "content.AUDIT",
+          "title": "",
+          "ref": "content.AUDIT",
+          "status": ""
+        },
+        "FINISH": {
+          "path": "content.FINISH",
+          "title": "",
+          "ref": "content.FINISH",
+          "status": ""
+        },
+        "COMMIT": {
+          "path": "content.COMMIT",
+          "title": "",
+          "ref": "content.COMMIT",
+          "status": ""
+        },
+        "LOG": {
+          "path": "content.LOG",
+          "title": "",
+          "ref": "content.LOG",
+          "status": ""
+        },
+        "DIAGNOSTICS": {
+          "path": "content.DIAGNOSTICS",
+          "title": "",
+          "ref": "content.DIAGNOSTICS",
+          "status": ""
+        },
+        "PROMPT": {
+          "path": "content.PROMPT",
+          "title": "",
+          "ref": "content.PROMPT",
+          "status": ""
+        },
+        "INSTRUCTIONS": {
+          "path": "content.INSTRUCTIONS",
+          "title": "",
+          "ref": "content.INSTRUCTIONS",
+          "status": ""
+        },
+        "COMPILE": {
+          "path": "content.COMPILE",
+          "title": "",
+          "ref": "content.COMPILE",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "context-docs/ENGINEERING.json",
       "document": {
         "title": "Engineering Standards",
         "type": "technical_context",
@@ -124,7 +630,7 @@
       }
     },
     {
-      "path": "core/ACTIVATION-CHECK.yaml",
+      "path": "core/ACTIVATION-CHECK.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -138,10 +644,10 @@
         "failure_handling"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -195,7 +701,7 @@
       }
     },
     {
-      "path": "core/AGENT-CONTRACT.yaml",
+      "path": "core/AGENT-CONTRACT.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -210,7 +716,7 @@
         "execution_passes",
         "known_solution_bias",
         "quality_gates",
-        "tool_first_yaml",
+        "tool_first_json",
         "communication_rules",
         "communication_profiles",
         "safety_rules",
@@ -289,10 +795,10 @@
           "ref": "items.quality_gates",
           "status": ""
         },
-        "tool_first_yaml": {
-          "path": "items.tool_first_yaml",
-          "title": "Tool-First YAML",
-          "ref": "items.tool_first_yaml",
+        "tool_first_json": {
+          "path": "items.tool_first_json",
+          "title": "Tool-First JSON",
+          "ref": "items.tool_first_json",
           "status": ""
         },
         "communication_rules": {
@@ -322,7 +828,7 @@
       }
     },
     {
-      "path": "core/COMMANDS.yaml",
+      "path": "core/COMMANDS.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -337,10 +843,10 @@
         "finish"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -400,7 +906,7 @@
       }
     },
     {
-      "path": "core/CONTEXT-COMPACTION.yaml",
+      "path": "core/CONTEXT-COMPACTION.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -413,10 +919,10 @@
         "reset_message"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -464,7 +970,7 @@
       }
     },
     {
-      "path": "core/FILE-FORMATS.yaml",
+      "path": "core/FILE-FORMATS.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -476,10 +982,10 @@
         "migration_rule"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -521,7 +1027,7 @@
       }
     },
     {
-      "path": "core/INSTRUCTION-CAPTURE.yaml",
+      "path": "core/INSTRUCTION-CAPTURE.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -535,10 +1041,10 @@
         "promotion_boundary"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -592,7 +1098,7 @@
       }
     },
     {
-      "path": "core/MEMORY-MODEL.yaml",
+      "path": "core/MEMORY-MODEL.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -606,10 +1112,10 @@
         "context_capsules"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -663,7 +1169,7 @@
       }
     },
     {
-      "path": "core/PROJECT-PROFILE.yaml",
+      "path": "core/PROJECT-PROFILE.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -675,10 +1181,10 @@
         "profile_fit_check"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -720,7 +1226,7 @@
       }
     },
     {
-      "path": "core/PROMOTION-RULES.yaml",
+      "path": "core/PROMOTION-RULES.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -737,10 +1243,10 @@
         "decisions_to_plan"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -812,7 +1318,7 @@
       }
     },
     {
-      "path": "core/REMOVAL-PROTOCOL.yaml",
+      "path": "core/REMOVAL-PROTOCOL.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -825,10 +1331,10 @@
         "safety"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -876,7 +1382,7 @@
       }
     },
     {
-      "path": "core/ROI-BIAS.yaml",
+      "path": "core/ROI-BIAS.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -892,10 +1398,10 @@
         "anti_pattern"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -961,7 +1467,7 @@
       }
     },
     {
-      "path": "core/SCRIPT-FALLBACK.yaml",
+      "path": "core/SCRIPT-FALLBACK.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -972,10 +1478,10 @@
         "install_hints"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1011,7 +1517,7 @@
       }
     },
     {
-      "path": "core/TASK-WORK.yaml",
+      "path": "core/TASK-WORK.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1026,10 +1532,10 @@
         "structured_document_edits"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1089,7 +1595,7 @@
       }
     },
     {
-      "path": "core/UPDATE-PROTOCOL.yaml",
+      "path": "core/UPDATE-PROTOCOL.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1103,10 +1609,10 @@
         "safety"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1160,7 +1666,62 @@
       }
     },
     {
-      "path": "docs-tech/KNOWLEDGE-VIEWS.yaml",
+      "path": "docs-tech/cache/doc_index.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema_version",
+        "documents"
+      ],
+      "keys": {
+        "schema_version": {
+          "path": "schema_version",
+          "title": "schema_version",
+          "ref": "schema_version",
+          "status": ""
+        },
+        "documents": {
+          "path": "documents",
+          "title": "documents",
+          "ref": "documents",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "docs-tech/CODE_LINE_INDEX.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "generatedAt",
+        "threshold",
+        "files"
+      ],
+      "keys": {
+        "generatedAt": {
+          "path": "generatedAt",
+          "title": "generatedAt",
+          "ref": "generatedAt",
+          "status": ""
+        },
+        "threshold": {
+          "path": "threshold",
+          "title": "threshold",
+          "ref": "threshold",
+          "status": ""
+        },
+        "files": {
+          "path": "files",
+          "title": "files",
+          "ref": "files",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "docs-tech/KNOWLEDGE-VIEWS.json",
       "document": {
         "title": "Knowledge Views",
         "type": "compiled_knowledge_config",
@@ -1176,8 +1737,8 @@
       "top_level_keys": [
         "index",
         "items",
-        "views",
-        "meta"
+        "meta",
+        "views"
       ],
       "keys": {
         "quick_index": {
@@ -1210,9 +1771,9 @@
           "ref": "views.0",
           "status": ""
         },
-        "architecture_godot": {
+        "architecture": {
           "path": "views.1",
-          "title": "Godot Architecture",
+          "title": "Architecture",
           "ref": "views.1",
           "status": ""
         },
@@ -1234,7 +1795,7 @@
           "ref": "views.4",
           "status": ""
         },
-        "worldgen": {
+        "domain_modeling": {
           "path": "views.5",
           "title": "Worldgen",
           "ref": "views.5",
@@ -1243,14 +1804,14 @@
       }
     },
     {
-      "path": "docs-tech/LARGE_FILES.yaml",
+      "path": "docs-tech/LARGE_FILES.json",
       "document": {
         "title": "📏 Large Files",
         "type": "technical",
         "language": "en"
       },
       "routing": {
-        "purpose": "Generated YAML index of code files above the large-file threshold.",
+        "purpose": "Generated JSON index of code files above the large-file threshold.",
         "read_when": [
           "When checking large source-owned files or deciding whether a file should be split.",
           "When code line index tooling is in scope."
@@ -1298,7 +1859,162 @@
       }
     },
     {
-      "path": "evals/expected-behaviors.yaml",
+      "path": "docs-tech/PIPELINE-BOOTSTRAP.json",
+      "document": {
+        "title": "Pipeline Bootstrap Index",
+        "type": "pipeline_bootstrap_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "DOCS.json",
+        "WORKFLOW.json",
+        "COMMANDS.json",
+        "FLOWS.json",
+        "SCRIPTS.json"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "DOCS.json": {
+          "path": "content.DOCS.json",
+          "title": "DOCS.json",
+          "ref": "content.DOCS.json",
+          "status": ""
+        },
+        "WORKFLOW.json": {
+          "path": "content.WORKFLOW.json",
+          "title": "WORKFLOW.json",
+          "ref": "content.WORKFLOW.json",
+          "status": ""
+        },
+        "COMMANDS.json": {
+          "path": "content.COMMANDS.json",
+          "title": "COMMANDS.json",
+          "ref": "content.COMMANDS.json",
+          "status": ""
+        },
+        "FLOWS.json": {
+          "path": "content.FLOWS.json",
+          "title": "FLOWS.json",
+          "ref": "content.FLOWS.json",
+          "status": ""
+        },
+        "SCRIPTS.json": {
+          "path": "content.SCRIPTS.json",
+          "title": "SCRIPTS.json",
+          "ref": "content.SCRIPTS.json",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "DOCS.json",
+      "document": {
+        "title": "Source Pipeline Document Index",
+        "type": "document_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "DOCS.json",
+        "WORKFLOW.json",
+        "COMMANDS.json",
+        "FLOWS.json",
+        "SCRIPTS.json",
+        "pipeline_featurelist.json",
+        "core/",
+        "project/",
+        "templates/",
+        "tools/",
+        "docs-tech/",
+        "AI-compiled/"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "DOCS.json": {
+          "path": "content.DOCS.json",
+          "title": "",
+          "ref": "content.DOCS.json",
+          "status": ""
+        },
+        "WORKFLOW.json": {
+          "path": "content.WORKFLOW.json",
+          "title": "",
+          "ref": "content.WORKFLOW.json",
+          "status": ""
+        },
+        "COMMANDS.json": {
+          "path": "content.COMMANDS.json",
+          "title": "",
+          "ref": "content.COMMANDS.json",
+          "status": ""
+        },
+        "FLOWS.json": {
+          "path": "content.FLOWS.json",
+          "title": "",
+          "ref": "content.FLOWS.json",
+          "status": ""
+        },
+        "SCRIPTS.json": {
+          "path": "content.SCRIPTS.json",
+          "title": "",
+          "ref": "content.SCRIPTS.json",
+          "status": ""
+        },
+        "pipeline_featurelist.json": {
+          "path": "content.pipeline_featurelist.json",
+          "title": "",
+          "ref": "content.pipeline_featurelist.json",
+          "status": ""
+        },
+        "core/": {
+          "path": "content.core/",
+          "title": "",
+          "ref": "content.core/",
+          "status": ""
+        },
+        "project/": {
+          "path": "content.project/",
+          "title": "",
+          "ref": "content.project/",
+          "status": ""
+        },
+        "templates/": {
+          "path": "content.templates/",
+          "title": "",
+          "ref": "content.templates/",
+          "status": ""
+        },
+        "tools/": {
+          "path": "content.tools/",
+          "title": "",
+          "ref": "content.tools/",
+          "status": ""
+        },
+        "docs-tech/": {
+          "path": "content.docs-tech/",
+          "title": "",
+          "ref": "content.docs-tech/",
+          "status": ""
+        },
+        "AI-compiled/": {
+          "path": "content.AI-compiled/",
+          "title": "",
+          "ref": "content.AI-compiled/",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "evals/expected-behaviors.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -1395,7 +2111,7 @@
       }
     },
     {
-      "path": "evals/personas.yaml",
+      "path": "evals/personas.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -1426,7 +2142,7 @@
       }
     },
     {
-      "path": "evals/results/baseline.yaml",
+      "path": "evals/results/baseline.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -1435,10 +2151,29 @@
         "run",
         "results"
       ],
-      "keys": {}
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "run": {
+          "path": "run",
+          "title": "run",
+          "ref": "run",
+          "status": ""
+        },
+        "results": {
+          "path": "results",
+          "title": "results",
+          "ref": "results",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "evals/results/with-pipeline.yaml",
+      "path": "evals/results/with-pipeline.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -1447,10 +2182,192 @@
         "run",
         "results"
       ],
-      "keys": {}
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "run": {
+          "path": "run",
+          "title": "run",
+          "ref": "run",
+          "status": ""
+        },
+        "results": {
+          "path": "results",
+          "title": "results",
+          "ref": "results",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "project/code/BRANCH-MODE.yaml",
+      "path": "FLOWS.json",
+      "document": {
+        "title": "Source Pipeline Flows",
+        "type": "flow_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "multi_prompt",
+        "direct_answer",
+        "documentation_edit",
+        "implementation",
+        "broad_refactor",
+        "pipeline_upgrade",
+        "review",
+        "quality_diagnostics",
+        "compile_command",
+        "manual_mode"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "multi_prompt": {
+          "path": "content.multi_prompt",
+          "title": "",
+          "ref": "content.multi_prompt",
+          "status": ""
+        },
+        "direct_answer": {
+          "path": "content.direct_answer",
+          "title": "",
+          "ref": "content.direct_answer",
+          "status": ""
+        },
+        "documentation_edit": {
+          "path": "content.documentation_edit",
+          "title": "",
+          "ref": "content.documentation_edit",
+          "status": ""
+        },
+        "implementation": {
+          "path": "content.implementation",
+          "title": "",
+          "ref": "content.implementation",
+          "status": ""
+        },
+        "broad_refactor": {
+          "path": "content.broad_refactor",
+          "title": "",
+          "ref": "content.broad_refactor",
+          "status": ""
+        },
+        "pipeline_upgrade": {
+          "path": "content.pipeline_upgrade",
+          "title": "",
+          "ref": "content.pipeline_upgrade",
+          "status": ""
+        },
+        "review": {
+          "path": "content.review",
+          "title": "",
+          "ref": "content.review",
+          "status": ""
+        },
+        "quality_diagnostics": {
+          "path": "content.quality_diagnostics",
+          "title": "",
+          "ref": "content.quality_diagnostics",
+          "status": ""
+        },
+        "compile_command": {
+          "path": "content.compile_command",
+          "title": "",
+          "ref": "content.compile_command",
+          "status": ""
+        },
+        "manual_mode": {
+          "path": "content.manual_mode",
+          "title": "",
+          "ref": "content.manual_mode",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "learning/inbox/life-work-testing-feedback.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "report_hash",
+        "generated_at",
+        "source_featurelist_path",
+        "project_path",
+        "project_featurelist_path",
+        "source_pipeline_id",
+        "project_pipeline_id",
+        "candidate_count",
+        "review_candidate_count",
+        "excluded_candidate_count",
+        "candidates",
+        "source_features_missing_from_project",
+        "recommendation"
+      ],
+      "keys": {
+        "testing_feedback_pipeline_learning_smoke_test": {
+          "path": "candidates.0",
+          "title": "",
+          "ref": "candidates.0",
+          "status": "review_candidate"
+        }
+      }
+    },
+    {
+      "path": "pipeline_featurelist.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "pipeline_id",
+        "role",
+        "updated_at",
+        "features"
+      ],
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "pipeline_id": {
+          "path": "pipeline_id",
+          "title": "pipeline_id",
+          "ref": "pipeline_id",
+          "status": ""
+        },
+        "role": {
+          "path": "role",
+          "title": "role",
+          "ref": "role",
+          "status": ""
+        },
+        "updated_at": {
+          "path": "updated_at",
+          "title": "updated_at",
+          "ref": "updated_at",
+          "status": ""
+        },
+        "features": {
+          "path": "features",
+          "title": "features",
+          "ref": "features",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/BRANCH-MODE.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1464,10 +2381,10 @@
         "branch_end"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1521,7 +2438,7 @@
       }
     },
     {
-      "path": "project/code/COMMANDS.yaml",
+      "path": "project/code/COMMANDS.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1541,10 +2458,10 @@
         "instructions"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1634,7 +2551,7 @@
       }
     },
     {
-      "path": "project/code/DDD-ADIV.yaml",
+      "path": "project/code/DDD-ADIV.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1648,10 +2565,10 @@
         "verification_attached"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1705,7 +2622,7 @@
       }
     },
     {
-      "path": "project/code/DIAGNOSTICS.yaml",
+      "path": "project/code/DIAGNOSTICS.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1720,10 +2637,10 @@
         "evidence_handling"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1783,7 +2700,7 @@
       }
     },
     {
-      "path": "project/code/FROZEN-LAYERS.yaml",
+      "path": "project/code/FROZEN-LAYERS.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1795,10 +2712,10 @@
         "non_local_changes"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1840,7 +2757,7 @@
       }
     },
     {
-      "path": "project/code/GIT.yaml",
+      "path": "project/code/GIT.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1853,10 +2770,10 @@
         "commit_rules"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1904,7 +2821,7 @@
       }
     },
     {
-      "path": "project/code/INSTRUCTION-CAPTURE.yaml",
+      "path": "project/code/INSTRUCTION-CAPTURE.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1916,10 +2833,10 @@
         "cleaning_rules"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -1961,7 +2878,7 @@
       }
     },
     {
-      "path": "project/code/PACK.yaml",
+      "path": "project/code/PACK.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -1983,10 +2900,10 @@
         "verification"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -2088,7 +3005,7 @@
       }
     },
     {
-      "path": "project/code/REGISTRIES.yaml",
+      "path": "project/code/REGISTRIES.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -2102,10 +3019,10 @@
         "decision_registry"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -2159,7 +3076,7 @@
       }
     },
     {
-      "path": "project/code/WORKFLOW.yaml",
+      "path": "project/code/WORKFLOW.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -2265,7 +3182,7 @@
       }
     },
     {
-      "path": "project/creative/PACK.yaml",
+      "path": "project/creative/PACK.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -2277,10 +3194,10 @@
         "review_gate"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -2322,7 +3239,64 @@
       }
     },
     {
-      "path": "project/generic/PACK.yaml",
+      "path": "project/gamedev/PACK.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_pairing",
+        "gamedev_defaults",
+        "verification"
+      ],
+      "top_level_keys": [
+        "index",
+        "items",
+        "schema",
+        "title"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "items.overview",
+          "title": "Overview",
+          "ref": "items.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "recommended_pairing": {
+          "path": "items.recommended_pairing",
+          "title": "Recommended Pairing",
+          "ref": "items.recommended_pairing",
+          "status": ""
+        },
+        "gamedev_defaults": {
+          "path": "items.gamedev_defaults",
+          "title": "Gamedev Defaults",
+          "ref": "items.gamedev_defaults",
+          "status": ""
+        },
+        "verification": {
+          "path": "items.verification",
+          "title": "Verification",
+          "ref": "items.verification",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/generic/PACK.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -2334,10 +3308,10 @@
         "review_gate"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -2379,7 +3353,7 @@
       }
     },
     {
-      "path": "project/personal/PACK.yaml",
+      "path": "project/personal/PACK.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -2392,10 +3366,10 @@
         "review_gate"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -2443,7 +3417,7 @@
       }
     },
     {
-      "path": "QUALITY-GATE.yaml",
+      "path": "QUALITY-GATE.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2452,10 +3426,696 @@
         "commands",
         "notes"
       ],
-      "keys": {}
+      "keys": {
+        "powershell_parse": {
+          "path": "commands.powershell_parse",
+          "title": "powershell_parse",
+          "ref": "commands.powershell_parse",
+          "status": ""
+        },
+        "audit_docs": {
+          "path": "commands.audit_docs",
+          "title": "audit_docs",
+          "ref": "commands.audit_docs",
+          "status": ""
+        },
+        "eval_framework": {
+          "path": "commands.eval_framework",
+          "title": "eval_framework",
+          "ref": "commands.eval_framework",
+          "status": ""
+        },
+        "transactional_doc_tools": {
+          "path": "commands.transactional_doc_tools",
+          "title": "transactional_doc_tools",
+          "ref": "commands.transactional_doc_tools",
+          "status": ""
+        },
+        "init_dry_run": {
+          "path": "commands.init_dry_run",
+          "title": "init_dry_run",
+          "ref": "commands.init_dry_run",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/_INSTRUCTION-QUEUE.yaml",
+      "path": "SCRIPTS.json",
+      "document": {
+        "title": "Source Pipeline Script Index",
+        "type": "script_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "add_changelog_entry.ps1",
+        "audit_docs.ps1",
+        "audit_json_docs.py",
+        "check_code_context_gate.ps1",
+        "check_compiled_instructions.ps1",
+        "check_evals.ps1",
+        "check_pipeline_featurelist_update.ps1",
+        "check_runtime.py",
+        "check_task.ps1",
+        "check_utf8_writes.ps1",
+        "commit_task.ps1",
+        "compile.ps1",
+        "compile_agent_instructions.ps1",
+        "configure_powershell_utf8.ps1",
+        "console_summary.ps1",
+        "context_tags.ps1",
+        "detect_project_stack.ps1",
+        "doc_build_cache.ps1",
+        "doc_item.py",
+        "doc_item_bulk_insert.ps1",
+        "doc_item_insert.ps1",
+        "doc_item_migrate.ps1",
+        "doc_item_move.ps1",
+        "doc_keys.ps1",
+        "doc_list_check.ps1",
+        "doc_list_insert.ps1",
+        "doc_list_insert_checked.ps1",
+        "doc_list_item.py",
+        "doc_list_review.ps1",
+        "doc_post_edit.ps1",
+        "doc_read.ps1",
+        "doc_read_titles.ps1",
+        "doc_tool.py",
+        "docs_migrator.ps1",
+        "docs_migrator.py",
+        "docs_slim.ps1",
+        "docs_slim.py",
+        "doctor.ps1",
+        "done.ps1",
+        "end_prompt_snapshot.ps1",
+        "finish_subtask.ps1",
+        "finish_task.ps1",
+        "generate_embedded_config_payload.py",
+        "import_existing_project.ps1",
+        "init_branch_memory.ps1",
+        "init_task_work.ps1",
+        "Initialize-SocratexPipeline.ps1",
+        "install_powershell.ps1",
+        "knowledge_check.ps1",
+        "knowledge_code_context.ps1",
+        "knowledge_compile.ps1",
+        "knowledge_delete.ps1",
+        "knowledge_file_check.ps1",
+        "knowledge_file_compile.ps1",
+        "knowledge_file_delete.ps1",
+        "knowledge_file_query.ps1",
+        "knowledge_file_rename.ps1",
+        "knowledge_file_select.ps1",
+        "knowledge_file_upsert.ps1",
+        "knowledge_index.py",
+        "knowledge_query.ps1",
+        "knowledge_rename.ps1",
+        "knowledge_select.ps1",
+        "knowledge_upsert.ps1",
+        "learn_pipeline_features.ps1",
+        "log_summary.ps1",
+        "migrate_ai_pipeline.ps1",
+        "normalize_documents.bat",
+        "normalize_json_files.ps1",
+        "normalize_json_files.py",
+        "normalize_markdown_emoji.ps1",
+        "normalize_text_files.ps1",
+        "open_pipeline_learning_issue.ps1",
+        "pipeline_bootstrap_index.ps1",
+        "pipeline_bootstrap_index.py",
+        "recompile_ai_instructions.ps1",
+        "reinitialize_pipeline.ps1",
+        "remove_pipeline.ps1",
+        "repair_mojibake.ps1",
+        "report_pipeline_learning.ps1",
+        "run_quality_fix.ps1",
+        "run_quality_gate.ps1",
+        "set_directives.ps1",
+        "sync_pipeline_featurelist.ps1",
+        "task_snapshot.ps1",
+        "update_code_line_index.ps1",
+        "update_pipeline_from_link.ps1",
+        "upgrade_from_riftbound.ps1",
+        "Utf8File.ps1",
+        "wizard.ps1",
+        "write_utf8_file.ps1"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "add_changelog_entry.ps1": {
+          "path": "content.add_changelog_entry.ps1",
+          "title": "",
+          "ref": "content.add_changelog_entry.ps1",
+          "status": ""
+        },
+        "audit_docs.ps1": {
+          "path": "content.audit_docs.ps1",
+          "title": "",
+          "ref": "content.audit_docs.ps1",
+          "status": ""
+        },
+        "audit_json_docs.py": {
+          "path": "content.audit_json_docs.py",
+          "title": "",
+          "ref": "content.audit_json_docs.py",
+          "status": ""
+        },
+        "check_code_context_gate.ps1": {
+          "path": "content.check_code_context_gate.ps1",
+          "title": "",
+          "ref": "content.check_code_context_gate.ps1",
+          "status": ""
+        },
+        "check_compiled_instructions.ps1": {
+          "path": "content.check_compiled_instructions.ps1",
+          "title": "",
+          "ref": "content.check_compiled_instructions.ps1",
+          "status": ""
+        },
+        "check_evals.ps1": {
+          "path": "content.check_evals.ps1",
+          "title": "",
+          "ref": "content.check_evals.ps1",
+          "status": ""
+        },
+        "check_pipeline_featurelist_update.ps1": {
+          "path": "content.check_pipeline_featurelist_update.ps1",
+          "title": "",
+          "ref": "content.check_pipeline_featurelist_update.ps1",
+          "status": ""
+        },
+        "check_runtime.py": {
+          "path": "content.check_runtime.py",
+          "title": "",
+          "ref": "content.check_runtime.py",
+          "status": ""
+        },
+        "check_task.ps1": {
+          "path": "content.check_task.ps1",
+          "title": "",
+          "ref": "content.check_task.ps1",
+          "status": ""
+        },
+        "check_utf8_writes.ps1": {
+          "path": "content.check_utf8_writes.ps1",
+          "title": "",
+          "ref": "content.check_utf8_writes.ps1",
+          "status": ""
+        },
+        "commit_task.ps1": {
+          "path": "content.commit_task.ps1",
+          "title": "",
+          "ref": "content.commit_task.ps1",
+          "status": ""
+        },
+        "compile.ps1": {
+          "path": "content.compile.ps1",
+          "title": "",
+          "ref": "content.compile.ps1",
+          "status": ""
+        },
+        "compile_agent_instructions.ps1": {
+          "path": "content.compile_agent_instructions.ps1",
+          "title": "",
+          "ref": "content.compile_agent_instructions.ps1",
+          "status": ""
+        },
+        "configure_powershell_utf8.ps1": {
+          "path": "content.configure_powershell_utf8.ps1",
+          "title": "",
+          "ref": "content.configure_powershell_utf8.ps1",
+          "status": ""
+        },
+        "console_summary.ps1": {
+          "path": "content.console_summary.ps1",
+          "title": "",
+          "ref": "content.console_summary.ps1",
+          "status": ""
+        },
+        "context_tags.ps1": {
+          "path": "content.context_tags.ps1",
+          "title": "",
+          "ref": "content.context_tags.ps1",
+          "status": ""
+        },
+        "detect_project_stack.ps1": {
+          "path": "content.detect_project_stack.ps1",
+          "title": "",
+          "ref": "content.detect_project_stack.ps1",
+          "status": ""
+        },
+        "doc_build_cache.ps1": {
+          "path": "content.doc_build_cache.ps1",
+          "title": "",
+          "ref": "content.doc_build_cache.ps1",
+          "status": ""
+        },
+        "doc_item.py": {
+          "path": "content.doc_item.py",
+          "title": "",
+          "ref": "content.doc_item.py",
+          "status": ""
+        },
+        "doc_item_bulk_insert.ps1": {
+          "path": "content.doc_item_bulk_insert.ps1",
+          "title": "",
+          "ref": "content.doc_item_bulk_insert.ps1",
+          "status": ""
+        },
+        "doc_item_insert.ps1": {
+          "path": "content.doc_item_insert.ps1",
+          "title": "",
+          "ref": "content.doc_item_insert.ps1",
+          "status": ""
+        },
+        "doc_item_migrate.ps1": {
+          "path": "content.doc_item_migrate.ps1",
+          "title": "",
+          "ref": "content.doc_item_migrate.ps1",
+          "status": ""
+        },
+        "doc_item_move.ps1": {
+          "path": "content.doc_item_move.ps1",
+          "title": "",
+          "ref": "content.doc_item_move.ps1",
+          "status": ""
+        },
+        "doc_keys.ps1": {
+          "path": "content.doc_keys.ps1",
+          "title": "",
+          "ref": "content.doc_keys.ps1",
+          "status": ""
+        },
+        "doc_list_check.ps1": {
+          "path": "content.doc_list_check.ps1",
+          "title": "",
+          "ref": "content.doc_list_check.ps1",
+          "status": ""
+        },
+        "doc_list_insert.ps1": {
+          "path": "content.doc_list_insert.ps1",
+          "title": "",
+          "ref": "content.doc_list_insert.ps1",
+          "status": ""
+        },
+        "doc_list_insert_checked.ps1": {
+          "path": "content.doc_list_insert_checked.ps1",
+          "title": "",
+          "ref": "content.doc_list_insert_checked.ps1",
+          "status": ""
+        },
+        "doc_list_item.py": {
+          "path": "content.doc_list_item.py",
+          "title": "",
+          "ref": "content.doc_list_item.py",
+          "status": ""
+        },
+        "doc_list_review.ps1": {
+          "path": "content.doc_list_review.ps1",
+          "title": "",
+          "ref": "content.doc_list_review.ps1",
+          "status": ""
+        },
+        "doc_post_edit.ps1": {
+          "path": "content.doc_post_edit.ps1",
+          "title": "",
+          "ref": "content.doc_post_edit.ps1",
+          "status": ""
+        },
+        "doc_read.ps1": {
+          "path": "content.doc_read.ps1",
+          "title": "",
+          "ref": "content.doc_read.ps1",
+          "status": ""
+        },
+        "doc_read_titles.ps1": {
+          "path": "content.doc_read_titles.ps1",
+          "title": "",
+          "ref": "content.doc_read_titles.ps1",
+          "status": ""
+        },
+        "doc_tool.py": {
+          "path": "content.doc_tool.py",
+          "title": "",
+          "ref": "content.doc_tool.py",
+          "status": ""
+        },
+        "docs_migrator.ps1": {
+          "path": "content.docs_migrator.ps1",
+          "title": "",
+          "ref": "content.docs_migrator.ps1",
+          "status": ""
+        },
+        "docs_migrator.py": {
+          "path": "content.docs_migrator.py",
+          "title": "",
+          "ref": "content.docs_migrator.py",
+          "status": ""
+        },
+        "docs_slim.ps1": {
+          "path": "content.docs_slim.ps1",
+          "title": "",
+          "ref": "content.docs_slim.ps1",
+          "status": ""
+        },
+        "docs_slim.py": {
+          "path": "content.docs_slim.py",
+          "title": "",
+          "ref": "content.docs_slim.py",
+          "status": ""
+        },
+        "doctor.ps1": {
+          "path": "content.doctor.ps1",
+          "title": "",
+          "ref": "content.doctor.ps1",
+          "status": ""
+        },
+        "done.ps1": {
+          "path": "content.done.ps1",
+          "title": "",
+          "ref": "content.done.ps1",
+          "status": ""
+        },
+        "end_prompt_snapshot.ps1": {
+          "path": "content.end_prompt_snapshot.ps1",
+          "title": "",
+          "ref": "content.end_prompt_snapshot.ps1",
+          "status": ""
+        },
+        "finish_subtask.ps1": {
+          "path": "content.finish_subtask.ps1",
+          "title": "",
+          "ref": "content.finish_subtask.ps1",
+          "status": ""
+        },
+        "finish_task.ps1": {
+          "path": "content.finish_task.ps1",
+          "title": "",
+          "ref": "content.finish_task.ps1",
+          "status": ""
+        },
+        "generate_embedded_config_payload.py": {
+          "path": "content.generate_embedded_config_payload.py",
+          "title": "",
+          "ref": "content.generate_embedded_config_payload.py",
+          "status": ""
+        },
+        "import_existing_project.ps1": {
+          "path": "content.import_existing_project.ps1",
+          "title": "",
+          "ref": "content.import_existing_project.ps1",
+          "status": ""
+        },
+        "init_branch_memory.ps1": {
+          "path": "content.init_branch_memory.ps1",
+          "title": "",
+          "ref": "content.init_branch_memory.ps1",
+          "status": ""
+        },
+        "init_task_work.ps1": {
+          "path": "content.init_task_work.ps1",
+          "title": "",
+          "ref": "content.init_task_work.ps1",
+          "status": ""
+        },
+        "Initialize-SocratexPipeline.ps1": {
+          "path": "content.Initialize-SocratexPipeline.ps1",
+          "title": "",
+          "ref": "content.Initialize-SocratexPipeline.ps1",
+          "status": ""
+        },
+        "install_powershell.ps1": {
+          "path": "content.install_powershell.ps1",
+          "title": "",
+          "ref": "content.install_powershell.ps1",
+          "status": ""
+        },
+        "knowledge_check.ps1": {
+          "path": "content.knowledge_check.ps1",
+          "title": "",
+          "ref": "content.knowledge_check.ps1",
+          "status": ""
+        },
+        "knowledge_code_context.ps1": {
+          "path": "content.knowledge_code_context.ps1",
+          "title": "",
+          "ref": "content.knowledge_code_context.ps1",
+          "status": ""
+        },
+        "knowledge_compile.ps1": {
+          "path": "content.knowledge_compile.ps1",
+          "title": "",
+          "ref": "content.knowledge_compile.ps1",
+          "status": ""
+        },
+        "knowledge_delete.ps1": {
+          "path": "content.knowledge_delete.ps1",
+          "title": "",
+          "ref": "content.knowledge_delete.ps1",
+          "status": ""
+        },
+        "knowledge_file_check.ps1": {
+          "path": "content.knowledge_file_check.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_check.ps1",
+          "status": ""
+        },
+        "knowledge_file_compile.ps1": {
+          "path": "content.knowledge_file_compile.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_compile.ps1",
+          "status": ""
+        },
+        "knowledge_file_delete.ps1": {
+          "path": "content.knowledge_file_delete.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_delete.ps1",
+          "status": ""
+        },
+        "knowledge_file_query.ps1": {
+          "path": "content.knowledge_file_query.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_query.ps1",
+          "status": ""
+        },
+        "knowledge_file_rename.ps1": {
+          "path": "content.knowledge_file_rename.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_rename.ps1",
+          "status": ""
+        },
+        "knowledge_file_select.ps1": {
+          "path": "content.knowledge_file_select.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_select.ps1",
+          "status": ""
+        },
+        "knowledge_file_upsert.ps1": {
+          "path": "content.knowledge_file_upsert.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_upsert.ps1",
+          "status": ""
+        },
+        "knowledge_index.py": {
+          "path": "content.knowledge_index.py",
+          "title": "",
+          "ref": "content.knowledge_index.py",
+          "status": ""
+        },
+        "knowledge_query.ps1": {
+          "path": "content.knowledge_query.ps1",
+          "title": "",
+          "ref": "content.knowledge_query.ps1",
+          "status": ""
+        },
+        "knowledge_rename.ps1": {
+          "path": "content.knowledge_rename.ps1",
+          "title": "",
+          "ref": "content.knowledge_rename.ps1",
+          "status": ""
+        },
+        "knowledge_select.ps1": {
+          "path": "content.knowledge_select.ps1",
+          "title": "",
+          "ref": "content.knowledge_select.ps1",
+          "status": ""
+        },
+        "knowledge_upsert.ps1": {
+          "path": "content.knowledge_upsert.ps1",
+          "title": "",
+          "ref": "content.knowledge_upsert.ps1",
+          "status": ""
+        },
+        "learn_pipeline_features.ps1": {
+          "path": "content.learn_pipeline_features.ps1",
+          "title": "",
+          "ref": "content.learn_pipeline_features.ps1",
+          "status": ""
+        },
+        "log_summary.ps1": {
+          "path": "content.log_summary.ps1",
+          "title": "",
+          "ref": "content.log_summary.ps1",
+          "status": ""
+        },
+        "migrate_ai_pipeline.ps1": {
+          "path": "content.migrate_ai_pipeline.ps1",
+          "title": "",
+          "ref": "content.migrate_ai_pipeline.ps1",
+          "status": ""
+        },
+        "normalize_documents.bat": {
+          "path": "content.normalize_documents.bat",
+          "title": "",
+          "ref": "content.normalize_documents.bat",
+          "status": ""
+        },
+        "normalize_json_files.ps1": {
+          "path": "content.normalize_json_files.ps1",
+          "title": "",
+          "ref": "content.normalize_json_files.ps1",
+          "status": ""
+        },
+        "normalize_json_files.py": {
+          "path": "content.normalize_json_files.py",
+          "title": "",
+          "ref": "content.normalize_json_files.py",
+          "status": ""
+        },
+        "normalize_markdown_emoji.ps1": {
+          "path": "content.normalize_markdown_emoji.ps1",
+          "title": "",
+          "ref": "content.normalize_markdown_emoji.ps1",
+          "status": ""
+        },
+        "normalize_text_files.ps1": {
+          "path": "content.normalize_text_files.ps1",
+          "title": "",
+          "ref": "content.normalize_text_files.ps1",
+          "status": ""
+        },
+        "open_pipeline_learning_issue.ps1": {
+          "path": "content.open_pipeline_learning_issue.ps1",
+          "title": "",
+          "ref": "content.open_pipeline_learning_issue.ps1",
+          "status": ""
+        },
+        "pipeline_bootstrap_index.ps1": {
+          "path": "content.pipeline_bootstrap_index.ps1",
+          "title": "",
+          "ref": "content.pipeline_bootstrap_index.ps1",
+          "status": ""
+        },
+        "pipeline_bootstrap_index.py": {
+          "path": "content.pipeline_bootstrap_index.py",
+          "title": "",
+          "ref": "content.pipeline_bootstrap_index.py",
+          "status": ""
+        },
+        "recompile_ai_instructions.ps1": {
+          "path": "content.recompile_ai_instructions.ps1",
+          "title": "",
+          "ref": "content.recompile_ai_instructions.ps1",
+          "status": ""
+        },
+        "reinitialize_pipeline.ps1": {
+          "path": "content.reinitialize_pipeline.ps1",
+          "title": "",
+          "ref": "content.reinitialize_pipeline.ps1",
+          "status": ""
+        },
+        "remove_pipeline.ps1": {
+          "path": "content.remove_pipeline.ps1",
+          "title": "",
+          "ref": "content.remove_pipeline.ps1",
+          "status": ""
+        },
+        "repair_mojibake.ps1": {
+          "path": "content.repair_mojibake.ps1",
+          "title": "",
+          "ref": "content.repair_mojibake.ps1",
+          "status": ""
+        },
+        "report_pipeline_learning.ps1": {
+          "path": "content.report_pipeline_learning.ps1",
+          "title": "",
+          "ref": "content.report_pipeline_learning.ps1",
+          "status": ""
+        },
+        "run_quality_fix.ps1": {
+          "path": "content.run_quality_fix.ps1",
+          "title": "",
+          "ref": "content.run_quality_fix.ps1",
+          "status": ""
+        },
+        "run_quality_gate.ps1": {
+          "path": "content.run_quality_gate.ps1",
+          "title": "",
+          "ref": "content.run_quality_gate.ps1",
+          "status": ""
+        },
+        "set_directives.ps1": {
+          "path": "content.set_directives.ps1",
+          "title": "",
+          "ref": "content.set_directives.ps1",
+          "status": ""
+        },
+        "sync_pipeline_featurelist.ps1": {
+          "path": "content.sync_pipeline_featurelist.ps1",
+          "title": "",
+          "ref": "content.sync_pipeline_featurelist.ps1",
+          "status": ""
+        },
+        "task_snapshot.ps1": {
+          "path": "content.task_snapshot.ps1",
+          "title": "",
+          "ref": "content.task_snapshot.ps1",
+          "status": ""
+        },
+        "update_code_line_index.ps1": {
+          "path": "content.update_code_line_index.ps1",
+          "title": "",
+          "ref": "content.update_code_line_index.ps1",
+          "status": ""
+        },
+        "update_pipeline_from_link.ps1": {
+          "path": "content.update_pipeline_from_link.ps1",
+          "title": "",
+          "ref": "content.update_pipeline_from_link.ps1",
+          "status": ""
+        },
+        "upgrade_from_riftbound.ps1": {
+          "path": "content.upgrade_from_riftbound.ps1",
+          "title": "",
+          "ref": "content.upgrade_from_riftbound.ps1",
+          "status": ""
+        },
+        "Utf8File.ps1": {
+          "path": "content.Utf8File.ps1",
+          "title": "",
+          "ref": "content.Utf8File.ps1",
+          "status": ""
+        },
+        "wizard.ps1": {
+          "path": "content.wizard.ps1",
+          "title": "",
+          "ref": "content.wizard.ps1",
+          "status": ""
+        },
+        "write_utf8_file.ps1": {
+          "path": "content.write_utf8_file.ps1",
+          "title": "",
+          "ref": "content.write_utf8_file.ps1",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/_INSTRUCTION-QUEUE.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -2464,10 +4124,10 @@
         "summary"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -2491,7 +4151,7 @@
       }
     },
     {
-      "path": "templates/code/_INSTRUCTION-QUEUE.yaml",
+      "path": "templates/code/_INSTRUCTION-QUEUE.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2499,10 +4159,23 @@
         "summary",
         "queue"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "queue": {
+          "path": "queue",
+          "title": "queue",
+          "ref": "queue",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/_PLAN.yaml",
+      "path": "templates/code/_PLAN.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2521,18 +4194,31 @@
       }
     },
     {
-      "path": "templates/code/_PROMPT-QUEUE.yaml",
+      "path": "templates/code/_PROMPT-QUEUE.json",
       "document": {},
       "routing": {},
       "toc": [],
       "top_level_keys": [
-        "summary",
-        "items"
+        "items",
+        "summary"
       ],
-      "keys": {}
+      "keys": {
+        "items": {
+          "path": "items",
+          "title": "items",
+          "ref": "items",
+          "status": ""
+        },
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/BUGS-SOLVED.yaml",
+      "path": "templates/code/BUGS-SOLVED.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2540,10 +4226,23 @@
         "summary",
         "resolved_bugs"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "resolved_bugs": {
+          "path": "resolved_bugs",
+          "title": "resolved_bugs",
+          "ref": "resolved_bugs",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/BUGS.yaml",
+      "path": "templates/code/BUGS.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2551,10 +4250,23 @@
         "summary",
         "bugs"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "bugs": {
+          "path": "bugs",
+          "title": "bugs",
+          "ref": "bugs",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/CHANGELOG.yaml",
+      "path": "templates/code/CHANGELOG.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2562,10 +4274,23 @@
         "summary",
         "entries"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "entries": {
+          "path": "entries",
+          "title": "entries",
+          "ref": "entries",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/context-docs/ENGINEERING.yaml",
+      "path": "templates/code/context-docs/ENGINEERING.json",
       "document": {
         "title": "Engineering Standards",
         "type": "technical_context",
@@ -2659,7 +4384,7 @@
       }
     },
     {
-      "path": "templates/code/context-docs/FROZEN_LAYERS.yaml",
+      "path": "templates/code/context-docs/FROZEN_LAYERS.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2667,10 +4392,23 @@
         "summary",
         "layers"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "layers": {
+          "path": "layers",
+          "title": "layers",
+          "ref": "layers",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/context-docs/TECHNICAL.yaml",
+      "path": "templates/code/context-docs/TECHNICAL.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2681,10 +4419,41 @@
         "source_of_truth",
         "known_traps"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "invariants": {
+          "path": "invariants",
+          "title": "invariants",
+          "ref": "invariants",
+          "status": ""
+        },
+        "ownership_contracts": {
+          "path": "ownership_contracts",
+          "title": "ownership_contracts",
+          "ref": "ownership_contracts",
+          "status": ""
+        },
+        "source_of_truth": {
+          "path": "source_of_truth",
+          "title": "source_of_truth",
+          "ref": "source_of_truth",
+          "status": ""
+        },
+        "known_traps": {
+          "path": "known_traps",
+          "title": "known_traps",
+          "ref": "known_traps",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/current_task.yaml",
+      "path": "templates/code/current_task.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2717,7 +4486,7 @@
       }
     },
     {
-      "path": "templates/code/DECISIONS.yaml",
+      "path": "templates/code/DECISIONS.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2725,10 +4494,82 @@
         "summary",
         "decisions"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "decisions": {
+          "path": "decisions",
+          "title": "decisions",
+          "ref": "decisions",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/DOCS.yaml",
+      "path": "templates/code/diagnostics-summary.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "description",
+        "evidence",
+        "observed_facts",
+        "current_hypothesis",
+        "next_source_owned_step",
+        "verification"
+      ],
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "description": {
+          "path": "description",
+          "title": "description",
+          "ref": "description",
+          "status": ""
+        },
+        "evidence": {
+          "path": "evidence",
+          "title": "evidence",
+          "ref": "evidence",
+          "status": ""
+        },
+        "observed_facts": {
+          "path": "observed_facts",
+          "title": "observed_facts",
+          "ref": "observed_facts",
+          "status": ""
+        },
+        "current_hypothesis": {
+          "path": "current_hypothesis",
+          "title": "current_hypothesis",
+          "ref": "current_hypothesis",
+          "status": ""
+        },
+        "next_source_owned_step": {
+          "path": "next_source_owned_step",
+          "title": "next_source_owned_step",
+          "ref": "next_source_owned_step",
+          "status": ""
+        },
+        "verification": {
+          "path": "verification",
+          "title": "verification",
+          "ref": "verification",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/DOCS.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2737,10 +4578,29 @@
         "rules",
         "documents"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "rules": {
+          "path": "rules",
+          "title": "rules",
+          "ref": "rules",
+          "status": ""
+        },
+        "documents": {
+          "path": "documents",
+          "title": "documents",
+          "ref": "documents",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/PIPELINE-CONFIG.yaml",
+      "path": "templates/code/PIPELINE-CONFIG.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2767,10 +4627,137 @@
         "project_profile",
         "runtime_status"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "language": {
+          "path": "language",
+          "title": "language",
+          "ref": "language",
+          "status": ""
+        },
+        "active_project_packs": {
+          "path": "active_project_packs",
+          "title": "active_project_packs",
+          "ref": "active_project_packs",
+          "status": ""
+        },
+        "ai_operating_mode": {
+          "path": "ai_operating_mode",
+          "title": "ai_operating_mode",
+          "ref": "ai_operating_mode",
+          "status": ""
+        },
+        "git": {
+          "path": "git",
+          "title": "git",
+          "ref": "git",
+          "status": ""
+        },
+        "ai_may_commit": {
+          "path": "ai_may_commit",
+          "title": "ai_may_commit",
+          "ref": "ai_may_commit",
+          "status": ""
+        },
+        "ai_may_push": {
+          "path": "ai_may_push",
+          "title": "ai_may_push",
+          "ref": "ai_may_push",
+          "status": ""
+        },
+        "branch_workflow": {
+          "path": "branch_workflow",
+          "title": "branch_workflow",
+          "ref": "branch_workflow",
+          "status": ""
+        },
+        "external_changes_possible": {
+          "path": "external_changes_possible",
+          "title": "external_changes_possible",
+          "ref": "external_changes_possible",
+          "status": ""
+        },
+        "force_ddd_adiv": {
+          "path": "force_ddd_adiv",
+          "title": "force_ddd_adiv",
+          "ref": "force_ddd_adiv",
+          "status": ""
+        },
+        "import_pipeline_package": {
+          "path": "import_pipeline_package",
+          "title": "import_pipeline_package",
+          "ref": "import_pipeline_package",
+          "status": ""
+        },
+        "package_manager_detection": {
+          "path": "package_manager_detection",
+          "title": "package_manager_detection",
+          "ref": "package_manager_detection",
+          "status": ""
+        },
+        "directive_mode": {
+          "path": "directive_mode",
+          "title": "directive_mode",
+          "ref": "directive_mode",
+          "status": ""
+        },
+        "first_target": {
+          "path": "first_target",
+          "title": "first_target",
+          "ref": "first_target",
+          "status": ""
+        },
+        "first_session_success_criteria": {
+          "path": "first_session_success_criteria",
+          "title": "first_session_success_criteria",
+          "ref": "first_session_success_criteria",
+          "status": ""
+        },
+        "changelog": {
+          "path": "changelog",
+          "title": "changelog",
+          "ref": "changelog",
+          "status": ""
+        },
+        "communication": {
+          "path": "communication",
+          "title": "communication",
+          "ref": "communication",
+          "status": ""
+        },
+        "pipeline": {
+          "path": "pipeline",
+          "title": "pipeline",
+          "ref": "pipeline",
+          "status": ""
+        },
+        "workflow": {
+          "path": "workflow",
+          "title": "workflow",
+          "ref": "workflow",
+          "status": ""
+        },
+        "project_profile": {
+          "path": "project_profile",
+          "title": "project_profile",
+          "ref": "project_profile",
+          "status": ""
+        },
+        "runtime_status": {
+          "path": "runtime_status",
+          "title": "runtime_status",
+          "ref": "runtime_status",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/STATE.yaml",
+      "path": "templates/code/STATE.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2783,21 +4770,77 @@
         "risks",
         "non_regression_reminders"
       ],
-      "keys": {}
+      "keys": {
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        },
+        "current_objective": {
+          "path": "current_objective",
+          "title": "current_objective",
+          "ref": "current_objective",
+          "status": ""
+        },
+        "current_pass": {
+          "path": "current_pass",
+          "title": "current_pass",
+          "ref": "current_pass",
+          "status": ""
+        },
+        "next_action": {
+          "path": "next_action",
+          "title": "next_action",
+          "ref": "next_action",
+          "status": ""
+        },
+        "blockers": {
+          "path": "blockers",
+          "title": "blockers",
+          "ref": "blockers",
+          "status": ""
+        },
+        "risks": {
+          "path": "risks",
+          "title": "risks",
+          "ref": "risks",
+          "status": ""
+        },
+        "non_regression_reminders": {
+          "path": "non_regression_reminders",
+          "title": "non_regression_reminders",
+          "ref": "non_regression_reminders",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/code/TODO.yaml",
+      "path": "templates/code/TODO.json",
       "document": {},
       "routing": {},
       "toc": [],
       "top_level_keys": [
-        "summary",
-        "items"
+        "items",
+        "summary"
       ],
-      "keys": {}
+      "keys": {
+        "items": {
+          "path": "items",
+          "title": "items",
+          "ref": "items",
+          "status": ""
+        },
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/context-docs-FROZEN_LAYERS.yaml",
+      "path": "templates/context-docs-FROZEN_LAYERS.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -2806,10 +4849,10 @@
         "summary"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -2833,7 +4876,7 @@
       }
     },
     {
-      "path": "templates/context-docs-TECHNICAL.yaml",
+      "path": "templates/context-docs-TECHNICAL.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -2842,10 +4885,10 @@
         "summary"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -2869,7 +4912,7 @@
       }
     },
     {
-      "path": "templates/docs-tech/KNOWLEDGE-VIEWS.yaml",
+      "path": "templates/docs-tech/KNOWLEDGE-VIEWS.json",
       "document": {
         "title": "Knowledge Views",
         "type": "compiled_knowledge_config",
@@ -2885,8 +4928,8 @@
       "top_level_keys": [
         "index",
         "items",
-        "views",
-        "meta"
+        "meta",
+        "views"
       ],
       "keys": {
         "quick_index": {
@@ -2919,9 +4962,9 @@
           "ref": "views.0",
           "status": ""
         },
-        "architecture_godot": {
+        "architecture": {
           "path": "views.1",
-          "title": "Godot Architecture",
+          "title": "Architecture",
           "ref": "views.1",
           "status": ""
         },
@@ -2943,7 +4986,7 @@
           "ref": "views.4",
           "status": ""
         },
-        "worldgen": {
+        "domain_modeling": {
           "path": "views.5",
           "title": "Worldgen",
           "ref": "views.5",
@@ -2952,7 +4995,7 @@
       }
     },
     {
-      "path": "templates/DOCS.yaml",
+      "path": "templates/DOCS.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -2961,40 +5004,29 @@
         "rules",
         "documents"
       ],
-      "keys": {}
-    },
-    {
-      "path": "templates/ORCHESTRATION.yaml",
-      "document": {},
-      "routing": {},
-      "toc": [],
-      "top_level_keys": [
-        "summary",
-        "usage",
-        "responsibility_boundaries",
-        "task_routing",
-        "active_pain_points",
-        "priority_rules",
-        "agent_behavior",
-        "team_on_demand"
-      ],
       "keys": {
-        "example_missing_core_loop": {
-          "path": "active_pain_points.0",
-          "title": "",
-          "ref": "active_pain_points.0",
-          "status": "example_replace_me"
+        "summary": {
+          "path": "summary",
+          "title": "summary",
+          "ref": "summary",
+          "status": ""
         },
-        "example_quality_or_reliability": {
-          "path": "active_pain_points.1",
-          "title": "",
-          "ref": "active_pain_points.1",
-          "status": "example_replace_me"
+        "rules": {
+          "path": "rules",
+          "title": "rules",
+          "ref": "rules",
+          "status": ""
+        },
+        "documents": {
+          "path": "documents",
+          "title": "documents",
+          "ref": "documents",
+          "status": ""
         }
       }
     },
     {
-      "path": "templates/PIPELINE-CONFIG.yaml",
+      "path": "templates/PIPELINE-CONFIG.json",
       "document": {},
       "routing": {},
       "toc": [
@@ -3010,10 +5042,10 @@
         "communication"
       ],
       "top_level_keys": [
-        "schema",
-        "title",
         "index",
-        "items"
+        "items",
+        "schema",
+        "title"
       ],
       "keys": {
         "quick_index": {
@@ -3079,7 +5111,7 @@
       }
     },
     {
-      "path": "templates/team/experience.yaml",
+      "path": "templates/team/experience.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -3092,10 +5124,53 @@
         "red_flags",
         "veto"
       ],
-      "keys": {}
+      "keys": {
+        "role": {
+          "path": "role",
+          "title": "role",
+          "ref": "role",
+          "status": ""
+        },
+        "mission": {
+          "path": "mission",
+          "title": "mission",
+          "ref": "mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "prioritize_sections",
+          "title": "prioritize_sections",
+          "ref": "prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "preferred_skills",
+          "title": "preferred_skills",
+          "ref": "preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "control_questions",
+          "title": "control_questions",
+          "ref": "control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "red_flags",
+          "title": "red_flags",
+          "ref": "red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "veto",
+          "title": "veto",
+          "ref": "veto",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/team/performance.yaml",
+      "path": "templates/team/performance.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -3108,10 +5183,53 @@
         "red_flags",
         "veto"
       ],
-      "keys": {}
+      "keys": {
+        "role": {
+          "path": "role",
+          "title": "role",
+          "ref": "role",
+          "status": ""
+        },
+        "mission": {
+          "path": "mission",
+          "title": "mission",
+          "ref": "mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "prioritize_sections",
+          "title": "prioritize_sections",
+          "ref": "prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "preferred_skills",
+          "title": "preferred_skills",
+          "ref": "preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "control_questions",
+          "title": "control_questions",
+          "ref": "control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "red_flags",
+          "title": "red_flags",
+          "ref": "red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "veto",
+          "title": "veto",
+          "ref": "veto",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/team/pipeline.yaml",
+      "path": "templates/team/pipeline.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -3124,10 +5242,53 @@
         "red_flags",
         "veto"
       ],
-      "keys": {}
+      "keys": {
+        "role": {
+          "path": "role",
+          "title": "role",
+          "ref": "role",
+          "status": ""
+        },
+        "mission": {
+          "path": "mission",
+          "title": "mission",
+          "ref": "mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "prioritize_sections",
+          "title": "prioritize_sections",
+          "ref": "prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "preferred_skills",
+          "title": "preferred_skills",
+          "ref": "preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "control_questions",
+          "title": "control_questions",
+          "ref": "control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "red_flags",
+          "title": "red_flags",
+          "ref": "red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "veto",
+          "title": "veto",
+          "ref": "veto",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/team/product.yaml",
+      "path": "templates/team/product.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -3140,10 +5301,53 @@
         "red_flags",
         "veto"
       ],
-      "keys": {}
+      "keys": {
+        "role": {
+          "path": "role",
+          "title": "role",
+          "ref": "role",
+          "status": ""
+        },
+        "mission": {
+          "path": "mission",
+          "title": "mission",
+          "ref": "mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "prioritize_sections",
+          "title": "prioritize_sections",
+          "ref": "prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "preferred_skills",
+          "title": "preferred_skills",
+          "ref": "preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "control_questions",
+          "title": "control_questions",
+          "ref": "control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "red_flags",
+          "title": "red_flags",
+          "ref": "red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "veto",
+          "title": "veto",
+          "ref": "veto",
+          "status": ""
+        }
+      }
     },
     {
-      "path": "templates/team/technical.yaml",
+      "path": "templates/team/technical.json",
       "document": {},
       "routing": {},
       "toc": [],
@@ -3156,7 +5360,154 @@
         "red_flags",
         "veto"
       ],
-      "keys": {}
+      "keys": {
+        "role": {
+          "path": "role",
+          "title": "role",
+          "ref": "role",
+          "status": ""
+        },
+        "mission": {
+          "path": "mission",
+          "title": "mission",
+          "ref": "mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "prioritize_sections",
+          "title": "prioritize_sections",
+          "ref": "prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "preferred_skills",
+          "title": "preferred_skills",
+          "ref": "preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "control_questions",
+          "title": "control_questions",
+          "ref": "control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "red_flags",
+          "title": "red_flags",
+          "ref": "red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "veto",
+          "title": "veto",
+          "ref": "veto",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/WORKFLOW.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "summary",
+        "usage",
+        "responsibility_boundaries",
+        "task_routing",
+        "active_pain_points",
+        "priority_rules",
+        "agent_behavior",
+        "team_on_demand"
+      ],
+      "keys": {
+        "example_missing_core_loop": {
+          "path": "active_pain_points.0",
+          "title": "",
+          "ref": "active_pain_points.0",
+          "status": "example_replace_me"
+        },
+        "example_quality_or_reliability": {
+          "path": "active_pain_points.1",
+          "title": "",
+          "ref": "active_pain_points.1",
+          "status": "example_replace_me"
+        }
+      }
+    },
+    {
+      "path": "WORKFLOW.json",
+      "document": {
+        "title": "Source Pipeline Workflow",
+        "type": "workflow",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "pipeline_bootstrap_directive",
+        "json_source_contract",
+        "workflow_workflow_contract",
+        "generic_programming_baseline",
+        "project_type_routing",
+        "broad_upgrade_passes",
+        "finish_contract"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "pipeline_bootstrap_directive": {
+          "path": "content.pipeline_bootstrap_directive",
+          "title": "Pipeline Bootstrap Directive",
+          "ref": "content.pipeline_bootstrap_directive",
+          "status": ""
+        },
+        "json_source_contract": {
+          "path": "content.json_source_contract",
+          "title": "JSON Source Contract",
+          "ref": "content.json_source_contract",
+          "status": ""
+        },
+        "workflow_workflow_contract": {
+          "path": "content.workflow_workflow_contract",
+          "title": "Workflow/Workflow Contract",
+          "ref": "content.workflow_workflow_contract",
+          "status": ""
+        },
+        "generic_programming_baseline": {
+          "path": "content.generic_programming_baseline",
+          "title": "Generic Programming Baseline",
+          "ref": "content.generic_programming_baseline",
+          "status": ""
+        },
+        "project_type_routing": {
+          "path": "content.project_type_routing",
+          "title": "Project Type Routing",
+          "ref": "content.project_type_routing",
+          "status": ""
+        },
+        "broad_upgrade_passes": {
+          "path": "content.broad_upgrade_passes",
+          "title": "Current Broad Upgrade Passes",
+          "ref": "content.broad_upgrade_passes",
+          "status": ""
+        },
+        "finish_contract": {
+          "path": "content.finish_contract",
+          "title": "Finish Contract",
+          "ref": "content.finish_contract",
+          "status": ""
+        }
+      }
     }
   ]
 }

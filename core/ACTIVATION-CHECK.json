@@ -1,0 +1,63 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "when_to_run",
+        "required_checks",
+        "report_shape",
+        "emoji_activation",
+        "failure_handling"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "when_to_run",
+                "required_checks",
+                "report_shape",
+                "emoji_activation",
+                "failure_handling"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Activation Check\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nUse this check after the first user prompt handled under an installed SocratexAI pipeline.\n\nThe goal is to verify that the agent has actually loaded and applied the installed rules instead of continuing with bootstrap defaults, stale chat context, or a partial adapter directive.\n"
+        },
+        "when_to_run": {
+            "title": "When To Run",
+            "format": "markdown-section",
+            "body": "## When To Run\n\nRun once per newly installed or newly updated project, at the first natural point after setup handoff.\n\nAlso run when:\n\n- a session starts from an adapter directive and the agent is unsure whether `SOCRATEX.md` was followed,\n- the communication format looks wrong,\n- emoji rules are not being applied,\n- branch-scoped memory is expected but was not read,\n- ROI, profile, or script-fallback rules are missing from behavior.\n\nDo not turn this into a long recurring ceremony. Once the pipeline is clearly active, keep using the normal workflow.\n"
+        },
+        "required_checks": {
+            "title": "Required Checks",
+            "format": "markdown-section",
+            "body": "## Required Checks\n\nConfirm that the agent has loaded:\n\n- root `SOCRATEX.md`,\n- `SocratexAI/AGENTS.md`,\n- `SocratexAI/PIPELINE-CONFIG.json`,\n- `SocratexAI/DOCS.json`,\n- `SocratexAI/core/AGENT-CONTRACT.json`,\n- selected project pack files,\n- `core/PROJECT-PROFILE.json` when `project_profile` exists,\n- `core/ROI-BIAS.json`,\n- `core/SCRIPT-FALLBACK.json`,\n- `project/code/BRANCH-MODE.json` and branch STATE/PLAN when `workflow.branch_mode` is `branch_scoped`.\n\nConfirm that the current response behavior applies:\n\n- configured pipeline language,\n- configured communication profile,\n- context-appropriate emoji at section or standalone status starts,\n- communication structure from `core/AGENT-CONTRACT.json`,\n- known-solutions and profile-fit checks,\n- ROI ranking when recommendations are present,\n- script-first and script-fallback discipline,\n- correct memory promotion rules.\n"
+        },
+        "report_shape": {
+            "title": "Report Shape",
+            "format": "markdown-section",
+            "body": "## Report Shape\n\nWhen the check runs, report it briefly:\n\n```text\n"
+        },
+        "emoji_activation": {
+            "title": "<emoji> Activation",
+            "format": "markdown-section",
+            "body": "## <emoji> Activation\nSocratexAI activation check passed: SOCRATEX.md, AGENTS.md, config, core contract, project pack, communication format, emoji rule, and workflow-specific rules are loaded.\n```\n\nIf something is missing, name it and load it before continuing.\n\nIf a file is absent because the selected mode does not require it, say it is not applicable.\n"
+        },
+        "failure_handling": {
+            "title": "Failure Handling",
+            "format": "markdown-section",
+            "body": "## Failure Handling\n\nIf activation is incomplete:\n\n1. Stop the current task briefly.\n2. Load the missing file or explain why it is unavailable.\n3. Re-evaluate the user's prompt under the complete pipeline rules.\n4. Continue only after the missing rule source is handled or explicitly marked not applicable.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Activation Check"
+}

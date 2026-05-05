@@ -1,0 +1,70 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "required_project_setup",
+        "diagnostic_intake",
+        "workflow",
+        "generic_command",
+        "human_readable_reporting",
+        "evidence_handling"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "required_project_setup",
+                "diagnostic_intake",
+                "workflow",
+                "generic_command",
+                "human_readable_reporting",
+                "evidence_handling"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Code Diagnostics\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nUse this workflow for logs, traces, crash dumps, test output, runtime errors, screenshots, and other evidence-driven debugging inputs.\n\nProgramming diagnostics should prefer JSON for generated summaries and JSON for agent-readable diagnostic state.\n"
+        },
+        "required_project_setup": {
+            "title": "Required Project Setup",
+            "format": "markdown-section",
+            "body": "## Required Project Setup\n\nFor code projects, create a root-level `logs/` folder when diagnostics are expected.\n\nKeep `logs/.gitkeep` if the directory should exist in source control.\n\nGenerated diagnostic dumps, screenshots, traces, and temporary summaries should normally stay untracked unless the project explicitly wants fixtures.\n"
+        },
+        "diagnostic_intake": {
+            "title": "Diagnostic Intake",
+            "format": "markdown-section",
+            "body": "## Diagnostic Intake\n\nEvidence may include:\n\n- `.log` files,\n- `.txt` console output,\n- `.json` runtime dumps,\n- screenshots,\n- test output,\n- crash reports,\n- CI artifacts,\n- profiler snapshots.\n"
+        },
+        "workflow": {
+            "title": "Workflow",
+            "format": "markdown-section",
+            "body": "## Workflow\n\n1. Identify the newest relevant evidence.\n2. Extract current errors, warnings, stack traces, failing tests, and repeated symptoms.\n3. Separate observed facts from hypotheses.\n4. Translate raw payloads into human-readable units before reporting them.\n5. Add a likely-cause interpretation after the observed facts.\n6. Choose the smallest source-owned fix or the smallest useful diagnostic addition.\n7. Run the relevant quality gate.\n8. Update `BUGS.json`, `ISSUES.json`, or `STATE.json` when the evidence changes active work.\n9. Ask for user confirmation before moving a suspected bug to `BUGS-SOLVED.json`.\n"
+        },
+        "generic_command": {
+            "title": "Generic Command",
+            "format": "markdown-section",
+            "body": "## Generic Command\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/log_summary.ps1 -Description \"<what to diagnose>\"\n```\n\nThe default output is `DIAGNOSTICS-SUMMARY.json`.\n"
+        },
+        "human_readable_reporting": {
+            "title": "Human-Readable Reporting",
+            "format": "markdown-section",
+            "body": "## Human-Readable Reporting\n\nWhen reporting diagnostics to a user:\n\n- show timing in milliseconds when practical,\n- show memory in KB, MB, or GB,\n- show throughput or frame rates in the most natural domain unit,\n- show timestamps as `YYYY-MM-DD HH:MM:SS` when timestamps are present,\n- include the relevant domain label or environment label when the evidence provides one,\n- distinguish observed data from likely-cause inference,\n- state uncertainty when the evidence is incomplete.\n\nDo not paste large raw logs into chat when a compact summary is enough.\n"
+        },
+        "evidence_handling": {
+            "title": "Evidence Handling",
+            "format": "markdown-section",
+            "body": "## Evidence Handling\n\nDo not delete logs automatically after a fix attempt.\n\nAfter the user confirms the issue is resolved, generated diagnostic files may be cleared while preserving `.gitkeep` and directory structure.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Code Diagnostics"
+}

@@ -13,10 +13,10 @@ Lite favors fewer files and lower ceremony.
 Recommended code files:
 
 - `AGENTS.md`
-- `STATE.yaml`
-- `_PLAN.yaml`
-- `TODO.yaml`
-- `DECISIONS.yaml`
+- `STATE.json`
+- `_PLAN.json`
+- `TODO.json`
+- `DECISIONS.json`
 
 ## Standard
 

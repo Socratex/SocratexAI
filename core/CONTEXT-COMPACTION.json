@@ -1,0 +1,56 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "when_to_recommend_a_hard_reset",
+        "before_reset",
+        "what_not_to_store",
+        "reset_message"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "when_to_recommend_a_hard_reset",
+                "before_reset",
+                "what_not_to_store",
+                "reset_message"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Context Compaction\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nUse context compaction to keep long AI-assisted sessions accurate and cheap.\n"
+        },
+        "when_to_recommend_a_hard_reset": {
+            "title": "When to Recommend a Hard Reset",
+            "format": "markdown-section",
+            "body": "## When to Recommend a Hard Reset\n\nRecommend a hard reset when:\n\n- the session has run through several major passes,\n- the same subsystem has gone through repeated retry loops,\n- broad architecture or ownership changed,\n- the live chat contains stale assumptions,\n- the agent has to reread too much to continue safely,\n- the next task is a new major scope.\n"
+        },
+        "before_reset": {
+            "title": "Before Reset",
+            "format": "markdown-section",
+            "body": "## Before Reset\n\nRefresh the compact project memory:\n\n1. active state file: current objective, current pass, next action, blockers, risks.\n2. relevant `context-docs/`: current contracts, invariants, source-of-truth paths, known traps.\n3. active plan file: only active and future passes.\n4. decision log: durable choices only.\n"
+        },
+        "what_not_to_store": {
+            "title": "What Not to Store",
+            "format": "markdown-section",
+            "body": "## What Not to Store\n\nDo not copy large history into compact memory.\n\nDo not duplicate the same plan across state, plan, backlog, and `context-docs/`.\n\nDo not store scratch notes in `context-docs/`.\n"
+        },
+        "reset_message": {
+            "title": "Reset Message",
+            "format": "markdown-section",
+            "body": "## Reset Message\n\nUse a short factual recommendation:\n\n`A hard reset is recommended now because the session has accumulated broad context and the next task is a new scope. STATE/context-docs have been refreshed for continuation.`\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Context Compaction"
+}

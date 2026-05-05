@@ -1,0 +1,49 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "default_contract",
+        "freeze_candidate_examples",
+        "non_local_changes"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "default_contract",
+                "freeze_candidate_examples",
+                "non_local_changes"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Frozen Layers for Code Projects\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nFrozen layers are working code or architecture areas that should not be changed casually.\n"
+        },
+        "default_contract": {
+            "title": "Default Contract",
+            "format": "markdown-section",
+            "body": "## Default Contract\n\nUse `context-docs/FROZEN_LAYERS.json` to list freeze candidates.\n\nBefore changing a frozen or semi-frozen layer:\n\n1. State that the change touches a frozen layer.\n2. Explain why the change is necessary.\n3. Prefer asking for confirmation when the reason is not an obvious local fix.\n4. Keep the diff bounded.\n5. Run the relevant regression check.\n6. Update the frozen-layer note if the ownership or invariant changed.\n"
+        },
+        "freeze_candidate_examples": {
+            "title": "Freeze Candidate Examples",
+            "format": "markdown-section",
+            "body": "## Freeze Candidate Examples\n\n- stable public API contracts,\n- persistence schema,\n- build or release tooling,\n- migration framework,\n- authentication or authorization boundaries,\n- generated ID contracts,\n- cross-module workflow,\n- core domain invariants.\n"
+        },
+        "non_local_changes": {
+            "title": "Non-Local Changes",
+            "format": "markdown-section",
+            "body": "## Non-Local Changes\n\nIf a new feature wants to change a frozen layer indirectly, first check whether an adapter, compatibility layer, or explicit extension point can avoid destabilizing the existing contract.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Frozen Layers for Code Projects"
+}

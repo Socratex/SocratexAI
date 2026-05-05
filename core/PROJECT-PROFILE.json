@@ -1,0 +1,49 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "profile_axes",
+        "behavior_impact",
+        "profile_fit_check"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "profile_axes",
+                "behavior_impact",
+                "profile_fit_check"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Project Profile\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nThe project profile describes the operating reality of a project before the agent chooses patterns, tooling, verification, and modernization strategy.\n\nRead this file before `project/code/WORKFLOW.json` when `PIPELINE-CONFIG.json` contains `project_profile`.\n\nIf `project_profile` is missing, ask for it at the next natural setup or planning point, but do not block urgent work.\n"
+        },
+        "profile_axes": {
+            "title": "Profile Axes",
+            "format": "markdown-section",
+            "body": "## Profile Axes\n\n`lifecycle`:\n\n- `greenfield`: new project with low legacy constraints.\n- `early`: active project still forming its architecture.\n- `mature`: established project with meaningful conventions and users.\n- `legacy`: older project where change risk, missing tests, and framework constraints matter.\n- `sunset`: project in maintenance, migration, or retirement mode.\n\n`test_coverage`:\n\n- `none`\n- `smoke-only`\n- `partial`\n- `comprehensive`\n- `tdd`\n\n`framework_kind`:\n\n- `standard`: mainstream framework with well-known conventions.\n- `custom in-house`: project-owned framework or deep local platform.\n- `mixed`: standard framework plus significant custom platform code.\n- `none`: no dominant framework.\n\n`linter`, `ci`, and `docs` describe whether feedback loops are enforced, partial, stale, or absent.\n\n`team_size` and `velocity` define coordination cost and acceptable change risk.\n\n`highest_pain` records the user's current practical pain in free text.\n\n`stack` stores verified stack tags such as `php-5.6`, `codeigniter`, `gearman`, `docker`, `node`, or `postgres`.\n"
+        },
+        "behavior_impact": {
+            "title": "Behavior Impact",
+            "format": "markdown-section",
+            "body": "## Behavior Impact\n\nUse the profile to filter the known-solutions search space.\n\nFor `legacy` projects, prefer:\n\n- minimal-invasive changes,\n- characterization tests,\n- golden master tests,\n- seam introduction,\n- strangler fig migration,\n- anti-corruption layers,\n- adapters between old and new code,\n- small verification scripts before structural refactors.\n\nFor `greenfield` and `early` projects, prefer:\n\n- clear domain model,\n- DDD-ADIV boundaries,\n- hexagonal or layered structure when appropriate,\n- framework-native conventions,\n- tests and schemas before complexity grows.\n\nFor `none` or `smoke-only` test coverage, prefer:\n\n- manual reproduction scripts,\n- characterization tests,\n- fixture snapshots,\n- golden files,\n- assertion points,\n- small reversible changes.\n\nFor `custom in-house` or `mixed` frameworks, prefer:\n\n- ports and adapters around framework boundaries,\n- injection seams,\n- framework isolation,\n- adapter extraction,\n- no broad edits to framework core unless explicitly scoped.\n\nFor `mature standard` framework projects, prefer:\n\n- built-in framework mechanisms,\n- ecosystem conventions,\n- standard extension points,\n- compatibility with existing lint, test, and CI gates.\n"
+        },
+        "profile_fit_check": {
+            "title": "Profile-Fit Check",
+            "format": "markdown-section",
+            "body": "## Profile-Fit Check\n\nBefore recommending a pattern or plan, ask:\n\n- Does this solution fit the lifecycle and test reality?\n- Does it reduce the user's stated highest pain?\n- Does it match the project's framework constraints?\n- Can it be verified with available tooling?\n- Is it high ROI for this profile, or only attractive in abstraction?\n\nIf the answer is weak, propose a better profile-fit option.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "Project Profile"
+}

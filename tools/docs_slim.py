@@ -1,10 +1,8 @@
 import argparse
 import copy
+import json
 from pathlib import Path
 from typing import Any
-
-import yaml
-
 
 EXCLUDED_PARTS = {".git", "Tools/Python312", "Tools/python-installer", "Tools/tmp"}
 
@@ -13,29 +11,16 @@ class LiteralString(str):
     pass
 
 
-class SlimYamlDumper(yaml.SafeDumper):
-    pass
+def load_document(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def represent_multiline_string(dumper: yaml.Dumper, value: str) -> yaml.ScalarNode:
-    style = "|" if "\n" in value else None
-    return dumper.represent_scalar("tag:yaml.org,2002:str", value, style=style)
+def render_document(path: Path, value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False, indent=4) + "\n"
 
 
-SlimYamlDumper.add_representer(str, represent_multiline_string)
-SlimYamlDumper.add_representer(LiteralString, represent_multiline_string)
-
-
-def load_yaml(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
-
-
-def write_yaml(path: Path, value: Any) -> None:
-    path.write_text(
-        yaml.dump(value, Dumper=SlimYamlDumper, allow_unicode=True, sort_keys=False, width=1000),
-        encoding="utf-8",
-    )
+def write_document(path: Path, value: Any) -> None:
+    path.write_text(render_document(path, value), encoding="utf-8", newline="\n")
 
 
 def repo_relative(path: Path, repo_root: Path) -> str:
@@ -47,11 +32,11 @@ def is_excluded(path: Path, repo_root: Path) -> bool:
     return any(relative == part or relative.startswith(f"{part}/") for part in EXCLUDED_PARTS)
 
 
-def iter_yaml_paths(repo_root: Path, patterns: list[str]) -> list[Path]:
+def iter_document_paths(repo_root: Path, patterns: list[str]) -> list[Path]:
     paths: set[Path] = set()
     for pattern in patterns:
         for path in repo_root.glob(pattern):
-            if path.is_file() and path.suffix in {".yaml", ".yml"} and not is_excluded(path, repo_root):
+            if path.is_file() and path.suffix in {".json", ".json", ".json"} and not is_excluded(path, repo_root):
                 paths.add(path.resolve())
     return sorted(paths)
 
@@ -67,7 +52,7 @@ SUPPORT_ITEM_KEYS = {
     "pass_index",
     "pass_execution_contract",
     "current_strategic_direction",
-    "non_negotiable_worldgen_principles",
+    "non_negotiable_domain_modeling_principles",
     "active_passes",
     "current_recommended_next_step",
 }
@@ -195,28 +180,28 @@ def slim_document(data: Any) -> Any:
 
 def command_slim(args: argparse.Namespace) -> None:
     repo_root = Path(args.repo_root).resolve()
-    paths = iter_yaml_paths(repo_root, args.paths)
+    paths = iter_document_paths(repo_root, args.paths)
     changed: list[str] = []
     for path in paths:
-        original = load_yaml(path)
+        original = load_document(path)
         slimmed = slim_document(original)
-        rendered = yaml.dump(slimmed, Dumper=SlimYamlDumper, allow_unicode=True, sort_keys=False, width=1000)
+        rendered = render_document(path, slimmed)
         current = path.read_text(encoding="utf-8")
         if slimmed == original and rendered == current:
             continue
         changed.append(repo_relative(path, repo_root))
         if not args.check:
-            path.write_text(rendered, encoding="utf-8")
+            write_document(path, slimmed)
     for path in changed:
         print(path)
     if args.check and changed:
         raise SystemExit(1)
-    print(f"OK: {'would slim' if args.check else 'slimmed'} {len(changed)} YAML document(s).")
+    print(f"OK: {'would slim' if args.check else 'slimmed'} {len(changed)} structured document(s).")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Slim YAML documents to index/items/meta layout.")
-    parser.add_argument("paths", nargs="*", default=["**/*.yaml", "**/*.yml"])
+    parser = argparse.ArgumentParser(description="Slim structured JSON/JSON documents to index/items/meta layout.")
+    parser.add_argument("paths", nargs="*", default=["**/*.json"])
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()

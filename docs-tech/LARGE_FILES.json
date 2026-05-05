@@ -1,0 +1,43 @@
+{
+    "index":  [
+                  "quick_index",
+                  "summary",
+                  "large_file_index",
+                  "maintenance"
+              ],
+    "items":  {
+                  "quick_index":  {
+                                      "title":  "Quick Index",
+                                      "content":  "- 📌 Summary\n- 📊 Large File Index\n- 🛠 Maintenance"
+                                  },
+                  "summary":  {
+                                  "title":  "📌 Summary",
+                                  "content":  "📌 Generated index of code files above the large-file threshold.\n\n📌 This document is generated from `docs-tech/CODE_LINE_INDEX.json` by `Tools/update_code_line_index.ps1`. It tracks code files above 300 non-empty lines so large files have an explicit reason to stay large or a visible reason to split later."
+                              },
+                  "large_file_index":  {
+                                           "title":  "📊 Large File Index",
+                                           "content":  "📊 Current files above 300 non-empty code lines.\n\n| Lines | File | Why It Is Large |\n| ---: | --- | --- |\n| 1235 | `tools/knowledge_index.py` | Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic. |\n| 414 | `tools/audit_docs.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |\n| 398 | `tools/recompile_ai_instructions.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |\n| 369 | `tools/doc_tool.py` | Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic. |\n| 356 | `tools/update_code_line_index.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |\n| 354 | `tools/Initialize-SocratexPipeline.ps1` | Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling. |"
+                                       },
+                  "maintenance":  {
+                                      "title":  "🛠 Maintenance",
+                                      "content":  "🛠 Update this document through the line-index script instead of editing the table manually.\n\n🛠 Use `Tools/update_code_line_index.ps1` for a full refresh. Use `Tools/update_code_line_index.ps1 -ChangedOnly` when only changed files need to update their index records from the current git diff."
+                                  }
+              },
+    "meta":  {
+                 "document":  {
+                                  "title":  "📏 Large Files",
+                                  "type":  "technical",
+                                  "language":  "en"
+                              },
+                 "routing":  {
+                                 "purpose":  "Generated JSON index of code files above the large-file threshold.",
+                                 "read_when":  [
+                                                   "When checking large source-owned files or deciding whether a file should be split.",
+                                                   "When code line index tooling is in scope."
+                                               ],
+                                 "do_not_read_when":  [
+                                                          "When the current task is unrelated to repository size, ownership, or tooling."
+                                                      ]
+                             }
+             }
+}

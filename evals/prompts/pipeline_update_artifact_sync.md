@@ -8,8 +8,8 @@ The new source introduced:
 AI-compiled/project/knowledge.sqlite
 AI-compiled/project/knowledge-files/
 tools/knowledge_code_context.ps1
-templates/docs-tech/KNOWLEDGE-VIEWS.yaml
-templates/code/context-docs/ENGINEERING.yaml
+templates/docs-tech/KNOWLEDGE-VIEWS.json
+templates/code/context-docs/ENGINEERING.json
 ```
 
 The installed project already has user memory, active plans, and project-local configuration.

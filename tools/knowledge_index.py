@@ -7,15 +7,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-import yaml
-
-
 SCHEMA = "socratex-knowledge-index/v3"
 COMPILER_VERSION = "3"
 DEFAULT_DB_PATH = "AI-compiled/project/knowledge.sqlite"
 DEFAULT_MANIFEST_PATH = "AI-compiled/project/knowledge-manifest.json"
 DEFAULT_FILE_DIR = "AI-compiled/project/knowledge-files"
-DEFAULT_VIEWS_PATH = "docs-tech/KNOWLEDGE-VIEWS.yaml"
+DEFAULT_VIEWS_PATH = "docs-tech/KNOWLEDGE-VIEWS.json"
 
 TAG_DESCRIPTIONS = {
     "adapters": "Scene/runtime adapter boundaries.",
@@ -32,8 +29,7 @@ TAG_DESCRIPTIONS = {
     "docs-workflow": "Documentation workflow, source-of-truth, and finalizer rules.",
     "engineering": "General engineering standards.",
     "explicit-flow": "Explicit control/data/state flow.",
-    "gamedev": "Game-development-specific engineering rules.",
-    "godot": "Godot runtime, scene, and tool rules.",
+    "gamedev": "Game-development-specific engineering rules for the gamedev pack.",
     "knowledge": "Compiled knowledge index, tag query, and note-selection rules.",
     "maintainability": "Long-term maintenance and traceability rules.",
     "ownership": "Source-of-truth and subsystem ownership rules.",
@@ -42,12 +38,11 @@ TAG_DESCRIPTIONS = {
     "planning": "Planning, pass selection, and priority sequencing rules.",
     "readability": "Human and agent readability rules.",
     "runtime": "Runtime lifecycle and gameplay execution rules.",
-    "scene-glue": "Godot scene glue and adapter rules.",
     "session-start": "Knowledge that should be loaded at the beginning of session context building.",
     "tests": "Automated or manual verification rules.",
     "top-down": "Top-down source organization.",
     "verification": "Verification strategy and quality gates.",
-    "worldgen": "World generation, route graph, biome, and generated-state rules.",
+    "domain_modeling": "Domain modeling, generated-state, and durable state rules.",
 }
 
 
@@ -92,9 +87,16 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
 
-def load_yaml(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
+def load_json(path: Path) -> Any:
+    return json.loads(read_text(path))
+
+
+def load_structured(path: Path) -> Any:
+    return load_json(path)
+
+
+def is_structured_source(path: Path) -> bool:
+    return path.suffix.lower() in {".json", ".json", ".json"}
 
 
 def normalize_path(path: str) -> str:
@@ -142,14 +144,14 @@ def should_skip_source(relative_path: str) -> bool:
         or path
         in {
             "docs-tech/CODE_LINE_INDEX.json",
-            "docs-tech/LARGE_FILES.yaml",
+            "docs-tech/LARGE_FILES.json",
         }
     )
 
 
-def discover_yaml_sources(repo_root: Path) -> list[Path]:
+def discover_structured_sources(repo_root: Path) -> list[Path]:
     paths: list[Path] = []
-    for pattern in ("*.yaml", "*.yml"):
+    for pattern in ("*.json", "*.json", "*.json"):
         for path in repo_root.rglob(pattern):
             relative = normalize_path(str(path.relative_to(repo_root)))
             if not should_skip_source(relative):
@@ -294,7 +296,9 @@ def collect_document_entries(repo_root: Path, document_path: str) -> tuple[str, 
     if not path.exists():
         raise FileNotFoundError(f"Knowledge source document is missing: {relative}")
     document_hash = sha256_file(path) or ""
-    document = load_yaml(path)
+    if not is_structured_source(path):
+        return document_hash, [], {relative: document_hash}
+    document = load_structured(path)
     entries = [normalize_entry(raw, relative, selector) for selector, raw in find_tagged_entries(document, "")]
     document_hashes = {relative: document_hash}
     for entry in entries:
@@ -311,12 +315,12 @@ def collect_document_entries(repo_root: Path, document_path: str) -> tuple[str, 
 def collect_all_entries(repo_root: Path) -> tuple[list[dict[str, Any]], dict[str, str]]:
     entries: list[dict[str, Any]] = []
     document_hashes: dict[str, str] = {}
-    for path in discover_yaml_sources(repo_root):
+    for path in discover_structured_sources(repo_root):
         relative = normalize_path(str(path.relative_to(repo_root)))
         document_hash, document_entries, source_hashes = collect_document_entries(repo_root, relative)
+        document_hashes[relative] = document_hash
         if document_entries:
             entries.extend(document_entries)
-            document_hashes[relative] = document_hash
         document_hashes.update(source_hashes)
     entries.sort(key=lambda entry: (entry["document_path"], entry["name"]))
     return entries, dict(sorted(document_hashes.items()))
@@ -326,10 +330,21 @@ def load_view_configs(repo_root: Path) -> list[dict[str, Any]]:
     views_path = repo_root / DEFAULT_VIEWS_PATH
     if not views_path.exists():
         return []
-    document = load_yaml(views_path)
-    raw_views = document.get("views") if isinstance(document, dict) else []
+    document = load_structured(views_path)
+    raw_views = []
+    selector_prefix = "views"
+    if isinstance(document, dict):
+        content = document.get("content")
+        if isinstance(content, dict) and isinstance(content.get("views"), list):
+            raw_views = content.get("views")
+            selector_prefix = "content.views"
+        elif isinstance(document.get("metadata"), dict) and isinstance(document["metadata"].get("views"), list):
+            raw_views = document["metadata"].get("views")
+            selector_prefix = "metadata.views"
+        else:
+            raw_views = document.get("views")
     if not isinstance(raw_views, list):
-        raise ValueError(f"{DEFAULT_VIEWS_PATH} must contain a top-level `views` list.")
+        raise ValueError(f"{DEFAULT_VIEWS_PATH} must contain `views`, `content.views`, or `metadata.views`.")
     configs: list[dict[str, Any]] = []
     for index, raw in enumerate(raw_views):
         if not isinstance(raw, dict):
@@ -350,7 +365,7 @@ def load_view_configs(repo_root: Path) -> list[dict[str, Any]]:
                 "type": normalize_type(raw.get("type")) if raw.get("type") else "",
                 "load_at_start": normalize_bool(raw.get("load_at_start", False)),
                 "source_path": DEFAULT_VIEWS_PATH,
-                "source_selector": f"views.{index}",
+                "source_selector": f"{selector_prefix}.{index}",
             }
         )
     return configs

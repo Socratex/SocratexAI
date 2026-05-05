@@ -65,12 +65,11 @@ $rules = [ordered]@{
 	"knowledge" = @("knowledge", "sqlite", "tag", "tags", "notat", "note", "notes", "selector", "context", "kontekst")
 	"debugging" = @("bug", "error", "crash", "console", "log", "trace", "diagnostic", "diagnost")
 	"performance" = @("performance", "fps", "memory", "profiler", "budget", "hot path")
-	"godot" = @("godot", "gdscript", "scene", "node", "signal", "tscn")
-	"worldgen" = @("worldgen", "world", "chunk", "biome", "terrain", "route")
+	"domain_modeling" = @("domain_modeling", "world", "chunk", "biome", "terrain", "route")
 	"persistence" = @("save", "load", "persistence", "persistent", "reconstruction", "stable id")
 	"verification" = @("test", "check", "verify", "verification", "audit", "quality gate", "gate")
 	"gamedev" = @("game", "gameplay", "combat", "movement", "camera", "collision", "traversal")
-	"documentation" = @("doc", "docs", "document", "markdown", "yaml", "changelog", "featurelist")
+	"documentation" = @("doc", "docs", "document", "markdown", "json", "changelog", "featurelist")
 	"planning" = @("plan", "roadmap", "priority", "todo", "pass", "continue")
 }
 

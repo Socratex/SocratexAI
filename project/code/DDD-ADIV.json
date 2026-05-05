@@ -1,0 +1,63 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "summary",
+        "known_solutions_alignment",
+        "domain_driven",
+        "architecture_decisive",
+        "invariant_visible",
+        "verification_attached"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "summary",
+                "known_solutions_alignment",
+                "domain_driven",
+                "architecture_decisive",
+                "invariant_visible",
+                "verification_attached"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# DDD-ADIV for Code Projects\n"
+        },
+        "summary": {
+            "title": "Summary",
+            "format": "markdown-section",
+            "body": "## Summary\n\nDDD-ADIV is the recommended design default for code projects using SocratexPipeline.\n\nDDD-ADIV means Domain-Driven, Architecture-Decisive, Invariant-Visible development.\n"
+        },
+        "known_solutions_alignment": {
+            "title": "Known-Solutions Alignment",
+            "format": "markdown-section",
+            "body": "## Known-Solutions Alignment\n\nUse known solutions as domain-clarifying tools, not as abstract ceremony.\n\nBefore custom design:\n\n- check known solutions, proven practices, standard tools, and business/software archetypes,\n- compare the problem against architecture archetypes such as layered architecture, hexagonal architecture, CQRS, state machines, queues, adapters, repositories, and domain services,\n- prefer build-vs-borrow discipline when a framework feature, library, workflow, or pattern is cheaper and clearer,\n- check future fit before executing requested work, and recommend a better prerequisite or design when the requested route would create avoidable retrofit cost,\n- align the selected solution with domain language, ownership, invariants, and boundaries.\n\nReject a known solution only when it conflicts with the domain, creates worse coupling, weakens invariants, or hides the source of truth.\n"
+        },
+        "domain_driven": {
+            "title": "Domain-Driven",
+            "format": "markdown-section",
+            "body": "## Domain-Driven\n\nUse project language as the primary naming source.\n\nPrefer:\n\n- business-meaningful names over mechanism names,\n- explicit domain state over incidental data shape,\n- commands and policies that describe intent,\n- domain services only when behavior does not naturally belong to one entity or value object.\n\nAvoid:\n\n- generic managers that own unrelated behavior,\n- anemic data objects plus scattered rules,\n- framework vocabulary leaking into core domain logic,\n- hidden domain meaning encoded only in comments or UI labels.\n"
+        },
+        "architecture_decisive": {
+            "title": "Architecture-Decisive",
+            "format": "markdown-section",
+            "body": "## Architecture-Decisive\n\nMake durable ownership and dependency decisions explicit.\n\nPrefer:\n\n- small boundaries with clear responsibilities,\n- ports and adapters for external systems,\n- dependency direction that points inward toward stable domain logic,\n- explicit source-of-truth ownership,\n- decision records for choices that future work must preserve.\n\nAvoid:\n\n- circular ownership,\n- duplicated sources of truth,\n- convenience coupling across unrelated modules,\n- broad shared utility layers that hide domain meaning.\n"
+        },
+        "invariant_visible": {
+            "title": "Invariant-Visible",
+            "format": "markdown-section",
+            "body": "## Invariant-Visible\n\nMake important rules mechanically findable and checkable.\n\nPrefer:\n\n- validation at boundaries,\n- explicit constructors or factories for valid states,\n- assertions or guards for impossible states,\n- schema checks for external data,\n- tests for high-risk invariants,\n- named policies for conditional rules.\n\nAvoid:\n\n- relying on call order when a state machine or explicit phase would be clearer,\n- implicit defaults that silently create invalid states,\n- scattered checks that implement one invariant differently in multiple places.\n"
+        },
+        "verification_attached": {
+            "title": "Verification-Attached",
+            "format": "markdown-section",
+            "body": "## Verification-Attached\n\nAttach verification to risky work.\n\nVerification can be:\n\n- unit tests,\n- integration tests,\n- contract tests,\n- typechecks,\n- linters,\n- build checks,\n- smoke tests,\n- manual reproduction steps.\n\nIf verification is not practical, record the residual risk.\n"
+        }
+    },
+    "schema": "socratex-document/v1",
+    "title": "DDD-ADIV for Code Projects"
+}

@@ -5,8 +5,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 import docs_slim
 
 
@@ -17,19 +15,17 @@ if hasattr(sys.stdout, "reconfigure"):
 URL_RE = re.compile(r"https?://[^\s\]\)>,\"']+", re.IGNORECASE)
 
 
-def load_yaml(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as handle:
-        return yaml.safe_load(handle) or {}
+def load_document(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def write_yaml(path: Path, value: Any) -> None:
-    rendered = yaml.dump(value, Dumper=docs_slim.SlimYamlDumper, allow_unicode=True, sort_keys=False, width=1000)
-    path.write_text(rendered, encoding="utf-8")
+def write_document(path: Path, value: Any) -> None:
+    docs_slim.write_document(path, value)
 
 
 def normalize_document(document: Any) -> dict[str, Any]:
     if not isinstance(document, dict):
-        raise ValueError("YAML document must be a mapping.")
+        raise ValueError("Structured document must be a mapping.")
     if "items" not in document:
         document["items"] = {}
     if not isinstance(document["items"], dict):
@@ -196,7 +192,7 @@ def format_list_line(text: str) -> str:
 
 
 def command_check(args: argparse.Namespace) -> None:
-    document = normalize_document(load_yaml(Path(args.path)))
+    document = normalize_document(load_document(Path(args.path)))
     if args.terms:
         candidates = candidate_matches(document, args.terms, args.limit)
         print_candidates(candidates, args.json)
@@ -215,7 +211,7 @@ def command_check(args: argparse.Namespace) -> None:
 
 
 def command_read_titles(args: argparse.Namespace) -> None:
-    document = normalize_document(load_yaml(Path(args.path)))
+    document = normalize_document(load_document(Path(args.path)))
     selected = select_items_by_titles(document, args.titles)
     if args.json:
         print(json.dumps(selected, ensure_ascii=False, indent=2))
@@ -232,7 +228,7 @@ def command_read_titles(args: argparse.Namespace) -> None:
 
 def command_insert(args: argparse.Namespace) -> None:
     path = Path(args.path)
-    document = normalize_document(load_yaml(path))
+    document = normalize_document(load_document(path))
     items = document["items"]
     if args.key not in items:
         if not args.create_title:
@@ -255,12 +251,12 @@ def command_insert(args: argparse.Namespace) -> None:
     else:
         set_item_content(item, line)
     document = docs_slim.slim_document(document)
-    write_yaml(path, document)
+    write_document(path, document)
     print(f"OK: inserted list item into {path}#{args.key}")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Check and insert list lines in slim YAML document item content.")
+    parser = argparse.ArgumentParser(description="Check and insert list lines in slim structured document item content.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     check = subparsers.add_parser("check")

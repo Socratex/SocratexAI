@@ -1,5 +1,5 @@
 param(
-	[string[]]$Paths = @("AGENTS.md", "DOCS.yaml"),
+	[string[]]$Paths = @("AGENTS.md", "DOCS.json"),
 	[switch]$Check
 )
 
