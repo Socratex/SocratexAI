@@ -2343,57 +2343,26 @@
       "path": "pipeline_featurelist.json",
       "document": {},
       "routing": {},
-      "toc": [],
-      "top_level_keys": [
-        "schema",
-        "pipeline_id",
-        "role",
-        "updated_at",
+      "toc": [
         "features",
-        "feature_contracts",
+        "feature_contracts"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
         "metadata"
       ],
       "keys": {
-        "schema": {
-          "path": "schema",
-          "title": "schema",
-          "ref": "schema",
-          "status": ""
-        },
-        "pipeline_id": {
-          "path": "pipeline_id",
-          "title": "pipeline_id",
-          "ref": "pipeline_id",
-          "status": ""
-        },
-        "role": {
-          "path": "role",
-          "title": "role",
-          "ref": "role",
-          "status": ""
-        },
-        "updated_at": {
-          "path": "updated_at",
-          "title": "updated_at",
-          "ref": "updated_at",
-          "status": ""
-        },
         "features": {
-          "path": "features",
+          "path": "content.features",
           "title": "features",
-          "ref": "features",
+          "ref": "content.features",
           "status": ""
         },
         "feature_contracts": {
-          "path": "feature_contracts",
-          "title": "feature_contracts",
-          "ref": "feature_contracts",
-          "status": ""
-        },
-        "metadata": {
-          "path": "metadata",
-          "title": "metadata",
-          "ref": "metadata",
+          "path": "content.feature_contracts",
+          "title": "",
+          "ref": "content.feature_contracts",
           "status": ""
         }
       }

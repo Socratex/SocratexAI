@@ -41,6 +41,54 @@ function Convert-ToStringList {
     return @($result)
 }
 
+function Get-DocumentContent {
+    param([object]$Document)
+
+    if ($null -eq $Document -or -not ($Document.PSObject.Properties.Name -contains "content")) {
+        return $null
+    }
+    return $Document.content
+}
+
+function Get-FeatureValues {
+    param([object]$FeatureList)
+
+    if ($null -eq $FeatureList) {
+        return @()
+    }
+    $content = Get-DocumentContent -Document $FeatureList
+    if ($null -ne $content -and $content.PSObject.Properties.Name -contains "features") {
+        return @($content.features)
+    }
+    if ($FeatureList.PSObject.Properties.Name -contains "features") {
+        return @($FeatureList.features)
+    }
+    return @()
+}
+
+function Get-FeatureContracts {
+    param([object]$FeatureList)
+
+    $content = Get-DocumentContent -Document $FeatureList
+    if ($null -ne $content -and $content.PSObject.Properties.Name -contains "feature_contracts") {
+        return $content.feature_contracts
+    }
+    if ($null -ne $FeatureList -and $FeatureList.PSObject.Properties.Name -contains "feature_contracts") {
+        return $FeatureList.feature_contracts
+    }
+    return $null
+}
+
+function Test-CanonicalListDocumentShape {
+    param([object]$Document)
+
+    if ($null -eq $Document) {
+        return $false
+    }
+    $rootKeys = @($Document.PSObject.Properties.Name)
+    return (($rootKeys -join ",") -eq "index,content,metadata")
+}
+
 function Expand-PathArguments {
     param([string[]]$RawPaths)
 
@@ -198,7 +246,22 @@ try {
 
     $featureList = Read-JsonFile -Path $featureListPath
     $scriptCatalog = Read-JsonFile -Path $scriptCatalogPath
-    $features = @(Convert-ToStringList -Value $featureList.features)
+    if (-not (Test-CanonicalListDocumentShape -Document $featureList)) {
+        Add-ContractError "pipeline_featurelist.json must use canonical root keys in this order: index, content, metadata."
+    } else {
+        $indexKeys = @(Convert-ToStringList -Value $featureList.index)
+        foreach ($requiredIndexKey in @("features", "feature_contracts")) {
+            if ($indexKeys -notcontains $requiredIndexKey) {
+                Add-ContractError "pipeline_featurelist.json index must include '$requiredIndexKey'."
+            }
+            if (-not ($featureList.content.PSObject.Properties.Name -contains $requiredIndexKey)) {
+                Add-ContractError "pipeline_featurelist.json content is missing '$requiredIndexKey'."
+            }
+        }
+    }
+
+    $features = @(Convert-ToStringList -Value (Get-FeatureValues -FeatureList $featureList))
+    $featureContracts = Get-FeatureContracts -FeatureList $featureList
     $featureSet = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
     foreach ($feature in $features) {
         if (-not $featureSet.Add($feature)) {
@@ -207,13 +270,13 @@ try {
     }
 
     if ($features.Count -eq 0) {
-        Add-ContractError "pipeline_featurelist.json must contain a non-empty features index."
+        Add-ContractError "pipeline_featurelist.json must contain a non-empty content.features index."
     }
-    if ($null -eq $featureList.feature_contracts) {
-        Add-ContractError "pipeline_featurelist.json must contain feature_contracts."
+    if ($null -eq $featureContracts) {
+        Add-ContractError "pipeline_featurelist.json must contain content.feature_contracts."
     }
 
-    $contractNames = if ($null -eq $featureList.feature_contracts) { @() } else { @($featureList.feature_contracts.PSObject.Properties.Name) }
+    $contractNames = if ($null -eq $featureContracts) { @() } else { @($featureContracts.PSObject.Properties.Name) }
     foreach ($feature in $features) {
         if ($contractNames -notcontains $feature) {
             Add-ContractError "Missing feature contract for feature id: $feature"
@@ -234,7 +297,7 @@ try {
             continue
         }
 
-        $contract = $featureList.feature_contracts.PSObject.Properties[$feature].Value
+        $contract = $featureContracts.PSObject.Properties[$feature].Value
         if ([string]::IsNullOrWhiteSpace([string]$contract.summary)) {
             Add-ContractError "Feature '$feature' contract is missing summary."
         }

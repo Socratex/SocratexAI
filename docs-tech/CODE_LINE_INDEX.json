@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T05:32:02+02:00",
+    "generatedAt":  "2026-05-05T05:43:21+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -39,20 +39,20 @@
                       "large":  true
                   },
                   {
+                      "path":  "tools/repo/check_pipeline_feature_contracts.ps1",
+                      "lines":  346,
+                      "extension":  ".ps1",
+                      "large":  true
+                  },
+                  {
                       "path":  "tools/documents/json_list_doc.py",
                       "lines":  343,
                       "extension":  ".py",
                       "large":  true
                   },
                   {
-                      "path":  "tools/repo/check_pipeline_feature_contracts.ps1",
-                      "lines":  292,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
                       "path":  "tools/repo/sync_pipeline_featurelist.ps1",
-                      "lines":  280,
+                      "lines":  295,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -99,6 +99,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/repo/report_pipeline_learning.ps1",
+                      "lines":  192,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/pipeline/reinitialize_pipeline.ps1",
                       "lines":  190,
                       "extension":  ".ps1",
@@ -117,8 +123,8 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/repo/report_pipeline_learning.ps1",
-                      "lines":  180,
+                      "path":  "tools/repo/learn_pipeline_features.ps1",
+                      "lines":  176,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -150,12 +156,6 @@
                       "path":  "tools/documents/document_schema_migration_engine.py",
                       "lines":  138,
                       "extension":  ".py",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/repo/learn_pipeline_features.ps1",
-                      "lines":  138,
-                      "extension":  ".ps1",
                       "large":  false
                   },
                   {

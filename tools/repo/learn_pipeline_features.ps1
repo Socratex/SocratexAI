@@ -72,7 +72,21 @@ function Get-FeatureContracts {
 	param([object]$FeatureList)
 
 	$contracts = [ordered]@{}
-	if ($null -eq $FeatureList -or -not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
+	if ($null -eq $FeatureList) {
+		return $contracts
+	}
+
+	if ($FeatureList.PSObject.Properties.Name -contains "content") {
+		$content = $FeatureList.content
+		if ($null -ne $content -and $content.PSObject.Properties.Name -contains "feature_contracts") {
+			foreach ($property in $content.feature_contracts.PSObject.Properties) {
+				$contracts[[string]$property.Name] = $property.Value
+			}
+			return $contracts
+		}
+	}
+
+	if (-not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
 		return $contracts
 	}
 
@@ -80,6 +94,31 @@ function Get-FeatureContracts {
 		$contracts[[string]$property.Name] = $property.Value
 	}
 	return $contracts
+}
+
+function Get-FeatureListMetadataValue {
+	param(
+		[object]$FeatureList,
+		[string]$Name,
+		[string]$Fallback
+	)
+
+	if ($null -ne $FeatureList -and $FeatureList.PSObject.Properties.Name -contains $Name) {
+		$value = ([string]$FeatureList.$Name).Trim()
+		if ($value.Length -gt 0) {
+			return $value
+		}
+	}
+	if ($null -ne $FeatureList -and $FeatureList.PSObject.Properties.Name -contains "metadata") {
+		$metadata = $FeatureList.metadata
+		if ($null -ne $metadata -and $metadata.PSObject.Properties.Name -contains $Name) {
+			$value = ([string]$metadata.$Name).Trim()
+			if ($value.Length -gt 0) {
+				return $value
+			}
+		}
+	}
+	return $Fallback
 }
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
@@ -144,13 +183,16 @@ foreach ($feature in $selected) {
 }
 
 $payload = [ordered]@{
-	schema = "socratex-pipeline-featurelist/v3"
-	pipeline_id = [string]$source.pipeline_id
-	role = [string]$source.role
-	updated_at = (Get-Date).ToString("yyyy-MM-dd")
-	features = @($updated)
-	feature_contracts = $sourceContracts
+	index = @("features", "feature_contracts")
+	content = [ordered]@{
+		features = @($updated)
+		feature_contracts = $sourceContracts
+	}
 	metadata = [ordered]@{
+		schema = "socratex-pipeline-featurelist/v4"
+		pipeline_id = Get-FeatureListMetadataValue -FeatureList $source -Name "pipeline_id" -Fallback "socratex_pipeline"
+		role = Get-FeatureListMetadataValue -FeatureList $source -Name "role" -Fallback "source"
+		updated_at = (Get-Date).ToString("yyyy-MM-dd")
 		comparison_contract = "Use features for cheap source/instance comparison; use feature_contracts for artifact-level synchronization and promotion checks."
 		required_contract_fields = @("summary", "required_paths", "required_scripts", "required_catalog_entries", "required_docs", "sync_direction", "promotion_checklist", "verification_commands", "known_failure_if_missing")
 		sync_directions = @("source_to_child", "child_to_source", "bidirectional", "source_only")

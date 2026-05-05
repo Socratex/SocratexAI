@@ -35,8 +35,9 @@
             "read": "index only in default context; read content only for exact metadata about a specific script"
         },
         "pipeline_featurelist.json": {
-            "role": "Canonical source-pipeline feature manifest.",
-            "read": "when pipeline-owned behavior changes"
+            "role": "Canonical source-pipeline feature manifest. It uses the stable JSON list-document shape: root index, content, and metadata.",
+            "read": "when pipeline-owned behavior changes",
+            "structure": "content.features stores the cheap feature-id comparison list; content.feature_contracts stores artifact contracts; metadata stores schema, pipeline identity, role, and comparison rules."
         },
         "core/": {
             "role": "Shared agent contracts and protocols.",

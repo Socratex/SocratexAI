@@ -312,6 +312,12 @@
       "date": "2026-05-05",
       "feature": "legacy_feature_manifest_update_recovery",
       "change": "Preserve project-owned index/content/metadata featurelist shape during cheap child pipeline updates. Recover list-document output when target DOCS.json declares pipeline_featurelist.json as a canonical project document. Why: Old or partially updated child workspaces should update cheaply without manual manifest migration or losing local feature descriptions."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-05",
+      "feature": "canonical_index_content_metadata_document_schema",
+      "change": "Promoted index/content/metadata from a child-project convention into the canonical source pipeline feature manifest shape. Moved source pipeline_featurelist.json feature IDs under content.features and artifact contracts under content.feature_contracts with backward-compatible readers for older root manifests. Why: Feature comparison and synchronization should be a stable low-cost structured document operation, not a Riftbound-only exception."
     }
   ]
 }

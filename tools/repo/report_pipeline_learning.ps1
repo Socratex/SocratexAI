@@ -98,7 +98,21 @@ function Get-FeatureContracts {
 	param([object]$FeatureList)
 
 	$contracts = [ordered]@{}
-	if ($null -eq $FeatureList -or -not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
+	if ($null -eq $FeatureList) {
+		return $contracts
+	}
+
+	if ($FeatureList.PSObject.Properties.Name -contains "content") {
+		$content = $FeatureList.content
+		if ($null -ne $content -and $content.PSObject.Properties.Name -contains "feature_contracts") {
+			foreach ($property in $content.feature_contracts.PSObject.Properties) {
+				$contracts[[string]$property.Name] = $property.Value
+			}
+			return $contracts
+		}
+	}
+
+	if (-not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
 		return $contracts
 	}
 
@@ -191,7 +205,7 @@ $payload = [ordered]@{
 	excluded_candidate_count = $excludedCandidates.Count
 	candidates = @($candidates)
 	source_features_missing_from_project = @($missingFromProject)
-	recommendation = "Use this report as intake only. Promote only reusable, project-agnostic features into the source pipeline, and promote feature_contracts with every accepted feature ID."
+	recommendation = "Use this report as intake only. Promote only reusable, project-agnostic features into the source pipeline, and promote content.feature_contracts with every accepted feature ID."
 }
 
 $json = $payload | ConvertTo-Json -Depth 10

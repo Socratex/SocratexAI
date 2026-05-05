@@ -66,7 +66,21 @@ function Get-FeatureContracts {
 	param([object]$FeatureList)
 
 	$contracts = [ordered]@{}
-	if ($null -eq $FeatureList -or -not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
+	if ($null -eq $FeatureList) {
+		return $contracts
+	}
+
+	if ($FeatureList.PSObject.Properties.Name -contains "content") {
+		$content = $FeatureList.content
+		if ($null -ne $content -and $content.PSObject.Properties.Name -contains "feature_contracts") {
+			foreach ($property in $content.feature_contracts.PSObject.Properties) {
+				$contracts[[string]$property.Name] = $property.Value
+			}
+			return $contracts
+		}
+	}
+
+	if (-not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
 		return $contracts
 	}
 
@@ -182,6 +196,9 @@ if (Test-Path -LiteralPath $OutputPath -PathType Leaf) {
 	$existingFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList $existing)
 	$existingContracts = Get-FeatureContracts -FeatureList $existing
 	$preserveListDocumentShape = Test-ListDocumentFeatureManifest -FeatureList $existing
+}
+if (-not $preserveListDocumentShape) {
+	$preserveListDocumentShape = Test-ListDocumentFeatureManifest -FeatureList $source
 }
 if (-not $preserveListDocumentShape) {
 	$preserveListDocumentShape = Test-TargetRequiresListDocumentFeatureManifest -RootPath $targetRoot
