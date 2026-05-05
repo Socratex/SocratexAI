@@ -2345,13 +2345,21 @@
       "routing": {},
       "toc": [],
       "top_level_keys": [
+        "metadata",
         "schema",
         "pipeline_id",
         "role",
         "updated_at",
-        "features"
+        "features",
+        "feature_contracts"
       ],
       "keys": {
+        "metadata": {
+          "path": "metadata",
+          "title": "metadata",
+          "ref": "metadata",
+          "status": ""
+        },
         "schema": {
           "path": "schema",
           "title": "schema",
@@ -2380,6 +2388,12 @@
           "path": "features",
           "title": "features",
           "ref": "features",
+          "status": ""
+        },
+        "feature_contracts": {
+          "path": "feature_contracts",
+          "title": "feature_contracts",
+          "ref": "feature_contracts",
           "status": ""
         }
       }
@@ -3493,6 +3507,7 @@
         "check_ai_compiled_context.ps1",
         "check_evals.ps1",
         "check_pipeline_featurelist_update.ps1",
+        "check_pipeline_feature_contracts.ps1",
         "check_runtime.py",
         "check_task.ps1",
         "check_utf8_writes.ps1",
@@ -4212,6 +4227,12 @@
           "path": "content.sync_managed_pipeline_package.ps1",
           "title": "",
           "ref": "content.sync_managed_pipeline_package.ps1",
+          "status": ""
+        },
+        "check_pipeline_feature_contracts.ps1": {
+          "path": "content.check_pipeline_feature_contracts.ps1",
+          "title": "",
+          "ref": "content.check_pipeline_feature_contracts.ps1",
           "status": ""
         }
       }

@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T04:47:16+02:00",
+    "generatedAt":  "2026-05-05T05:09:03+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -10,7 +10,7 @@
                   },
                   {
                       "path":  "tools/documents/audit_docs.ps1",
-                      "lines":  440,
+                      "lines":  449,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -43,6 +43,12 @@
                       "lines":  343,
                       "extension":  ".py",
                       "large":  true
+                  },
+                  {
+                      "path":  "tools/repo/check_pipeline_feature_contracts.ps1",
+                      "lines":  292,
+                      "extension":  ".ps1",
+                      "large":  false
                   },
                   {
                       "path":  "tools/pipeline/import_existing_project.ps1",
@@ -129,6 +135,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/repo/report_pipeline_learning.ps1",
+                      "lines":  138,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/setup/run_interactive_setup.ps1",
                       "lines":  135,
                       "extension":  ".ps1",
@@ -141,8 +153,14 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/repo/report_pipeline_learning.ps1",
-                      "lines":  125,
+                      "path":  "tools/repo/sync_pipeline_featurelist.ps1",
+                      "lines":  128,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/repo/learn_pipeline_features.ps1",
+                      "lines":  122,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -165,12 +183,6 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/repo/sync_pipeline_featurelist.ps1",
-                      "lines":  103,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
                       "path":  "tools/pipeline/remove_pipeline.ps1",
                       "lines":  101,
                       "extension":  ".ps1",
@@ -189,8 +201,8 @@
                       "large":  false
                   },
                   {
-                      "path":  "tools/repo/learn_pipeline_features.ps1",
-                      "lines":  97,
+                      "path":  "tools/repo/check_pipeline_featurelist_update.ps1",
+                      "lines":  92,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -219,6 +231,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/pipeline/sync_managed_pipeline_package.ps1",
+                      "lines":  86,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/repo/check_toolchain_health.ps1",
                       "lines":  86,
                       "extension":  ".ps1",
@@ -227,18 +245,6 @@
                   {
                       "path":  "tools/text/check_utf8_writes.ps1",
                       "lines":  86,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/pipeline/sync_managed_pipeline_package.ps1",
-                      "lines":  85,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/repo/check_pipeline_featurelist_update.ps1",
-                      "lines":  85,
                       "extension":  ".ps1",
                       "large":  false
                   },

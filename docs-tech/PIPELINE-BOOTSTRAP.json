@@ -66,6 +66,7 @@
             "check_ai_compiled_context.ps1",
             "check_evals.ps1",
             "check_pipeline_featurelist_update.ps1",
+            "check_pipeline_feature_contracts.ps1",
             "check_runtime.py",
             "check_task.ps1",
             "check_utf8_writes.ps1",

@@ -44,6 +44,20 @@ function Get-DefaultPipelineId {
 	return $id
 }
 
+function Get-FeatureContracts {
+	param([object]$FeatureList)
+
+	$contracts = [ordered]@{}
+	if ($null -eq $FeatureList -or -not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
+		return $contracts
+	}
+
+	foreach ($property in $FeatureList.feature_contracts.PSObject.Properties) {
+		$contracts[[string]$property.Name] = $property.Value
+	}
+	return $contracts
+}
+
 $targetRoot = Resolve-Path -LiteralPath $TargetPath
 if ([string]::IsNullOrWhiteSpace($OutputPath)) {
 	$OutputPath = Join-Path $targetRoot "pipeline_featurelist.json"
@@ -65,9 +79,11 @@ if ($sourceFeatures.Count -eq 0) {
 }
 
 $existingFeatures = @()
+$existingContracts = [ordered]@{}
 if (Test-Path -LiteralPath $OutputPath -PathType Leaf) {
 	$existing = Read-JsonFile -Path $OutputPath
 	$existingFeatures = Convert-ToFeatureList -Values @($existing.features)
+	$existingContracts = Get-FeatureContracts -FeatureList $existing
 }
 
 $features = [System.Collections.Generic.List[string]]::new()
@@ -83,6 +99,12 @@ foreach ($feature in $existingFeatures + $ExtraFeatures) {
 $same = @($sourceFeatures | Where-Object { $features.Contains($_) })
 $missing = @($sourceFeatures | Where-Object { -not $features.Contains($_) })
 $extra = @($features | Where-Object { $sourceFeatures -notcontains $_ })
+$extraContracts = [ordered]@{}
+foreach ($feature in $extra) {
+	if ($existingContracts.Contains($feature)) {
+		$extraContracts[$feature] = $existingContracts[$feature]
+	}
+}
 
 if ([string]::IsNullOrWhiteSpace($PipelineId)) {
 	$PipelineId = Get-DefaultPipelineId -RootPath $targetRoot
@@ -102,8 +124,14 @@ $payload = [ordered]@{
 		extra_in_instance = @($extra)
 	}
 }
+if ($extraContracts.Count -gt 0) {
+	$payload.feature_contracts = $extraContracts
+	$payload.metadata = [ordered]@{
+		comparison_contract = "Use features and comparison_to_source for cheap comparison; preserve feature_contracts only for instance-owned extra features that may be promoted upstream."
+	}
+}
 
-$json = ($payload | ConvertTo-Json -Depth 8)
+$json = ($payload | ConvertTo-Json -Depth 20)
 if ($DryRun) {
 	Write-Host "Would write instance pipeline feature list: $OutputPath"
 	Write-Host $json

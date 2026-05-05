@@ -76,6 +76,20 @@ function Get-ReportHash {
 	}
 }
 
+function Get-FeatureContracts {
+	param([object]$FeatureList)
+
+	$contracts = [ordered]@{}
+	if ($null -eq $FeatureList -or -not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
+		return $contracts
+	}
+
+	foreach ($property in $FeatureList.feature_contracts.PSObject.Properties) {
+		$contracts[[string]$property.Name] = $property.Value
+	}
+	return $contracts
+}
+
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
 if ([string]::IsNullOrWhiteSpace($SourceFeatureListPath)) {
 	$SourceFeatureListPath = Join-Path $repoRoot "pipeline_featurelist.json"
@@ -90,6 +104,7 @@ $project = Read-JsonFile -Path $projectFeatureListPath
 
 $sourceFeatures = Convert-ToFeatureList -Values @($source.features)
 $projectFeatures = Convert-ToFeatureList -Values @($project.features)
+$projectContracts = Get-FeatureContracts -FeatureList $project
 $candidateFeatures = @($projectFeatures | Where-Object { $sourceFeatures -notcontains $_ })
 $missingFromProject = @($sourceFeatures | Where-Object { $projectFeatures -notcontains $_ })
 
@@ -99,6 +114,7 @@ foreach ($feature in $candidateFeatures) {
 	$candidates += [ordered]@{
 		id = $feature
 		status = if ($excluded) { "excluded_by_pattern" } else { "review_candidate" }
+		contract_status = if ($projectContracts.Contains($feature)) { "contract_present" } else { "missing_contract" }
 		recommendation = if ($excluded) { "Keep project-specific unless a maintainer explicitly promotes it." } else { "Review for promotion into the source pipeline." }
 	}
 }
@@ -128,7 +144,7 @@ $payload = [ordered]@{
 	excluded_candidate_count = $excludedCandidates.Count
 	candidates = @($candidates)
 	source_features_missing_from_project = @($missingFromProject)
-	recommendation = "Use this report as intake only. Promote only reusable, project-agnostic feature IDs into the source pipeline."
+	recommendation = "Use this report as intake only. Promote only reusable, project-agnostic features into the source pipeline, and promote feature_contracts with every accepted feature ID."
 }
 
 $json = $payload | ConvertTo-Json -Depth 10

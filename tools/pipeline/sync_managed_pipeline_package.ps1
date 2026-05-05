@@ -9,6 +9,7 @@ param(
         ".gitignore",
         "AI-compiled",
         "adapters",
+        "context-docs",
         "core",
         "docs",
         "docs-tech",

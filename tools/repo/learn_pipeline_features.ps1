@@ -50,6 +50,20 @@ function Test-ExcludedFeature {
 	return $false
 }
 
+function Get-FeatureContracts {
+	param([object]$FeatureList)
+
+	$contracts = [ordered]@{}
+	if ($null -eq $FeatureList -or -not ($FeatureList.PSObject.Properties.Name -contains "feature_contracts")) {
+		return $contracts
+	}
+
+	foreach ($property in $FeatureList.feature_contracts.PSObject.Properties) {
+		$contracts[[string]$property.Name] = $property.Value
+	}
+	return $contracts
+}
+
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
 if ([string]::IsNullOrWhiteSpace($SourceFeatureListPath)) {
 	$SourceFeatureListPath = Join-Path $repoRoot "pipeline_featurelist.json"
@@ -92,6 +106,14 @@ if ($selected.Count -eq 0) {
 	exit 0
 }
 
+$sourceContracts = Get-FeatureContracts -FeatureList $source
+$projectContracts = Get-FeatureContracts -FeatureList $project
+foreach ($feature in $selected) {
+	if (-not $projectContracts.Contains($feature)) {
+		throw "Selected feature '$feature' has no feature_contracts entry in project feature list. Promote full artifacts and contract first; do not copy feature IDs alone."
+	}
+}
+
 $updated = [System.Collections.Generic.List[string]]::new()
 foreach ($feature in $sourceFeatures) {
 	$updated.Add($feature) | Out-Null
@@ -100,16 +122,23 @@ foreach ($feature in $selected) {
 	if (-not $updated.Contains($feature)) {
 		$updated.Add($feature) | Out-Null
 	}
+	$sourceContracts[$feature] = $projectContracts[$feature]
 }
 
 $payload = [ordered]@{
-	schema = [string]$source.schema
+	schema = "socratex-pipeline-featurelist/v3"
 	pipeline_id = [string]$source.pipeline_id
 	role = [string]$source.role
 	updated_at = (Get-Date).ToString("yyyy-MM-dd")
 	features = @($updated)
+	feature_contracts = $sourceContracts
+	metadata = [ordered]@{
+		comparison_contract = "Use features for cheap source/instance comparison; use feature_contracts for artifact-level synchronization and promotion checks."
+		required_contract_fields = @("summary", "required_paths", "required_scripts", "required_catalog_entries", "required_docs", "sync_direction", "promotion_checklist", "verification_commands", "known_failure_if_missing")
+		sync_directions = @("source_to_child", "child_to_source", "bidirectional", "source_only")
+	}
 }
 
-$json = ($payload | ConvertTo-Json -Depth 8)
+$json = ($payload | ConvertTo-Json -Depth 20)
 [System.IO.File]::WriteAllText($SourceFeatureListPath, $json + [Environment]::NewLine, [System.Text.UTF8Encoding]::new($false))
-Write-Host "OK: added $($selected.Count) feature(s) to source pipeline feature list."
+Write-Host "OK: added $($selected.Count) feature(s) and feature contract(s) to source pipeline feature list."

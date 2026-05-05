@@ -1,637 +1,23 @@
 {
-  "index": [
-    "add_changelog_entry.ps1",
-    "audit_docs.ps1",
-    "audit_json_docs.py",
-    "check_code_context_gate.ps1",
-    "check_ai_compiled_context.ps1",
-    "check_evals.ps1",
-    "check_pipeline_featurelist_update.ps1",
-    "check_runtime.py",
-    "check_task.ps1",
-    "check_utf8_writes.ps1",
-    "legacy_commit_task_compatibility_wrapper.ps1",
-    "compile_pipeline_context.ps1",
-    "generate_installed_agent_instructions.ps1",
-    "configure_powershell_utf8.ps1",
-    "console_summary.ps1",
-    "context_tags.ps1",
-    "detect_project_stack.ps1",
-    "build_document_cache.ps1",
-    "document_item_edit_engine.py",
-    "bulk_insert_document_items.ps1",
-    "insert_document_item.ps1",
-    "migrate_document_item.ps1",
-    "move_document_item.ps1",
-    "list_document_keys.ps1",
-    "check_document_list_item_duplicates.ps1",
-    "insert_document_list_item.ps1",
-    "insert_checked_document_list_item.ps1",
-    "document_list_item_edit_engine.py",
-    "review_document_list_candidates.ps1",
-    "json_list_doc.py",
-    "json_refresh_index.ps1",
-    "json_migrate_content.ps1",
-    "json_read.ps1",
-    "json_item_insert.ps1",
-    "json_item_set.ps1",
-    "json_item_move.ps1",
-    "json_item_delete.ps1",
-    "json_line_insert.ps1",
-    "json_line_set.ps1",
-    "json_line_move.ps1",
-    "run_document_post_edit_checks.ps1",
-    "read_document_item.ps1",
-    "read_document_items_by_title.ps1",
-    "document_read_cache_engine.py",
-    "migrate_document_schema.ps1",
-    "document_schema_migration_engine.py",
-    "normalize_document_structure.ps1",
-    "document_structure_normalizer_engine.py",
-    "check_toolchain_health.ps1",
-    "finalize_task_check_commit_push.ps1",
-    "end_prompt_snapshot.ps1",
-    "finalize_changed_files_commit_push.ps1",
-    "run_final_task_checks.ps1",
-    "generate_embedded_config_payload.py",
-    "import_existing_project.ps1",
-    "init_branch_memory.ps1",
-    "init_task_work.ps1",
-    "Initialize-SocratexPipeline.ps1",
-    "install_powershell.ps1",
-    "knowledge_check.ps1",
-    "knowledge_code_context.ps1",
-    "knowledge_compile.ps1",
-    "knowledge_delete.ps1",
-    "knowledge_file_check.ps1",
-    "knowledge_file_compile.ps1",
-    "knowledge_file_delete.ps1",
-    "knowledge_file_query.ps1",
-    "knowledge_file_rename.ps1",
-    "knowledge_file_select.ps1",
-    "knowledge_file_upsert.ps1",
-    "knowledge_index.py",
-    "knowledge_query.ps1",
-    "knowledge_rename.ps1",
-    "knowledge_select.ps1",
-    "knowledge_upsert.ps1",
-    "learn_pipeline_features.ps1",
-    "log_summary.ps1",
-    "migrate_ai_pipeline.ps1",
-    "normalize_documents.bat",
-    "normalize_json_files.ps1",
-    "normalize_json_files.py",
-    "normalize_markdown_emoji.ps1",
-    "normalize_text_files.ps1",
-    "open_pipeline_learning_issue.ps1",
-    "pipeline_bootstrap_index.ps1",
-    "pipeline_bootstrap_index.py",
-    "rebuild_ai_compiled_context.ps1",
-    "reinitialize_pipeline.ps1",
-    "remove_pipeline.ps1",
-    "repair_mojibake.ps1",
-    "report_pipeline_learning.ps1",
-    "run_quality_fix.ps1",
-    "run_quality_gate.ps1",
-    "set_directives.ps1",
-    "sync_pipeline_featurelist.ps1",
-    "task_snapshot.ps1",
-    "update_code_line_index.ps1",
-    "update_pipeline_from_link.ps1",
-    "upgrade_from_riftbound.ps1",
-    "utf8_file_helpers.ps1",
-    "run_interactive_setup.ps1",
-    "write_utf8_file.ps1",
-    "sync_managed_pipeline_package.ps1"
-  ],
-  "content": {
-    "add_changelog_entry.ps1": {
-      "path": "tools/repo/add_changelog_entry.ps1",
-      "category": "repo"
-    },
-    "audit_docs.ps1": {
-      "path": "tools/documents/audit_docs.ps1",
-      "category": "documents"
-    },
-    "audit_json_docs.py": {
-      "path": "tools/documents/audit_json_docs.py",
-      "category": "documents"
-    },
-    "check_code_context_gate.ps1": {
-      "path": "tools/codebase/check_code_context_gate.ps1",
-      "category": "codebase"
-    },
-    "check_ai_compiled_context.ps1": {
-      "path": "tools/pipeline/check_ai_compiled_context.ps1",
-      "category": "pipeline"
-    },
-    "check_evals.ps1": {
-      "path": "tools/quality/check_evals.ps1",
-      "category": "quality"
-    },
-    "check_pipeline_featurelist_update.ps1": {
-      "path": "tools/repo/check_pipeline_featurelist_update.ps1",
-      "category": "repo"
-    },
-    "check_runtime.py": {
-      "path": "tools/quality/check_runtime.py",
-      "category": "quality"
-    },
-    "check_task.ps1": {
-      "path": "tools/repo/check_task.ps1",
-      "category": "repo"
-    },
-    "check_utf8_writes.ps1": {
-      "path": "tools/text/check_utf8_writes.ps1",
-      "category": "text"
-    },
-    "legacy_commit_task_compatibility_wrapper.ps1": {
-      "path": "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
-      "category": "repo"
-    },
-    "compile_pipeline_context.ps1": {
-      "path": "tools/pipeline/compile_pipeline_context.ps1",
-      "category": "pipeline"
-    },
-    "generate_installed_agent_instructions.ps1": {
-      "path": "tools/pipeline/generate_installed_agent_instructions.ps1",
-      "category": "pipeline"
-    },
-    "configure_powershell_utf8.ps1": {
-      "path": "tools/setup/configure_powershell_utf8.ps1",
-      "category": "setup"
-    },
-    "console_summary.ps1": {
-      "path": "tools/diagnostics/console_summary.ps1",
-      "category": "diagnostics"
-    },
-    "context_tags.ps1": {
-      "path": "tools/knowledge/context_tags.ps1",
-      "category": "knowledge"
-    },
-    "detect_project_stack.ps1": {
-      "path": "tools/setup/detect_project_stack.ps1",
-      "category": "setup"
-    },
-    "build_document_cache.ps1": {
-      "path": "tools/documents/build_document_cache.ps1",
-      "category": "documents"
-    },
-    "document_item_edit_engine.py": {
-      "path": "tools/documents/document_item_edit_engine.py",
-      "category": "documents"
-    },
-    "bulk_insert_document_items.ps1": {
-      "path": "tools/documents/bulk_insert_document_items.ps1",
-      "category": "documents"
-    },
-    "insert_document_item.ps1": {
-      "path": "tools/documents/insert_document_item.ps1",
-      "category": "documents"
-    },
-    "migrate_document_item.ps1": {
-      "path": "tools/documents/migrate_document_item.ps1",
-      "category": "documents"
-    },
-    "move_document_item.ps1": {
-      "path": "tools/documents/move_document_item.ps1",
-      "category": "documents"
-    },
-    "list_document_keys.ps1": {
-      "path": "tools/documents/list_document_keys.ps1",
-      "category": "documents"
-    },
-    "check_document_list_item_duplicates.ps1": {
-      "path": "tools/documents/check_document_list_item_duplicates.ps1",
-      "category": "documents"
-    },
-    "insert_document_list_item.ps1": {
-      "path": "tools/documents/insert_document_list_item.ps1",
-      "category": "documents"
-    },
-    "insert_checked_document_list_item.ps1": {
-      "path": "tools/documents/insert_checked_document_list_item.ps1",
-      "category": "documents"
-    },
-    "document_list_item_edit_engine.py": {
-      "path": "tools/documents/document_list_item_edit_engine.py",
-      "category": "documents"
-    },
-    "review_document_list_candidates.ps1": {
-      "path": "tools/documents/review_document_list_candidates.ps1",
-      "category": "documents"
-    },
-    "json_list_doc.py": {
-      "path": "tools/documents/json_list_doc.py",
-      "description": "Edit and read list-style JSON source documents while preserving collection order and root indexes.",
-      "input": {
-        "commands": [
-          "read",
-          "insert-entry",
-          "set-entry",
-          "move-entry",
-          "delete-entry",
-          "refresh-index",
-          "migrate-content",
-          "insert-line",
-          "set-line",
-          "move-line"
-        ],
-        "value_sources": [
-          "--text",
-          "--value-json",
-          "--value-json-file",
-          "--value-json-stdin"
-        ],
-        "preferred_structured_value_source": "--value-json-file or --value-json-stdin for multiline, nested, or quote-heavy JSON.",
-        "rule": "Use exactly one value source per insert-entry or set-entry call."
-      },
-      "output": {
-        "read": "JSON payload printed to stdout.",
-        "mutation_success": "OK: operation target.",
-        "failure": "Non-zero exit with ERROR message on stderr/stdout from the Python wrapper."
-      },
-      "category": "documents"
-    },
-    "json_refresh_index.ps1": {
-      "path": "tools/documents/json_refresh_index.ps1",
-      "description": "Refresh a root index from a JSON document collection such as content.",
-      "category": "documents"
-    },
-    "json_migrate_content.ps1": {
-      "path": "tools/documents/json_migrate_content.ps1",
-      "description": "Move an old root collection into the canonical content object and rebuild index.",
-      "category": "documents"
-    },
-    "json_read.ps1": {
-      "path": "tools/documents/json_read.ps1",
-      "description": "Read a JSON document index, entry, or line from a selected collection.",
-      "category": "documents"
-    },
-    "json_item_insert.ps1": {
-      "path": "tools/documents/json_item_insert.ps1",
-      "description": "Insert a JSON entry at start, end, before, or after another entry.",
-      "input": {
-        "required": [
-          "-Path",
-          "-Key"
-        ],
-        "optional": [
-          "-Collection",
-          "-Position",
-          "-Reference",
-          "-Text",
-          "-ValueJson",
-          "-ValueJsonFile",
-          "-ValueJsonStdin"
-        ],
-        "preferred_structured_value_source": "Use -ValueJsonFile or -ValueJsonStdin for multiline, nested, or quote-heavy JSON.",
-        "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
-      },
-      "output": {
-        "success": "OK: inserted key.",
-        "failure": "Throws json_item_insert failed with the child process exit code."
-      },
-      "category": "documents"
-    },
-    "json_item_set.ps1": {
-      "path": "tools/documents/json_item_set.ps1",
-      "description": "Replace or rename a JSON entry in a selected collection.",
-      "input": {
-        "required": [
-          "-Path",
-          "-Key"
-        ],
-        "optional": [
-          "-Collection",
-          "-NewKey",
-          "-Text",
-          "-ValueJson",
-          "-ValueJsonFile",
-          "-ValueJsonStdin"
-        ],
-        "preferred_structured_value_source": "Use -ValueJsonFile or -ValueJsonStdin for multiline, nested, or quote-heavy JSON.",
-        "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
-      },
-      "output": {
-        "success": "OK: updated key.",
-        "failure": "Throws json_item_set failed with the child process exit code."
-      },
-      "category": "documents"
-    },
-    "json_item_move.ps1": {
-      "path": "tools/documents/json_item_move.ps1",
-      "description": "Move a JSON entry relative to another entry.",
-      "category": "documents"
-    },
-    "json_item_delete.ps1": {
-      "path": "tools/documents/json_item_delete.ps1",
-      "description": "Delete a JSON entry and refresh collection ordering.",
-      "category": "documents"
-    },
-    "json_line_insert.ps1": {
-      "path": "tools/documents/json_line_insert.ps1",
-      "description": "Insert one or more lines into a list-valued JSON entry.",
-      "category": "documents"
-    },
-    "json_line_set.ps1": {
-      "path": "tools/documents/json_line_set.ps1",
-      "description": "Replace one line inside a list-valued JSON entry.",
-      "category": "documents"
-    },
-    "json_line_move.ps1": {
-      "path": "tools/documents/json_line_move.ps1",
-      "description": "Move one line inside a list-valued JSON entry.",
-      "category": "documents"
-    },
-    "run_document_post_edit_checks.ps1": {
-      "path": "tools/documents/run_document_post_edit_checks.ps1",
-      "category": "documents"
-    },
-    "read_document_item.ps1": {
-      "path": "tools/documents/read_document_item.ps1",
-      "category": "documents"
-    },
-    "read_document_items_by_title.ps1": {
-      "path": "tools/documents/read_document_items_by_title.ps1",
-      "category": "documents"
-    },
-    "document_read_cache_engine.py": {
-      "path": "tools/documents/document_read_cache_engine.py",
-      "category": "documents"
-    },
-    "migrate_document_schema.ps1": {
-      "path": "tools/documents/migrate_document_schema.ps1",
-      "category": "documents"
-    },
-    "document_schema_migration_engine.py": {
-      "path": "tools/documents/document_schema_migration_engine.py",
-      "category": "documents"
-    },
-    "normalize_document_structure.ps1": {
-      "path": "tools/documents/normalize_document_structure.ps1",
-      "category": "documents"
-    },
-    "document_structure_normalizer_engine.py": {
-      "path": "tools/documents/document_structure_normalizer_engine.py",
-      "category": "documents"
-    },
-    "check_toolchain_health.ps1": {
-      "path": "tools/repo/check_toolchain_health.ps1",
-      "category": "repo"
-    },
-    "finalize_task_check_commit_push.ps1": {
-      "path": "tools/repo/finalize_task_check_commit_push.ps1",
-      "category": "repo"
-    },
-    "end_prompt_snapshot.ps1": {
-      "path": "tools/repo/end_prompt_snapshot.ps1",
-      "category": "repo"
-    },
-    "finalize_changed_files_commit_push.ps1": {
-      "path": "tools/repo/finalize_changed_files_commit_push.ps1",
-      "category": "repo"
-    },
-    "run_final_task_checks.ps1": {
-      "path": "tools/repo/run_final_task_checks.ps1",
-      "category": "repo"
-    },
-    "generate_embedded_config_payload.py": {
-      "path": "tools/pipeline/generate_embedded_config_payload.py",
-      "category": "pipeline"
-    },
-    "import_existing_project.ps1": {
-      "path": "tools/pipeline/import_existing_project.ps1",
-      "category": "pipeline"
-    },
-    "init_branch_memory.ps1": {
-      "path": "tools/pipeline/init_branch_memory.ps1",
-      "category": "pipeline"
-    },
-    "init_task_work.ps1": {
-      "path": "tools/pipeline/init_task_work.ps1",
-      "category": "pipeline"
-    },
-    "Initialize-SocratexPipeline.ps1": {
-      "path": "tools/pipeline/Initialize-SocratexPipeline.ps1",
-      "category": "pipeline"
-    },
-    "install_powershell.ps1": {
-      "path": "tools/setup/install_powershell.ps1",
-      "category": "setup"
-    },
-    "knowledge_check.ps1": {
-      "path": "tools/knowledge/knowledge_check.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_code_context.ps1": {
-      "path": "tools/knowledge/knowledge_code_context.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_compile.ps1": {
-      "path": "tools/knowledge/knowledge_compile.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_delete.ps1": {
-      "path": "tools/knowledge/knowledge_delete.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_file_check.ps1": {
-      "path": "tools/knowledge/knowledge_file_check.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_file_compile.ps1": {
-      "path": "tools/knowledge/knowledge_file_compile.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_file_delete.ps1": {
-      "path": "tools/knowledge/knowledge_file_delete.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_file_query.ps1": {
-      "path": "tools/knowledge/knowledge_file_query.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_file_rename.ps1": {
-      "path": "tools/knowledge/knowledge_file_rename.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_file_select.ps1": {
-      "path": "tools/knowledge/knowledge_file_select.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_file_upsert.ps1": {
-      "path": "tools/knowledge/knowledge_file_upsert.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_index.py": {
-      "path": "tools/knowledge/knowledge_index.py",
-      "category": "knowledge"
-    },
-    "knowledge_query.ps1": {
-      "path": "tools/knowledge/knowledge_query.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_rename.ps1": {
-      "path": "tools/knowledge/knowledge_rename.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_select.ps1": {
-      "path": "tools/knowledge/knowledge_select.ps1",
-      "category": "knowledge"
-    },
-    "knowledge_upsert.ps1": {
-      "path": "tools/knowledge/knowledge_upsert.ps1",
-      "category": "knowledge"
-    },
-    "learn_pipeline_features.ps1": {
-      "path": "tools/repo/learn_pipeline_features.ps1",
-      "category": "repo"
-    },
-    "log_summary.ps1": {
-      "path": "tools/diagnostics/log_summary.ps1",
-      "category": "diagnostics"
-    },
-    "migrate_ai_pipeline.ps1": {
-      "path": "tools/pipeline/migrate_ai_pipeline.ps1",
-      "category": "pipeline"
-    },
-    "normalize_documents.bat": {
-      "path": "tools/text/normalize_documents.bat",
-      "category": "text"
-    },
-    "normalize_json_files.ps1": {
-      "path": "tools/text/normalize_json_files.ps1",
-      "category": "text"
-    },
-    "normalize_json_files.py": {
-      "path": "tools/text/normalize_json_files.py",
-      "category": "text"
-    },
-    "normalize_markdown_emoji.ps1": {
-      "path": "tools/documents/normalize_markdown_emoji.ps1",
-      "category": "documents"
-    },
-    "normalize_text_files.ps1": {
-      "path": "tools/text/normalize_text_files.ps1",
-      "category": "text"
-    },
-    "open_pipeline_learning_issue.ps1": {
-      "path": "tools/repo/open_pipeline_learning_issue.ps1",
-      "category": "repo"
-    },
-    "pipeline_bootstrap_index.ps1": {
-      "path": "tools/pipeline/pipeline_bootstrap_index.ps1",
-      "category": "pipeline"
-    },
-    "pipeline_bootstrap_index.py": {
-      "path": "tools/pipeline/pipeline_bootstrap_index.py",
-      "category": "pipeline"
-    },
-    "rebuild_ai_compiled_context.ps1": {
-      "path": "tools/pipeline/rebuild_ai_compiled_context.ps1",
-      "category": "pipeline"
-    },
-    "reinitialize_pipeline.ps1": {
-      "path": "tools/pipeline/reinitialize_pipeline.ps1",
-      "category": "pipeline"
-    },
-    "remove_pipeline.ps1": {
-      "path": "tools/pipeline/remove_pipeline.ps1",
-      "category": "pipeline"
-    },
-    "repair_mojibake.ps1": {
-      "path": "tools/text/repair_mojibake.ps1",
-      "category": "text"
-    },
-    "report_pipeline_learning.ps1": {
-      "path": "tools/repo/report_pipeline_learning.ps1",
-      "category": "repo"
-    },
-    "run_quality_fix.ps1": {
-      "path": "tools/quality/run_quality_fix.ps1",
-      "category": "quality"
-    },
-    "run_quality_gate.ps1": {
-      "path": "tools/quality/run_quality_gate.ps1",
-      "category": "quality"
-    },
-    "set_directives.ps1": {
-      "path": "tools/pipeline/set_directives.ps1",
-      "category": "pipeline"
-    },
-    "sync_pipeline_featurelist.ps1": {
-      "path": "tools/repo/sync_pipeline_featurelist.ps1",
-      "category": "repo"
-    },
-    "task_snapshot.ps1": {
-      "path": "tools/repo/task_snapshot.ps1",
-      "category": "repo"
-    },
-    "update_code_line_index.ps1": {
-      "path": "tools/codebase/update_code_line_index.ps1",
-      "category": "codebase"
-    },
-    "update_pipeline_from_link.ps1": {
-      "path": "tools/pipeline/update_pipeline_from_link.ps1",
-      "category": "pipeline"
-    },
-    "upgrade_from_riftbound.ps1": {
-      "path": "tools/pipeline/upgrade_from_riftbound.ps1",
-      "category": "pipeline"
-    },
-    "utf8_file_helpers.ps1": {
-      "path": "tools/text/utf8_file_helpers.ps1",
-      "category": "text"
-    },
-    "run_interactive_setup.ps1": {
-      "path": "tools/setup/run_interactive_setup.ps1",
-      "category": "setup"
-    },
-    "write_utf8_file.ps1": {
-      "path": "tools/text/write_utf8_file.ps1",
-      "category": "text"
-    },
-    "sync_managed_pipeline_package.ps1": {
-      "path": "tools/pipeline/sync_managed_pipeline_package.ps1",
-      "category": "pipeline",
-      "description": "Mirror the managed SocratexAI package from source into an installed child pipeline, removing obsolete files inside managed paths.",
-      "input": {
-        "required": [
-          "-SourceRoot",
-          "-InstallRoot"
-        ],
-        "optional": [
-          "-ManagedPaths",
-          "-DryRun"
-        ],
-        "rule": "Use only for managed SocratexAI package paths; project memory outside SocratexAI remains owned by the child project."
-      },
-      "output": {
-        "success": "Prints mirrored managed paths and OK when complete.",
-        "failure": "Throws on unsafe destination paths or copy/remove failures."
-      }
-    }
-  },
-  "metadata": {
-    "document": {
-      "title": "Source Pipeline Script Index",
-      "type": "script_index",
-      "language": "en"
-    },
-    "context_loading": {
-      "default": "index_only",
-      "content_read": "only when exact metadata for a specific script is needed"
-    },
-    "script_io_contract": {
-      "purpose": "Describe stable invocation contracts for scripts whose argument shape is not obvious from the script name alone.",
-      "default_context_rule": "The default SCRIPTS context remains name/index-only; read input/output only before invoking a script whose argument shape is not obvious.",
-      "structured_json_rule": "For long, multiline, nested, or quote-heavy JSON, prefer file/stdin value inputs over inline shell arguments."
-    },
-    "categories": {
-      "documents": [
+    "index": [
+        "add_changelog_entry.ps1",
         "audit_docs.ps1",
         "audit_json_docs.py",
+        "check_code_context_gate.ps1",
+        "check_ai_compiled_context.ps1",
+        "check_evals.ps1",
+        "check_pipeline_featurelist_update.ps1",
+        "check_pipeline_feature_contracts.ps1",
+        "check_runtime.py",
+        "check_task.ps1",
+        "check_utf8_writes.ps1",
+        "legacy_commit_task_compatibility_wrapper.ps1",
+        "compile_pipeline_context.ps1",
+        "generate_installed_agent_instructions.ps1",
+        "configure_powershell_utf8.ps1",
+        "console_summary.ps1",
+        "context_tags.ps1",
+        "detect_project_stack.ps1",
         "build_document_cache.ps1",
         "document_item_edit_engine.py",
         "bulk_insert_document_items.ps1",
@@ -663,10 +49,17 @@
         "document_schema_migration_engine.py",
         "normalize_document_structure.ps1",
         "document_structure_normalizer_engine.py",
-        "normalize_markdown_emoji.ps1"
-      ],
-      "knowledge": [
-        "context_tags.ps1",
+        "check_toolchain_health.ps1",
+        "finalize_task_check_commit_push.ps1",
+        "end_prompt_snapshot.ps1",
+        "finalize_changed_files_commit_push.ps1",
+        "run_final_task_checks.ps1",
+        "generate_embedded_config_payload.py",
+        "import_existing_project.ps1",
+        "init_branch_memory.ps1",
+        "init_task_work.ps1",
+        "Initialize-SocratexPipeline.ps1",
+        "install_powershell.ps1",
         "knowledge_check.ps1",
         "knowledge_code_context.ps1",
         "knowledge_compile.ps1",
@@ -682,75 +75,729 @@
         "knowledge_query.ps1",
         "knowledge_rename.ps1",
         "knowledge_select.ps1",
-        "knowledge_upsert.ps1"
-      ],
-      "repo": [
-        "add_changelog_entry.ps1",
-        "check_pipeline_featurelist_update.ps1",
-        "check_task.ps1",
-        "check_toolchain_health.ps1",
-        "legacy_commit_task_compatibility_wrapper.ps1",
-        "finalize_task_check_commit_push.ps1",
-        "finalize_changed_files_commit_push.ps1",
-        "run_final_task_checks.ps1",
-        "end_prompt_snapshot.ps1",
-        "task_snapshot.ps1",
+        "knowledge_upsert.ps1",
         "learn_pipeline_features.ps1",
-        "open_pipeline_learning_issue.ps1",
-        "report_pipeline_learning.ps1",
-        "sync_pipeline_featurelist.ps1"
-      ],
-      "pipeline": [
-        "check_ai_compiled_context.ps1",
-        "compile_pipeline_context.ps1",
-        "generate_installed_agent_instructions.ps1",
-        "generate_embedded_config_payload.py",
-        "import_existing_project.ps1",
-        "init_branch_memory.ps1",
-        "init_task_work.ps1",
-        "Initialize-SocratexPipeline.ps1",
+        "log_summary.ps1",
         "migrate_ai_pipeline.ps1",
+        "normalize_documents.bat",
+        "normalize_json_files.ps1",
+        "normalize_json_files.py",
+        "normalize_markdown_emoji.ps1",
+        "normalize_text_files.ps1",
+        "open_pipeline_learning_issue.ps1",
         "pipeline_bootstrap_index.ps1",
         "pipeline_bootstrap_index.py",
         "rebuild_ai_compiled_context.ps1",
         "reinitialize_pipeline.ps1",
         "remove_pipeline.ps1",
+        "repair_mojibake.ps1",
+        "report_pipeline_learning.ps1",
+        "run_quality_fix.ps1",
+        "run_quality_gate.ps1",
         "set_directives.ps1",
+        "sync_pipeline_featurelist.ps1",
+        "task_snapshot.ps1",
+        "update_code_line_index.ps1",
         "update_pipeline_from_link.ps1",
         "upgrade_from_riftbound.ps1",
-        "sync_managed_pipeline_package.ps1"
-      ],
-      "setup": [
-        "configure_powershell_utf8.ps1",
-        "detect_project_stack.ps1",
-        "install_powershell.ps1",
-        "run_interactive_setup.ps1"
-      ],
-      "text": [
-        "check_utf8_writes.ps1",
-        "normalize_documents.bat",
-        "normalize_json_files.ps1",
-        "normalize_json_files.py",
-        "normalize_text_files.ps1",
-        "repair_mojibake.ps1",
         "utf8_file_helpers.ps1",
-        "write_utf8_file.ps1"
-      ],
-      "quality": [
-        "check_evals.ps1",
-        "check_runtime.py",
-        "run_quality_fix.ps1",
-        "run_quality_gate.ps1"
-      ],
-      "diagnostics": [
-        "console_summary.ps1",
-        "log_summary.ps1"
-      ],
-      "codebase": [
-        "check_code_context_gate.ps1",
-        "update_code_line_index.ps1"
-      ]
+        "run_interactive_setup.ps1",
+        "write_utf8_file.ps1",
+        "sync_managed_pipeline_package.ps1"
+    ],
+    "content": {
+        "add_changelog_entry.ps1": {
+            "path": "tools/repo/add_changelog_entry.ps1",
+            "category": "repo"
+        },
+        "audit_docs.ps1": {
+            "path": "tools/documents/audit_docs.ps1",
+            "category": "documents"
+        },
+        "audit_json_docs.py": {
+            "path": "tools/documents/audit_json_docs.py",
+            "category": "documents"
+        },
+        "check_code_context_gate.ps1": {
+            "path": "tools/codebase/check_code_context_gate.ps1",
+            "category": "codebase"
+        },
+        "check_ai_compiled_context.ps1": {
+            "path": "tools/pipeline/check_ai_compiled_context.ps1",
+            "category": "pipeline"
+        },
+        "check_evals.ps1": {
+            "path": "tools/quality/check_evals.ps1",
+            "category": "quality"
+        },
+        "check_pipeline_featurelist_update.ps1": {
+            "path": "tools/repo/check_pipeline_featurelist_update.ps1",
+            "category": "repo",
+            "description": "Repository pipeline feature synchronization helper.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Use documented script parameters for the selected workflow."
+            },
+            "output": {
+                "success": "Exits 0 and prints status when the operation succeeds.",
+                "failure": "Throws or exits nonzero with a concrete error."
+            }
+        },
+        "check_runtime.py": {
+            "path": "tools/quality/check_runtime.py",
+            "category": "quality"
+        },
+        "check_task.ps1": {
+            "path": "tools/repo/check_task.ps1",
+            "category": "repo"
+        },
+        "check_utf8_writes.ps1": {
+            "path": "tools/text/check_utf8_writes.ps1",
+            "category": "text"
+        },
+        "legacy_commit_task_compatibility_wrapper.ps1": {
+            "path": "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
+            "category": "repo"
+        },
+        "compile_pipeline_context.ps1": {
+            "path": "tools/pipeline/compile_pipeline_context.ps1",
+            "category": "pipeline"
+        },
+        "generate_installed_agent_instructions.ps1": {
+            "path": "tools/pipeline/generate_installed_agent_instructions.ps1",
+            "category": "pipeline"
+        },
+        "configure_powershell_utf8.ps1": {
+            "path": "tools/setup/configure_powershell_utf8.ps1",
+            "category": "setup"
+        },
+        "console_summary.ps1": {
+            "path": "tools/diagnostics/console_summary.ps1",
+            "category": "diagnostics"
+        },
+        "context_tags.ps1": {
+            "path": "tools/knowledge/context_tags.ps1",
+            "category": "knowledge"
+        },
+        "detect_project_stack.ps1": {
+            "path": "tools/setup/detect_project_stack.ps1",
+            "category": "setup"
+        },
+        "build_document_cache.ps1": {
+            "path": "tools/documents/build_document_cache.ps1",
+            "category": "documents"
+        },
+        "document_item_edit_engine.py": {
+            "path": "tools/documents/document_item_edit_engine.py",
+            "category": "documents"
+        },
+        "bulk_insert_document_items.ps1": {
+            "path": "tools/documents/bulk_insert_document_items.ps1",
+            "category": "documents"
+        },
+        "insert_document_item.ps1": {
+            "path": "tools/documents/insert_document_item.ps1",
+            "category": "documents"
+        },
+        "migrate_document_item.ps1": {
+            "path": "tools/documents/migrate_document_item.ps1",
+            "category": "documents"
+        },
+        "move_document_item.ps1": {
+            "path": "tools/documents/move_document_item.ps1",
+            "category": "documents"
+        },
+        "list_document_keys.ps1": {
+            "path": "tools/documents/list_document_keys.ps1",
+            "category": "documents"
+        },
+        "check_document_list_item_duplicates.ps1": {
+            "path": "tools/documents/check_document_list_item_duplicates.ps1",
+            "category": "documents"
+        },
+        "insert_document_list_item.ps1": {
+            "path": "tools/documents/insert_document_list_item.ps1",
+            "category": "documents"
+        },
+        "insert_checked_document_list_item.ps1": {
+            "path": "tools/documents/insert_checked_document_list_item.ps1",
+            "category": "documents"
+        },
+        "document_list_item_edit_engine.py": {
+            "path": "tools/documents/document_list_item_edit_engine.py",
+            "category": "documents"
+        },
+        "review_document_list_candidates.ps1": {
+            "path": "tools/documents/review_document_list_candidates.ps1",
+            "category": "documents"
+        },
+        "json_list_doc.py": {
+            "path": "tools/documents/json_list_doc.py",
+            "description": "Edit and read list-style JSON source documents while preserving collection order and root indexes.",
+            "input": {
+                "commands": [
+                    "read",
+                    "insert-entry",
+                    "set-entry",
+                    "move-entry",
+                    "delete-entry",
+                    "refresh-index",
+                    "migrate-content",
+                    "insert-line",
+                    "set-line",
+                    "move-line"
+                ],
+                "value_sources": [
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "preferred_structured_value_source": "--value-json-file or --value-json-stdin for multiline, nested, or quote-heavy JSON.",
+                "rule": "Use exactly one value source per insert-entry or set-entry call."
+            },
+            "output": {
+                "read": "JSON payload printed to stdout.",
+                "mutation_success": "OK: operation target.",
+                "failure": "Non-zero exit with ERROR message on stderr/stdout from the Python wrapper."
+            },
+            "category": "documents"
+        },
+        "json_refresh_index.ps1": {
+            "path": "tools/documents/json_refresh_index.ps1",
+            "description": "Refresh a root index from a JSON document collection such as content.",
+            "category": "documents"
+        },
+        "json_migrate_content.ps1": {
+            "path": "tools/documents/json_migrate_content.ps1",
+            "description": "Move an old root collection into the canonical content object and rebuild index.",
+            "category": "documents"
+        },
+        "json_read.ps1": {
+            "path": "tools/documents/json_read.ps1",
+            "description": "Read a JSON document index, entry, or line from a selected collection.",
+            "category": "documents"
+        },
+        "json_item_insert.ps1": {
+            "path": "tools/documents/json_item_insert.ps1",
+            "description": "Insert a JSON entry at start, end, before, or after another entry.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Collection",
+                    "-Position",
+                    "-Reference",
+                    "-Text",
+                    "-ValueJson",
+                    "-ValueJsonFile",
+                    "-ValueJsonStdin"
+                ],
+                "preferred_structured_value_source": "Use -ValueJsonFile or -ValueJsonStdin for multiline, nested, or quote-heavy JSON.",
+                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
+            },
+            "output": {
+                "success": "OK: inserted key.",
+                "failure": "Throws json_item_insert failed with the child process exit code."
+            },
+            "category": "documents"
+        },
+        "json_item_set.ps1": {
+            "path": "tools/documents/json_item_set.ps1",
+            "description": "Replace or rename a JSON entry in a selected collection.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Collection",
+                    "-NewKey",
+                    "-Text",
+                    "-ValueJson",
+                    "-ValueJsonFile",
+                    "-ValueJsonStdin"
+                ],
+                "preferred_structured_value_source": "Use -ValueJsonFile or -ValueJsonStdin for multiline, nested, or quote-heavy JSON.",
+                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
+            },
+            "output": {
+                "success": "OK: updated key.",
+                "failure": "Throws json_item_set failed with the child process exit code."
+            },
+            "category": "documents"
+        },
+        "json_item_move.ps1": {
+            "path": "tools/documents/json_item_move.ps1",
+            "description": "Move a JSON entry relative to another entry.",
+            "category": "documents"
+        },
+        "json_item_delete.ps1": {
+            "path": "tools/documents/json_item_delete.ps1",
+            "description": "Delete a JSON entry and refresh collection ordering.",
+            "category": "documents"
+        },
+        "json_line_insert.ps1": {
+            "path": "tools/documents/json_line_insert.ps1",
+            "description": "Insert one or more lines into a list-valued JSON entry.",
+            "category": "documents"
+        },
+        "json_line_set.ps1": {
+            "path": "tools/documents/json_line_set.ps1",
+            "description": "Replace one line inside a list-valued JSON entry.",
+            "category": "documents"
+        },
+        "json_line_move.ps1": {
+            "path": "tools/documents/json_line_move.ps1",
+            "description": "Move one line inside a list-valued JSON entry.",
+            "category": "documents"
+        },
+        "run_document_post_edit_checks.ps1": {
+            "path": "tools/documents/run_document_post_edit_checks.ps1",
+            "category": "documents"
+        },
+        "read_document_item.ps1": {
+            "path": "tools/documents/read_document_item.ps1",
+            "category": "documents"
+        },
+        "read_document_items_by_title.ps1": {
+            "path": "tools/documents/read_document_items_by_title.ps1",
+            "category": "documents"
+        },
+        "document_read_cache_engine.py": {
+            "path": "tools/documents/document_read_cache_engine.py",
+            "category": "documents"
+        },
+        "migrate_document_schema.ps1": {
+            "path": "tools/documents/migrate_document_schema.ps1",
+            "category": "documents"
+        },
+        "document_schema_migration_engine.py": {
+            "path": "tools/documents/document_schema_migration_engine.py",
+            "category": "documents"
+        },
+        "normalize_document_structure.ps1": {
+            "path": "tools/documents/normalize_document_structure.ps1",
+            "category": "documents"
+        },
+        "document_structure_normalizer_engine.py": {
+            "path": "tools/documents/document_structure_normalizer_engine.py",
+            "category": "documents"
+        },
+        "check_toolchain_health.ps1": {
+            "path": "tools/repo/check_toolchain_health.ps1",
+            "category": "repo"
+        },
+        "finalize_task_check_commit_push.ps1": {
+            "path": "tools/repo/finalize_task_check_commit_push.ps1",
+            "category": "repo"
+        },
+        "end_prompt_snapshot.ps1": {
+            "path": "tools/repo/end_prompt_snapshot.ps1",
+            "category": "repo"
+        },
+        "finalize_changed_files_commit_push.ps1": {
+            "path": "tools/repo/finalize_changed_files_commit_push.ps1",
+            "category": "repo"
+        },
+        "run_final_task_checks.ps1": {
+            "path": "tools/repo/run_final_task_checks.ps1",
+            "category": "repo"
+        },
+        "generate_embedded_config_payload.py": {
+            "path": "tools/pipeline/generate_embedded_config_payload.py",
+            "category": "pipeline"
+        },
+        "import_existing_project.ps1": {
+            "path": "tools/pipeline/import_existing_project.ps1",
+            "category": "pipeline"
+        },
+        "init_branch_memory.ps1": {
+            "path": "tools/pipeline/init_branch_memory.ps1",
+            "category": "pipeline"
+        },
+        "init_task_work.ps1": {
+            "path": "tools/pipeline/init_task_work.ps1",
+            "category": "pipeline"
+        },
+        "Initialize-SocratexPipeline.ps1": {
+            "path": "tools/pipeline/Initialize-SocratexPipeline.ps1",
+            "category": "pipeline"
+        },
+        "install_powershell.ps1": {
+            "path": "tools/setup/install_powershell.ps1",
+            "category": "setup"
+        },
+        "knowledge_check.ps1": {
+            "path": "tools/knowledge/knowledge_check.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_code_context.ps1": {
+            "path": "tools/knowledge/knowledge_code_context.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_compile.ps1": {
+            "path": "tools/knowledge/knowledge_compile.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_delete.ps1": {
+            "path": "tools/knowledge/knowledge_delete.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_file_check.ps1": {
+            "path": "tools/knowledge/knowledge_file_check.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_file_compile.ps1": {
+            "path": "tools/knowledge/knowledge_file_compile.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_file_delete.ps1": {
+            "path": "tools/knowledge/knowledge_file_delete.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_file_query.ps1": {
+            "path": "tools/knowledge/knowledge_file_query.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_file_rename.ps1": {
+            "path": "tools/knowledge/knowledge_file_rename.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_file_select.ps1": {
+            "path": "tools/knowledge/knowledge_file_select.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_file_upsert.ps1": {
+            "path": "tools/knowledge/knowledge_file_upsert.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_index.py": {
+            "path": "tools/knowledge/knowledge_index.py",
+            "category": "knowledge"
+        },
+        "knowledge_query.ps1": {
+            "path": "tools/knowledge/knowledge_query.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_rename.ps1": {
+            "path": "tools/knowledge/knowledge_rename.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_select.ps1": {
+            "path": "tools/knowledge/knowledge_select.ps1",
+            "category": "knowledge"
+        },
+        "knowledge_upsert.ps1": {
+            "path": "tools/knowledge/knowledge_upsert.ps1",
+            "category": "knowledge"
+        },
+        "learn_pipeline_features.ps1": {
+            "path": "tools/repo/learn_pipeline_features.ps1",
+            "category": "repo",
+            "description": "Repository pipeline feature synchronization helper.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Use documented script parameters for the selected workflow."
+            },
+            "output": {
+                "success": "Exits 0 and prints status when the operation succeeds.",
+                "failure": "Throws or exits nonzero with a concrete error."
+            }
+        },
+        "log_summary.ps1": {
+            "path": "tools/diagnostics/log_summary.ps1",
+            "category": "diagnostics"
+        },
+        "migrate_ai_pipeline.ps1": {
+            "path": "tools/pipeline/migrate_ai_pipeline.ps1",
+            "category": "pipeline"
+        },
+        "normalize_documents.bat": {
+            "path": "tools/text/normalize_documents.bat",
+            "category": "text"
+        },
+        "normalize_json_files.ps1": {
+            "path": "tools/text/normalize_json_files.ps1",
+            "category": "text"
+        },
+        "normalize_json_files.py": {
+            "path": "tools/text/normalize_json_files.py",
+            "category": "text"
+        },
+        "normalize_markdown_emoji.ps1": {
+            "path": "tools/documents/normalize_markdown_emoji.ps1",
+            "category": "documents"
+        },
+        "normalize_text_files.ps1": {
+            "path": "tools/text/normalize_text_files.ps1",
+            "category": "text"
+        },
+        "open_pipeline_learning_issue.ps1": {
+            "path": "tools/repo/open_pipeline_learning_issue.ps1",
+            "category": "repo"
+        },
+        "pipeline_bootstrap_index.ps1": {
+            "path": "tools/pipeline/pipeline_bootstrap_index.ps1",
+            "category": "pipeline"
+        },
+        "pipeline_bootstrap_index.py": {
+            "path": "tools/pipeline/pipeline_bootstrap_index.py",
+            "category": "pipeline"
+        },
+        "rebuild_ai_compiled_context.ps1": {
+            "path": "tools/pipeline/rebuild_ai_compiled_context.ps1",
+            "category": "pipeline"
+        },
+        "reinitialize_pipeline.ps1": {
+            "path": "tools/pipeline/reinitialize_pipeline.ps1",
+            "category": "pipeline"
+        },
+        "remove_pipeline.ps1": {
+            "path": "tools/pipeline/remove_pipeline.ps1",
+            "category": "pipeline"
+        },
+        "repair_mojibake.ps1": {
+            "path": "tools/text/repair_mojibake.ps1",
+            "category": "text"
+        },
+        "report_pipeline_learning.ps1": {
+            "path": "tools/repo/report_pipeline_learning.ps1",
+            "category": "repo"
+        },
+        "run_quality_fix.ps1": {
+            "path": "tools/quality/run_quality_fix.ps1",
+            "category": "quality"
+        },
+        "run_quality_gate.ps1": {
+            "path": "tools/quality/run_quality_gate.ps1",
+            "category": "quality"
+        },
+        "set_directives.ps1": {
+            "path": "tools/pipeline/set_directives.ps1",
+            "category": "pipeline"
+        },
+        "sync_pipeline_featurelist.ps1": {
+            "path": "tools/repo/sync_pipeline_featurelist.ps1",
+            "category": "repo",
+            "description": "Repository pipeline feature synchronization helper.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Use documented script parameters for the selected workflow."
+            },
+            "output": {
+                "success": "Exits 0 and prints status when the operation succeeds.",
+                "failure": "Throws or exits nonzero with a concrete error."
+            }
+        },
+        "task_snapshot.ps1": {
+            "path": "tools/repo/task_snapshot.ps1",
+            "category": "repo"
+        },
+        "update_code_line_index.ps1": {
+            "path": "tools/codebase/update_code_line_index.ps1",
+            "category": "codebase"
+        },
+        "update_pipeline_from_link.ps1": {
+            "path": "tools/pipeline/update_pipeline_from_link.ps1",
+            "category": "pipeline"
+        },
+        "upgrade_from_riftbound.ps1": {
+            "path": "tools/pipeline/upgrade_from_riftbound.ps1",
+            "category": "pipeline"
+        },
+        "utf8_file_helpers.ps1": {
+            "path": "tools/text/utf8_file_helpers.ps1",
+            "category": "text"
+        },
+        "run_interactive_setup.ps1": {
+            "path": "tools/setup/run_interactive_setup.ps1",
+            "category": "setup"
+        },
+        "write_utf8_file.ps1": {
+            "path": "tools/text/write_utf8_file.ps1",
+            "category": "text"
+        },
+        "sync_managed_pipeline_package.ps1": {
+            "path": "tools/pipeline/sync_managed_pipeline_package.ps1",
+            "category": "pipeline",
+            "description": "Mirror the managed SocratexAI package from source into an installed child pipeline, removing obsolete files inside managed paths.",
+            "input": {
+                "required": [
+                    "-SourceRoot",
+                    "-InstallRoot"
+                ],
+                "optional": [
+                    "-ManagedPaths",
+                    "-DryRun"
+                ],
+                "rule": "Use only for managed SocratexAI package paths; project memory outside SocratexAI remains owned by the child project."
+            },
+            "output": {
+                "success": "Prints mirrored managed paths and OK when complete.",
+                "failure": "Throws on unsafe destination paths or copy/remove failures."
+            }
+        },
+        "check_pipeline_feature_contracts.ps1": {
+            "path": "tools/repo/check_pipeline_feature_contracts.ps1",
+            "category": "repo",
+            "description": "Validate pipeline_featurelist.json feature artifact contracts and ensure changed pipeline-owned paths are assigned to at least one feature contract.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths"
+                ],
+                "rule": "Pass changed paths when checking a focused task; omit paths for a full feature contract audit."
+            },
+            "output": {
+                "success": "Prints the number of covered feature contracts and confirms changed pipeline paths are assigned.",
+                "failure": "Throws when a feature lacks contract fields, required artifacts are missing, catalog entries are absent, or changed pipeline paths are uncovered."
+            }
+        }
     },
-    "category_rule": "Scripts live under tools/<category>/ and SCRIPTS.json keeps the filename index plus exact categorized path for execution."
-  }
+    "metadata": {
+        "document": {
+            "title": "Source Pipeline Script Index",
+            "type": "script_index",
+            "language": "en"
+        },
+        "context_loading": {
+            "default": "index_only",
+            "content_read": "only when exact metadata for a specific script is needed"
+        },
+        "script_io_contract": {
+            "purpose": "Describe stable invocation contracts for scripts whose argument shape is not obvious from the script name alone.",
+            "default_context_rule": "The default SCRIPTS context remains name/index-only; read input/output only before invoking a script whose argument shape is not obvious.",
+            "structured_json_rule": "For long, multiline, nested, or quote-heavy JSON, prefer file/stdin value inputs over inline shell arguments."
+        },
+        "categories": {
+            "documents": [
+                "audit_docs.ps1",
+                "audit_json_docs.py",
+                "build_document_cache.ps1",
+                "document_item_edit_engine.py",
+                "bulk_insert_document_items.ps1",
+                "insert_document_item.ps1",
+                "migrate_document_item.ps1",
+                "move_document_item.ps1",
+                "list_document_keys.ps1",
+                "check_document_list_item_duplicates.ps1",
+                "insert_document_list_item.ps1",
+                "insert_checked_document_list_item.ps1",
+                "document_list_item_edit_engine.py",
+                "review_document_list_candidates.ps1",
+                "json_list_doc.py",
+                "json_refresh_index.ps1",
+                "json_migrate_content.ps1",
+                "json_read.ps1",
+                "json_item_insert.ps1",
+                "json_item_set.ps1",
+                "json_item_move.ps1",
+                "json_item_delete.ps1",
+                "json_line_insert.ps1",
+                "json_line_set.ps1",
+                "json_line_move.ps1",
+                "run_document_post_edit_checks.ps1",
+                "read_document_item.ps1",
+                "read_document_items_by_title.ps1",
+                "document_read_cache_engine.py",
+                "migrate_document_schema.ps1",
+                "document_schema_migration_engine.py",
+                "normalize_document_structure.ps1",
+                "document_structure_normalizer_engine.py",
+                "normalize_markdown_emoji.ps1"
+            ],
+            "knowledge": [
+                "context_tags.ps1",
+                "knowledge_check.ps1",
+                "knowledge_code_context.ps1",
+                "knowledge_compile.ps1",
+                "knowledge_delete.ps1",
+                "knowledge_file_check.ps1",
+                "knowledge_file_compile.ps1",
+                "knowledge_file_delete.ps1",
+                "knowledge_file_query.ps1",
+                "knowledge_file_rename.ps1",
+                "knowledge_file_select.ps1",
+                "knowledge_file_upsert.ps1",
+                "knowledge_index.py",
+                "knowledge_query.ps1",
+                "knowledge_rename.ps1",
+                "knowledge_select.ps1",
+                "knowledge_upsert.ps1"
+            ],
+            "repo": [
+                "add_changelog_entry.ps1",
+                "check_pipeline_featurelist_update.ps1",
+                "check_task.ps1",
+                "check_toolchain_health.ps1",
+                "legacy_commit_task_compatibility_wrapper.ps1",
+                "finalize_task_check_commit_push.ps1",
+                "finalize_changed_files_commit_push.ps1",
+                "run_final_task_checks.ps1",
+                "end_prompt_snapshot.ps1",
+                "task_snapshot.ps1",
+                "learn_pipeline_features.ps1",
+                "open_pipeline_learning_issue.ps1",
+                "report_pipeline_learning.ps1",
+                "sync_pipeline_featurelist.ps1"
+            ],
+            "pipeline": [
+                "check_ai_compiled_context.ps1",
+                "compile_pipeline_context.ps1",
+                "generate_installed_agent_instructions.ps1",
+                "generate_embedded_config_payload.py",
+                "import_existing_project.ps1",
+                "init_branch_memory.ps1",
+                "init_task_work.ps1",
+                "Initialize-SocratexPipeline.ps1",
+                "migrate_ai_pipeline.ps1",
+                "pipeline_bootstrap_index.ps1",
+                "pipeline_bootstrap_index.py",
+                "rebuild_ai_compiled_context.ps1",
+                "reinitialize_pipeline.ps1",
+                "remove_pipeline.ps1",
+                "set_directives.ps1",
+                "update_pipeline_from_link.ps1",
+                "upgrade_from_riftbound.ps1",
+                "sync_managed_pipeline_package.ps1"
+            ],
+            "setup": [
+                "configure_powershell_utf8.ps1",
+                "detect_project_stack.ps1",
+                "install_powershell.ps1",
+                "run_interactive_setup.ps1"
+            ],
+            "text": [
+                "check_utf8_writes.ps1",
+                "normalize_documents.bat",
+                "normalize_json_files.ps1",
+                "normalize_json_files.py",
+                "normalize_text_files.ps1",
+                "repair_mojibake.ps1",
+                "utf8_file_helpers.ps1",
+                "write_utf8_file.ps1"
+            ],
+            "quality": [
+                "check_evals.ps1",
+                "check_runtime.py",
+                "run_quality_fix.ps1",
+                "run_quality_gate.ps1"
+            ],
+            "diagnostics": [
+                "console_summary.ps1",
+                "log_summary.ps1"
+            ],
+            "codebase": [
+                "check_code_context_gate.ps1",
+                "update_code_line_index.ps1"
+            ]
+        },
+        "category_rule": "Scripts live under tools/<category>/ and SCRIPTS.json keeps the filename index plus exact categorized path for execution."
+    }
 }

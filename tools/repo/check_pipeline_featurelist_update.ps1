@@ -6,6 +6,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$featureContractCheckScript = Join-Path $PSScriptRoot "check_pipeline_feature_contracts.ps1"
 
 function Invoke-GitLines {
 	param([string[]]$Arguments)
@@ -82,6 +83,12 @@ try {
 	$featureListChanged = @($changedPaths | Where-Object { Test-FeatureListPath -Path $_ })
 	if ($featureListChanged.Count -gt 0) {
 		Write-Host "OK: pipeline feature list changed with pipeline-owned changes."
+		if (Test-Path -LiteralPath $featureContractCheckScript -PathType Leaf) {
+			& powershell -NoProfile -ExecutionPolicy Bypass -File $featureContractCheckScript -Paths ($changedPaths -join ",")
+			if ($LASTEXITCODE -ne 0) {
+				throw "pipeline feature contract check failed with exit code $LASTEXITCODE"
+			}
+		}
 		exit 0
 	}
 
