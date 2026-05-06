@@ -1,0 +1,12 @@
+{
+    "index": [],
+    "content": {},
+    "metadata": {
+        "document": {
+            "title": "Tool Errors",
+            "type": "tool_error_registry",
+            "language": "en"
+        },
+        "purpose": "Records repeatable repository tool invocation, input, result, quoting, path, encoding, and contract failures so the owning script or script catalog can be hardened instead of relying on manual memory."
+    }
+}

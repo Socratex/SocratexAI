@@ -19,6 +19,7 @@
             "templates/",
             "tools/",
             "docs-tech/",
+            "docs-tech/TOOL-ERRORS.json",
             "AI-compiled/"
         ],
         "WORKFLOW.json": [
@@ -29,7 +30,8 @@
             "generic_programming_baseline",
             "project_type_routing",
             "finish_contract",
-            "tool_error_hardening"
+            "tool_error_hardening",
+            "single_entry_tool_handler"
         ],
         "COMMANDS.json": [
             "CONTEXT",
@@ -162,7 +164,10 @@
             "utf8_file_helpers.ps1",
             "run_interactive_setup.ps1",
             "write_utf8_file.ps1",
-            "sync_managed_pipeline_package.ps1"
+            "sync_managed_pipeline_package.ps1",
+            "read_compiled_context.ps1",
+            "tool_error_log.ps1",
+            "tool_handler.ps1"
         ]
     },
     "metadata": {

@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-05T05:43:21+02:00",
+    "generatedAt":  "2026-05-06T13:35:37+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -17,6 +17,12 @@
                   {
                       "path":  "tools/pipeline/rebuild_ai_compiled_context.ps1",
                       "lines":  398,
+                      "extension":  ".ps1",
+                      "large":  true
+                  },
+                  {
+                      "path":  "tools/pipeline/tool_handler.ps1",
+                      "lines":  376,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -135,6 +141,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/pipeline/tool_error_log.ps1",
+                      "lines":  154,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/repo/finalize_changed_files_commit_push.ps1",
                       "lines":  148,
                       "extension":  ".ps1",
@@ -171,8 +183,20 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/documents/insert_document_item.ps1",
+                      "lines":  111,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/repo/add_changelog_entry.ps1",
                       "lines":  109,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
+                      "path":  "tools/pipeline/read_compiled_context.ps1",
+                      "lines":  106,
                       "extension":  ".ps1",
                       "large":  false
                   },
@@ -371,12 +395,6 @@
                   {
                       "path":  "tools/documents/normalize_document_structure.ps1",
                       "lines":  45,
-                      "extension":  ".ps1",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/documents/insert_document_item.ps1",
-                      "lines":  43,
                       "extension":  ".ps1",
                       "large":  false
                   },

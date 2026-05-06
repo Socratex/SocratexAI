@@ -632,6 +632,12 @@
           "title": "Default Tool Error Hardening",
           "ref": "items.tagged_rules.value.8",
           "status": ""
+        },
+        "engineering.coding.code_primary_source_of_truth": {
+          "path": "items.tagged_rules.value.9",
+          "title": "Code Is The Primary Source Of Truth",
+          "ref": "items.tagged_rules.value.9",
+          "status": ""
         }
       }
     },
@@ -1937,6 +1943,41 @@
       }
     },
     {
+      "path": "docs-tech/TOOL-ERRORS.json",
+      "document": {
+        "title": "Tool Errors",
+        "type": "tool_error_registry",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "index": {
+          "path": "index",
+          "title": "index",
+          "ref": "index",
+          "status": ""
+        },
+        "content": {
+          "path": "content",
+          "title": "content",
+          "ref": "content",
+          "status": ""
+        },
+        "metadata": {
+          "path": "metadata",
+          "title": "metadata",
+          "ref": "metadata",
+          "status": ""
+        }
+      }
+    },
+    {
       "path": "DOCS.json",
       "document": {
         "title": "Source Pipeline Document Index",
@@ -1956,6 +1997,7 @@
         "templates/",
         "tools/",
         "docs-tech/",
+        "docs-tech/TOOL-ERRORS.json",
         "AI-compiled/"
       ],
       "top_level_keys": [
@@ -2034,6 +2076,12 @@
           "path": "content.AI-compiled/",
           "title": "",
           "ref": "content.AI-compiled/",
+          "status": ""
+        },
+        "docs-tech/TOOL-ERRORS.json": {
+          "path": "content.docs-tech/TOOL-ERRORS.json",
+          "title": "",
+          "ref": "content.docs-tech/TOOL-ERRORS.json",
           "status": ""
         }
       }
@@ -3579,7 +3627,10 @@
         "utf8_file_helpers.ps1",
         "run_interactive_setup.ps1",
         "write_utf8_file.ps1",
-        "sync_managed_pipeline_package.ps1"
+        "sync_managed_pipeline_package.ps1",
+        "read_compiled_context.ps1",
+        "tool_error_log.ps1",
+        "tool_handler.ps1"
       ],
       "top_level_keys": [
         "index",
@@ -4209,6 +4260,24 @@
           "path": "content.check_pipeline_feature_contracts.ps1",
           "title": "",
           "ref": "content.check_pipeline_feature_contracts.ps1",
+          "status": ""
+        },
+        "tool_handler.ps1": {
+          "path": "content.tool_handler.ps1",
+          "title": "",
+          "ref": "content.tool_handler.ps1",
+          "status": ""
+        },
+        "tool_error_log.ps1": {
+          "path": "content.tool_error_log.ps1",
+          "title": "",
+          "ref": "content.tool_error_log.ps1",
+          "status": ""
+        },
+        "read_compiled_context.ps1": {
+          "path": "content.read_compiled_context.ps1",
+          "title": "",
+          "ref": "content.read_compiled_context.ps1",
           "status": ""
         }
       }
@@ -5550,7 +5619,8 @@
         "generic_programming_baseline",
         "project_type_routing",
         "finish_contract",
-        "tool_error_hardening"
+        "tool_error_hardening",
+        "single_entry_tool_handler"
       ],
       "top_level_keys": [
         "index",
@@ -5604,6 +5674,12 @@
           "path": "content.tool_error_hardening",
           "title": "Tool Error Hardening",
           "ref": "content.tool_error_hardening",
+          "status": ""
+        },
+        "single_entry_tool_handler": {
+          "path": "content.single_entry_tool_handler",
+          "title": "Single Entry Tool Handler",
+          "ref": "content.single_entry_tool_handler",
           "status": ""
         }
       }

@@ -11,6 +11,7 @@
         "templates/",
         "tools/",
         "docs-tech/",
+        "docs-tech/TOOL-ERRORS.json",
         "AI-compiled/"
     ],
     "content": {
@@ -62,6 +63,10 @@
         "AI-compiled/": {
             "role": "Generated read-optimized instruction and knowledge cache.",
             "read": "for fast orientation; do not edit by hand"
+        },
+        "docs-tech/TOOL-ERRORS.json": {
+            "role": "Registry of repeatable tool invocation, input, result, path, quoting, encoding, and contract failures that should harden scripts or script metadata.",
+            "read": "when a tool invocation or output failure repeats, or when tool_handler/tool_error_log behavior is being repaired"
         }
     },
     "metadata": {

@@ -103,7 +103,10 @@
         "utf8_file_helpers.ps1",
         "run_interactive_setup.ps1",
         "write_utf8_file.ps1",
-        "sync_managed_pipeline_package.ps1"
+        "sync_managed_pipeline_package.ps1",
+        "read_compiled_context.ps1",
+        "tool_error_log.ps1",
+        "tool_handler.ps1"
     ],
     "content": {
         "add_changelog_entry.ps1": {
@@ -198,7 +201,32 @@
         },
         "insert_document_item.ps1": {
             "path": "tools/documents/insert_document_item.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Insert a document item; routes .json paths through json_item_insert.ps1/json_item_set.ps1 and non-JSON slim documents through document_item_edit_engine.py.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Title",
+                    "-Content",
+                    "-ContentFile",
+                    "-ItemFile",
+                    "-Position",
+                    "-Before",
+                    "-After",
+                    "-AllowEmpty",
+                    "-Replace",
+                    "-NoPostEdit"
+                ],
+                "json_routing": "For .json paths, -Title/-Content/-ContentFile are wrapped as {title, content}; -ItemFile must contain a JSON value; -Replace routes to json_item_set.ps1; insert routes to json_item_insert.ps1.",
+                "rule": "Use -ContentFile or -ItemFile for multiline or quote-heavy content. For direct JSON control, use json_item_insert.ps1/json_item_set.ps1."
+            },
+            "output": {
+                "success": "OK from the underlying document editor.",
+                "failure": "Throws child editor failure with the child process exit code."
+            }
         },
         "migrate_document_item.ps1": {
             "path": "tools/documents/migrate_document_item.ps1",
@@ -680,6 +708,78 @@
                 "success": "Prints the number of covered feature contracts and confirms changed pipeline paths are assigned.",
                 "failure": "Throws when a feature lacks contract fields, required artifacts are missing, catalog entries are absent, or changed pipeline paths are uncovered."
             }
+        },
+        "tool_handler.ps1": {
+            "path": "tools/pipeline/tool_handler.ps1",
+            "category": "pipeline",
+            "description": "Public single entry point for repository tool operations; validates inputs, normalizes parameters and aliases, delegates to the target script, logs input errors, and returns a stable result envelope.",
+            "input": {
+                "required": [
+                    "-Operation"
+                ],
+                "optional": [
+                    "-ParametersJson",
+                    "-ParametersJsonFile",
+                    "-OutputMode",
+                    "-ErrorLogPath",
+                    "-NoErrorLog"
+                ],
+                "rule": "Use exactly one of -ParametersJson or -ParametersJsonFile. Prefer -ParametersJsonFile for nested, multiline, or quote-heavy parameter payloads."
+            },
+            "output": {
+                "success": "Structured result envelope with ok=true, normalized operation, target script, normalized parameters, command, exit code, and captured output.",
+                "failure": "Structured result envelope with ok=false, error type/message, and logged_error_key when validation logged an input failure."
+            }
+        },
+        "tool_error_log.ps1": {
+            "path": "tools/pipeline/tool_error_log.ps1",
+            "category": "pipeline",
+            "description": "Append a tool invocation or result-contract failure to docs-tech/TOOL-ERRORS.json, defaulting to the parent project registry when running from an installed SocratexAI package.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Path",
+                    "-Key",
+                    "-Title",
+                    "-Status",
+                    "-Tool",
+                    "-Failure",
+                    "-FailingCommandShape",
+                    "-ObservedError",
+                    "-SuspectedContractGap",
+                    "-FixTarget",
+                    "-DetailsJson",
+                    "-DetailsJsonFile",
+                    "-ObservedAt",
+                    "-Json"
+                ],
+                "rule": "Omit -Path for the default tool-error registry. Use -DetailsJsonFile for nested, multiline, or quote-heavy payloads; valid JSON is stored as structured data and invalid JSON is stored as text."
+            },
+            "output": {
+                "success": "OK text or JSON with the inserted key and target path.",
+                "failure": "Throws if the registry cannot be initialized or the entry cannot be appended."
+            }
+        },
+        "read_compiled_context.ps1": {
+            "path": "tools/pipeline/read_compiled_context.ps1",
+            "category": "pipeline",
+            "description": "Read a source compiled instruction file or a compact source context document by alias.",
+            "input": {
+                "required": [
+                    "-Document"
+                ],
+                "optional": [
+                    "-CompiledRoot",
+                    "-AllowStale",
+                    "-Json"
+                ],
+                "aliases": "When called through tool_handler.ps1, aliases such as scripts, commands, flows, docs, workflow, rules, entrypoint, bootstrap, engineering, and agent_contract are normalized before invocation.",
+                "rule": "Prefer tool_handler.ps1 for normal use so aliases and stale checks are normalized before this script runs."
+            },
+            "output": {
+                "success": "Compiled or source context content by default, or JSON with selected path and content when -Json is used.",
+                "failure": "Throws when no alias/path matches or when a compiled output hash is stale."
+            }
         }
     },
     "metadata": {
@@ -787,7 +887,10 @@
                 "set_directives.ps1",
                 "update_pipeline_from_link.ps1",
                 "upgrade_from_riftbound.ps1",
-                "sync_managed_pipeline_package.ps1"
+                "sync_managed_pipeline_package.ps1",
+                "tool_handler.ps1",
+                "tool_error_log.ps1",
+                "read_compiled_context.ps1"
             ],
             "setup": [
                 "configure_powershell_utf8.ps1",

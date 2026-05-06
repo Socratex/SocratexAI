@@ -7,7 +7,8 @@
         "generic_programming_baseline",
         "project_type_routing",
         "finish_contract",
-        "tool_error_hardening"
+        "tool_error_hardening",
+        "single_entry_tool_handler"
     ],
     "content": {
         "quick_index": {
@@ -18,7 +19,8 @@
                 "workflow_workflow_contract",
                 "generic_programming_baseline",
                 "project_type_routing",
-                "finish_contract"
+                "finish_contract",
+                "single_entry_tool_handler"
             ]
         },
         "pipeline_bootstrap_directive": {
@@ -55,6 +57,10 @@
         "tool_error_hardening": {
             "title": "Tool Error Hardening",
             "rule": "When an owned repository script fails because input was easy to pass incorrectly, validation was missing, output was unclear, path/encoding/quoting handling was fragile, or the process failure is likely to recur, default to hardening the owning script, wrapper, help text, validation, or SCRIPTS.json input/output contract before retrying or immediately after unblocking the task. Treat manual recovery as temporary unless the failure is clearly a one-off typo, missing user data, or larger than the current task scope. Prefer file/stdin/structured inputs over fragile inline quoting for complex JSON."
+        },
+        "single_entry_tool_handler": {
+            "title": "Single Entry Tool Handler",
+            "rule": "For repository-owned scripts that have a SCRIPTS.json contract and are exposed to agents as repeatable operations, prefer tools/pipeline/tool_handler.ps1 as the public entry point. The handler should validate required and optional parameters from SCRIPTS.json, normalize common aliases, delegate to the target script, capture a predictable result envelope, and automatically log rejected input through tool_error_log.ps1."
         }
     },
     "metadata": {

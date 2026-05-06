@@ -19,6 +19,79 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+if ([System.IO.Path]::GetExtension($Path).ToLowerInvariant() -eq ".json") {
+	$jsonItemInsert = Join-Path $PSScriptRoot "json_item_insert.ps1"
+	$jsonItemSet = Join-Path $PSScriptRoot "json_item_set.ps1"
+	$jsonPosition = $Position
+	$jsonReference = ""
+	if ($Replace) {
+		# Position is irrelevant for replacement; keep the existing key location.
+	} elseif ($Before -ne "") {
+		$jsonPosition = "before"
+		$jsonReference = $Before
+	} elseif ($After -ne "") {
+		$jsonPosition = "after"
+		$jsonReference = $After
+	}
+
+	if ($ItemFile -ne "") {
+		if ($Replace) {
+			& $jsonItemSet -Path $Path -Key $Key -ValueJsonFile $ItemFile
+		} elseif ($jsonReference -ne "") {
+			& $jsonItemInsert -Path $Path -Key $Key -Position $jsonPosition -Reference $jsonReference -ValueJsonFile $ItemFile
+		} else {
+			& $jsonItemInsert -Path $Path -Key $Key -Position $jsonPosition -ValueJsonFile $ItemFile
+		}
+		if ($LASTEXITCODE -ne 0) {
+			throw "JSON item edit failed with exit code $LASTEXITCODE"
+		}
+		return
+	}
+
+	$contentValue = $Content
+	if ($ContentFile -ne "") {
+		$contentValue = [System.IO.File]::ReadAllText(
+			(Resolve-Path -LiteralPath $ContentFile).Path,
+			[System.Text.UTF8Encoding]::new($false, $true)
+		)
+	}
+	if ($Title -eq "" -and $contentValue -eq "" -and -not $AllowEmpty) {
+		throw "JSON item insert requires -Title, -Content, -ContentFile, -ItemFile, or -AllowEmpty."
+	}
+
+	$itemPayload = [ordered]@{}
+	if ($Title -ne "") {
+		$itemPayload["title"] = $Title
+	}
+	if ($contentValue -ne "" -or $AllowEmpty) {
+		$itemPayload["content"] = $contentValue
+	}
+
+	$tempJsonFile = [System.IO.Path]::GetTempFileName()
+	try {
+		[System.IO.File]::WriteAllText(
+			$tempJsonFile,
+			($itemPayload | ConvertTo-Json -Depth 20),
+			[System.Text.UTF8Encoding]::new($false)
+		)
+		if ($Replace) {
+			& $jsonItemSet -Path $Path -Key $Key -ValueJsonFile $tempJsonFile
+		} elseif ($jsonReference -ne "") {
+			& $jsonItemInsert -Path $Path -Key $Key -Position $jsonPosition -Reference $jsonReference -ValueJsonFile $tempJsonFile
+		} else {
+			& $jsonItemInsert -Path $Path -Key $Key -Position $jsonPosition -ValueJsonFile $tempJsonFile
+		}
+		if ($LASTEXITCODE -ne 0) {
+			throw "JSON item edit failed with exit code $LASTEXITCODE"
+		}
+	} finally {
+		if (Test-Path -LiteralPath $tempJsonFile) {
+			Remove-Item -LiteralPath $tempJsonFile -Force
+		}
+	}
+	return
+}
+
 $python = Join-Path $PSScriptRoot "..\Python312\python.exe"
 if (-not (Test-Path -LiteralPath $python)) {
 	$python = "python"

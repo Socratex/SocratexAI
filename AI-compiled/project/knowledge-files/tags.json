@@ -92,6 +92,10 @@
     "tag": "maintainability"
   },
   {
+    "description": "",
+    "tag": "naming"
+  },
+  {
     "description": "Source-of-truth and subsystem ownership rules.",
     "tag": "ownership"
   },

@@ -17,6 +17,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.code_primary_source_of_truth",
+    "is_duplicate": false,
+    "note": "Durable coding discipline promoted from Riftbound Vanguard pipeline work.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "is_duplicate": false,
     "note": "Source pipeline file-fallback rule.",

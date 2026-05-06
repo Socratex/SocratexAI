@@ -305,6 +305,34 @@
                             "note": "Script catalog can carry exact input/output contracts for fragile invocation shapes."
                         }
                     ]
+                },
+                {
+                    "id": "engineering.coding.code_primary_source_of_truth",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Code Is The Primary Source Of Truth",
+                    "summary": "Names, files, methods, variables, and parameters should carry business meaning directly; comments are side notes only when code cannot encode the intent or warning well enough.",
+                    "rule": "Treat code as the primary source of truth. File names should suggest how methods are interpreted; method names should suggest how variables and parameters are interpreted. Names should be obvious enough to derive business meaning from the code. Use comments only for missing typing/context, reader warnings, workarounds, hacks, non-obvious implementation constraints, or business intent/specification that code cannot express. Do not write comments that merely describe what the code already says.",
+                    "rationale": "Long-running agent work is cheaper and safer when meaning is encoded in names and ownership boundaries instead of duplicated prose that can drift.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "coding",
+                        "naming",
+                        "comments",
+                        "ddd-adiv",
+                        "maintainability"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "context-docs/ENGINEERING.json",
+                            "selector": "tagged_rules",
+                            "note": "Durable coding discipline promoted from Riftbound Vanguard pipeline work."
+                        }
+                    ]
                 }
             ]
         },
