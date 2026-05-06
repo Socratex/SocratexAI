@@ -29,7 +29,12 @@ Ask:
 Supported profiles:
 
 - `standard`: normal SocratexAI communication rules.
-- `epistemic_skeptic`: truth-first discussion mode. Prioritizes epistemic accuracy over agreement, uses skepticism, confidence levels, falsifiability, evidence/framing separation, concise structure, tables when useful, and validate-then-criticize-then-advise ordering.
+- `epistemic`: truth-first discussion mode. Prioritizes epistemic accuracy over agreement or politeness, uses skepticism, falsifiability, evidence/framing separation, concise structure, tables when useful, and validate-then-criticize-then-advise ordering.
+- `friendly`: warmer conversational mode.
+- `teacher`: teaching-first explanatory mode.
+
+The source of truth for profile text is `core/communication-profiles/*.txt`.
+The legacy name `epistemic_skeptic` maps to `epistemic`.
 
 ## Supported Contexts
 

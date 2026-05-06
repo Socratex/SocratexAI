@@ -15,6 +15,7 @@
             "SCRIPTS.json",
             "pipeline_featurelist.json",
             "core/",
+            "core/communication-profiles/",
             "project/",
             "templates/",
             "tools/",

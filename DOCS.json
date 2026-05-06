@@ -7,6 +7,7 @@
         "SCRIPTS.json",
         "pipeline_featurelist.json",
         "core/",
+        "core/communication-profiles/",
         "project/",
         "templates/",
         "tools/",
@@ -67,6 +68,10 @@
         "docs-tech/TOOL-ERRORS.json": {
             "role": "Registry of repeatable tool invocation, input, result, path, quoting, encoding, and contract failures that should harden scripts or script metadata.",
             "read": "when a tool invocation or output failure repeats, or when tool_handler/tool_error_log behavior is being repaired"
+        },
+        "core/communication-profiles/": {
+            "role": "Plain-text communication profile registry. Each .txt filename is a communication.profile id and the file body is the source of truth for that response mode.",
+            "read": "when setup, initialization, communication behavior, or selected profile loading changes"
         }
     },
     "metadata": {

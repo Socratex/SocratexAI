@@ -7,6 +7,22 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
 
+function Get-CommunicationProfiles {
+    $profileRoot = Join-Path $repoRoot "core\communication-profiles"
+    if (-not (Test-Path -LiteralPath $profileRoot)) {
+        return @("standard")
+    }
+    $profiles = @(
+        Get-ChildItem -LiteralPath $profileRoot -Filter "*.txt" -File |
+            Sort-Object Name |
+            ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) }
+    )
+    if ($profiles.Count -eq 0) {
+        return @("standard")
+    }
+    return $profiles
+}
+
 function Ask-Default {
     param(
         [string]$Prompt,
@@ -21,17 +37,42 @@ function Ask-Default {
     return $answer
 }
 
+function Ask-Choice {
+    param(
+        [string]$Prompt,
+        [string]$Default,
+        [string[]]$Choices
+    )
+
+    $allowed = @{}
+    foreach ($choice in $Choices) {
+        $allowed[$choice.ToLowerInvariant()] = $choice
+    }
+    while ($true) {
+        $answer = Ask-Default -Prompt $Prompt -Default $Default
+        $key = $answer.Trim().ToLowerInvariant()
+        if ($key -eq "epistemic_skeptic") {
+            $key = "epistemic"
+        }
+        if ($allowed.ContainsKey($key)) {
+            return $allowed[$key]
+        }
+        Write-Host "Unknown communication profile '$answer'. Available: $([string]::Join(', ', $Choices))"
+    }
+}
+
 Write-Host "SocratexPipeline first-run wizard"
 Write-Host "Answer in your preferred language after choosing the project language."
 Write-Host ""
 
+$communicationProfiles = @(Get-CommunicationProfiles)
 $language = Ask-Default -Prompt "1. Project conversation/status language" -Default "English"
 $projectName = Ask-Default -Prompt "2. Project name" -Default "Initialized SocratexPipeline Project"
 $kind = Ask-Default -Prompt "3. Project kind: code, generic, personal, creative, mixed" -Default "code"
 $packs = Ask-Default -Prompt "4. Active packs, comma-separated" -Default $(if ($kind -eq "code") { "code" } else { "generic" })
 $aiMode = Ask-Default -Prompt "5. AI mode: Lite, Standard, Enterprise" -Default "Standard"
 $firstTarget = Ask-Default -Prompt "6. First concrete target" -Default "Define the first execution pass"
-$communicationProfile = Ask-Default -Prompt "7. Communication profile: standard, epistemic_skeptic" -Default "standard"
+$communicationProfile = Ask-Choice -Prompt "7. Communication profile: $([string]::Join(', ', $communicationProfiles))" -Default "standard" -Choices $communicationProfiles
 $optimizeFor = Ask-Default -Prompt "8. Optimize for" -Default "correctness"
 $avoid = Ask-Default -Prompt "9. What should the agent avoid" -Default "unbounded scope"
 $artifacts = Ask-Default -Prompt "10. Required artifacts after initialization" -Default "default pack artifacts"

@@ -265,7 +265,7 @@ try {
 
     Test-ContainsText -Text $contract -Needle "Emoji Rule" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "Communication Profiles" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "epistemic_skeptic" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "core/communication-profiles/*.txt" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "Tool-First JSON" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "migrate_document_item.ps1" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "bulk_insert_document_items.ps1" -Label "core/AGENT-CONTRACT.json"

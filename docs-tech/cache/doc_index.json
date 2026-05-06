@@ -1993,6 +1993,7 @@
         "SCRIPTS.json",
         "pipeline_featurelist.json",
         "core/",
+        "core/communication-profiles/",
         "project/",
         "templates/",
         "tools/",
@@ -2082,6 +2083,12 @@
           "path": "content.docs-tech/TOOL-ERRORS.json",
           "title": "",
           "ref": "content.docs-tech/TOOL-ERRORS.json",
+          "status": ""
+        },
+        "core/communication-profiles/": {
+          "path": "content.core/communication-profiles/",
+          "title": "",
+          "ref": "content.core/communication-profiles/",
           "status": ""
         }
       }

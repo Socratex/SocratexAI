@@ -5,7 +5,6 @@ param(
     [string]$AiMode = "Standard",
     [string]$FirstTarget = "TBD",
     [string]$FirstSessionSuccess = "TBD",
-    [ValidateSet("standard", "epistemic_skeptic")]
     [string]$CommunicationProfile = "standard",
     [ValidateSet("yes", "no", "TBD")]
     [string]$UseChangelog = "yes",
@@ -50,6 +49,28 @@ $TrashDir = Join-Path $Root "temp\trash"
 $TrashProjectDir = Join-Path $TrashDir "project"
 $InitializerDir = Join-Path $Root "initializer"
 $TrashInitializerDir = Join-Path $TrashDir "initializer"
+
+function Resolve-CommunicationProfile {
+    param([string]$Profile)
+
+    $normalized = $Profile.Trim().ToLowerInvariant()
+    if ($normalized -eq "epistemic_skeptic") {
+        $normalized = "epistemic"
+    }
+
+    $profilePath = Join-Path $Root "core\communication-profiles\$normalized.txt"
+    if (-not (Test-Path -LiteralPath $profilePath -PathType Leaf)) {
+        $available = @(
+            Get-ChildItem -LiteralPath (Join-Path $Root "core\communication-profiles") -Filter "*.txt" -File -ErrorAction SilentlyContinue |
+                Sort-Object Name |
+                ForEach-Object { [System.IO.Path]::GetFileNameWithoutExtension($_.Name) }
+        )
+        throw "Unknown communication profile '$Profile'. Available profiles: $([string]::Join(', ', $available))"
+    }
+    return $normalized
+}
+
+$CommunicationProfile = Resolve-CommunicationProfile -Profile $CommunicationProfile
 
 New-Item -ItemType Directory -Force -Path $TrashProjectDir | Out-Null
 New-Item -ItemType Directory -Force -Path $TrashDir | Out-Null

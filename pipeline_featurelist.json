@@ -44,6 +44,7 @@
             "workflow_unknown_task_routing",
             "on_demand_team_role_lenses",
             "compiled_agent_instruction_layer",
+            "communication_profile_text_registry",
             "code_task_engineering_standards_preload",
             "code_task_engineering_context_loader",
             "full_code_guidance_context_gate",
@@ -5272,6 +5273,55 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents may add explanatory comments for code that should instead be self-describing through names and ownership boundaries."
+            },
+            "communication_profile_text_registry": {
+                "summary": "Communication profiles are source-owned plain-text files discovered by setup and referenced by installed agent instructions.",
+                "required_paths": [
+                    "core/communication-profiles",
+                    "core/AGENT-CONTRACT.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "tools/setup/run_interactive_setup.ps1",
+                    "tools/pipeline/Initialize-SocratexPipeline.ps1",
+                    "tools/pipeline/generate_installed_agent_instructions.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "templates/SOCRATEX.md",
+                    "PUBLIC-BOOTSTRAP.md",
+                    "DOCS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "run_interactive_setup.ps1",
+                    "Initialize-SocratexPipeline.ps1",
+                    "generate_installed_agent_instructions.ps1",
+                    "rebuild_ai_compiled_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "run_interactive_setup.ps1",
+                        "Initialize-SocratexPipeline.ps1",
+                        "generate_installed_agent_instructions.ps1",
+                        "rebuild_ai_compiled_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/AGENT-CONTRACT.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "DOCS.json",
+                    "PUBLIC-BOOTSTRAP.md"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep each communication profile as a separate .txt file under core/communication-profiles.",
+                    "Keep communication.profile values aligned with profile filenames, with only documented legacy aliases.",
+                    "Ensure first-run setup discovers profile names from the folder rather than hardcoding the list.",
+                    "Rebuild compiled instructions so the profile registry is visible to agents."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                ],
+                "known_failure_if_missing": "Communication profile choices drift across prose, setup prompts, config validation, and compiled agent instructions."
             }
         }
     },

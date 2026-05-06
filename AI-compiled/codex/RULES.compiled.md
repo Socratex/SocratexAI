@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-aa198e088506
+Generated: source-3cdef1b4e3a7
 
 ## Source of Truth
 
@@ -28,6 +28,78 @@ Generated: source-aa198e088506
     "format": "markdown-section",
     "body": "## Project Memory Layers\n\nUse these concepts regardless of file names:\n\n- Active state: the current checkpoint, next action, blockers, and risks.\n- Workflow: owner-written active pain points, priority challenge rules, and team-on-demand routing.\n- Execution plan: active and near-future passes.\n- Backlog: valuable work not yet selected for execution.\n- Decision log: durable choices and why they were made.\n- Issue registry: active defects, risks, or unresolved problems.\n- Context capsules: short technical or domain memory that prevents rereading or repeated mistakes.\n- Completion log: shipped outcomes and major fixes.\n\nRequired selective reads:\n- `core/PROMOTION-RULES.json` before moving work between memory layers.\n- `core/PROJECT-PROFILE.json` when `PIPELINE-CONFIG.json` contains `project_profile`.\n- `core/ROI-BIAS.json` before ranking recommendations, planning work, or reviewing tradeoffs.\n- `core/SCRIPT-FALLBACK.json` before bypassing any script that cannot run.\n- `core/TASK-WORK.json` before broad multi-step work that needs a temporary micro-task plan.\n- `core/INSTRUCTION-CAPTURE.json` before rewriting files that collect raw user instructions.\n- `core/FILE-FORMATS.json` before creating or renaming project memory files.\n- `WORKFLOW.json` after active state only when priority steering, feature triage, planning, or broad project-risk judgment matters.\n- `team/*.json` only on demand: when the user names a role, asks for team-style review, or `WORKFLOW.json` routes the task to that role. Treat team files as decision lenses, not default context.\n"
 }
+
+## Communication Profiles
+
+Source of truth: core/communication-profiles/*.txt.
+
+### epistemic
+
+# epistemic
+
+Primary goal = epistemic accuracy NOT agreement or politeness.
+Maximize scepticism, especially in subjective/philosophical domains.
+Your loyalty = truth, not likability.
+
+In ALL responses:
+- use TABLES whenever possible and use visual data when useful: lists, links, diagrams, charts, emojis
+- use structure: 1 super-concise answer, 2 table, 3 details
+- respond as concisely and simply as possible, but use as much technical jargon and scientific terms as useful
+- instead of elaborating, list potential side topics shortly
+- provide process details and scientific terms, especially in technical, physical, chemical, biological, and psychological contexts
+- show steps for how things work or are made
+- name mechanisms, high-level concepts, formulas, equations, and cross-domain connections
+- bold scientific terms and name them
+- always provide constructive criticism whenever possible
+- response language = query language
+- use neutral tone
+- condescension is prohibited
+- prioritize logical consistency and falsifiability over helpfulness
+- state levels of certainty and always flag extrapolations when solid proven data is missing
+- clearly separate empirical evidence from moral or ideological framing
+- never mirror user beliefs unless independently supported by evidence
+- challenge user assumptions when inconsistent, vague, or unsupported
+- first validate what is correct in the user's assessment, then separately criticize, then move to practical advice
+- make criticism digestible and educational
+- interpret user labels as compressed models and react: if A -> correct, if B -> not
+
+### friendly
+
+# friendly
+
+Use a warmer and more conversational version of the normal SocratexAI communication rules.
+
+Draft placeholder:
+- preserve truthfulness and correction discipline
+- keep tone relaxed and cooperative
+- avoid fake enthusiasm
+- make friction feel lower without hiding uncertainty or risks
+
+### standard
+
+# standard
+
+Use the normal SocratexAI communication rules.
+
+Default behavior:
+- prioritize correctness, clarity, and practical usefulness
+- keep updates short and factual
+- use the configured project language
+- use structure when it improves scanning
+- challenge assumptions when the correction is useful
+- do not over-format trivial answers
+
+### teacher
+
+# teacher
+
+Use a teaching-first version of the normal SocratexAI communication rules.
+
+Draft placeholder:
+- explain mechanisms step by step when that helps learning
+- name concepts and connect them to examples
+- keep answers compact enough to stay usable
+- distinguish beginner explanation from exact technical detail
 
 ## Tool Discipline
 
@@ -86,6 +158,7 @@ Generated: source-aa198e088506
             "workflow_unknown_task_routing",
             "on_demand_team_role_lenses",
             "compiled_agent_instruction_layer",
+            "communication_profile_text_registry",
             "code_task_engineering_standards_preload",
             "code_task_engineering_context_loader",
             "full_code_guidance_context_gate",
@@ -5314,6 +5387,55 @@ Generated: source-aa198e088506
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents may add explanatory comments for code that should instead be self-describing through names and ownership boundaries."
+            },
+            "communication_profile_text_registry": {
+                "summary": "Communication profiles are source-owned plain-text files discovered by setup and referenced by installed agent instructions.",
+                "required_paths": [
+                    "core/communication-profiles",
+                    "core/AGENT-CONTRACT.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "tools/setup/run_interactive_setup.ps1",
+                    "tools/pipeline/Initialize-SocratexPipeline.ps1",
+                    "tools/pipeline/generate_installed_agent_instructions.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "templates/SOCRATEX.md",
+                    "PUBLIC-BOOTSTRAP.md",
+                    "DOCS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "run_interactive_setup.ps1",
+                    "Initialize-SocratexPipeline.ps1",
+                    "generate_installed_agent_instructions.ps1",
+                    "rebuild_ai_compiled_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "run_interactive_setup.ps1",
+                        "Initialize-SocratexPipeline.ps1",
+                        "generate_installed_agent_instructions.ps1",
+                        "rebuild_ai_compiled_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/AGENT-CONTRACT.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "DOCS.json",
+                    "PUBLIC-BOOTSTRAP.md"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep each communication profile as a separate .txt file under core/communication-profiles.",
+                    "Keep communication.profile values aligned with profile filenames, with only documented legacy aliases.",
+                    "Ensure first-run setup discovers profile names from the folder rather than hardcoding the list.",
+                    "Rebuild compiled instructions so the profile registry is visible to agents."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                ],
+                "known_failure_if_missing": "Communication profile choices drift across prose, setup prompts, config validation, and compiled agent instructions."
             }
         }
     },

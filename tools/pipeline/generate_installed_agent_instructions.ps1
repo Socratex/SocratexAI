@@ -19,6 +19,8 @@ $lines.Add("# Agent Instructions") | Out-Null
 $lines.Add("") | Out-Null
 $lines.Add('Read `core/AGENT-CONTRACT.json` first.') | Out-Null
 $lines.Add("") | Out-Null
+$lines.Add('Read `PIPELINE-CONFIG.json` when present, then read `core/communication-profiles/<communication.profile>.txt`. If the selected profile is missing, read `core/communication-profiles/standard.txt` and report the missing profile.') | Out-Null
+$lines.Add("") | Out-Null
 $lines.Add('Read `DOCS.json` before reading, creating, renaming, or updating project documents. Use it to choose what to read and where to write new information.') | Out-Null
 $lines.Add("") | Out-Null
 $lines.Add('Then read the active state file as the compact active project state. For code projects, use `STATE.json`; for non-code user-facing memory, use `STATE.md`.') | Out-Null

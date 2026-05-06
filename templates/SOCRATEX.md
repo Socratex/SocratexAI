@@ -17,8 +17,9 @@ Read order:
 3. `.aiassistant/socratex/PIPELINE-CONFIG.json` when present
 4. `SocratexAI/AGENTS.md`
 5. `SocratexAI/PIPELINE-CONFIG.json`
-6. `SocratexAI/DOCS.json`
-7. `SocratexAI/STATE.json` for code projects, or `SocratexAI/STATE.md` for non-code user-facing memory
+6. `SocratexAI/core/communication-profiles/<communication.profile>.txt`; if missing, read `standard.txt` and report the missing profile
+7. `SocratexAI/DOCS.json`
+8. `SocratexAI/STATE.json` for code projects, or `SocratexAI/STATE.md` for non-code user-facing memory
 
 Before reading, creating, renaming, or updating project documents, use `SocratexAI/DOCS.json` to identify what each document is for, which document should be read, and where new information should be written.
 

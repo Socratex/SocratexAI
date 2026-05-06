@@ -1,5 +1,5 @@
 {
-    "generatedAt":  "2026-05-06T13:35:37+02:00",
+    "generatedAt":  "2026-05-06T14:41:23+02:00",
     "threshold":  300,
     "files":  [
                   {
@@ -16,13 +16,19 @@
                   },
                   {
                       "path":  "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                      "lines":  398,
+                      "lines":  428,
                       "extension":  ".ps1",
                       "large":  true
                   },
                   {
                       "path":  "tools/pipeline/tool_handler.ps1",
                       "lines":  376,
+                      "extension":  ".ps1",
+                      "large":  true
+                  },
+                  {
+                      "path":  "tools/pipeline/Initialize-SocratexPipeline.ps1",
+                      "lines":  372,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -35,12 +41,6 @@
                   {
                       "path":  "tools/codebase/update_code_line_index.ps1",
                       "lines":  356,
-                      "extension":  ".ps1",
-                      "large":  true
-                  },
-                  {
-                      "path":  "tools/pipeline/Initialize-SocratexPipeline.ps1",
-                      "lines":  355,
                       "extension":  ".ps1",
                       "large":  true
                   },
@@ -135,6 +135,12 @@
                       "large":  false
                   },
                   {
+                      "path":  "tools/setup/run_interactive_setup.ps1",
+                      "lines":  173,
+                      "extension":  ".ps1",
+                      "large":  false
+                  },
+                  {
                       "path":  "tools/documents/document_structure_normalizer_engine.py",
                       "lines":  170,
                       "extension":  ".py",
@@ -168,12 +174,6 @@
                       "path":  "tools/documents/document_schema_migration_engine.py",
                       "lines":  138,
                       "extension":  ".py",
-                      "large":  false
-                  },
-                  {
-                      "path":  "tools/setup/run_interactive_setup.ps1",
-                      "lines":  135,
-                      "extension":  ".ps1",
                       "large":  false
                   },
                   {
@@ -304,7 +304,7 @@
                   },
                   {
                       "path":  "tools/pipeline/generate_installed_agent_instructions.ps1",
-                      "lines":  69,
+                      "lines":  71,
                       "extension":  ".ps1",
                       "large":  false
                   },

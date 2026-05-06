@@ -53,6 +53,24 @@ function Get-Section {
 	}
 }
 
+function Get-CommunicationProfileText {
+	$profileRoot = Join-Path $repoRoot "core\communication-profiles"
+	if (-not (Test-Path -LiteralPath $profileRoot)) {
+		return ""
+	}
+
+	$lines = [System.Collections.Generic.List[string]]::new()
+	foreach ($profile in (Get-ChildItem -LiteralPath $profileRoot -Filter "*.txt" -File | Sort-Object Name)) {
+		$name = [System.IO.Path]::GetFileNameWithoutExtension($profile.Name)
+		$text = Get-Content -Raw -LiteralPath $profile.FullName -Encoding UTF8
+		$lines.Add("### $name") | Out-Null
+		$lines.Add("") | Out-Null
+		$lines.Add($text.Trim()) | Out-Null
+		$lines.Add("") | Out-Null
+	}
+	return ($lines -join [Environment]::NewLine).Trim()
+}
+
 function Get-ExistingPacks {
 	param([string[]]$Candidates)
 
@@ -175,6 +193,16 @@ function Get-SourceManifest {
 			$sources[$path] = $hash
 		}
 	}
+	$profileRoot = Join-Path $repoRoot "core\communication-profiles"
+	if (Test-Path -LiteralPath $profileRoot) {
+		foreach ($profile in (Get-ChildItem -LiteralPath $profileRoot -Filter "*.txt" -File | Sort-Object Name)) {
+			$relativePath = "core/communication-profiles/$($profile.Name)"
+			$hash = Get-RelativeHash -RelativePath $relativePath
+			if ($hash) {
+				$sources[$relativePath] = $hash
+			}
+		}
+	}
 	foreach ($pack in $PackNames) {
 		foreach ($path in @(
 			"project/$pack/PACK.json",
@@ -205,6 +233,7 @@ function New-CompiledFiles {
 	$agentContractPrinciples = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "operating_principles"
 	$memoryLayers = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "project_memory_layers"
 	$toolFirstJson = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "tool_first_json"
+	$communicationProfiles = Get-CommunicationProfileText
 	$codeWorkflowReadOrder = Get-Section -RelativePath "project/code/WORKFLOW.json" -Selector "read_order"
 	$codeWorkflowGeneral = Get-Section -RelativePath "project/code/WORKFLOW.json" -Selector "general_workflow"
 	$codeWorkflowVerification = Get-Section -RelativePath "project/code/WORKFLOW.json" -Selector "verification_boundary"
@@ -254,6 +283,12 @@ $agentContractPurpose
 $agentContractPrinciples
 
 $memoryLayers
+
+## Communication Profiles
+
+Source of truth: `core/communication-profiles/*.txt`.
+
+$communicationProfiles
 
 ## Tool Discipline
 
