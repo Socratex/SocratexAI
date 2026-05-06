@@ -1,63 +1,70 @@
 {
-  "index": [
-    "quick_index",
-    "overview",
-    "purpose",
-    "source_resolution",
-    "update_command",
-    "feature_learning",
-    "workflow",
-    "safety"
-  ],
-  "items": {
-    "quick_index": {
-      "title": "Quick Index",
-      "refs": [
+    "index": [
+        "quick_index",
         "overview",
         "purpose",
         "source_resolution",
         "update_command",
         "feature_learning",
+        "upgrade_enforcement",
         "workflow",
         "safety"
-      ]
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "refs": [
+                "overview",
+                "purpose",
+                "source_resolution",
+                "update_command",
+                "feature_learning",
+                "upgrade_enforcement",
+                "workflow",
+                "safety"
+            ]
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Update Protocol\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nUse this protocol when the user asks to update, refresh, reinstall, or pull the latest SocratexAI pipeline in an already configured project.\n\nThe agent must know where the pipeline comes from and which updater to run before changing files.\n"
+        },
+        "source_resolution": {
+            "title": "Source Resolution",
+            "format": "markdown-section",
+            "body": "## Source Resolution\n\nDetermine the update source in this order:\n\n1. `PIPELINE-CONFIG.json` value `pipeline.update_source`.\n2. `PIPELINE-CONFIG.json` value `pipeline.public_bootstrap_url`.\n3. The installed `SocratexAI/PUBLIC-BOOTSTRAP.md` source URL if documented by the project.\n4. A user-provided URL or local source path.\n5. Ask the user for the update source.\n\nDo not guess a repository URL when no source is configured.\n"
+        },
+        "update_command": {
+            "title": "Update Command",
+            "format": "markdown-section",
+            "body": "## Update Command\n\nCheap update is the default. A normal update should only refresh the managed `SocratexAI/` package, keep project configuration and project memory untouched, refresh the compact instance feature list, update root directives, and run the cheap feature-contract check.\n\nFor public user updates, prefer a Git source when possible:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source \"https://github.com/Socratex/SocratexAI.git\" -SourceMode Git\n```\n\nA zip or local checkout is still valid:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source \"<zip-or-local-source>\"\n```\n\nDo not pass `-ReinitializeNew` by default. Use it only when the update explicitly introduces new missing-only initialized artifacts that should be created in the project root. When this is needed, the updater invokes SocratexAI/tools/pipeline/reinitialize_pipeline.ps1 in missing-only mode.\n\nDo not pass `-FullVerify` by default. Use it when the user has enough budget/time or when debugging the update itself; it rebuilds compiled knowledge and runs full `audit_docs.ps1` after the cheap update.\n\nUse the selected project packs from config when reinitialization is explicitly requested.\n\nIf `pipeline.update_command` exists in config, use it as the command template after replacing `<source>` with the resolved update source, but preserve the cheap default unless the config explicitly opts into full verification.\n\nReinitialization must be missing-only: create newly introduced files or config defaults, but do not overwrite active project memory.\nPipeline package update is a managed mirror sync, not a loose copy. The updater must mirror source-owned package paths under `SocratexAI/`, including root routing catalogs such as `DOCS.json`, `WORKFLOW.json`, `COMMANDS.json`, `FLOWS.json`, `SCRIPTS.json`, and source context such as `context-docs/`, and remove obsolete files inside those managed paths before copying the new source. This preserves structural changes such as `tools/<category>/` and prevents stale flat scripts, old templates, or dead general documents from surviving after an update.\n\nThe updater must not overwrite project-owned configuration or memory such as root `PIPELINE-CONFIG.json`, active state, plans, backlog, decisions, or project context docs. Source-owned files inside `SocratexAI/` are replaceable; project-owned files outside `SocratexAI/` are not.\n\nWhen updating the pipeline inside Riftbound Vanguard, ask whether the user also wants the source `SocratexPipeline` repository upgraded and pushed when the installed pipeline change exposes a reusable pipeline improvement.\n\nFor maintainer-only upgrades from a private reference project, use the maintainer upgrade tool only when the user explicitly requests that source:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/upgrade_from_riftbound.ps1 -RiftboundPath \"<path>\"\n```\n\nFor migration from another AI pipeline, use:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/migrate_ai_pipeline.ps1\n```"
+        },
+        "feature_learning": {
+            "title": "Feature Learning",
+            "format": "markdown-section",
+            "body": "## Feature Learning\n\n`pipeline_featurelist.json` is the compact feature-id contract for comparing source and installed pipelines.\n\nThe source `SocratexPipeline/pipeline_featurelist.json` is canonical and must not reference specific installed projects.\nIt uses the canonical JSON list-document shape: root `index`, `content`, and `metadata`.\n\n`pipeline_featurelist.json` uses a two-layer contract inside `content`:\n\n- `content.features` stays as the cheap comparison index for source/instance diffs.\n- `content.feature_contracts` is the artifact-level contract used to prove a feature is actually synchronized.\n\n`metadata` stores schema, pipeline identity, role, update date, comparison rules, allowed sync directions, and compatibility notes.\nReaders may accept older root `features` and root `feature_contracts` only as migration input; source output should stay `index/content/metadata`.\n\nEvery source feature must define `summary`, `required_paths`, `required_scripts`, `required_catalog_entries`, `required_docs`, `sync_direction`, `promotion_checklist`, `verification_commands`, and `known_failure_if_missing`.\n\nRun the contract checker before promoting or publishing source changes:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1\n```\n\nWhen passing changed paths, the checker also verifies that every changed pipeline-owned artifact is assigned to at least one feature contract:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1 -Paths tools/pipeline/example.ps1,SCRIPTS.json\n```\n\nInstalled projects should keep an instance manifest at project root in the same list-document shape with:\n\n- `content.features`\n- `content.comparison_to_source.same`\n- `content.comparison_to_source.missing_from_instance`\n- `content.comparison_to_source.extra_in_instance`\n\nWhen a project develops a reusable non-project-specific pipeline behavior, inspect it with:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/learn_pipeline_features.ps1 -ProjectPath \"<project>\"\n```\n\nFor structured local intake that an agent can read later, generate a JSON learning report with:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/report_pipeline_learning.ps1 -ProjectPath \"<project>\" -OutputPath \"learning/inbox/<project>.json\"\n```\n\nFor public pipeline improvement intake, use only a prefilled GitHub Issue URL:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/open_pipeline_learning_issue.ps1 -ProjectPath \"<project>\" -Open\n```\n\nThis is the only supported public network intake path for now. It does not require a GitHub token in the pipeline and does not write through an API; the user reviews the prefilled issue and submits it from the browser.\n\nWhen the report comes from a concrete AI improvement, include a short explanation and changed scripts:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/open_pipeline_learning_issue.ps1 -ProjectPath \"<project>\" -LearnedSummary \"<what AI learned>\" -ChangedScripts @(\"tools/example.ps1\") -Open\n```\n\nApply selected reusable features to the source manifest with `-Apply -IncludeFeatures <ids>` or `-Apply -AcceptAll` only after excluding project/domain-specific features and confirming that each selected feature has a `content.feature_contracts` entry. The promotion tool refuses selected feature IDs that do not carry a contract.\nFeature learning is not complete when only the feature ID is copied. A promoted reusable feature must also bring every required artifact: scripts, script category placement, SCRIPTS.json path and input/output contracts, general documents, templates, compiled-context source lists, workflow/audit/update rules, and migration or cleanup logic. If the child proves a structural pipeline behavior, port the source artifacts first, then update the feature list.\n\nPipeline-owned improvements under `tools/`, `core/`, `project/`, `templates/`, or `adapters/` must update `pipeline_featurelist.json`; `tools/repo/check_pipeline_featurelist_update.ps1` enforces this only for pipeline-owned changed paths, so ordinary project tasks do not need feature-list edits.\n\nAfter the source learns new canonical feature IDs, future project updates and reinitialization should run `tools/repo/sync_pipeline_featurelist.ps1` so installed projects can compare themselves against the new source feature list.\n"
+        },
+        "upgrade_enforcement": {
+            "title": "Upgrade Enforcement",
+            "format": "markdown-section",
+            "body": "## Upgrade Enforcement\n\nDuring setup, update, upgrade, migration, and reinitialization, the current SocratexAI pipeline contract dictates file structure, response style, and required tooling. Do not copy an older local file shape just because it already exists. Validate the current format before writing.\n\nBefore editing structured project or pipeline documents, read `SocratexAI/core/FILE-FORMATS.json` when present and inspect or use `SocratexAI/tools/documents/json_list_doc.py` plus its PowerShell wrappers. Canonical JSON list documents use root `index`, `content`, `metadata` in that order. `index` contains only keys or titles present in `content`; payload belongs under `content`; schema, routing, generation, status, and support fields belong under `metadata`.\n\nTreat plans, state, queues, feature lists, command catalogs, workflow catalogs, and context capsules as structured operational data, not narrative documents. Preserve list-document contracts instead of turning them into prose.\n\nAfter changing structured files, run the pipeline scripts that match the change. At minimum, run `SocratexAI/tools/repo/check_pipeline_feature_contracts.ps1` for pipeline-owned artifacts or feature manifests and `SocratexAI/tools/documents/audit_docs.ps1` when available or when full verification is requested. Use JSON document wrappers, `json_list_doc.py`, and `SocratexAI/tools/text/normalize_json_files.ps1` instead of hand-shaping JSON when tools are available.\n\nIf a required script cannot run, report the missing tool as a blocker or degraded mode and either repair/install the tool first or stop before claiming completion.\n\nPipeline/global requirements outrank local project preferences for file structure, response format, and mandatory script usage unless the user explicitly overrides them. Local settings may add constraints, but must not silently weaken the pipeline contract.\n\nWhen active communication rules require `single thought per line` or emoji-prefixed prose paragraphs, apply them to update/setup reporting too.\n"
+        },
+        "workflow": {
+            "title": "Workflow",
+            "format": "markdown-section",
+            "body": "## Workflow\n\n1. Read root `SOCRATEX.md`.\n2. Read installed pipeline config.\n3. Resolve the update source.\n4. Check runtime availability or follow `core/SCRIPT-FALLBACK.json`.\n5. Read `SocratexAI/core/FILE-FORMATS.json` and the relevant JSON document tooling contract before editing structured files.\n6. Run the updater with explicit source and packs; verify that managed `SocratexAI/` paths were mirror-synced, including deletion of obsolete source-owned files.\n7. Reinitialize missing-only only when explicitly requested with `-ReinitializeNew`.\n8. Run `SocratexAI/tools/repo/check_pipeline_feature_contracts.ps1` when available.\n9. Run `SocratexAI/tools/documents/audit_docs.ps1` when `-FullVerify` is requested, a structured document changed, or a cheap check fails.\n10. Run `SocratexAI/core/ACTIVATION-CHECK.json` after update when the user is validating setup, not for every low-budget update.\n11. Report updated source, packs, scripts run or skipped, whether full verification was skipped, and remaining risks.\n"
+        },
+        "safety": {
+            "title": "Safety",
+            "format": "markdown-section",
+            "body": "## Safety\n\nDo not overwrite project memory such as active state, branch state, plans, backlog, decisions, or context docs unless the updater explicitly preserves or migrates them.\n\nDo not update from an untrusted URL without telling the user what source will be used.\n\nIf update source is missing, ask for it and stop before changing files.\n"
+        }
     },
-    "overview": {
-      "title": "Overview",
-      "format": "markdown-section",
-      "body": "# Update Protocol\n"
-    },
-    "purpose": {
-      "title": "Purpose",
-      "format": "markdown-section",
-      "body": "## Purpose\n\nUse this protocol when the user asks to update, refresh, reinstall, or pull the latest SocratexAI pipeline in an already configured project.\n\nThe agent must know where the pipeline comes from and which updater to run before changing files.\n"
-    },
-    "source_resolution": {
-      "title": "Source Resolution",
-      "format": "markdown-section",
-      "body": "## Source Resolution\n\nDetermine the update source in this order:\n\n1. `PIPELINE-CONFIG.json` value `pipeline.update_source`.\n2. `PIPELINE-CONFIG.json` value `pipeline.public_bootstrap_url`.\n3. The installed `SocratexAI/PUBLIC-BOOTSTRAP.md` source URL if documented by the project.\n4. A user-provided URL or local source path.\n5. Ask the user for the update source.\n\nDo not guess a repository URL when no source is configured.\n"
-    },
-    "update_command": {
-      "title": "Update Command",
-      "format": "markdown-section",
-      "body": "## Update Command\n\nCheap update is the default. A normal update should only refresh the managed `SocratexAI/` package, keep project configuration and project memory untouched, refresh the compact instance feature list, update root directives, and run the cheap feature-contract check.\n\nFor public user updates, prefer a Git source when possible:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source \"https://github.com/Socratex/SocratexAI.git\" -SourceMode Git\n```\n\nA zip or local checkout is still valid:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source \"<zip-or-local-source>\"\n```\n\nDo not pass `-ReinitializeNew` by default. Use it only when the update explicitly introduces new missing-only initialized artifacts that should be created in the project root. When this is needed, the updater invokes SocratexAI/tools/pipeline/reinitialize_pipeline.ps1 in missing-only mode.\n\nDo not pass `-FullVerify` by default. Use it when the user has enough budget/time or when debugging the update itself; it rebuilds compiled knowledge and runs full `audit_docs.ps1` after the cheap update.\n\nUse the selected project packs from config when reinitialization is explicitly requested.\n\nIf `pipeline.update_command` exists in config, use it as the command template after replacing `<source>` with the resolved update source, but preserve the cheap default unless the config explicitly opts into full verification.\n\nReinitialization must be missing-only: create newly introduced files or config defaults, but do not overwrite active project memory.\nPipeline package update is a managed mirror sync, not a loose copy. The updater must mirror source-owned package paths under `SocratexAI/`, including root routing catalogs such as `DOCS.json`, `WORKFLOW.json`, `COMMANDS.json`, `FLOWS.json`, `SCRIPTS.json`, and source context such as `context-docs/`, and remove obsolete files inside those managed paths before copying the new source. This preserves structural changes such as `tools/<category>/` and prevents stale flat scripts, old templates, or dead general documents from surviving after an update.\n\nThe updater must not overwrite project-owned configuration or memory such as root `PIPELINE-CONFIG.json`, active state, plans, backlog, decisions, or project context docs. Source-owned files inside `SocratexAI/` are replaceable; project-owned files outside `SocratexAI/` are not.\n\nWhen updating the pipeline inside Riftbound Vanguard, ask whether the user also wants the source `SocratexPipeline` repository upgraded and pushed when the installed pipeline change exposes a reusable pipeline improvement.\n\nFor maintainer-only upgrades from a private reference project, use the maintainer upgrade tool only when the user explicitly requests that source:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/upgrade_from_riftbound.ps1 -RiftboundPath \"<path>\"\n```\n\nFor migration from another AI pipeline, use:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/migrate_ai_pipeline.ps1\n```"
-    },
-    "feature_learning": {
-      "title": "Feature Learning",
-      "format": "markdown-section",
-      "body": "## Feature Learning\n\n`pipeline_featurelist.json` is the compact feature-id contract for comparing source and installed pipelines.\n\nThe source `SocratexPipeline/pipeline_featurelist.json` is canonical and must not reference specific installed projects.\nIt uses the canonical JSON list-document shape: root `index`, `content`, and `metadata`.\n\n`pipeline_featurelist.json` uses a two-layer contract inside `content`:\n\n- `content.features` stays as the cheap comparison index for source/instance diffs.\n- `content.feature_contracts` is the artifact-level contract used to prove a feature is actually synchronized.\n\n`metadata` stores schema, pipeline identity, role, update date, comparison rules, allowed sync directions, and compatibility notes.\nReaders may accept older root `features` and root `feature_contracts` only as migration input; source output should stay `index/content/metadata`.\n\nEvery source feature must define `summary`, `required_paths`, `required_scripts`, `required_catalog_entries`, `required_docs`, `sync_direction`, `promotion_checklist`, `verification_commands`, and `known_failure_if_missing`.\n\nRun the contract checker before promoting or publishing source changes:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1\n```\n\nWhen passing changed paths, the checker also verifies that every changed pipeline-owned artifact is assigned to at least one feature contract:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1 -Paths tools/pipeline/example.ps1,SCRIPTS.json\n```\n\nInstalled projects should keep an instance manifest at project root in the same list-document shape with:\n\n- `content.features`\n- `content.comparison_to_source.same`\n- `content.comparison_to_source.missing_from_instance`\n- `content.comparison_to_source.extra_in_instance`\n\nWhen a project develops a reusable non-project-specific pipeline behavior, inspect it with:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/learn_pipeline_features.ps1 -ProjectPath \"<project>\"\n```\n\nFor structured local intake that an agent can read later, generate a JSON learning report with:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/report_pipeline_learning.ps1 -ProjectPath \"<project>\" -OutputPath \"learning/inbox/<project>.json\"\n```\n\nFor public pipeline improvement intake, use only a prefilled GitHub Issue URL:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/open_pipeline_learning_issue.ps1 -ProjectPath \"<project>\" -Open\n```\n\nThis is the only supported public network intake path for now. It does not require a GitHub token in the pipeline and does not write through an API; the user reviews the prefilled issue and submits it from the browser.\n\nWhen the report comes from a concrete AI improvement, include a short explanation and changed scripts:\n\n```powershell\npowershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/open_pipeline_learning_issue.ps1 -ProjectPath \"<project>\" -LearnedSummary \"<what AI learned>\" -ChangedScripts @(\"tools/example.ps1\") -Open\n```\n\nApply selected reusable features to the source manifest with `-Apply -IncludeFeatures <ids>` or `-Apply -AcceptAll` only after excluding project/domain-specific features and confirming that each selected feature has a `content.feature_contracts` entry. The promotion tool refuses selected feature IDs that do not carry a contract.\nFeature learning is not complete when only the feature ID is copied. A promoted reusable feature must also bring every required artifact: scripts, script category placement, SCRIPTS.json path and input/output contracts, general documents, templates, compiled-context source lists, workflow/audit/update rules, and migration or cleanup logic. If the child proves a structural pipeline behavior, port the source artifacts first, then update the feature list.\n\nPipeline-owned improvements under `tools/`, `core/`, `project/`, `templates/`, or `adapters/` must update `pipeline_featurelist.json`; `tools/repo/check_pipeline_featurelist_update.ps1` enforces this only for pipeline-owned changed paths, so ordinary project tasks do not need feature-list edits.\n\nAfter the source learns new canonical feature IDs, future project updates and reinitialization should run `tools/repo/sync_pipeline_featurelist.ps1` so installed projects can compare themselves against the new source feature list.\n"
-    },
-    "workflow": {
-      "title": "Workflow",
-      "format": "markdown-section",
-      "body": "## Workflow\n\n1. Read root `SOCRATEX.md`.\n2. Read installed pipeline config.\n3. Resolve the update source.\n4. Check runtime availability or follow `core/SCRIPT-FALLBACK.json`.\n5. Run the updater with explicit source and packs; verify that managed `SocratexAI/` paths were mirror-synced, including deletion of obsolete source-owned files.\n6. Reinitialize missing-only only when explicitly requested with `-ReinitializeNew`.\n7. Run `SocratexAI/tools/repo/check_pipeline_feature_contracts.ps1` when available.\n8. Run `SocratexAI/tools/documents/audit_docs.ps1` only when `-FullVerify` is requested or a cheap check fails.\n9. Run `SocratexAI/core/ACTIVATION-CHECK.json` after update when the user is validating setup, not for every low-budget update.\n10. Report updated source, packs, whether full verification was skipped, and remaining risks.\n"
-    },
-    "safety": {
-      "title": "Safety",
-      "format": "markdown-section",
-      "body": "## Safety\n\nDo not overwrite project memory such as active state, branch state, plans, backlog, decisions, or context docs unless the updater explicitly preserves or migrates them.\n\nDo not update from an untrusted URL without telling the user what source will be used.\n\nIf update source is missing, ask for it and stop before changing files.\n"
-    }
-  },
-  "schema": "socratex-document/v1",
-  "title": "Update Protocol"
+    "schema": "socratex-document/v1",
+    "title": "Update Protocol"
 }

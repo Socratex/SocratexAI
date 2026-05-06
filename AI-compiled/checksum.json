@@ -1,10 +1,10 @@
 {
     "schema":  "socratex-compiled-agent-checksum/v1",
-    "generated_at":  "source-67e4a38fec5e",
+    "generated_at":  "source-192bf7a6c416",
     "source_hashes":  {
                           "AGENTS.md":  "f17717c0fb04cbc9687fbb06b5df5212e9b83327fee5ea1943c688b25a40fd1e",
                           "README.md":  "8b91bc9a9d2654bd3eb260243591a67ac1291c7e7d4ffa73c746c7c5865fd747",
-                          "PUBLIC-BOOTSTRAP.md":  "3eec0279ad450567afbfc1d1a9d7ab97d92237967c233469fb61b283b537b793",
+                          "PUBLIC-BOOTSTRAP.md":  "a50787d2155ccaea1337742c5802436c2749072b627af96b2b3d663483567b5f",
                           "DOCS.json":  "258979826fa56e0d13c29e6b5fc881936ad28086bcfa9291c801d859ce649b52",
                           "WORKFLOW.json":  "7a25588389d6a832ad4fb91d6e55de2a3f8ec632084938e93ec9f38778508cb3",
                           "COMMANDS.json":  "7ae768535f5e697de610b6351a040ff4757683690240ca225c2d7a3931bf0f0d",
@@ -47,11 +47,11 @@
                       },
     "output_hashes":  {
                           "README.md":  "d066b6cd837082095c4a037ac3c5619ba562ed9762f239a8e4cce0ea94e35659",
-                          "INDEX.json":  "b48456ec67ee58036885a8745b41033d9906af343547273ddb5454efc324e433",
-                          "codex/ENTRYPOINT.md":  "aa12d5e6f7d6179b05dbd0e9b4a6e3f85f8a2cdef9d60c817e0bbdd756ea20e5",
-                          "codex/RULES.compiled.md":  "83ad0fafbfb2d8731763f7d772d96a1ad485f1d957fb947529e6cd943f246d7d",
-                          "codex/WORKFLOW.compiled.md":  "747e8ab91d7dff3ce56159cfb451af267a171dcba3fc1d59048167129a9c1e65",
-                          "codex/CONTEXTUAL-WORKFLOW.compiled.md":  "105457a524adb49e115b572f87c4ee94ec76b5b072f9ac957c16fde0a7f0b8d8",
-                          "codex/TEAM.compiled.md":  "d721365a30bd885cff7e1019bfe7e43d167ad8c577e7a1937ccc984278c8ab3f"
+                          "INDEX.json":  "4a9d3fc7073495b402da46ad874a010275690d1a8e931d236ad4487497b7659c",
+                          "codex/ENTRYPOINT.md":  "408b5d767aa73d776074a794de2d13cfdc5e4c1601c6807f3c2a9873d5f28b24",
+                          "codex/RULES.compiled.md":  "3ef667a5dce0b9d32d6eddf257f6790b67293b0104b14d4a23655ef570019066",
+                          "codex/WORKFLOW.compiled.md":  "88726f2c2e8191ac04d1cf2fa241415824f8d5a1aad86a21fd6e99a10d9b8c0f",
+                          "codex/CONTEXTUAL-WORKFLOW.compiled.md":  "55f75ba43383128b992d27c8e5c16682960d42b74828b9b28bc00e1c729d2032",
+                          "codex/TEAM.compiled.md":  "e265a8d78100f542ce7c8b53568e869d19c0fa938d643407dd100af75a09cdda"
                       }
 }

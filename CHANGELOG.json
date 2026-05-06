@@ -324,6 +324,12 @@
       "date": "2026-05-05",
       "feature": "cheap_idempotent_pipeline_update",
       "change": "Updated PUBLIC-BOOTSTRAP.md so raw-link setup documents the cheap Git update command as the default. Added FullVerify and ReinitializeNew as explicit opt-ins and records update_source/public_bootstrap_url in PIPELINE-CONFIG.json during setup. Why: Users who install from the public bootstrap link should receive the low-budget update path without needing a separate source-pipeline explanation."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-06",
+      "feature": "canonical_index_content_metadata_document_schema",
+      "change": "Hardened PUBLIC-BOOTSTRAP.md and core/UPDATE-PROTOCOL.json so setup/update/upgrade agents must validate current file contracts before writing structured documents. Documented that canonical JSON list documents use index/content/metadata, index only mirrors content keys/titles, and plan/state/queue/catalog files are structured operational data rather than narrative prose. Added mandatory script-use guidance for upgrade work: run relevant document/feature-contract tooling or report blocked/degraded mode before claiming completion. Extended feature contracts so cheap update and canonical document schema cover FILE-FORMATS.json, json_list_doc.py, normalization, audit, and global-over-local enforcement. Why: A real pipeline update on another machine showed five failure modes: stale shape copying, skipped format contracts, skipped validation scripts, narrative treatment of plan/state files, and local settings overriding pipeline/global requirements."
     }
   ]
 }

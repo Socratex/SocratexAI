@@ -172,6 +172,30 @@ Use one of these modes:
 
 Default to merge when uncertain.
 
+## Mandatory Upgrade Enforcement
+
+During setup, update, upgrade, and migration, the current pipeline contract dictates file structure, response style, and required tooling.
+
+Do not copy an older local file shape just because it already exists. Before writing structured files, validate the current target format from `SocratexAI/core/FILE-FORMATS.json` and the JSON list-document tooling in `SocratexAI/tools/documents/json_list_doc.py`.
+
+Canonical JSON list documents must use exactly this root order:
+
+1. `index`
+2. `content`
+3. `metadata`
+
+`index` contains only keys or titles that exist in `content`. Put all real payload under `content`. Put schema, routing, generation, status, and support fields under `metadata`.
+
+Treat plans, state, queues, feature lists, command catalogs, workflow catalogs, and context capsules as structured operational data, not narrative documents.
+
+After changing structured files, run the pipeline scripts that match the change. At minimum, use `SocratexAI/tools/documents/audit_docs.ps1` when available. For pipeline-owned artifacts or feature manifests, also run `SocratexAI/tools/repo/check_pipeline_feature_contracts.ps1`. Use the JSON document wrappers or `SocratexAI/tools/text/normalize_json_files.ps1` instead of hand-shaping JSON when the tools are available.
+
+If a required script cannot run, report that as a blocker or degraded mode. Do not claim the upgrade is complete until the relevant scripts pass or the user explicitly accepts manual mode.
+
+Pipeline/global rules are non-negotiable defaults. Local project settings may add constraints, but they must not silently weaken pipeline-required file structure, response format, or script usage unless the user explicitly says to override them.
+
+When active communication rules require `single thought per line` or emoji-prefixed prose paragraphs, apply them during setup and update reports as well as ordinary work.
+
 ## Installation Actions
 
 For programming projects:
