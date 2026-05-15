@@ -29,13 +29,44 @@ function Get-ConfigList {
     }
     try {
         $config = $Text | ConvertFrom-Json
-        if ($config.active_project_packs) {
-            return @($config.active_project_packs | ForEach-Object { [string]$_ })
+        $content = Get-ConfigContent -Config $config
+        if ($content.active_project_packs) {
+            return @($content.active_project_packs | ForEach-Object { [string]$_ })
         }
     } catch {
         return @()
     }
     return @()
+}
+
+function Get-ConfigContent {
+    param([object]$Config)
+
+    if ($null -ne $Config -and
+        $Config.PSObject.Properties.Name.Contains("content") -and
+        $null -ne $Config.content -and
+        $Config.content.PSObject.Properties.Name.Count -gt 0) {
+        return $Config.content
+    }
+    return $Config
+}
+
+function Ensure-ObjectProperty {
+    param(
+        [object]$Target,
+        [string]$Name,
+        [object]$Value
+    )
+
+    if (-not $Target.PSObject.Properties.Name.Contains($Name)) {
+        $Target | Add-Member -NotePropertyName $Name -NotePropertyValue $Value
+        return $true
+    }
+    if ($null -eq $Target.$Name) {
+        $Target.$Name = $Value
+        return $true
+    }
+    return $false
 }
 
 function Get-ChangelogEnabled {
@@ -46,8 +77,9 @@ function Get-ChangelogEnabled {
     }
     try {
         $config = $Text | ConvertFrom-Json
-        if ($config.changelog -and $null -ne $config.changelog.enabled) {
-            $value = ([string]$config.changelog.enabled).ToLowerInvariant()
+        $content = Get-ConfigContent -Config $config
+        if ($content.changelog -and $null -ne $content.changelog.enabled) {
+            $value = ([string]$content.changelog.enabled).ToLowerInvariant()
             return $value -notin @("no", "false", "disabled", "off")
         }
     } catch {
@@ -107,20 +139,13 @@ function Ensure-ConfigDefaults {
     }
 
     $changed = $false
-    if (-not $config.PSObject.Properties.Name.Contains("changelog")) {
-        $config | Add-Member -NotePropertyName "changelog" -NotePropertyValue ([pscustomobject]@{ enabled = $(if ($ChangelogEnabled) { "yes" } else { "no" }) })
-        $changed = $true
-    }
-    if (-not $config.PSObject.Properties.Name.Contains("communication")) {
-        $config | Add-Member -NotePropertyName "communication" -NotePropertyValue ([pscustomobject]@{ profile = "standard" })
-        $changed = $true
-    }
-    if (-not $config.PSObject.Properties.Name.Contains("pipeline")) {
-        $config | Add-Member -NotePropertyName "pipeline" -NotePropertyValue ([pscustomobject]@{})
-        $changed = $true
-    }
-    if (-not $config.pipeline.PSObject.Properties.Name.Contains("reinitialize_command")) {
-        $config.pipeline | Add-Member -NotePropertyName "reinitialize_command" -NotePropertyValue "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/reinitialize_pipeline.ps1 -TargetPath ."
+    $content = Get-ConfigContent -Config $config
+    $changed = (Ensure-ObjectProperty -Target $content -Name "changelog" -Value ([pscustomobject]@{ enabled = $(if ($ChangelogEnabled) { "yes" } else { "no" }) })) -or $changed
+    $changed = (Ensure-ObjectProperty -Target $content -Name "communication" -Value ([pscustomobject]@{ profile = "standard" })) -or $changed
+    $changed = (Ensure-ObjectProperty -Target $content -Name "pipeline" -Value ([pscustomobject]@{})) -or $changed
+
+    if (-not $content.pipeline.PSObject.Properties.Name.Contains("reinitialize_command")) {
+        $content.pipeline | Add-Member -NotePropertyName "reinitialize_command" -NotePropertyValue "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/reinitialize_pipeline.ps1 -TargetPath ."
         $changed = $true
     }
 
