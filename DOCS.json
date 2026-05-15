@@ -7,6 +7,7 @@
         "SCRIPTS.json",
         "pipeline_featurelist.json",
         "core/",
+        "core/WORKSPACE.json",
         "core/communication-profiles/",
         "project/",
         "templates/",
@@ -44,6 +45,10 @@
         "core/": {
             "role": "Shared agent contracts and protocols.",
             "read": "when exact source-level behavior is needed"
+        },
+        "core/WORKSPACE.json": {
+            "role": "Workspace root marker contract. Defines where workspace.json lives, how tools discover it, and why project scripts should remain repo-relative.",
+            "read": "when workspace layout, import tooling, sibling SocratexAI source resolution, or work/projects path migration changes"
         },
         "project/": {
             "role": "Project-type packs.",

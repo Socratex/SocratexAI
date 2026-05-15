@@ -1342,6 +1342,59 @@
       }
     },
     {
+      "path": "core/WORKSPACE.json",
+      "document": {
+        "title": "Workspace Root Contract",
+        "type": "core_protocol",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "purpose",
+        "canonical_location",
+        "discovery_order",
+        "path_contract",
+        "update_behavior"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "purpose": {
+          "path": "content.purpose",
+          "title": "",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "canonical_location": {
+          "path": "content.canonical_location",
+          "title": "",
+          "ref": "content.canonical_location",
+          "status": ""
+        },
+        "discovery_order": {
+          "path": "content.discovery_order",
+          "title": "",
+          "ref": "content.discovery_order",
+          "status": ""
+        },
+        "path_contract": {
+          "path": "content.path_contract",
+          "title": "",
+          "ref": "content.path_contract",
+          "status": ""
+        },
+        "update_behavior": {
+          "path": "content.update_behavior",
+          "title": "",
+          "ref": "content.update_behavior",
+          "status": ""
+        }
+      }
+    },
+    {
       "path": "docs-tech/CODE_LINE_INDEX.json",
       "document": {},
       "routing": {},
@@ -1976,6 +2029,72 @@
           "path": "items.summary",
           "title": "Summary",
           "ref": "items.summary",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/workspace.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "workspace_name",
+        "projects_dir",
+        "socratex_ai_dir",
+        "tools_dir",
+        "archive_dir",
+        "drive_exports_dir",
+        "google_drive_projects_uri"
+      ],
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "workspace_name": {
+          "path": "workspace_name",
+          "title": "workspace_name",
+          "ref": "workspace_name",
+          "status": ""
+        },
+        "projects_dir": {
+          "path": "projects_dir",
+          "title": "projects_dir",
+          "ref": "projects_dir",
+          "status": ""
+        },
+        "socratex_ai_dir": {
+          "path": "socratex_ai_dir",
+          "title": "socratex_ai_dir",
+          "ref": "socratex_ai_dir",
+          "status": ""
+        },
+        "tools_dir": {
+          "path": "tools_dir",
+          "title": "tools_dir",
+          "ref": "tools_dir",
+          "status": ""
+        },
+        "archive_dir": {
+          "path": "archive_dir",
+          "title": "archive_dir",
+          "ref": "archive_dir",
+          "status": ""
+        },
+        "drive_exports_dir": {
+          "path": "drive_exports_dir",
+          "title": "drive_exports_dir",
+          "ref": "drive_exports_dir",
+          "status": ""
+        },
+        "google_drive_projects_uri": {
+          "path": "google_drive_projects_uri",
+          "title": "google_drive_projects_uri",
+          "ref": "google_drive_projects_uri",
           "status": ""
         }
       }

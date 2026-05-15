@@ -1,0 +1,10 @@
+{
+  "schema": "socratex-workspace/v1",
+  "workspace_name": "local-projects",
+  "projects_dir": ".",
+  "socratex_ai_dir": "SocratexAI",
+  "tools_dir": "tools",
+  "archive_dir": "_archive",
+  "drive_exports_dir": "drive-exports",
+  "google_drive_projects_uri": "TBD"
+}

@@ -66,6 +66,7 @@ ignored/ai-socratex/
 ## Structure
 
 - `core/` contains shared project-memory, planning, execution, and quality contracts.
+- `core/WORKSPACE.json` defines the workspace marker contract for local multi-project workspaces.
 - `project/` contains modular project packs.
 - `adapters/` contains thin adapter files for specific agents.
 - `AI-compiled/` contains generated read-optimized instructions for agents.
@@ -76,6 +77,26 @@ ignored/ai-socratex/
 - `temp/trash/` receives first-run initializer files after setup.
 
 When installed into another project, this source structure is copied under `SocratexAI/`.
+
+## Workspace Marker
+
+Workspace-level tools should use a `workspace.json` file stored in the workspace root next to `SocratexAI/`.
+
+Example:
+
+```text
+<workspace>/
+  workspace.json
+  SocratexAI/
+  <Project>/
+  tools/
+  _archive/
+  drive-exports/
+```
+
+Paths inside `workspace.json` should be relative to the file location. Project-local scripts should keep resolving their own repository roots from script location; `workspace.json` is only for workspace-level operations such as sibling source checkout discovery, Drive imports, archives, and exports.
+
+Use `tools/pipeline/resolve_workspace_root.ps1` when a script or agent needs the local workspace root. Do not hardcode user-specific paths such as `/home/<user>/work`, `/home/<user>/projects`, `drive-imports`, or `repos` into source pipeline scripts or project configs.
 
 ## First Run
 
@@ -139,6 +160,7 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/pipeline/remove_pipeline.ps1`: remove the installed pipeline through a bounded remover.
 - `SocratexAI/tools/pipeline/upgrade_from_riftbound.ps1`: maintainer upgrade from the active reference source pipeline.
 - `SocratexAI/tools/pipeline/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
+- `SocratexAI/tools/pipeline/resolve_workspace_root.ps1`: local workspace marker resolver for multi-project workspaces.
 
 Structured JSON tools apply to every project type, including non-code projects, for agent-only structured JSON files. Use `read_document_item`, `list_document_keys`, `insert_document_item`, `bulk_insert_document_items`, `move_document_item`, and `migrate_document_item` whenever practical.
 

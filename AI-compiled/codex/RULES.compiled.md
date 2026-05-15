@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-6f116757eac2
+Generated: source-14fb128e7db2
 
 ## Source of Truth
 
@@ -207,7 +207,8 @@ Draft placeholder:
             "cheap_idempotent_pipeline_update",
             "legacy_feature_manifest_update_recovery",
             "canonical_index_content_metadata_document_schema",
-            "cross_platform_tool_runtime_resolution"
+            "cross_platform_tool_runtime_resolution",
+            "workspace_root_marker_resolution"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -5506,6 +5507,50 @@ Draft placeholder:
                 ],
                 "known_failure_if_missing": "Linux and Steam Deck installs fall back to empty HUD-like pipeline state or failed bootstrap/document/knowledge tools because wrappers try to execute a Windows-only bundled Python path."
             },
+            "workspace_root_marker_resolution": {
+                "summary": "Workspace-level tools resolve local multi-project workspaces from workspace.json stored next to SocratexAI, keeping project scripts repo-relative and avoiding hardcoded work/projects roots.",
+                "required_paths": [
+                    "core/WORKSPACE.json",
+                    "README.md",
+                    "PUBLIC-BOOTSTRAP.md",
+                    "DOCS.json",
+                    "SCRIPTS.json",
+                    "templates/SOCRATEX.md",
+                    "templates/workspace.json",
+                    "tools/pipeline/resolve_workspace_root.ps1",
+                    "core/UPDATE-PROTOCOL.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "resolve_workspace_root.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "resolve_workspace_root.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/WORKSPACE.json",
+                    "README.md",
+                    "PUBLIC-BOOTSTRAP.md",
+                    "DOCS.json",
+                    "SCRIPTS.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Store workspace.json in the workspace root next to SocratexAI/.",
+                    "Keep workspace.json paths relative to its own directory unless the value is an external URI.",
+                    "Use resolve_workspace_root.ps1 for workspace-level imports, archives, exports, and local sibling source checkout discovery.",
+                    "Keep project-local scripts resolving repo roots relative to script location.",
+                    "Do not hardcode /home/<user>/work, /home/<user>/projects, drive-imports, or repos as canonical source paths."
+                ],
+                "verification_commands": [
+                    "powershell -NoLogo -NoProfile -File tools/pipeline/resolve_workspace_root.ps1 -Json",
+                    "powershell -NoLogo -NoProfile -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoLogo -NoProfile -File tools/documents/audit_docs.ps1"
+                ],
+                "known_failure_if_missing": "Agents and workspace tools may preserve hardcoded local roots, making work/projects renames and multi-machine workspace layouts brittle."
+            },
             "communication_profile_text_registry": {
                 "summary": "Communication profiles are source-owned plain-text files discovered by setup and referenced by installed agent instructions.",
                 "required_paths": [
@@ -5561,7 +5606,7 @@ Draft placeholder:
         "schema": "socratex-pipeline-featurelist/v4",
         "pipeline_id": "socratex_pipeline",
         "role": "source",
-        "updated_at": "2026-05-15",
+        "updated_at": "2026-05-16",
         "comparison_contract": "Use content.features for cheap source/instance comparison; use content.feature_contracts for artifact-level synchronization and promotion checks. Root index/content/metadata is the canonical JSON list-document shape.",
         "required_root_keys": [
             "index",

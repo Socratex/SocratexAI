@@ -201,6 +201,23 @@ Pipeline/global rules are non-negotiable defaults. Local project settings may ad
 
 When active communication rules require `single thought per line` or emoji-prefixed prose paragraphs, apply them during setup and update reports as well as ordinary work.
 
+## Workspace Marker
+
+For local multi-project workspaces, use `workspace.json` in the workspace root next to `SocratexAI/`.
+
+Example:
+
+```text
+<workspace>/
+  workspace.json
+  SocratexAI/
+  <Project>/
+```
+
+Paths inside `workspace.json` should be relative to the file location. Use it only for workspace-level operations such as resolving a sibling source pipeline checkout, Drive imports, archives, or exports. Project scripts should continue resolving their own repository root relative to script location.
+
+Do not hardcode local roots such as `/home/<user>/work`, `/home/<user>/projects`, `drive-imports`, or `repos` into source pipeline scripts or installed project configuration.
+
 ## Installation Actions
 
 For programming projects:
@@ -283,6 +300,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/up
 Use `-ReinitializeNew` only when the update explicitly introduces newly initialized files that should be created in the project root. Reinitialization must be missing-only and must not overwrite project memory.
 
 The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user. If `pipeline.public_bootstrap_url` points to this raw bootstrap file, prefer the Git repository source above for the actual update package.
+
+When a project belongs to a local workspace containing `workspace.json` next to a sibling `SocratexAI/`, use `SocratexAI/tools/pipeline/resolve_workspace_root.ps1` to resolve that workspace before using a local source such as `../SocratexAI`. The local marker is the source of truth for work/projects-style path moves.
 
 If the updated pipeline includes initializer artifacts missing from the installed project, run `tools/pipeline/reinitialize_pipeline.ps1` in missing-only mode after update.
 

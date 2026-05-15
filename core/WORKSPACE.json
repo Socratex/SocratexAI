@@ -1,0 +1,36 @@
+{
+    "index": [
+        "purpose",
+        "canonical_location",
+        "discovery_order",
+        "path_contract",
+        "update_behavior"
+    ],
+    "content": {
+        "purpose": {
+            "body": "workspace.json is the local workspace marker for tools that operate across projects, imports, archives, or a sibling SocratexAI source checkout. It is not a project memory file and must not be stored inside an individual project repository as the canonical source of truth."
+        },
+        "canonical_location": {
+            "body": "Store workspace.json in the workspace root next to SocratexAI/. A typical layout is <workspace>/workspace.json, <workspace>/SocratexAI/, <workspace>/<Project>/, <workspace>/tools/, <workspace>/_archive/, and <workspace>/drive-exports/."
+        },
+        "discovery_order": {
+            "body": "Workspace-aware tools should search upward from the current project or script path for a directory containing workspace.json and SocratexAI/. If no marker is found, they may use SOCRATEX_WORKSPACE_ROOT only as an explicit local override, then fail with a clear message rather than guessing a hardcoded home path."
+        },
+        "path_contract": {
+            "body": "Paths inside workspace.json should be relative to the directory containing workspace.json unless an external service requires a URI. Project scripts should continue resolving their own repository roots relative to script location; workspace.json is only for workspace-level tools and sibling source checkout discovery."
+        },
+        "update_behavior": {
+            "body": "During pipeline update, agents should use workspace.json to resolve a local sibling SocratexAI source checkout when the project config points to a local source such as ../SocratexAI. Do not bake /home/<user>/work, /home/<user>/projects, drive-imports, or repos paths into source pipeline scripts or project configs."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Workspace Root Contract",
+            "type": "core_protocol",
+            "language": "en"
+        },
+        "schema": "socratex-json-list-document/v1",
+        "workspace_marker": "workspace.json",
+        "resolver": "tools/pipeline/resolve_workspace_root.ps1"
+    }
+}
