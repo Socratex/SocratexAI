@@ -3,14 +3,8 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
 $tool = Join-Path $PSScriptRoot "knowledge_index.py"
-$python = Join-Path $PSScriptRoot "..\Python312\python.exe"
-if (-not (Test-Path -LiteralPath $python -PathType Leaf)) {
-	$pythonCommand = Get-Command python -ErrorAction SilentlyContinue
-	if ($null -eq $pythonCommand) {
-		throw "Python is required for knowledge file fallback checks."
-	}
-	$python = $pythonCommand.Source
-}
+. (Join-Path $PSScriptRoot "..\pipeline\resolve_tool_runtime.ps1")
+$python = Resolve-SocratexPython -SearchRoot $PSScriptRoot
 
 Push-Location -LiteralPath $repoRoot
 try {

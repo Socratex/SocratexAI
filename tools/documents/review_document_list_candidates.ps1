@@ -16,10 +16,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $checkScript = Join-Path $PSScriptRoot "check_document_list_item_duplicates.ps1"
-$python = Join-Path $PSScriptRoot "..\Python312\python.exe"
-if (-not (Test-Path -LiteralPath $python)) {
-	$python = "python"
-}
+. (Join-Path $PSScriptRoot "..\pipeline\resolve_tool_runtime.ps1")
+$python = Resolve-SocratexPython -SearchRoot $PSScriptRoot
 $docListItemScript = Join-Path $PSScriptRoot "document_list_item_edit_engine.py"
 
 function Convert-JsonOutput {

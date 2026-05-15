@@ -1,5 +1,5 @@
 param(
-    [string]$Output = "docs-tech\PIPELINE-BOOTSTRAP.json",
+    [string]$Output = "",
     [switch]$Check
 )
 
@@ -7,10 +7,27 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
-$python = Join-Path $PSScriptRoot "..\Python312\python.exe"
-if (-not (Test-Path -LiteralPath $python)) {
-    $python = "python"
+. (Join-Path $PSScriptRoot "resolve_tool_runtime.ps1")
+$python = Resolve-SocratexPython -SearchRoot $PSScriptRoot
+
+function Convert-ToNativeRelativePath {
+    param([string]$Path)
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return (Join-Path "docs-tech" "PIPELINE-BOOTSTRAP.json")
+    }
+    if ([System.IO.Path]::IsPathRooted($Path)) {
+        return $Path
+    }
+
+    $parts = @($Path -split '[\\/]' | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+    if ($parts.Count -eq 0) {
+        return $Path
+    }
+    return [System.IO.Path]::Combine($parts)
 }
+
+$Output = Convert-ToNativeRelativePath -Path $Output
 
 $script = Join-Path $PSScriptRoot "pipeline_bootstrap_index.py"
 $arguments = @(

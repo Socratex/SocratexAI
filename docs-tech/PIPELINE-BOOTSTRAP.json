@@ -149,6 +149,7 @@
             "open_pipeline_learning_issue.ps1",
             "pipeline_bootstrap_index.ps1",
             "pipeline_bootstrap_index.py",
+            "resolve_tool_runtime.ps1",
             "rebuild_ai_compiled_context.ps1",
             "reinitialize_pipeline.ps1",
             "remove_pipeline.ps1",

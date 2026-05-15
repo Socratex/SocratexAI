@@ -92,10 +92,8 @@ if ([System.IO.Path]::GetExtension($Path).ToLowerInvariant() -eq ".json") {
 	return
 }
 
-$python = Join-Path $PSScriptRoot "..\Python312\python.exe"
-if (-not (Test-Path -LiteralPath $python)) {
-	$python = "python"
-}
+. (Join-Path $PSScriptRoot "..\pipeline\resolve_tool_runtime.ps1")
+$python = Resolve-SocratexPython -SearchRoot $PSScriptRoot
 
 $script = Join-Path $PSScriptRoot "document_item_edit_engine.py"
 $arguments = @($script, "insert", $Path, $Key, "--position", $Position)

@@ -41,6 +41,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..\..")
+. (Join-Path $PSScriptRoot "resolve_tool_runtime.ps1")
 . (Join-Path $Root "tools\text\utf8_file_helpers.ps1")
 $InstallRoot = Join-Path $Root "SocratexAI"
 $ProjectDir = Join-Path $Root "project"
@@ -283,15 +284,13 @@ if ($CreateFiles) {
             python3 = [ordered]@{ ok = "TBD"; version = "TBD"; install_hint = "TBD" }
             pwsh = [ordered]@{ ok = "TBD"; version = "TBD"; install_hint = "TBD"; install_supported = "TBD"; fallback_recommendation = "TBD" }
         }
-        $python = Get-Command python -ErrorAction SilentlyContinue
-        if ($python) {
-            try {
-                $runtimeJson = [string]::Join([Environment]::NewLine, (& python (Join-Path $Root "tools\quality\check_runtime.py") --root-key runtime_status))
-                $runtimePayload = $runtimeJson | ConvertFrom-Json
-                $runtimeStatus = $runtimePayload.runtime_status
-            } catch {
-                $runtimeStatus["check_error"] = "runtime check failed"
-            }
+        try {
+            $python = Resolve-SocratexPython -SearchRoot $PSScriptRoot
+            $runtimeJson = [string]::Join([Environment]::NewLine, (& $python (Join-Path $Root "tools\quality\check_runtime.py") --root-key runtime_status))
+            $runtimePayload = $runtimeJson | ConvertFrom-Json
+            $runtimeStatus = $runtimePayload.runtime_status
+        } catch {
+            $runtimeStatus["check_error"] = "runtime check failed"
         }
         $config = [ordered]@{
             summary = "Initialized project configuration for SocratexPipeline."
