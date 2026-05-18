@@ -1,0 +1,494 @@
+{
+    "index": [
+        "quick_index",
+        "pipeline_bootstrap_directive",
+        "audit_output_contract",
+        "default_start",
+        "feature_bug_steer_direction",
+        "contextual_actions_purpose",
+        "contextual_actions",
+        "task_classifier",
+        "broad_work_definition",
+        "approval_rules",
+        "finish_checklist",
+        "purpose",
+        "read_discipline",
+        "working_checks"
+    ],
+    "content": {
+        "quick_index": {
+            "title": "Quick Index",
+            "content": "- Pipeline Bootstrap Directive\n- Audit Output Contract\n- Default Start\n- Feature And Bug Steer Direction\n- Task Classifier\n- Broad Work Definition\n- Approval Rules\n- Finish Checklist\n- Purpose\n- Read Discipline\n- Working Checks\n"
+        },
+        "pipeline_bootstrap_directive": {
+            "title": "Pipeline Bootstrap Directive",
+            "content": "🚦 Highest-priority execution directive: at the start of every project prompt, ensure the minimal pipeline bootstrap index from `docs-tech/PIPELINE-BOOTSTRAP.json` is loaded through `Tools/pipeline/read_compiled_context.ps1 bootstrap` unless it is already present in the active context. Use the bootstrap index to select exact `COMMANDS.json`, `FLOWS.json`, `WORKFLOW.json`, `SCRIPTS.json`, and `DOCS.json` records. Always use WORKFLOW and FLOWS to execute project prompts: WORKFLOW classifies and constrains the work, while FLOWS provides ordered execution steps. If the required command, flow, workflow rule, script, or document route is missing, report the missing contract before executing."
+        },
+        "audit_output_contract": {
+            "title": "Audit Output Contract",
+            "content": "🧾 All useful project audit results belong under root `audits/`, beside `logs/`, `logs-diagnostics/`, and `logs-performance/`.\n\nAudit reports should be timestamped, evidence-backed, and readable without chat history. Use Markdown unless a tool explicitly requires JSON.\n\nBefore starting a planned audit, define the audit Definition of Done in the owning plan/pass first. The DoD must state what report file will be produced, what evidence is required, how findings are prioritized, how fix cost is assigned, how hypotheses are confirmed or falsified, and what decision output is expected.\n\nEach audit report should preserve:\n- observed facts\n- likely causes\n- uncertainty\n- priority\n- fix cost\n- source/log evidence\n- concrete follow-up recommendation\n- falsified hypotheses or explicitly unproven assumptions\n- decision routing: fix now, fold into existing pass, create a new pass, move to backlog, or accept as known risk\n\nDo not store long-lived audit conclusions only in chat, transient logs, or generated cache files.\n"
+        },
+        "default_start": {
+            "title": "Default Start",
+            "content": "📌 For any task under this project, read the minimal pipeline bootstrap through `Tools/pipeline/read_compiled_context.ps1 bootstrap` first unless it is already present in active context; then read `STATE` through `Tools/pipeline/read_compiled_context.ps1 STATE` unless the current request is only a direct question that can be answered from already visible context. Always use the compiled-context reader for always-read project documents; source files remain canonical for edits, but default orientation reads should come from `SocratexAI/AI-compiled/project/` by document name.\n\nRead `team/*.json` only on demand: when the user names a role, asks for team-style review, or `WORKFLOW.json` contextual actions route the task to a role. These files are decision lenses, not default context.\n\nThen classify the task by the narrowest matching workflow below. Prefer the smallest document and source-code slice that can answer or implement the request.\n\nDefault context keeps the generated compact routing indexes for `DOCS.json`, `WORKFLOW.json`, `COMMANDS.json`, `FLOWS.json`, and `SCRIPTS.json` in `docs-tech/PIPELINE-BOOTSTRAP.json`; read full source entries only when the selected document route, workflow row, command, flow, or script requires exact behavior. Other project documents remain opt-in through this classifier, WORKFLOW contextual actions, or a direct user request.\n\n🏷️ For every user command or substantive question, load the main workflow/instruction context first, then run `Tools/knowledge/context_tags.ps1 <user text>` when available. Use the resulting tags with `Tools/knowledge/knowledge_select.ps1 -Tags <tags> -Match any` to pull relevant compiled notes before answering or executing. Treat tag-selected notes as routing context, not as a substitute for exact source reads when edits or high-stakes claims depend on source truth.\n\n🧠 For any task that may touch source code, read compiled `STATE` once through the default-start rule, then run `Tools/codebase/load_programming_context.ps1` before the first code read/write that could lead to an edit. This is mandatory even for small code changes and also applies to `CONTINUE` whenever executing or proposing the next step leads to source-code work. The helper reads `WORKFLOW` and `ENGINEERING` by document name from compiled project context, then runs `Tools/knowledge/knowledge_code_context.ps1`; use `-IncludeState` only for standalone manual invocations where `STATE` was not already loaded. Additional named views such as `architecture_godot`, `performance`, or `debugging` may be passed through as additive task context, but they do not replace the compiled document-name reads or the full base code-guidance set. After a successful code-guidance load, `knowledge_code_context.ps1` writes `ignored/code_context_gate.json`; `Tools/repo/check_task.ps1` fails changed-code checks when that marker is missing, tied to another HEAD, or missing required base tags.\n\n🎛️ For any substantive question, review, plan, diagnosis, implementation decision, bug report, feature request, performance-drop report, runtime-feel regression, or LOG/CONSOLE investigation about player-facing quality, gameplay feel, camera feel, readability, runtime performance, materialization/activation, rendering/UI cost, diagnostics, logs, or frame pacing, load the relevant quality context before answering or editing. Start with `context-docs/PERFORMANCE.json` for runtime/performance risk, `team/gameplay_feel.json` for player-facing feel/readability, and `team/performance.json` for frame-time/budget review; then add the smallest exact `context-docs/` capsule and source/log slice needed to verify claims. Treat this like the code-context rule: quality conclusions should not rely only on visible chat memory or general taste.\n\nKeep `docs-tech/STATE.json` short: target `80-150` lines. If it grows above `250` lines, compact it before starting the next broad pass.\n"
+        },
+        "feature_bug_steer_direction": {
+            "title": "Feature And Bug Steer Direction",
+            "content": "For every new feature request, suggestion, or architectural discussion, first check whether the work can be implemented optimally, future-proof, and aligned with AAA-style runtime architecture before adding scene/controller-heavy behavior.\n\nPrefer data-first ownership, deterministic IDs, explicit save/delta impact, budgeted activation/projection, diagnostics, and smoke/benchmark hooks when they reduce future retrofit cost without blocking current gameplay progress.\n\nFor feature requests, bug reports, runtime-feel regressions, and performance drops, load the relevant quality context before prioritizing, diagnosing, proposing, or implementing. Use `context-docs/PERFORMANCE.json`, `team/performance.json`, and `team/gameplay_feel.json` as the default quality lenses, then add the smallest exact source/log/context slice needed for evidence.\n\nFor bug reports, use the same steering principle: fix the root cause in the correct ownership boundary, preserve data-first/runtime-budget assumptions, avoid masking symptoms with scene-local patches, and add diagnostics when the issue is likely to recur or affect future systems.\n\nWhen a requested feature or bug fix exposes a cheaper enabling contract, ownership boundary, diagnostic, or performance guardrail, recommend doing that prerequisite first; ask for confirmation only when it materially changes the user's requested order.\n"
+        },
+        "contextual_actions_purpose": {
+            "title": "Workflow Contextual Actions Purpose",
+            "body": [
+                "Contextual action rules applied while executing FLOWS.json flows.",
+                "FLOWS decides the work path, document loading, scripts, checks, and finalization.",
+                "WORKFLOW contextual actions constrain how the assistant behaves inside that path when project priorities, formats, active risks, or owner intent matter."
+            ]
+        },
+        "contextual_actions": {
+            "title": "Workflow Contextual Actions",
+            "item_shape": {
+                "required": [
+                    "id",
+                    "when",
+                    "do",
+                    "dont"
+                ],
+                "optional": [
+                    "priority",
+                    "status",
+                    "applies_to_flows",
+                    "applies_to_types",
+                    "owner_note"
+                ]
+            },
+            "items": [
+                {
+                    "id": "respect_flow_boundary",
+                    "priority": "critical",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "all"
+                    ],
+                    "when": "A flow is selected and execution begins.",
+                    "do": "Use FLOWS.json and metadata.document_types as the source of truth for execution steps, document loading, scripts, checks, and finalization.",
+                    "dont": "Do not redefine flow routing, document loading maps, command semantics, script descriptions, or finalizer behavior in WORKFLOW."
+                },
+                {
+                    "id": "apply_target_document_format",
+                    "priority": "critical",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "documentation_edit",
+                        "planning",
+                        "prompt_command",
+                        "continue_command",
+                        "implementation"
+                    ],
+                    "applies_to_types": [
+                        "documentation",
+                        "pipeline",
+                        "product_strategy",
+                        "engineering"
+                    ],
+                    "when": "A flow edits a structured document or adds an item to a planning, vision, workflow, or context document.",
+                    "do": "Preserve the target document format, item schema, naming style, stable IDs, root index policy, and required emoji or language rules before writing.",
+                    "dont": "Do not insert entries in a convenient ad hoc format just because the flow already identified the correct document."
+                },
+                {
+                    "id": "use_document_duplicate_check",
+                    "priority": "high",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "documentation_edit",
+                        "planning",
+                        "prompt_command"
+                    ],
+                    "applies_to_types": [
+                        "documentation",
+                        "pipeline",
+                        "product_strategy"
+                    ],
+                    "when": "A flow adds a new durable documentation item outside context-docs and strict technical capsules.",
+                    "do": "Check likely duplicate titles or nearby existing sections before inserting and merge, split, or rename instead of creating duplicate concepts.",
+                    "dont": "Do not bypass duplicate-candidate review for normal documentation additions unless the task is parser repair, schema repair, raw formatting inspection, or a direct manual-mode edit."
+                },
+                {
+                    "id": "preserve_planning_boundaries",
+                    "priority": "high",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "planning",
+                        "continue_command",
+                        "prompt_command",
+                        "multi_task_prompt"
+                    ],
+                    "applies_to_types": [
+                        "product_strategy",
+                        "documentation"
+                    ],
+                    "when": "A flow edits _PLAN.json, docs/TODO.json, docs/TARGET.json, vision documents, or changelog-like content.",
+                    "do": "Keep active/future passes in _PLAN.json, near-term backlog in docs/TODO.json, target criteria in docs/TARGET.json, long-horizon direction in VISION documents, and shipped history in CHANGELOG.md.",
+                    "dont": "Do not use one planning document as a dumping ground for history, backlog, active execution, and long-horizon vision at the same time."
+                },
+                {
+                    "id": "check_active_pressure_before_priority_change",
+                    "priority": "critical",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "planning",
+                        "implementation",
+                        "broad_refactor",
+                        "continue_command",
+                        "prompt_command"
+                    ],
+                    "applies_to_types": [
+                        "product_strategy",
+                        "game_design",
+                        "engineering"
+                    ],
+                    "when": "A requested task changes priority, adds a feature, reshapes passes, or could defer an active project blocker.",
+                    "do": "Compare the request with active project pressures and state any conflict before changing the plan or executing lower-leverage work.",
+                    "dont": "Do not silently promote work that routes around a higher active pressure."
+                },
+                {
+                    "id": "ctx_fun_loop_first",
+                    "priority": "critical",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "planning",
+                        "implementation",
+                        "broad_refactor",
+                        "continue_command"
+                    ],
+                    "applies_to_types": [
+                        "game_design",
+                        "product_strategy",
+                        "engineering"
+                    ],
+                    "when": "Gameplay, feature, scope, or priority work could affect validation of the core loop.",
+                    "do": "Prefer work that moves the project toward a testable and repeatable loop: run entry, risk, combat, reward, return, upgrade, retry.",
+                    "dont": "Do not expand peripheral polish while combat, risk, reward, return, or run repeatability still block validation.",
+                    "owner_note": "Gra nie ma jeszcze wystarczająco domkniętej i powtarzalnie angażującej pętli zabawy."
+                },
+                {
+                    "id": "ctx_enemy_validation_pressure",
+                    "priority": "high",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "planning",
+                        "implementation",
+                        "bug_command",
+                        "log_command",
+                        "console_command"
+                    ],
+                    "applies_to_types": [
+                        "game_design",
+                        "engineering",
+                        "diagnostics"
+                    ],
+                    "when": "Gameplay or diagnostic work depends on combat validation or enemy behavior.",
+                    "do": "Treat enemy spawn, movement, behavior, readability, and combat impact as high-leverage validation risks.",
+                    "dont": "Do not route around enemy issues when requested gameplay work depends on combat feel.",
+                    "owner_note": "Przeciwnicy nadal są ryzykownym obszarem: spawn, ruch, zachowanie, czytelność albo wpływ na zabawę mogą blokować walidację."
+                },
+                {
+                    "id": "ctx_performance_budget_awareness",
+                    "priority": "high",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "implementation",
+                        "broad_refactor",
+                        "quality_diagnostics",
+                        "log_command",
+                        "console_command"
+                    ],
+                    "applies_to_types": [
+                        "engineering",
+                        "diagnostics",
+                        "visual_design"
+                    ],
+                    "when": "Runtime, world scale, combat, UI readability, diagnostics, visual systems, or repeated per-frame behavior are touched.",
+                    "do": "Evaluate frame cost, activation cost, node count, serialization, logging, and main-thread work.",
+                    "dont": "Do not defer performance risk when it can block world scale, combat readability, or iteration speed.",
+                    "owner_note": "Wydajność może blokować skalę świata, walkę, czytelność i iterację."
+                },
+                {
+                    "id": "ctx_future_first_prerequisites",
+                    "priority": "high",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "planning",
+                        "implementation",
+                        "broad_refactor",
+                        "multi_task_prompt"
+                    ],
+                    "applies_to_types": [
+                        "engineering",
+                        "product_strategy",
+                        "game_design"
+                    ],
+                    "when": "A requested order would add behavior on top of a temporary or soon-to-change foundation.",
+                    "do": "Name the cheaper prerequisite and recommend doing it first when it avoids more expensive refactors later.",
+                    "dont": "Do not treat the current plan order as sacred when a newly exposed prerequisite is cheaper now."
+                },
+                {
+                    "id": "evidence_first_reporting",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "review",
+                        "quality_diagnostics",
+                        "bug_command",
+                        "log_command",
+                        "console_command",
+                        "planning"
+                    ],
+                    "applies_to_types": [
+                        "diagnostics",
+                        "engineering",
+                        "product_strategy"
+                    ],
+                    "when": "A flow reports causes, risks, recommendations, or project status.",
+                    "do": "Separate observed facts, owner notes, inference, speculation, and value judgment.",
+                    "dont": "Do not present uncertain causes as confirmed when no log, test, code path, or user confirmation supports them."
+                },
+                {
+                    "id": "owner_pressure_is_sticky",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "documentation_edit",
+                        "planning"
+                    ],
+                    "applies_to_types": [
+                        "pipeline",
+                        "product_strategy",
+                        "documentation"
+                    ],
+                    "when": "A flow updates WORKFLOW contextual actions or another document containing owner-stated pressure, priorities, or constraints.",
+                    "do": "Preserve owner-stated notes and active pressures until the owner explicitly changes or resolves them.",
+                    "dont": "Do not rewrite owner notes as inferred AI conclusions or remove them based only on implementation progress."
+                },
+                {
+                    "id": "respect_user_override_after_tradeoff",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "all"
+                    ],
+                    "when": "The user explicitly chooses a lower-priority path after the conflict or tradeoff is clear.",
+                    "do": "Follow the requested path within project constraints.",
+                    "dont": "Do not use WORKFLOW contextual actions as an excuse to refuse clearly requested work."
+                },
+                {
+                    "id": "apply_contextual_actions_only_when_relevant",
+                    "priority": "high",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "all"
+                    ],
+                    "when": "A task is narrow, local, purely factual, or already fully governed by FLOWS without priority or format risk.",
+                    "do": "Apply only the contextual action rules that materially affect the current flow execution.",
+                    "dont": "Do not inflate small answers or local fixes with broad contextual-action-driven reads, planning, or priority analysis."
+                },
+                {
+                    "id": "handle_unclassified_flow_uncertainty",
+                    "priority": "high",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "direct_answer",
+                        "requested_work_style",
+                        "multi_task_prompt"
+                    ],
+                    "applies_to_types": [
+                        "other",
+                        "pipeline"
+                    ],
+                    "when": "The request does not fit any current flow or document type clearly enough to execute safely.",
+                    "do": "Name the uncertainty, propose the best flow shape with goal, needed sources, scope, finish criterion, verification, and document-update obligations, then ask for acceptance when the work is not small and reversible.",
+                    "dont": "Do not start broad reads, edits, refactors, or speculative execution when classification is materially uncertain."
+                },
+                {
+                    "id": "use_role_lenses_on_demand",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "planning",
+                        "review",
+                        "direct_answer",
+                        "quality_diagnostics"
+                    ],
+                    "applies_to_types": [
+                        "product_strategy",
+                        "game_design",
+                        "visual_design",
+                        "audio_design",
+                        "diagnostics"
+                    ],
+                    "when": "A team/persona lens would affect prioritization, product judgment, gameplay feel, performance judgment, or design critique.",
+                    "do": "Use role/persona lenses only when the user requests them explicitly, the selected flow/type calls for them, or the contextual action rule itself makes that perspective relevant.",
+                    "dont": "Do not treat a role/persona lens as an independent agent, default context load, or substitute for evidence from documents, logs, tests, or code."
+                },
+                {
+                    "id": "audit_findings_policy",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "audit_command",
+                        "review",
+                        "quality_diagnostics"
+                    ],
+                    "applies_to_types": [
+                        "documentation",
+                        "pipeline",
+                        "engineering"
+                    ],
+                    "when": "A flow audits process, documents, code, consistency, or project-rule compliance.",
+                    "do": "Fix local unambiguous hard errors when the selected flow permits edits, and report soft warnings as recommendations.",
+                    "dont": "Do not broaden cleanup beyond the affected documents, scripts, files, or rule surface just because an audit found adjacent soft issues."
+                },
+                {
+                    "id": "diagnostic_human_units_and_causality",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "quality_diagnostics",
+                        "bug_command",
+                        "console_command",
+                        "log_command",
+                        "review"
+                    ],
+                    "applies_to_types": [
+                        "diagnostics",
+                        "engineering"
+                    ],
+                    "when": "A flow reports logs, console output, runtime dumps, performance data, screenshots, or diagnostic evidence.",
+                    "do": "Report human-readable units when available: FPS as FPS, timing in milliseconds, memory in KB/MB/GB, timestamp, biome, observed facts first, then likely cause with confidence.",
+                    "dont": "Do not jump from raw payloads directly to a confident fix narrative without separating measurement, observation, inference, and uncertainty."
+                },
+                {
+                    "id": "root_cause_over_symptom_patch",
+                    "priority": "high",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "implementation",
+                        "bug_command",
+                        "console_command",
+                        "log_command",
+                        "quality_diagnostics"
+                    ],
+                    "applies_to_types": [
+                        "engineering",
+                        "diagnostics"
+                    ],
+                    "when": "A bug, regression, runtime failure, or behavioral issue is being fixed.",
+                    "do": "Find the source-owned root cause at the correct ownership boundary and add targeted diagnostics first when evidence is weak.",
+                    "dont": "Do not mask symptoms with scene-local patches, swallowed errors, or speculative repeated fixes."
+                },
+                {
+                    "id": "vision_to_plan_requires_approval",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "planning",
+                        "direct_answer",
+                        "documentation_edit"
+                    ],
+                    "applies_to_types": [
+                        "game_design",
+                        "world_design",
+                        "visual_design",
+                        "audio_design",
+                        "lore",
+                        "product_strategy"
+                    ],
+                    "when": "A flow discusses vision, long-horizon direction, target alignment, fantasy, player experience, or scope and the next step would promote that discussion into _PLAN.json or active execution.",
+                    "do": "Separate current target, long-horizon direction, hypothesis, backlog, and inspiration, and ask before promoting vision content into active plan work.",
+                    "dont": "Do not update active plans automatically just because a vision discussion produced a plausible next feature."
+                },
+                {
+                    "id": "on_tool_result_error_repair_script_contract",
+                    "priority": "critical",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "all"
+                    ],
+                    "applies_to_types": [
+                        "pipeline",
+                        "engineering",
+                        "documentation"
+                    ],
+                    "when": "Any repository script or tool returns an error and the likely cause is bad invocation, malformed input, quoting, encoding, path handling, expected input shape, output parsing, cache/index drift, or another repeatable process/tool contract issue.",
+                    "do": "Treat tool hardening as the default reaction: make the owning script, wrapper, validation, help text, or SCRIPTS.json input/output contract more universal and resistant to that mistake before retrying, unless it is clearly a one-off typo or missing user input. Prefer file/stdin/structured inputs over fragile inline quoting. For normal repository script use, prefer Tools/pipeline/tool_handler.ps1 as the public entry point so input validation, alias normalization, and input-error logging happen before target execution. If an issue is not fixed immediately or a target script returns a semantically bad result, log it through Tools/pipeline/tool_error_log.ps1 with failing command shape, observed error, suspected contract gap, and owning script or SCRIPTS.json fix target.",
+                    "dont": "Do not treat \"I passed it wrong\" as only an operator mistake when the tool could reasonably prevent, explain, or accept that input shape. Do not keep bypassing wrappers or repeating manual command reconstruction across prompts. Do not replace specialized scripts with a monolithic handler; the handler owns routing, validation, normalization, logging, and result envelope only."
+                },
+                {
+                    "id": "workflow_contextual_action_update_permission",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "documentation_edit",
+                        "planning"
+                    ],
+                    "applies_to_types": [
+                        "pipeline",
+                        "product_strategy",
+                        "documentation"
+                    ],
+                    "when": "A flow edits WORKFLOW contextual actions.",
+                    "do": "Update WORKFLOW contextual actions when the contextual action layer changes or the user explicitly requests an orchestration change.",
+                    "dont": "Do not rewrite owner-stated priorities, active pressures, or orchestration policy as inferred AI conclusions."
+                }
+            ]
+        },
+        "task_classifier": {
+            "title": "Task Classifier",
+            "content": "🔎 Use the first row that fully covers the request; when a task spans multiple rows, follow the strictest relevant approval and verification requirement.\n\n| Task type | Required reads | Approval checkpoint | Verification | Document updates |\n| --- | --- | --- | --- | --- |\n| Direct answer or local explanation | `docs-tech/STATE.json` if project state matters; `WORKFLOW.json` contextual actions if priority steering matters; relevant source/docs only | No, unless the answer depends on a risky assumption | None unless a command is needed | None |\n| Quality, feel, performance, or diagnostic analysis | `docs-tech/STATE.json`; prompt-derived `Tools/knowledge/context_tags.ps1` + `Tools/knowledge/knowledge_select.ps1`; `context-docs/PERFORMANCE.json` for runtime/performance cost; `team/gameplay_feel.json` for player-facing feel/readability; `team/performance.json` for budget/frame-time judgment; smallest relevant source/log/context-doc slice for factual claims | No for analysis; ask before broad architecture or direction changes | None for analysis; focused smoke/log/benchmark only when validating an implementation claim | Update durable docs only when a lasting quality rule, budget, diagnostic convention, or technical truth changed |\n| Tiny documentation wording edit | Target document only; `DOCS.json` if document role or emoji rules are involved | No | `git diff --check`; `Tools/repo/finish_task.ps1` when practical | Target document only |\n| Local code fix in one ownership area | `Tools/pipeline/read_compiled_context.ps1 STATE`; `Tools/codebase/load_programming_context.ps1` without `-IncludeState`; touched files; smallest relevant additional compiled/source context capsule if present | No, if reversible and ownership is clear | Relevant focused check; quality gate for non-trivial gameplay/UI/runtime changes | `docs-tech/STATE.json` only if active checkpoint changes |\n| Runtime console error | `docs-tech/STATE.json`; relevant quality context when the error affects feel, runtime, UI, performance, or diagnostics; `CONSOLE-LOG-SUMMARY`; raw `CONSOLE-LOG` only if needed | No, if source-owned fix is clear | Relevant quality gate; then finish task | `docs-tech/BUGS.json` only if the issue should remain tracked |\n| Bug registry work | `docs-tech/BUGS.json`; `docs-tech/STATE.json`; relevant quality context before prioritizing, diagnosing, or fixing; relevant source/docs | No for smallest diagnostic/fix step; ask before speculative broad rewrites | Focused repro/quality gate when possible | Update the active bug entry; move to `docs-tech/BUGS-SOLVED.json` only after user confirmation |\n| Valid `LOG <description>` diagnostic | `docs-tech/STATE.json`; relevant quality context for performance drops, runtime-feel regressions, UI/render issues, and diagnostics; manual F4 `logs/` summary/output; newest matching JSON and paired screenshot when useful | No for smallest source-owned fix | Focused check or quality gate; finish task | Keep bug/docs updates bounded to the actual finding |\n| Performance-drop report | `docs-tech/STATE.json`; prompt-derived `Tools/knowledge/context_tags.ps1` + `Tools/knowledge/knowledge_select.ps1`; `context-docs/PERFORMANCE.json`; `team/performance.json`; `team/gameplay_feel.json` when the drop affects perceived feel; relevant `logs-performance/`, `logs-diagnostics/`, benchmark markers, or F4 dump; smallest relevant source/context-doc slice | No for evidence gathering or a local source-owned fix; ask before broad runtime architecture changes | Focused log/benchmark/smoke or full quality gate after code changes | Update durable docs only when a lasting budget, diagnostic convention, or technical truth changed |\n| `AUDIT` | `Tools/documents/audit_docs.ps1` output; affected docs only if issues are reported | No for local contract fixes; ask before broad cleanup | `Tools/documents/audit_docs.ps1`; finish task after edits | Only docs or scripts that directly define the broken contract; useful audit conclusions go under root `audits/` |\n| `CONTEXT` | `Tools/pipeline/read_compiled_context.ps1 STATE`; `Tools/pipeline/read_compiled_context.ps1 WORKFLOW`; `Tools/knowledge/context_tags.ps1`; `Tools/knowledge/knowledge_select.ps1`; `Tools/codebase/load_programming_context.ps1` without `-IncludeState` when implementation/refactor/bugfix/review context is requested or likely | No | None for standalone context loading | None |\n| `COMPILE` | `docs-tech/STATE.json`; compiled context config only if compile output reports stale or missing source mapping | No | `Tools/pipeline/compile.ps1` | Finalize only if compile updates committed source/config/generated files |\n| `CONTINUE` | `Tools/pipeline/read_compiled_context.ps1 STATE`; `_PLAN.json`; `docs/TODO.json` only if needed by the command rules; if the resolved pass or proposed next step may touch source code, run `Tools/codebase/load_programming_context.ps1` without `-IncludeState` before the first source-code read/write | No when executing a clearly defined current pass; ask if proposing a new target | Quality gate appropriate to touched systems; finish task | Remove completed pass from `_PLAN.json`; refresh `docs-tech/STATE.json`; update `CHANGELOG.md` only for shipped changes |\n| `PROMPT` | `_PROMPTS.md`; `_PROMPT-QUEUE.json` as needed; `docs-tech/STATE.json` if implementation follows | No for one clear prompt; ask if prompt is ambiguous or structurally risky | Same as the executed work type | Clear executed prompt or completed queue pass; preserve unresolved queue scope |\n| Broad feature, refactor, or multi-system change | `Tools/pipeline/read_compiled_context.ps1 STATE`; `Tools/codebase/load_programming_context.ps1` without `-IncludeState` before source-code work; relevant quality context before accepting feature direction or implementation order; `_PLAN.json`; `docs/TODO.json`; smallest relevant additional compiled/source `context-docs/`; `TECHNICAL.json` if architecture/runtime contracts are touched | Yes, present concise architecture/impact note before implementation | Full relevant quality gate; finish task | `_PLAN.json`, `docs/TODO.json`, `docs-tech/STATE.json`, `TECHNICAL.json`, or `CHANGELOG.md` only when their ownership rules are triggered |\n| Visual direction or rendering/style change | `docs-tech/STATE.json`; `docs/GRAPHICS.json`; relevant source/assets | Yes if it changes direction or multiple systems | Visual/runtime check where practical | `docs/GRAPHICS.json` only for durable visual direction changes |\n| Audio, music, SFX, or voice change | `docs-tech/STATE.json`; `docs/AUDIO.json`; relevant source/assets | Yes if it changes direction or runtime ownership | Runtime/audio-specific check where practical | `docs/AUDIO.json` only for durable audio direction changes |\n| Planning/document-structure change | `docs-tech/STATE.json`; target planning docs; `DOCS.json` if ownership changes | Ask only if it reorders priorities materially or could drop unresolved scope | `git diff --check`; finish task when practical | Preserve unresolved scope by moving, merging, or splitting; never silently delete future work |\n"
+        },
+        "broad_work_definition": {
+            "title": "Broad Work Definition",
+            "content": "⚠️ Treat work as broad when it touches two or more ownership boundaries, persistent schema/state, runtime orchestration, visual/audio direction, active plan structure, randomness, async/timing behavior, or more than three files.\n\nFor broad work, write a short impact note before implementation: affected systems, state/schema assumptions, likely files or ownership boundaries, and the expected outcome.\n"
+        },
+        "approval_rules": {
+            "title": "Approval Rules",
+            "content": "🛑 Ask before implementation when the architecture is still a meaningful choice, when the request is ambiguous, when the change can create hidden coupling, or when a future-first prerequisite would make the requested order materially cheaper later.\n\nDo not ask for approval for local, reversible, source-owned fixes with a clear scope.\n"
+        },
+        "finish_checklist": {
+            "title": "Finish Checklist",
+            "content": "✅ Before the final response, verify the smallest useful set of completion facts.\n\n- The requested change or answer is actually handled.\n- `Tools/repo/done.ps1 -Message \"<message>\"` ran for code, tooling, or documentation changes that should be committed and pushed.\n- Verification ran through the finalizer, or the reason for skipping it is explicit.\n- Triggered document ownership updates are complete.\n- No unresolved plan, TODO, bug, or vision scope was silently deleted.\n- User-facing final response states what changed, relevant risks, and the verification result.\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "content": "🧭 Use this file as the compact operational router before expanding into heavier planning, technical, or domain documents.\n\nThis document does not replace `AGENTS.md`; it turns the project rules into a faster decision table for common task types.\n"
+        },
+        "read_discipline": {
+            "title": "Read Discipline",
+            "content": "🚦 Load `Tools/pipeline/read_compiled_context.ps1 bootstrap` first for every project prompt unless the bootstrap is already present in active context. Use that index to select exact DOCS, WORKFLOW, COMMANDS, FLOWS, and SCRIPTS records before widening reads.`n`n📚 Prefer selective reads over broad sweeps: `docs-tech/STATE.json`, then the target file or smallest relevant context capsule, then larger planning or technical documents only when the workflow row requires them.\n\n🧠 For code work, do not rely only on visible chat context or tag search. Before any code touch, read compiled `STATE` once through the default-start rule, then run `Tools/codebase/load_programming_context.ps1` without `-IncludeState`; it reads compiled `WORKFLOW` and `ENGINEERING` by document name, then loads the full compiled code-guidance set with `Tools/knowledge/knowledge_code_context.ps1`. Keep both the document-name compiled reads and the code-guidance rules active as constraints during implementation. Do not substitute a narrower tag query or visible-chat memory summary. The final check path enforces the code-guidance half with the local code-context gate marker for changed code files.\n\nDo not read `_IDEAS.md`, `CHANGELOG.md`, `TECHNICAL.json`, `docs/GRAPHICS.json`, or `docs/AUDIO.json` by default unless the classifier or user request makes them relevant.\n\n🔑 For structured YAML/JSON project documents, read keys first with `Tools/documents/doc_keys.ps1`, then read only the selected section with `Tools/documents/doc_read.ps1` unless full-file context is necessary.\n\n🧭 When the relevant structured document or item is unknown, use `Tools/documents/doc_route.ps1 <intent>` or `Tools/documents/doc_search.ps1 <query>` before broad `rg` sweeps.\n\n🚫 Do not use `Select-String`, `rg`, or full-text grep as the default way to inspect structured project documents such as `WORKFLOW.json`, `_PLAN.json`, and `docs/TODO.json`, and slim YAML documents such as `docs-tech/STATE.json` or `context-docs/*.json`. Use text grep only for raw formatting/encoding checks, parser or cache debugging, unknown references after doc tools miss, or source-code searches.\n"
+        },
+        "working_checks": {
+            "title": "Working Checks",
+            "content": "🔧 During implementation, use diffs, targeted reads, and focused searches for local decisions, then use `Tools/repo/done.ps1 -Message \"<message>\"` near the end of the current scope instead of repeated manual sequences of normalizers, cache refreshes, index refreshes, quality gates, `git diff --check`, `git diff --stat`, `git status --short`, commit, and push.\n\nThe normal flow is: gather task context with repository scripts, make the code and document edits for the current scope, then run `Tools/repo/done.ps1 -Message \"<message>\"`. The script discovers changed files from git, normalizes text, refreshes document caches and code-line indexes, runs the full quality path, stages intentional source/assets/docs/config changes, commits, pushes, and reports status.\n\nIf `Tools/repo/done.ps1` fails on a mechanical or repeatable process problem that can be prevented by tooling, improve the owning script before rerunning the finalizer. Prefer fixing automation for encoding/mojibake drift, LF/CRLF normalization, document cache drift, generated index drift, formatting drift, staging filters, and recurring Godot log capture failure modes instead of preserving manual recovery steps.\n\nWhen editing project documents, use transactional document scripts instead of composing manual read/edit/normalize/cache/check command queues. The script should own its write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.\n\nWhen editing slim YAML documents, use the document item tools instead of ad hoc inline PowerShell for structural item edits. Use `Tools/documents/doc_item_bulk_insert.ps1` by default when adding multiple keyed items to one document, so `index` and `items.quick_index` stay synchronized.\n\nTreat `Tools/documents/doc_item_insert.ps1`, `Tools/documents/doc_item_bulk_insert.ps1`, `Tools/documents/doc_item_move.ps1`, and `Tools/documents/doc_item_migrate.ps1` as transaction wrappers: they should edit, normalize, rebuild document cache when needed, run compact local document checks, and print the final result. Do not manually repeat those post-edit steps unless the wrapper fails, `-NoPostEdit` was intentionally used, or a broader verification boundary requires it. Run full document audit at the final verification boundary, not after every item edit.\n\nTreat `Tools/documents/docs_slim.ps1` and `Tools/documents/docs_migrator.ps1` the same way for whole-document migrations: when they modify files, they should call the shared post-edit pipeline unless `-NoPostEdit` is explicitly used.\n\nUse manual patches for slim YAML only when no item-level script fits, the script is unavailable, or the edit is a whole-file schema/tooling repair rather than an item operation.\n\nWhen editing emoji-heavy documents on Windows/PowerShell, anchor patches on ASCII headings or stable ASCII text. Do not copy mojibake-rendered emoji from shell output; use `Tools/setup/configure_powershell_utf8.ps1` and `Tools/documents/audit_docs.ps1` to keep the environment and files sane.\n\nRun status/check/gate commands only at verification boundaries: once near the end of a normal prompt through `Tools/repo/done.ps1`, or once per deliberately split subtask in a broad task that needs a stop/go decision before continuing.\n\nAfter a failed check or tool-result error, inspect only the relevant failing area, fix it, then rerun one focused helper or `Tools/repo/done.ps1`. When the failure happened because the script accepted fragile input, lacked validation, produced unclear output, or made an easy operator mistake likely, the default response is to harden the tool or its SCRIPTS.json input/output contract so the same prompt class does not need the same workaround again. For structured JSON failures caused by shell quoting, add or use file/stdin value inputs instead of repeating inline escaping workarounds.\n\nReserve `Tools/repo/finish_task.ps1` for lower-level finalizer internals, no-commit checks, or debugging `Tools/repo/done.ps1`. It should use git-discovered changed files to normalize text, rebuild document cache when applicable, refresh the code-line index, run checks, refresh `OUTPUT`, and play the completion sound at the true prompt boundary.\n- Hard rule: for documentation reads/writes outside `context-docs/` and strictly technical capsules, use the candidate-title workflow: derive likely duplicate words, run `Tools/documents/doc_list_review.ps1 -Terms <words>` when available, otherwise run `Tools/documents/doc_list_check.ps1 -Terms <words>`; read only candidates; then write once through a transactional document script.\n- For simple reference, inspiration, source, URL, or list-line additions inside an existing slim YAML item, use `Tools/documents/doc_list_insert_checked.ps1` when available to merge insert and compact task verification; otherwise use `Tools/documents/doc_list_insert.ps1`.\n- For task-like list-line additions in slim YAML documents, preserve task identity with `Tools/documents/doc_list_insert_checked.ps1 -ItemId <id>` or `Tools/documents/doc_list_insert.ps1 -ItemId <id>`: use numbers for separate tasks (`41.1`, `41.3`, `42`, `43.1`), uppercase letter suffixes for split parts of the same task at any depth (`41.2A`, `41.2B`, `41.2A.1`, `41.2A.1B`), and extra dotted numeric segments when an item must be inserted between already numbered tasks (`41.2.3.5`).\n- Use `Tools/documents/doc_list_check.ps1` before insert only when the user explicitly asks for a duplicate report or when possible duplicate matches must be reviewed before choosing the target item.\n- Treat `Tools/documents/doc_list_insert.ps1` as a transaction wrapper: it checks duplicates, edits, writes UTF-8, normalizes, rebuilds cache when applicable, runs compact local checks, and prints one final result.\n- Hard git rule: use `Tools/repo/done.ps1 -Message \"<message>\"` whenever practical for subtask closure. It must discover changed files from git, run the batch finalizer with quality, stage intentional source/assets/docs/config changes, verify staged changes, commit, push unless disabled, and report whether the working tree is clean. If the tree is not clean, the subtask is not closed.\n- Keep `Tools/repo/finish_subtask.ps1` and `Tools/repo/commit_task.ps1` only as compatibility/lower-level wrappers; new automation should call `Tools/repo/done.ps1` directly.\n"
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Codex Workflow",
+            "type": "workflow",
+            "language": "en"
+        },
+        "routing": {
+            "purpose": "Compact project workflow router, including task classification, read rules, approval behavior, finish checks, and contextual action rules.",
+            "read_when": [
+                "When this document is explicitly referenced.",
+                "When workflow rules select this document for the current task."
+            ],
+            "do_not_read_when": [
+                "When a smaller current-state or subsystem capsule is sufficient."
+            ]
+        },
+        "contextual_actions": {
+            "purpose": "Priority, owner-pressure, format, evidence, and product-risk guardrails applied while executing FLOWS.json flows.",
+            "source": "Merged into WORKFLOW.json as the single workflow policy source."
+        }
+    }
+}

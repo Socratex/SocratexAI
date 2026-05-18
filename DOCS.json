@@ -9,6 +9,7 @@
         "core/",
         "core/WORKSPACE.json",
         "core/communication-profiles/",
+        "profiles/",
         "project/",
         "templates/",
         "tools/",
@@ -77,6 +78,10 @@
         "core/communication-profiles/": {
             "role": "Plain-text communication profile registry. Each .txt filename is a communication.profile id and the file body is the source of truth for that response mode.",
             "read": "when setup, initialization, communication behavior, or selected profile loading changes"
+        },
+        "profiles/": {
+            "role": "Reusable child-project profiles. Profiles define source-owned project-facing command, flow, script, and workflow artifacts that children consume as managed additions instead of forking ad hoc copies.",
+            "read": "when update, import, initialization, or child override behavior changes"
         }
     },
     "metadata": {

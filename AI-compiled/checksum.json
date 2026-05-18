@@ -1,11 +1,11 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-14fb128e7db2",
+  "generated_at": "source-e3fccc36eeba",
   "source_hashes": {
     "AGENTS.md": "f17717c0fb04cbc9687fbb06b5df5212e9b83327fee5ea1943c688b25a40fd1e",
     "README.md": "8ab79917d40b6797cc348d5bd03bb8658f951ab995705316c0b9cbebe12fdd5f",
     "PUBLIC-BOOTSTRAP.md": "52e2c8242114abade238ad470255c7e45ebc81e5d7ca14ac6a1cd9f0472b784f",
-    "DOCS.json": "f441873d1b90d0cb5ba0174e3112ed98158cbfbb649b572d0d97361eb53ecb8d",
+    "DOCS.json": "d7c66a81385471758e514cf472d852c3462ac53c681e5519c9453d106d451446",
     "WORKFLOW.json": "361fc6a15383aac57f775fb3da86e86158527b3712c29c6255c06cbfeaf3e108",
     "COMMANDS.json": "7ae768535f5e697de610b6351a040ff4757683690240ca225c2d7a3931bf0f0d",
     "FLOWS.json": "2a32e5ac9c442c8f28624cc1b509b4a7c75294df9b9001796396a0aa281bf528",
@@ -51,11 +51,11 @@
   },
   "output_hashes": {
     "README.md": "d066b6cd837082095c4a037ac3c5619ba562ed9762f239a8e4cce0ea94e35659",
-    "INDEX.json": "d4579b8c4c7bc26e015b12031fde48fb85e2a9af63a47cf90a21b62f2ed4ca3c",
-    "codex/ENTRYPOINT.md": "08d512cfffbacd54e57663b4dea981f23fb7a6886bd73b87e705e06f0d5d516b",
-    "codex/RULES.compiled.md": "559dfa5ceadc45742045cbaf7cd1883093cc9bb017173051b505ee4108bbb299",
-    "codex/WORKFLOW.compiled.md": "b34af79cdb12c5bcbceba3c2790264184dde1ded6cba5ae32f2312711132db63",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "a6931acc21984e93c0834c1a36af4eccf449a8c43003920764fb8ad074bf5592",
-    "codex/TEAM.compiled.md": "828eebb20e0b41747652d3fe3bf677bed2f37ec825b1921b8584be71bf44d813"
+    "INDEX.json": "51368d72b3d0ee2168f03740652b9bdac5fdcbc7257bcb8e024e6c02774c77a8",
+    "codex/ENTRYPOINT.md": "26329cb5b1a4a9368efeccc63e21538eaa888b76c2bc318d75f97bbc15ff0f14",
+    "codex/RULES.compiled.md": "7b9ae62ee5dd91ebf4f889fd89681364d6383d99e8065af27c81c9e7675bf2a8",
+    "codex/WORKFLOW.compiled.md": "800758a9c3fc069f903204cd7720d3134e50807e66631a7d778bcebf2ecf33b8",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "649151842ebc07a6d2394da95a230bee579f430417ec6dc6228809e1c102439f",
+    "codex/TEAM.compiled.md": "e8b3f1918bf963004fef661649c561fdfc8c24b1059d0f0ef9bbc12c9c66be9c"
   }
 }

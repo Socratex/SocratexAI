@@ -4,6 +4,8 @@ param(
 
     [string[]]$Packs = @("code"),
 
+    [string]$Profile = "",
+
     [ValidateSet("Lite", "Standard", "Enterprise")]
     [string]$AiMode = "Standard",
 
@@ -24,11 +26,32 @@ $SourceRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
 $TargetRoot = Resolve-Path -LiteralPath $TargetPath
 $InstallRoot = Join-Path $TargetRoot "SocratexAI"
 
+function Resolve-PowerShellCommand {
+    $pwsh = Get-Command "pwsh" -ErrorAction SilentlyContinue
+    if ($pwsh) {
+        return $pwsh.Source
+    }
+    $powershell = Get-Command "powershell" -ErrorAction SilentlyContinue
+    if ($powershell) {
+        return $powershell.Source
+    }
+    $powershellExe = Get-Command "powershell.exe" -ErrorAction SilentlyContinue
+    if ($powershellExe) {
+        return $powershellExe.Source
+    }
+    throw "Neither pwsh nor powershell is available."
+}
+
+$PowerShellCommand = Resolve-PowerShellCommand
+
 $normalizedPacks = @()
 foreach ($pack in $Packs) {
     $normalizedPacks += ($pack -split "," | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 }
 $Packs = $normalizedPacks
+if ([string]::IsNullOrWhiteSpace($Profile) -and ($Packs -contains "gamedev")) {
+    $Profile = "SocratexGamedev"
+}
 
 function Copy-ItemSafe {
     param(
@@ -144,12 +167,18 @@ $syncArgs = @(
     "-SourceRoot",
     $SourceRoot,
     "-InstallRoot",
-    $InstallRoot
+    $InstallRoot,
+    "-ProjectRoot",
+    $TargetRoot,
+    "-PruneUnmanaged"
 )
+if (-not [string]::IsNullOrWhiteSpace($Profile)) {
+    $syncArgs += @("-Profile", $Profile, "-ApplyProjectProfile")
+}
 if ($DryRun) {
     $syncArgs += "-DryRun"
 }
-& powershell @syncArgs
+& $PowerShellCommand @syncArgs
 if ($LASTEXITCODE -ne 0) {
     throw "sync_managed_pipeline_package failed with exit code $LASTEXITCODE"
 }
@@ -238,11 +267,11 @@ if ($CreateProjectFiles) {
 if (-not $DryRun) {
     $syncFeatureListScript = Join-Path $InstallRoot "tools\repo\sync_pipeline_featurelist.ps1"
     if (Test-Path -LiteralPath $syncFeatureListScript) {
-        & powershell -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
+        & $PowerShellCommand -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
     }
     $knowledgeCompileScript = Join-Path $InstallRoot "tools\knowledge\knowledge_compile.ps1"
     if (Test-Path -LiteralPath $knowledgeCompileScript) {
-        & powershell -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
+        & $PowerShellCommand -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
         if ($LASTEXITCODE -ne 0) {
             throw "knowledge_compile failed with exit code $LASTEXITCODE"
         }
@@ -275,7 +304,7 @@ if (-not $DryRun) {
                 version = "0.2.0-alpha"
                 update_source = "TBD"
                 public_bootstrap_url = "TBD"
-                update_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source `"<source>`" -Packs $($Packs[0]) -ReinitializeNew"
+                update_command = "pwsh -NoLogo -NoProfile -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source `"<source>`" -Packs $([string]::Join(',', $Packs)) -ReinitializeNew"
                 remove_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/remove_pipeline.ps1 -TargetPath ."
                 reinitialize_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/reinitialize_pipeline.ps1 -TargetPath ."
             }

@@ -314,7 +314,7 @@ if ($CreateFiles) {
                 version = "0.2.0-alpha"
                 update_source = "TBD"
                 public_bootstrap_url = "TBD"
-                update_command = 'powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source "<source>" -Packs code -ReinitializeNew'
+                update_command = "pwsh -NoLogo -NoProfile -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source `"<source>`" -Packs $([string]::Join(',', $KeepPacks)) -ReinitializeNew"
                 remove_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/remove_pipeline.ps1 -TargetPath ."
                 reinitialize_command = "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/reinitialize_pipeline.ps1 -TargetPath ."
             }

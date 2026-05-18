@@ -1,0 +1,43 @@
+{
+    "index": [
+        "summary",
+        "purpose",
+        "managed_project_files",
+        "child_override_policy",
+        "project_stack"
+    ],
+    "content": {
+        "summary": {
+            "title": "Summary",
+            "content": "SocratexGamedev is the reusable game-project profile for SocratexPipeline children that need Godot/gamedev command routing, flows, script catalogs, and runtime-quality workflow rules."
+        },
+        "purpose": {
+            "title": "Purpose",
+            "content": "Keep game-specific workflow machinery source-owned in SocratexAI instead of copied and forked independently inside every game child project."
+        },
+        "managed_project_files": {
+            "title": "Managed Project Files",
+            "paths": [
+                "COMMANDS.json",
+                "FLOWS.json",
+                "SCRIPTS.json",
+                "WORKFLOW.json"
+            ]
+        },
+        "child_override_policy": {
+            "title": "Child Override Policy",
+            "content": "Children may add project-specific docs, state, plans, context capsules, tools, configs, and explicit overrides. Updates must preserve locally changed managed profile files and report them as overrides instead of overwriting them silently."
+        },
+        "project_stack": {
+            "title": "Project Stack",
+            "content": "Designed for game projects, especially Godot/GDScript projects with runtime logs, manual playtest loops, performance diagnostics, and project-owned tool wrappers."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "SocratexGamedev Profile",
+            "type": "pipeline_profile",
+            "language": "en"
+        }
+    }
+}
