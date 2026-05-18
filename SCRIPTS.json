@@ -108,7 +108,9 @@
         "sync_managed_pipeline_package.ps1",
         "read_compiled_context.ps1",
         "tool_error_log.ps1",
-        "tool_handler.ps1"
+        "tool_handler.ps1",
+        "project_design_context.ps1",
+        "check_project_design_context_gate.ps1"
     ],
     "content": {
         "add_changelog_entry.ps1": {
@@ -147,6 +149,22 @@
             "output": {
                 "success": "Exits 0 and prints status when the operation succeeds.",
                 "failure": "Throws or exits nonzero with a concrete error."
+            }
+        },
+        "check_pipeline_feature_contracts.ps1": {
+            "path": "tools/repo/check_pipeline_feature_contracts.ps1",
+            "category": "repo",
+            "description": "Validate pipeline_featurelist.json feature artifact contracts and ensure changed pipeline-owned paths are assigned to at least one feature contract.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths"
+                ],
+                "rule": "Pass changed paths when checking a focused task; omit paths for a full feature contract audit."
+            },
+            "output": {
+                "success": "Prints the number of covered feature contracts and confirms changed pipeline paths are assigned.",
+                "failure": "Throws when a feature lacks contract fields, required artifacts are missing, catalog entries are absent, or changed pipeline paths are uncovered."
             }
         },
         "check_runtime.py": {
@@ -733,42 +751,25 @@
                 "failure": "Throws on unsafe destination paths or copy/remove failures."
             }
         },
-        "check_pipeline_feature_contracts.ps1": {
-            "path": "tools/repo/check_pipeline_feature_contracts.ps1",
-            "category": "repo",
-            "description": "Validate pipeline_featurelist.json feature artifact contracts and ensure changed pipeline-owned paths are assigned to at least one feature contract.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "-Paths"
-                ],
-                "rule": "Pass changed paths when checking a focused task; omit paths for a full feature contract audit."
-            },
-            "output": {
-                "success": "Prints the number of covered feature contracts and confirms changed pipeline paths are assigned.",
-                "failure": "Throws when a feature lacks contract fields, required artifacts are missing, catalog entries are absent, or changed pipeline paths are uncovered."
-            }
-        },
-        "tool_handler.ps1": {
-            "path": "tools/pipeline/tool_handler.ps1",
+        "read_compiled_context.ps1": {
+            "path": "tools/pipeline/read_compiled_context.ps1",
             "category": "pipeline",
-            "description": "Public single entry point for repository tool operations; validates inputs, normalizes parameters and aliases, delegates to the target script, logs input errors, and returns a stable result envelope.",
+            "description": "Read a source compiled instruction file or a compact source context document by alias.",
             "input": {
                 "required": [
-                    "-Operation"
+                    "-Document"
                 ],
                 "optional": [
-                    "-ParametersJson",
-                    "-ParametersJsonFile",
-                    "-OutputMode",
-                    "-ErrorLogPath",
-                    "-NoErrorLog"
+                    "-CompiledRoot",
+                    "-AllowStale",
+                    "-Json"
                 ],
-                "rule": "Use exactly one of -ParametersJson or -ParametersJsonFile. Prefer -ParametersJsonFile for nested, multiline, or quote-heavy parameter payloads."
+                "aliases": "When called through tool_handler.ps1, aliases such as scripts, commands, flows, docs, workflow, rules, entrypoint, bootstrap, engineering, and agent_contract are normalized before invocation.",
+                "rule": "Prefer tool_handler.ps1 for normal use so aliases and stale checks are normalized before this script runs."
             },
             "output": {
-                "success": "Structured result envelope with ok=true, normalized operation, target script, normalized parameters, command, exit code, and captured output.",
-                "failure": "Structured result envelope with ok=false, error type/message, and logged_error_key when validation logged an input failure."
+                "success": "Compiled or source context content by default, or JSON with selected path and content when -Json is used.",
+                "failure": "Throws when no alias/path matches or when a compiled output hash is stale."
             }
         },
         "tool_error_log.ps1": {
@@ -800,25 +801,61 @@
                 "failure": "Throws if the registry cannot be initialized or the entry cannot be appended."
             }
         },
-        "read_compiled_context.ps1": {
-            "path": "tools/pipeline/read_compiled_context.ps1",
+        "tool_handler.ps1": {
+            "path": "tools/pipeline/tool_handler.ps1",
             "category": "pipeline",
-            "description": "Read a source compiled instruction file or a compact source context document by alias.",
+            "description": "Public single entry point for repository tool operations; validates inputs, normalizes parameters and aliases, delegates to the target script, logs input errors, and returns a stable result envelope.",
             "input": {
                 "required": [
-                    "-Document"
+                    "-Operation"
                 ],
                 "optional": [
-                    "-CompiledRoot",
-                    "-AllowStale",
-                    "-Json"
+                    "-ParametersJson",
+                    "-ParametersJsonFile",
+                    "-OutputMode",
+                    "-ErrorLogPath",
+                    "-NoErrorLog"
                 ],
-                "aliases": "When called through tool_handler.ps1, aliases such as scripts, commands, flows, docs, workflow, rules, entrypoint, bootstrap, engineering, and agent_contract are normalized before invocation.",
-                "rule": "Prefer tool_handler.ps1 for normal use so aliases and stale checks are normalized before this script runs."
+                "rule": "Use exactly one of -ParametersJson or -ParametersJsonFile. Prefer -ParametersJsonFile for nested, multiline, or quote-heavy parameter payloads."
             },
             "output": {
-                "success": "Compiled or source context content by default, or JSON with selected path and content when -Json is used.",
-                "failure": "Throws when no alias/path matches or when a compiled output hash is stale."
+                "success": "Structured result envelope with ok=true, normalized operation, target script, normalized parameters, command, exit code, and captured output.",
+                "failure": "Structured result envelope with ok=false, error type/message, and logged_error_key when validation logged an input failure."
+            }
+        },
+        "project_design_context.ps1": {
+            "path": "tools/knowledge/project_design_context.ps1",
+            "category": "knowledge",
+            "description": "Read project-specific code_design_required_reads from PIPELINE-CONFIG.json, print the project's design context, and write ignored/project_design_context_gate.json so downstream task checks can prove the design rules were loaded for the current HEAD.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-ProjectRoot",
+                    "-Quiet"
+                ],
+                "rule": "Run from the project root or pass -ProjectRoot. The script no-ops cleanly when code_design_required_reads is absent."
+            },
+            "output": {
+                "success": "Writes ignored/project_design_context_gate.json with declared and loaded design-context files for HEAD.",
+                "failure": "Throws when PIPELINE-CONFIG.json is missing or one of the declared design-context files cannot be read."
+            }
+        },
+        "check_project_design_context_gate.ps1": {
+            "path": "tools/codebase/check_project_design_context_gate.ps1",
+            "category": "codebase",
+            "description": "Verify ignored/project_design_context_gate.json was refreshed for the current HEAD and changed code paths, so finalize/task-check flows can prove the project's design rules were loaded before code edits.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-ProjectRoot",
+                    "-Paths",
+                    "-MaxAgeMinutes"
+                ],
+                "rule": "Pass changed paths when checking a focused task; omit paths to derive them from git working tree + staged + untracked."
+            },
+            "output": {
+                "success": "Confirms the gate file exists, matches current HEAD, and covers the changed code paths.",
+                "failure": "Throws when the gate is missing, stale relative to HEAD or MaxAgeMinutes, or does not cover the declared design-context reads."
             }
         }
     },
