@@ -20,6 +20,7 @@ param(
         "evals",
         "initializer",
         "project",
+        "profiles",
         "templates",
         "tools",
         "AGENTS.md",

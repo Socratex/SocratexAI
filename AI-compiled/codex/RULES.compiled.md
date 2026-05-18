@@ -201,6 +201,7 @@ Draft placeholder:
             "single_entry_tool_handler",
             "categorized_tool_scripts",
             "managed_pipeline_package_mirror_sync",
+            "project_profile_child_overlay_sync",
             "full_update_artifact_parity_contract",
             "managed_pipeline_root_catalog_sync",
             "feature_artifact_contracts",
@@ -4826,6 +4827,57 @@ Draft placeholder:
                 ],
                 "known_failure_if_missing": "If 'managed_pipeline_package_mirror_sync' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
+            "project_profile_child_overlay_sync": {
+                "summary": "Project profile child overlay sync keeps reusable profile-owned project catalogs in SocratexAI while child projects receive only additions, generated state, protected config, and explicit local overrides.",
+                "required_paths": [
+                    "pipeline_featurelist.json",
+                    "profiles/SocratexGamedev",
+                    "SCRIPTS.json",
+                    "tools/pipeline/sync_managed_pipeline_package.ps1",
+                    "tools/pipeline/update_pipeline_from_link.ps1",
+                    "tools/pipeline/import_existing_project.ps1",
+                    "tools/pipeline/Initialize-SocratexPipeline.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.ps1"
+                ],
+                "required_scripts": [
+                    "sync_managed_pipeline_package.ps1",
+                    "update_pipeline_from_link.ps1",
+                    "import_existing_project.ps1",
+                    "Initialize-SocratexPipeline.ps1",
+                    "check_pipeline_feature_contracts.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "sync_managed_pipeline_package.ps1",
+                        "update_pipeline_from_link.ps1",
+                        "import_existing_project.ps1",
+                        "Initialize-SocratexPipeline.ps1",
+                        "check_pipeline_feature_contracts.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "profiles/SocratexGamedev/PROFILE.json",
+                    "profiles/SocratexGamedev/COMMANDS.json",
+                    "profiles/SocratexGamedev/FLOWS.json",
+                    "profiles/SocratexGamedev/SCRIPTS.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep reusable game-project catalogs in profiles/SocratexGamedev instead of copying them independently into each child project.",
+                    "Run sync_managed_pipeline_package.ps1 with -ProjectRoot, -Profile, -ApplyProjectProfile, and -PruneUnmanaged during project update/import.",
+                    "Preserve locally changed managed profile files as reported overrides unless -ForceManaged is explicitly used.",
+                    "Keep PIPELINE-PACKAGE.json reporting project_profile_files, local_overrides, preserved_unmanaged, and removed_unmanaged after every sync.",
+                    "Keep profiles included in managed package sync so profile definitions are present on other machines and child projects after update."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/sync_managed_pipeline_package.ps1 -SourceRoot . -InstallRoot <child>/SocratexAI -ProjectRoot <child> -Profile SocratexGamedev -ApplyProjectProfile -PruneUnmanaged -DryRun"
+                ],
+                "known_failure_if_missing": "Child projects keep forked copies of root command, flow, script, and workflow catalogs, so source updates do not cleanly propagate across projects or machines and local duplicates silently drift."
+            },
             "full_update_artifact_parity_contract": {
                 "summary": "Full Update Artifact Parity Contract capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
                 "required_paths": [
@@ -5606,7 +5658,7 @@ Draft placeholder:
         "schema": "socratex-pipeline-featurelist/v4",
         "pipeline_id": "socratex_pipeline",
         "role": "source",
-        "updated_at": "2026-05-16",
+        "updated_at": "2026-05-18",
         "comparison_contract": "Use content.features for cheap source/instance comparison; use content.feature_contracts for artifact-level synchronization and promotion checks. Root index/content/metadata is the canonical JSON list-document shape.",
         "required_root_keys": [
             "index",
