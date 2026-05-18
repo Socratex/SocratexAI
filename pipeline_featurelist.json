@@ -95,7 +95,8 @@
             "legacy_feature_manifest_update_recovery",
             "canonical_index_content_metadata_document_schema",
             "cross_platform_tool_runtime_resolution",
-            "workspace_root_marker_resolution"
+            "workspace_root_marker_resolution",
+            "project_specific_design_context_gate"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -5537,6 +5538,66 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
                 "known_failure_if_missing": "Communication profile choices drift across prose, setup prompts, config validation, and compiled agent instructions."
+            },
+            "project_specific_design_context_gate": {
+                "summary": "Project-Specific Design Context Gate capability is considered active only when the per-project design context loader, its config field, the implementation flow that requires it, and its verification surface remain present. Tightens the implementation flow so that beyond the workspace-shared engineering rules, project-specific zone splits, namespace rules, and lifecycle constraints from each project's PIPELINE-CONFIG.json are deterministically loaded into context before code edits.",
+                "required_paths": [
+                    "FLOWS.json",
+                    "context-docs/ENGINEERING.json",
+                    "pipeline_featurelist.json",
+                    "tools/codebase/check_project_design_context_gate.ps1",
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/project_design_context.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.ps1"
+                ],
+                "required_scripts": [
+                    "audit_docs.ps1",
+                    "check_project_design_context_gate.ps1",
+                    "knowledge_code_context.ps1",
+                    "project_design_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "audit_docs.ps1",
+                        "check_project_design_context_gate.ps1",
+                        "knowledge_code_context.ps1",
+                        "project_design_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "FLOWS.json",
+                    "context-docs/ENGINEERING.json"
+                ],
+                "required_config_fields": {
+                    "<project>/.aiassistant/socratex/PIPELINE-CONFIG.json": [
+                        "code_design_required_reads"
+                    ]
+                },
+                "implementation_flow_steps": [
+                    "load WORKFLOW.json",
+                    "run knowledge_code_context.ps1 — REQUIRED: brings 11 substantive code-design rules (borrowed-before-bespoke, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
+                    "run project_design_context.ps1 -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads — writes ignored/project_design_context_gate.json",
+                    "inspect SCRIPTS.json index before manual work",
+                    "edit scoped files",
+                    "run check_task.ps1 -ProjectRoot <project> at the final verification boundary — verifies BOTH ignored/code_context_gate.json (workspace, via check_code_context_gate.ps1) and <project>/ignored/project_design_context_gate.json (per-project, via check_project_design_context_gate.ps1) are fresh for current HEAD when changed-code is detected"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Port the reusable source artifacts, not only the feature id.",
+                    "Ensure project_design_context.ps1 ships into installed projects (or stays accessible via shared-sibling SocratexAI clone).",
+                    "Verify each child project declares code_design_required_reads in its PIPELINE-CONFIG.json or accepts the no-op fallback.",
+                    "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Run the feature contract checker before promoting or publishing the update.",
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/project_design_context.ps1 -ProjectRoot <project> -Quiet",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/codebase/check_project_design_context_gate.ps1 -ProjectRoot <project>"
+                ],
+                "known_failure_if_missing": "If 'project_specific_design_context_gate' is listed without these artifacts, source/child comparison may pass by feature id while implementation flow loses its second gate, and per-project zone/namespace rules become opt-in instead of enforced. Symptoms: agents drag /app patterns into /application files (or vice-versa), miss namespace-zone constraints in projects with dual zones, or apply modern syntax to PHP 5.6 projects."
             }
         }
     },

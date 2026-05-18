@@ -61,7 +61,8 @@ $baseCodeGuidanceTags = @(
 	"diagnostics",
 	"performance",
 	"verification",
-	"domain_modeling"
+	"domain_modeling",
+	"readability"
 )
 $selectedTags = @($baseCodeGuidanceTags + $AdditionalTags | Where-Object {
 	-not [string]::IsNullOrWhiteSpace($_)

@@ -1,6 +1,66 @@
 [
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "tag": "borrowed-before-bespoke"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "tag": "domain_modeling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.business_naming",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.business_naming",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.business_naming",
+    "tag": "ddd-adiv"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.business_naming",
+    "tag": "domain_modeling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.business_naming",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.business_naming",
+    "tag": "readability"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.code_primary_source_of_truth",
     "tag": "coding"
   },
@@ -31,6 +91,81 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "tag": "domain_modeling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "tag": "future-first"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "tag": "production-grade"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "tag": "ddd-adiv"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "tag": "domain_modeling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "tag": "ownership"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "tag": "architecture"
   },
@@ -48,6 +183,191 @@
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_aware_change_split",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_aware_change_split",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_aware_change_split",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_aware_change_split",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_aware_change_split",
+    "tag": "ownership"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_aware_change_split",
+    "tag": "readability"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.match_surrounding_patterns",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.match_surrounding_patterns",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.match_surrounding_patterns",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.match_surrounding_patterns",
+    "tag": "ownership"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.match_surrounding_patterns",
+    "tag": "readability"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.method_and_variable_extraction",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.method_and_variable_extraction",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.method_and_variable_extraction",
+    "tag": "diagnostics"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.method_and_variable_extraction",
+    "tag": "domain_modeling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.method_and_variable_extraction",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.method_and_variable_extraction",
+    "tag": "readability"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.minimal_comments",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.minimal_comments",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.minimal_comments",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.minimal_comments",
+    "tag": "readability"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "data-first"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "diagnostics"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "future-first"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "ownership"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "performance"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "production-grade"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.readability_first",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.readability_first",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.readability_first",
+    "tag": "diagnostics"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.readability_first",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.readability_first",
+    "tag": "readability"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -257,6 +577,46 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.normalized_content_hashes",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.pair_programming_collaboration",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.pair_programming_collaboration",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.pair_programming_collaboration",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.verification_without_tests",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.verification_without_tests",
+    "tag": "diagnostics"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.verification_without_tests",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.verification_without_tests",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.verification_without_tests",
     "tag": "workflow"
   }
 ]

@@ -333,6 +333,397 @@
                             "note": "Durable coding discipline promoted from Riftbound Vanguard pipeline work."
                         }
                     ]
+                },
+                {
+                    "id": "engineering.coding.borrowed_before_bespoke",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Borrowed Before Bespoke",
+                    "summary": "Prefer established patterns, proven libraries, and standard tools over custom-built solutions when they fit the project profile.",
+                    "rule": "Before designing custom code, check whether an established pattern, archetype, standard workflow, library, or proven tool already solves the problem at lower cost. Apply the build-vs-borrow lens to: design patterns (state machines, queues, adapters, ports, repositories), platform conventions, schemas, transaction boundaries, and contract types. Only build bespoke when the borrowed option creates worse constraints, hides project-specific truth, or fails the profile-fit check (e.g., wrong language version, conflicting with legacy framework). Document the decision when bespoke is chosen.",
+                    "rationale": "Custom code carries hidden ownership and maintenance cost. Borrowing reduces initial complexity and surfaces failure modes that are already documented; bespoke should pay for itself with a concrete project-specific advantage.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "architecture",
+                        "best-practices",
+                        "borrowed-before-bespoke",
+                        "coding",
+                        "domain_modeling",
+                        "engineering"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "primary_known_solutions_directive",
+                            "note": "Source-of-truth for the borrowed-before-bespoke directive."
+                        },
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "known_solution_bias",
+                            "is_duplicate": true,
+                            "note": "Domain-specific expansion of the same directive."
+                        },
+                        {
+                            "path": "project/code/DDD-ADIV.json",
+                            "selector": "known_solutions_alignment",
+                            "is_duplicate": true,
+                            "note": "DDD-ADIV reinforces build-vs-borrow as a domain-clarifying tool."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.production_grade_default",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Production-Grade Architectural Default",
+                    "summary": "For programming feature requests, bias toward production-grade architecture: explicit ownership, data flow, contracts, toolability, diagnostics, performance budget, deterministic behavior, testability, low retrofit cost.",
+                    "rule": "When implementing features in software/games, evaluate the requested approach against a production-grade lens before executing. Required dimensions: explicit ownership of state and side effects; explicit data flow (no hidden pipelines); machine-readable contracts (types, schemas, JSON shapes); toolability (linters, scripts, tests can run on the artifact); diagnostics (the change can be traced and verified mechanically); performance budget (no silent O(n^2) where O(n) was reasonable); deterministic behavior where relevant; testability (verification is attachable); low retrofit cost (future modifications are not blocked). If the user's path is weaker than a better future-facing sequence, propose the better sequence before executing.",
+                    "rationale": "Production-grade defaults reduce future retrofit cost and make code mechanically diagnosable. The cost of doing it badly first is paid by every future maintainer, so the bias should be toward strong defaults unless the project profile (e.g., throwaway prototype) explicitly relaxes them.",
+                    "priority": "should",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "architecture",
+                        "best-practices",
+                        "coding",
+                        "data-first",
+                        "diagnostics",
+                        "engineering",
+                        "future-first",
+                        "ownership",
+                        "performance",
+                        "production-grade",
+                        "verification"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "primary_known_solutions_directive",
+                            "note": "Production-grade directive for code feature requests."
+                        },
+                        {
+                            "path": "project/code/PACK.json",
+                            "selector": "technical_defaults",
+                            "is_duplicate": true,
+                            "note": "Code-pack technical defaults reinforce the same architectural lens."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.ddd_adiv_when_possible",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "DDD-ADIV When Possible",
+                    "summary": "Use DDD-ADIV (Domain-Driven, Architecture-Decisive, Invariant-Visible, Verification-Attached) as a practical design bias when it reduces ambiguity, future retrofit cost, or hidden coupling - without turning it into ceremony.",
+                    "rule": "Before substantive code design, ask the four questions: (1) Domain language - does the name reflect business meaning rather than mechanism? (2) Architecture-decisive - are ownership and dependency direction explicit? (3) Invariant-visible - are important rules expressed as checks/schemas/tests/validations? (4) Verification-attached - is the risky behavior testable or at least observable? When project profile is `legacy` or per-zone config sets `ddd_adiv: false|soft`, treat DDD-ADIV as a lens-not-mandate: pull ownership when rewriting heavily, leave legacy untouched when surgical-fixing. Read `project/code/DDD-ADIV.json` for the full definition. Do not turn it into ceremony - skip when the change is genuinely shallow.",
+                    "rationale": "DDD-ADIV is the workspace's recommended default because explicit boundaries and named invariants survive long-running maintenance better than clever or convenient code. Per-zone overrides exist precisely so the lens does not force-fit legacy code.",
+                    "priority": "should",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "architecture",
+                        "coding",
+                        "ddd-adiv",
+                        "domain_modeling",
+                        "engineering",
+                        "ownership",
+                        "verification"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "ddd_adiv_default",
+                            "note": "Shared contract definition of DDD-ADIV bias."
+                        },
+                        {
+                            "path": "project/code/DDD-ADIV.json",
+                            "selector": "domain_driven",
+                            "is_duplicate": true,
+                            "note": "Full code-pack DDD-ADIV definition."
+                        },
+                        {
+                            "path": "project/code/DDD-ADIV.json",
+                            "selector": "architecture_decisive",
+                            "is_duplicate": true,
+                            "note": "Architecture-decisive dimension."
+                        },
+                        {
+                            "path": "project/code/DDD-ADIV.json",
+                            "selector": "invariant_visible",
+                            "is_duplicate": true,
+                            "note": "Invariant-visible dimension."
+                        },
+                        {
+                            "path": "project/code/DDD-ADIV.json",
+                            "selector": "verification_attached",
+                            "is_duplicate": true,
+                            "note": "Verification-attached dimension."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.readability_first",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Readability First",
+                    "summary": "Prefer readable, diagnosable code over compact or clever code. Code is read more often than written; future maintainers - including future-you and AI agents - pay the cost of cleverness.",
+                    "rule": "When writing or modifying code, optimize for readability first: explicit control flow over clever tricks; explicit data flow over hidden pipelines; guard clauses over deep nesting; small functions over multi-purpose blocks; intent-revealing names over abbreviated ones; one block focused on one concern at one abstraction level; structured APIs/parsers over ad-hoc string manipulation. Comments explain non-obvious WHY (constraints, hazards, tradeoffs) - not WHAT. Top-down code organization when practical: entry points and high-level workflow first, helpers later. If a clever optimization is required, attach a short comment explaining why and a verification (test/benchmark) for the gain.",
+                    "rationale": "SocratexPipeline is built on the assumption that long-running diagnosability matters more than micro-cleverness. Code that is hard to read becomes hard to diagnose, hard to modify safely, and hard for AI agents to reason about - compounding maintenance cost over time.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "best-practices",
+                        "coding",
+                        "diagnostics",
+                        "engineering",
+                        "readability"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "project/code/PACK.json",
+                            "selector": "technical_defaults",
+                            "note": "Code-pack technical defaults already mandate readability - this entry surfaces it as a tagged rule for the knowledge layer."
+                        },
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "operating_principles",
+                            "is_duplicate": true,
+                            "note": "Operating principles include 'prefer explicit contracts over hidden convention'."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.method_and_variable_extraction",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Extract Methods and Intent-Revealing Variables",
+                    "summary": "Pull repeated logic into named methods. Extract intermediate values into intent-revealing variables. Keep functions short and single-purpose.",
+                    "rule": "When code starts doing multiple things, extract: (1) repeated expressions into intent-revealing local variables (e.g. eligibleCustomers = customers.filter(...)) instead of inline complex expressions; (2) multi-step blocks into private methods named after their business intent (sendOverdueReminders rather than processList); (3) deeply nested conditionals into guard-clause helper methods. Targets: each function should fit on a screen and operate at one level of abstraction; named locals should explain WHY a value is what it is, not just hold it. Do not extract for the sake of file count - extract when naming the extraction makes the call site read more like business logic.",
+                    "rationale": "Inline cleverness compresses the WHY into mental load. Named extractions move the WHY into the name itself, so the call site reads like documentation. This is the single highest-ROI readability lever in legacy code.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "best-practices",
+                        "coding",
+                        "diagnostics",
+                        "domain_modeling",
+                        "engineering",
+                        "readability"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "project/code/PACK.json",
+                            "selector": "technical_defaults",
+                            "is_duplicate": true,
+                            "note": "Code-pack defaults already mention small functions and intent-revealing helpers."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.codebase_as_contract",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Codebase Is the Contract — Make It as Strict as Possible",
+                    "summary": "Treat the code itself (types, schemas, signatures, validation, structure) as the primary contract. Make it as machine-checkable as the language and project allow.",
+                    "rule": "When writing or modifying code, choose the strictest valid representation: (1) types over untyped parameters when the language version supports them; (2) value objects over primitive obsession (Money vs float, EmailAddress vs string); (3) schema validation at boundaries (DTOs, JSON schemas, parsers - not ad-hoc isset chains); (4) explicit enums or named constants over magic strings/numbers; (5) named function signatures over loose array bags; (6) immutable-by-default where the language supports it. The language target may forbid some of these (e.g., PHP 5.6 has no typed properties) - use what IS available and match the project profile. The point: a future maintainer should be able to learn what is true about the system by reading the code, not by reading commit messages or wikis. Documentation rots; the code is what runs.",
+                    "rationale": "Documentation drifts; tests cover specific cases; contracts in the language itself stay aligned with the runtime. The stricter the code-as-contract, the less the system depends on tribal knowledge or external documentation that goes stale.",
+                    "priority": "should",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "architecture",
+                        "best-practices",
+                        "coding",
+                        "domain_modeling",
+                        "engineering",
+                        "future-first",
+                        "production-grade",
+                        "verification"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "operating_principles",
+                            "is_duplicate": true,
+                            "note": "Operating principles include 'prefer explicit contracts over hidden convention'."
+                        },
+                        {
+                            "path": "project/code/DDD-ADIV.json",
+                            "selector": "invariant_visible",
+                            "is_duplicate": true,
+                            "note": "Invariant-visible dimension: validation at boundaries, explicit factories, schema checks."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.legacy_aware_change_split",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
+                    "summary": "In legacy zones (project profile = legacy or per-zone config says 'do not modernize'), make changes surgical. For non-trivial changes, extract the new logic to a separate clean file rather than scattering large diffs across legacy code — '499 deleted lines + 2 clean new files', not '500 changed lines'.",
+                    "rule": "Before modifying legacy code, classify the change. (A) Surgical fix: small, follows surrounding patterns - edit in place, do not modernize, match existing style even if older. (B) Non-trivial change: would touch many lines or introduce concepts foreign to that zone - DO NOT scatter the changes across the legacy file. Instead extract the new logic to a separate clean file (in the modern zone if one exists, or as a small dedicated legacy file with clean structure), then make the legacy site call into it with the smallest possible delta. The diff should read as 'small change at legacy call site + a new readable file', not 'sprawling rewrite mid-legacy-file'. (C) Heavy rewrite: same as (B) but the new file lives in the modern zone if the project has one. Check `project_profile.lifecycle` and per-zone config in PIPELINE-CONFIG.json to decide which mode applies. Always favor the diff shape that keeps reviewers focused on the small call-site change while the new logic gets a clean, isolated home.",
+                    "rationale": "Mixing modern style into legacy files creates style-inversion zones that confuse both human readers and inspection tools. Extracting to a new file gives the new code a clean home, keeps the legacy file readable as legacy, and gives reviewers a clear before/after on the legacy call site without losing the new logic in diff noise.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "architecture",
+                        "best-practices",
+                        "coding",
+                        "engineering",
+                        "ownership",
+                        "readability"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "primary_known_solutions_directive",
+                            "is_duplicate": true,
+                            "note": "Bug-fix directive: prefer fix that removes class of bug or improves diagnosis without over-expanding scope."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.minimal_comments",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Minimal Comments — Workarounds and Business Intent Only",
+                    "summary": "Default to no comments. Add a comment only when it explains a non-obvious WHY: a workaround for a specific bug, a business invariant, a hidden constraint, or surprising behavior. Never restate WHAT the code does.",
+                    "rule": "Comment policy: (1) NEVER restate visible code - well-named identifiers and intent-revealing methods already do that. (2) NEVER reference the current task, PR number, or ticket inside code - those belong in the commit message and PR description (they rot in code). (3) DO comment when the WHY is non-obvious: 'we round here because the upstream system returns 0.999...', 'workaround for issue #X in library Y' (only library bug references stay), 'this branch handles the case where billing flips between cycles'. (4) DO comment business intent that the code shape cannot capture: 'overdue means 30+ days for retail customers, 60+ for enterprise (per agreement clause 4.2)'. (5) Multi-paragraph docblocks are forbidden unless the language requires them for type generation; one short line max for non-obvious WHY. (6) TODO/FIXME for follow-ups is allowed when the alternative would silently leave the issue uncaptured.",
+                    "rationale": "Comments rot independently of the code they describe. The only comments that survive over time are the ones that capture knowledge the code itself cannot: workarounds, business rules, hidden invariants. Everything else creates noise and false security as it drifts out of sync.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "best-practices",
+                        "coding",
+                        "engineering",
+                        "readability"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "project/code/PACK.json",
+                            "selector": "technical_defaults",
+                            "is_duplicate": true,
+                            "note": "Code-pack defaults: 'Comments should explain non-obvious constraints, workarounds, hazards, or tradeoffs; do not restate visible code.'"
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.business_naming",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Business Naming with Technical Suffix",
+                    "summary": "Names should reflect business intent, not implementation mechanism. Reading the code should explain WHAT the system does in domain terms; technical suffixes carry the HOW.",
+                    "rule": "When naming classes, methods, variables, files, and database columns: (1) The base name expresses business meaning (Quote, Customer, OverduePayment, EligibilityCheck, ClawbackCalculation) - not generic mechanism nouns (Manager, Handler, Processor, Helper, Util). (2) Technical role goes in the SUFFIX, not the base name: QuoteRepository, OverduePaymentNotifier, EligibilityCheckResult, ClawbackReportBuilder. (3) Avoid abbreviations unless they are project-domain canon (CRM, GDPR, MLE if everyone on the project knows them). (4) Method names describe the business action: markQuoteAsAccepted(), recalculateClawbackForCancelledOrder() - not processItem() or doStuff(). (5) Boolean variables and methods read as predicates: isOverdue(), hasUnresolvedClawback(), customerCanReceiveRefund. (6) Variables hold the WHY in their name: $eligibleCustomers (not $tmp), $unsentReminders (not $arr2). When the project has an existing domain glossary, prefer those exact terms even when shorter neutral names would technically work.",
+                    "rationale": "Code is read more often than written, and the dominant reading pattern is 'what is this system doing in business terms?' - not 'what mechanism is being used?'. Business-named code answers the dominant question first; technical suffixes add the secondary information without obscuring intent.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "best-practices",
+                        "coding",
+                        "ddd-adiv",
+                        "domain_modeling",
+                        "engineering",
+                        "readability"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "project/code/DDD-ADIV.json",
+                            "selector": "domain_driven",
+                            "is_duplicate": true,
+                            "note": "DDD domain-driven dimension: business-meaningful names over mechanism names, intent-revealing methods."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.coding.match_surrounding_patterns",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "Match Surrounding Patterns Mid-Fix",
+                    "summary": "When making non-rewrite changes, match the conventions of the surrounding file/zone — even if those conventions are older or weaker. Do not modernize mid-fix.",
+                    "rule": "When editing existing code that you do not own end-to-end: (1) Read the surrounding file and the immediate neighbors in that directory before writing. (2) Match the existing style (naming, indentation, error handling, structural patterns) even if it is older or you would do it differently in greenfield code. (3) If the surrounding code uses a deprecated or weak pattern, leave it alone for THIS change - a separate refactor task can address it. (4) Cross-zone moves (e.g., legacy → modern) are a separate decision per legacy_aware_change_split; do not casually drag legacy patterns into modern zones or modern patterns into legacy zones as a side-effect of a feature. The exception: when the per-project profile or zone config explicitly authorizes modernization in this zone (e.g., bias-true DDD-ADIV in a modern zone), the new code follows the modern conventions even if the file is partially legacy - but the diff should still avoid scattering migration churn across unrelated lines.",
+                    "rationale": "Style inversions inside legacy files create cognitive overhead for every future reader. The cost of leaving an old pattern alone for one fix is small; the cost of leaving a half-modernized file is paid forever. Match-surrounding is the cheapest way to keep diffs reviewable.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "best-practices",
+                        "coding",
+                        "engineering",
+                        "ownership",
+                        "readability"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "operating_principles",
+                            "is_duplicate": true,
+                            "note": "Operating principles emphasize smallest meaningful ownership slice."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.workflow.pair_programming_collaboration",
+                    "type": "rule",
+                    "subtype": "workflow_rule",
+                    "title": "Pair-Programming Stance",
+                    "summary": "Default agent stance is pair-programming colleague: investigate, suggest, trace, explain, maintain the thread of what we know — not autonomous executor and not documentation generator.",
+                    "rule": "When working with the user on a code task: (1) Maintain the investigation thread - track what is known, what is unknown, what was checked, what is the next smallest verification. Do not lose state across iterations. (2) Suggest iterative next steps: when stuck, propose the smallest single thing that can be verified to make progress. (3) Spot patterns and shortcuts: 'this looks like X - have you checked Y?', 'this could be simpler if Z'. (4) Trace execution chains: when asked how something works, follow the code through dispatch / workers / callbacks / models, do not guess from names. (5) Explain mechanically when asked 'how does X work?' - give a clear, accurate, code-grounded answer. (6) Be honest about limits: 'I don't know, let me check' or 'this needs your judgment' beats fabrication. (7) Do NOT run away with implementation when the design has not been agreed; do NOT over-produce documentation artifacts; do NOT batch up multi-step rewrites without explicit approval. Decisions on priorities, architecture direction, and what ships belong to the user.",
+                    "rationale": "Pair-programming with a senior engineer is the default mode in this workspace. The agent's primary value is investigative thread-keeping and pattern-spotting, not autonomous execution. Misaligning the stance produces both over-engineering and over-eager rewrites that the user has to undo.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "best-practices",
+                        "engineering",
+                        "workflow"
+                    ],
+                    "source_refs": []
+                },
+                {
+                    "id": "engineering.workflow.verification_without_tests",
+                    "type": "rule",
+                    "subtype": "workflow_rule",
+                    "title": "Verification Discipline Without a Test Suite",
+                    "summary": "When a project has no test runner (project_profile.test_coverage = 'none' or 'smoke-only'), substitute discipline: read all callers, trace execution, propose a manual smoke-test sequence, and explicitly state what was NOT verified and why.",
+                    "rule": "When implementing changes in projects without an enforced test suite: (1) Read all callers of the symbols being modified before changing them - grep/find for usages, list them, ensure the change matches all caller expectations. (2) Trace execution through the change site: dispatch, workers, hooks, third-party APIs - surface any path the change might affect. (3) Prefer the smallest possible diff for risky changes; if a refactor would be cleaner, propose it as a separate task rather than bundling. (4) For each substantive change, propose a concrete manual smoke-test sequence the user (or QA) can run - exact endpoint/URL, parameters, expected vs actual outcome. (5) Explicitly state what was NOT verified and why ('BaRE billing path not exercised locally - verification deferred to QA on stage'). Do not claim end-to-end correctness from `php -l` or syntax-only checks. (6) When `php -l` / linter / inspection profile passes, say so by name - do not generalize that to 'verified'.",
+                    "rationale": "Most legacy/maintenance-mode projects lack a green-build signal. Pretending otherwise produces false confidence. Substituting reading-callers + tracing + explicit unverified-list keeps the diagnosability bar high without inventing test infrastructure that is not there.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "best-practices",
+                        "diagnostics",
+                        "engineering",
+                        "verification",
+                        "workflow"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "project/code/DDD-ADIV.json",
+                            "selector": "verification_attached",
+                            "is_duplicate": true,
+                            "note": "Verification-attached dimension supports manual reproduction steps when other verification is impractical."
+                        }
+                    ]
                 }
             ]
         },

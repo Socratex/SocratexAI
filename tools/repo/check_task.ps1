@@ -1,5 +1,6 @@
 param(
 	[string[]]$Paths = @(),
+	[string]$ProjectRoot = "",
 	[switch]$Audit,
 	[switch]$MarkdownEmoji,
 	[switch]$NoLineIndex,
@@ -21,6 +22,7 @@ $lineIndexScript = Join-Path $repoRoot "tools\codebase\update_code_line_index.ps
 $utf8WriteCheckScript = Join-Path $repoRoot "tools\text\check_utf8_writes.ps1"
 $pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
 $codeContextGateScript = Join-Path $repoRoot "tools\codebase\check_code_context_gate.ps1"
+$projectDesignContextGateScript = Join-Path $repoRoot "tools\codebase\check_project_design_context_gate.ps1"
 
 function Invoke-CheckCommand {
 	param(
@@ -111,6 +113,23 @@ try {
 			$codeContextArgs += ($checkPaths -join ",")
 		}
 		Invoke-CheckCommand -Label "compiled code-guidance context gate" -Command "powershell" -Arguments $codeContextArgs
+	}
+
+	if ($ProjectRoot.Length -gt 0 -and (Test-Path -LiteralPath $projectDesignContextGateScript -PathType Leaf)) {
+		$projectDesignArgs = @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$projectDesignContextGateScript,
+			"-ProjectRoot",
+			$ProjectRoot
+		)
+		if ($checkPaths.Count -gt 0) {
+			$projectDesignArgs += "-Paths"
+			$projectDesignArgs += ($checkPaths -join ",")
+		}
+		Invoke-CheckCommand -Label "per-project design context gate" -Command "powershell" -Arguments $projectDesignArgs
 	}
 
 	Invoke-TextNormalization -Label "text normalization refresh"

@@ -42,10 +42,11 @@
         "implementation": {
             "then": [
                 "load WORKFLOW.json",
-                "run knowledge_code_context.ps1 before source-code reads or edits",
+                "run knowledge_code_context.ps1 before source-code reads or edits — REQUIRED to bring borrowed-before-bespoke, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
+                "run project_design_context.ps1 -ProjectRoot <project> when the project's PIPELINE-CONFIG.json declares code_design_required_reads (zone splits, namespace rules, lifecycle constraints, per-project conventions) — writes ignored/project_design_context_gate.json",
                 "inspect SCRIPTS.json index before manual work",
                 "edit scoped files",
-                "run check_task.ps1 at the final verification boundary"
+                "run check_task.ps1 at the final verification boundary — verifies both ignored/code_context_gate.json and ignored/project_design_context_gate.json are fresh for current HEAD when changed-code is detected"
             ]
         },
         "broad_refactor": {
