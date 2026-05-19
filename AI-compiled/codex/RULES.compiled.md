@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-9f0fc0228d57
+Generated: source-c4127c8eaf6d
 
 ## Source of Truth
 
@@ -195,6 +195,7 @@ Draft placeholder:
             "script_input_output_contracts",
             "default_tool_error_hardening",
             "code_primary_truth_and_comment_discipline",
+            "helper_enforced_contracts",
             "compiled_context_alias_normalization",
             "json_routed_document_item_wrapper",
             "tool_error_registry_and_logger",
@@ -5442,6 +5443,42 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents may add explanatory comments for code that should instead be self-describing through names and ownership boundaries."
+            },
+            "helper_enforced_contracts": {
+                "summary": "Shared helpers, APIs, registries, schemas, or small service boundaries should act as contract aids when they support correct architecture, make correct usage easiest, and make off-contract usage visible.",
+                "required_paths": [
+                    "context-docs/ENGINEERING.json",
+                    "AI-compiled",
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "rebuild_ai_compiled_context.ps1",
+                    "knowledge_code_context.ps1",
+                    "knowledge_compile.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "rebuild_ai_compiled_context.ps1",
+                        "knowledge_code_context.ps1",
+                        "knowledge_compile.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "context-docs/ENGINEERING.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Port the reusable source artifacts, not only the feature id.",
+                    "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Run the feature contract checker before promoting or publishing the update.",
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                ],
+                "known_failure_if_missing": "Projects may duplicate boundary behavior across callers instead of using a helper or API that supports the architecture and makes the intended contract easy to use and easy to audit."
             },
             "cross_platform_tool_runtime_resolution": {
                 "summary": "PowerShell wrappers resolve Python and PowerShell through a shared runtime helper so source and installed pipeline tools run on Windows, Linux, and Steam Deck/Linux without hardcoded Windows-only Python paths.",

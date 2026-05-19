@@ -1,6 +1,46 @@
 [
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "contracts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "ddd-adiv"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "diagnostics"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "helpers"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "source-of-truth"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "tooling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.borrowed_before_bespoke",
     "tag": "architecture"
   },

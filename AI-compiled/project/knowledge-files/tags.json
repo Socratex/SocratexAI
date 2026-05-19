@@ -32,6 +32,10 @@
     "tag": "compiled-context"
   },
   {
+    "description": "",
+    "tag": "contracts"
+  },
+  {
     "description": "C# domain and validation rules.",
     "tag": "csharp"
   },
@@ -84,6 +88,10 @@
     "tag": "hashing"
   },
   {
+    "description": "",
+    "tag": "helpers"
+  },
+  {
     "description": "Compiled knowledge index, tag query, and note-selection rules.",
     "tag": "knowledge"
   },
@@ -130,6 +138,10 @@
   {
     "description": "Knowledge that should be loaded at the beginning of session context building.",
     "tag": "session-start"
+  },
+  {
+    "description": "",
+    "tag": "source-of-truth"
   },
   {
     "description": "Automated or manual verification rules.",
