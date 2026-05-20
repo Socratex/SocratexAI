@@ -5890,7 +5890,7 @@ Draft placeholder:
                 ]
             },
             "source_pipeline_maintainer_backlog": {
-                "summary": "Source-only maintainer backlog for deferred SocratexPipeline cleanup and audit ideas that should not become always-loaded directives until promoted.",
+                "summary": "Source-only maintainer backlog for deferred SocratexPipeline cleanup, directive hierarchy, context-bloat, and audit ideas that should not become always-loaded directives until promoted.",
                 "required_paths": [
                     "TODO.md",
                     "DOCS.json",
@@ -5915,6 +5915,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Keep deferred maintainer cleanup ideas in TODO.md unless they are promoted into a reusable source or child-project feature.",
                     "Use the backlog for directive bloat, hierarchy, and context-cost audits instead of adding more always-loaded rules by default.",
+                    "For directive consolidation work, require mechanical trigger conditions, real load tiers, and a hard Tier 1 token budget before AI categorization.",
                     "Update DOCS.json when maintainer-side backlog ownership changes.",
                     "Rebuild compiled context and run feature-contract checks before committing source-pipeline document changes."
                 ],
