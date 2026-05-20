@@ -5916,7 +5916,7 @@ Draft placeholder:
                     "Keep deferred maintainer cleanup ideas in TODO.md unless they are promoted into a reusable source or child-project feature.",
                     "Use the backlog for directive bloat, hierarchy, and context-cost audits instead of adding more always-loaded rules by default.",
                     "For directive consolidation work, require mechanical trigger conditions, real load tiers, and a hard Tier 1 token budget before AI categorization.",
-                    "For task-specific quality work, prefer a research/formalization flow that turns broad philosophy into concrete task plans over enumerating every domain-specific tactic in core directives.",
+                    "For code-touch quality work, prefer an always-on research/formalization flow when no research-backed implementation plan exists, so broad philosophy becomes concrete task plans instead of domain-specific tactics bloating core directives.",
                     "Update DOCS.json when maintainer-side backlog ownership changes.",
                     "Rebuild compiled context and run feature-contract checks before committing source-pipeline document changes."
                 ],
