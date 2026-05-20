@@ -4,6 +4,12 @@
         {
             "version": "0.2.0-alpha",
             "date": "2026-05-21",
+            "feature": "sensitive_reference_leak_smoke",
+            "change": "Added check_sensitive_reference_leaks.ps1 to the source quality gate and script catalog, removed private project/person references from reusable pipeline sources, replaced private reference-project wording with neutral child-project/reference-project terminology, and renamed the maintainer-only reference upgrade script to upgrade_from_reference_project.ps1. Why: source pipeline artifacts should preserve reusable lessons without leaking private project names, personal identity references, or project-specific maintainer workflow names."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-21",
             "feature": "profile_gated_better_version_now_directive",
             "change": "Made the better-version-now and predictable-load directives more generic and profile-gated. The global contract now avoids gamedev-specific wording, code workflow scales the directive by task size and project_profile, legacy/sunset/custom-framework surgical fixes are explicitly kept surgical, and gamedev/business/realtime examples live in profile-specific or code-pack guidance. Why: future-proofing should guide all programming work without causing legacy tickets or business CRUD changes to receive inappropriate gamedev-style architecture suggestions."
         },
@@ -41,13 +47,13 @@
             "date": "2026-05-05",
             "type": "feature",
             "feature": "categorized_tool_scripts",
-            "change": "Moved source pipeline scripts from one flat tools directory into categorized tools/<category>/ folders and updated SCRIPTS.json, path references, templates, and compiled-context inputs to use the categorized paths. Why: the reusable pipeline should mirror the maintainable script ownership pattern already proven in Riftbound, while keeping a compact script index for agents."
+            "change": "Moved source pipeline scripts from one flat tools directory into categorized tools/<category>/ folders and updated SCRIPTS.json, path references, templates, and compiled-context inputs to use the categorized paths. Why: the reusable pipeline should mirror the maintainable script ownership pattern already proven in a child project, while keeping a compact script index for agents."
         },
         {
             "version": "0.2.0-alpha",
             "date": "2026-05-05",
             "feature": "json_tool_hardening_and_document_tools",
-            "change": "Promoted Riftbound-proven JSON document tooling into the source pipeline, including list-style JSON read/edit wrappers, file/stdin value inputs for complex JSON payloads, SCRIPTS.json input/output contracts, and default tool-error hardening rules in WORKFLOW and ENGINEERING. Why: source-pipeline agents should fix repeatable script friction in the owning tool or contract instead of carrying fragile manual workarounds between projects."
+            "change": "Promoted child-project-proven JSON document tooling into the source pipeline, including list-style JSON read/edit wrappers, file/stdin value inputs for complex JSON payloads, SCRIPTS.json input/output contracts, and default tool-error hardening rules in WORKFLOW and ENGINEERING. Why: source-pipeline agents should fix repeatable script friction in the owning tool or contract instead of carrying fragile manual workarounds between projects."
         },
         {
             "version": "0.2.0-alpha",
@@ -227,7 +233,7 @@
             "version": "0.2.0-alpha",
             "date": "2026-04-30",
             "feature": "pipeline_featurelist_manifest",
-            "change": "Added root pipeline_featurelist.json to track source pipeline features and compare them against Riftbound Vanguard. Updated changelog helper to support CHANGELOG.json entries instead of assuming Markdown changelog format. Why: Source pipeline upgrades need a machine-readable feature manifest and a working changelog writer for JSON changelog files."
+            "change": "Added root pipeline_featurelist.json to track source pipeline features and compare them against installed child projects. Updated changelog helper to support CHANGELOG.json entries instead of assuming Markdown changelog format. Why: Source pipeline upgrades need a machine-readable feature manifest and a working changelog writer for JSON changelog files."
         },
         {
             "version": "0.2.0-alpha",
@@ -239,7 +245,7 @@
             "version": "0.2.0-alpha",
             "date": "2026-04-30",
             "feature": "compact_pipeline_featurelist",
-            "change": "Simplified pipeline_featurelist.json to a source-only canonical feature-id list with no project-instance references or redundant descriptions. Why: SocratexPipeline is the source pipeline and should not know about Riftbound Vanguard or any specific instance that consumes it."
+            "change": "Simplified pipeline_featurelist.json to a source-only canonical feature-id list with no project-instance references or redundant descriptions. Why: SocratexPipeline is the source pipeline and should not know about any specific instance that consumes it."
         },
         {
             "version": "0.2.0-alpha",
@@ -275,7 +281,7 @@
             "version": "0.2.0-alpha",
             "date": "2026-04-30",
             "feature": "author_metadata",
-            "change": "Added SocratexDevSolutions Michał Jasiński as the public SocratexPipeline author in README and LICENSE metadata. Why: Public pipeline distribution should identify the author/owner clearly."
+            "change": "Added SocratexDevSolutions as the public SocratexPipeline author in README and LICENSE metadata. Why: Public pipeline distribution should identify the author/owner clearly without embedding personal identity references in reusable pipeline sources."
         },
         {
             "version": "0.2.0-alpha",
@@ -335,7 +341,7 @@
             "version": "0.2.0-alpha",
             "date": "2026-05-05",
             "feature": "canonical_index_content_metadata_document_schema",
-            "change": "Promoted index/content/metadata from a child-project convention into the canonical source pipeline feature manifest shape. Moved source pipeline_featurelist.json feature IDs under content.features and artifact contracts under content.feature_contracts with backward-compatible readers for older root manifests. Why: Feature comparison and synchronization should be a stable low-cost structured document operation, not a Riftbound-only exception."
+            "change": "Promoted index/content/metadata from a child-project convention into the canonical source pipeline feature manifest shape. Moved source pipeline_featurelist.json feature IDs under content.features and artifact contracts under content.feature_contracts with backward-compatible readers for older root manifests. Why: Feature comparison and synchronization should be a stable low-cost structured document operation, not a project-specific exception."
         },
         {
             "version": "0.2.0-alpha",

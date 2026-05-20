@@ -279,14 +279,14 @@ try {
     Test-ContainsText -Text $contract -Needle "## <emoji> Summary" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "configured pipeline language" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "Primary Known-Solutions Directive" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "Profile-fit check" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Profile-fit:" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "ROI Picks" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "SCRIPT-FALLBACK.json" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "Build-vs-borrow discipline" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "Future-fit check" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "primary steer-direction" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "production-grade architectural practices" -Label "core/AGENT-CONTRACT.json"
-    Test-ContainsText -Text $contract -Needle "For programming bug reports" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Borrowed-before-invented" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Better-version-now" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Predictable-load" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "Overengineering check" -Label "core/AGENT-CONTRACT.json"
+    Test-ContainsText -Text $contract -Needle "For programming work" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "DDD-ADIV" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "core/PROMOTION-RULES.json" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $contract -Needle "core/FILE-FORMATS.json" -Label "core/AGENT-CONTRACT.json"
@@ -336,7 +336,7 @@ try {
         Test-ContainsText -Text $codePack -Needle "migrate_document_item.ps1" -Label "project/code/PACK.json"
         Test-ContainsText -Text $codePack -Needle "Architecture archetypes check" -Label "project/code/PACK.json"
         Test-ContainsText -Text $codePack -Needle "DDD alignment" -Label "project/code/PACK.json"
-        Test-ContainsText -Text $codePack -Needle "Future-fit check" -Label "project/code/PACK.json"
+        Test-ContainsText -Text $codePack -Needle "Better-version-now discipline" -Label "project/code/PACK.json"
 
         Test-ContainsText -Text $codeWorkflow -Needle "Command Classifier" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "Script-First Execution" -Label "project/code/WORKFLOW.json"
@@ -345,7 +345,7 @@ try {
         Test-ContainsText -Text $codeWorkflow -Needle "transaction wrappers" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "Select-String" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "tools/documents/check_document_list_item_duplicates.ps1" -Label "project/code/WORKFLOW.json"
-        Test-ContainsText -Text $codeWorkflow -Needle "production-grade architecture" -Label "project/code/WORKFLOW.json"
+        Test-ContainsText -Text $codeWorkflow -Needle "production-grade software engineering" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "For bug reports" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "Branch-Scoped Workflow" -Label "project/code/WORKFLOW.json"
         Test-ContainsText -Text $codeWorkflow -Needle "ROI Workflow" -Label "project/code/WORKFLOW.json"
@@ -385,7 +385,7 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "sync_managed_pipeline_package.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_riftbound.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "run_document_post_edit_checks.ps1", "bulk_insert_document_items.ps1", "migrate_document_item.ps1", "move_document_item.ps1", "insert_document_item.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1", "check_pipeline_feature_contracts.ps1", "check_evals.ps1", "compile_pipeline_context.ps1", "knowledge_compile.ps1", "knowledge_check.ps1", "knowledge_select.ps1", "knowledge_upsert.ps1", "knowledge_delete.ps1", "knowledge_rename.ps1", "knowledge_query.ps1", "knowledge_file_compile.ps1", "knowledge_file_check.ps1", "knowledge_file_select.ps1", "knowledge_file_upsert.ps1", "knowledge_file_delete.ps1", "knowledge_file_rename.ps1", "knowledge_file_query.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "sync_managed_pipeline_package.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_reference_project.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "run_document_post_edit_checks.ps1", "bulk_insert_document_items.ps1", "migrate_document_item.ps1", "move_document_item.ps1", "insert_document_item.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1", "check_pipeline_feature_contracts.ps1", "check_evals.ps1", "compile_pipeline_context.ps1", "knowledge_compile.ps1", "knowledge_check.ps1", "knowledge_select.ps1", "knowledge_upsert.ps1", "knowledge_delete.ps1", "knowledge_rename.ps1", "knowledge_query.ps1", "knowledge_file_compile.ps1", "knowledge_file_check.ps1", "knowledge_file_select.ps1", "knowledge_file_upsert.ps1", "knowledge_file_delete.ps1", "knowledge_file_rename.ps1", "knowledge_file_query.ps1")) {
             Test-ScriptExists -Name $tool
         }
         foreach ($tool in @("rebuild_ai_compiled_context.ps1", "check_ai_compiled_context.ps1")) {

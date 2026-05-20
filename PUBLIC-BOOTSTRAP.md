@@ -278,7 +278,7 @@ Use these tools when available:
 
 - `tools/pipeline/update_pipeline_from_link.ps1`: update a user's project from the latest public pipeline source.
 - `tools/pipeline/reinitialize_pipeline.ps1`: add newly introduced initialized artifacts without overwriting existing project memory.
-- `tools/pipeline/upgrade_from_riftbound.ps1`: maintainer-only upgrade from the active reference source pipeline.
+- `tools/pipeline/upgrade_from_reference_project.ps1`: maintainer-only upgrade from the active reference source pipeline.
 - `tools/pipeline/migrate_ai_pipeline.ps1`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
 
 When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.json`.

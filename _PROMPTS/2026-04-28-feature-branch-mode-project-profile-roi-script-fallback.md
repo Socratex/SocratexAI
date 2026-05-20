@@ -1,7 +1,7 @@
 # Feature request — branch mode + project profile + ROI bias + script fallback
 
 **Adresat:** AI rozwijające pipeline SocratexAI (źródła w tym repo).
-**Autor:** Michał (właściciel SocratexAI).
+**Autor:** pipeline maintainer.
 **Data:** 2026-04-28.
 **Charakter:** development prompt — modyfikujesz źródła pipeline'u (`core/`, `project/code/`, `templates/`, `initializer/FIRST-RUN.md`, `PUBLIC-BOOTSTRAP.md`, `tools/`), nie konkretny projekt klienta.
 
@@ -13,7 +13,7 @@ Cztery niezależne features do dodania. Każdą z nich można wdrożyć osobno, 
 
 ### Skąd to się bierze
 
-Konwencja z mojego projektu Omega (v3-omega) okazała się bardzo dobra w praktyce i chcę ją skodyfikować jako wbudowaną opcję pipeline'u. Wzorzec:
+Konwencja z dojrzałego projektu referencyjnego okazała się bardzo dobra w praktyce i chcę ją skodyfikować jako wbudowaną opcję pipeline'u. Wzorzec:
 
 ```
 <project>/

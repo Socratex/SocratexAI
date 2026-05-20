@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory = $true)]
-    [string]$RiftboundPath,
+    [string]$ReferenceProjectPath,
     [string]$TargetPath = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path,
     [switch]$DryRun
 )
@@ -8,13 +8,13 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$SourceRoot = Resolve-Path -LiteralPath $RiftboundPath
+$SourceRoot = Resolve-Path -LiteralPath $ReferenceProjectPath
 $TargetRoot = Resolve-Path -LiteralPath $TargetPath
 $SourceTools = Join-Path $SourceRoot "Tools"
 $TargetTools = Join-Path $TargetRoot "tools"
-$ReferenceTools = Join-Path $TargetTools "upstream-riftbound"
+$ReferenceTools = Join-Path $TargetTools "upstream-reference-project"
 
-Write-Host "==> maintainer upgrade from Riftbound"
+Write-Host "==> maintainer upgrade from reference project"
 Write-Host "Source: $SourceRoot"
 Write-Host "Target: $TargetRoot"
 
@@ -34,7 +34,7 @@ if ($DryRun) {
     }
 }
 
-Write-Host "Riftbound tools were refreshed as a recursive reference tree."
+Write-Host "Reference project tools were refreshed as a recursive reference tree."
 Write-Host "Reusable source changes must be ported into categorized source tools explicitly, then cataloged in SCRIPTS.json and pipeline_featurelist.json."
 
 if (-not $DryRun) {

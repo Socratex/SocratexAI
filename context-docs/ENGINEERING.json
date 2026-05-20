@@ -297,7 +297,7 @@
                         {
                             "path": "context-docs/ENGINEERING.json",
                             "selector": "tagged_rules",
-                            "note": "Reusable source-pipeline rule promoted from Riftbound Vanguard logger/session and movement resolver work."
+                            "note": "Reusable source-pipeline rule promoted from child-project logger/session and movement resolver work."
                         }
                     ]
                 },
@@ -360,7 +360,7 @@
                         {
                             "path": "context-docs/ENGINEERING.json",
                             "selector": "tagged_rules",
-                            "note": "Durable coding discipline promoted from Riftbound Vanguard pipeline work."
+                            "note": "Durable coding discipline promoted from child-project pipeline work."
                         }
                     ]
                 },

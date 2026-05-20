@@ -70,7 +70,7 @@ When a user asks an agent to remove the pipeline, the agent should read `Socrate
 The maintainer can pull improvements from the active reference pipeline with:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/upgrade_from_riftbound.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/upgrade_from_reference_project.ps1
 ```
 
 ## Migration

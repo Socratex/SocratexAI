@@ -4,20 +4,20 @@
 
 ## What to do
 
-1. Read the bootstrap doc: `/home/socratex/PhpstormProjects/SocratexAI/PUBLIC-BOOTSTRAP.md`
-2. Read the workspace convention: `/home/socratex/PhpstormProjects/SOCRATEX.md`
+1. Read the bootstrap doc from the local SocratexAI source checkout.
+2. Read the workspace convention from the local workspace root when one exists.
 3. Look at the bootstrapped reference projects for layout examples:
-   - `/home/socratex/PhpstormProjects/Omega/v3-omega/` (mature, migrated)
-   - `/home/socratex/PhpstormProjects/Omega/barev3/` (fresh bootstrap)
+   - `<workspace>/reference-projects/mature-migrated/` (mature, migrated)
+   - `<workspace>/reference-projects/fresh-bootstrap/` (fresh bootstrap)
 4. Ask the user the bootstrap questions (language → context → programming subset).
 5. Inspect this project for ecosystem signals (composer.json, package.json, pyproject.toml, go.mod, Cargo.toml, *.csproj, etc).
 6. Install the project-local pipeline:
-   - `.aiassistant/socratex/AGENTS.md` — project working rules (use `Omega/barev3/.aiassistant/socratex/AGENTS.md` as a template; rewrite for this project's stack)
+   - `.aiassistant/socratex/AGENTS.md` — project working rules (use the fresh-bootstrap reference project's `.aiassistant/socratex/AGENTS.md` as a template; rewrite for this project's stack)
    - `.aiassistant/socratex/DOCS.md` — document roles
    - `.aiassistant/socratex/PIPELINE-CONFIG.yaml` — link to global SocratexAI + project metadata
-   - `.aiassistant/<project>.md` — project-specific code-gen rules (optional; like `Omega/v3-omega/.aiassistant/omega.md`)
-   - `AI.md` at project root — branch STATE/PLAN convention (copy from `Omega/v3-omega/AI.md` and adjust the working-rules pointer)
-   - `CLAUDE.md` at project root — merge with whatever exists; add the "Pipeline Source" section pointing at `../SocratexAI/` (or `../../SocratexAI/` if the project is nested under `Omega/`)
+   - `.aiassistant/<project>.md` — project-specific code-gen rules (optional; use the mature reference project shape when available)
+   - `AI.md` at project root — branch STATE/PLAN convention (copy from the mature reference project and adjust the working-rules pointer)
+   - `CLAUDE.md` at project root — merge with whatever exists; add the "Pipeline Source" section pointing at the resolved SocratexAI source checkout
    - `ignored/ai-socratex/.gitkeep` — ensure the dir exists
 7. Add `/ignored` (or equivalent) to `.gitignore` if it's not already there.
 8. **Delete this `BOOTSTRAP-PENDING.md` file** when bootstrap is complete.
@@ -32,5 +32,5 @@
 
 ## Path adjustment
 
-If this project is at `/home/socratex/PhpstormProjects/<name>/`, the global pipeline is at `../SocratexAI/`.
-If this project is nested at `/home/socratex/PhpstormProjects/Omega/<name>/`, the global pipeline is at `../../SocratexAI/`.
+If this project is at `<workspace>/<name>/`, the global pipeline is usually at `../SocratexAI/`.
+If this project is nested under a workspace subfolder, resolve the SocratexAI source checkout through the workspace marker instead of hardcoding a personal or project-specific path.

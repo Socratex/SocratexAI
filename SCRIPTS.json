@@ -8,6 +8,7 @@
         "check_evals.ps1",
         "check_pipeline_featurelist_update.ps1",
         "check_pipeline_feature_contracts.ps1",
+        "check_sensitive_reference_leaks.ps1",
         "check_runtime.py",
         "check_task.ps1",
         "check_utf8_writes.ps1",
@@ -101,7 +102,7 @@
         "task_snapshot.ps1",
         "update_code_line_index.ps1",
         "update_pipeline_from_link.ps1",
-        "upgrade_from_riftbound.ps1",
+        "upgrade_from_reference_project.ps1",
         "utf8_file_helpers.ps1",
         "run_interactive_setup.ps1",
         "write_utf8_file.ps1",
@@ -165,6 +166,23 @@
             "output": {
                 "success": "Prints the number of covered feature contracts and confirms changed pipeline paths are assigned.",
                 "failure": "Throws when a feature lacks contract fields, required artifacts are missing, catalog entries are absent, or changed pipeline paths are uncovered."
+            }
+        },
+        "check_sensitive_reference_leaks.ps1": {
+            "path": "tools/repo/check_sensitive_reference_leaks.ps1",
+            "category": "repo",
+            "description": "Smoke-test the repository for private project, private domain, and private identity references before publication or pipeline sync.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Root",
+                    "-MaxFindings"
+                ],
+                "rule": "Run without arguments from the source pipeline repository; pass -Root only when checking another checkout."
+            },
+            "output": {
+                "success": "Exits 0 when no blocked private references are found.",
+                "failure": "Exits nonzero and prints file, line, rule, and matched text for every blocked reference up to MaxFindings."
             }
         },
         "check_runtime.py": {
@@ -715,8 +733,8 @@
                 "failure": "Throws on unresolved source, unsafe sync, failed reinitialization, failed directive update, failed feature-contract check, or failed full verification."
             }
         },
-        "upgrade_from_riftbound.ps1": {
-            "path": "tools/pipeline/upgrade_from_riftbound.ps1",
+        "upgrade_from_reference_project.ps1": {
+            "path": "tools/pipeline/upgrade_from_reference_project.ps1",
             "category": "pipeline"
         },
         "utf8_file_helpers.ps1": {
@@ -933,6 +951,7 @@
             "repo": [
                 "add_changelog_entry.ps1",
                 "check_pipeline_featurelist_update.ps1",
+                "check_sensitive_reference_leaks.ps1",
                 "check_task.ps1",
                 "check_toolchain_health.ps1",
                 "legacy_commit_task_compatibility_wrapper.ps1",
@@ -965,7 +984,7 @@
                 "remove_pipeline.ps1",
                 "set_directives.ps1",
                 "update_pipeline_from_link.ps1",
-                "upgrade_from_riftbound.ps1",
+                "upgrade_from_reference_project.ps1",
                 "sync_managed_pipeline_package.ps1",
                 "tool_handler.ps1",
                 "tool_error_log.ps1",

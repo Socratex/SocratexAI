@@ -453,7 +453,7 @@
       "large": false
     },
     {
-      "path": "tools/pipeline/upgrade_from_riftbound.ps1",
+      "path": "tools/pipeline/upgrade_from_reference_project.ps1",
       "lines": 36,
       "extension": ".ps1",
       "large": false

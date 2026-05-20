@@ -158,7 +158,7 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 - `SocratexAI/tools/pipeline/update_pipeline_from_link.ps1`: public user update from a latest pipeline source.
 - `SocratexAI/tools/pipeline/reinitialize_pipeline.ps1`: missing-only reinitialization after setup or update.
 - `SocratexAI/tools/pipeline/remove_pipeline.ps1`: remove the installed pipeline through a bounded remover.
-- `SocratexAI/tools/pipeline/upgrade_from_riftbound.ps1`: maintainer upgrade from the active reference source pipeline.
+- `SocratexAI/tools/pipeline/upgrade_from_reference_project.ps1`: maintainer upgrade from the active reference source pipeline.
 - `SocratexAI/tools/pipeline/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
 - `SocratexAI/tools/pipeline/resolve_workspace_root.ps1`: local workspace marker resolver for multi-project workspaces.
 
@@ -243,7 +243,7 @@ See `VERSION` and `QUALITY-GATE.json`.
 
 ## Author
 
-SocratexDevSolutions Michał Jasiński.
+SocratexDevSolutions.
 
 ## License
 
