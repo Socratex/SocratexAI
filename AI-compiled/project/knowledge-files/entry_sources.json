@@ -169,6 +169,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "is_duplicate": true,
+    "note": "Project profile gates how strongly better-version-now and DDD-ADIV apply to legacy, greenfield, custom-framework, and no-test contexts.",
+    "path": "core/PROJECT-PROFILE.json",
+    "selector": "behavior_impact"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.borrowed_before_bespoke",
     "is_duplicate": true,
     "note": "DDD-ADIV reinforces build-vs-borrow as a domain-clarifying tool.",

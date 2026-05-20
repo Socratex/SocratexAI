@@ -12,7 +12,7 @@
         },
         "summary": {
             "title": "Summary",
-            "content": "This file is the compact engineering standards capsule compiled into `AI-compiled/project/knowledge.sqlite`.\n\nSource documents remain authoritative. SQLite is a generated query/index layer for faster agent context loading.\n\n\nCurrent code-task default: apply the better-version-now check before implementation; prefer small future-proof improvements in clean code, DDD/ADIV boundaries, contracts, security, data ownership, migrations, diagnostics, verification, and predictable-load architecture when they are cheap now and expensive to retrofit later."
+            "content": "This file is the compact engineering standards capsule compiled into `AI-compiled/project/knowledge.sqlite`.\n\nSource documents remain authoritative. SQLite is a generated query/index layer for faster agent context loading.\n\nCurrent code-task default: apply profile-fit first, then better-version-now. Prefer small future-proof improvements in clean code, DDD/ADIV boundaries, contracts, security, data ownership, migrations, diagnostics, verification, and predictable-load architecture when they are cheap now and expensive to retrofit later; keep legacy surgical changes surgical."
         },
         "tagged_rules": {
             "title": "Tagged Rules",
@@ -409,9 +409,9 @@
                     "type": "rule",
                     "subtype": "architecture_rule",
                     "title": "Better Version Now By Default",
-                    "summary": "For programming tasks, check whether a slightly better future-proof version should be built now across architecture, clean code, contracts, security, data ownership, and performance.",
-                    "rule": "For every implementation, bugfix, migration, refactor, performance diagnosis, code review, and architecture decision, ask: should this be built as the better version now? Default to yes when a small extra investment improves future change cost, ownership clarity, code cleanliness, DDD/ADIV alignment, security posture, data ownership, context boundaries, contracts, migration safety, observability, testability, or predictable-scale performance. Borrow known solutions and proven patterns before inventing custom systems. Add a little more structure now when it is cheap and likely to prevent expensive refactors, debt repayment, security redesign, data-boundary repair, or performance tuning later. When the better version would be substantially bigger, speculative, ceremony-heavy, or unclear, stop for an overengineering check and ask for the intended future load, domain boundary, security exposure, data volume, team/process expectation, or product direction before implementing.",
-                    "rationale": "This is not a license for ceremony or speculative frameworks. It is the default quality profile: learn from known software history, avoid repeating common debt patterns, and choose small future-proofing steps while they are cheap. Many expensive rewrites come from taking the locally easy path in areas where growth, ownership, security, data shape, or runtime scale was already predictable. The desired bias is to avoid building toward a known retrofit unless current instructions explicitly prioritize a disposable shortcut.",
+                    "summary": "Programming tasks should check whether a small profile-fit improvement should be done now across clean code, DDD/ADIV, contracts, security, data ownership, migrations, diagnostics, verification, and predictable performance.",
+                    "rule": "For every implementation, bugfix, migration, refactor, performance diagnosis, code review, and architecture decision, ask whether a modest better-version-now step should be included. Default to yes when it cheaply improves ownership, readability, security, data boundaries, contracts, migration safety, observability, verification, or future change cost. Apply project-profile gating: legacy/sunset/custom-framework surgical changes stay surgical and match surrounding code; broad boundaries, anti-corruption layers, and paradigm migration require an explicit refactor, modernization, migration, or broad feature task. Borrow known solutions and proven patterns before inventing custom systems. If the better version is substantially larger, speculative, ceremony-heavy, or unclear, stop for an overengineering check.",
+                    "rationale": "The rule prevents known expensive refactors without turning every ticket into architecture work. Future-proofing is valuable when small and profile-fit; it is harmful when it ignores legacy constraints, test reality, or task size.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
@@ -431,7 +431,9 @@
                         "security",
                         "migrations",
                         "performance",
-                        "verification"
+                        "verification",
+                        "profile-fit",
+                        "legacy"
                     ],
                     "source_refs": [
                         {
@@ -450,6 +452,11 @@
                             "selector": "general_workflow",
                             "is_duplicate": true,
                             "note": "Code workflow makes the check part of every programming task sequence."
+                        },
+                        {
+                            "path": "core/PROJECT-PROFILE.json",
+                            "selector": "behavior_impact",
+                            "note": "Project profile gates how strongly better-version-now and DDD-ADIV apply to legacy, greenfield, custom-framework, and no-test contexts."
                         }
                     ]
                 },
@@ -497,9 +504,9 @@
                     "type": "rule",
                     "subtype": "architecture_rule",
                     "title": "Lightweight By Default For Predictable Load",
-                    "summary": "Every implementation, bug diagnosis, and performance response should check predictable scale and avoid heavyweight frameworks as the default model for mass, batch, or hot-path behavior.",
-                    "rule": "For every implementation, bugfix, performance diagnosis, log review, and architecture decision, explicitly check whether the touched behavior is or will predictably become mass, batch, hot-path, storage-heavy, I/O-heavy, framework-heavy, generated-content-heavy, or otherwise repeatedly exercised. When yes, prefer lightweight data-first truth, explicit helper/service APIs, local queries, indexes, batching, pooling, bounded caches, raw/bulk paths, activation/prewarm, and measured async/worker handoff over convenient heavyweight framework abstractions as the default storage, index, broadphase, or update model. Use heavy framework primitives for active entities, small local proxies, ergonomic single-object operations, and presentation/simulation that is truly active. If the tradeoff is uncertain and the choice affects architecture, ask for the intended load shape before implementing: rough active counts, total generated counts, on-screen counts, batch sizes, update frequency, persistence volume, and whether the system is expected to grow by 2x, 10x, or 100x. For performance complaints, first consider whether the real fix is migration away from a heavyweight default model before tightening budgets, thresholds, culling radii, or micro-optimizing symptoms.",
-                    "rationale": "This is future-cost prevention, not premature optimization. Premature optimization is harmful when it adds complexity without likely load; low-performance-quality architecture is also harmful when predictable load is obvious. Retrofitting away from heavyweight framework primitives later is more expensive than starting with explicit helper/query/batch contracts now. The intended bias is not to overengineer, but to avoid building a large future system on a model that will have to be thrown away once load is added.",
+                    "summary": "Predictable batch, hot-path, storage, I/O, event, or generated-content load should use an appropriate lightweight ownership path before convenient per-object framework usage becomes the broad model.",
+                    "rule": "For every implementation, bugfix, performance diagnosis, log review, and architecture decision, check whether the touched behavior is likely to become batch, hot-path, storage-heavy, I/O-heavy, event-heavy, generated-content-heavy, count-heavy, or repeatedly exercised. When yes, prefer the profile-appropriate lightweight path: bulk/query access, explicit indexes, bounded caches, queues/background jobs, project-owned helper/service APIs, batching, pooling, activation, or specialized local queries. Use convenient framework primitives for local entity work and ordinary small operations; do not make per-object convenience the broad storage, update, or batch model for predictable scale. For performance complaints, first ask whether the real fix is migrating away from an unsuitable broad model before tuning thresholds, cache sizes, or local micro-costs.",
+                    "rationale": "This is a generic performance architecture heuristic. In business systems it can mean avoiding N+1/per-row ORM work for a true batch; in realtime profiles it can mean avoiding thousands of inactive engine objects. Profile-fit still applies: do not replace simple framework code in a small legacy ticket unless scale or measurements justify it.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
@@ -514,7 +521,8 @@
                         "batching",
                         "pooling",
                         "hot-path",
-                        "lightweight-by-default"
+                        "lightweight-by-default",
+                        "profile-fit"
                     ],
                     "source_refs": [
                         {

@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-0d98efd647fd
+Generated: source-9d6c180868c6
 
 ## Source of Truth
 
@@ -5756,9 +5756,10 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'project_specific_design_context_gate' is listed without these artifacts, source/child comparison may pass by feature id while implementation flow loses its second gate, and per-project zone/namespace rules become opt-in instead of enforced. Symptoms: agents drag /app patterns into /application files (or vice-versa), miss namespace-zone constraints in projects with dual zones, or apply modern syntax to PHP 5.6 projects."
             },
             "predictable_load_lightweight_architecture": {
-                "summary": "Programming work checks predictable load before choosing heavyweight framework primitives, and performance complaints route toward lightweight data/query/batch/pool/prewarm migration when the broad model is the bottleneck.",
+                "summary": "Programming work checks predictable load before choosing heavyweight/per-object framework paths, with profile-gated interpretation for business, legacy, and realtime/gamedev projects.",
                 "required_paths": [
                     "core/AGENT-CONTRACT.json",
+                    "core/PROJECT-PROFILE.json",
                     "project/code/PACK.json",
                     "project/code/WORKFLOW.json",
                     "context-docs/ENGINEERING.json",
@@ -5782,7 +5783,8 @@ Draft placeholder:
                     "project/code/PACK.json",
                     "project/code/WORKFLOW.json",
                     "context-docs/ENGINEERING.json",
-                    "templates/code/context-docs/ENGINEERING.json"
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "core/PROJECT-PROFILE.json"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
@@ -5834,9 +5836,10 @@ Draft placeholder:
                 "known_failure_if_missing": "A pipeline source improvement may pass locally but new child projects initialized from templates miss the rule, causing update/source parity to look correct while starter projects remain stale."
             },
             "better_version_now_future_proof_engineering": {
-                "summary": "Global programming directive: agents should check per task whether a modest better-version-now implementation should be chosen across clean code, DDD-ADIV, architecture, security, data ownership, contracts, migrations, diagnostics, verification, and predictable performance before accepting a lower-quality shortcut.",
+                "summary": "Global programming directive: agents check per task whether a modest profile-fit better-version-now improvement should be chosen across clean code, DDD-ADIV, security, data ownership, contracts, migrations, diagnostics, verification, and predictable performance before accepting a lower-quality shortcut.",
                 "required_paths": [
                     "core/AGENT-CONTRACT.json",
+                    "core/PROJECT-PROFILE.json",
                     "project/code/PACK.json",
                     "project/code/WORKFLOW.json",
                     "project/code/DDD-ADIV.json",
@@ -5856,7 +5859,8 @@ Draft placeholder:
                     "Keep the directive in shared agent contract, code pack, workflow, engineering standards, gamedev profile, template engineering context, and feature contract in the same promotion.",
                     "Make the rule explicit that borrowed/proven solutions are checked before invented systems.",
                     "Describe the overengineering check so better-version-now does not become speculative ceremony.",
-                    "Recompile AI-compiled context and run the feature contract checker."
+                    "Recompile AI-compiled context and run the feature contract checker.",
+                    "Keep profile-gating explicit so legacy surgical fixes do not become broad modernization work."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
@@ -5877,7 +5881,8 @@ Draft placeholder:
                     "project/gamedev/PACK.json",
                     "profiles/SocratexGamedev/WORKFLOW.json",
                     "context-docs/ENGINEERING.json",
-                    "templates/code/context-docs/ENGINEERING.json"
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "core/PROJECT-PROFILE.json"
                 ]
             }
         }
@@ -5886,7 +5891,7 @@ Draft placeholder:
         "schema": "socratex-pipeline-featurelist/v4",
         "pipeline_id": "socratex_pipeline",
         "role": "source",
-        "updated_at": "2026-05-20",
+        "updated_at": "2026-05-21",
         "comparison_contract": "Use content.features for cheap source/instance comparison; use content.feature_contracts for artifact-level synchronization and promotion checks. Root index/content/metadata is the canonical JSON list-document shape.",
         "required_root_keys": [
             "index",

@@ -121,6 +121,10 @@
   },
   {
     "description": "",
+    "tag": "legacy"
+  },
+  {
+    "description": "",
     "tag": "lightweight-by-default"
   },
   {
@@ -158,6 +162,10 @@
   {
     "description": "",
     "tag": "production-grade"
+  },
+  {
+    "description": "",
+    "tag": "profile-fit"
   },
   {
     "description": "Human and agent readability rules.",

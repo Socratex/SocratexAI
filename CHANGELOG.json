@@ -3,6 +3,12 @@
     "entries": [
         {
             "version": "0.2.0-alpha",
+            "date": "2026-05-21",
+            "feature": "profile_gated_better_version_now_directive",
+            "change": "Made the better-version-now and predictable-load directives more generic and profile-gated. The global contract now avoids gamedev-specific wording, code workflow scales the directive by task size and project_profile, legacy/sunset/custom-framework surgical fixes are explicitly kept surgical, and gamedev/business/realtime examples live in profile-specific or code-pack guidance. Why: future-proofing should guide all programming work without causing legacy tickets or business CRUD changes to receive inappropriate gamedev-style architecture suggestions."
+        },
+        {
+            "version": "0.2.0-alpha",
             "date": "2026-05-20",
             "feature": "better_version_now_future_proof_engineering",
             "change": "Expanded the predictable-load directive into a broader better-version-now programming philosophy. Agents now check per task whether a modest upfront improvement should be made across clean code, DDD-ADIV, architecture, security, data ownership, contracts, migrations, diagnostics, verification, and performance; borrowed/proven patterns should be considered before invented systems, with an explicit overengineering check when the better version becomes large or speculative. Why: future-proofing should prevent known expensive refactors and debt repayment across all programming work, not only FPS-sensitive paths."

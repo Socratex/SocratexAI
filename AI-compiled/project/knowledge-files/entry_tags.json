@@ -57,12 +57,22 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "legacy"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
     "tag": "migrations"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
     "tag": "performance"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "profile-fit"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -528,6 +538,11 @@
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
     "tag": "pooling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "profile-fit"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
