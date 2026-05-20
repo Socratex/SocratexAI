@@ -5890,7 +5890,7 @@ Draft placeholder:
                 ]
             },
             "source_pipeline_maintainer_backlog": {
-                "summary": "Source-only maintainer backlog and current-priority lane for deferred or promoted SocratexPipeline cleanup, directive hierarchy, context-bloat, research-flow, adversarial-audit, and audit ideas that should not become always-loaded directives until promoted.",
+                "summary": "Source-only maintainer backlog and current-priority lane for deferred or promoted SocratexPipeline cleanup, directive hierarchy, context-bloat, research-flow, task-flow-audit, adversarial-audit, and audit ideas that should not become always-loaded directives until promoted.",
                 "required_paths": [
                     "TODO.md",
                     "DOCS.json",
@@ -5919,6 +5919,7 @@ Draft placeholder:
                     "For directive consolidation work, require mechanical trigger conditions, real load tiers, and a hard Tier 1 token budget before AI categorization.",
                     "For code-touch quality work, prefer an always-on research/formalization flow when no research-backed implementation plan exists, so broad philosophy becomes concrete task plans instead of domain-specific tactics bloating core directives.",
                     "Keep fresh-agent/adversarial diff audit ideas in the backlog until they are intentionally promoted into an advisory or blocking quality-gate feature.",
+                    "Keep artifact-based task-flow audit ideas in the backlog until they are intentionally promoted into a code-touch finalization check that requires cited plan/research/futureproof artifacts instead of yes/no self-grading.",
                     "Update DOCS.json when maintainer-side backlog ownership changes.",
                     "Rebuild compiled context and run feature-contract checks before committing source-pipeline document changes."
                 ],
