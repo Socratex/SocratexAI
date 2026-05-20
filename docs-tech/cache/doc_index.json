@@ -284,16 +284,94 @@
           "ref": "items.tagged_rules.value.7",
           "status": ""
         },
-        "engineering.workflow.default_tool_error_hardening": {
+        "engineering.architecture.helper_enforced_contracts": {
           "path": "items.tagged_rules.value.8",
-          "title": "Default Tool Error Hardening",
+          "title": "Helpers Enforce Contracts By Convenience",
           "ref": "items.tagged_rules.value.8",
           "status": ""
         },
-        "engineering.coding.code_primary_source_of_truth": {
+        "engineering.workflow.default_tool_error_hardening": {
           "path": "items.tagged_rules.value.9",
-          "title": "Code Is The Primary Source Of Truth",
+          "title": "Default Tool Error Hardening",
           "ref": "items.tagged_rules.value.9",
+          "status": ""
+        },
+        "engineering.coding.code_primary_source_of_truth": {
+          "path": "items.tagged_rules.value.10",
+          "title": "Code Is The Primary Source Of Truth",
+          "ref": "items.tagged_rules.value.10",
+          "status": ""
+        },
+        "engineering.coding.borrowed_before_bespoke": {
+          "path": "items.tagged_rules.value.11",
+          "title": "Borrowed Before Bespoke",
+          "ref": "items.tagged_rules.value.11",
+          "status": ""
+        },
+        "engineering.coding.production_grade_default": {
+          "path": "items.tagged_rules.value.12",
+          "title": "Production-Grade Architectural Default",
+          "ref": "items.tagged_rules.value.12",
+          "status": ""
+        },
+        "engineering.coding.ddd_adiv_when_possible": {
+          "path": "items.tagged_rules.value.13",
+          "title": "DDD-ADIV When Possible",
+          "ref": "items.tagged_rules.value.13",
+          "status": ""
+        },
+        "engineering.coding.readability_first": {
+          "path": "items.tagged_rules.value.14",
+          "title": "Readability First",
+          "ref": "items.tagged_rules.value.14",
+          "status": ""
+        },
+        "engineering.coding.method_and_variable_extraction": {
+          "path": "items.tagged_rules.value.15",
+          "title": "Extract Methods and Intent-Revealing Variables",
+          "ref": "items.tagged_rules.value.15",
+          "status": ""
+        },
+        "engineering.coding.codebase_as_contract": {
+          "path": "items.tagged_rules.value.16",
+          "title": "Codebase Is the Contract — Make It as Strict as Possible",
+          "ref": "items.tagged_rules.value.16",
+          "status": ""
+        },
+        "engineering.coding.legacy_aware_change_split": {
+          "path": "items.tagged_rules.value.17",
+          "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
+          "ref": "items.tagged_rules.value.17",
+          "status": ""
+        },
+        "engineering.coding.minimal_comments": {
+          "path": "items.tagged_rules.value.18",
+          "title": "Minimal Comments — Workarounds and Business Intent Only",
+          "ref": "items.tagged_rules.value.18",
+          "status": ""
+        },
+        "engineering.coding.business_naming": {
+          "path": "items.tagged_rules.value.19",
+          "title": "Business Naming with Technical Suffix",
+          "ref": "items.tagged_rules.value.19",
+          "status": ""
+        },
+        "engineering.coding.match_surrounding_patterns": {
+          "path": "items.tagged_rules.value.20",
+          "title": "Match Surrounding Patterns Mid-Fix",
+          "ref": "items.tagged_rules.value.20",
+          "status": ""
+        },
+        "engineering.workflow.pair_programming_collaboration": {
+          "path": "items.tagged_rules.value.21",
+          "title": "Pair-Programming Stance",
+          "ref": "items.tagged_rules.value.21",
+          "status": ""
+        },
+        "engineering.workflow.verification_without_tests": {
+          "path": "items.tagged_rules.value.22",
+          "title": "Verification Discipline Without a Test Suite",
+          "ref": "items.tagged_rules.value.22",
           "status": ""
         }
       }

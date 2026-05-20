@@ -161,7 +161,14 @@ function Read-Index {
 		}
 	}
 
-	return Get-Content -Raw -LiteralPath $fullPath -Encoding UTF8 | ConvertFrom-Json
+	$json = Get-Content -Raw -LiteralPath $fullPath -Encoding UTF8
+	$convertParams = @{
+		InputObject = $json
+	}
+	if ((Get-Command ConvertFrom-Json).Parameters.ContainsKey("DateKind")) {
+		$convertParams["DateKind"] = "String"
+	}
+	return ConvertFrom-Json @convertParams
 }
 
 function ConvertTo-IndexObject {

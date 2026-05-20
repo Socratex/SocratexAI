@@ -5334,6 +5334,7 @@
                 "summary": "Shared helpers, APIs, registries, schemas, or small service boundaries should act as contract aids when they support correct architecture, make correct usage easiest, and make off-contract usage visible.",
                 "required_paths": [
                     "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
                     "AI-compiled",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json"
@@ -5351,7 +5352,8 @@
                     ]
                 },
                 "required_docs": [
-                    "context-docs/ENGINEERING.json"
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [

@@ -17,6 +17,7 @@
             "core/",
             "core/WORKSPACE.json",
             "core/communication-profiles/",
+            "profiles/",
             "project/",
             "templates/",
             "tools/",
@@ -171,7 +172,9 @@
             "sync_managed_pipeline_package.ps1",
             "read_compiled_context.ps1",
             "tool_error_log.ps1",
-            "tool_handler.ps1"
+            "tool_handler.ps1",
+            "project_design_context.ps1",
+            "check_project_design_context_gate.ps1"
         ]
     },
     "metadata": {

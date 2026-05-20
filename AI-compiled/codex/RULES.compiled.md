@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-c4127c8eaf6d
+Generated: source-78adcf14f9bc
 
 ## Source of Truth
 
@@ -5448,6 +5448,7 @@ Draft placeholder:
                 "summary": "Shared helpers, APIs, registries, schemas, or small service boundaries should act as contract aids when they support correct architecture, make correct usage easiest, and make off-contract usage visible.",
                 "required_paths": [
                     "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
                     "AI-compiled",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json"
@@ -5465,7 +5466,8 @@ Draft placeholder:
                     ]
                 },
                 "required_docs": [
-                    "context-docs/ENGINEERING.json"
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [

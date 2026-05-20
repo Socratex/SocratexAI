@@ -270,6 +270,36 @@
                             "note": "Code-project workflow repeats the same future-fit and diagnostic bias."
                         }
                     ]
+                },
+                {
+                    "id": "engineering.architecture.helper_enforced_contracts",
+                    "type": "rule",
+                    "subtype": "architecture_rule",
+                    "title": "Helpers Enforce Contracts By Convenience",
+                    "summary": "Prefer shared helpers, APIs, registries, schemas, or small service boundaries as contract aids when they support correct architecture, make correct usage easy, and make off-contract usage obvious.",
+                    "rule": "When multiple call sites must follow the same technical or domain contract, look for a small shared helper, API, registry, schema, or service boundary that carries the contract by default. Treat the helper as an aid to the contract and architecture, not as a shortcut around ownership, domain boundaries, or framework intent. Prefer this when it improves ownership, diagnostics, verification, and reuse across projects. Do not force the pattern when it would hide hot-path cost, blur domain ownership, add ceremony to a one-off behavior, or fight an established framework boundary.",
+                    "rationale": "A convenient shared helper turns architectural discipline into the path of least resistance, reduces duplicated local interpretations, and gives agents and developers one auditable place to debug or evolve the rule.",
+                    "priority": "should",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "architecture",
+                        "source-of-truth",
+                        "contracts",
+                        "helpers",
+                        "diagnostics",
+                        "ddd-adiv",
+                        "tooling"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "context-docs/ENGINEERING.json",
+                            "selector": "tagged_rules",
+                            "note": "Reusable source-pipeline rule promoted from Riftbound Vanguard logger/session and movement resolver work."
+                        }
+                    ]
                 }
             ]
         },
