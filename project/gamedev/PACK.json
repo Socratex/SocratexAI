@@ -36,7 +36,7 @@
         "gamedev_defaults": {
             "title": "Gamedev Defaults",
             "format": "markdown-section",
-            "body": "## Gamedev Defaults\n\n- Keep simulation state and presentation glue separate when the engine allows it.\n- Make lifecycle boundaries explicit: boot, load, update, pause, save, unload, and shutdown.\n- Treat frame budget, allocation behavior, asset loading, and input latency as first-class constraints.\n- Prefer engine-native systems and proven game architecture patterns before custom infrastructure.\n- Keep data contracts explicit for content, save data, procedural generation, and editor/export tooling.\n- Add diagnostics that explain runtime state without flooding the main loop.\n"
+            "body": "## Gamedev Defaults\n\n- Keep simulation state and presentation glue separate when the engine allows it.\n- Make lifecycle boundaries explicit: boot, load, update, pause, save, unload, and shutdown.\n- Treat frame budget, allocation behavior, asset loading, and input latency as first-class constraints.\n- Prefer engine-native systems and proven game architecture patterns before custom infrastructure.\n- Apply better-version-now judgment to feel-critical and scale-prone game systems: a small upfront boundary, data contract, activation budget, diagnostic hook, or deterministic recipe is preferred when it prevents later terrain, combat, AI, save, map, or performance rewrites.\n- Keep data contracts explicit for content, save data, procedural generation, and editor/export tooling.\n- Add diagnostics that explain runtime state without flooding the main loop.\n"
         },
         "verification": {
             "title": "Verification",

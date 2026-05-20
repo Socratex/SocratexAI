@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-de7cb630a66f",
+  "generated_at": "source-0d98efd647fd",
   "source_hashes": {
     "AGENTS.md": "f17717c0fb04cbc9687fbb06b5df5212e9b83327fee5ea1943c688b25a40fd1e",
     "README.md": "8ab79917d40b6797cc348d5bd03bb8658f951ab995705316c0b9cbebe12fdd5f",
@@ -11,14 +11,14 @@
     "FLOWS.json": "bf2c71fba51f5ed6beef6d9c5196b17f2ee29a678cc1c04ff8da35d358fb2151",
     "SCRIPTS.json": "65ea6661c1ef0f62e1b5a52a7e390bc8c7632ef7b901fdce0392a4ebffb81274",
     "docs-tech/PIPELINE-BOOTSTRAP.json": "0be426d399d88ec0406c8c412a0ef72e7ed1be7220b97f5bb4a06c1db8c281af",
-    "core/AGENT-CONTRACT.json": "e2355d77ef244f16633f2393f3fabe00037bc83f0e9051398f4cd40afbcbeae9",
+    "core/AGENT-CONTRACT.json": "4ca02a32a5b3db50fb3524a18a60ede9661f1a56a89fd8a9ca5f5bb2844ada64",
     "core/MEMORY-MODEL.json": "4496293983d003482f7234270a29af74f900a9878f70aa80aee2965c01da7c94",
     "core/PROMOTION-RULES.json": "504e7086041db37e699151798a2efe67f9b8c4056094e2203a68354c4ad22680",
     "core/FILE-FORMATS.json": "4ff9fdd22cf992983f26a312cc64b8b59db8d40161c9e891156d23979f8b8bee",
     "core/ROI-BIAS.json": "bd909cd333fc1e0c5af5d120a76669801c8e4129dbf0aceeced6fb4413da3d08",
     "core/TASK-WORK.json": "dcef612a7d6b84eeff8c149bcf457434e7f4bd2ed4f2506c639ff4e06b0b86e2",
     "core/SCRIPT-FALLBACK.json": "d5d1a6eae90d0ff3138eca96ced3d79d088351ea02cefacaaa30677d9c8f27ec",
-    "context-docs/ENGINEERING.json": "bd5afba85c00590b3d31b19a7e1cc26f3cdd99eac2656a7b5fec612f103ba4a8",
+    "context-docs/ENGINEERING.json": "12541a62c26d385dcfd3410c4dada8336cd74f5b8f259abb46d9203356dd99ec",
     "docs-tech/KNOWLEDGE-VIEWS.json": "a9a0248a8d062912ba4c1dbdeea49120072d1d306bfa2f6c5b61ded464ace310",
     "tools/knowledge/knowledge_index.py": "84c48fd7f5a458badadeea7e6fc19b1a0616e4e3f4dde2c281d739bcc55af3cf",
     "tools/knowledge/context_tags.ps1": "2b22b5678cef79565ac224ab2a77de5a711de0b4460dc0eec9bb50bcd2849ac3",
@@ -32,7 +32,7 @@
     "tools/pipeline/pipeline_bootstrap_index.ps1": "c7a6642e6e2ebde39abec94856cde3f074c837215c26f93301c4c0f16dd44599",
     "templates/WORKFLOW.json": "6f9d47020c1eb1a658d9e0d41997aeddaca3d31929f97444f833c845a2f4aa9b",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "a9a0248a8d062912ba4c1dbdeea49120072d1d306bfa2f6c5b61ded464ace310",
-    "templates/code/context-docs/ENGINEERING.json": "53572fa8dc4f6174aa5262ad3b420583d60b17385102f7fa92c534e24022e92e",
+    "templates/code/context-docs/ENGINEERING.json": "47abe47a51d1deaeab76d669483d000d532d30df64dd1160d305f0dedbe01a77",
     "templates/team/product.json": "2781abb86bba0e7208a3025fbc8726f6bb63490ad26e54d8be87b2ace6b26a2e",
     "templates/team/technical.json": "a6dbc89c944220a85cbe7ee4b1e348eecb6b73ccccaf080413b90115a176480f",
     "templates/team/performance.json": "d403bb9e0baf62c4c4ca8ab1d240faedca5f4a8917a288318d837deb756f2b58",
@@ -42,20 +42,20 @@
     "core/communication-profiles/friendly.txt": "8441c79d029d197c02ca42ac327636dac4b5b5e28826dae4d80da90338fd7a44",
     "core/communication-profiles/standard.txt": "01b41af406cd8a24e1c87bc62ee5d13715cd0227811c233f41dcf469ab01adbf",
     "core/communication-profiles/teacher.txt": "e6c80a798f5c13f92af1565f7a464d7fe0da9634a52bfff54da6d3d95dde75ca",
-    "project/code/PACK.json": "ff9f18c9c8657d404257dc9971697f2ab1a3a444e6a01e5d14ec572ca519e36d",
-    "project/code/WORKFLOW.json": "ee5f48999c4381cdb25fb1c8dfc78e625431af5d73bc27e208e59741f149ab5d",
+    "project/code/PACK.json": "ac836ab0a5d439dee767486570ed2aa10d29f14dcbe2064d3b309cd6766b0144",
+    "project/code/WORKFLOW.json": "536c34aea4c5e108cbcb929140f366aa5cb0053d418819cc82fa456c1ac5f92f",
     "project/generic/PACK.json": "93ca6ebdd3c7af9996c435c7173845f55852a5cc9c1c45127ee21e89d11f77ce",
     "project/personal/PACK.json": "00bbcde9ae16eddf9da4450c5c81ba29582ccc43bbe92a8c931d24c3a04e9a6d",
     "project/creative/PACK.json": "67b717d5838f88570a0b65234e3e00163ce34c6115cf830c3985af0cd92da291",
-    "project/gamedev/PACK.json": "73408f84fdb78df97b28356f469953c0ae9650d0ee77355beb756b7ea5da0743"
+    "project/gamedev/PACK.json": "6bc9bc82163a6cab1c759298b5d2f05374e14d1a20565a8afb2cf55c531bb5be"
   },
   "output_hashes": {
     "README.md": "d066b6cd837082095c4a037ac3c5619ba562ed9762f239a8e4cce0ea94e35659",
-    "INDEX.json": "5da2f7f4ee57549d82c770a24b00737e38c579c69a06654f02792d1a35cfc4f6",
-    "codex/ENTRYPOINT.md": "f346c751d81ab4a993146a9a8259a132de0cd4228755955f553efdc3a2fc05cd",
-    "codex/RULES.compiled.md": "b602597bdab264987240c3f9a90106004df08f60acbad6d838c026c39bc0eb4b",
-    "codex/WORKFLOW.compiled.md": "95b2da03b1347d8926054f43d0a0fafa6518e3c45cec2548232d0b4bf84b1e83",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "a99b266ed5408e49345387f67ad3c7ba9329157e2e52307becd75bea5a7e7794",
-    "codex/TEAM.compiled.md": "38cff8c52f368b031db1f859c8921c7519c06b8789690da6891301b2a4fe73bc"
+    "INDEX.json": "3a81168e81c4e097fb93575804036fef03743080f64a6be6515c8dcbbbbb90aa",
+    "codex/ENTRYPOINT.md": "4117980182fb8ecf388c86a70d1effd5501e58bb9ae42ddff68ad58bcb798d0a",
+    "codex/RULES.compiled.md": "4664bb83f2fca5f8a8e6a23c351edb6da116c80f4c3206b3237b99bcdd557a4a",
+    "codex/WORKFLOW.compiled.md": "15776a9d5aa7404e3825df02596a151433dc4344281213c36f3b43bf1efcf7e0",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "431fc581be9a507bf376691da86224ce0949d05879332071f100f494c2544396",
+    "codex/TEAM.compiled.md": "df691115e3ba87fbf7295e0a0596375b5781ef07a8d6310247a6ac7a67458aaa"
   }
 }

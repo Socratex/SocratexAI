@@ -1,6 +1,21 @@
 [
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
+    "compiled_content": "## engineering.architecture.better_version_now_future_proof_by_default - Better Version Now By Default\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `architecture_rule`\n- load_at_start: `true`\n- tags: `engineering`, `architecture`, `coding`, `clean-code`, `ddd-adiv`, `future-first`, `better-version-now`, `borrowed-before-bespoke`, `contracts`, `boundaries`, `data-ownership`, `security`, `migrations`, `performance`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nFor programming tasks, check whether a slightly better future-proof version should be built now across architecture, clean code, contracts, security, data ownership, and performance.\n\nFor every implementation, bugfix, migration, refactor, performance diagnosis, code review, and architecture decision, ask: should this be built as the better version now? Default to yes when a small extra investment improves future change cost, ownership clarity, code cleanliness, DDD/ADIV alignment, security posture, data ownership, context boundaries, contracts, migration safety, observability, testability, or predictable-scale performance. Borrow known solutions and proven patterns before inventing custom systems. Add a little more structure now when it is cheap and likely to prevent expensive refactors, debt repayment, security redesign, data-boundary repair, or performance tuning later. When the better version would be substantially bigger, speculative, ceremony-heavy, or unclear, stop for an overengineering check and ask for the intended future load, domain boundary, security exposure, data volume, team/process expectation, or product direction before implementing.\n\nRationale: This is not a license for ceremony or speculative frameworks. It is the default quality profile: learn from known software history, avoid repeating common debt patterns, and choose small future-proofing steps while they are cheap. Many expensive rewrites come from taking the locally easy path in areas where growth, ownership, security, data shape, or runtime scale was already predictable. The desired bias is to avoid building toward a known retrofit unless current instructions explicitly prioritize a disposable shortcut.\n\nSources:\n- `core/AGENT-CONTRACT.json` `primary_known_solutions_directive` - Shared agent contract defines the global better-version-now and borrowed-before-invented directive.\n- `project/code/PACK.json` `technical_defaults` duplicate - Code pack applies the directive to programming implementation defaults.\n- `project/code/WORKFLOW.json` `general_workflow` duplicate - Code workflow makes the check part of every programming task sequence.\n",
+    "document_path": "context-docs/ENGINEERING.json",
+    "load_at_start": true,
+    "name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "priority": "must",
+    "source_of_truth": "context-docs/ENGINEERING.json",
+    "source_selector": "items.tagged_rules.value.12",
+    "stability": "durable",
+    "subtype": "architecture_rule",
+    "summary": "For programming tasks, check whether a slightly better future-proof version should be built now across architecture, clean code, contracts, security, data ownership, and performance.",
+    "title": "Better Version Now By Default",
+    "type": "rule"
+  },
+  {
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.architecture.helper_enforced_contracts - Helpers Enforce Contracts By Convenience\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `architecture_rule`\n- load_at_start: `true`\n- tags: `engineering`, `architecture`, `source-of-truth`, `contracts`, `helpers`, `diagnostics`, `ddd-adiv`, `tooling`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nPrefer shared helpers, APIs, registries, schemas, or small service boundaries as contract aids when they support correct architecture, make correct usage easy, and make off-contract usage obvious.\n\nWhen multiple call sites must follow the same technical or domain contract, look for a small shared helper, API, registry, schema, or service boundary that carries the contract by default. Treat the helper as an aid to the contract and architecture, not as a shortcut around ownership, domain boundaries, or framework intent. Prefer this when it improves ownership, diagnostics, verification, and reuse across projects. Do not force the pattern when it would hide hot-path cost, blur domain ownership, add ceremony to a one-off behavior, or fight an established framework boundary.\n\nRationale: A convenient shared helper turns architectural discipline into the path of least resistance, reduces duplicated local interpretations, and gives agents and developers one auditable place to debug or evolve the rule.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Reusable source-pipeline rule promoted from Riftbound Vanguard logger/session and movement resolver work.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -15,7 +30,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.borrowed_before_bespoke - Borrowed Before Bespoke\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `architecture`, `best-practices`, `borrowed-before-bespoke`, `coding`, `domain_modeling`, `engineering`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nPrefer established patterns, proven libraries, and standard tools over custom-built solutions when they fit the project profile.\n\nBefore designing custom code, check whether an established pattern, archetype, standard workflow, library, or proven tool already solves the problem at lower cost. Apply the build-vs-borrow lens to: design patterns (state machines, queues, adapters, ports, repositories), platform conventions, schemas, transaction boundaries, and contract types. Only build bespoke when the borrowed option creates worse constraints, hides project-specific truth, or fails the profile-fit check (e.g., wrong language version, conflicting with legacy framework). Document the decision when bespoke is chosen.\n\nRationale: Custom code carries hidden ownership and maintenance cost. Borrowing reduces initial complexity and surfaces failure modes that are already documented; bespoke should pay for itself with a concrete project-specific advantage.\n\nSources:\n- `core/AGENT-CONTRACT.json` `primary_known_solutions_directive` - Source-of-truth for the borrowed-before-bespoke directive.\n- `core/AGENT-CONTRACT.json` `known_solution_bias` duplicate - Domain-specific expansion of the same directive.\n- `project/code/DDD-ADIV.json` `known_solutions_alignment` duplicate - DDD-ADIV reinforces build-vs-borrow as a domain-clarifying tool.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -30,14 +45,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.business_naming - Business Naming with Technical Suffix\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `best-practices`, `coding`, `ddd-adiv`, `domain_modeling`, `engineering`, `readability`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nNames should reflect business intent, not implementation mechanism. Reading the code should explain WHAT the system does in domain terms; technical suffixes carry the HOW.\n\nWhen naming classes, methods, variables, files, and database columns: (1) The base name expresses business meaning (Quote, Customer, OverduePayment, EligibilityCheck, ClawbackCalculation) - not generic mechanism nouns (Manager, Handler, Processor, Helper, Util). (2) Technical role goes in the SUFFIX, not the base name: QuoteRepository, OverduePaymentNotifier, EligibilityCheckResult, ClawbackReportBuilder. (3) Avoid abbreviations unless they are project-domain canon (CRM, GDPR, MLE if everyone on the project knows them). (4) Method names describe the business action: markQuoteAsAccepted(), recalculateClawbackForCancelledOrder() - not processItem() or doStuff(). (5) Boolean variables and methods read as predicates: isOverdue(), hasUnresolvedClawback(), customerCanReceiveRefund. (6) Variables hold the WHY in their name: $eligibleCustomers (not $tmp), $unsentReminders (not $arr2). When the project has an existing domain glossary, prefer those exact terms even when shorter neutral names would technically work.\n\nRationale: Code is read more often than written, and the dominant reading pattern is 'what is this system doing in business terms?' - not 'what mechanism is being used?'. Business-named code answers the dominant question first; technical suffixes add the secondary information without obscuring intent.\n\nSources:\n- `project/code/DDD-ADIV.json` `domain_driven` duplicate - DDD domain-driven dimension: business-meaningful names over mechanism names, intent-revealing methods.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.business_naming",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.20",
+    "source_selector": "items.tagged_rules.value.21",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "Names should reflect business intent, not implementation mechanism. Reading the code should explain WHAT the system does in domain terms; technical suffixes carry the HOW.",
@@ -45,7 +60,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.code_primary_source_of_truth - Code Is The Primary Source Of Truth\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `engineering`, `coding`, `naming`, `comments`, `ddd-adiv`, `maintainability`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nNames, files, methods, variables, and parameters should carry business meaning directly; comments are side notes only when code cannot encode the intent or warning well enough.\n\nTreat code as the primary source of truth. File names should suggest how methods are interpreted; method names should suggest how variables and parameters are interpreted. Names should be obvious enough to derive business meaning from the code. Use comments only for missing typing/context, reader warnings, workarounds, hacks, non-obvious implementation constraints, or business intent/specification that code cannot express. Do not write comments that merely describe what the code already says.\n\nRationale: Long-running agent work is cheaper and safer when meaning is encoded in names and ownership boundaries instead of duplicated prose that can drift.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Durable coding discipline promoted from Riftbound Vanguard pipeline work.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -60,14 +75,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.codebase_as_contract - Codebase Is the Contract — Make It as Strict as Possible\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `architecture`, `best-practices`, `coding`, `domain_modeling`, `engineering`, `future-first`, `production-grade`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nTreat the code itself (types, schemas, signatures, validation, structure) as the primary contract. Make it as machine-checkable as the language and project allow.\n\nWhen writing or modifying code, choose the strictest valid representation: (1) types over untyped parameters when the language version supports them; (2) value objects over primitive obsession (Money vs float, EmailAddress vs string); (3) schema validation at boundaries (DTOs, JSON schemas, parsers - not ad-hoc isset chains); (4) explicit enums or named constants over magic strings/numbers; (5) named function signatures over loose array bags; (6) immutable-by-default where the language supports it. The language target may forbid some of these (e.g., PHP 5.6 has no typed properties) - use what IS available and match the project profile. The point: a future maintainer should be able to learn what is true about the system by reading the code, not by reading commit messages or wikis. Documentation rots; the code is what runs.\n\nRationale: Documentation drifts; tests cover specific cases; contracts in the language itself stay aligned with the runtime. The stricter the code-as-contract, the less the system depends on tribal knowledge or external documentation that goes stale.\n\nSources:\n- `core/AGENT-CONTRACT.json` `operating_principles` duplicate - Operating principles include 'prefer explicit contracts over hidden convention'.\n- `project/code/DDD-ADIV.json` `invariant_visible` duplicate - Invariant-visible dimension: validation at boundaries, explicit factories, schema checks.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.codebase_as_contract",
     "priority": "should",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.17",
+    "source_selector": "items.tagged_rules.value.18",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "Treat the code itself (types, schemas, signatures, validation, structure) as the primary contract. Make it as machine-checkable as the language and project allow.",
@@ -75,14 +90,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.ddd_adiv_when_possible - DDD-ADIV When Possible\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `architecture`, `coding`, `ddd-adiv`, `domain_modeling`, `engineering`, `ownership`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nUse DDD-ADIV (Domain-Driven, Architecture-Decisive, Invariant-Visible, Verification-Attached) as a practical design bias when it reduces ambiguity, future retrofit cost, or hidden coupling - without turning it into ceremony.\n\nBefore substantive code design, ask the four questions: (1) Domain language - does the name reflect business meaning rather than mechanism? (2) Architecture-decisive - are ownership and dependency direction explicit? (3) Invariant-visible - are important rules expressed as checks/schemas/tests/validations? (4) Verification-attached - is the risky behavior testable or at least observable? When project profile is `legacy` or per-zone config sets `ddd_adiv: false|soft`, treat DDD-ADIV as a lens-not-mandate: pull ownership when rewriting heavily, leave legacy untouched when surgical-fixing. Read `project/code/DDD-ADIV.json` for the full definition. Do not turn it into ceremony - skip when the change is genuinely shallow.\n\nRationale: DDD-ADIV is the workspace's recommended default because explicit boundaries and named invariants survive long-running maintenance better than clever or convenient code. Per-zone overrides exist precisely so the lens does not force-fit legacy code.\n\nSources:\n- `core/AGENT-CONTRACT.json` `ddd_adiv_default` - Shared contract definition of DDD-ADIV bias.\n- `project/code/DDD-ADIV.json` `domain_driven` duplicate - Full code-pack DDD-ADIV definition.\n- `project/code/DDD-ADIV.json` `architecture_decisive` duplicate - Architecture-decisive dimension.\n- `project/code/DDD-ADIV.json` `invariant_visible` duplicate - Invariant-visible dimension.\n- `project/code/DDD-ADIV.json` `verification_attached` duplicate - Verification-attached dimension.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.ddd_adiv_when_possible",
     "priority": "should",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.14",
+    "source_selector": "items.tagged_rules.value.15",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "Use DDD-ADIV (Domain-Driven, Architecture-Decisive, Invariant-Visible, Verification-Attached) as a practical design bias when it reduces ambiguity, future retrofit cost, or hidden coupling - without turning it into ceremony.",
@@ -90,7 +105,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.explicit_diagnosable_flow - Explicit Diagnosable Flow\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `engineering`, `coding`, `architecture`, `diagnostics`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nPrefer explicit data flow, ownership, boundaries, and verification over hidden or clever behavior.\n\nKeep implementation easy to trace mechanically: clear entry points, explicit state changes, source-of-truth ownership, boundary normalization, and verification attached to risky behavior.\n\nRationale: SocratexPipeline is meant to preserve long-running agent continuity; implicit systems make that continuity fragile.\n\nSources:\n- `core/AGENT-CONTRACT.json` `operating_principles` - Consolidated from the shared agent contract.\n- `project/code/WORKFLOW.json` `general_workflow` duplicate - Code-project workflow repeats the same future-fit and diagnostic bias.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -105,14 +120,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.legacy_aware_change_split - Legacy-Aware Change Split — Surgical or Extract-to-Clean-File\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `architecture`, `best-practices`, `coding`, `engineering`, `ownership`, `readability`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nIn legacy zones (project profile = legacy or per-zone config says 'do not modernize'), make changes surgical. For non-trivial changes, extract the new logic to a separate clean file rather than scattering large diffs across legacy code — '499 deleted lines + 2 clean new files', not '500 changed lines'.\n\nBefore modifying legacy code, classify the change. (A) Surgical fix: small, follows surrounding patterns - edit in place, do not modernize, match existing style even if older. (B) Non-trivial change: would touch many lines or introduce concepts foreign to that zone - DO NOT scatter the changes across the legacy file. Instead extract the new logic to a separate clean file (in the modern zone if one exists, or as a small dedicated legacy file with clean structure), then make the legacy site call into it with the smallest possible delta. The diff should read as 'small change at legacy call site + a new readable file', not 'sprawling rewrite mid-legacy-file'. (C) Heavy rewrite: same as (B) but the new file lives in the modern zone if the project has one. Check `project_profile.lifecycle` and per-zone config in PIPELINE-CONFIG.json to decide which mode applies. Always favor the diff shape that keeps reviewers focused on the small call-site change while the new logic gets a clean, isolated home.\n\nRationale: Mixing modern style into legacy files creates style-inversion zones that confuse both human readers and inspection tools. Extracting to a new file gives the new code a clean home, keeps the legacy file readable as legacy, and gives reviewers a clear before/after on the legacy call site without losing the new logic in diff noise.\n\nSources:\n- `core/AGENT-CONTRACT.json` `primary_known_solutions_directive` duplicate - Bug-fix directive: prefer fix that removes class of bug or improves diagnosis without over-expanding scope.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.legacy_aware_change_split",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.18",
+    "source_selector": "items.tagged_rules.value.19",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "In legacy zones (project profile = legacy or per-zone config says 'do not modernize'), make changes surgical. For non-trivial changes, extract the new logic to a separate clean file rather than scattering large diffs across legacy code — '499 deleted lines + 2 clean new files', not '500 changed lines'.",
@@ -120,14 +135,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.match_surrounding_patterns - Match Surrounding Patterns Mid-Fix\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `best-practices`, `coding`, `engineering`, `ownership`, `readability`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nWhen making non-rewrite changes, match the conventions of the surrounding file/zone — even if those conventions are older or weaker. Do not modernize mid-fix.\n\nWhen editing existing code that you do not own end-to-end: (1) Read the surrounding file and the immediate neighbors in that directory before writing. (2) Match the existing style (naming, indentation, error handling, structural patterns) even if it is older or you would do it differently in greenfield code. (3) If the surrounding code uses a deprecated or weak pattern, leave it alone for THIS change - a separate refactor task can address it. (4) Cross-zone moves (e.g., legacy → modern) are a separate decision per legacy_aware_change_split; do not casually drag legacy patterns into modern zones or modern patterns into legacy zones as a side-effect of a feature. The exception: when the per-project profile or zone config explicitly authorizes modernization in this zone (e.g., bias-true DDD-ADIV in a modern zone), the new code follows the modern conventions even if the file is partially legacy - but the diff should still avoid scattering migration churn across unrelated lines.\n\nRationale: Style inversions inside legacy files create cognitive overhead for every future reader. The cost of leaving an old pattern alone for one fix is small; the cost of leaving a half-modernized file is paid forever. Match-surrounding is the cheapest way to keep diffs reviewable.\n\nSources:\n- `core/AGENT-CONTRACT.json` `operating_principles` duplicate - Operating principles emphasize smallest meaningful ownership slice.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.match_surrounding_patterns",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.21",
+    "source_selector": "items.tagged_rules.value.22",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "When making non-rewrite changes, match the conventions of the surrounding file/zone — even if those conventions are older or weaker. Do not modernize mid-fix.",
@@ -135,14 +150,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.method_and_variable_extraction - Extract Methods and Intent-Revealing Variables\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `best-practices`, `coding`, `diagnostics`, `domain_modeling`, `engineering`, `readability`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nPull repeated logic into named methods. Extract intermediate values into intent-revealing variables. Keep functions short and single-purpose.\n\nWhen code starts doing multiple things, extract: (1) repeated expressions into intent-revealing local variables (e.g. eligibleCustomers = customers.filter(...)) instead of inline complex expressions; (2) multi-step blocks into private methods named after their business intent (sendOverdueReminders rather than processList); (3) deeply nested conditionals into guard-clause helper methods. Targets: each function should fit on a screen and operate at one level of abstraction; named locals should explain WHY a value is what it is, not just hold it. Do not extract for the sake of file count - extract when naming the extraction makes the call site read more like business logic.\n\nRationale: Inline cleverness compresses the WHY into mental load. Named extractions move the WHY into the name itself, so the call site reads like documentation. This is the single highest-ROI readability lever in legacy code.\n\nSources:\n- `project/code/PACK.json` `technical_defaults` duplicate - Code-pack defaults already mention small functions and intent-revealing helpers.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.method_and_variable_extraction",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.16",
+    "source_selector": "items.tagged_rules.value.17",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "Pull repeated logic into named methods. Extract intermediate values into intent-revealing variables. Keep functions short and single-purpose.",
@@ -150,14 +165,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.minimal_comments - Minimal Comments — Workarounds and Business Intent Only\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `best-practices`, `coding`, `engineering`, `readability`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nDefault to no comments. Add a comment only when it explains a non-obvious WHY: a workaround for a specific bug, a business invariant, a hidden constraint, or surprising behavior. Never restate WHAT the code does.\n\nComment policy: (1) NEVER restate visible code - well-named identifiers and intent-revealing methods already do that. (2) NEVER reference the current task, PR number, or ticket inside code - those belong in the commit message and PR description (they rot in code). (3) DO comment when the WHY is non-obvious: 'we round here because the upstream system returns 0.999...', 'workaround for issue #X in library Y' (only library bug references stay), 'this branch handles the case where billing flips between cycles'. (4) DO comment business intent that the code shape cannot capture: 'overdue means 30+ days for retail customers, 60+ for enterprise (per agreement clause 4.2)'. (5) Multi-paragraph docblocks are forbidden unless the language requires them for type generation; one short line max for non-obvious WHY. (6) TODO/FIXME for follow-ups is allowed when the alternative would silently leave the issue uncaptured.\n\nRationale: Comments rot independently of the code they describe. The only comments that survive over time are the ones that capture knowledge the code itself cannot: workarounds, business rules, hidden invariants. Everything else creates noise and false security as it drifts out of sync.\n\nSources:\n- `project/code/PACK.json` `technical_defaults` duplicate - Code-pack defaults: 'Comments should explain non-obvious constraints, workarounds, hazards, or tradeoffs; do not restate visible code.'\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.minimal_comments",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.19",
+    "source_selector": "items.tagged_rules.value.20",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "Default to no comments. Add a comment only when it explains a non-obvious WHY: a workaround for a specific bug, a business invariant, a hidden constraint, or surprising behavior. Never restate WHAT the code does.",
@@ -165,14 +180,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.production_grade_default - Production-Grade Architectural Default\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `architecture`, `best-practices`, `coding`, `data-first`, `diagnostics`, `engineering`, `future-first`, `ownership`, `performance`, `production-grade`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nFor programming feature requests, bias toward production-grade architecture: explicit ownership, data flow, contracts, toolability, diagnostics, performance budget, deterministic behavior, testability, low retrofit cost.\n\nWhen implementing features in software/games, evaluate the requested approach against a production-grade lens before executing. Required dimensions: explicit ownership of state and side effects; explicit data flow (no hidden pipelines); machine-readable contracts (types, schemas, JSON shapes); toolability (linters, scripts, tests can run on the artifact); diagnostics (the change can be traced and verified mechanically); performance budget (no silent O(n^2) where O(n) was reasonable); deterministic behavior where relevant; testability (verification is attachable); low retrofit cost (future modifications are not blocked). If the user's path is weaker than a better future-facing sequence, propose the better sequence before executing.\n\nRationale: Production-grade defaults reduce future retrofit cost and make code mechanically diagnosable. The cost of doing it badly first is paid by every future maintainer, so the bias should be toward strong defaults unless the project profile (e.g., throwaway prototype) explicitly relaxes them.\n\nSources:\n- `core/AGENT-CONTRACT.json` `primary_known_solutions_directive` - Production-grade directive for code feature requests.\n- `project/code/PACK.json` `technical_defaults` duplicate - Code-pack technical defaults reinforce the same architectural lens.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.production_grade_default",
     "priority": "should",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.12",
+    "source_selector": "items.tagged_rules.value.13",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "For programming feature requests, bias toward production-grade architecture: explicit ownership, data flow, contracts, toolability, diagnostics, performance budget, deterministic behavior, testability, low retrofit cost.",
@@ -180,14 +195,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.coding.readability_first - Readability First\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `coding_rule`\n- load_at_start: `true`\n- tags: `best-practices`, `coding`, `diagnostics`, `engineering`, `readability`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nPrefer readable, diagnosable code over compact or clever code. Code is read more often than written; future maintainers - including future-you and AI agents - pay the cost of cleverness.\n\nWhen writing or modifying code, optimize for readability first: explicit control flow over clever tricks; explicit data flow over hidden pipelines; guard clauses over deep nesting; small functions over multi-purpose blocks; intent-revealing names over abbreviated ones; one block focused on one concern at one abstraction level; structured APIs/parsers over ad-hoc string manipulation. Comments explain non-obvious WHY (constraints, hazards, tradeoffs) - not WHAT. Top-down code organization when practical: entry points and high-level workflow first, helpers later. If a clever optimization is required, attach a short comment explaining why and a verification (test/benchmark) for the gain.\n\nRationale: SocratexPipeline is built on the assumption that long-running diagnosability matters more than micro-cleverness. Code that is hard to read becomes hard to diagnose, hard to modify safely, and hard for AI agents to reason about - compounding maintenance cost over time.\n\nSources:\n- `project/code/PACK.json` `technical_defaults` - Code-pack technical defaults already mandate readability - this entry surfaces it as a tagged rule for the knowledge layer.\n- `core/AGENT-CONTRACT.json` `operating_principles` duplicate - Operating principles include 'prefer explicit contracts over hidden convention'.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.coding.readability_first",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.15",
+    "source_selector": "items.tagged_rules.value.16",
     "stability": "durable",
     "subtype": "coding_rule",
     "summary": "Prefer readable, diagnosable code over compact or clever code. Code is read more often than written; future maintainers - including future-you and AI agents - pay the cost of cleverness.",
@@ -195,14 +210,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.performance.lightweight_by_default_for_predictable_load - Lightweight By Default For Predictable Load\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `architecture_rule`\n- load_at_start: `true`\n- tags: `engineering`, `performance`, `architecture`, `future-first`, `data-first`, `runtime`, `batching`, `pooling`, `hot-path`, `lightweight-by-default`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nEvery implementation, bug diagnosis, and performance response should check predictable scale and avoid heavyweight frameworks as the default model for mass, batch, or hot-path behavior.\n\nFor every implementation, bugfix, performance diagnosis, log review, and architecture decision, explicitly check whether the touched behavior is or will predictably become mass, batch, hot-path, storage-heavy, I/O-heavy, framework-heavy, generated-content-heavy, or otherwise repeatedly exercised. When yes, prefer lightweight data-first truth, explicit helper/service APIs, local queries, indexes, batching, pooling, bounded caches, raw/bulk paths, activation/prewarm, and measured async/worker handoff over convenient heavyweight framework abstractions as the default storage, index, broadphase, or update model. Use heavy framework primitives for active entities, small local proxies, ergonomic single-object operations, and presentation/simulation that is truly active. If the tradeoff is uncertain and the choice affects architecture, ask for the intended load shape before implementing: rough active counts, total generated counts, on-screen counts, batch sizes, update frequency, persistence volume, and whether the system is expected to grow by 2x, 10x, or 100x. For performance complaints, first consider whether the real fix is migration away from a heavyweight default model before tightening budgets, thresholds, culling radii, or micro-optimizing symptoms.\n\nRationale: This is future-cost prevention, not premature optimization. Premature optimization is harmful when it adds complexity without likely load; low-performance-quality architecture is also harmful when predictable load is obvious. Retrofitting away from heavyweight framework primitives later is more expensive than starting with explicit helper/query/batch contracts now. The intended bias is not to overengineer, but to avoid building a large future system on a model that will have to be thrown away once load is added.\n\nSources:\n- `core/AGENT-CONTRACT.json` `primary_known_solutions_directive` - Shared programming directive now includes predictable-load checks and heavyweight-model migration bias.\n- `project/code/PACK.json` `technical_defaults` duplicate - Code pack technical defaults require lightweight-by-default contracts where load is predictable.\n- `project/code/WORKFLOW.json` `general_workflow` duplicate - Code workflow applies the check during feature, bug, performance, and architecture work.\n- `templates/code/context-docs/ENGINEERING.json` `tagged_rules` duplicate - Starter code template carries the rule into new child projects.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.performance.lightweight_by_default_for_predictable_load",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.13",
+    "source_selector": "items.tagged_rules.value.14",
     "stability": "durable",
     "subtype": "architecture_rule",
     "summary": "Every implementation, bug diagnosis, and performance response should check predictable scale and avoid heavyweight frameworks as the default model for mass, batch, or hot-path behavior.",
@@ -210,7 +225,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.context_tags_before_response - Context Tags Before Response\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `docs-workflow`, `compiled-context`, `knowledge`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nCommands and substantive questions should route through main workflow context, prompt-derived tags, and compiled notes before answer or execution.\n\nFor every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text with `tools/knowledge/context_tags.ps1` when available, then query compiled notes with `tools/knowledge/knowledge_select.ps1 -Tags <tags> -Match any` before answering or executing. Use tag-selected notes as routing and risk context; read exact source documents before edits, high-stakes claims, or ambiguity resolution.\n\nRationale: Prompt-derived tags make compiled knowledge useful beyond broad startup slices and reduce missed workflow, architecture, diagnostic, or documentation constraints.\n\nSources:\n- `core/AGENT-CONTRACT.json` `operating_principles` - Shared contract requires tag-derived context before substantive answers and commands.\n- `project/code/WORKFLOW.json` `read_order` duplicate - Code workflow defines the executable context-tag pass.\n- `tools/knowledge/context_tags.ps1` `script` duplicate - Source pipeline helper for deriving context tags from user text.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -225,7 +240,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.default_tool_error_hardening - Default Tool Error Hardening\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `tooling`, `automation`, `scripts`, `docs-workflow`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nTool invocation failures should default to hardening the owning script or contract, not repeating manual recovery.\n\nWhen an owned repository script or tool fails because an input was easy to pass incorrectly, quoting/encoding/path handling was fragile, validation was missing, output was unclear, or a process failure is likely to recur, default to fixing or extending the owning script, wrapper, help/validation, or SCRIPTS.json input/output contract before retrying or immediately after unblocking the task. Treat manual recovery as temporary; keep it only when the failure is clearly a one-off typo, missing user-provided data, or the tool-hardening scope would be materially larger than the current task.\n\nRationale: Repeatable tool friction is pipeline debt. Encoding the fix into scripts and script contracts reduces future prompt cost and prevents agents from memorizing brittle workarounds.\n\nSources:\n- `WORKFLOW.json` `tool_error_hardening` - Source workflow rule makes tool hardening the default response to repeatable tool-result errors.\n- `SCRIPTS.json` `metadata.script_io_contract` duplicate - Script catalog can carry exact input/output contracts for fragile invocation shapes.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -240,7 +255,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.knowledge_file_fallback - Use File Knowledge Fallback When SQLite Is Unavailable\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `docs-workflow`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nThe JSON table fallback mirrors the core SQLite table model but intentionally omits named views.\n\nIf SQLite cannot be used, read compiled knowledge from `AI-compiled/project/knowledge-files/` with `tools/knowledge/knowledge_file_select.ps1`; query by tags, type, source path, document path, entry name, or startup flag instead of named views.\n\nRationale: Some hosts may not allow SQLite writes or may lock the database file, but agents still need a compact compiled knowledge layer.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Source pipeline file-fallback rule.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -255,7 +270,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.knowledge_hash_gate - Validate Source Hashes Before Trusting SQLite\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `verification_rule`\n- load_at_start: `true`\n- tags: `engineering`, `verification`, `docs-workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nA compiled knowledge database is trustworthy only when its tracked source hashes match current documents.\n\nRun `tools/knowledge/knowledge_check.ps1` before relying on existing compiled knowledge; if stale documents are reported, refresh them with `tools/knowledge/knowledge_upsert.ps1 -Path <document>` or rebuild with `tools/knowledge/knowledge_compile.ps1`.\n\nRationale: Hash checks prevent agents from reading stale compiled knowledge after source documents change.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Source pipeline starter rule.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -270,7 +285,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.knowledge_sqlite_generated_layer - SQLite Knowledge Is Generated\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `docs-workflow`, `verification`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nThe SQLite knowledge database is a compiled index, not a manually edited source of truth.\n\nEdit source documents first, then refresh `AI-compiled/project/knowledge.sqlite` with `tools/knowledge/knowledge_compile.ps1` for a full rebuild or `tools/knowledge/knowledge_upsert.ps1 -Path <document>` for a targeted document update.\n\nRationale: This preserves readable source documents while giving agents fast tag, type, source, and startup-context queries.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Source pipeline starter rule.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -285,7 +300,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.knowledge_views - Query Context Through Named Views\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `should`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `docs-workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nUse named knowledge views for common context lanes before broader document reads.\n\nPrefer `tools/knowledge/knowledge_select.ps1 -View <view_id>` for prepared context lanes such as `session_start`, `debugging`, `performance`, and `docs_workflow`; use tag/type/source queries when the task needs a narrower slice.\n\nRationale: Named views reduce context cost and make repeated agent startup/query behavior consistent across projects.\n\nSources:\n- `context-docs/ENGINEERING.json` `tagged_rules` - Source pipeline starter rule.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -300,7 +315,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.load_standards_before_code - Load Engineering Standards Before Code Work\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `coding`, `architecture`, `best-practices`, `borrowed-before-bespoke`, `production-grade`, `ddd-adiv`, `future-first`, `docs-workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nAny code-touching task must load the full compiled code-guidance set before source edits.\n\nFor implementation, refactor, bugfix, code review, or any task that may touch source code, run `tools/knowledge/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. The loaded base set must include engineering, coding, architecture, best practices, borrowed-before-bespoke, production-grade software engineering, DDD-ADIV, future-first, data-first ownership, runtime boundaries, diagnostics, performance, and verification rules. Additional task views may be added, but they must not replace the full base set. `tools/repo/check_task.ps1` should fail changed-code checks when the fresh `ignored/code_context_gate.json` marker from that helper is missing, loaded for another HEAD, or incomplete.\n\nRationale: Professional code quality depends on keeping the complete active project engineering standard in context every time, not on a narrow subset or visible-chat memory.\n\nSources:\n- `project/code/WORKFLOW.json` `read_order` - Code workflow read-order requirement for programming tasks.\n- `project/code/WORKFLOW.json` `script_first_execution` duplicate - Script-first workflow repeats the preferred query command.\n- `tools/knowledge/knowledge_code_context.ps1` `script` duplicate - Canonical helper for loading the code-task engineering context slice.\n- `tools/codebase/check_code_context_gate.ps1` `script` duplicate - Verification guard for changed-code tasks.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -315,7 +330,7 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.normalized_content_hashes - Normalized Content Hashes For Compiled Knowledge\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `engineering`, `workflow`, `tooling`, `compiled-context`, `knowledge`, `hashing`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nCompiled knowledge and instruction freshness hashes ignore mechanical text drift but preserve semantic whitespace.\n\nUse normalized text-content hashes for compiled knowledge, file fallback tables, compiled instruction checksums, and generated instruction source manifests: remove UTF-8 BOM, fold CRLF/CR to LF, trim trailing spaces and tabs per line, and ignore excess final blank lines. Do not use file modification timestamps for freshness, and do not strip all whitespace, because those approaches respectively create false invalidations and hide semantic changes in JSON, Python, PowerShell, and other whitespace-sensitive formats.\n\nRationale: Compiled outputs should rebuild when source meaning changes, not when editor or line-ending cleanup changes; preserving indentation and interior whitespace keeps the hash safe for whitespace-sensitive files.\n\nSources:\n- `tools/knowledge/knowledge_index.py` `normalized_hash_text` - Knowledge SQLite and file fallback source freshness use the normalized hash policy.\n- `tools/pipeline/rebuild_ai_compiled_context.ps1` `ConvertTo-NormalizedHashText` duplicate - Compiled instruction source manifests and checksums use the same normalized hash policy.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
@@ -330,14 +345,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
-    "compiled_content": "## engineering.workflow.pair_programming_collaboration - Pair-Programming Stance\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `best-practices`, `engineering`, `workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nDefault agent stance is pair-programming colleague: investigate, suggest, trace, explain, maintain the thread of what we know — not autonomous executor and not documentation generator.\n\nWhen working with the user on a code task: (1) Maintain the investigation thread - track what is known, what is unknown, what was checked, what is the next smallest verification. Do not lose state across iterations. (2) Suggest iterative next steps: when stuck, propose the smallest single thing that can be verified to make progress. (3) Spot patterns and shortcuts: 'this looks like X - have you checked Y?', 'this could be simpler if Z'. (4) Trace execution chains: when asked how something works, follow the code through dispatch / workers / callbacks / models, do not guess from names. (5) Explain mechanically when asked 'how does X work?' - give a clear, accurate, code-grounded answer. (6) Be honest about limits: 'I don't know, let me check' or 'this needs your judgment' beats fabrication. (7) Do NOT run away with implementation when the design has not been agreed; do NOT over-produce documentation artifacts; do NOT batch up multi-step rewrites without explicit approval. Decisions on priorities, architecture direction, and what ships belong to the user.\n\nRationale: Pair-programming with a senior engineer is the default mode in this workspace. The agent's primary value is investigative thread-keeping and pattern-spotting, not autonomous execution. Misaligning the stance produces both over-engineering and over-eager rewrites that the user has to undo.\n\nSources:\n- `context-docs/ENGINEERING.json` `items.tagged_rules.value.22` - record source\n",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
+    "compiled_content": "## engineering.workflow.pair_programming_collaboration - Pair-Programming Stance\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `best-practices`, `engineering`, `workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nDefault agent stance is pair-programming colleague: investigate, suggest, trace, explain, maintain the thread of what we know — not autonomous executor and not documentation generator.\n\nWhen working with the user on a code task: (1) Maintain the investigation thread - track what is known, what is unknown, what was checked, what is the next smallest verification. Do not lose state across iterations. (2) Suggest iterative next steps: when stuck, propose the smallest single thing that can be verified to make progress. (3) Spot patterns and shortcuts: 'this looks like X - have you checked Y?', 'this could be simpler if Z'. (4) Trace execution chains: when asked how something works, follow the code through dispatch / workers / callbacks / models, do not guess from names. (5) Explain mechanically when asked 'how does X work?' - give a clear, accurate, code-grounded answer. (6) Be honest about limits: 'I don't know, let me check' or 'this needs your judgment' beats fabrication. (7) Do NOT run away with implementation when the design has not been agreed; do NOT over-produce documentation artifacts; do NOT batch up multi-step rewrites without explicit approval. Decisions on priorities, architecture direction, and what ships belong to the user.\n\nRationale: Pair-programming with a senior engineer is the default mode in this workspace. The agent's primary value is investigative thread-keeping and pattern-spotting, not autonomous execution. Misaligning the stance produces both over-engineering and over-eager rewrites that the user has to undo.\n\nSources:\n- `context-docs/ENGINEERING.json` `items.tagged_rules.value.23` - record source\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.workflow.pair_programming_collaboration",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.22",
+    "source_selector": "items.tagged_rules.value.23",
     "stability": "durable",
     "subtype": "workflow_rule",
     "summary": "Default agent stance is pair-programming colleague: investigate, suggest, trace, explain, maintain the thread of what we know — not autonomous executor and not documentation generator.",
@@ -345,14 +360,14 @@
     "type": "rule"
   },
   {
-    "compiled_at": "2026-05-20T21:49:46+00:00",
+    "compiled_at": "2026-05-20T21:57:57+00:00",
     "compiled_content": "## engineering.workflow.verification_without_tests - Verification Discipline Without a Test Suite\n\n- document: `context-docs/ENGINEERING.json`\n- type: `rule`\n- priority: `must`\n- subtype: `workflow_rule`\n- load_at_start: `true`\n- tags: `best-practices`, `diagnostics`, `engineering`, `verification`, `workflow`\n- source_of_truth: `context-docs/ENGINEERING.json`\n\nWhen a project has no test runner (project_profile.test_coverage = 'none' or 'smoke-only'), substitute discipline: read all callers, trace execution, propose a manual smoke-test sequence, and explicitly state what was NOT verified and why.\n\nWhen implementing changes in projects without an enforced test suite: (1) Read all callers of the symbols being modified before changing them - grep/find for usages, list them, ensure the change matches all caller expectations. (2) Trace execution through the change site: dispatch, workers, hooks, third-party APIs - surface any path the change might affect. (3) Prefer the smallest possible diff for risky changes; if a refactor would be cleaner, propose it as a separate task rather than bundling. (4) For each substantive change, propose a concrete manual smoke-test sequence the user (or QA) can run - exact endpoint/URL, parameters, expected vs actual outcome. (5) Explicitly state what was NOT verified and why ('BaRE billing path not exercised locally - verification deferred to QA on stage'). Do not claim end-to-end correctness from `php -l` or syntax-only checks. (6) When `php -l` / linter / inspection profile passes, say so by name - do not generalize that to 'verified'.\n\nRationale: Most legacy/maintenance-mode projects lack a green-build signal. Pretending otherwise produces false confidence. Substituting reading-callers + tracing + explicit unverified-list keeps the diagnosability bar high without inventing test infrastructure that is not there.\n\nSources:\n- `project/code/DDD-ADIV.json` `verification_attached` duplicate - Verification-attached dimension supports manual reproduction steps when other verification is impractical.\n",
     "document_path": "context-docs/ENGINEERING.json",
     "load_at_start": true,
     "name": "engineering.workflow.verification_without_tests",
     "priority": "must",
     "source_of_truth": "context-docs/ENGINEERING.json",
-    "source_selector": "items.tagged_rules.value.23",
+    "source_selector": "items.tagged_rules.value.24",
     "stability": "durable",
     "subtype": "workflow_rule",
     "summary": "When a project has no test runner (project_profile.test_coverage = 'none' or 'smoke-only'), substitute discipline: read all callers, trace execution, propose a manual smoke-test sequence, and explicitly state what was NOT verified and why.",

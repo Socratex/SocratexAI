@@ -97,6 +97,7 @@
             "canonical_index_content_metadata_document_schema",
             "cross_platform_tool_runtime_resolution",
             "workspace_root_marker_resolution",
+            "better_version_now_future_proof_engineering",
             "predictable_load_lightweight_architecture",
             "template_parity_for_reusable_pipeline_improvements",
             "project_specific_design_context_gate"
@@ -5717,6 +5718,53 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "A pipeline source improvement may pass locally but new child projects initialized from templates miss the rule, causing update/source parity to look correct while starter projects remain stale."
+            },
+            "better_version_now_future_proof_engineering": {
+                "summary": "Global programming directive: agents should check per task whether a modest better-version-now implementation should be chosen across clean code, DDD-ADIV, architecture, security, data ownership, contracts, migrations, diagnostics, verification, and predictable performance before accepting a lower-quality shortcut.",
+                "required_paths": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
+                    "project/code/DDD-ADIV.json",
+                    "project/gamedev/PACK.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "knowledge_code_context.ps1",
+                    "knowledge_compile.ps1",
+                    "check_pipeline_feature_contracts.ps1"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the directive in shared agent contract, code pack, workflow, engineering standards, gamedev profile, template engineering context, and feature contract in the same promotion.",
+                    "Make the rule explicit that borrowed/proven solutions are checked before invented systems.",
+                    "Describe the overengineering check so better-version-now does not become speculative ceremony.",
+                    "Recompile AI-compiled context and run the feature contract checker."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                ],
+                "known_failure_if_missing": "If this feature exists only as a performance rule, agents will keep treating future-proofing as FPS-only instead of applying it to clean code, DDD/ADIV, security, data ownership, contracts, migrations, and context boundaries.",
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "knowledge_code_context.ps1",
+                        "knowledge_compile.ps1",
+                        "check_pipeline_feature_contracts.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
+                    "project/gamedev/PACK.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json"
+                ]
             }
         }
     },

@@ -1,6 +1,81 @@
 [
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "better-version-now"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "borrowed-before-bespoke"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "boundaries"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "clean-code"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "contracts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "data-ownership"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "ddd-adiv"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "future-first"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "migrations"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "performance"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "security"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.architecture.helper_enforced_contracts",
     "tag": "architecture"
   },

@@ -12,7 +12,7 @@
         },
         "summary": {
             "title": "Summary",
-            "content": "This file is the compact engineering standards capsule compiled into `AI-compiled/project/knowledge.sqlite`.\n\nSource documents remain authoritative. SQLite is a generated query/index layer for faster agent context loading.\n"
+            "content": "This file is the compact engineering standards capsule compiled into `AI-compiled/project/knowledge.sqlite`.\n\nSource documents remain authoritative. SQLite is a generated query/index layer for faster agent context loading.\n\n\nCurrent code-task default: apply the better-version-now check before implementation; prefer small future-proof improvements in clean code, DDD/ADIV boundaries, contracts, security, data ownership, migrations, diagnostics, verification, and predictable-load architecture when they are cheap now and expensive to retrofit later."
         },
         "tagged_rules": {
             "title": "Tagged Rules",
@@ -401,6 +401,55 @@
                             "selector": "known_solutions_alignment",
                             "is_duplicate": true,
                             "note": "DDD-ADIV reinforces build-vs-borrow as a domain-clarifying tool."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.architecture.better_version_now_future_proof_by_default",
+                    "type": "rule",
+                    "subtype": "architecture_rule",
+                    "title": "Better Version Now By Default",
+                    "summary": "For programming tasks, check whether a slightly better future-proof version should be built now across architecture, clean code, contracts, security, data ownership, and performance.",
+                    "rule": "For every implementation, bugfix, migration, refactor, performance diagnosis, code review, and architecture decision, ask: should this be built as the better version now? Default to yes when a small extra investment improves future change cost, ownership clarity, code cleanliness, DDD/ADIV alignment, security posture, data ownership, context boundaries, contracts, migration safety, observability, testability, or predictable-scale performance. Borrow known solutions and proven patterns before inventing custom systems. Add a little more structure now when it is cheap and likely to prevent expensive refactors, debt repayment, security redesign, data-boundary repair, or performance tuning later. When the better version would be substantially bigger, speculative, ceremony-heavy, or unclear, stop for an overengineering check and ask for the intended future load, domain boundary, security exposure, data volume, team/process expectation, or product direction before implementing.",
+                    "rationale": "This is not a license for ceremony or speculative frameworks. It is the default quality profile: learn from known software history, avoid repeating common debt patterns, and choose small future-proofing steps while they are cheap. Many expensive rewrites come from taking the locally easy path in areas where growth, ownership, security, data shape, or runtime scale was already predictable. The desired bias is to avoid building toward a known retrofit unless current instructions explicitly prioritize a disposable shortcut.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "architecture",
+                        "coding",
+                        "clean-code",
+                        "ddd-adiv",
+                        "future-first",
+                        "better-version-now",
+                        "borrowed-before-bespoke",
+                        "contracts",
+                        "boundaries",
+                        "data-ownership",
+                        "security",
+                        "migrations",
+                        "performance",
+                        "verification"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "primary_known_solutions_directive",
+                            "note": "Shared agent contract defines the global better-version-now and borrowed-before-invented directive."
+                        },
+                        {
+                            "path": "project/code/PACK.json",
+                            "selector": "technical_defaults",
+                            "is_duplicate": true,
+                            "note": "Code pack applies the directive to programming implementation defaults."
+                        },
+                        {
+                            "path": "project/code/WORKFLOW.json",
+                            "selector": "general_workflow",
+                            "is_duplicate": true,
+                            "note": "Code workflow makes the check part of every programming task sequence."
                         }
                     ]
                 },

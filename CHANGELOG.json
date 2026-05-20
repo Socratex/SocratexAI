@@ -4,6 +4,12 @@
         {
             "version": "0.2.0-alpha",
             "date": "2026-05-20",
+            "feature": "better_version_now_future_proof_engineering",
+            "change": "Expanded the predictable-load directive into a broader better-version-now programming philosophy. Agents now check per task whether a modest upfront improvement should be made across clean code, DDD-ADIV, architecture, security, data ownership, contracts, migrations, diagnostics, verification, and performance; borrowed/proven patterns should be considered before invented systems, with an explicit overengineering check when the better version becomes large or speculative. Why: future-proofing should prevent known expensive refactors and debt repayment across all programming work, not only FPS-sensitive paths."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-20",
             "feature": "predictable_load_lightweight_architecture",
             "change": "Added a global programming directive for predictable-load lightweight architecture: implementation, bugfix, log review, and performance diagnosis now check whether a behavior will scale by count/frequency/storage/I/O/runtime pressure and prefer data/query/batch/pool/prewarm helper contracts over heavyweight framework primitives as the default broad model. Also added template-parity workflow rules so reusable source-pipeline improvements update starter templates and feature contracts when future child projects should inherit the behavior. Why: predictable future load should be designed lightly from the start instead of relying on later expensive refactors or symptom micro-optimizations."
         },

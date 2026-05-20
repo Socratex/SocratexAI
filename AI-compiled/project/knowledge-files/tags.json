@@ -20,8 +20,20 @@
     "tag": "best-practices"
   },
   {
+    "description": "",
+    "tag": "better-version-now"
+  },
+  {
     "description": "Prefer proven external patterns before custom systems when they reduce risk.",
     "tag": "borrowed-before-bespoke"
+  },
+  {
+    "description": "",
+    "tag": "boundaries"
+  },
+  {
+    "description": "",
+    "tag": "clean-code"
   },
   {
     "description": "Code readability and implementation rules.",
@@ -46,6 +58,10 @@
   {
     "description": "Data owns truth before scene projection.",
     "tag": "data-first"
+  },
+  {
+    "description": "",
+    "tag": "data-ownership"
   },
   {
     "description": "",
@@ -113,6 +129,10 @@
   },
   {
     "description": "",
+    "tag": "migrations"
+  },
+  {
+    "description": "",
     "tag": "naming"
   },
   {
@@ -150,6 +170,10 @@
   {
     "description": "",
     "tag": "scripts"
+  },
+  {
+    "description": "",
+    "tag": "security"
   },
   {
     "description": "Knowledge that should be loaded at the beginning of session context building.",
