@@ -5,6 +5,7 @@
         "COMMANDS.json",
         "FLOWS.json",
         "SCRIPTS.json",
+        "TODO.md",
         "pipeline_featurelist.json",
         "core/",
         "core/WORKSPACE.json",
@@ -37,6 +38,10 @@
         "SCRIPTS.json": {
             "role": "Root script availability index.",
             "read": "index only in default context; read content only for exact metadata about a specific script"
+        },
+        "TODO.md": {
+            "role": "Maintainer-side backlog for source-pipeline cleanup, audits, and deferred improvements not yet promoted into plan or feature contracts.",
+            "read": "when source-pipeline backlog, directive cleanup, or maintainer-side deferred work is relevant"
         },
         "pipeline_featurelist.json": {
             "role": "Canonical source-pipeline feature manifest. It uses the stable JSON list-document shape: root index, content, and metadata.",

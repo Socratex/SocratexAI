@@ -100,7 +100,8 @@
             "better_version_now_future_proof_engineering",
             "predictable_load_lightweight_architecture",
             "template_parity_for_reusable_pipeline_improvements",
-            "project_specific_design_context_gate"
+            "project_specific_design_context_gate",
+            "source_pipeline_maintainer_backlog"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -5773,6 +5774,41 @@
                     "templates/code/context-docs/ENGINEERING.json",
                     "core/PROJECT-PROFILE.json"
                 ]
+            },
+            "source_pipeline_maintainer_backlog": {
+                "summary": "Source-only maintainer backlog for deferred SocratexPipeline cleanup and audit ideas that should not become always-loaded directives until promoted.",
+                "required_paths": [
+                    "TODO.md",
+                    "DOCS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.ps1",
+                    "rebuild_ai_compiled_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.ps1",
+                        "rebuild_ai_compiled_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "TODO.md",
+                    "DOCS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_only",
+                "promotion_checklist": [
+                    "Keep deferred maintainer cleanup ideas in TODO.md unless they are promoted into a reusable source or child-project feature.",
+                    "Use the backlog for directive bloat, hierarchy, and context-cost audits instead of adding more always-loaded rules by default.",
+                    "Update DOCS.json when maintainer-side backlog ownership changes.",
+                    "Rebuild compiled context and run feature-contract checks before committing source-pipeline document changes."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1"
+                ],
+                "known_failure_if_missing": "Maintainer cleanup ideas may be added as new global directives or scattered prompts, increasing context bloat and making rule priority loss more random under context pressure."
             }
         }
     },
