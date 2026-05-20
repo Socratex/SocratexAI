@@ -69,7 +69,7 @@
     "is_duplicate": false,
     "note": "record source",
     "path": "context-docs/ENGINEERING.json",
-    "selector": "items.tagged_rules.value.21"
+    "selector": "items.tagged_rules.value.22"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -142,6 +142,14 @@
     "note": "Operating principles include 'prefer explicit contracts over hidden convention'.",
     "path": "core/AGENT-CONTRACT.json",
     "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "is_duplicate": false,
+    "note": "Shared programming directive now includes predictable-load checks and heavyweight-model migration bias.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -249,9 +257,25 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "is_duplicate": true,
+    "note": "Code pack technical defaults require lightweight-by-default contracts where load is predictable.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "is_duplicate": true,
     "note": "Code-project workflow repeats the same future-fit and diagnostic bias.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "general_workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "is_duplicate": true,
+    "note": "Code workflow applies the check during feature, bug, performance, and architecture work.",
     "path": "project/code/WORKFLOW.json",
     "selector": "general_workflow"
   },
@@ -278,6 +302,14 @@
     "note": "Script-first workflow repeats the preferred query command.",
     "path": "project/code/WORKFLOW.json",
     "selector": "script_first_execution"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "is_duplicate": true,
+    "note": "Starter code template carries the rule into new child projects.",
+    "path": "templates/code/context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",

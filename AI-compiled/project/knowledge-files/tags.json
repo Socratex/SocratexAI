@@ -13,6 +13,10 @@
   },
   {
     "description": "",
+    "tag": "batching"
+  },
+  {
+    "description": "",
     "tag": "best-practices"
   },
   {
@@ -92,8 +96,16 @@
     "tag": "helpers"
   },
   {
+    "description": "",
+    "tag": "hot-path"
+  },
+  {
     "description": "Compiled knowledge index, tag query, and note-selection rules.",
     "tag": "knowledge"
+  },
+  {
+    "description": "",
+    "tag": "lightweight-by-default"
   },
   {
     "description": "Long-term maintenance and traceability rules.",
@@ -118,6 +130,10 @@
   {
     "description": "Planning, pass selection, and priority sequencing rules.",
     "tag": "planning"
+  },
+  {
+    "description": "",
+    "tag": "pooling"
   },
   {
     "description": "",

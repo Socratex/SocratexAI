@@ -2,6 +2,12 @@
     "summary": "SocratexAI pipeline product changelog.",
     "entries": [
         {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-20",
+            "feature": "predictable_load_lightweight_architecture",
+            "change": "Added a global programming directive for predictable-load lightweight architecture: implementation, bugfix, log review, and performance diagnosis now check whether a behavior will scale by count/frequency/storage/I/O/runtime pressure and prefer data/query/batch/pool/prewarm helper contracts over heavyweight framework primitives as the default broad model. Also added template-parity workflow rules so reusable source-pipeline improvements update starter templates and feature contracts when future child projects should inherit the behavior. Why: predictable future load should be designed lightly from the start instead of relying on later expensive refactors or symptom micro-optimizations."
+        },
+        {
             "date": "2026-05-05",
             "type": "feature",
             "feature": "managed_pipeline_root_catalog_sync",

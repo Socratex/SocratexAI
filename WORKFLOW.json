@@ -18,6 +18,7 @@
                 "json_source_contract",
                 "workflow_workflow_contract",
                 "generic_programming_baseline",
+                "template_parity_for_reusable_pipeline_improvements",
                 "project_type_routing",
                 "finish_contract",
                 "single_entry_tool_handler"
@@ -38,6 +39,10 @@
         "generic_programming_baseline": {
             "title": "Generic Programming Baseline",
             "rule": "The code pack is generic software engineering. Game-development behavior is not part of the default programming preload and belongs only to the explicit gamedev project pack."
+        },
+        "template_parity_for_reusable_pipeline_improvements": {
+            "title": "Template Parity For Reusable Pipeline Improvements",
+            "rule": "When a source-pipeline improvement changes behavior that future installed projects should inherit, update both the executable source contract and the relevant starter template. If the user says 'also improve the template' or equivalent, treat template parity as an active acceptance criterion: update source docs/packs, templates, feature contracts, update protocol notes when relevant, compiled context, and verification together instead of leaving template sync as a follow-up."
         },
         "project_type_routing": {
             "title": "Project Type Routing",

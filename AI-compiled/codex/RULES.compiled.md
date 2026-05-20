@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-78adcf14f9bc
+Generated: source-de7cb630a66f
 
 ## Source of Truth
 
@@ -20,7 +20,7 @@ Generated: source-78adcf14f9bc
 {
     "title": "Operating Principles",
     "format": "markdown-section",
-    "body": "## Operating Principles\n\n- Prefer epistemic accuracy over agreement, optimism, or style.\n- Separate observed facts, reasoned inference, speculation, and value judgment.\n- Do not mirror the user's belief unless it is independently supported by evidence.\n- Challenge vague, unsupported, contradictory, or likely false assumptions when the correction is useful.\n- State uncertainty explicitly when confidence is limited.\n- Prefer explicit contracts over hidden convention.\n- Preserve momentum when the request is clear.\n- Ask questions only when missing information materially changes the action.\n- Keep project-facing files concise, current, and useful.\n- Read `DOCS.json` before reading, creating, renaming, or updating project documents.\n- Update `DOCS.json` whenever a durable document is added, removed, renamed, or its role changes.\n- Prefer the smallest meaningful ownership slice.\n- Avoid broad sweeps when a narrow contract point solves the problem.\n- Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.\n- Prefer high-ROI improvements over comprehensive but low-impact passes.\n- When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.\n- Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.\n- For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text when a tag extractor is available, then query the compiled knowledge layer by those tags before answering or executing. Treat tag-selected notes as routing context, not a replacement for exact source reads when edits or high-stakes claims depend on source truth.\n"
+    "body": "## Operating Principles\n\n- Prefer epistemic accuracy over agreement, optimism, or style.\n- Separate observed facts, reasoned inference, speculation, and value judgment.\n- Do not mirror the user's belief unless it is independently supported by evidence.\n- Challenge vague, unsupported, contradictory, or likely false assumptions when the correction is useful.\n- State uncertainty explicitly when confidence is limited.\n- Prefer explicit contracts over hidden convention.\n- Preserve momentum when the request is clear.\n- Ask questions only when missing information materially changes the action.\n- Keep project-facing files concise, current, and useful.\n- Read `DOCS.json` before reading, creating, renaming, or updating project documents.\n- Update `DOCS.json` whenever a durable document is added, removed, renamed, or its role changes.\n- Prefer the smallest meaningful ownership slice.\n- Avoid broad sweeps when a narrow contract point solves the problem.\n- Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.\n- Prefer high-ROI improvements over comprehensive but low-impact passes.\n- When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.\n- Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.\n- For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text when a tag extractor is available, then query the compiled knowledge layer by those tags before answering or executing. Treat tag-selected notes as routing context, not a replacement for exact source reads when edits or high-stakes claims depend on source truth.\n- When improving reusable SocratexPipeline behavior, keep source contracts, project packs, templates, feature contracts, and compiled/update surfaces in parity. If the user says to improve the template too, treat template parity as mandatory acceptance criteria, not as a follow-up.\n"
 }
 
 {
@@ -211,6 +211,8 @@ Draft placeholder:
             "canonical_index_content_metadata_document_schema",
             "cross_platform_tool_runtime_resolution",
             "workspace_root_marker_resolution",
+            "predictable_load_lightweight_architecture",
+            "template_parity_for_reusable_pipeline_improvements",
             "project_specific_design_context_gate"
         ],
         "feature_contracts": {
@@ -5751,6 +5753,84 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/codebase/check_project_design_context_gate.ps1 -ProjectRoot <project>"
                 ],
                 "known_failure_if_missing": "If 'project_specific_design_context_gate' is listed without these artifacts, source/child comparison may pass by feature id while implementation flow loses its second gate, and per-project zone/namespace rules become opt-in instead of enforced. Symptoms: agents drag /app patterns into /application files (or vice-versa), miss namespace-zone constraints in projects with dual zones, or apply modern syntax to PHP 5.6 projects."
+            },
+            "predictable_load_lightweight_architecture": {
+                "summary": "Programming work checks predictable load before choosing heavyweight framework primitives, and performance complaints route toward lightweight data/query/batch/pool/prewarm migration when the broad model is the bottleneck.",
+                "required_paths": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "knowledge_code_context.ps1",
+                    "knowledge_compile.ps1",
+                    "check_pipeline_feature_contracts.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "knowledge_code_context.ps1",
+                        "knowledge_compile.ps1",
+                        "check_pipeline_feature_contracts.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the shared agent contract, code pack, code workflow, source engineering standards, and code starter template aligned.",
+                    "Ensure the rule is included in compiled code-task engineering context so implementation, bugfix, log review, and performance diagnosis load it by default.",
+                    "For performance reports, prefer architecture migration when a heavyweight broad model is predictably the bottleneck before symptom shaving.",
+                    "Run feature-contract and knowledge checks after promotion."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_check.ps1"
+                ],
+                "known_failure_if_missing": "Agents may keep using ORM/engine/framework convenience as the broad storage/index/batch model for predictable scale, then try to micro-optimize symptoms instead of choosing a lightweight architecture early."
+            },
+            "template_parity_for_reusable_pipeline_improvements": {
+                "summary": "Reusable source-pipeline behavior changes must update the relevant starter templates and feature contracts when future child projects should inherit the behavior.",
+                "required_paths": [
+                    "WORKFLOW.json",
+                    "core/UPDATE-PROTOCOL.json",
+                    "templates",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.ps1",
+                    "compile_pipeline_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.ps1",
+                        "compile_pipeline_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "WORKFLOW.json",
+                    "core/UPDATE-PROTOCOL.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "When the user asks to improve the template too, treat template parity as acceptance criteria for the task.",
+                    "Update source contracts and starter templates in the same promotion when future children should inherit the behavior.",
+                    "List the source docs, templates, scripts, and compiled-context surfaces in the feature contract.",
+                    "Run the feature-contract checker before publishing."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                ],
+                "known_failure_if_missing": "A pipeline source improvement may pass locally but new child projects initialized from templates miss the rule, causing update/source parity to look correct while starter projects remain stale."
             }
         }
     },
@@ -5758,7 +5838,7 @@ Draft placeholder:
         "schema": "socratex-pipeline-featurelist/v4",
         "pipeline_id": "socratex_pipeline",
         "role": "source",
-        "updated_at": "2026-05-18",
+        "updated_at": "2026-05-20",
         "comparison_contract": "Use content.features for cheap source/instance comparison; use content.feature_contracts for artifact-level synchronization and promotion checks. Root index/content/metadata is the canonical JSON list-document shape.",
         "required_root_keys": [
             "index",

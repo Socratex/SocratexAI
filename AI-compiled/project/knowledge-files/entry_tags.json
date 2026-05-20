@@ -411,6 +411,56 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "batching"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "data-first"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "future-first"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "hot-path"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "lightweight-by-default"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "performance"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "pooling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "runtime"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
     "tag": "compiled-context"
   },

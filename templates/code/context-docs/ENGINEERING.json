@@ -300,6 +300,56 @@
                             "note": "Reusable source-pipeline rule promoted from Riftbound Vanguard logger/session and movement resolver work."
                         }
                     ]
+                },
+                {
+                    "id": "engineering.performance.lightweight_by_default_for_predictable_load",
+                    "type": "rule",
+                    "subtype": "architecture_rule",
+                    "title": "Lightweight By Default For Predictable Load",
+                    "summary": "Every implementation, bug diagnosis, and performance response should check predictable scale and avoid heavyweight frameworks as the default model for mass, batch, or hot-path behavior.",
+                    "rule": "For every implementation, bugfix, performance diagnosis, log review, and architecture decision, explicitly check whether the touched behavior is or will predictably become mass, batch, hot-path, storage-heavy, I/O-heavy, framework-heavy, generated-content-heavy, or otherwise repeatedly exercised. When yes, prefer lightweight data-first truth, explicit helper/service APIs, local queries, indexes, batching, pooling, bounded caches, raw/bulk paths, activation/prewarm, and measured async/worker handoff over convenient heavyweight framework abstractions as the default storage, index, broadphase, or update model. Use heavy framework primitives for active entities, small local proxies, ergonomic single-object operations, and presentation/simulation that is truly active. If the tradeoff is uncertain and the choice affects architecture, ask for the intended load shape before implementing: rough active counts, total generated counts, on-screen counts, batch sizes, update frequency, persistence volume, and whether the system is expected to grow by 2x, 10x, or 100x. For performance complaints, first consider whether the real fix is migration away from a heavyweight default model before tightening budgets, thresholds, culling radii, or micro-optimizing symptoms.",
+                    "rationale": "This is future-cost prevention, not premature optimization. Premature optimization is harmful when it adds complexity without likely load; low-performance-quality architecture is also harmful when predictable load is obvious. Retrofitting away from heavyweight framework primitives later is more expensive than starting with explicit helper/query/batch contracts now. The intended bias is not to overengineer, but to avoid building a large future system on a model that will have to be thrown away once load is added.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "performance",
+                        "architecture",
+                        "future-first",
+                        "data-first",
+                        "runtime",
+                        "batching",
+                        "pooling",
+                        "hot-path",
+                        "lightweight-by-default"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "primary_known_solutions_directive",
+                            "note": "Shared programming directive now includes predictable-load checks and heavyweight-model migration bias."
+                        },
+                        {
+                            "path": "project/code/PACK.json",
+                            "selector": "technical_defaults",
+                            "is_duplicate": true,
+                            "note": "Code pack technical defaults require lightweight-by-default contracts where load is predictable."
+                        },
+                        {
+                            "path": "project/code/WORKFLOW.json",
+                            "selector": "general_workflow",
+                            "is_duplicate": true,
+                            "note": "Code workflow applies the check during feature, bug, performance, and architecture work."
+                        },
+                        {
+                            "path": "templates/code/context-docs/ENGINEERING.json",
+                            "selector": "tagged_rules",
+                            "is_duplicate": true,
+                            "note": "Starter code template carries the rule into new child projects."
+                        }
+                    ]
                 }
             ]
         },
