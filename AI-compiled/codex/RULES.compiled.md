@@ -6156,6 +6156,7 @@ Draft placeholder:
                     "Keep fresh-agent/adversarial diff audit ideas in the backlog until they are intentionally promoted into an advisory or blocking quality-gate feature.",
                     "Keep artifact-based task-flow audit ideas in the backlog until they are intentionally promoted into a code-touch finalization check that requires cited plan/research/futureproof artifacts instead of yes/no self-grading.",
                     "When promoted together, prefer a hybrid task-flow audit where adversarial diff review is a conditional end section for complex or high-risk diffs, not a separate ritual for every small change.",
+                    "Keep fragmented-task external-memory workflow ideas in the backlog until promoted into a rule that splits tasks above a configurable context/LOC threshold and requires STATE/PLAN handoff artifacts between sub-tasks.",
                     "Update DOCS.json when maintainer-side backlog ownership changes.",
                     "Rebuild compiled context and run feature-contract checks before committing source-pipeline document changes."
                 ],
