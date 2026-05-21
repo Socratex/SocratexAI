@@ -7,6 +7,9 @@
         "default_file",
         "minimal_schema",
         "workflow",
+        "automation_boundary",
+        "handoff_schema",
+        "grouped_fragmentation",
         "promotion",
         "structured_document_edits"
     ],
@@ -63,6 +66,21 @@
             "title": "Structured Document Edits",
             "format": "markdown-section",
             "body": "## Structured Document Edits\n\nFor JSON documents with `index` and `items`, use document item scripts for structural moves:\n\n- `tools/documents/migrate_document_item.ps1` to move or copy an item between documents,\n- `tools/documents/move_document_item.ps1` to move an item inside one document,\n- `tools/documents/insert_document_item.ps1` to add an item at a controlled position,\n- `tools/documents/read_document_item.ps1` and `tools/documents/list_document_keys.ps1` for selective reads before editing.\n\nManual edits are acceptable when:\n\n- changing the document schema itself,\n- fixing the parser or migration tool,\n- the script is unavailable or broken,\n- doing a very small text correction inside one item and no field-level script exists.\n\nIf a script cannot run because a runtime is missing, follow `core/SCRIPT-FALLBACK.json`.\n"
+        },
+        "grouped_fragmentation": {
+            "title": "Grouped Fragmentation",
+            "format": "markdown-section",
+            "body": "## Grouped Fragmentation\n\nFor broad work, split execution into user-approved groups and bounded sub-tasks when required code/context is likely above roughly 1500 LOC, the task has more than 3 substantial substeps, or the work crosses multiple ownership boundaries, migrations, performance investigations, or multi-system bugs.\n\nA group is one user-approved execution unit. Sub-tasks inside the active group may run automatically without waiting for another user `continue`, as long as the next sub-task stays inside the approved group goal and no escalation condition appears.\n\nBetween sub-tasks, minimize live context, reload only the required project context by tier, read the group sub-plan and the latest handoff artifact, then execute the next bounded sub-task. Do not rely on chat memory as the state bridge."
+        },
+        "handoff_schema": {
+            "title": "Handoff Schema",
+            "format": "markdown-section",
+            "body": "## Handoff Schema\n\nEach fragmented sub-task must write a handoff before the next fragment starts. Use `tools/tasks/grouped_task_handoff.ps1` when available.\n\nRecord at minimum:\n\n- task id, group id, and sub-task id,\n- group goal and sub-task goal,\n- inspected files,\n- changed files,\n- current hypothesis or decision state,\n- unresolved risks, blockers, and assumptions,\n- exact next files or commands,\n- verification already run,\n- whether automatic progression may continue or must stop for the user.\n\nThe next fragment must read this handoff before further source inspection or edits."
+        },
+        "automation_boundary": {
+            "title": "Automation Boundary",
+            "format": "markdown-section",
+            "body": "## Automation Boundary\n\nStop automatic sub-task progression and ask the user before continuing when:\n\n- scope grows outside the approved group,\n- a product/design/business direction decision appears,\n- verification fails in a way that changes the implementation plan,\n- a destructive action, dependency install, credential, external write, or expensive operation is needed,\n- the handoff is incomplete or contradictory,\n- the next sub-task would require a new research direction or new named mechanism not already accepted.\n\nWait for user `continue` before starting the next group. Do not wait between sub-tasks inside the same approved group unless one of these conditions appears."
         }
     },
     "schema": "socratex-document/v1",

@@ -1379,6 +1379,9 @@
         "default_file",
         "minimal_schema",
         "workflow",
+        "automation_boundary",
+        "handoff_schema",
+        "grouped_fragmentation",
         "promotion",
         "structured_document_edits"
       ],
@@ -1441,6 +1444,24 @@
           "path": "items.structured_document_edits",
           "title": "Structured Document Edits",
           "ref": "items.structured_document_edits",
+          "status": ""
+        },
+        "grouped_fragmentation": {
+          "path": "items.grouped_fragmentation",
+          "title": "Grouped Fragmentation",
+          "ref": "items.grouped_fragmentation",
+          "status": ""
+        },
+        "handoff_schema": {
+          "path": "items.handoff_schema",
+          "title": "Handoff Schema",
+          "ref": "items.handoff_schema",
+          "status": ""
+        },
+        "automation_boundary": {
+          "path": "items.automation_boundary",
+          "title": "Automation Boundary",
+          "ref": "items.automation_boundary",
           "status": ""
         }
       }

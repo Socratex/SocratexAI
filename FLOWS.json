@@ -56,6 +56,7 @@
             "then": [
                 "confirm high-cost scope when not already confirmed",
                 "create passes",
+                "subroutine:grouped_fragmented_task_handoff",
                 "run knowledge_code_context.ps1 before source-code reads or edits",
                 "subroutine:research_named_mechanism_gate",
                 "edit in coherent slices",
@@ -68,6 +69,7 @@
         "pipeline_upgrade": {
             "then": [
                 "audit source state",
+                "subroutine:grouped_fragmented_task_handoff",
                 "migrate structured contracts to JSON",
                 "port routing/index scripts",
                 "generalize default code behavior",
@@ -136,6 +138,15 @@
                 "Always state which repo tools/scripts were used and which edits were manual.",
                 "For complex or high-risk tasks, run a short adversarial review from the changelog append: ask what the changelog says changed, then check whether the diff really implements that claim and whether verification, plan/state, tool usage, or future-debt risk is missing.",
                 "Use tools/repo/task_flow_audit.ps1 when available to print the checklist and changelog-based complex review prompt."
+            ],
+            "grouped_fragmented_task_handoff": [
+                "Before broad implementation, check whether the task exceeds the fragmentation trigger: roughly >1500 LOC required context, >3 substantial substeps, multiple ownership boundaries, migration scope, performance investigation, or multi-system bug scope.",
+                "If the trigger is met, split the work into user-approved groups; each group has one coherent goal, acceptance condition, expected output, and stop/checkpoint before the next group.",
+                "Inside an approved group, split work into bounded sub-tasks with narrow ownership, expected artifact, minimal required context, and verification target.",
+                "Run sub-tasks inside the approved group automatically without waiting for another user continue unless an escalation condition appears.",
+                "Between sub-tasks, minimize live context, reload project context by tier, read the group sub-plan and latest STATE/PLAN handoff, then execute the next sub-task.",
+                "After each sub-task, write the handoff with grouped_task_handoff.ps1 when available: inspected files, changed files, current hypothesis/decision state, unresolved risks, next files/commands, and verification status.",
+                "Stop and ask the user when scope expands outside the group, product direction is needed, verification changes the plan, a destructive/external/expensive action is needed, or the handoff is incomplete."
             ]
         }
     }

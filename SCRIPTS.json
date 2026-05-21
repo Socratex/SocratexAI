@@ -60,6 +60,7 @@
         "import_existing_project.ps1",
         "init_branch_memory.ps1",
         "init_task_work.ps1",
+        "grouped_task_handoff.ps1",
         "Initialize-SocratexPipeline.ps1",
         "install_powershell.ps1",
         "knowledge_check.ps1",
@@ -978,6 +979,44 @@
             "path": "tools/knowledge/knowledge_tier_report.py",
             "category": "knowledge",
             "description": "Python engine behind knowledge_tier_report.ps1 and knowledge_tier_check.ps1."
+        },
+        "grouped_task_handoff.ps1": {
+            "path": "tools/tasks/grouped_task_handoff.ps1",
+            "category": "tasks",
+            "description": "Write grouped fragmented-task STATE/PLAN handoff JSON and an optional next-subtask prompt.",
+            "input": {
+                "required": [
+                    "-TaskId",
+                    "-GroupId",
+                    "-SubtaskId"
+                ],
+                "optional": [
+                    "-ProjectRoot",
+                    "-Status",
+                    "-GroupGoal",
+                    "-SubtaskGoal",
+                    "-HandoffSummary",
+                    "-InspectedFiles",
+                    "-ChangedFiles",
+                    "-Verification",
+                    "-Risks",
+                    "-NextFiles",
+                    "-NextCommands",
+                    "-NextSubtaskId",
+                    "-NextSubtaskGoal",
+                    "-HandoffPath",
+                    "-PromptPath",
+                    "-NoPrompt",
+                    "-PrintJson"
+                ],
+                "default_handoff": "docs-tech/cache/grouped_task_handoff.json",
+                "default_prompt": "docs-tech/cache/next_subtask_prompt.md",
+                "rule": "Use named parameters only. From shell, pass list values as one quoted comma-separated string or from PowerShell as an explicit array; positional binding is disabled to prevent accidental path shifts."
+            },
+            "output": {
+                "success": "Updates handoff JSON, writes next-subtask prompt unless -NoPrompt is passed, and prints both paths.",
+                "failure": "Throws on invalid existing handoff JSON or missing required ids."
+            }
         }
     },
     "metadata": {

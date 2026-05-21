@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-21T22:19:15+02:00",
+  "generatedAt": "2026-05-21T23:39:52+02:00",
   "threshold": 300,
   "files": [
     {
@@ -137,6 +137,12 @@
     {
       "path": "tools/repo/run_final_task_checks.ps1",
       "lines": 192,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/tasks/grouped_task_handoff.ps1",
+      "lines": 185,
       "extension": ".ps1",
       "large": false
     },

@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-1c4c0e961e41
+Generated: source-48efbbd70f66
 
 ## Source of Truth
 
@@ -374,7 +374,8 @@ Draft placeholder:
             "directive_hierarchy_context_budget",
             "task_flow_audit_closure",
             "ai_native_code_contract_headers",
-            "source_pipeline_maintainer_backlog"
+            "source_pipeline_maintainer_backlog",
+            "grouped_fragmented_task_state_handoff"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -6267,9 +6268,9 @@ Draft placeholder:
                     "For directive consolidation work, require mechanical trigger conditions, real load tiers, and a hard Tier 1 token budget before AI categorization.",
                     "For code-touch quality work, prefer an always-on research/formalization flow when no research-backed implementation plan exists, so broad philosophy becomes concrete task plans instead of domain-specific tactics bloating core directives.",
                     "Keep future task-flow audit expansions in the backlog unless they add new reusable behavior beyond the promoted `task_flow_audit_closure` feature.",
-                    "Keep fragmented-task grouped auto-orchestration ideas in the backlog until promoted into a rule that splits large tasks into user-approved groups and bounded sub-tasks, runs sub-tasks inside the active group without waiting for user continue, reloads only tiered project context plus group handoff between sub-tasks, and requires STATE/PLAN handoff artifacts between fragments.",
                     "Update DOCS.json when maintainer-side backlog ownership changes.",
-                    "Rebuild compiled context and run feature-contract checks before committing source-pipeline document changes."
+                    "Rebuild compiled context and run feature-contract checks before committing source-pipeline document changes.",
+                    "Move promoted maintainer backlog ideas into their own feature contract and remove the active backlog bullet once shipped."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
@@ -6404,6 +6405,50 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_tier_check.ps1 -IncludeTemplates"
                 ],
                 "known_failure_if_missing": "Pipeline guidance keeps accumulating in always-loaded context, agents lose or ignore clear directives under context pressure, and broad knowledge sweeps pretend to fix bloat without a real tier contract or queryable tier metadata."
+            },
+            "grouped_fragmented_task_state_handoff": {
+                "summary": "Large-task workflow splits broad work into user-approved groups and bounded sub-tasks, runs sub-tasks inside the approved group automatically through file handoff, and waits for user continue only before the next group or escalation.",
+                "required_paths": [
+                    "core/TASK-WORK.json",
+                    "FLOWS.json",
+                    "project/code/WORKFLOW.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "tools/tasks/grouped_task_handoff.ps1",
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "grouped_task_handoff.ps1",
+                    "check_pipeline_feature_contracts.ps1",
+                    "rebuild_ai_compiled_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "grouped_task_handoff.ps1",
+                        "check_pipeline_feature_contracts.ps1",
+                        "rebuild_ai_compiled_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/TASK-WORK.json",
+                    "FLOWS.json",
+                    "project/code/WORKFLOW.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the fragmentation trigger explicit: roughly >1500 LOC context, >3 substantial substeps, multiple ownership boundaries, migrations, performance investigations, or multi-system bugs.",
+                    "Keep the approval boundary explicit: user approves groups; sub-tasks inside a group can run automatically until escalation.",
+                    "Keep handoff file structure durable enough for a fresh session to continue without relying on chat memory.",
+                    "Preserve escalation rules for product direction, scope expansion, failing verification, destructive/external actions, and incomplete handoff state.",
+                    "Sync the managed package so child projects receive TASK-WORK, FLOWS, code/gamedev workflow guidance, helper script, script catalog entry, and feature contract."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/tasks/grouped_task_handoff.ps1 -TaskId demo -GroupId g1 -SubtaskId s1 -ProjectRoot . -Status done -HandoffSummary \"demo\" -NoPrompt",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                ],
+                "known_failure_if_missing": "Agents keep doing broad work in one live context window, wait manually between every small subtask, or lose critical state between fragmented sessions because STATE/PLAN handoff artifacts are absent."
             }
         }
     },

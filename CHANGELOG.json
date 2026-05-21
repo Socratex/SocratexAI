@@ -414,6 +414,12 @@
       "date": "2026-05-21",
       "feature": "borrowed_before_invented",
       "change": "Renamed the borrowed-before-bespoke directive wording and feature ID to borrowed-before-invented / borrowed-vs-invented in active source knowledge, helper tags, gates, and feature contracts. Why: The directive is about checking known borrowed solutions before inventing a custom one; 'invented' matches the user-facing concept better than 'bespoke'."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-21",
+      "feature": "grouped_fragmented_task_state_handoff",
+      "change": "Added grouped fragmented-task execution guidance and a grouped_task_handoff.ps1 helper. Broad tasks can now be split into user-approved groups and bounded sub-tasks; sub-tasks inside an approved group can continue automatically through a durable handoff JSON and next-subtask prompt, with escalation rules for scope, product direction, verification failures, destructive/external actions, and incomplete handoff state. Why: large Codex tasks need external STATE/PLAN memory and automation between sub-tasks without forcing manual continue after every small fragment."
     }
   ]
 }

@@ -494,7 +494,7 @@
         },
         "broad_work_definition": {
             "title": "Broad Work Definition",
-            "content": "⚠️ Treat work as broad when it touches two or more ownership boundaries, persistent schema/state, runtime orchestration, visual/audio direction, active plan structure, randomness, async/timing behavior, or more than three files.\n\nFor broad work, write a short impact note before implementation: affected systems, state/schema assumptions, likely files or ownership boundaries, and the expected outcome.\n"
+            "content": "⚠️ Treat work as broad when it touches two or more ownership boundaries, persistent schema/state, runtime orchestration, visual/audio direction, active plan structure, randomness, async/timing behavior, or more than three files.\n\nFor broad work, write a short impact note before implementation: affected systems, state/schema assumptions, likely files or ownership boundaries, and the expected outcome.\n\n\n🧩 If broad gamedev work exceeds roughly 1500 LOC of required context, more than three substantial substeps, or multiple runtime/scene/domain ownership boundaries, split it into user-approved groups and bounded sub-tasks. Within an approved group, continue sub-tasks automatically through `Tools/tasks/grouped_task_handoff.ps1` handoff files; stop for the user before the next group or when scope, product direction, verification, destructive/external action, or handoff uncertainty requires escalation.\n"
         },
         "approval_rules": {
             "title": "Approval Rules",
