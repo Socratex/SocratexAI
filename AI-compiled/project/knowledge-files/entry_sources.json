@@ -1,6 +1,14 @@
 [
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "is_duplicate": true,
+    "note": "Implementation flow names the gate before source edits.",
+    "path": "FLOWS.json",
+    "selector": "implementation"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.default_tool_error_hardening",
     "is_duplicate": true,
     "note": "Script catalog can carry exact input/output contracts for fragile invocation shapes.",
@@ -69,7 +77,7 @@
     "is_duplicate": false,
     "note": "record source",
     "path": "context-docs/ENGINEERING.json",
-    "selector": "items.tagged_rules.value.23"
+    "selector": "items.tagged_rules.value.24"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -166,6 +174,14 @@
     "note": "Shared contract requires tag-derived context before substantive answers and commands.",
     "path": "core/AGENT-CONTRACT.json",
     "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "is_duplicate": false,
+    "note": "Shared directive for web-first known-solution checks before non-obvious code writes.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -289,6 +305,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "is_duplicate": true,
+    "note": "Code pack applies the gate to generic programming work.",
+    "path": "project/code/PACK.json",
+    "selector": "known_solution_bias"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
     "is_duplicate": true,
     "note": "Code workflow makes the check part of every programming task sequence.",
@@ -334,6 +358,14 @@
     "note": "Script-first workflow repeats the preferred query command.",
     "path": "project/code/WORKFLOW.json",
     "selector": "script_first_execution"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "is_duplicate": true,
+    "note": "Executable code workflow sequence for the research spike and named mechanism.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "general_workflow"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",

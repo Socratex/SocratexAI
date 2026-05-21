@@ -13,6 +13,7 @@
             "COMMANDS.json",
             "FLOWS.json",
             "SCRIPTS.json",
+            "TODO.md",
             "pipeline_featurelist.json",
             "core/",
             "core/WORKSPACE.json",

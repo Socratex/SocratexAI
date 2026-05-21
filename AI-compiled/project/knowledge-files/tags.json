@@ -128,6 +128,10 @@
     "tag": "lightweight-by-default"
   },
   {
+    "description": "",
+    "tag": "lightweight-futureproof"
+  },
+  {
     "description": "Long-term maintenance and traceability rules.",
     "tag": "maintainability"
   },
@@ -172,6 +176,10 @@
     "tag": "readability"
   },
   {
+    "description": "",
+    "tag": "research"
+  },
+  {
     "description": "Runtime lifecycle and gameplay execution rules.",
     "tag": "runtime"
   },
@@ -206,6 +214,10 @@
   {
     "description": "Verification strategy and quality gates.",
     "tag": "verification"
+  },
+  {
+    "description": "",
+    "tag": "web-research"
   },
   {
     "description": "",

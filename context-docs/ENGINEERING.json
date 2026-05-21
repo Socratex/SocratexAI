@@ -12,7 +12,7 @@
         },
         "summary": {
             "title": "Summary",
-            "content": "This file is the compact engineering standards capsule compiled into `AI-compiled/project/knowledge.sqlite`.\n\nSource documents remain authoritative. SQLite is a generated query/index layer for faster agent context loading.\n\nCurrent code-task default: apply profile-fit first, then better-version-now. Prefer small future-proof improvements in clean code, DDD/ADIV boundaries, contracts, security, data ownership, migrations, diagnostics, verification, and predictable-load architecture when they are cheap now and expensive to retrofit later; keep legacy surgical changes surgical."
+            "content": "This file is the compact engineering standards capsule compiled into `AI-compiled/project/knowledge.sqlite`.\n\nSource documents remain authoritative. SQLite is a generated query/index layer for faster agent context loading.\n\nCurrent code-task default: apply profile-fit, web-research-spike, and lightweight-futureproof before better-version-now. Prefer small future-proof improvements in clean code, DDD/ADIV boundaries, contracts, security, data ownership, migrations, diagnostics, verification, and predictable-load architecture when they are cheap now and expensive to retrofit later; keep legacy surgical changes surgical."
         },
         "tagged_rules": {
             "title": "Tagged Rules",
@@ -370,7 +370,7 @@
                     "subtype": "coding_rule",
                     "title": "Borrowed Before Bespoke",
                     "summary": "Prefer established patterns, proven libraries, and standard tools over custom-built solutions when they fit the project profile.",
-                    "rule": "Before designing custom code, check whether an established pattern, archetype, standard workflow, library, or proven tool already solves the problem at lower cost. Apply the build-vs-borrow lens to: design patterns (state machines, queues, adapters, ports, repositories), platform conventions, schemas, transaction boundaries, and contract types. Only build bespoke when the borrowed option creates worse constraints, hides project-specific truth, or fails the profile-fit check (e.g., wrong language version, conflicting with legacy framework). Document the decision when bespoke is chosen.",
+                    "rule": "Before designing custom code, check whether an established pattern, archetype, standard workflow, library, or proven tool already solves the problem at lower cost. For non-obvious write-code work, use the web research spike gate to find current archetypes and known failure modes before choosing a bespoke design. Apply the build-vs-borrow lens to: design patterns (state machines, queues, adapters, ports, repositories), platform conventions, schemas, transaction boundaries, and contract types. Only build bespoke when the borrowed option creates worse constraints, hides project-specific truth, or fails the profile-fit check. Local patterns shape the implementation after research; they do not automatically overrule research. Document the decision when bespoke is chosen.",
                     "rationale": "Custom code carries hidden ownership and maintenance cost. Borrowing reduces initial complexity and surfaces failure modes that are already documented; bespoke should pay for itself with a concrete project-specific advantage.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -405,12 +405,65 @@
                     ]
                 },
                 {
+                    "id": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+                    "type": "rule",
+                    "subtype": "workflow_rule",
+                    "title": "Web Research Spike To Named Implementation Plan Gate",
+                    "summary": "Non-obvious code-write work should research established archetypes and known failure modes before design, then name the implementation mechanism in the plan or execution note.",
+                    "rule": "Before non-obvious source-code writes such as feature design, structural bugfixes, performance work, hitbox/runtime behavior, or architecture choices, run a lightweight web research spike unless the active plan already names a current research-backed mechanism. If the correct pattern depends on future behavior, ask concise scale/dynamism questions first: active/total counts, update frequency, batch size, data volume, dynamic variation, module/branch count, and expected growth order. Synthesize the result as a named implementation mechanism, then use local project patterns, DDD-ADIV, diagnostics, and verification to shape the implementation. Local patterns are an implementation lens, not an automatic veto; when research conflicts with local style, surface the conflict and ask.",
+                    "rationale": "This keeps borrowed-before-bespoke concrete without bloating every task with heavy design docs. The gate catches known architecture, performance, diagnosability, and lifecycle traps early while preserving lightweight execution for obvious tiny fixes.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "workflow",
+                        "architecture",
+                        "coding",
+                        "research",
+                        "web-research",
+                        "borrowed-before-bespoke",
+                        "future-first",
+                        "lightweight-futureproof",
+                        "performance",
+                        "diagnostics",
+                        "planning",
+                        "profile-fit"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "primary_known_solutions_directive",
+                            "note": "Shared directive for web-first known-solution checks before non-obvious code writes."
+                        },
+                        {
+                            "path": "project/code/PACK.json",
+                            "selector": "known_solution_bias",
+                            "is_duplicate": true,
+                            "note": "Code pack applies the gate to generic programming work."
+                        },
+                        {
+                            "path": "project/code/WORKFLOW.json",
+                            "selector": "general_workflow",
+                            "is_duplicate": true,
+                            "note": "Executable code workflow sequence for the research spike and named mechanism."
+                        },
+                        {
+                            "path": "FLOWS.json",
+                            "selector": "implementation",
+                            "is_duplicate": true,
+                            "note": "Implementation flow names the gate before source edits."
+                        }
+                    ]
+                },
+                {
                     "id": "engineering.architecture.better_version_now_future_proof_by_default",
                     "type": "rule",
                     "subtype": "architecture_rule",
                     "title": "Better Version Now By Default",
-                    "summary": "Programming tasks should check whether a small profile-fit improvement should be done now across clean code, DDD/ADIV, contracts, security, data ownership, migrations, diagnostics, verification, and predictable performance.",
-                    "rule": "For every implementation, bugfix, migration, refactor, performance diagnosis, code review, and architecture decision, ask whether a modest better-version-now step should be included. Default to yes when it cheaply improves ownership, readability, security, data boundaries, contracts, migration safety, observability, verification, or future change cost. Apply project-profile gating: legacy/sunset/custom-framework surgical changes stay surgical and match surrounding code; broad boundaries, anti-corruption layers, and paradigm migration require an explicit refactor, modernization, migration, or broad feature task. Borrow known solutions and proven patterns before inventing custom systems. If the better version is substantially larger, speculative, ceremony-heavy, or unclear, stop for an overengineering check.",
+                    "summary": "Programming tasks should check whether a small profile-fit, research-informed improvement should be done now across clean code, DDD/ADIV, contracts, security, data ownership, migrations, diagnostics, verification, and predictable performance.",
+                    "rule": "For every implementation, bugfix, migration, refactor, performance diagnosis, code review, and architecture decision, ask whether a modest better-version-now step should be included. For non-obvious source-code writes, first run the web research spike gate unless the active plan already names the mechanism. Default to yes when a small step cheaply improves ownership, readability, security, data boundaries, contracts, migration safety, observability, verification, or future change cost. Apply project-profile gating: legacy/sunset/custom-framework surgical changes stay surgical and match surrounding code; broad boundaries, anti-corruption layers, and paradigm migration require an explicit refactor, modernization, migration, or broad feature task. Borrow known solutions and proven patterns before inventing custom systems. If the better version is substantially larger, speculative, ceremony-heavy, or unclear, stop for an overengineering check.",
                     "rationale": "The rule prevents known expensive refactors without turning every ticket into architecture work. Future-proofing is valuable when small and profile-fit; it is harmful when it ignores legacy constraints, test reality, or task size.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -503,10 +556,10 @@
                     "id": "engineering.performance.lightweight_by_default_for_predictable_load",
                     "type": "rule",
                     "subtype": "architecture_rule",
-                    "title": "Lightweight By Default For Predictable Load",
-                    "summary": "Predictable batch, hot-path, storage, I/O, event, or generated-content load should use an appropriate lightweight ownership path before convenient per-object framework usage becomes the broad model.",
-                    "rule": "For every implementation, bugfix, performance diagnosis, log review, and architecture decision, check whether the touched behavior is likely to become batch, hot-path, storage-heavy, I/O-heavy, event-heavy, generated-content-heavy, count-heavy, or repeatedly exercised. When yes, prefer the profile-appropriate lightweight path: bulk/query access, explicit indexes, bounded caches, queues/background jobs, project-owned helper/service APIs, batching, pooling, activation, or specialized local queries. Use convenient framework primitives for local entity work and ordinary small operations; do not make per-object convenience the broad storage, update, or batch model for predictable scale. For performance complaints, first ask whether the real fix is migrating away from an unsuitable broad model before tuning thresholds, cache sizes, or local micro-costs.",
-                    "rationale": "This is a generic performance architecture heuristic. In business systems it can mean avoiding N+1/per-row ORM work for a true batch; in realtime profiles it can mean avoiding thousands of inactive engine objects. Profile-fit still applies: do not replace simple framework code in a small legacy ticket unless scale or measurements justify it.",
+                    "title": "Lightweight Futureproof For Predictable Load",
+                    "summary": "Predictable batch, hot-path, storage, I/O, event, count-heavy, dynamic, or generated-content load should use an appropriate lightweight ownership path before convenient per-object framework usage becomes the broad model.",
+                    "rule": "For every implementation, bugfix, performance diagnosis, log review, and architecture decision, check whether the touched behavior is likely to become batch, hot-path, storage-heavy, I/O-heavy, event-heavy, generated-content-heavy, count-heavy, dynamic, modular, branched, or repeatedly exercised. When scale/dynamics are unclear and architecture depends on them, ask concise future-load questions before web research. When predictable load exists, prefer the profile-appropriate lightweight path: bulk/query access, explicit indexes, bounded caches, queues/background jobs, project-owned helper/service APIs, batching, pooling, activation, or specialized local queries. Use convenient framework primitives for local entity work and ordinary small operations; do not make per-object convenience the broad storage, update, runtime, or batch model for predictable scale. For performance complaints, first ask whether the real fix is migrating away from an unsuitable broad model before tuning thresholds, cache sizes, or local micro-costs.",
+                    "rationale": "This is a generic lightweight futureproof heuristic. In business systems it can mean ORM for single-entity work and raw/bulk query helpers for true batch paths; in realtime profiles it can mean avoiding thousands of inactive engine objects. Profile-fit still applies: do not replace simple framework code in a small legacy ticket unless scale or measurements justify it.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
@@ -522,7 +575,8 @@
                         "pooling",
                         "hot-path",
                         "lightweight-by-default",
-                        "profile-fit"
+                        "profile-fit",
+                        "lightweight-futureproof"
                     ],
                     "source_refs": [
                         {

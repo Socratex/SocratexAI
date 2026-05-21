@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-b0f2be906c4a
+Generated: source-a8a320bef913
 
 ## Source of Truth
 
@@ -275,6 +275,7 @@ Draft placeholder:
             "predictable_load_lightweight_architecture",
             "template_parity_for_reusable_pipeline_improvements",
             "project_specific_design_context_gate",
+            "web_research_spike_to_named_implementation_plan_gate",
             "source_pipeline_maintainer_backlog"
         ],
         "feature_contracts": {
@@ -6066,6 +6067,55 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1"
                 ],
                 "known_failure_if_missing": "Maintainer cleanup ideas may be added as new global directives or scattered prompts, increasing context bloat and making rule priority loss more random under context pressure."
+            },
+            "web_research_spike_to_named_implementation_plan_gate": {
+                "summary": "Reusable code-pipeline rule: non-obvious source-code writes use a lightweight web research spike, concise future-load/dynamics questions, and a named implementation mechanism before editing; local patterns shape implementation after research instead of automatically winning over known domain failure modes.",
+                "required_paths": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
+                    "FLOWS.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "knowledge_code_context.ps1",
+                    "knowledge_compile.ps1",
+                    "check_pipeline_feature_contracts.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "knowledge_code_context.ps1",
+                        "knowledge_compile.ps1",
+                        "check_pipeline_feature_contracts.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
+                    "FLOWS.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Apply the rule to the shared code pack/workflow, engineering knowledge capsule, starter template, flows, gamedev profile, and feature contract in the same promotion.",
+                    "For non-obvious write-code work, require web research for established archetypes and known failure modes unless the active plan already names the mechanism.",
+                    "Before research, ask concise scale/dynamism questions when architecture depends on future load, count, frequency, modules, branches, or data volume.",
+                    "Record the result as a named implementation mechanism in the plan or execution note before editing structural code.",
+                    "Use local patterns and DDD-ADIV as implementation filters after research; if research and local philosophy conflict, ask with the concrete tradeoff.",
+                    "Keep obvious tiny fixes lightweight and exempt from the gate.",
+                    "Recompile AI-compiled context and run feature-contract checks before committing source-pipeline document changes."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                ],
+                "known_failure_if_missing": "Agents may either invent bespoke designs without checking known archetypes, or over-apply local philosophy when gamedev/performance research indicates a different lightweight futureproof mechanism."
             }
         }
     },

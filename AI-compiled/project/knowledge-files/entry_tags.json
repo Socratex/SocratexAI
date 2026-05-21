@@ -532,6 +532,11 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "tag": "lightweight-futureproof"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
     "tag": "performance"
   },
   {
@@ -797,6 +802,71 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.verification_without_tests",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "borrowed-before-bespoke"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "diagnostics"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "future-first"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "lightweight-futureproof"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "performance"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "planning"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "profile-fit"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "research"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "tag": "web-research"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
     "tag": "workflow"
   }
 ]
