@@ -2,282 +2,282 @@
   "compiler_version": "3",
   "documents": [
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "adf27dd65ac2868fa1b463b476a42c8b7736fc969d2f7bbf8d7e6818b9d576ad",
       "path": "CHANGELOG.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "7ae768535f5e697de610b6351a040ff4757683690240ca225c2d7a3931bf0f0d",
       "path": "COMMANDS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "1268c5bcf907faa7c6f34935e024f954fd63a3397844aac692dacf454a83995f",
       "path": "DOCS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
-      "hash": "e0806c9c5f46a7221a237fc01d7a523de0ccec692c850f43b5af0f11fb1208ba",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
+      "hash": "a77b1d26d60d9f42f8729ec62fbdf5b3fc2b6deb622888b2995610165e9c9654",
       "path": "FLOWS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "61dc9a7718ea072da0c89c44f4a433a9041324e44461e4579c61017e533d5b6d",
       "path": "QUALITY-GATE.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "a642e6928dce31d1c985653f4cf69f1d04cb0ad8329b54fd62d95fe43cb12ca2",
       "path": "SCRIPTS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "da9cc26b0880b33bbb149b5fe6e55cb93bd304f1042b452ee1233757ee8c2c72",
       "path": "WORKFLOW.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "50df56010990519870f6c1a31f2084bf9fc75bfc8de0503386c76fc8e1189644",
       "path": "context-docs/ENGINEERING.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "bf359acc1a5ce1f383711c943325e237de1dc61b1b83242bda27f8efbc3558ee",
       "path": "core/ACTIVATION-CHECK.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "d91a61b6daecedb1916317d21af842db6c4fa6a5e59cc810a96964a9f3492f54",
       "path": "core/AGENT-CONTRACT.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "85bd65862ea94b87f08ba1b9659a633da40854671bb9a7f073c3c3011d71a829",
       "path": "core/COMMANDS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "68cc6d338ffb05f910bb94c858ca63885932ca47356db33d4f32d92936af6508",
       "path": "core/CONTEXT-COMPACTION.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "4ff9fdd22cf992983f26a312cc64b8b59db8d40161c9e891156d23979f8b8bee",
       "path": "core/FILE-FORMATS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "d998ad92f8dedce9856a46aee6bdabab0468330a590a70c5a1a235b6658de65d",
       "path": "core/INSTRUCTION-CAPTURE.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "4496293983d003482f7234270a29af74f900a9878f70aa80aee2965c01da7c94",
       "path": "core/MEMORY-MODEL.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "72cc92d679866e4832cb17d67449cadcabc516c5b8432dd928f3f91010df0d24",
       "path": "core/PROJECT-PROFILE.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "504e7086041db37e699151798a2efe67f9b8c4056094e2203a68354c4ad22680",
       "path": "core/PROMOTION-RULES.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "0d1f491cea4ca082aae0048da83fa44efc6f694a5bf27b6690f69ecb69808480",
       "path": "core/REMOVAL-PROTOCOL.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "bd909cd333fc1e0c5af5d120a76669801c8e4129dbf0aceeced6fb4413da3d08",
       "path": "core/ROI-BIAS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "d5d1a6eae90d0ff3138eca96ced3d79d088351ea02cefacaaa30677d9c8f27ec",
       "path": "core/SCRIPT-FALLBACK.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "dcef612a7d6b84eeff8c149bcf457434e7f4bd2ed4f2506c639ff4e06b0b86e2",
       "path": "core/TASK-WORK.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "d6ab61d46d9011960a8afcf9dc9d36a67e903a56e71a4209635139c6c5810efc",
       "path": "core/UPDATE-PROTOCOL.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "5d67c2753d1d16d56344c49d184b67cf0ab81a4adb4db1599782df6ba47eda08",
       "path": "core/WORKSPACE.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "a9a0248a8d062912ba4c1dbdeea49120072d1d306bfa2f6c5b61ded464ace310",
       "path": "docs-tech/KNOWLEDGE-VIEWS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "1dcc2e91647e349833b769014b006a0c71be404fc66018c3820a48c232cf3706",
       "path": "docs-tech/PIPELINE-BOOTSTRAP.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "da43d76d6199eb52cbbd7130e102202baaf1de00dff76ac78b260a356105b589",
       "path": "docs-tech/TOOL-ERRORS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "edc05f5add2b303e8db58e5b6c04a051e3440d19f8ee30ad1081cb4729d88dc2",
       "path": "evals/expected-behaviors.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "e63d77e3f3c870f290f846d27826601b3757d94fae5e44d9c944858cdabca9aa",
       "path": "evals/personas.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "21c348c435587e448fe41a77e50ab4d3344b3f0892015383ca071bd7dd59697a",
       "path": "evals/results/baseline.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "4dad9ffa3b1d1a1c176e727f40629ea7baa1d8cdd8c4a881dd5ee6465fedf1f5",
       "path": "evals/results/with-pipeline.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
-      "hash": "a5ec41f3bfc87495ce7d8d751a78478f6190f78e764daf75809a804a8f6fb7d4",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
+      "hash": "698526ddec381c6bb3c99ac544d069988c9efe89700614953dafb27defe74822",
       "path": "pipeline_featurelist.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "b35c048774c80584389c4d8e85b2071ca6a9b6c04f899c6755c46e9f313a40f3",
       "path": "profiles/SocratexForeignLegacy/WORKFLOW.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "3b98b5ba6a12a8293e0b23409fb896077434f1a4f85c3bc32d583689542ebdc5",
       "path": "profiles/SocratexGamedev/COMMANDS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "03d9c7cb06424325552a21f50d835ddc5c698852ded6e9963915f450136b27b4",
       "path": "profiles/SocratexGamedev/FLOWS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "2321eb2f6d16843b96bdb590f86a8b0e27b9e38d837103a67c68247f4befc962",
       "path": "profiles/SocratexGamedev/PROFILE.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "2a0b0d994c89f43777043c9b33e8eaf09d252542ed586dc4adb5dd99e3cfe6e6",
       "path": "profiles/SocratexGamedev/SCRIPTS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "4b026614dad2df9b99686179a720068c5f7bab2b5e6386f3dd108ee694913812",
       "path": "profiles/SocratexGamedev/WORKFLOW.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "3bc27031b79ddfa32a0c9c8a07faa31156ab71b94ebf5583d3f3ff67cb908675",
       "path": "project/code/BRANCH-MODE.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "ba5367f8a623d4c26090b3b961258f3ab1d7bb56615513bc60b8e1f28a055172",
       "path": "project/code/COMMANDS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "3f12470efdb008bfabd02a3fde1e62542a8f043999671d08fe66cf4313ff00de",
       "path": "project/code/DDD-ADIV.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "a14fa0083df01ae1c75d2bdda4c0aa0ead89fd961cf1b2b0caa98d077d91f6bf",
       "path": "project/code/DIAGNOSTICS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "dd0bf6df21ec4493e944cd21ef534726797729c15e7800171b669fa54e34be7e",
       "path": "project/code/FROZEN-LAYERS.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "2746c504f669103391a9e51396f9f81d67ab7fbf5c521298e9c7a90bd1be7847",
       "path": "project/code/GIT.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "1cb6163049ca201feeb87eb22bb1ca5651d35a52ed762094df0641ad92460673",
       "path": "project/code/INSTRUCTION-CAPTURE.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "b7ef2b161ec434325cde626740bac018e4180b29103cfcf0b95e7b1d6f591a4f",
       "path": "project/code/PACK.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "e16d660f97a5e671a8915938afb138d75d66b12b93aeb50bad6a4c9e9bdaee2d",
       "path": "project/code/REGISTRIES.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "1dc932e6616791b629d4ed5dd2de2be60d9c7efd610c2b267decc43a7a8697e6",
       "path": "project/code/WORKFLOW.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "67b717d5838f88570a0b65234e3e00163ce34c6115cf830c3985af0cd92da291",
       "path": "project/creative/PACK.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "a24a0f7cf7629be3c0be183c49fa48619d600a305dff409a2a553105df8739f8",
       "path": "project/gamedev/PACK.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "93ca6ebdd3c7af9996c435c7173845f55852a5cc9c1c45127ee21e89d11f77ce",
       "path": "project/generic/PACK.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "00bbcde9ae16eddf9da4450c5c81ba29582ccc43bbe92a8c931d24c3a04e9a6d",
       "path": "project/personal/PACK.json"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "d9c8730470947355d15ec13183c771589765535fd07cb2a38c065cde07d9ab02",
       "path": "tools/codebase/check_code_context_gate.ps1"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "2b22b5678cef79565ac224ab2a77de5a711de0b4460dc0eec9bb50bcd2849ac3",
       "path": "tools/knowledge/context_tags.ps1"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "c330d347559ae5fcb6bae74dfb323a4b27f8d66de40a14516c175988937710ed",
       "path": "tools/knowledge/knowledge_code_context.ps1"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "84c48fd7f5a458badadeea7e6fc19b1a0616e4e3f4dde2c281d739bcc55af3cf",
       "path": "tools/knowledge/knowledge_index.py"
     },
     {
-      "compiled_at": "2026-05-21T12:33:07+00:00",
+      "compiled_at": "2026-05-21T12:42:47+00:00",
       "hash": "d7e63e3528cd217896fae189591c6bec68803b52cf8edbb0ae63f2324673e6b1",
       "path": "tools/pipeline/rebuild_ai_compiled_context.ps1"
     }
@@ -467,7 +467,7 @@
     }
   ],
   "file_dir": "/home/socratex/work/SocratexAI/AI-compiled/project/knowledge-files",
-  "generated_at": "2026-05-21T12:33:07+00:00",
+  "generated_at": "2026-05-21T12:42:47+00:00",
   "schema": "socratex-knowledge-index/v3-file-manifest",
   "tables": {
     "documents": "/home/socratex/work/SocratexAI/AI-compiled/project/knowledge-files/documents.json",

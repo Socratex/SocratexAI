@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-a8092b8761c6
+Generated: source-ff8c95d1ee8f
 
 ## Source of Truth
 
@@ -6069,7 +6069,7 @@ Draft placeholder:
                 "known_failure_if_missing": "Maintainer cleanup ideas may be added as new global directives or scattered prompts, increasing context bloat and making rule priority loss more random under context pressure."
             },
             "web_research_spike_to_named_implementation_plan_gate": {
-                "summary": "Reusable code-pipeline rule: non-obvious source-code writes use a profile-specific risk lens, lightweight web research spike, concise future-load/dynamics questions, and a named implementation mechanism before editing; local patterns shape implementation after research instead of automatically winning over known domain failure modes.",
+                "summary": "Reusable code-pipeline rule: before source-code writes, agents check whether the active plan already contains research and a named implementation mechanism; obvious small fixes proceed directly, while non-obvious feature/architecture/bug/performance/runtime work runs research first using the loaded knowledge base, project profile, local philosophy, and project-specific rules to decide the relevant risk lenses.",
                 "required_paths": [
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
@@ -6104,9 +6104,9 @@ Draft placeholder:
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Apply the rule to the shared code pack/workflow, engineering knowledge capsule, starter template, flows, gamedev profile, and feature contract in the same promotion.",
-                    "For non-obvious write-code work, require web research for established archetypes and known failure modes unless the active plan already names the mechanism.",
+                    "For non-obvious write-code work, require research for established archetypes and known failure modes unless the active plan already names the mechanism; use project rules to decide whether web research, local docs, official docs, or another source is appropriate.",
                     "Before research, ask concise scale/dynamism questions when architecture depends on future load, count, frequency, modules, branches, or data volume.",
-                    "Choose the profile-specific risk lens before research/planning: business/backend emphasizes security, data integrity, authorization, auditability, migrations, and RPM/load; gamedev emphasizes FPS/frame time, active node count, physics/render cost, pooling/activation, determinism, save/runtime state, feel/readability, and diagnostic/log overhead.",
+                    "Keep FLOWS generic: it should decide whether a task has research plus a named mechanism, whether the change is an obvious small fix, or whether research is required. Domain/profile-specific lenses belong in the knowledge base, project profile, and project-specific rules.",
                     "Record the result as a named implementation mechanism in the plan or execution note before editing structural code.",
                     "Use local patterns and DDD-ADIV as implementation filters after research; if research and local philosophy conflict, ask with the concrete tradeoff.",
                     "Keep obvious tiny fixes lightweight and exempt from the gate.",
