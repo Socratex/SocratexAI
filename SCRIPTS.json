@@ -74,6 +74,9 @@
         "knowledge_file_select.ps1",
         "knowledge_file_upsert.ps1",
         "knowledge_index.py",
+        "knowledge_tier_report.py",
+        "knowledge_tier_report.ps1",
+        "knowledge_tier_check.ps1",
         "knowledge_query.ps1",
         "knowledge_rename.ps1",
         "knowledge_select.ps1",
@@ -932,6 +935,49 @@
                 "success": "Confirms the gate file exists, matches current HEAD, and covers the changed code paths.",
                 "failure": "Throws when the gate is missing, stale relative to HEAD or MaxAgeMinutes, or does not cover the declared design-context reads."
             }
+        },
+        "knowledge_tier_check.ps1": {
+            "path": "tools/knowledge/knowledge_tier_check.ps1",
+            "category": "knowledge",
+            "description": "Fail when source knowledge documentation entries are missing explicit context_tier metadata or contain invalid tiers.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-RepoRoot",
+                    "-IncludeTemplates",
+                    "-Format markdown|json"
+                ],
+                "rule": "Use after knowledge tier migrations or before relying on tier-scoped context routing. Include templates when starter/template knowledge docs are in scope."
+            },
+            "output": {
+                "success": "Prints a tier coverage report and exits 0 when every discovered knowledge entry has a valid context_tier.",
+                "failure": "Exits nonzero and lists missing or invalid context_tier entries."
+            }
+        },
+        "knowledge_tier_report.ps1": {
+            "path": "tools/knowledge/knowledge_tier_report.ps1",
+            "category": "knowledge",
+            "description": "Report source knowledge documentation entries grouped by context_tier, categories/tags, type, and document path.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-RepoRoot",
+                    "-IncludeTemplates",
+                    "-Strict",
+                    "-ShowEntries",
+                    "-Format markdown|json"
+                ],
+                "rule": "Use for tier audits and category summaries; add -Strict to turn missing or invalid tiers into a failing check."
+            },
+            "output": {
+                "success": "Prints markdown or JSON summary with counts by tier and category.",
+                "failure": "With -Strict, exits nonzero when missing/invalid context_tier entries or JSON parse errors are found."
+            }
+        },
+        "knowledge_tier_report.py": {
+            "path": "tools/knowledge/knowledge_tier_report.py",
+            "category": "knowledge",
+            "description": "Python engine behind knowledge_tier_report.ps1 and knowledge_tier_check.ps1."
         }
     },
     "metadata": {

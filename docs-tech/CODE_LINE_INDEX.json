@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-21T20:53:10+02:00",
+  "generatedAt": "2026-05-21T22:19:15+02:00",
   "threshold": 300,
   "files": [
     {
@@ -89,6 +89,12 @@
     {
       "path": "tools/documents/document_list_item_edit_engine.py",
       "lines": 243,
+      "extension": ".py",
+      "large": false
+    },
+    {
+      "path": "tools/knowledge/knowledge_tier_report.py",
+      "lines": 224,
       "extension": ".py",
       "large": false
     },
@@ -477,6 +483,12 @@
       "large": false
     },
     {
+      "path": "tools/knowledge/knowledge_tier_report.ps1",
+      "lines": 34,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/pipeline/migrate_ai_pipeline.ps1",
       "lines": 34,
       "extension": ".ps1",
@@ -556,6 +568,12 @@
     },
     {
       "path": "tools/knowledge/knowledge_check.ps1",
+      "lines": 24,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/knowledge/knowledge_tier_check.ps1",
       "lines": 24,
       "extension": ".ps1",
       "large": false

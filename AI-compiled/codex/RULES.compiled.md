@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-9fc1acba154f
+Generated: source-b5605b7c6b67
 
 ## Source of Truth
 
@@ -6339,6 +6339,9 @@ Draft placeholder:
                     "tools/knowledge/knowledge_select.ps1",
                     "tools/knowledge/knowledge_file_select.ps1",
                     "tools/knowledge/knowledge_query.ps1",
+                    "tools/knowledge/knowledge_tier_report.py",
+                    "tools/knowledge/knowledge_tier_report.ps1",
+                    "tools/knowledge/knowledge_tier_check.ps1",
                     "tools/knowledge/knowledge_file_query.ps1",
                     "tools/pipeline/rebuild_ai_compiled_context.ps1"
                 ],
@@ -6347,6 +6350,9 @@ Draft placeholder:
                     "knowledge_select.ps1",
                     "knowledge_file_select.ps1",
                     "knowledge_query.ps1",
+                    "knowledge_tier_report.py",
+                    "knowledge_tier_report.ps1",
+                    "knowledge_tier_check.ps1",
                     "knowledge_file_query.ps1",
                     "compile_pipeline_context.ps1",
                     "check_pipeline_feature_contracts.ps1"
@@ -6360,6 +6366,9 @@ Draft placeholder:
                         "knowledge_select.ps1",
                         "knowledge_file_select.ps1",
                         "knowledge_query.ps1",
+                        "knowledge_tier_report.py",
+                        "knowledge_tier_report.ps1",
+                        "knowledge_tier_check.ps1",
                         "knowledge_file_query.ps1"
                     ]
                 },
@@ -6380,12 +6389,14 @@ Draft placeholder:
                     "Update named knowledge view docs/templates so routed context can bound tiers.",
                     "Keep durable source and starter knowledge entries explicitly tagged with `context_tier` so tier queries do not rely on compiler defaults.",
                     "When one future knowledge entry mixes tiers, split it into focused entries before assigning `context_tier`; do not physically separate files until migration tooling can move entries by metadata.",
+                    "Run `knowledge_tier_check.ps1 -IncludeTemplates` after broad source/template retagging so missing tiers fail mechanically.",
                     "Recompile AI-compiled context and knowledge artifacts, then run feature-contract checks before committing."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -MaxContextTier 2 -Format json"
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -MaxContextTier 2 -Format json",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_tier_check.ps1 -IncludeTemplates"
                 ],
                 "known_failure_if_missing": "Pipeline guidance keeps accumulating in always-loaded context, agents lose or ignore clear directives under context pressure, and broad knowledge sweeps pretend to fix bloat without a real tier contract or queryable tier metadata."
             }
