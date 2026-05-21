@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-364c504f0f3f
+Generated: source-1c4c0e961e41
 
 ## Source of Truth
 
@@ -432,8 +432,13 @@ Draft placeholder:
                     "core/AGENT-CONTRACT.json",
                     "core/ROI-BIAS.json",
                     "core/SCRIPT-FALLBACK.json",
+                    "FLOWS.json",
                     "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
                     "project/code/DDD-ADIV.json",
+                    "tools/codebase/check_code_context_gate.ps1",
+                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_index.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],

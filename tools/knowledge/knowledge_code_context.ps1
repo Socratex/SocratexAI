@@ -51,7 +51,7 @@ $baseCodeGuidanceTags = @(
 	"coding",
 	"architecture",
 	"best-practices",
-	"borrowed-before-bespoke",
+	"borrowed-before-invented",
 	"production-grade",
 	"ddd-adiv",
 	"future-first",

@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-364c504f0f3f",
+  "generated_at": "source-1c4c0e961e41",
   "source_hashes": {
     "AGENTS.md": "c2e7d0359d8c2faa695de4880c06ffa41aea651e13f0012c7f892ca92e02c589",
     "README.md": "60702ed0de7e1dd8fd2c08b2a7a3c0706e362a5feb7398228e0cc045b835fae1",
@@ -8,7 +8,7 @@
     "DOCS.json": "262bfb18212fb898fc8fc3f6e5316f09b70aaf74ba067662bf46304ea48c638d",
     "WORKFLOW.json": "da9cc26b0880b33bbb149b5fe6e55cb93bd304f1042b452ee1233757ee8c2c72",
     "COMMANDS.json": "7ae768535f5e697de610b6351a040ff4757683690240ca225c2d7a3931bf0f0d",
-    "FLOWS.json": "1780151ac8ba351532228dfcf5c666305878ad0ad1a7d0169ae3038b1603957d",
+    "FLOWS.json": "2daf4c1f942a69d1a49353b725e42636a3c94f228ab1b7fe4a78a30eb0023a8d",
     "SCRIPTS.json": "c4faa38108e03e35b604c47196fc2d489f4e3d23a410a646ed906f50a60f0600",
     "docs-tech/PIPELINE-BOOTSTRAP.json": "0174abdea09bacf33a8bd4a552094966c7dfb660d906610e8f84e52711cb5b43",
     "core/AGENT-CONTRACT.json": "b9a352cfd2b8f7cc9b5d8a364927fef182215f1ce4d0410a9fea74ae1efe517d",
@@ -21,7 +21,7 @@
     "core/SCRIPT-FALLBACK.json": "d5d1a6eae90d0ff3138eca96ced3d79d088351ea02cefacaaa30677d9c8f27ec",
     "context-docs/ENGINEERING.json": "fd9f8978afb9e7d1b8e2240ce959e84e5b0fcd9799655be6274608fcad3bc870",
     "docs-tech/KNOWLEDGE-VIEWS.json": "9ea4a1f68025bac03febc1730c654ea78cda3f05e7a693be3db71809e4722810",
-    "tools/knowledge/knowledge_index.py": "c0839d1f3b9c35405811e461a537327b71c36888c6b5960dae4afa611f5015d9",
+    "tools/knowledge/knowledge_index.py": "3c91959fba395e7963cf07a5ae8c78ac1b68b4dcaf7e55409f9ff1f485893d3a",
     "tools/knowledge/context_tags.ps1": "2b22b5678cef79565ac224ab2a77de5a711de0b4460dc0eec9bb50bcd2849ac3",
     "tools/knowledge/knowledge_select.ps1": "db003afc91c2a827826f48895084099239e8d685c54ae09a3189f002c7d2d459",
     "tools/knowledge/knowledge_compile.ps1": "4b819d7ce04e625f86287c87b0e3eeeae12dbe8d013c441cfefde1358f3ac5f6",
@@ -45,7 +45,7 @@
     "core/communication-profiles/standard.txt": "01b41af406cd8a24e1c87bc62ee5d13715cd0227811c233f41dcf469ab01adbf",
     "core/communication-profiles/teacher.txt": "e6c80a798f5c13f92af1565f7a464d7fe0da9634a52bfff54da6d3d95dde75ca",
     "project/code/PACK.json": "b7ef2b161ec434325cde626740bac018e4180b29103cfcf0b95e7b1d6f591a4f",
-    "project/code/WORKFLOW.json": "5ebe86b9f73c2103adbcb3faeef02b9d59d4eedd60e19d0ae03a5c7364e84a11",
+    "project/code/WORKFLOW.json": "bcccf6ff3b9b37e27fb3d31d62a433e675aa7dc80f4bf4398aac7dc006d8c3bd",
     "project/generic/PACK.json": "93ca6ebdd3c7af9996c435c7173845f55852a5cc9c1c45127ee21e89d11f77ce",
     "project/personal/PACK.json": "00bbcde9ae16eddf9da4450c5c81ba29582ccc43bbe92a8c931d24c3a04e9a6d",
     "project/creative/PACK.json": "67b717d5838f88570a0b65234e3e00163ce34c6115cf830c3985af0cd92da291",
@@ -53,11 +53,11 @@
   },
   "output_hashes": {
     "README.md": "d066b6cd837082095c4a037ac3c5619ba562ed9762f239a8e4cce0ea94e35659",
-    "INDEX.json": "1b6344b5a14a580a453c9b3057d0d8eed3ce2eeece29466e468c8115cf576d4f",
-    "codex/ENTRYPOINT.md": "5e7faa0042608fb7e90cf00f268665224dd816f856e128ced8c5c2fba3265465",
-    "codex/RULES.compiled.md": "073a1e75dcfe1e87ddde442467dafd4f740c4b11ba059d526502a46c1031810e",
-    "codex/WORKFLOW.compiled.md": "a2ff5b50d72a7457931f1e41acb336e7997d5b3d79823106113fc19505df2d1e",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "0eda8f85dc04d4bc347bb0663aaf9106942659dacda817c1fb5d8aa34080c57a",
-    "codex/TEAM.compiled.md": "72c0c5972071b4d2d041010b6e84ff8ffcd4bcd119e1628ac7c414b13a68f572"
+    "INDEX.json": "c1b7b34951043dd9aa91fe00074fcd6dd9075665dba6a351f6437748e815715b",
+    "codex/ENTRYPOINT.md": "35e5369fb2bb6ecbeb4b4e4a37d2fe9a59da7db5e63ecd935aeb4d7bb7ad8d4f",
+    "codex/RULES.compiled.md": "60084bfa80ea9f478ee0a0b465e9d0f418aabfda1353f498b47ee616864e46d0",
+    "codex/WORKFLOW.compiled.md": "a7201c899a84065a23dba5d817f55d76304ac3e88f0747c5c37da3fa201b2591",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "291088f61fcf77a31f5f8fb2079152f54a5831b1ad6ad69eaec6968761bdeacd",
+    "codex/TEAM.compiled.md": "43313543542897ad77087f91269a014aed796a04a66cc3c79be363ff26630122"
   }
 }

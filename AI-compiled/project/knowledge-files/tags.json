@@ -29,10 +29,6 @@
   },
   {
     "description": "Prefer proven external patterns before custom systems when they reduce risk.",
-    "tag": "borrowed-before-bespoke"
-  },
-  {
-    "description": "",
     "tag": "borrowed-before-invented"
   },
   {

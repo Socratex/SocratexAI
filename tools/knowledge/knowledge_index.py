@@ -17,7 +17,7 @@ DEFAULT_VIEWS_PATH = "docs-tech/KNOWLEDGE-VIEWS.json"
 TAG_DESCRIPTIONS = {
     "adapters": "Scene/runtime adapter boundaries.",
     "architecture": "Durable architecture and ownership rules.",
-    "borrowed-before-bespoke": "Prefer proven external patterns before custom systems when they reduce risk.",
+    "borrowed-before-invented": "Prefer proven external patterns before custom systems when they reduce risk.",
     "coding": "Code readability and implementation rules.",
     "comments": "Comment policy and documentation-in-code rules.",
     "compiled-context": "Compiled context, generated knowledge, and instruction cache workflows.",

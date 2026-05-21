@@ -43,7 +43,7 @@
         "implementation": {
             "then": [
                 "load WORKFLOW.json",
-                "run knowledge_code_context.ps1 before source-code reads or edits — REQUIRED to bring borrowed-before-bespoke, web-research-spike gate, lightweight-futureproof, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
+                "run knowledge_code_context.ps1 before source-code reads or edits — REQUIRED to bring borrowed-before-invented, web-research-spike gate, lightweight-futureproof, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
                 "subroutine:research_named_mechanism_gate",
                 "run project_design_context.ps1 -ProjectRoot <project> when the project's PIPELINE-CONFIG.json declares code_design_required_reads (zone splits, namespace rules, lifecycle constraints, per-project conventions) — writes ignored/project_design_context_gate.json",
                 "inspect SCRIPTS.json index before manual work",
