@@ -378,6 +378,12 @@
       "date": "2026-05-21",
       "feature": "task_flow_audit_closure",
       "change": "Added artifact-based task-flow closure audit as a reusable flow subroutine and repo script; final checks now print the checklist, including loaded route, selected flow, closure evidence, changelog truth, tool-failure response, and tool-vs-manual discipline. Complex/high-risk tasks now get a changelog-driven adversarial review prompt that checks whether the diff actually implements the changelog claim and whether verification or future-debt risk remains. Why: Task closure should be provable from artifacts instead of prose, while heavier adversarial review should stay conditional."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-21",
+      "feature": "task_flow_audit_closure",
+      "change": "Hardened task_flow_audit.ps1 with -ProjectRoot so installed child-project wrappers audit the child repository diff/changelog instead of the embedded SocratexAI package. Why: Riftbound wrapper dry-run exposed that the managed package script otherwise resolved its own package root and reported zero changed paths."
     }
   ]
 }

@@ -730,11 +730,12 @@
                 "required": [],
                 "optional": [
                     "-Paths",
+                    "-ProjectRoot",
                     "-ChangelogPath",
                     "-Complex",
                     "-NoChangelog"
                 ],
-                "rule": "Run near task closure after changes exist; pass -Complex for explicitly high-risk tasks when the heuristic is insufficient."
+                "rule": "Run near task closure after changes exist; pass -ProjectRoot when invoking the managed package copy from a child-project wrapper; pass -Complex for explicitly high-risk tasks when the heuristic is insufficient."
             },
             "output": {
                 "success": "Exits 0 and prints required closure artifacts, latest changelog evidence when present, and complex-task adversarial review prompts when applicable.",

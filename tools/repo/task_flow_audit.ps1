@@ -1,5 +1,6 @@
 param(
 	[string[]]$Paths = @(),
+	[string]$ProjectRoot = "",
 	[string]$ChangelogPath = "",
 	[switch]$Complex,
 	[switch]$NoChangelog
@@ -8,7 +9,11 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$repoRoot = if ([string]::IsNullOrWhiteSpace($ProjectRoot)) {
+	Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+} else {
+	Resolve-Path -LiteralPath $ProjectRoot
+}
 
 function Invoke-GitLines {
 	param([string[]]$Arguments)

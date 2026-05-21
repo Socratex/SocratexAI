@@ -5901,6 +5901,7 @@
                     "Keep the reusable behavior as one `task_flow_audit` subroutine referenced from flows instead of duplicating checklist steps in every flow.",
                     "Always require closure artifacts for changed-file tasks: loaded route, selected flow execution, concrete closure evidence, changelog truth, tool-failure repair/spec response, and tools-vs-manual discipline.",
                     "Use `tools/repo/task_flow_audit.ps1` as the lightweight closure prompt/checklist and wire it into the final task checks so the artifact audit appears at the task boundary.",
+                    "When an installed child-project wrapper calls the managed package copy, pass `-ProjectRoot` so the audit reads the child repository diff and changelog instead of the embedded SocratexAI package.",
                     "For complex or high-risk work, run the adversarial review from the changelog append: read what the changelog claims changed, then test the diff and verification against that claim.",
                     "Keep tiny obvious fixes lightweight: they still answer the core artifacts, but they do not need the complex adversarial section unless the heuristic or agent flags risk.",
                     "Update source and profile FLOWS through subroutines, then sync managed package children so installed projects inherit the rule."
