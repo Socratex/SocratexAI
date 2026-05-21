@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T00:24:04+02:00",
+  "generatedAt": "2026-05-22T01:06:21+02:00",
   "threshold": 300,
   "files": [
     {
@@ -94,7 +94,7 @@
     },
     {
       "path": "tools/knowledge/knowledge_tier_report.py",
-      "lines": 224,
+      "lines": 236,
       "extension": ".py",
       "large": false
     },

@@ -168,10 +168,21 @@ def scan_repo(repo_root: Path, include_templates: bool) -> dict[str, Any]:
 
     missing = [entry for entry in entries if entry["tier_issue"] == "missing"]
     invalid = [entry for entry in entries if entry["tier_issue"] == "invalid"]
+    tier_coverage_ok = len(missing) == 0 and len(invalid) == 0
+    strict_ok = tier_coverage_ok and len(parse_errors) == 0
     return {
         "repo_root": str(repo_root),
         "include_templates": include_templates,
         "scope": "knowledge entries with id/type/tags and rule/body/summary",
+        "status": {
+            "tier_coverage_ok": tier_coverage_ok,
+            "strict_ok": strict_ok,
+            "message": (
+                "OK: wszystko zatierowane; all discovered knowledge entries have valid context_tier."
+                if tier_coverage_ok
+                else "ERROR: missing or invalid context_tier entries found."
+            ),
+        },
         "summary": {
             "json_files_scanned": files_scanned,
             "json_files_with_entries": len(files_with_entries),
@@ -203,6 +214,7 @@ def format_markdown(report: dict[str, Any], show_entries: bool) -> str:
     lines.append(f"- missing_context_tier: `{summary['missing_context_tier']}`")
     lines.append(f"- invalid_context_tier: `{summary['invalid_context_tier']}`")
     lines.append(f"- parse_errors: `{summary['parse_errors']}`")
+    lines.append(f"- status: `{report['status']['message']}`")
     lines.append("")
     lines.append("## Tiers")
     lines.append("")

@@ -951,7 +951,7 @@
                 "rule": "Use after knowledge tier migrations or before relying on tier-scoped context routing. Include templates when starter/template knowledge docs are in scope."
             },
             "output": {
-                "success": "Prints a tier coverage report and exits 0 when every discovered knowledge entry has a valid context_tier.",
+                "success": "Prints a tier coverage report with an explicit all-tiered status line and exits 0 when every discovered knowledge entry has a valid context_tier.",
                 "failure": "Exits nonzero and lists missing or invalid context_tier entries."
             }
         },
@@ -971,7 +971,7 @@
                 "rule": "Use for tier audits and category summaries; add -Strict to turn missing or invalid tiers into a failing check."
             },
             "output": {
-                "success": "Prints markdown or JSON summary with counts by tier and category.",
+                "success": "Prints markdown or JSON summary with counts by tier, category, and explicit tier coverage status.",
                 "failure": "With -Strict, exits nonzero when missing/invalid context_tier entries or JSON parse errors are found."
             }
         },

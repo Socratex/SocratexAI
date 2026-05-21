@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-48efbbd70f66
+Generated: source-8e439b311944
 
 ## Source of Truth
 
@@ -6398,7 +6398,7 @@ Draft placeholder:
                     "Update named knowledge view docs/templates so routed context can bound tiers.",
                     "Keep durable source and starter knowledge entries explicitly tagged with `context_tier` so tier queries do not rely on compiler defaults.",
                     "When one future knowledge entry mixes tiers, split it into focused entries before assigning `context_tier`; do not physically separate files until migration tooling can move entries by metadata.",
-                    "Run `knowledge_tier_check.ps1 -IncludeTemplates` after broad source/template retagging so missing tiers fail mechanically.",
+                    "Run `knowledge_tier_check.ps1 -IncludeTemplates` after broad source/template retagging so missing tiers fail mechanically and successful scans print an explicit all-tiered status line.",
                     "Recompile AI-compiled context and knowledge artifacts, then run feature-contract checks before committing."
                 ],
                 "verification_commands": [

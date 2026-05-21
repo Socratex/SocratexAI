@@ -438,6 +438,12 @@
       "date": "2026-05-22",
       "feature": "feature_artifact_contracts",
       "change": "Skipped source_only required path and doc existence checks when validating installed child SocratexAI packages. Why: Child package updates remove source-only maintainer files such as TODO.md, so package checks should not require those source repo artifacts."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-22",
+      "feature": "knowledge_context_tier_hierarchy",
+      "change": "Added explicit all-tiered success status to knowledge tier reports. Why: Pass 0I requires successful tier scans to say directly that every knowledge entry is tiered while preserving structured counts and exit-code behavior."
     }
   ]
 }
