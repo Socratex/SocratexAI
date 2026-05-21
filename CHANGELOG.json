@@ -390,6 +390,12 @@
       "date": "2026-05-21",
       "feature": "ai_native_code_contract_headers",
       "change": "Added the AI-native code contract header standard to ENGINEERING and the code template. Added a gamedev contextual action for applying the standard to runtime/gameplay/diagnostic/layer-boundary files. Added ai_native_contract_dry_run.ps1 plus script and feature contracts so projects can plan per-system rollout without mass source rewrites. Why: Human/AI/hybrid code maintenance needs concise source ownership, diagnostic taxonomy, and layer-purity contracts, but broad rollout should be planned per system instead of adding stale boilerplate everywhere."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-21",
+      "feature": "directive_hierarchy_context_budget",
+      "change": "Completed the source knowledge-tier migration by adding explicit context_tier metadata to SocratexAI engineering knowledge entries and code starter template entries; updated the directive hierarchy feature contract so future tier queries rely on source metadata rather than compiler defaults. Why: Tiered context routing should be migration-tool-friendly and queryable from source JSON nodes, not inferred only during compilation."
     }
   ]
 }

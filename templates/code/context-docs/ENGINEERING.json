@@ -28,6 +28,7 @@
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -54,6 +55,7 @@
                     "priority": "should",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -79,6 +81,7 @@
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -118,6 +121,7 @@
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -143,6 +147,7 @@
                     "priority": "should",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -169,6 +174,7 @@
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -217,6 +223,7 @@
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -250,6 +257,7 @@
                     "priority": "should",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -282,6 +290,7 @@
                     "priority": "should",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -325,6 +334,7 @@
                     "priority": "should",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -355,6 +365,7 @@
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -449,6 +460,7 @@
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",
@@ -505,6 +517,7 @@
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
                     "load_at_start": true,
+                    "context_tier": 2,
                     "stability": "durable",
                     "tags": [
                         "engineering",

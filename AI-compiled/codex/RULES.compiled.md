@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-db2c176d8d11
+Generated: source-9fc1acba154f
 
 ## Source of Truth
 
@@ -6340,8 +6340,7 @@ Draft placeholder:
                     "tools/knowledge/knowledge_file_select.ps1",
                     "tools/knowledge/knowledge_query.ps1",
                     "tools/knowledge/knowledge_file_query.ps1",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "TODO.md"
+                    "tools/pipeline/rebuild_ai_compiled_context.ps1"
                 ],
                 "required_scripts": [
                     "knowledge_index.py",
@@ -6379,8 +6378,8 @@ Draft placeholder:
                     "Carry human-in-loop research as a Tier 1 gate and keep detailed lenses lower-tier.",
                     "Add compiled knowledge support for context_tier plus exact/max tier filtering, with defaults for untagged entries.",
                     "Update named knowledge view docs/templates so routed context can bound tiers.",
-                    "Record that full SocratexAI or child-project knowledgebase retagging is a separate audit pass with visible counts/results.",
-                    "For the real full retag audit, keep tier metadata on entries with explicit `context_tier`, split mixed-tier entries before assigning tiers, and defer physical file-per-tier separation until migration tooling can move entries by metadata.",
+                    "Keep durable source and starter knowledge entries explicitly tagged with `context_tier` so tier queries do not rely on compiler defaults.",
+                    "When one future knowledge entry mixes tiers, split it into focused entries before assigning `context_tier`; do not physically separate files until migration tooling can move entries by metadata.",
                     "Recompile AI-compiled context and knowledge artifacts, then run feature-contract checks before committing."
                 ],
                 "verification_commands": [
