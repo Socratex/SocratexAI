@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-716133649295
+Generated: source-f3d10b989ce5
 
 ## Source of Truth
 
@@ -110,7 +110,7 @@ Generated: source-716133649295
         },
         "migration_policy": {
             "title": "Migration Policy",
-            "content": "Do not pretend a full knowledgebase retag happened through a quick partial sweep. Passes may add the tier contract, compiler support, defaults, and high-value seed tags first. A full SocratexAI or child-project knowledgebase retag is a separate audit pass across all source documents, with before/after counts and owner-visible results."
+            "content": "Do not pretend a full knowledgebase retag happened through a quick partial sweep. Passes may add the tier contract, compiler support, defaults, and high-value seed tags first. A full SocratexAI or child-project knowledgebase retag is a separate audit pass across all source documents, with before/after counts and owner-visible results. The first real migration should keep tier metadata close to entries with explicit `context_tier`; entries that mix multiple tiers must be split into focused entries before tier assignment. Do not physically split files by tier until entry-level metadata is reliable enough for migration-tool-assisted movement."
         }
     },
     "metadata": {
@@ -6272,6 +6272,7 @@ Draft placeholder:
                     "Add compiled knowledge support for context_tier plus exact/max tier filtering, with defaults for untagged entries.",
                     "Update named knowledge view docs/templates so routed context can bound tiers.",
                     "Record that full SocratexAI or child-project knowledgebase retagging is a separate audit pass with visible counts/results.",
+                    "For the real full retag audit, keep tier metadata on entries with explicit `context_tier`, split mixed-tier entries before assigning tiers, and defer physical file-per-tier separation until migration tooling can move entries by metadata.",
                     "Recompile AI-compiled context and knowledge artifacts, then run feature-contract checks before committing."
                 ],
                 "verification_commands": [
