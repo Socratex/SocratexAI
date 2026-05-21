@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-8e439b311944
+Generated: source-91637e85f89a
 
 ## Source of Truth
 
@@ -2395,7 +2395,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'self_describing_learning_issues' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "pipeline_featurelist_update_guard": {
-                "summary": "Pipeline Featurelist Update Guard capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Pipeline Featurelist Update Guard capability is considered active only when its listed source artifacts, catalogs, update path, generated-cache exemption, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "core/UPDATE-PROTOCOL.json",
@@ -2470,7 +2470,7 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "If 'pipeline_featurelist_update_guard' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+                "known_failure_if_missing": "If 'pipeline_featurelist_update_guard' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, generated-cache exemption, or review workflow is absent."
             },
             "priority_workflow_layer": {
                 "summary": "Priority Workflow Layer capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
