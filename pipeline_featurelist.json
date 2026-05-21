@@ -4986,13 +4986,14 @@
                     "Keep the features array as the cheap comparison layer.",
                     "Add or update feature_contracts for every accepted feature.",
                     "Run check_pipeline_feature_contracts.ps1 with changed paths before promotion.",
+                    "When validating an installed child SocratexAI package, skip source_only repo-path/doc existence checks because those artifacts remain source-maintainer owned.",
                     "Do not promote child features upstream unless their contracts list the artifacts to port."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "Source and child pipelines can report matching feature IDs while the behavior is absent, stale, or only partially copied."
+                "known_failure_if_missing": "Source and child pipelines can report matching feature IDs while the behavior is absent, stale, only partially copied, or blocked by source_only maintainer artifacts that are intentionally not installed into child packages."
             },
             "cheap_idempotent_pipeline_update": {
                 "summary": "Installed child pipelines update cheaply by default: shallow Git/local/zip source resolution, managed SocratexAI package mirror, project configuration preservation, compact featurelist refresh, directive refresh, and cheap feature-contract verification; expensive rebuilds are opt-in.",

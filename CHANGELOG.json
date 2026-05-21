@@ -432,6 +432,12 @@
       "date": "2026-05-22",
       "feature": "ai_native_code_contract_headers",
       "change": "Excluded local toolchain and vendored runtime folders from ai_native_contract_dry_run.ps1 candidates. Why: Pass 0H dry-run in Riftbound showed Tools/Python312 and python-installer files as false positives; rollout planning must focus on project-owned systems."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-22",
+      "feature": "feature_artifact_contracts",
+      "change": "Skipped source_only required path and doc existence checks when validating installed child SocratexAI packages. Why: Child package updates remove source-only maintainer files such as TODO.md, so package checks should not require those source repo artifacts."
     }
   ]
 }

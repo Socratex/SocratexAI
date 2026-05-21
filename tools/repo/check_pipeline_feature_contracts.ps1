@@ -215,6 +215,15 @@ function Get-ManagedPackagePaths {
     return @($paths | Sort-Object -Unique)
 }
 
+function Test-InstalledPipelinePackageRoot {
+    $rootName = Split-Path -Leaf $repoRoot
+    $parentRoot = Split-Path -Parent $repoRoot
+    if ($rootName -ne "SocratexAI" -or [string]::IsNullOrWhiteSpace($parentRoot)) {
+        return $false
+    }
+    return (Test-Path -LiteralPath (Join-Path $parentRoot "SOCRATEX.md") -PathType Leaf)
+}
+
 function Test-RequiredRepoPath {
     param(
         [string]$Feature,
@@ -290,6 +299,7 @@ try {
 
     $allowedDirections = @("source_to_child", "child_to_source", "bidirectional", "source_only")
     $managedPaths = @(Get-ManagedPackagePaths)
+    $isInstalledPackageRoot = Test-InstalledPipelinePackageRoot
     $allRequiredPaths = [System.Collections.Generic.List[string]]::new()
 
     foreach ($feature in $features) {
@@ -324,8 +334,12 @@ try {
         if ($allowedDirections -notcontains $syncDirection) {
             Add-ContractError "Feature '$feature' has invalid sync_direction '$syncDirection'."
         }
+        $skipSourceOnlyRepoChecks = ($isInstalledPackageRoot -and $syncDirection -eq "source_only")
 
         foreach ($requiredPath in $requiredPaths) {
+            if ($skipSourceOnlyRepoChecks) {
+                continue
+            }
             $allRequiredPaths.Add($requiredPath) | Out-Null
             Test-RequiredRepoPath -Feature $feature -RelativePath $requiredPath
             if (($syncDirection -eq "source_to_child" -or $syncDirection -eq "bidirectional") -and $managedPaths.Count -gt 0 -and -not (Test-ManagedSyncPath -Path $requiredPath -ManagedPaths $managedPaths)) {
@@ -351,6 +365,9 @@ try {
         }
 
         foreach ($docPath in $requiredDocs) {
+            if ($skipSourceOnlyRepoChecks) {
+                continue
+            }
             Test-RequiredRepoPath -Feature $feature -RelativePath $docPath
         }
 

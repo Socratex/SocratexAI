@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-21T23:52:35+02:00",
+  "generatedAt": "2026-05-22T00:24:04+02:00",
   "threshold": 300,
   "files": [
     {
@@ -52,7 +52,7 @@
     },
     {
       "path": "tools/repo/check_pipeline_feature_contracts.ps1",
-      "lines": 346,
+      "lines": 362,
       "extension": ".ps1",
       "large": true
     },
