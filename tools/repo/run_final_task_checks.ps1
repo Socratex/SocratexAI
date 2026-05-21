@@ -15,6 +15,7 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
 $taskSnapshotScript = Join-Path $PSScriptRoot "task_snapshot.ps1"
+$taskFlowAuditScript = Join-Path $PSScriptRoot "task_flow_audit.ps1"
 $auditScript = Join-Path $repoRoot "tools\documents\audit_docs.ps1"
 $lineIndexScript = Join-Path $repoRoot "tools\codebase\update_code_line_index.ps1"
 $textNormalizeScript = Join-Path $repoRoot "tools\text\normalize_text_files.ps1"
@@ -116,6 +117,16 @@ try {
 
 	if (Test-Path -LiteralPath ".git") {
 		Invoke-RepoCommand -Label "git diff --check" -Command "git" -Arguments @("diff", "--check")
+	}
+
+	if (Test-Path -LiteralPath $taskFlowAuditScript) {
+		Invoke-RepoCommand -Label "task flow audit" -Command "powershell" -Arguments @(
+			"-NoProfile",
+			"-ExecutionPolicy",
+			"Bypass",
+			"-File",
+			$taskFlowAuditScript
+		)
 	}
 
 	if ((Test-Path -LiteralPath ".git") -and (Test-Path -LiteralPath $pipelineFeatureListCheckScript)) {

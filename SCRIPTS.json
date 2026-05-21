@@ -100,6 +100,7 @@
         "set_directives.ps1",
         "sync_pipeline_featurelist.ps1",
         "task_snapshot.ps1",
+        "task_flow_audit.ps1",
         "update_code_line_index.ps1",
         "update_pipeline_from_link.ps1",
         "upgrade_from_reference_project.ps1",
@@ -116,7 +117,25 @@
     "content": {
         "add_changelog_entry.ps1": {
             "path": "tools/repo/add_changelog_entry.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Append a factual shipped-change entry to CHANGELOG.json or CHANGELOG.md.",
+            "input": {
+                "required": [
+                    "-Summary"
+                ],
+                "optional": [
+                    "-Feature",
+                    "-Why",
+                    "-Version",
+                    "-Timestamp",
+                    "-Path"
+                ],
+                "rule": "PowerShell does not accept repeated -Summary switches; pass multiple summary lines as a single array, e.g. -Summary @('line one','line two'), or pass one concise summary string."
+            },
+            "output": {
+                "success": "Appends one changelog entry and prints the target feature or timestamp.",
+                "failure": "Throws when the changelog path is missing, the timestamp is invalid, or Summary is empty."
+            }
         },
         "audit_docs.ps1": {
             "path": "tools/documents/audit_docs.ps1",
@@ -703,6 +722,25 @@
             "path": "tools/repo/task_snapshot.ps1",
             "category": "repo"
         },
+        "task_flow_audit.ps1": {
+            "path": "tools/repo/task_flow_audit.ps1",
+            "category": "repo",
+            "description": "Prints the artifact-based task-flow closure checklist and the conditional complex-task adversarial review prompt from the latest changelog artifact.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-ChangelogPath",
+                    "-Complex",
+                    "-NoChangelog"
+                ],
+                "rule": "Run near task closure after changes exist; pass -Complex for explicitly high-risk tasks when the heuristic is insufficient."
+            },
+            "output": {
+                "success": "Exits 0 and prints required closure artifacts, latest changelog evidence when present, and complex-task adversarial review prompts when applicable.",
+                "failure": "Throws when git or changelog parsing fails."
+            }
+        },
         "update_code_line_index.ps1": {
             "path": "tools/codebase/update_code_line_index.ps1",
             "category": "codebase"
@@ -960,6 +998,7 @@
                 "run_final_task_checks.ps1",
                 "end_prompt_snapshot.ps1",
                 "task_snapshot.ps1",
+                "task_flow_audit.ps1",
                 "learn_pipeline_features.ps1",
                 "open_pipeline_learning_issue.ps1",
                 "report_pipeline_learning.ps1",

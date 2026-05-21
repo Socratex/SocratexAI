@@ -36,6 +36,7 @@
                 "read target owner document with list_document_keys.ps1 or read_document_item.ps1",
                 "edit structured documents with insert_document_item.ps1, move_document_item.ps1, migrate_document_item.ps1, or insert_checked_document_list_item.ps1 when their contract fits",
                 "run normalize_json_files.ps1 after JSON edits",
+                "subroutine:task_flow_audit",
                 "run check_task.ps1 at the final verification boundary"
             ]
         },
@@ -47,6 +48,7 @@
                 "run project_design_context.ps1 -ProjectRoot <project> when the project's PIPELINE-CONFIG.json declares code_design_required_reads (zone splits, namespace rules, lifecycle constraints, per-project conventions) — writes ignored/project_design_context_gate.json",
                 "inspect SCRIPTS.json index before manual work",
                 "edit scoped files",
+                "subroutine:task_flow_audit",
                 "run check_task.ps1 at the final verification boundary — verifies both ignored/code_context_gate.json and ignored/project_design_context_gate.json are fresh for current HEAD when changed-code is detected"
             ]
         },
@@ -58,6 +60,7 @@
                 "subroutine:research_named_mechanism_gate",
                 "edit in coherent slices",
                 "update affected contracts",
+                "subroutine:task_flow_audit",
                 "run check_task.ps1 after each intentional verification boundary",
                 "run finalize_task_check_commit_push.ps1 when commit and push are required"
             ]
@@ -72,6 +75,7 @@
                 "run pipeline_bootstrap_index.ps1 after routing or index changes",
                 "run normalize_json_files.ps1 after JSON contract changes",
                 "run compile_pipeline_context.ps1 after source instruction, template, pack, or compiled-context changes",
+                "subroutine:task_flow_audit",
                 "run finalize_task_check_commit_push.ps1"
             ]
         },
@@ -90,6 +94,7 @@
                 "run check_ai_compiled_context.ps1 or compile_pipeline_context.ps1 for compiled-context drift",
                 "inspect failures",
                 "fix repeatable tooling failures in the owning tool",
+                "subroutine:task_flow_audit",
                 "rerun the failing script"
             ]
         },
@@ -120,6 +125,17 @@
                 "If the change is a non-obvious feature, architecture, bug, performance, hitbox/runtime, or structural task, do research first.",
                 "Run the required research using the loaded knowledge base, project profile, local philosophy, and project-specific rules as the source for what risks and lenses matter.",
                 "Name the implementation mechanism before editing."
+            ],
+            "task_flow_audit": [
+                "Near task closure, run or answer the artifact-based task-flow audit instead of relying on a prose-only completion claim.",
+                "Always cite the context route: loaded FLOWS/WORKFLOW/DOCS/STATE/plan/context records that were relevant to the task.",
+                "Always cite the selected flow and the steps/subroutines actually followed.",
+                "Always cite closure evidence: changed files, verification commands, generated artifacts, and remaining risk.",
+                "Always state whether the changelog was updated from actual shipped changes; if no changelog update was needed, give the reason.",
+                "Always state whether any tool failed mechanically; when it did, fix the owning tool or input contract/spec before preserving a manual workaround.",
+                "Always state which repo tools/scripts were used and which edits were manual.",
+                "For complex or high-risk tasks, run a short adversarial review from the changelog append: ask what the changelog says changed, then check whether the diff really implements that claim and whether verification, plan/state, tool usage, or future-debt risk is missing.",
+                "Use tools/repo/task_flow_audit.ps1 when available to print the checklist and changelog-based complex review prompt."
             ]
         }
     }

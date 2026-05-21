@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-21T17:16:24+02:00",
+  "generatedAt": "2026-05-21T18:30:30+02:00",
   "threshold": 300,
   "files": [
     {
@@ -129,14 +129,20 @@
       "large": false
     },
     {
+      "path": "tools/repo/run_final_task_checks.ps1",
+      "lines": 192,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/repo/open_pipeline_learning_issue.ps1",
       "lines": 183,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/repo/run_final_task_checks.ps1",
-      "lines": 182,
+      "path": "tools/repo/task_flow_audit.ps1",
+      "lines": 179,
       "extension": ".ps1",
       "large": false
     },

@@ -447,9 +447,21 @@
                 "Answer in prompt language.",
                 "Use concise emoji-prefixed chat sections for project status, findings, plans, and execution reports.",
                 "Distinguish if present: observed facts, inference, speculation, and value judgment when relevant; if only a focused check is needed before finalization, use Tools/repo/check_task.ps1 -Paths <changed paths>.",
+                "subroutine:task_flow_audit",
                 "if files changed: Run Tools/repo/done.ps1 -Message \"<message>\" for source, tooling, config, generated context, or durable documentation changes.",
                 "if files changed: Inspect the finalizer output.",
                 "if files changed: changed files, verification result, commit or push status, and remaining risk."
+            ],
+            "task_flow_audit": [
+                "Near task closure, run or answer the artifact-based task-flow audit instead of relying on a prose-only completion claim.",
+                "Always cite the context route: loaded FLOWS/WORKFLOW/DOCS/STATE/plan/context records that were relevant to the task.",
+                "Always cite the selected flow and the steps/subroutines actually followed.",
+                "Always cite closure evidence: changed files, verification commands, generated artifacts, and remaining risk.",
+                "Always state whether the changelog was updated from actual shipped changes; if no changelog update was needed, give the reason.",
+                "Always state whether any tool failed mechanically; when it did, fix the owning tool or input contract/spec before preserving a manual workaround.",
+                "Always state which repo tools/scripts were used and which edits were manual.",
+                "For complex or high-risk tasks, run a short adversarial review from the changelog append: ask what the changelog says changed, then check whether the diff really implements that claim and whether verification, plan/state, tool usage, or future-debt risk is missing.",
+                "Use Tools/repo/task_flow_audit.ps1 when available to print the checklist and changelog-based complex review prompt."
             ],
             "diagnostic_report": [
                 "Report observed diagnostic facts in human-readable units.",
