@@ -6224,21 +6224,22 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "sync_direction": "source_to_child",
-                "promotion_checklist": [
-                    "Keep the standard generic in ENGINEERING: top-of-file comment-prefixed JSON-like fields for purpose, owns, must_not, design_goals, non_goals, diagnostics taxonomy/fields, layer name/cannot-depend-on, and short ai_notes.",
-                    "Keep profile-specific meaning in profile WORKFLOW or project knowledge; gamedev should interpret headers through runtime/FPS budget, activation, diagnostics, layer purity, worldgen, traversal, combat, and gameplay ownership lenses.",
-                    "Do not mass-tag source files during the feature promotion. First run the dry-run helper and add explicit per-system rollout passes when headers are worth the maintenance cost.",
-                    "Avoid boilerplate on tiny leaf files, generated/vendor files, resource-only files, and obvious DTO/config files.",
-                    "Treat headers as reading/audit contracts only; still require clear code names, tests/smokes, schemas, runtime diagnostics, and mechanical dependency checks where those are the real enforcement layer.",
-                    "Sync the managed package so child projects receive the rule, script, script catalog entry, feature contract, and gamedev contextual action."
-                ],
+          "promotion_checklist": [
+            "Keep the standard generic in ENGINEERING: top-of-file comment-prefixed JSON-like fields for purpose, owns, must_not, design_goals, non_goals, diagnostics taxonomy/fields, layer name/cannot-depend-on, and short ai_notes.",
+            "Keep profile-specific meaning in profile WORKFLOW or project knowledge; gamedev should interpret headers through runtime/FPS budget, activation, diagnostics, layer purity, worldgen, traversal, combat, and gameplay ownership lenses.",
+            "Do not mass-tag source files during the feature promotion. First run the dry-run helper and add explicit per-system rollout passes when headers are worth the maintenance cost.",
+            "Avoid boilerplate on tiny leaf files, generated/vendor files, resource-only files, and obvious DTO/config files.",
+            "Keep the dry-run helper excluding generated, vendored, ignored, logs, managed embedded packages, test-smoke scripts, and local toolchain/runtime folders such as Tools/Python312, Tools/python-installer, and Tools/tmp.",
+            "Treat headers as reading/audit contracts only; still require clear code names, tests/smokes, schemas, runtime diagnostics, and mechanical dependency checks where those are the real enforcement layer.",
+            "Sync the managed package so child projects receive the rule, script, script catalog entry, feature contract, and gamedev contextual action."
+          ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/codebase/ai_native_contract_dry_run.ps1 -ProjectRoot .",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
-                "known_failure_if_missing": "Agents may keep relearning source ownership from broad reads, add inconsistent comments, miss diagnostic taxonomy/layer-purity constraints, or mass-add stale boilerplate without a per-system rollout plan."
-            },
+        "known_failure_if_missing": "Agents may keep relearning source ownership from broad reads, add inconsistent comments, miss diagnostic taxonomy/layer-purity constraints, include vendored/toolchain/test/managed-package files as rollout candidates, or mass-add stale boilerplate without a per-system rollout plan."
+      },
             "source_pipeline_maintainer_backlog": {
                 "summary": "Source-only maintainer backlog and current-priority lane for deferred or promoted SocratexPipeline cleanup, directive hierarchy, context-bloat, research-flow, task-flow-audit, adversarial-audit, and audit ideas that should not become always-loaded directives until promoted.",
                 "required_paths": [

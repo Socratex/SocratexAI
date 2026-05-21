@@ -426,6 +426,12 @@
       "date": "2026-05-21",
       "feature": "pipeline_featurelist_instance_generation",
       "change": "Fixed sync_pipeline_featurelist.ps1 so instance manifests preserve source feature_contracts in addition to local extra contracts. Why: Riftbound finalization exposed that feature IDs synced without their source contracts, causing artifact contract checks to fail after package sync."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-22",
+      "feature": "ai_native_code_contract_headers",
+      "change": "Excluded local toolchain and vendored runtime folders from ai_native_contract_dry_run.ps1 candidates. Why: Pass 0H dry-run in Riftbound showed Tools/Python312 and python-installer files as false positives; rollout planning must focus on project-owned systems."
     }
   ]
 }

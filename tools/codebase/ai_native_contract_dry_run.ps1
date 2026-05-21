@@ -17,12 +17,12 @@ try {
 if (-not $gitFiles -or $LASTEXITCODE -ne 0) {
     $extensions = @("*.gd", "*.cs", "*.ts", "*.tsx", "*.js", "*.jsx", "*.py", "*.ps1", "*.java", "*.kt", "*.go", "*.rs", "*.php")
     $gitFiles = Get-ChildItem -LiteralPath $resolvedRoot -Recurse -File -Include $extensions |
-        Where-Object { $_.FullName -notmatch "[/\\](\.git|AI-compiled|ignored|logs|logs-diagnostics|logs-performance|node_modules|vendor|Tools[/\\]Python312)[/\\]" } |
+        Where-Object { $_.FullName -notmatch "[/\\](\.git|AI-compiled|SocratexAI|ignored|logs|logs-diagnostics|logs-performance|node_modules|vendor)[/\\]|[/\\]Tools[/\\](Python312|python-installer|tmp)[/\\]|[/\\]Game[/\\]test-scripts[/\\]" } |
         ForEach-Object { [System.IO.Path]::GetRelativePath($resolvedRoot, $_.FullName) }
 }
 
 $codeExtensions = @(".gd", ".cs", ".ts", ".tsx", ".js", ".jsx", ".py", ".ps1", ".java", ".kt", ".go", ".rs", ".php")
-$skipPattern = "[/\\](AI-compiled|ignored|logs|logs-diagnostics|logs-performance|node_modules|vendor|Tools[/\\]Python312)[/\\]|\.uid$|\.import$|\.tres$|\.tscn$"
+$skipPattern = "(^|[/\\])(AI-compiled|SocratexAI|ignored|logs|logs-diagnostics|logs-performance|node_modules|vendor)([/\\]|$)|(^|[/\\])Tools[/\\](Python312|python-installer|tmp)[/\\]|(^|[/\\])Game[/\\]test-scripts[/\\]|\.uid$|\.import$|\.tres$|\.tscn$"
 $importantPathPattern = "(movement|player|world|worldgen|diagnostic|runtime|stream|save|persistence|combat|enemy|camera|ui|audio|registry|repository|service|system|controller|orchestrator|coordinator|pipeline|quality|tool)"
 
 $candidates = foreach ($relativePath in $gitFiles) {
