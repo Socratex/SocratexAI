@@ -5932,6 +5932,7 @@
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Apply the rule to the shared code pack/workflow, engineering knowledge capsule, starter template, flows, gamedev profile, and feature contract in the same promotion.",
+                    "Implement the gate as a reusable FLOW subroutine and reference it from implementation/broad-refactor flows instead of duplicating the decision steps inline.",
                     "For non-obvious write-code work, require research for established archetypes and known failure modes unless the active plan already names the mechanism; use project rules to decide whether web research, local docs, official docs, or another source is appropriate.",
                     "Before research, ask concise scale/dynamism questions when architecture depends on future load, count, frequency, modules, branches, or data volume.",
                     "Keep FLOWS generic: it should decide whether a task has research plus a named mechanism, whether the change is an obvious small fix, or whether research is required. Domain/profile-specific lenses belong in the knowledge base, project profile, and project-specific rules.",

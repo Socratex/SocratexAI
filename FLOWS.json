@@ -43,9 +43,7 @@
             "then": [
                 "load WORKFLOW.json",
                 "run knowledge_code_context.ps1 before source-code reads or edits — REQUIRED to bring borrowed-before-bespoke, web-research-spike gate, lightweight-futureproof, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
-                "before writing code, check whether the active plan already contains research and a named implementation mechanism for the touched scope; if yes, execute that plan",
-                "if no researched/named mechanism exists, classify the change: obvious small fix means proceed directly; non-obvious feature, architecture, bug, performance, hitbox/runtime, or structural work means do research first",
-                "run the required research using the loaded knowledge base, project profile, local philosophy, and project-specific rules as the source for what risks and lenses matter; then name the implementation mechanism before editing",
+                "subroutine:research_named_mechanism_gate",
                 "run project_design_context.ps1 -ProjectRoot <project> when the project's PIPELINE-CONFIG.json declares code_design_required_reads (zone splits, namespace rules, lifecycle constraints, per-project conventions) — writes ignored/project_design_context_gate.json",
                 "inspect SCRIPTS.json index before manual work",
                 "edit scoped files",
@@ -57,8 +55,7 @@
                 "confirm high-cost scope when not already confirmed",
                 "create passes",
                 "run knowledge_code_context.ps1 before source-code reads or edits",
-                "before broad code edits, check whether the active plan already contains research and a named implementation mechanism; if not, classify whether the change is obvious enough to proceed or requires research first",
-                "run any needed research through the loaded knowledge base, project profile, local philosophy, and project-specific rules; then name the implementation mechanism before editing",
+                "subroutine:research_named_mechanism_gate",
                 "edit in coherent slices",
                 "update affected contracts",
                 "run check_task.ps1 after each intentional verification boundary",
@@ -115,6 +112,15 @@
             "title": "Source Pipeline Flows",
             "type": "flow_index",
             "language": "en"
+        },
+        "subroutines": {
+            "research_named_mechanism_gate": [
+                "Before writing code, check whether the active plan already contains research and a named implementation mechanism for the touched scope; if yes, execute that plan.",
+                "If no researched/named mechanism exists, classify the change: obvious small fix means proceed directly.",
+                "If the change is a non-obvious feature, architecture, bug, performance, hitbox/runtime, or structural task, do research first.",
+                "Run the required research using the loaded knowledge base, project profile, local philosophy, and project-specific rules as the source for what risks and lenses matter.",
+                "Name the implementation mechanism before editing."
+            ]
         }
     }
 }
