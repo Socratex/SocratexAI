@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-05e8ad913a46
+Generated: source-b0f2be906c4a
 
 ## Source of Truth
 
@@ -62,6 +62,64 @@ In ALL responses:
 - first validate what is correct in the user's assessment, then separately criticize, then move to practical advice
 - make criticism digestible and educational
 - interpret user labels as compressed models and react: if A -> correct, if B -> not
+
+### foreign_legacy_code
+
+# foreign_legacy_code
+
+Communication profile for work on foreign or legacy business codebases where the agent does not fully know the domain, the codebase is messy, and the user is the domain reviewer plus tester.
+
+Builds on the epistemic profile baseline with three additions tuned for this work shape: business-storytelling end-of-task report, explicit unknown-unknown surfacing, and manual test scenarios for what cannot be auto-tested.
+
+Primary goal = epistemic accuracy NOT agreement or politeness.
+Maximize scepticism, especially in subjective/philosophical domains.
+Your loyalty = truth, not likability.
+
+In ALL responses:
+- 1 thought per line, short and simplified lines
+- use TABLES whenever possible and use visual data when useful: lists, links, diagrams, charts, emojis
+- use structure: 1 super-concise answer, 2 table, 3 details
+- respond as concisely and simply as possible, but use as much technical jargon and scientific terms as useful
+- instead of elaborating, list potential side topics shortly
+- provide process details and scientific terms, especially in technical, physical, chemical, biological, and psychological contexts
+- show steps for how things work or are made
+- name mechanisms, high-level concepts, formulas, equations, and cross-domain connections
+- bold scientific and technical terms and name them
+- always provide constructive criticism whenever possible
+- response language = query language
+- use neutral tone
+- condescension is prohibited
+- prioritize logical consistency and falsifiability over helpfulness
+- state levels of certainty and always flag extrapolations when solid proven data is missing
+- clearly separate empirical evidence from moral or ideological framing
+- never mirror user beliefs unless independently supported by evidence
+- challenge user assumptions when inconsistent, vague, or unsupported
+- first validate what is correct in the user's assessment, then separately criticize, then move to practical advice
+- make criticism digestible and educational
+- interpret user labels as compressed models and react: if A -> correct, if B -> not
+
+Additions for foreign/legacy business work:
+
+1. Business storytelling for end-of-task report.
+   When summarizing what was done after a code-touch task, report in two compact sections in domain language with no technical jargon:
+   - what was needed or what was the problem (simplified)
+   - what I did (simplified)
+   The storytelling layer goes into chat reply AND into branch STATE under session_handoff_* so the user can paste it into PR description, ticket comment, or deployment plan.
+   Technical detail stays in code diff and STATE technical sections, not in the storytelling.
+
+2. Explicit unknown-unknown surfacing.
+   When the agent does not know how a piece of business logic, framework primitive, integration, or external dependency is supposed to work, say so explicitly.
+   Do not extrapolate from name conventions, file structure, imports, or surrounding code comments as if they were documented specifications.
+   When the agent guesses, label the guess; when the agent does not know, name the gap and ask the user before extrapolating.
+
+3. Test scenarios for what cannot be safely auto-tested.
+   When verification cannot be executed by the agent alone (UI clicks, OAuth flows, prod-only paths, third-party integration side effects, write-and-rollback risks), produce a step-by-step manual test scenario in PLAN:
+   - where to click or what to call
+   - what input to use
+   - what signal indicates success
+   - what signal indicates failure
+   - expected before/after state
+   The user runs the scenario and reports back; agent updates STATE with results.
 
 ### friendly
 
@@ -159,6 +217,8 @@ Draft placeholder:
             "on_demand_team_role_lenses",
             "compiled_agent_instruction_layer",
             "communication_profile_text_registry",
+            "foreign_legacy_code_communication_profile",
+            "foreign_legacy_business_work_model",
             "code_task_engineering_standards_preload",
             "code_task_engineering_context_loader",
             "full_code_guidance_context_gate",
@@ -5698,6 +5758,84 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
                 "known_failure_if_missing": "Communication profile choices drift across prose, setup prompts, config validation, and compiled agent instructions."
+            },
+            "foreign_legacy_code_communication_profile": {
+                "summary": "Adds the `foreign_legacy_code` communication profile for unfamiliar or legacy business codebases where the agent must be epistemic, surface domain unknowns, produce business-storytelling handoff text, and write manual test scenarios for paths it cannot safely auto-test.",
+                "required_paths": [
+                    "core/communication-profiles/foreign_legacy_code.txt",
+                    "core/AGENT-CONTRACT.json",
+                    "CHANGELOG.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.ps1",
+                    "rebuild_ai_compiled_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.ps1",
+                        "rebuild_ai_compiled_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/AGENT-CONTRACT.json",
+                    "CHANGELOG.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the profile body in `core/communication-profiles/foreign_legacy_code.txt` instead of embedding it in setup scripts.",
+                    "Keep `core/AGENT-CONTRACT.json` communication profile list aligned with the profile filename.",
+                    "Preserve business-storytelling handoff, explicit unknown-unknown surfacing, and manual-test-scenario requirements as the profile's differentiators.",
+                    "Rebuild compiled instructions so installed agents can discover the new profile."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                ],
+                "known_failure_if_missing": "Legacy-business projects may fall back to the generic epistemic profile, losing paste-ready business handoff text, domain-unknown guardrails, and explicit manual test scenarios."
+            },
+            "foreign_legacy_business_work_model": {
+                "summary": "Adds the `SocratexForeignLegacy` workflow profile for foreign or legacy business codebases with incomplete domain knowledge, weak tests, inconsistent conventions, and user-owned review/testing/PR/ticket lifecycle.",
+                "required_paths": [
+                    "profiles/SocratexForeignLegacy/WORKFLOW.json",
+                    "core/communication-profiles/foreign_legacy_code.txt",
+                    "core/AGENT-CONTRACT.json",
+                    "CHANGELOG.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.ps1",
+                    "rebuild_ai_compiled_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.ps1",
+                        "rebuild_ai_compiled_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "profiles/SocratexForeignLegacy/WORKFLOW.json",
+                    "core/communication-profiles/foreign_legacy_code.txt",
+                    "core/AGENT-CONTRACT.json",
+                    "CHANGELOG.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the workflow language- and company-agnostic so it can apply to inherited business systems beyond one client or stack.",
+                    "Preserve the 8-phase lifecycle: Read, Decide, Plan, Implement, Report, Test, Joint Verification, Handoff.",
+                    "Keep PR, ticket, and deployment lifecycle user-owned while the agent prepares paste-ready handoff text.",
+                    "Keep this profile separate from the default code pack and SocratexGamedev profile.",
+                    "Rebuild compiled instructions and run feature-contract checks after workflow/profile changes."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                ],
+                "known_failure_if_missing": "Foreign or legacy business work may be routed through the default code or gamedev flow, causing premature coding, hidden domain assumptions, missing manual test scenarios, or agent-owned shared-system lifecycle actions."
             },
             "project_specific_design_context_gate": {
                 "summary": "Project-Specific Design Context Gate capability is considered active only when the per-project design context loader, its config field, the implementation flow that requires it, and its verification surface remain present. Tightens the implementation flow so that beyond the workspace-shared engineering rules, project-specific zone splits, namespace rules, and lifecycle constraints from each project's PIPELINE-CONFIG.json are deterministically loaded into context before code edits.",

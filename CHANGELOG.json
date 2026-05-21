@@ -4,6 +4,18 @@
         {
             "version": "0.2.0-alpha",
             "date": "2026-05-21",
+            "feature": "foreign_legacy_business_work_model",
+            "change": "Added a third work model alongside default code pack and SocratexGamedev: profiles/SocratexForeignLegacy/WORKFLOW.json. Targets foreign or legacy business codebases where the agent does not fully know the domain, the codebase is messy, and the user is the domain reviewer plus tester. Defines an 8-phase task lifecycle (Read, Decide, Plan, Implement, Report, Test, Joint Verification, Handoff), language- and company-agnostic, with business-storytelling end-of-task reports, explicit unknown-unknown surfacing, and manual test scenarios for what cannot be safely auto-tested. PR/ticket/deployment lifecycle stays user-owned. Why: legacy/foreign business work has a fundamentally different shape than greenfield code or gamedev — agent does not own domain knowledge or testing infrastructure, so the work model must front-load reading + planning, defer architecture decisions, and produce paste-ready handoff text instead of initiating shared-system writes."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-21",
+            "feature": "foreign_legacy_code_communication_profile",
+            "change": "Added core/communication-profiles/foreign_legacy_code.txt as a fifth communication profile alongside standard, epistemic, friendly, and teacher. Inherits epistemic baseline (1 thought per line, tables, certainty levels, validate-then-criticize-then-advise, no mirror, challenge assumptions) and adds three foreign/legacy-specific rules: business-storytelling end-of-task report, explicit unknown-unknown surfacing, and manual test scenarios for non-safe-auto-test paths. AGENT-CONTRACT.json communication_profiles listing updated. Why: epistemic style alone does not cover the storytelling layer needed for ticket comments and PR descriptions on foreign business code, nor does it forbid extrapolation from name conventions in absence of explicit specs."
+        },
+        {
+            "version": "0.2.0-alpha",
+            "date": "2026-05-21",
             "feature": "sensitive_reference_leak_smoke",
             "change": "Added check_sensitive_reference_leaks.ps1 to the source quality gate and script catalog, removed private project/person references from reusable pipeline sources, replaced private reference-project wording with neutral child-project/reference-project terminology, and renamed the maintainer-only reference upgrade script to upgrade_from_reference_project.ps1. Why: source pipeline artifacts should preserve reusable lessons without leaking private project names, personal identity references, or project-specific maintainer workflow names."
         },
