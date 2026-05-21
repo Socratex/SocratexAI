@@ -1715,7 +1715,7 @@
                 "known_failure_if_missing": "If 'pipeline_featurelist_manifest' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "pipeline_featurelist_instance_generation": {
-                "summary": "Pipeline Featurelist Instance Generation capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Pipeline Featurelist Instance Generation capability is considered active only when its listed source artifacts, catalogs, update path, source feature_contract preservation, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "core/UPDATE-PROTOCOL.json",
@@ -1782,6 +1782,7 @@
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
+                    "Preserve source feature_contracts for source features and preserve instance-owned contracts for extra instance features.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."

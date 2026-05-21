@@ -420,6 +420,12 @@
       "date": "2026-05-21",
       "feature": "grouped_fragmented_task_state_handoff",
       "change": "Added grouped fragmented-task execution guidance and a grouped_task_handoff.ps1 helper. Broad tasks can now be split into user-approved groups and bounded sub-tasks; sub-tasks inside an approved group can continue automatically through a durable handoff JSON and next-subtask prompt, with escalation rules for scope, product direction, verification failures, destructive/external actions, and incomplete handoff state. Why: large Codex tasks need external STATE/PLAN memory and automation between sub-tasks without forcing manual continue after every small fragment."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-21",
+      "feature": "pipeline_featurelist_instance_generation",
+      "change": "Fixed sync_pipeline_featurelist.ps1 so instance manifests preserve source feature_contracts in addition to local extra contracts. Why: Riftbound finalization exposed that feature IDs synced without their source contracts, causing artifact contract checks to fail after package sync."
     }
   ]
 }

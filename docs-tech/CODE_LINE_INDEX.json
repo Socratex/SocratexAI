@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-21T23:39:52+02:00",
+  "generatedAt": "2026-05-21T23:52:35+02:00",
   "threshold": 300,
   "files": [
     {
@@ -70,9 +70,9 @@
     },
     {
       "path": "tools/repo/sync_pipeline_featurelist.ps1",
-      "lines": 295,
+      "lines": 304,
       "extension": ".ps1",
-      "large": false
+      "large": true
     },
     {
       "path": "tools/repo/end_prompt_snapshot.ps1",

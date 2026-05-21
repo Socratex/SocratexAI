@@ -186,6 +186,7 @@ $sourceFeatures = Convert-ToFeatureList -Values @(Get-FeatureValues -FeatureList
 if ($sourceFeatures.Count -eq 0) {
 	throw "Source feature list has no features: $SourceFeatureListPath"
 }
+$sourceContracts = Get-FeatureContracts -FeatureList $source
 
 $existingFeatures = @()
 $existingContracts = [ordered]@{}
@@ -223,6 +224,14 @@ foreach ($feature in $extra) {
 		$extraContracts[$feature] = $existingContracts[$feature]
 	}
 }
+$featureContracts = [ordered]@{}
+foreach ($feature in $features) {
+	if ($sourceContracts.Contains($feature)) {
+		$featureContracts[$feature] = $sourceContracts[$feature]
+	} elseif ($existingContracts.Contains($feature)) {
+		$featureContracts[$feature] = $existingContracts[$feature]
+	}
+}
 
 if ([string]::IsNullOrWhiteSpace($PipelineId)) {
 	$PipelineId = Get-DefaultPipelineId -RootPath $targetRoot
@@ -250,7 +259,7 @@ if ($preserveListDocumentShape) {
 			$index.Add($requiredKey) | Out-Null
 		}
 	}
-	if ($extraContracts.Count -gt 0 -and -not $index.Contains("feature_contracts")) {
+	if ($featureContracts.Count -gt 0 -and -not $index.Contains("feature_contracts")) {
 		$index.Add("feature_contracts") | Out-Null
 	}
 
@@ -269,8 +278,8 @@ if ($preserveListDocumentShape) {
 			$content[$property] = @($features)
 		} elseif ($property -eq "comparison_to_source") {
 			$content[$property] = $comparison
-		} elseif ($property -eq "feature_contracts" -and $extraContracts.Count -gt 0) {
-			$content[$property] = $extraContracts
+		} elseif ($property -eq "feature_contracts" -and $featureContracts.Count -gt 0) {
+			$content[$property] = $featureContracts
 		} elseif ($existingContent.Contains($property)) {
 			$content[$property] = $existingContent[$property]
 		} else {
@@ -307,10 +316,10 @@ if ($preserveListDocumentShape) {
 		comparison_to_source = $comparison
 	}
 }
-if (-not $preserveListDocumentShape -and $extraContracts.Count -gt 0) {
-	$payload.feature_contracts = $extraContracts
+if (-not $preserveListDocumentShape -and $featureContracts.Count -gt 0) {
+	$payload.feature_contracts = $featureContracts
 	$payload.metadata = [ordered]@{
-		comparison_contract = "Use features and comparison_to_source for cheap comparison; preserve feature_contracts only for instance-owned extra features that may be promoted upstream."
+		comparison_contract = "Use features and comparison_to_source for cheap comparison; preserve source feature contracts plus instance-owned extra feature contracts."
 	}
 }
 
