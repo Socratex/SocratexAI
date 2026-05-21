@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-21T18:38:19+02:00",
+  "generatedAt": "2026-05-21T20:53:10+02:00",
   "threshold": 300,
   "files": [
     {
@@ -281,6 +281,12 @@
     {
       "path": "tools/documents/review_document_list_candidates.ps1",
       "lines": 89,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/codebase/ai_native_contract_dry_run.ps1",
+      "lines": 86,
       "extension": ".ps1",
       "large": false
     },

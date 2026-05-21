@@ -365,6 +365,49 @@
                     ]
                 },
                 {
+                    "id": "engineering.coding.ai_native_code_contract_headers",
+                    "type": "rule",
+                    "subtype": "coding_rule",
+                    "title": "AI-Native Code Contract Headers",
+                    "summary": "Major source files may carry a short top-of-file JSON-like comment block that states ownership, non-goals, diagnostics, and layer boundaries for human/AI/hybrid maintenance.",
+                    "rule": "Use an `AI_CONTRACT` header only for major systems, shared boundaries, runtime/performance/diagnostic modules, layer seams, and files repeatedly touched by humans and agents. Place it at the beginning of the file as a block of comment-prefixed JSON-like fields: purpose, owns, must_not, design_goals, non_goals, diagnostics.taxonomy, diagnostics.fields, layer.name, layer.cannot_depend_on, and ai_notes. Keep it short and factual. Do not add boilerplate to tiny leaf files, generated files, third-party/vendor files, obvious DTO/config-only files, or code where names and types already carry the full meaning. Treat the header as a reading and audit contract, not a substitute for clear names, tests, schemas, runtime checks, or actual dependency enforcement. Use `tools/codebase/ai_native_contract_dry_run.ps1` to inspect candidate rollout files before adding headers; broad header rollout should happen through explicit per-system passes.",
+                    "rationale": "The user's code will be maintained by a human/AI/hybrid process. A small machine-readable comment contract helps future agents find ownership, avoid forbidden responsibilities, preserve diagnostic taxonomy, and respect layer purity without turning every file into stale prose.",
+                    "priority": "should",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "coding",
+                        "comments",
+                        "ai-native",
+                        "ownership",
+                        "contracts",
+                        "diagnostics",
+                        "layer-purity",
+                        "maintainability",
+                        "human-ai-hybrid"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "context-docs/ENGINEERING.json",
+                            "selector": "tagged_rules",
+                            "note": "Reusable code contract standard for AI-assisted maintenance."
+                        },
+                        {
+                            "path": "tools/codebase/ai_native_contract_dry_run.ps1",
+                            "selector": "script",
+                            "note": "Dry-run helper that prints the standard and candidate rollout files without editing source."
+                        },
+                        {
+                            "path": "profiles/SocratexGamedev/WORKFLOW.json",
+                            "selector": "contextual_actions",
+                            "is_duplicate": true,
+                            "note": "Gamedev profile adds FPS/runtime/diagnostic/layer-purity lens for game-system headers."
+                        }
+                    ]
+                },
+                {
                     "id": "engineering.coding.borrowed_before_bespoke",
                     "type": "rule",
                     "subtype": "coding_rule",

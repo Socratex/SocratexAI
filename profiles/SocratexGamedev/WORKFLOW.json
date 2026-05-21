@@ -239,6 +239,27 @@
                     "owner_note": "Owner prefers quality-greedy early foundations when the project is early and future load/change is predictable."
                 },
                 {
+                    "id": "ctx_ai_native_runtime_contract_headers",
+                    "priority": "normal",
+                    "status": "active",
+                    "applies_to_flows": [
+                        "implementation",
+                        "broad_refactor",
+                        "review",
+                        "quality_diagnostics",
+                        "planning"
+                    ],
+                    "applies_to_types": [
+                        "engineering",
+                        "diagnostics",
+                        "game_design"
+                    ],
+                    "when": "A task creates, audits, or materially reshapes a major gameplay, runtime, worldgen, diagnostics, layer-boundary, or repeatedly agent-touched source file.",
+                    "do": "Apply the generic `AI_CONTRACT` header standard through the gamedev lens: state purpose, owns/must_not, design goals/non-goals, runtime/FPS or activation budget when relevant, diagnostic taxonomy such as `[DOMAIN][SYSTEM][EVENT]`, stable fields, layer name, and cannot-depend-on rules. Use `ai_native_contract_dry_run.ps1` for candidate discovery and plan broad rollout as explicit per-system passes.",
+                    "dont": "Do not mass-add boilerplate during unrelated gameplay work, and do not put long design docs into source headers. Keep tiny leaf files, generated files, resource-only files, and obvious DTO/config files untagged unless repeated maintenance proves the header pays for itself.",
+                    "owner_note": "AI-native headers are for readable ownership and future-agent safety, not for replacing clear code, tests, diagnostics, or dependency checks."
+                },
+                {
                     "id": "ctx_future_first_prerequisites",
                     "priority": "high",
                     "status": "active",

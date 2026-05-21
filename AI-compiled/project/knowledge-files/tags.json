@@ -4,6 +4,10 @@
     "tag": "adapters"
   },
   {
+    "description": "",
+    "tag": "ai-native"
+  },
+  {
     "description": "Durable architecture and ownership rules.",
     "tag": "architecture"
   },
@@ -128,8 +132,16 @@
     "tag": "hot-path"
   },
   {
+    "description": "",
+    "tag": "human-ai-hybrid"
+  },
+  {
     "description": "Compiled knowledge index, tag query, and note-selection rules.",
     "tag": "knowledge"
+  },
+  {
+    "description": "",
+    "tag": "layer-purity"
   },
   {
     "description": "",

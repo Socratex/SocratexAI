@@ -384,6 +384,12 @@
       "date": "2026-05-21",
       "feature": "task_flow_audit_closure",
       "change": "Hardened task_flow_audit.ps1 with -ProjectRoot so installed child-project wrappers audit the child repository diff/changelog instead of the embedded SocratexAI package. Why: Riftbound wrapper dry-run exposed that the managed package script otherwise resolved its own package root and reported zero changed paths."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-21",
+      "feature": "ai_native_code_contract_headers",
+      "change": "Added the AI-native code contract header standard to ENGINEERING and the code template. Added a gamedev contextual action for applying the standard to runtime/gameplay/diagnostic/layer-boundary files. Added ai_native_contract_dry_run.ps1 plus script and feature contracts so projects can plan per-system rollout without mass source rewrites. Why: Human/AI/hybrid code maintenance needs concise source ownership, diagnostic taxonomy, and layer-purity contracts, but broad rollout should be planned per system instead of adding stale boilerplate everywhere."
     }
   ]
 }

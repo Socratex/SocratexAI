@@ -126,6 +126,56 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "ai-native"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "comments"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "contracts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "diagnostics"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "human-ai-hybrid"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "layer-purity"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "maintainability"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "tag": "ownership"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.borrowed_before_bespoke",
     "tag": "architecture"
   },

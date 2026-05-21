@@ -106,6 +106,7 @@
             "web_research_spike_to_named_implementation_plan_gate",
             "directive_hierarchy_context_budget",
             "task_flow_audit_closure",
+            "ai_native_code_contract_headers",
             "source_pipeline_maintainer_backlog"
         ],
         "feature_contracts": {
@@ -5912,6 +5913,57 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents can claim completion from prose while skipping the selected flow, omitting changelog truth, hiding manual tool bypass, or missing an obvious adversarial check on broad diffs."
+            },
+            "ai_native_code_contract_headers": {
+                "summary": "Reusable code-pipeline standard for short top-of-file JSON-like `AI_CONTRACT` comment headers on major systems, shared boundaries, diagnostics, runtime/performance modules, layer seams, and repeatedly agent-touched files, plus a dry-run helper for planning per-system rollout without mass boilerplate.",
+                "required_paths": [
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "SCRIPTS.json",
+                    "tools/codebase/ai_native_contract_dry_run.ps1",
+                    "pipeline_featurelist.json",
+                    "CHANGELOG.json"
+                ],
+                "required_scripts": [
+                    "ai_native_contract_dry_run.ps1",
+                    "knowledge_code_context.ps1",
+                    "knowledge_compile.ps1",
+                    "check_pipeline_feature_contracts.ps1",
+                    "rebuild_ai_compiled_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "ai_native_contract_dry_run.ps1",
+                        "knowledge_code_context.ps1",
+                        "knowledge_compile.ps1",
+                        "check_pipeline_feature_contracts.ps1",
+                        "rebuild_ai_compiled_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "SCRIPTS.json",
+                    "CHANGELOG.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the standard generic in ENGINEERING: top-of-file comment-prefixed JSON-like fields for purpose, owns, must_not, design_goals, non_goals, diagnostics taxonomy/fields, layer name/cannot-depend-on, and short ai_notes.",
+                    "Keep profile-specific meaning in profile WORKFLOW or project knowledge; gamedev should interpret headers through runtime/FPS budget, activation, diagnostics, layer purity, worldgen, traversal, combat, and gameplay ownership lenses.",
+                    "Do not mass-tag source files during the feature promotion. First run the dry-run helper and add explicit per-system rollout passes when headers are worth the maintenance cost.",
+                    "Avoid boilerplate on tiny leaf files, generated/vendor files, resource-only files, and obvious DTO/config files.",
+                    "Treat headers as reading/audit contracts only; still require clear code names, tests/smokes, schemas, runtime diagnostics, and mechanical dependency checks where those are the real enforcement layer.",
+                    "Sync the managed package so child projects receive the rule, script, script catalog entry, feature contract, and gamedev contextual action."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/codebase/ai_native_contract_dry_run.ps1 -ProjectRoot .",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                ],
+                "known_failure_if_missing": "Agents may keep relearning source ownership from broad reads, add inconsistent comments, miss diagnostic taxonomy/layer-purity constraints, or mass-add stale boilerplate without a per-system rollout plan."
             },
             "source_pipeline_maintainer_backlog": {
                 "summary": "Source-only maintainer backlog and current-priority lane for deferred or promoted SocratexPipeline cleanup, directive hierarchy, context-bloat, research-flow, task-flow-audit, adversarial-audit, and audit ideas that should not become always-loaded directives until promoted.",
