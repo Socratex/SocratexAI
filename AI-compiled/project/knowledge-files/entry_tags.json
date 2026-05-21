@@ -781,6 +781,46 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "tag": "compiled-context"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "tag": "context-budget"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "tag": "context-tier"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "tag": "directive-hierarchy"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "tag": "knowledge"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.verification_without_tests",
     "tag": "best-practices"
   },

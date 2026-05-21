@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-4bee53f3b8ee
+Generated: source-716133649295
 
 ## Source of Truth
 
@@ -26,8 +26,103 @@ Generated: source-4bee53f3b8ee
 {
     "title": "Project Memory Layers",
     "format": "markdown-section",
-    "body": "## Project Memory Layers\n\nUse these concepts regardless of file names:\n\n- Active state: the current checkpoint, next action, blockers, and risks.\n- Workflow: owner-written active pain points, priority challenge rules, and team-on-demand routing.\n- Execution plan: active and near-future passes.\n- Backlog: valuable work not yet selected for execution.\n- Decision log: durable choices and why they were made.\n- Issue registry: active defects, risks, or unresolved problems.\n- Context capsules: short technical or domain memory that prevents rereading or repeated mistakes.\n- Completion log: shipped outcomes and major fixes.\n\nRequired selective reads:\n- `core/PROMOTION-RULES.json` before moving work between memory layers.\n- `core/PROJECT-PROFILE.json` when `PIPELINE-CONFIG.json` contains `project_profile`.\n- `core/ROI-BIAS.json` before ranking recommendations, planning work, or reviewing tradeoffs.\n- `core/SCRIPT-FALLBACK.json` before bypassing any script that cannot run.\n- `core/TASK-WORK.json` before broad multi-step work that needs a temporary micro-task plan.\n- `core/INSTRUCTION-CAPTURE.json` before rewriting files that collect raw user instructions.\n- `core/FILE-FORMATS.json` before creating or renaming project memory files.\n- `WORKFLOW.json` after active state only when priority steering, feature triage, planning, or broad project-risk judgment matters.\n- `team/*.json` only on demand: when the user names a role, asks for team-style review, or `WORKFLOW.json` routes the task to that role. Treat team files as decision lenses, not default context.\n"
+    "body": "## Project Memory Layers\n\nUse these concepts regardless of file names:\n\n- Active state: the current checkpoint, next action, blockers, and risks.\n- Workflow: owner-written active pain points, priority challenge rules, and team-on-demand routing.\n- Execution plan: active and near-future passes.\n- Backlog: valuable work not yet selected for execution.\n- Decision log: durable choices and why they were made.\n- Issue registry: active defects, risks, or unresolved problems.\n- Context capsules: short technical or domain memory that prevents rereading or repeated mistakes.\n- Completion log: shipped outcomes and major fixes.\n\nContext tier rule: keep Tier 1 as the small always-loaded core and decision gates; route operating rules through Tier 2, deep patterns through Tier 3, history/vision/backlog through Tier 4, and FOMO/inactive inspiration through Tier 5. Read `core/CONTEXT-TIERS.json` before changing directive hierarchy, startup context, knowledge tiering, or context budgets.\n\nRequired selective reads:\n- `core/PROMOTION-RULES.json` before moving work between memory layers.\n- `core/CONTEXT-TIERS.json` before changing directive hierarchy, context budget, compiled-knowledge routing, or knowledgebase tier metadata.\n- `core/PROJECT-PROFILE.json` when `PIPELINE-CONFIG.json` contains `project_profile`.\n- `core/ROI-BIAS.json` before ranking recommendations, planning work, or reviewing tradeoffs.\n- `core/SCRIPT-FALLBACK.json` before bypassing any script that cannot run.\n- `core/TASK-WORK.json` before broad multi-step work that needs a temporary micro-task plan.\n- `core/INSTRUCTION-CAPTURE.json` before rewriting files that collect raw user instructions.\n- `core/FILE-FORMATS.json` before creating or renaming project memory files.\n- `WORKFLOW.json` after active state only when priority steering, feature triage, planning, or broad project-risk judgment matters.\n- `team/*.json` only on demand: when the user names a role, asks for team-style review, or `WORKFLOW.json` routes the task to that role. Treat team files as decision lenses, not default context.\n"
 }
+
+## Context Tiers
+
+~~~json
+{
+    "index": [
+        "quick_index",
+        "purpose",
+        "tier_model",
+        "human_in_loop_research_gate",
+        "budget_sequence",
+        "knowledge_tiering",
+        "consolidation_trigger",
+        "migration_policy"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "content": "- Purpose\n- Tier Model\n- Human In Loop Research Gate\n- Budget Sequence\n- Knowledge Tiering\n- Consolidation Trigger\n- Migration Policy\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "content": "This contract defines how SocratexPipeline separates always-loaded directives, routed operating guidance, deep references, historical memory, and inactive inspiration so context stays reliable under pressure."
+        },
+        "tier_model": {
+            "title": "Tier Model",
+            "value": [
+                {
+                    "tier": 1,
+                    "name": "Core Pipeline And Decision Gates",
+                    "load_policy": "Always loaded.",
+                    "contents": "Small core pipeline contract: instruction authority, read order, safety, routing entrypoints, finish/finalizer rule, and decision gates that prevent wrong execution before any task-specific context is loaded.",
+                    "exclude": "Domain-specific lenses, long examples, archetype catalogs, backlog, vision, or detailed project-profile doctrine."
+                },
+                {
+                    "tier": 2,
+                    "name": "Routed Operating Rules",
+                    "load_policy": "Loaded by task type, profile, flow, command, or selected knowledge view.",
+                    "contents": "Executable operating guidance: flows, main philosophies, generic rules, task-type rules, profile routes, and concise profile-specific constraints.",
+                    "exclude": "Long pattern explanations, historical reasoning, and inactive ideas."
+                },
+                {
+                    "tier": 3,
+                    "name": "Patterns, Archetypes, And Deep References",
+                    "load_policy": "Loaded on demand by tags, explicit research need, or exact subsystem scope.",
+                    "contents": "Known-solution archetypes, examples, detailed implementation patterns, project-specific deep guidance, architecture maps, and longer diagnostic or performance references.",
+                    "exclude": "Always-loaded startup guidance unless a short Tier 1 or Tier 2 pointer routes to it."
+                },
+                {
+                    "tier": 4,
+                    "name": "History, Vision, And Simplified Backlog",
+                    "load_policy": "Discoverable through indexes/search, never default-loaded.",
+                    "contents": "Project history, current and long-horizon vision, deferred but meaningful backlog, past decisions, and inactive but still plausible future work.",
+                    "exclude": "Loose FOMO inspiration that is not yet a real project direction."
+                },
+                {
+                    "tier": 5,
+                    "name": "FOMO And Inactive Inspiration",
+                    "load_policy": "Discoverable only when explicitly requested or when the user reactivates the idea.",
+                    "contents": "Loose inspirations, maybe-someday ideas, raw reference dumps, and low-confidence future possibilities.",
+                    "exclude": "Active plan, current blockers, or rules required for reliable task execution."
+                }
+            ]
+        },
+        "human_in_loop_research_gate": {
+            "title": "Human In Loop Research Gate",
+            "content": "Tier 1 carries only the short gate: when a non-obvious write-code, feature, bug, performance, runtime, migration, or architecture task lacks a researched and named mechanism, ask concise business/product-direction and technical-implication questions before research. Questions should target scale, dynamism, count, frequency, modularity, dependencies, performance pressure, extensibility, data ownership, and whether behavior should be functional, visual, structural, or only presentation-level. After the user answers, run the research through project/profile philosophy, then name the implementation mechanism in the plan or execution note before editing."
+        },
+        "budget_sequence": {
+            "title": "Budget Sequence",
+            "content": "Classify tiers before setting or enforcing exact budget numbers. Default source-pipeline target: Tier 1 should stay roughly 3-5k tokens for reusable core instructions excluding routed knowledge, but the exact budget must be calibrated after tier ownership is clear. If Tier 1 grows because an item feels important rather than because it is needed before routing, demote it to Tier 2 or lower and leave a pointer."
+        },
+        "knowledge_tiering": {
+            "title": "Knowledge Tiering",
+            "content": "Knowledge entries may declare `context_tier` from 1 to 5. When omitted, compiled knowledge assigns an effective tier: `load_at_start=true` becomes Tier 2 and other knowledge entries become Tier 3. Tier 1 should normally live in core instruction contracts rather than broad knowledge entries. Selection tools may filter by exact context tier or maximum tier when a task needs a bounded context slice."
+        },
+        "consolidation_trigger": {
+            "title": "Consolidation Trigger",
+            "content": "If three sessions show observed instruction drift, repeated ignored clear directives, or recurring context-pressure misses, schedule a consolidation pass. The trigger opens a tier/budget review; it does not automatically promote more content into Tier 1."
+        },
+        "migration_policy": {
+            "title": "Migration Policy",
+            "content": "Do not pretend a full knowledgebase retag happened through a quick partial sweep. Passes may add the tier contract, compiler support, defaults, and high-value seed tags first. A full SocratexAI or child-project knowledgebase retag is a separate audit pass across all source documents, with before/after counts and owner-visible results."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Context Tiers",
+            "type": "core_contract",
+            "language": "en"
+        }
+    }
+}
+
+~~~
 
 ## Communication Profiles
 
@@ -276,6 +371,7 @@ Draft placeholder:
             "template_parity_for_reusable_pipeline_improvements",
             "project_specific_design_context_gate",
             "web_research_spike_to_named_implementation_plan_gate",
+            "directive_hierarchy_context_budget",
             "source_pipeline_maintainer_backlog"
         ],
         "feature_contracts": {
@@ -6118,6 +6214,72 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents may either invent bespoke designs without checking known archetypes, or over-apply local philosophy when gamedev/performance research indicates a different lightweight futureproof mechanism."
+            },
+            "directive_hierarchy_context_budget": {
+                "summary": "Classify pipeline directives and knowledge into Tier 1-5 context layers before setting startup-context budgets, so always-loaded context stays small while routed rules, deep references, history, backlog, and inactive inspiration remain discoverable.",
+                "required_paths": [
+                    "core/CONTEXT-TIERS.json",
+                    "core/AGENT-CONTRACT.json",
+                    "AGENTS.md",
+                    "DOCS.json",
+                    "project/code/WORKFLOW.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "docs-tech/KNOWLEDGE-VIEWS.json",
+                    "templates/docs-tech/KNOWLEDGE-VIEWS.json",
+                    "tools/knowledge/knowledge_index.py",
+                    "tools/knowledge/knowledge_select.ps1",
+                    "tools/knowledge/knowledge_file_select.ps1",
+                    "tools/knowledge/knowledge_query.ps1",
+                    "tools/knowledge/knowledge_file_query.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "TODO.md"
+                ],
+                "required_scripts": [
+                    "knowledge_index.py",
+                    "knowledge_select.ps1",
+                    "knowledge_file_select.ps1",
+                    "knowledge_query.ps1",
+                    "knowledge_file_query.ps1",
+                    "compile_pipeline_context.ps1",
+                    "check_pipeline_feature_contracts.ps1"
+                ],
+                "required_catalog_entries": {
+                    "DOCS.json": [
+                        "core/CONTEXT-TIERS.json"
+                    ],
+                    "SCRIPTS.json": [
+                        "knowledge_index.py",
+                        "knowledge_select.ps1",
+                        "knowledge_file_select.ps1",
+                        "knowledge_query.ps1",
+                        "knowledge_file_query.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/CONTEXT-TIERS.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "docs-tech/KNOWLEDGE-VIEWS.json",
+                    "templates/docs-tech/KNOWLEDGE-VIEWS.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Add the canonical Tier 1-5 context hierarchy to a core source-pipeline contract.",
+                    "Keep Tier 1 generic and small: core pipeline, authority, safety, routing, finalization, and decision gates only.",
+                    "Route project/profile/domain details through Tier 2 or Tier 3 rather than always-loaded startup text.",
+                    "Carry human-in-loop research as a Tier 1 gate and keep detailed lenses lower-tier.",
+                    "Add compiled knowledge support for context_tier plus exact/max tier filtering, with defaults for untagged entries.",
+                    "Update named knowledge view docs/templates so routed context can bound tiers.",
+                    "Record that full SocratexAI or child-project knowledgebase retagging is a separate audit pass with visible counts/results.",
+                    "Recompile AI-compiled context and knowledge artifacts, then run feature-contract checks before committing."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -MaxContextTier 2 -Format json"
+                ],
+                "known_failure_if_missing": "Pipeline guidance keeps accumulating in always-loaded context, agents lose or ignore clear directives under context pressure, and broad knowledge sweeps pretend to fix bloat without a real tier contract or queryable tier metadata."
             }
         }
     },

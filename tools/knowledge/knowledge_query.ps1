@@ -4,6 +4,8 @@ param(
 	[string]$Match = "all",
 	[string]$Type = "",
 	[switch]$LoadAtStart,
+	[int[]]$ContextTier = @(),
+	[int]$MaxContextTier = 0,
 	[string]$SourcePath = "",
 	[string]$DocumentPath = "",
 	[string]$Name = "",
@@ -37,6 +39,14 @@ if ($Type -ne "") {
 }
 if ($LoadAtStart) {
 	$arguments += "--load-at-start"
+}
+if ($ContextTier.Count -gt 0) {
+	foreach ($tier in $ContextTier) {
+		$arguments += @("--context-tier", [string]$tier)
+	}
+}
+if ($MaxContextTier -gt 0) {
+	$arguments += @("--max-context-tier", [string]$MaxContextTier)
 }
 if ($SourcePath -ne "") {
 	$arguments += @("--source-path", $SourcePath)

@@ -104,6 +104,7 @@
             "template_parity_for_reusable_pipeline_improvements",
             "project_specific_design_context_gate",
             "web_research_spike_to_named_implementation_plan_gate",
+            "directive_hierarchy_context_budget",
             "source_pipeline_maintainer_backlog"
         ],
         "feature_contracts": {
@@ -5946,6 +5947,72 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents may either invent bespoke designs without checking known archetypes, or over-apply local philosophy when gamedev/performance research indicates a different lightweight futureproof mechanism."
+            },
+            "directive_hierarchy_context_budget": {
+                "summary": "Classify pipeline directives and knowledge into Tier 1-5 context layers before setting startup-context budgets, so always-loaded context stays small while routed rules, deep references, history, backlog, and inactive inspiration remain discoverable.",
+                "required_paths": [
+                    "core/CONTEXT-TIERS.json",
+                    "core/AGENT-CONTRACT.json",
+                    "AGENTS.md",
+                    "DOCS.json",
+                    "project/code/WORKFLOW.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "docs-tech/KNOWLEDGE-VIEWS.json",
+                    "templates/docs-tech/KNOWLEDGE-VIEWS.json",
+                    "tools/knowledge/knowledge_index.py",
+                    "tools/knowledge/knowledge_select.ps1",
+                    "tools/knowledge/knowledge_file_select.ps1",
+                    "tools/knowledge/knowledge_query.ps1",
+                    "tools/knowledge/knowledge_file_query.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "TODO.md"
+                ],
+                "required_scripts": [
+                    "knowledge_index.py",
+                    "knowledge_select.ps1",
+                    "knowledge_file_select.ps1",
+                    "knowledge_query.ps1",
+                    "knowledge_file_query.ps1",
+                    "compile_pipeline_context.ps1",
+                    "check_pipeline_feature_contracts.ps1"
+                ],
+                "required_catalog_entries": {
+                    "DOCS.json": [
+                        "core/CONTEXT-TIERS.json"
+                    ],
+                    "SCRIPTS.json": [
+                        "knowledge_index.py",
+                        "knowledge_select.ps1",
+                        "knowledge_file_select.ps1",
+                        "knowledge_query.ps1",
+                        "knowledge_file_query.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/CONTEXT-TIERS.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "docs-tech/KNOWLEDGE-VIEWS.json",
+                    "templates/docs-tech/KNOWLEDGE-VIEWS.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Add the canonical Tier 1-5 context hierarchy to a core source-pipeline contract.",
+                    "Keep Tier 1 generic and small: core pipeline, authority, safety, routing, finalization, and decision gates only.",
+                    "Route project/profile/domain details through Tier 2 or Tier 3 rather than always-loaded startup text.",
+                    "Carry human-in-loop research as a Tier 1 gate and keep detailed lenses lower-tier.",
+                    "Add compiled knowledge support for context_tier plus exact/max tier filtering, with defaults for untagged entries.",
+                    "Update named knowledge view docs/templates so routed context can bound tiers.",
+                    "Record that full SocratexAI or child-project knowledgebase retagging is a separate audit pass with visible counts/results.",
+                    "Recompile AI-compiled context and knowledge artifacts, then run feature-contract checks before committing."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -MaxContextTier 2 -Format json"
+                ],
+                "known_failure_if_missing": "Pipeline guidance keeps accumulating in always-loaded context, agents lose or ignore clear directives under context pressure, and broad knowledge sweeps pretend to fix bloat without a real tier contract or queryable tier metadata."
             }
         }
     },

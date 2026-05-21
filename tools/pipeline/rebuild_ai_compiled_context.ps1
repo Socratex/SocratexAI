@@ -161,6 +161,7 @@ function Get-SourceManifest {
 		"SCRIPTS.json",
 		"docs-tech/PIPELINE-BOOTSTRAP.json",
 		"core/AGENT-CONTRACT.json",
+		"core/CONTEXT-TIERS.json",
 		"core/MEMORY-MODEL.json",
 		"core/PROMOTION-RULES.json",
 		"core/FILE-FORMATS.json",
@@ -232,6 +233,7 @@ function New-CompiledFiles {
 	$agentContractPurpose = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "purpose"
 	$agentContractPrinciples = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "operating_principles"
 	$memoryLayers = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "project_memory_layers"
+	$contextTiers = Get-RepoText -RelativePath "core/CONTEXT-TIERS.json"
 	$toolFirstJson = Get-Section -RelativePath "core/AGENT-CONTRACT.json" -Selector "tool_first_json"
 	$communicationProfiles = Get-CommunicationProfileText
 	$codeWorkflowReadOrder = Get-Section -RelativePath "project/code/WORKFLOW.json" -Selector "read_order"
@@ -283,6 +285,12 @@ $agentContractPurpose
 $agentContractPrinciples
 
 $memoryLayers
+
+## Context Tiers
+
+~~~json
+$contextTiers
+~~~
 
 ## Communication Profiles
 

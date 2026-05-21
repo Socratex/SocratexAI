@@ -31,6 +31,7 @@ For code projects, also read:
 - `core/REMOVAL-PROTOCOL.json` when the user asks to remove the pipeline
 - `core/TASK-WORK.json` for broad multi-step tasks
 - `core/PROMOTION-RULES.json`
+- `core/CONTEXT-TIERS.json` when directive hierarchy, context budget, compiled-knowledge routing, or knowledgebase retagging is in scope
 - `core/CONTEXT-COMPACTION.json`
 - `core/INSTRUCTION-CAPTURE.json`
 - `core/PROJECT-PROFILE.json` when `project_profile` exists

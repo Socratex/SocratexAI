@@ -185,6 +185,22 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "is_duplicate": false,
+    "note": "Canonical Tier 1-5 context hierarchy.",
+    "path": "core/CONTEXT-TIERS.json",
+    "selector": "tier_model"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "is_duplicate": true,
+    "note": "Human-in-loop research input gate.",
+    "path": "core/CONTEXT-TIERS.json",
+    "selector": "human_in_loop_research_gate"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
     "is_duplicate": true,
     "note": "Project profile gates how strongly better-version-now and DDD-ADIV apply to legacy, greenfield, custom-framework, and no-test contexts.",
@@ -406,6 +422,14 @@
     "note": "Knowledge SQLite and file fallback source freshness use the normalized hash policy.",
     "path": "tools/knowledge/knowledge_index.py",
     "selector": "normalized_hash_text"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "is_duplicate": true,
+    "note": "Compiled knowledge supports effective context tiers and tier filters.",
+    "path": "tools/knowledge/knowledge_index.py",
+    "selector": "context_tier"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",

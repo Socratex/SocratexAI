@@ -391,6 +391,12 @@
           "title": "Verification Discipline Without a Test Suite",
           "ref": "items.tagged_rules.value.25",
           "status": ""
+        },
+        "engineering.workflow.tiered_context_hierarchy": {
+          "path": "items.tagged_rules.value.26",
+          "title": "Tiered Context Hierarchy",
+          "ref": "items.tagged_rules.value.26",
+          "status": ""
         }
       }
     },
@@ -730,6 +736,80 @@
           "path": "items.reset_message",
           "title": "Reset Message",
           "ref": "items.reset_message",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/CONTEXT-TIERS.json",
+      "document": {
+        "title": "Context Tiers",
+        "type": "core_contract",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "purpose",
+        "tier_model",
+        "human_in_loop_research_gate",
+        "budget_sequence",
+        "knowledge_tiering",
+        "consolidation_trigger",
+        "migration_policy"
+      ],
+      "top_level_keys": [
+        "index",
+        "items",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "items.quick_index",
+          "title": "Quick Index",
+          "ref": "items.quick_index",
+          "status": ""
+        },
+        "purpose": {
+          "path": "items.purpose",
+          "title": "Purpose",
+          "ref": "items.purpose",
+          "status": ""
+        },
+        "tier_model": {
+          "path": "items.tier_model",
+          "title": "Tier Model",
+          "ref": "items.tier_model",
+          "status": ""
+        },
+        "human_in_loop_research_gate": {
+          "path": "items.human_in_loop_research_gate",
+          "title": "Human In Loop Research Gate",
+          "ref": "items.human_in_loop_research_gate",
+          "status": ""
+        },
+        "budget_sequence": {
+          "path": "items.budget_sequence",
+          "title": "Budget Sequence",
+          "ref": "items.budget_sequence",
+          "status": ""
+        },
+        "knowledge_tiering": {
+          "path": "items.knowledge_tiering",
+          "title": "Knowledge Tiering",
+          "ref": "items.knowledge_tiering",
+          "status": ""
+        },
+        "consolidation_trigger": {
+          "path": "items.consolidation_trigger",
+          "title": "Consolidation Trigger",
+          "ref": "items.consolidation_trigger",
+          "status": ""
+        },
+        "migration_policy": {
+          "path": "items.migration_policy",
+          "title": "Migration Policy",
+          "ref": "items.migration_policy",
           "status": ""
         }
       }

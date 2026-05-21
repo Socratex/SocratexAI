@@ -7,8 +7,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-SCHEMA = "socratex-knowledge-index/v3"
-COMPILER_VERSION = "3"
+SCHEMA = "socratex-knowledge-index/v4"
+COMPILER_VERSION = "4"
 DEFAULT_DB_PATH = "AI-compiled/project/knowledge.sqlite"
 DEFAULT_MANIFEST_PATH = "AI-compiled/project/knowledge-manifest.json"
 DEFAULT_FILE_DIR = "AI-compiled/project/knowledge-files"
@@ -21,10 +21,13 @@ TAG_DESCRIPTIONS = {
     "coding": "Code readability and implementation rules.",
     "comments": "Comment policy and documentation-in-code rules.",
     "compiled-context": "Compiled context, generated knowledge, and instruction cache workflows.",
+    "context-budget": "Context budget, startup-context size, and consolidation guardrails.",
+    "context-tier": "Tiered context hierarchy and routing rules.",
     "csharp": "C# domain and validation rules.",
     "data-first": "Data owns truth before scene projection.",
     "debugging": "Interactive debugging and failure investigation.",
     "diagnostics": "Logging, debug, and observability rules.",
+    "directive-hierarchy": "Instruction authority, always-loaded scope, and routed instruction tiers.",
     "documentation": "Documentation and durable memory file rules.",
     "docs-workflow": "Documentation workflow, source-of-truth, and finalizer rules.",
     "engineering": "General engineering standards.",
@@ -123,6 +126,37 @@ def normalize_bool(raw: Any) -> bool:
     return bool(raw)
 
 
+def normalize_context_tier(raw: Any, load_at_start: bool) -> int:
+    if raw is None or raw == "":
+        return 2 if load_at_start else 3
+    try:
+        tier = int(raw)
+    except (TypeError, ValueError) as error:
+        raise ValueError(f"context_tier must be an integer 1-5, got {raw!r}") from error
+    if tier < 1 or tier > 5:
+        raise ValueError(f"context_tier must be between 1 and 5, got {tier}")
+    return tier
+
+
+def normalize_context_tiers(raw: Any) -> list[int]:
+    if raw is None or raw == "":
+        return []
+    raw_values = [raw] if isinstance(raw, (str, int)) else list(raw)
+    tiers: list[int] = []
+    for value in raw_values:
+        if isinstance(value, str) and "," in value:
+            parts = [part.strip() for part in value.split(",")]
+        else:
+            parts = [value]
+        for part in parts:
+            if part == "":
+                continue
+            tier = normalize_context_tier(part, load_at_start=False)
+            if tier not in tiers:
+                tiers.append(tier)
+    return tiers
+
+
 def scalar_text(raw: Any) -> str:
     if raw is None:
         return ""
@@ -191,6 +225,7 @@ def normalize_entry(raw: dict[str, Any], document_path: str, selector: str) -> d
     name = str(raw.get("name") or raw.get("id") or raw.get("title")).strip()
     if not name:
         raise ValueError(f"Knowledge entry has no name/id in {document_path}:{selector}")
+    load_at_start = normalize_bool(raw.get("load_at_start", False))
     entry = {
         "document_path": document_path,
         "name": name,
@@ -202,7 +237,8 @@ def normalize_entry(raw: dict[str, Any], document_path: str, selector: str) -> d
         "rationale": scalar_text(raw.get("rationale")),
         "priority": scalar_text(raw.get("priority") or "should"),
         "source_of_truth": normalize_path(str(raw.get("source_of_truth") or document_path)),
-        "load_at_start": normalize_bool(raw.get("load_at_start", False)),
+        "load_at_start": load_at_start,
+        "context_tier": normalize_context_tier(raw.get("context_tier"), load_at_start),
         "stability": scalar_text(raw.get("stability") or "durable"),
         "source_selector": selector,
         "tags": tags,
@@ -267,6 +303,7 @@ def compile_entry_content(entry: dict[str, Any]) -> str:
         f"- type: `{entry['type']}`",
         f"- priority: `{entry['priority']}`",
         f"- load_at_start: `{str(entry['load_at_start']).lower()}`",
+        f"- context_tier: `{entry['context_tier']}`",
         f"- tags: {', '.join(f'`{tag}`' for tag in entry['tags'])}",
         f"- source_of_truth: `{entry['source_of_truth']}`",
         "",
@@ -364,6 +401,8 @@ def load_view_configs(repo_root: Path) -> list[dict[str, Any]]:
                 "match": match_mode,
                 "type": normalize_type(raw.get("type")) if raw.get("type") else "",
                 "load_at_start": normalize_bool(raw.get("load_at_start", False)),
+                "context_tiers": normalize_context_tiers(raw.get("context_tiers") or raw.get("context_tier")),
+                "max_context_tier": int(raw.get("max_context_tier") or 0),
                 "source_path": DEFAULT_VIEWS_PATH,
                 "source_selector": f"{selector_prefix}.{index}",
             }
@@ -417,6 +456,7 @@ def ensure_schema(connection: sqlite3.Connection) -> None:
             priority text not null,
             source_of_truth text not null,
             load_at_start integer not null,
+            context_tier integer not null default 3,
             stability text not null,
             source_selector text not null,
             compiled_at text not null,
@@ -448,6 +488,8 @@ def ensure_schema(connection: sqlite3.Connection) -> None:
             type_filter text not null,
             tag_filter text not null,
             load_at_start_only integer not null,
+            context_tiers text not null default '',
+            max_context_tier integer not null default 0,
             source_path text not null,
             source_selector text not null,
             compiled_at text not null
@@ -469,6 +511,9 @@ def ensure_schema(connection: sqlite3.Connection) -> None:
         """
     )
     ensure_column(connection, "entries", "subtype", "text not null default ''")
+    ensure_column(connection, "entries", "context_tier", "integer not null default 3")
+    ensure_column(connection, "views", "context_tiers", "text not null default ''")
+    ensure_column(connection, "views", "max_context_tier", "integer not null default 0")
     connection.executemany(
         "insert or ignore into tags(tag, description) values (?, ?)",
         sorted(TAG_DESCRIPTIONS.items()),
@@ -515,8 +560,8 @@ def upsert_document(connection: sqlite3.Connection, path: str, document_hash: st
             """
             insert into entries(
                 document_path, name, type, subtype, title, summary, compiled_content, priority,
-                source_of_truth, load_at_start, stability, source_selector, compiled_at
-            ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                source_of_truth, load_at_start, context_tier, stability, source_selector, compiled_at
+            ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 entry["document_path"],
@@ -529,6 +574,7 @@ def upsert_document(connection: sqlite3.Connection, path: str, document_hash: st
                 entry["priority"],
                 entry["source_of_truth"],
                 1 if entry["load_at_start"] else 0,
+                entry["context_tier"],
                 entry["stability"],
                 entry["source_selector"],
                 now,
@@ -570,8 +616,8 @@ def refresh_views(connection: sqlite3.Connection) -> None:
             """
             insert into views(
                 view_id, title, description, match_mode, type_filter, tag_filter,
-                load_at_start_only, source_path, source_selector, compiled_at
-            ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                load_at_start_only, context_tiers, max_context_tier, source_path, source_selector, compiled_at
+            ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 view["view_id"],
@@ -581,6 +627,8 @@ def refresh_views(connection: sqlite3.Connection) -> None:
                 view["type"],
                 ",".join(view["tags"]),
                 1 if view["load_at_start"] else 0,
+                ",".join(str(tier) for tier in view["context_tiers"]),
+                view["max_context_tier"],
                 view["source_path"],
                 view["source_selector"],
                 now,
@@ -592,6 +640,8 @@ def refresh_views(connection: sqlite3.Connection) -> None:
             match=view["match"],
             entry_type=view["type"],
             load_at_start=view["load_at_start"],
+            context_tiers=view["context_tiers"],
+            max_context_tier=view["max_context_tier"],
             source_path="",
             document_path="",
             name="",
@@ -715,7 +765,7 @@ def build_signature(connection: sqlite3.Connection) -> str:
         "documents": [dict(row) for row in connection.execute("select path, hash from documents order by path")],
         "entries": [dict(row) for row in connection.execute("select document_path, name, compiled_content from entries order by document_path, name")],
         "tags": [dict(row) for row in connection.execute("select document_path, entry_name, tag from entry_tags order by document_path, entry_name, tag")],
-        "views": [dict(row) for row in connection.execute("select view_id, title, tag_filter, type_filter, load_at_start_only from views order by view_id")],
+        "views": [dict(row) for row in connection.execute("select view_id, title, tag_filter, type_filter, load_at_start_only, context_tiers, max_context_tier from views order by view_id")],
     }
     return sha256_text(json.dumps(payload, ensure_ascii=False, sort_keys=True))
 
@@ -729,9 +779,9 @@ def write_manifest(db_path: Path, manifest_path: Path) -> None:
             "database_path": normalize_path(str(db_path)),
             "generated_at": utc_now(),
             "documents": [dict(row) for row in connection.execute("select path, hash, compiled_at from documents order by path")],
-            "entries": [dict(row) for row in connection.execute("select document_path, name, type, subtype, load_at_start from entries order by document_path, name")],
+            "entries": [dict(row) for row in connection.execute("select document_path, name, type, subtype, load_at_start, context_tier from entries order by document_path, name")],
             "tags": [dict(row) for row in connection.execute("select tag, description from tags order by tag")],
-            "views": [dict(row) for row in connection.execute("select view_id, title, match_mode, type_filter, tag_filter, load_at_start_only from views order by view_id")],
+            "views": [dict(row) for row in connection.execute("select view_id, title, match_mode, type_filter, tag_filter, load_at_start_only, context_tiers, max_context_tier from views order by view_id")],
         }
     finally:
         connection.close()
@@ -829,6 +879,7 @@ def build_file_store(entries: list[dict[str, Any]], document_hashes: dict[str, s
                 "priority": entry["priority"],
                 "source_of_truth": entry["source_of_truth"],
                 "load_at_start": bool(entry["load_at_start"]),
+                "context_tier": entry["context_tier"],
                 "stability": entry["stability"],
                 "source_selector": entry["source_selector"],
                 "compiled_at": now,
@@ -912,6 +963,7 @@ def write_file_store(file_dir: Path, store: dict[str, Any]) -> None:
                 "type": row["type"],
                 "subtype": row.get("subtype", ""),
                 "load_at_start": row["load_at_start"],
+                "context_tier": row.get("context_tier", 3),
             }
             for row in store["entries"]
         ],
@@ -1077,6 +1129,8 @@ def select_file_entries(
     match: str,
     entry_type: str,
     load_at_start: bool,
+    context_tiers: list[int],
+    max_context_tier: int,
     source_path: str,
     document_path: str,
     name: str,
@@ -1103,6 +1157,11 @@ def select_file_entries(
             continue
         if load_at_start and not bool(row["load_at_start"]):
             continue
+        row_context_tier = int(row.get("context_tier", 3))
+        if context_tiers and row_context_tier not in context_tiers:
+            continue
+        if max_context_tier and row_context_tier > max_context_tier:
+            continue
         if normalized_document and row["document_path"] != normalized_document:
             continue
         if name and row["name"] != name:
@@ -1116,6 +1175,7 @@ def select_file_entries(
                 continue
         entry = dict(row)
         entry["load_at_start"] = bool(entry["load_at_start"])
+        entry["context_tier"] = int(entry.get("context_tier", 3))
         entry["tags"] = entry_tags
         entry["sources"] = entry_sources
         for source in entry["sources"]:
@@ -1131,6 +1191,8 @@ def select_entries(
     match: str,
     entry_type: str,
     load_at_start: bool,
+    context_tiers: list[int],
+    max_context_tier: int,
     source_path: str,
     document_path: str,
     name: str,
@@ -1138,7 +1200,7 @@ def select_entries(
 ) -> list[dict[str, Any]]:
     connection = connect(db_path)
     try:
-        return select_entries_from_connection(connection, tags, match, entry_type, load_at_start, source_path, document_path, name, view_id)
+        return select_entries_from_connection(connection, tags, match, entry_type, load_at_start, context_tiers, max_context_tier, source_path, document_path, name, view_id)
     finally:
         connection.close()
 
@@ -1149,6 +1211,8 @@ def select_entries_from_connection(
     match: str,
     entry_type: str,
     load_at_start: bool,
+    context_tiers: list[int],
+    max_context_tier: int,
     source_path: str,
     document_path: str,
     name: str,
@@ -1168,6 +1232,14 @@ def select_entries_from_connection(
         params.append(normalize_type(entry_type))
     if load_at_start:
         clauses.append("e.load_at_start = 1")
+    normalized_context_tiers = normalize_context_tiers(context_tiers)
+    if normalized_context_tiers:
+        placeholders = ",".join("?" for _ in normalized_context_tiers)
+        clauses.append(f"e.context_tier in ({placeholders})")
+        params.extend(normalized_context_tiers)
+    if max_context_tier:
+        clauses.append("e.context_tier <= ?")
+        params.append(max_context_tier)
     if document_path:
         clauses.append("e.document_path = ?")
         params.append(normalize_path(document_path))
@@ -1205,6 +1277,7 @@ def select_entries_from_connection(
     for row in rows:
         entry = dict(row)
         entry["load_at_start"] = bool(entry["load_at_start"])
+        entry["context_tier"] = int(entry.get("context_tier", 3))
         entry["tags"] = [
             tag_row["tag"]
             for tag_row in connection.execute(
@@ -1269,6 +1342,8 @@ def main() -> None:
     parser.add_argument("--type", default="")
     parser.add_argument("--view", default="")
     parser.add_argument("--load-at-start", action="store_true")
+    parser.add_argument("--context-tier", action="append", default=[])
+    parser.add_argument("--max-context-tier", type=int, default=0)
     parser.add_argument("--source-path", default="")
     parser.add_argument("--document-path", default="")
     parser.add_argument("--format", choices=["markdown", "json"], default="markdown")
@@ -1296,6 +1371,8 @@ def main() -> None:
             args.match,
             args.type,
             args.load_at_start,
+            normalize_context_tiers(args.context_tier),
+            args.max_context_tier,
             args.source_path,
             args.document_path,
             args.name,
@@ -1310,6 +1387,8 @@ def main() -> None:
             args.match,
             args.type,
             args.load_at_start,
+            normalize_context_tiers(args.context_tier),
+            args.max_context_tier,
             args.source_path,
             args.document_path,
             args.name,

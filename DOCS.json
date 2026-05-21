@@ -9,6 +9,7 @@
         "pipeline_featurelist.json",
         "core/",
         "core/WORKSPACE.json",
+        "core/CONTEXT-TIERS.json",
         "core/communication-profiles/",
         "profiles/",
         "project/",
@@ -55,6 +56,10 @@
         "core/WORKSPACE.json": {
             "role": "Workspace root marker contract. Defines where workspace.json lives, how tools discover it, and why project scripts should remain repo-relative.",
             "read": "when workspace layout, import tooling, sibling SocratexAI source resolution, or work/projects path migration changes"
+        },
+        "core/CONTEXT-TIERS.json": {
+            "role": "Reusable context hierarchy contract for Tier 1-5 loading, budget sequencing, knowledge tier metadata, and consolidation triggers.",
+            "read": "when directive hierarchy, context budget, startup context, compiled knowledge routing, or knowledgebase retagging is in scope"
         },
         "project/": {
             "role": "Project-type packs.",

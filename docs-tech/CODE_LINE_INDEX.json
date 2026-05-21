@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-20T02:24:10+02:00",
+  "generatedAt": "2026-05-21T17:16:24+02:00",
   "threshold": 300,
   "files": [
     {
       "path": "tools/knowledge/knowledge_index.py",
-      "lines": 1235,
+      "lines": 1310,
       "extension": ".py",
       "large": true
     },
@@ -16,7 +16,7 @@
     },
     {
       "path": "tools/pipeline/rebuild_ai_compiled_context.ps1",
-      "lines": 428,
+      "lines": 434,
       "extension": ".ps1",
       "large": true
     },
@@ -333,6 +333,12 @@
       "large": false
     },
     {
+      "path": "tools/knowledge/knowledge_select.ps1",
+      "lines": 70,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/repo/finalize_task_check_commit_push.ps1",
       "lines": 67,
       "extension": ".ps1",
@@ -357,14 +363,20 @@
       "large": false
     },
     {
-      "path": "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
-      "lines": 61,
+      "path": "tools/knowledge/knowledge_file_select.ps1",
+      "lines": 64,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/knowledge/knowledge_select.ps1",
-      "lines": 60,
+      "path": "tools/knowledge/knowledge_query.ps1",
+      "lines": 64,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
+      "lines": 61,
       "extension": ".ps1",
       "large": false
     },
@@ -377,18 +389,6 @@
     {
       "path": "tools/setup/detect_project_stack.ps1",
       "lines": 58,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/knowledge/knowledge_file_select.ps1",
-      "lines": 54,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/knowledge/knowledge_query.ps1",
-      "lines": 54,
       "extension": ".ps1",
       "large": false
     },
@@ -585,6 +585,12 @@
       "large": false
     },
     {
+      "path": "tools/knowledge/knowledge_file_query.ps1",
+      "lines": 21,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/knowledge/knowledge_file_rename.ps1",
       "lines": 21,
       "extension": ".ps1",
@@ -605,12 +611,6 @@
     {
       "path": "tools/documents/read_document_item.ps1",
       "lines": 20,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/knowledge/knowledge_file_query.ps1",
-      "lines": 19,
       "extension": ".ps1",
       "large": false
     },

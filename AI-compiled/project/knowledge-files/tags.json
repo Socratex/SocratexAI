@@ -48,6 +48,14 @@
     "tag": "compiled-context"
   },
   {
+    "description": "Context budget, startup-context size, and consolidation guardrails.",
+    "tag": "context-budget"
+  },
+  {
+    "description": "Tiered context hierarchy and routing rules.",
+    "tag": "context-tier"
+  },
+  {
     "description": "",
     "tag": "contracts"
   },
@@ -74,6 +82,10 @@
   {
     "description": "Logging, debug, and observability rules.",
     "tag": "diagnostics"
+  },
+  {
+    "description": "Instruction authority, always-loaded scope, and routed instruction tiers.",
+    "tag": "directive-hierarchy"
   },
   {
     "description": "Documentation workflow, source-of-truth, and finalizer rules.",

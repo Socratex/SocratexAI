@@ -1,0 +1,89 @@
+{
+    "index": [
+        "quick_index",
+        "purpose",
+        "tier_model",
+        "human_in_loop_research_gate",
+        "budget_sequence",
+        "knowledge_tiering",
+        "consolidation_trigger",
+        "migration_policy"
+    ],
+    "items": {
+        "quick_index": {
+            "title": "Quick Index",
+            "content": "- Purpose\n- Tier Model\n- Human In Loop Research Gate\n- Budget Sequence\n- Knowledge Tiering\n- Consolidation Trigger\n- Migration Policy\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "content": "This contract defines how SocratexPipeline separates always-loaded directives, routed operating guidance, deep references, historical memory, and inactive inspiration so context stays reliable under pressure."
+        },
+        "tier_model": {
+            "title": "Tier Model",
+            "value": [
+                {
+                    "tier": 1,
+                    "name": "Core Pipeline And Decision Gates",
+                    "load_policy": "Always loaded.",
+                    "contents": "Small core pipeline contract: instruction authority, read order, safety, routing entrypoints, finish/finalizer rule, and decision gates that prevent wrong execution before any task-specific context is loaded.",
+                    "exclude": "Domain-specific lenses, long examples, archetype catalogs, backlog, vision, or detailed project-profile doctrine."
+                },
+                {
+                    "tier": 2,
+                    "name": "Routed Operating Rules",
+                    "load_policy": "Loaded by task type, profile, flow, command, or selected knowledge view.",
+                    "contents": "Executable operating guidance: flows, main philosophies, generic rules, task-type rules, profile routes, and concise profile-specific constraints.",
+                    "exclude": "Long pattern explanations, historical reasoning, and inactive ideas."
+                },
+                {
+                    "tier": 3,
+                    "name": "Patterns, Archetypes, And Deep References",
+                    "load_policy": "Loaded on demand by tags, explicit research need, or exact subsystem scope.",
+                    "contents": "Known-solution archetypes, examples, detailed implementation patterns, project-specific deep guidance, architecture maps, and longer diagnostic or performance references.",
+                    "exclude": "Always-loaded startup guidance unless a short Tier 1 or Tier 2 pointer routes to it."
+                },
+                {
+                    "tier": 4,
+                    "name": "History, Vision, And Simplified Backlog",
+                    "load_policy": "Discoverable through indexes/search, never default-loaded.",
+                    "contents": "Project history, current and long-horizon vision, deferred but meaningful backlog, past decisions, and inactive but still plausible future work.",
+                    "exclude": "Loose FOMO inspiration that is not yet a real project direction."
+                },
+                {
+                    "tier": 5,
+                    "name": "FOMO And Inactive Inspiration",
+                    "load_policy": "Discoverable only when explicitly requested or when the user reactivates the idea.",
+                    "contents": "Loose inspirations, maybe-someday ideas, raw reference dumps, and low-confidence future possibilities.",
+                    "exclude": "Active plan, current blockers, or rules required for reliable task execution."
+                }
+            ]
+        },
+        "human_in_loop_research_gate": {
+            "title": "Human In Loop Research Gate",
+            "content": "Tier 1 carries only the short gate: when a non-obvious write-code, feature, bug, performance, runtime, migration, or architecture task lacks a researched and named mechanism, ask concise business/product-direction and technical-implication questions before research. Questions should target scale, dynamism, count, frequency, modularity, dependencies, performance pressure, extensibility, data ownership, and whether behavior should be functional, visual, structural, or only presentation-level. After the user answers, run the research through project/profile philosophy, then name the implementation mechanism in the plan or execution note before editing."
+        },
+        "budget_sequence": {
+            "title": "Budget Sequence",
+            "content": "Classify tiers before setting or enforcing exact budget numbers. Default source-pipeline target: Tier 1 should stay roughly 3-5k tokens for reusable core instructions excluding routed knowledge, but the exact budget must be calibrated after tier ownership is clear. If Tier 1 grows because an item feels important rather than because it is needed before routing, demote it to Tier 2 or lower and leave a pointer."
+        },
+        "knowledge_tiering": {
+            "title": "Knowledge Tiering",
+            "content": "Knowledge entries may declare `context_tier` from 1 to 5. When omitted, compiled knowledge assigns an effective tier: `load_at_start=true` becomes Tier 2 and other knowledge entries become Tier 3. Tier 1 should normally live in core instruction contracts rather than broad knowledge entries. Selection tools may filter by exact context tier or maximum tier when a task needs a bounded context slice."
+        },
+        "consolidation_trigger": {
+            "title": "Consolidation Trigger",
+            "content": "If three sessions show observed instruction drift, repeated ignored clear directives, or recurring context-pressure misses, schedule a consolidation pass. The trigger opens a tier/budget review; it does not automatically promote more content into Tier 1."
+        },
+        "migration_policy": {
+            "title": "Migration Policy",
+            "content": "Do not pretend a full knowledgebase retag happened through a quick partial sweep. Passes may add the tier contract, compiler support, defaults, and high-value seed tags first. A full SocratexAI or child-project knowledgebase retag is a separate audit pass across all source documents, with before/after counts and owner-visible results."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Context Tiers",
+            "type": "core_contract",
+            "language": "en"
+        }
+    }
+}

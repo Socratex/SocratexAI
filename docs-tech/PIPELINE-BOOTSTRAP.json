@@ -17,6 +17,7 @@
             "pipeline_featurelist.json",
             "core/",
             "core/WORKSPACE.json",
+            "core/CONTEXT-TIERS.json",
             "core/communication-profiles/",
             "profiles/",
             "project/",

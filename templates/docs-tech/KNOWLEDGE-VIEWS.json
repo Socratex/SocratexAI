@@ -16,7 +16,7 @@
         },
         "view_contract": {
             "title": "View Contract",
-            "content": "Each view selects knowledge entries by tags, type, and optional startup flag.\n\nSupported fields:\n- `id`: stable query id.\n- `title`: human-readable label.\n- `description`: short explanation of when the view should be used.\n- `tags`: many-to-many entry tags used as the primary filter.\n- `match`: `all` requires every tag, `any` accepts any listed tag.\n- `type`: optional entry type filter such as `rule`, `fact`, `decision`, `risk`, or `workflow`.\n- `load_at_start`: optional filter that keeps only entries marked for session startup.\n"
+            "content": "Each view selects knowledge entries by tags, type, and optional startup flag.\n\nSupported fields:\n- `id`: stable query id.\n- `title`: human-readable label.\n- `description`: short explanation of when the view should be used.\n- `tags`: many-to-many entry tags used as the primary filter.\n- `match`: `all` requires every tag, `any` accepts any listed tag.\n- `type`: optional entry type filter such as `rule`, `fact`, `decision`, `risk`, or `workflow`.\n- `load_at_start`: optional filter that keeps only entries marked for session startup.\n- `context_tiers`: optional exact tier list, using integers 1-5.\n- `max_context_tier`: optional upper tier bound for bounded context slices.\n"
         },
         "defined_views": {
             "title": "Defined Views",
@@ -41,7 +41,8 @@
                 "docs-workflow"
             ],
             "match": "any",
-            "load_at_start": true
+            "load_at_start": true,
+            "max_context_tier": 2
         },
         {
             "id": "architecture",
@@ -50,7 +51,8 @@
             "tags": [
                 "architecture"
             ],
-            "match": "all"
+            "match": "all",
+            "max_context_tier": 3
         },
         {
             "id": "debugging",
@@ -61,7 +63,8 @@
                 "verification",
                 "debugging"
             ],
-            "match": "any"
+            "match": "any",
+            "max_context_tier": 3
         },
         {
             "id": "performance",
@@ -70,7 +73,8 @@
             "tags": [
                 "performance"
             ],
-            "match": "any"
+            "match": "any",
+            "max_context_tier": 3
         },
         {
             "id": "docs_workflow",
@@ -81,7 +85,8 @@
                 "workflow",
                 "verification"
             ],
-            "match": "any"
+            "match": "any",
+            "max_context_tier": 3
         },
         {
             "id": "domain_modeling",
@@ -92,7 +97,8 @@
                 "persistence",
                 "data-first"
             ],
-            "match": "any"
+            "match": "any",
+            "max_context_tier": 3
         }
     ]
 }

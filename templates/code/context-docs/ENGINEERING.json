@@ -12,7 +12,7 @@
         },
         "summary": {
             "title": "Summary",
-            "content": "This file is the compact engineering standards capsule compiled into `AI-compiled/project/knowledge.sqlite`.\n\nSource documents remain authoritative. SQLite is a generated query/index layer for faster agent context loading.\n\nCurrent code-task default: apply profile-fit, web-research-spike, and lightweight-futureproof before better-version-now. Prefer small future-proof improvements in clean code, DDD/ADIV boundaries, contracts, security, data ownership, migrations, diagnostics, verification, and predictable-load architecture when they are cheap now and expensive to retrofit later; keep legacy surgical changes surgical."
+            "content": "This file is the compact engineering standards capsule compiled into `AI-compiled/project/knowledge.sqlite`.\n\nSource documents remain authoritative. SQLite is a generated query/index layer for faster agent context loading.\n\nCurrent code-task default: apply profile-fit, web-research-spike, and lightweight-futureproof before better-version-now. Prefer small future-proof improvements in clean code, DDD/ADIV boundaries, contracts, security, data ownership, migrations, diagnostics, verification, and predictable-load architecture when they are cheap now and expensive to retrofit later; keep legacy surgical changes surgical. Keep always-loaded context small through the Tier 1-5 context hierarchy: core gates first, routed operating rules second, deep references third, history/backlog fourth, FOMO fifth."
         },
         "tagged_rules": {
             "title": "Tagged Rules",
@@ -351,6 +351,47 @@
                             "selector": "implementation",
                             "is_duplicate": true,
                             "note": "Implementation flow names the gate before source edits."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.workflow.tiered_context_hierarchy",
+                    "type": "rule",
+                    "subtype": "workflow_rule",
+                    "title": "Tiered Context Hierarchy",
+                    "summary": "Keep always-loaded context small by classifying pipeline knowledge into five tiers before setting exact token budgets.",
+                    "rule": "Use the tiered context hierarchy before expanding startup instructions or broad routed knowledge. Tier 1 is the small always-loaded core pipeline and decision gates. Tier 2 is routed operating guidance such as flows, main philosophies, generic rules, and task/profile rules. Tier 3 is deep patterns, archetypes, examples, and project-specific references. Tier 4 is history, vision, and simplified backlog. Tier 5 is FOMO and inactive inspiration. For non-obvious code work, Tier 1 should only carry the gate that asks concise business/product-direction and technical-implication questions before research; detailed profile lenses belong in Tier 2 or Tier 3. Full knowledgebase retagging must be a real audit pass, not a shallow sweep.",
+                    "rationale": "Clear tier ownership prevents instruction bloat, keeps cacheable startup context stable, and makes routed knowledge loadable by task need instead of perceived importance.",
+                    "priority": "must",
+                    "source_of_truth": "core/CONTEXT-TIERS.json",
+                    "load_at_start": true,
+                    "context_tier": 2,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "workflow",
+                        "docs-workflow",
+                        "compiled-context",
+                        "knowledge",
+                        "context-tier",
+                        "context-budget",
+                        "directive-hierarchy"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/CONTEXT-TIERS.json",
+                            "selector": "tier_model",
+                            "note": "Canonical Tier 1-5 context hierarchy."
+                        },
+                        {
+                            "path": "core/CONTEXT-TIERS.json",
+                            "selector": "human_in_loop_research_gate",
+                            "note": "Human-in-loop research input gate."
+                        },
+                        {
+                            "path": "tools/knowledge/knowledge_index.py",
+                            "selector": "context_tier",
+                            "note": "Compiled knowledge supports effective context tiers and tier filters."
                         }
                     ]
                 },
