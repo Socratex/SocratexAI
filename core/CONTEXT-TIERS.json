@@ -23,16 +23,16 @@
             "value": [
                 {
                     "tier": 1,
-                    "name": "Core Pipeline And Decision Gates",
+                    "name": "Core Directives And Decision Gates",
                     "load_policy": "Always loaded.",
-                    "contents": "Small core pipeline contract: instruction authority, read order, safety, routing entrypoints, finish/finalizer rule, and decision gates that prevent wrong execution before any task-specific context is loaded.",
-                    "exclude": "Domain-specific lenses, long examples, archetype catalogs, backlog, vision, or detailed project-profile doctrine."
+                    "contents": "Small directive layer: instruction authority, read order, safety, routing entrypoints, finish/finalizer rule, and direction-setting gates that must shape every task before task-specific context is loaded. This includes short reminders for workflow/flows discipline, DDD-ADIV, source-of-truth ownership, research/web-research, borrowed-before-invented, and lightweight-futureproof thinking.",
+                    "exclude": "Detailed implementation content, domain-specific lenses, long examples, archetype catalogs, backlog, vision, or detailed project-profile doctrine."
                 },
                 {
                     "tier": 2,
                     "name": "Routed Operating Rules",
                     "load_policy": "Loaded by task type, profile, flow, command, or selected knowledge view.",
-                    "contents": "Executable operating guidance: flows, main philosophies, generic rules, task-type rules, profile routes, and concise profile-specific constraints.",
+                    "contents": "Executable operating guidance loaded after the Tier 1 directive says what direction to preserve: task-type rules, profile routes, concise profile-specific constraints, and operational details that are useful only after the task route is known.",
                     "exclude": "Long pattern explanations, historical reasoning, and inactive ideas."
                 },
                 {
@@ -68,7 +68,7 @@
         },
         "knowledge_tiering": {
             "title": "Knowledge Tiering",
-            "content": "Knowledge entries may declare `context_tier` from 1 to 5. When omitted, compiled knowledge assigns an effective tier: `load_at_start=true` becomes Tier 2 and other knowledge entries become Tier 3. Tier 1 should normally live in core instruction contracts rather than broad knowledge entries. Selection tools may filter by exact context tier or maximum tier when a task needs a bounded context slice."
+            "content": "Knowledge entries may declare `context_tier` from 1 to 5. When omitted, compiled knowledge assigns an effective tier: `load_at_start=true` becomes Tier 2 and other knowledge entries become Tier 3. Tier 1 is allowed for short durable directives whose role is `remember this direction`, not for detailed implementation content. Selection tools may filter by exact context tier or maximum tier when a task needs a bounded context slice."
         },
         "consolidation_trigger": {
             "title": "Consolidation Trigger",

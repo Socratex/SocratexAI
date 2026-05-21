@@ -97,15 +97,15 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "entry_name": "engineering.coding.borrowed_before_invented",
     "is_duplicate": false,
-    "note": "Source-of-truth for the borrowed-before-bespoke directive.",
+    "note": "Source-of-truth for the borrowed-before-invented directive.",
     "path": "core/AGENT-CONTRACT.json",
     "selector": "primary_known_solutions_directive"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "entry_name": "engineering.coding.borrowed_before_invented",
     "is_duplicate": true,
     "note": "Domain-specific expansion of the same directive.",
     "path": "core/AGENT-CONTRACT.json",
@@ -225,9 +225,9 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "entry_name": "engineering.coding.borrowed_before_invented",
     "is_duplicate": true,
-    "note": "DDD-ADIV reinforces build-vs-borrow as a domain-clarifying tool.",
+    "note": "DDD-ADIV reinforces borrow-vs-invent as a domain-clarifying tool.",
     "path": "project/code/DDD-ADIV.json",
     "selector": "known_solutions_alignment"
   },

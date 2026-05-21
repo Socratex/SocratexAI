@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-b5605b7c6b67",
+  "generated_at": "source-364c504f0f3f",
   "source_hashes": {
     "AGENTS.md": "c2e7d0359d8c2faa695de4880c06ffa41aea651e13f0012c7f892ca92e02c589",
     "README.md": "60702ed0de7e1dd8fd2c08b2a7a3c0706e362a5feb7398228e0cc045b835fae1",
@@ -12,14 +12,14 @@
     "SCRIPTS.json": "c4faa38108e03e35b604c47196fc2d489f4e3d23a410a646ed906f50a60f0600",
     "docs-tech/PIPELINE-BOOTSTRAP.json": "0174abdea09bacf33a8bd4a552094966c7dfb660d906610e8f84e52711cb5b43",
     "core/AGENT-CONTRACT.json": "b9a352cfd2b8f7cc9b5d8a364927fef182215f1ce4d0410a9fea74ae1efe517d",
-    "core/CONTEXT-TIERS.json": "bb23e6d2639b2cb9d8945a6b9938dda9c7ebfd4d93d86801e7a78461a99d545f",
+    "core/CONTEXT-TIERS.json": "35cdff060072083fa23537851d7c5d194566e2b2353526d674e6090be322f4c3",
     "core/MEMORY-MODEL.json": "4496293983d003482f7234270a29af74f900a9878f70aa80aee2965c01da7c94",
     "core/PROMOTION-RULES.json": "504e7086041db37e699151798a2efe67f9b8c4056094e2203a68354c4ad22680",
     "core/FILE-FORMATS.json": "4ff9fdd22cf992983f26a312cc64b8b59db8d40161c9e891156d23979f8b8bee",
     "core/ROI-BIAS.json": "bd909cd333fc1e0c5af5d120a76669801c8e4129dbf0aceeced6fb4413da3d08",
     "core/TASK-WORK.json": "dcef612a7d6b84eeff8c149bcf457434e7f4bd2ed4f2506c639ff4e06b0b86e2",
     "core/SCRIPT-FALLBACK.json": "d5d1a6eae90d0ff3138eca96ced3d79d088351ea02cefacaaa30677d9c8f27ec",
-    "context-docs/ENGINEERING.json": "bf35f275e8de660d6cee12275099fe2d2d664d737861777aebdc8ffb84243427",
+    "context-docs/ENGINEERING.json": "fd9f8978afb9e7d1b8e2240ce959e84e5b0fcd9799655be6274608fcad3bc870",
     "docs-tech/KNOWLEDGE-VIEWS.json": "9ea4a1f68025bac03febc1730c654ea78cda3f05e7a693be3db71809e4722810",
     "tools/knowledge/knowledge_index.py": "c0839d1f3b9c35405811e461a537327b71c36888c6b5960dae4afa611f5015d9",
     "tools/knowledge/context_tags.ps1": "2b22b5678cef79565ac224ab2a77de5a711de0b4460dc0eec9bb50bcd2849ac3",
@@ -33,7 +33,7 @@
     "tools/pipeline/pipeline_bootstrap_index.ps1": "c7a6642e6e2ebde39abec94856cde3f074c837215c26f93301c4c0f16dd44599",
     "templates/WORKFLOW.json": "6f9d47020c1eb1a658d9e0d41997aeddaca3d31929f97444f833c845a2f4aa9b",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "9ea4a1f68025bac03febc1730c654ea78cda3f05e7a693be3db71809e4722810",
-    "templates/code/context-docs/ENGINEERING.json": "fb369e9c7675a7131ae0cd7631be71f17d9c27e2912e8dee5fbe7516d81d8bd0",
+    "templates/code/context-docs/ENGINEERING.json": "b483435c9cb1932f46396de08eb504eac2f114e106b672d4dc06d339b9202fa0",
     "templates/team/product.json": "2781abb86bba0e7208a3025fbc8726f6bb63490ad26e54d8be87b2ace6b26a2e",
     "templates/team/technical.json": "a6dbc89c944220a85cbe7ee4b1e348eecb6b73ccccaf080413b90115a176480f",
     "templates/team/performance.json": "d403bb9e0baf62c4c4ca8ab1d240faedca5f4a8917a288318d837deb756f2b58",
@@ -53,11 +53,11 @@
   },
   "output_hashes": {
     "README.md": "d066b6cd837082095c4a037ac3c5619ba562ed9762f239a8e4cce0ea94e35659",
-    "INDEX.json": "ba0c6fb3010e3236cccab02ba2fed10253e2cf83e295d4ebbfffa4ef6e6d6d49",
-    "codex/ENTRYPOINT.md": "978057210c454178d296680fcbfaf89a1c18f966e3ab1f3d33fe88ea9442571f",
-    "codex/RULES.compiled.md": "64ef57c83004f829dcb5ab7abe87fdeaece54d01099e643246fb444bd2655798",
-    "codex/WORKFLOW.compiled.md": "1f03e70d8a7059c46d7006321eaad36bdb0d342abf2d0b2c3dcb8d436610c8e8",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "8a663df40e350fd391d4af256905479d900f3f9c561621f3f18c9919c26f2ac3",
-    "codex/TEAM.compiled.md": "62a0606748f052f174a34631b0aa5a4f82a6a033868679828e7f37f62f833657"
+    "INDEX.json": "1b6344b5a14a580a453c9b3057d0d8eed3ce2eeece29466e468c8115cf576d4f",
+    "codex/ENTRYPOINT.md": "5e7faa0042608fb7e90cf00f268665224dd816f856e128ced8c5c2fba3265465",
+    "codex/RULES.compiled.md": "073a1e75dcfe1e87ddde442467dafd4f740c4b11ba059d526502a46c1031810e",
+    "codex/WORKFLOW.compiled.md": "a2ff5b50d72a7457931f1e41acb336e7997d5b3d79823106113fc19505df2d1e",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "0eda8f85dc04d4bc347bb0663aaf9106942659dacda817c1fb5d8aa34080c57a",
+    "codex/TEAM.compiled.md": "72c0c5972071b4d2d041010b6e84ff8ffcd4bcd119e1628ac7c414b13a68f572"
   }
 }

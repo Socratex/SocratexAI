@@ -402,6 +402,18 @@
       "date": "2026-05-21",
       "feature": "directive_hierarchy_context_budget",
       "change": "Added knowledge_tier_check.ps1 and knowledge_tier_report.ps1 so source and child projects can fail missing context_tier metadata mechanically and summarize knowledge entries by tier/category. Why: Full tier migrations need a repeatable checker instead of manual grep/counts, especially when child projects preserve local SocratexAI knowledge overrides."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-21",
+      "feature": "directive_hierarchy_context_budget",
+      "change": "Reclassified workflow, docs-workflow, DDD-ADIV, source-of-truth, research/web-research, borrowed-before-bespoke, and lightweight-futureproof knowledge entries as Tier 1 directives rather than Tier 2 content. Why: These entries are direction-setting reminders that should shape agent thinking before routed implementation content is selected."
+    },
+    {
+      "version": "0.2.0-alpha",
+      "date": "2026-05-21",
+      "feature": "borrowed_before_invented",
+      "change": "Renamed the borrowed-before-bespoke directive wording and feature ID to borrowed-before-invented / borrowed-vs-invented in active source knowledge and feature contracts. Why: The directive is about checking known borrowed solutions before inventing a custom one; 'invented' matches the user-facing concept better than 'bespoke'."
     }
   ]
 }

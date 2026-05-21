@@ -12,7 +12,7 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
-    "tag": "borrowed-before-bespoke"
+    "tag": "borrowed-before-invented"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -176,32 +176,32 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "entry_name": "engineering.coding.borrowed_before_invented",
     "tag": "architecture"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "entry_name": "engineering.coding.borrowed_before_invented",
     "tag": "best-practices"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
-    "tag": "borrowed-before-bespoke"
+    "entry_name": "engineering.coding.borrowed_before_invented",
+    "tag": "borrowed-before-invented"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "entry_name": "engineering.coding.borrowed_before_invented",
     "tag": "coding"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "entry_name": "engineering.coding.borrowed_before_invented",
     "tag": "domain_modeling"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
-    "entry_name": "engineering.coding.borrowed_before_bespoke",
+    "entry_name": "engineering.coding.borrowed_before_invented",
     "tag": "engineering"
   },
   {
@@ -747,7 +747,7 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.load_standards_before_code",
-    "tag": "borrowed-before-bespoke"
+    "tag": "borrowed-before-invented"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -902,7 +902,7 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
-    "tag": "borrowed-before-bespoke"
+    "tag": "borrowed-before-invented"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",

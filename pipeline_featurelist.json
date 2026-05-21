@@ -9,7 +9,7 @@
             "agent_contract_and_core_protocols",
             "future_first_implementation_steering",
             "ddd_adiv_design_default",
-            "borrowed_before_bespoke",
+            "borrowed_before_invented",
             "script_first_execution",
             "repair_automation_before_manual_recovery",
             "evidence_driven_debugging",
@@ -271,8 +271,8 @@
                 ],
                 "known_failure_if_missing": "If 'ddd_adiv_design_default' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
-            "borrowed_before_bespoke": {
-                "summary": "Borrowed Before Bespoke capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+            "borrowed_before_invented": {
+                "summary": "Borrowed Before Invented capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "AGENTS.md",
@@ -307,7 +307,7 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "If 'borrowed_before_bespoke' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+                "known_failure_if_missing": "If 'borrowed_before_invented' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "script_first_execution": {
                 "summary": "Script First Execution capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
@@ -5706,7 +5706,7 @@
                 },
                 "implementation_flow_steps": [
                     "load WORKFLOW.json",
-                    "run knowledge_code_context.ps1 — REQUIRED: brings 11 substantive code-design rules (borrowed-before-bespoke, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
+                    "run knowledge_code_context.ps1 — REQUIRED: brings 11 substantive code-design rules (borrowed-before-invented, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
                     "run project_design_context.ps1 -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads — writes ignored/project_design_context_gate.json",
                     "inspect SCRIPTS.json index before manual work",
                     "edit scoped files",
@@ -6054,7 +6054,7 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
-                "known_failure_if_missing": "Agents may either invent bespoke designs without checking known archetypes, or over-apply local philosophy when gamedev/performance research indicates a different lightweight futureproof mechanism."
+                "known_failure_if_missing": "Agents may either invent invented designs without checking known archetypes, or over-apply local philosophy when gamedev/performance research indicates a different lightweight futureproof mechanism."
             },
             "directive_hierarchy_context_budget": {
                 "summary": "Classify pipeline directives and knowledge into Tier 1-5 context layers before setting startup-context budgets, so always-loaded context stays small while routed rules, deep references, history, backlog, and inactive inspiration remain discoverable.",

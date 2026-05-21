@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-b5605b7c6b67
+Generated: source-364c504f0f3f
 
 ## Source of Truth
 
@@ -57,16 +57,16 @@ Generated: source-b5605b7c6b67
             "value": [
                 {
                     "tier": 1,
-                    "name": "Core Pipeline And Decision Gates",
+                    "name": "Core Directives And Decision Gates",
                     "load_policy": "Always loaded.",
-                    "contents": "Small core pipeline contract: instruction authority, read order, safety, routing entrypoints, finish/finalizer rule, and decision gates that prevent wrong execution before any task-specific context is loaded.",
-                    "exclude": "Domain-specific lenses, long examples, archetype catalogs, backlog, vision, or detailed project-profile doctrine."
+                    "contents": "Small directive layer: instruction authority, read order, safety, routing entrypoints, finish/finalizer rule, and direction-setting gates that must shape every task before task-specific context is loaded. This includes short reminders for workflow/flows discipline, DDD-ADIV, source-of-truth ownership, research/web-research, borrowed-before-invented, and lightweight-futureproof thinking.",
+                    "exclude": "Detailed implementation content, domain-specific lenses, long examples, archetype catalogs, backlog, vision, or detailed project-profile doctrine."
                 },
                 {
                     "tier": 2,
                     "name": "Routed Operating Rules",
                     "load_policy": "Loaded by task type, profile, flow, command, or selected knowledge view.",
-                    "contents": "Executable operating guidance: flows, main philosophies, generic rules, task-type rules, profile routes, and concise profile-specific constraints.",
+                    "contents": "Executable operating guidance loaded after the Tier 1 directive says what direction to preserve: task-type rules, profile routes, concise profile-specific constraints, and operational details that are useful only after the task route is known.",
                     "exclude": "Long pattern explanations, historical reasoning, and inactive ideas."
                 },
                 {
@@ -102,7 +102,7 @@ Generated: source-b5605b7c6b67
         },
         "knowledge_tiering": {
             "title": "Knowledge Tiering",
-            "content": "Knowledge entries may declare `context_tier` from 1 to 5. When omitted, compiled knowledge assigns an effective tier: `load_at_start=true` becomes Tier 2 and other knowledge entries become Tier 3. Tier 1 should normally live in core instruction contracts rather than broad knowledge entries. Selection tools may filter by exact context tier or maximum tier when a task needs a bounded context slice."
+            "content": "Knowledge entries may declare `context_tier` from 1 to 5. When omitted, compiled knowledge assigns an effective tier: `load_at_start=true` becomes Tier 2 and other knowledge entries become Tier 3. Tier 1 is allowed for short durable directives whose role is `remember this direction`, not for detailed implementation content. Selection tools may filter by exact context tier or maximum tier when a task needs a bounded context slice."
         },
         "consolidation_trigger": {
             "title": "Consolidation Trigger",
@@ -276,7 +276,7 @@ Draft placeholder:
             "agent_contract_and_core_protocols",
             "future_first_implementation_steering",
             "ddd_adiv_design_default",
-            "borrowed_before_bespoke",
+            "borrowed_before_invented",
             "script_first_execution",
             "repair_automation_before_manual_recovery",
             "evidence_driven_debugging",
@@ -538,8 +538,8 @@ Draft placeholder:
                 ],
                 "known_failure_if_missing": "If 'ddd_adiv_design_default' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
-            "borrowed_before_bespoke": {
-                "summary": "Borrowed Before Bespoke capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+            "borrowed_before_invented": {
+                "summary": "Borrowed Before Invented capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "AGENTS.md",
@@ -574,7 +574,7 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "If 'borrowed_before_bespoke' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+                "known_failure_if_missing": "If 'borrowed_before_invented' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "script_first_execution": {
                 "summary": "Script First Execution capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
@@ -5973,7 +5973,7 @@ Draft placeholder:
                 },
                 "implementation_flow_steps": [
                     "load WORKFLOW.json",
-                    "run knowledge_code_context.ps1 — REQUIRED: brings 11 substantive code-design rules (borrowed-before-bespoke, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
+                    "run knowledge_code_context.ps1 — REQUIRED: brings 11 substantive code-design rules (borrowed-before-invented, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
                     "run project_design_context.ps1 -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads — writes ignored/project_design_context_gate.json",
                     "inspect SCRIPTS.json index before manual work",
                     "edit scoped files",
@@ -6321,7 +6321,7 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
-                "known_failure_if_missing": "Agents may either invent bespoke designs without checking known archetypes, or over-apply local philosophy when gamedev/performance research indicates a different lightweight futureproof mechanism."
+                "known_failure_if_missing": "Agents may either invent invented designs without checking known archetypes, or over-apply local philosophy when gamedev/performance research indicates a different lightweight futureproof mechanism."
             },
             "directive_hierarchy_context_budget": {
                 "summary": "Classify pipeline directives and knowledge into Tier 1-5 context layers before setting startup-context budgets, so always-loaded context stays small while routed rules, deep references, history, backlog, and inactive inspiration remain discoverable.",
