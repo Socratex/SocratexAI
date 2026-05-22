@@ -21,7 +21,7 @@ Read order:
 7. `SocratexAI/DOCS.json`
 8. `SocratexAI/STATE.json` for code projects, or `SocratexAI/STATE.md` for non-code user-facing memory
 
-Before reading, creating, renaming, or updating project documents, use `SocratexAI/DOCS.json` to identify what each document is for, which document should be read, and where new information should be written.
+Before reading, creating, renaming, or updating project documents, use `SocratexAI/DOCS.json` to identify what each document is for, which document should be read, and where new information should be written. Paths listed inside `SocratexAI/DOCS.json` are relative to the installed `SocratexAI/` package unless the entry explicitly names a project-root path such as `SOCRATEX.md` or `.aiassistant/`.
 
 After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.json` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
 

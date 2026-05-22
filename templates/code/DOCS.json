@@ -118,7 +118,7 @@
             "read_when": "When processing queued instructions.",
             "write_when": "Defragmenting, sorting, promoting, or completing queued instructions."
         },
-        "current_task.json": {
+        "docs-tech/cache/current_task.json": {
             "role": "Temporary broad-task micro-task working memory.",
             "audience": "ai",
             "format": "json",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T01:35:05+02:00",
+  "generatedAt": "2026-05-22T13:49:20+02:00",
   "threshold": 300,
   "files": [
     {
@@ -399,6 +399,12 @@
       "large": false
     },
     {
+      "path": "tools/quality/run_quality_gate_contract.ps1",
+      "lines": 61,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
       "lines": 61,
       "extension": ".ps1",
@@ -435,6 +441,12 @@
       "large": false
     },
     {
+      "path": "tools/quality/run_quality_gate.ps1",
+      "lines": 47,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/documents/migrate_document_schema.ps1",
       "lines": 43,
       "extension": ".ps1",
@@ -448,12 +460,6 @@
     },
     {
       "path": "tools/documents/json_item_insert.ps1",
-      "lines": 41,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/quality/run_quality_gate.ps1",
       "lines": 41,
       "extension": ".ps1",
       "large": false

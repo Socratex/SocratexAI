@@ -5,6 +5,7 @@
         "COMMANDS.json",
         "FLOWS.json",
         "SCRIPTS.json",
+        "QUALITY-GATE.json",
         "TODO.md",
         "pipeline_featurelist.json",
         "core/",
@@ -39,6 +40,10 @@
         "SCRIPTS.json": {
             "role": "Root script availability index.",
             "read": "index only in default context; read content only for exact metadata about a specific script"
+        },
+        "QUALITY-GATE.json": {
+            "role": "Canonical source-pipeline smoke and self-check command contract.",
+            "read": "when quality diagnostics, CI self-checks, or source-pipeline smoke coverage is in scope"
         },
         "TODO.md": {
             "role": "Maintainer-side backlog for source-pipeline cleanup, audits, and deferred improvements not yet promoted into plan or feature contracts.",

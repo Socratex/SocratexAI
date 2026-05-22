@@ -5,6 +5,7 @@
         "json_source_contract",
         "workflow_workflow_contract",
         "generic_programming_baseline",
+        "template_parity_for_reusable_pipeline_improvements",
         "project_type_routing",
         "finish_contract",
         "tool_error_hardening",

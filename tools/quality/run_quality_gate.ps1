@@ -7,6 +7,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $Root = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$contractRunner = Join-Path $PSScriptRoot "run_quality_gate_contract.ps1"
+$qualityGateContract = Join-Path $Root "QUALITY-GATE.json"
 
 if ($Skip) {
     Write-Host "SKIP: quality gate skipped by request."
@@ -20,7 +22,12 @@ try {
     if ($Command -and $Command.Count -gt 0) {
         $commandLine = [string]::Join(" ", $Command)
         Write-Host "Running configured command: $commandLine"
-        powershell -NoProfile -ExecutionPolicy Bypass -Command $commandLine
+        pwsh -NoLogo -NoProfile -Command $commandLine
+        exit $LASTEXITCODE
+    }
+
+    if ((Test-Path -LiteralPath $qualityGateContract) -and (Test-Path -LiteralPath $contractRunner)) {
+        pwsh -NoLogo -NoProfile -File $contractRunner -Path $qualityGateContract
         exit $LASTEXITCODE
     }
 
@@ -37,7 +44,7 @@ try {
     foreach ($candidate in $candidates) {
         if (Test-Path -LiteralPath $candidate.File) {
             Write-Host "Detected $($candidate.File); running $($candidate.Command)"
-            powershell -NoProfile -ExecutionPolicy Bypass -Command $candidate.Command
+            pwsh -NoLogo -NoProfile -Command $candidate.Command
             exit $LASTEXITCODE
         }
     }

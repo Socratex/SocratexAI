@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-9746f5ff8b3c
+Generated: source-ae13bd81346a
 
 ## Source of Truth
 
@@ -1045,6 +1045,7 @@ Draft placeholder:
                     "check_toolchain_health.ps1",
                     "check_sensitive_reference_leaks.ps1",
                     "run_quality_gate.ps1",
+                    "run_quality_gate_contract.ps1",
                     "run_quality_fix.ps1",
                     "check_runtime.py",
                     "audit_docs.ps1"
@@ -1058,6 +1059,7 @@ Draft placeholder:
                         "check_toolchain_health.ps1",
                         "check_sensitive_reference_leaks.ps1",
                         "run_quality_gate.ps1",
+                        "run_quality_gate_contract.ps1",
                         "run_quality_fix.ps1",
                         "check_runtime.py",
                         "audit_docs.ps1"
@@ -1099,6 +1101,7 @@ Draft placeholder:
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
                     "run_quality_gate.ps1",
+                    "run_quality_gate_contract.ps1",
                     "run_quality_fix.ps1",
                     "check_runtime.py",
                     "audit_docs.ps1"
@@ -1111,6 +1114,7 @@ Draft placeholder:
                         "check_task.ps1",
                         "check_toolchain_health.ps1",
                         "run_quality_gate.ps1",
+                        "run_quality_gate_contract.ps1",
                         "run_quality_fix.ps1",
                         "check_runtime.py",
                         "audit_docs.ps1"
@@ -1151,6 +1155,7 @@ Draft placeholder:
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
                     "run_quality_gate.ps1",
+                    "run_quality_gate_contract.ps1",
                     "run_quality_fix.ps1",
                     "check_runtime.py",
                     "audit_docs.ps1"
@@ -1163,6 +1168,7 @@ Draft placeholder:
                         "check_task.ps1",
                         "check_toolchain_health.ps1",
                         "run_quality_gate.ps1",
+                        "run_quality_gate_contract.ps1",
                         "run_quality_fix.ps1",
                         "check_runtime.py",
                         "audit_docs.ps1"
@@ -1203,6 +1209,7 @@ Draft placeholder:
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
                     "run_quality_gate.ps1",
+                    "run_quality_gate_contract.ps1",
                     "run_quality_fix.ps1",
                     "check_runtime.py",
                     "audit_docs.ps1"
@@ -1215,6 +1222,7 @@ Draft placeholder:
                         "check_task.ps1",
                         "check_toolchain_health.ps1",
                         "run_quality_gate.ps1",
+                        "run_quality_gate_contract.ps1",
                         "run_quality_fix.ps1",
                         "check_runtime.py",
                         "audit_docs.ps1"
@@ -1261,6 +1269,7 @@ Draft placeholder:
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
                     "run_quality_gate.ps1",
+                    "run_quality_gate_contract.ps1",
                     "run_quality_fix.ps1",
                     "check_runtime.py",
                     "audit_docs.ps1"
@@ -1273,6 +1282,7 @@ Draft placeholder:
                         "check_task.ps1",
                         "check_toolchain_health.ps1",
                         "run_quality_gate.ps1",
+                        "run_quality_gate_contract.ps1",
                         "run_quality_fix.ps1",
                         "check_runtime.py",
                         "audit_docs.ps1"

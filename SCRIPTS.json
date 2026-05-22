@@ -102,6 +102,7 @@
         "report_pipeline_learning.ps1",
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
+        "run_quality_gate_contract.ps1",
         "set_directives.ps1",
         "sync_pipeline_featurelist.ps1",
         "task_snapshot.ps1",
@@ -722,6 +723,23 @@
             "path": "tools/quality/run_quality_gate.ps1",
             "category": "quality"
         },
+        "run_quality_gate_contract.ps1": {
+            "path": "tools/quality/run_quality_gate_contract.ps1",
+            "category": "quality",
+            "description": "Execute the repository QUALITY-GATE.json command contract in order.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Path",
+                    "-CommandNames"
+                ],
+                "rule": "Run without arguments from the repository root to execute QUALITY-GATE.json. Pass -CommandNames with a comma-separated list to run a focused subset by key."
+            },
+            "output": {
+                "success": "Runs every selected quality-gate command and exits 0 after printing OK.",
+                "failure": "Throws when the contract is missing, a command key is unknown, command text is empty, or any selected command exits nonzero."
+            }
+        },
         "set_directives.ps1": {
             "path": "tools/pipeline/set_directives.ps1",
             "category": "pipeline"
@@ -1153,7 +1171,8 @@
                 "check_evals.ps1",
                 "check_runtime.py",
                 "run_quality_fix.ps1",
-                "run_quality_gate.ps1"
+                "run_quality_gate.ps1",
+                "run_quality_gate_contract.ps1"
             ],
             "diagnostics": [
                 "console_summary.ps1",
