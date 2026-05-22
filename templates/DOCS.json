@@ -1,11 +1,25 @@
 {
-    "summary": "Document role index for a non-code SocratexAI project.",
-    "rules": {
-        "read_before_document_work": true,
-        "update_when_adding_or_renaming_documents": true,
-        "purpose": "Use this file to decide which documents to read, create, update, or avoid before changing project memory or adding new documentation.\n"
-    },
-    "documents": {
+    "index": [
+        "SOCRATEX.md",
+        "PIPELINE-CONFIG.json",
+        "DOCS.json",
+        "docs-tech/KNOWLEDGE-VIEWS.json",
+        "AI-compiled/project/knowledge.sqlite",
+        "AI-compiled/project/knowledge-files/",
+        "STATE.md",
+        "WORKFLOW.json",
+        "team/*.json",
+        "_PLAN.md",
+        "BACKLOG.md",
+        "DECISIONS.md",
+        "ISSUES.md",
+        "JOURNAL.md",
+        "REVIEW.md",
+        "_INSTRUCTIONS.md",
+        "_INSTRUCTION-QUEUE.json",
+        "context-docs/*.json"
+    ],
+    "content": {
         "SOCRATEX.md": {
             "role": "Root activation entrypoint.",
             "audience": "ai",
@@ -131,6 +145,19 @@
             "format": "json",
             "read_when": "When the relevant topic is in scope and STATE.md is insufficient.",
             "write_when": "Durable current-state context would reduce future rereading cost."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Non-Code Project Document Index",
+            "type": "document_index",
+            "language": "en"
+        },
+        "summary": "Document role index for a non-code SocratexAI project.",
+        "rules": {
+            "read_before_document_work": true,
+            "update_when_adding_or_renaming_documents": true,
+            "purpose": "Use this file to decide which documents to read, create, update, or avoid before changing project memory or adding new documentation.\n"
         }
     }
 }

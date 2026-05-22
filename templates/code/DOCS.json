@@ -1,11 +1,30 @@
 {
-    "summary": "Document role index for a code SocratexAI project.",
-    "rules": {
-        "read_before_document_work": true,
-        "update_when_adding_or_renaming_documents": true,
-        "purpose": "Use this file to decide which documents to read, create, update, or avoid before changing project memory, planning work, adding diagnostics, or creating new documentation.\n"
-    },
-    "documents": {
+    "index": [
+        "SOCRATEX.md",
+        "PIPELINE-CONFIG.json",
+        "DOCS.json",
+        "STATE.json",
+        "WORKFLOW.json",
+        "team/*.json",
+        "_PLAN.json",
+        "TODO.json",
+        "DECISIONS.json",
+        "BUGS.json",
+        "BUGS-SOLVED.json",
+        "CHANGELOG.json",
+        "_PROMPTS.md",
+        "_PROMPT-QUEUE.json",
+        "_INSTRUCTIONS.md",
+        "_INSTRUCTION-QUEUE.json",
+        "docs-tech/cache/current_task.json",
+        "docs-tech/KNOWLEDGE-VIEWS.json",
+        "AI-compiled/project/knowledge.sqlite",
+        "AI-compiled/project/knowledge-files/",
+        "context-docs/ENGINEERING.json",
+        "context-docs/*.json",
+        "ignored/ai-socratex/*.md"
+    ],
+    "content": {
         "SOCRATEX.md": {
             "role": "Root activation entrypoint.",
             "audience": "ai",
@@ -166,6 +185,19 @@
             "format": "markdown",
             "read_when": "At session start when workflow.branch_mode is branch_scoped.",
             "write_when": "Branch-scoped facts, next steps, or ad-hoc work change."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Code Project Document Index",
+            "type": "document_index",
+            "language": "en"
+        },
+        "summary": "Document role index for a code SocratexAI project.",
+        "rules": {
+            "read_before_document_work": true,
+            "update_when_adding_or_renaming_documents": true,
+            "purpose": "Use this file to decide which documents to read, create, update, or avoid before changing project memory, planning work, adding diagnostics, or creating new documentation.\n"
         }
     }
 }

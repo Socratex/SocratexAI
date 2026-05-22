@@ -3,6 +3,7 @@
         "quick_index",
         "overview",
         "summary",
+        "json_shape_contract",
         "code_projects",
         "non_code_projects",
         "migration_rule"
@@ -13,6 +14,7 @@
             "refs": [
                 "overview",
                 "summary",
+                "json_shape_contract",
                 "code_projects",
                 "non_code_projects",
                 "migration_rule"
@@ -27,6 +29,11 @@
             "title": "Summary",
             "format": "markdown-section",
             "body": "## Summary\n\nThis file defines format choices across SocratexPipeline project types.\n"
+        },
+        "json_shape_contract": {
+            "title": "JSON Shape Contract",
+            "format": "markdown-section",
+            "body": "## JSON Shape Contract\n\nUse canonical JSON list-document shape for source routing catalogs, source feature manifests, source quality contracts, installed project DOCS templates, and new project-facing routing indexes: root `index`, `content`, and `metadata`, in that order.\n\nLegacy source-section documents under `core/` and `project/` may keep the established `index/items/schema/title` or `index/items/metadata` shape when they are read as section documents by existing tooling. Do not introduce that shape for new routing catalogs.\n\nInstalled project memory templates such as `STATE.json`, `_PLAN.json`, `TODO.json`, `BUGS.json`, `DECISIONS.json`, queues, team lenses, and configuration files may use their domain-specific schema. They are not list-document routing catalogs unless their own metadata says so.\n\n`templates/DOCS.json` and `templates/code/DOCS.json` are canonical list documents. Their `index` lists document paths, `content` maps those paths to role/read/write metadata, and `metadata` stores template summary and rules.\n\nWhen migrating older `summary/rules/documents` DOCS templates, move document entries into `content`, copy document keys into `index`, and move `summary` plus `rules` into `metadata`.\n"
         },
         "code_projects": {
             "title": "Code Projects",

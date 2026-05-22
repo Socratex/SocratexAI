@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-instructions/v1",
-  "generated_at": "source-cdbce2dd35df",
+  "generated_at": "source-acf437e3d2d1",
   "role": "generated_agent_cache",
   "source_of_truth": "source instruction files outside AI-compiled",
   "do_not_edit_manually": true,
@@ -37,7 +37,7 @@
     "core/CONTEXT-TIERS.json": "35cdff060072083fa23537851d7c5d194566e2b2353526d674e6090be322f4c3",
     "core/MEMORY-MODEL.json": "4496293983d003482f7234270a29af74f900a9878f70aa80aee2965c01da7c94",
     "core/PROMOTION-RULES.json": "504e7086041db37e699151798a2efe67f9b8c4056094e2203a68354c4ad22680",
-    "core/FILE-FORMATS.json": "4ff9fdd22cf992983f26a312cc64b8b59db8d40161c9e891156d23979f8b8bee",
+    "core/FILE-FORMATS.json": "4697f7151db92bbb7dff26b8dab011c92a21d13fef66c0f144b2a96a627299b3",
     "core/ROI-BIAS.json": "bd909cd333fc1e0c5af5d120a76669801c8e4129dbf0aceeced6fb4413da3d08",
     "core/TASK-WORK.json": "ce0bc8987bbe9d8d91c2fa6488eabe269b79c410e690af54e6b92010b828c5a5",
     "core/SCRIPT-FALLBACK.json": "d5d1a6eae90d0ff3138eca96ced3d79d088351ea02cefacaaa30677d9c8f27ec",

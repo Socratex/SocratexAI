@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-cdbce2dd35df
+Generated: source-acf437e3d2d1
 
 ## Source of Truth
 
@@ -4623,7 +4623,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'explicit_gamedev_project_pack' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "json_document_normalizer": {
-                "summary": "Json Document Normalizer capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Json Document Normalizer capability is active only when canonical list-document tooling, canonical installed DOCS templates, catalogs, update path, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "DOCS.json",

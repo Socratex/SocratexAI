@@ -253,6 +253,8 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.json") -Needle "audit_docs" -Label "QUALITY-GATE.json"
     Test-CanonicalListDocument -RelativePath "QUALITY-GATE.json" -RequiredContentKeys @("summary", "commands", "notes")
     Test-CanonicalListDocument -RelativePath "pipeline_featurelist.json" -RequiredContentKeys @("features", "feature_contracts")
+    Test-CanonicalListDocument -RelativePath "templates/DOCS.json"
+    Test-CanonicalListDocument -RelativePath "templates/code/DOCS.json"
     Test-ContainsText -Text (Get-RepoText -RelativePath ".gitignore") -Needle "/ignored/" -Label ".gitignore"
     $docIndex = Get-OptionalRepoText -RelativePath "docs-tech/cache/doc_index.json"
     if ($docIndex -match '"path":\s*"ignored/') {
@@ -335,6 +337,8 @@ try {
     Test-ContainsText -Text $contract -Needle "core/FILE-FORMATS.json" -Label "core/AGENT-CONTRACT.json"
     Test-ContainsText -Text $fileFormats -Needle "Code Projects" -Label "core/FILE-FORMATS.json"
     Test-ContainsText -Text $fileFormats -Needle "JSON" -Label "core/FILE-FORMATS.json"
+    Test-ContainsText -Text $fileFormats -Needle "JSON Shape Contract" -Label "core/FILE-FORMATS.json"
+    Test-ContainsText -Text $fileFormats -Needle "templates/code/DOCS.json" -Label "core/FILE-FORMATS.json"
     Test-ContainsText -Text $contextCompaction -Needle "When to Recommend a Hard Reset" -Label "core/CONTEXT-COMPACTION.json"
     Test-ContainsText -Text $memoryModel -Needle "Branch-Scoped Active State" -Label "core/MEMORY-MODEL.json"
     Test-ContainsText -Text $activationCheck -Needle "Required Checks" -Label "core/ACTIVATION-CHECK.json"
