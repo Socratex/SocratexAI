@@ -181,6 +181,95 @@ function Test-CanonicalListDocument {
     }
 }
 
+function ConvertTo-RepoRelativePath {
+    param([string]$Path)
+
+    $resolved = (Resolve-Path -LiteralPath $Path).Path
+    $root = $repoRoot.Path
+    if ($resolved.StartsWith($root)) {
+        return ($resolved.Substring($root.Length).TrimStart([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar) -replace "\\", "/")
+    }
+
+    return ($Path -replace "\\", "/")
+}
+
+function Test-JsonFormatPathMatch {
+    param(
+        [string]$RelativePath,
+        [string]$Pattern
+    )
+
+    $normalizedPattern = $Pattern.Replace("\", "/")
+    if ($normalizedPattern.EndsWith("/**")) {
+        $prefix = $normalizedPattern.Substring(0, $normalizedPattern.Length - 3)
+        return $RelativePath -eq $prefix -or $RelativePath.StartsWith("$prefix/")
+    }
+
+    return $RelativePath -eq $normalizedPattern
+}
+
+function Test-JsonFormatContract {
+    $contractPath = Join-Path $repoRoot "JSON-FORMAT-CONTRACT.json"
+    if (-not (Test-Path -LiteralPath $contractPath -PathType Leaf)) {
+        Add-Error "Missing required file: JSON-FORMAT-CONTRACT.json"
+        return
+    }
+
+    try {
+        $contract = Get-Content -Raw -LiteralPath $contractPath -Encoding UTF8 | ConvertFrom-Json
+    } catch {
+        Add-Error "Failed to parse JSON-FORMAT-CONTRACT.json: $($_.Exception.Message)"
+        return
+    }
+
+    $generatedExclusions = @($contract.content.generated_exclusions.paths)
+    $directExceptions = @{}
+    foreach ($property in $contract.content.direct_schema_exceptions.paths.PSObject.Properties) {
+        $directExceptions[$property.Name] = [string]$property.Value
+    }
+
+    $jsonFiles = Get-ChildItem -LiteralPath $repoRoot -Filter "*.json" -File -Recurse -ErrorAction SilentlyContinue
+    foreach ($file in $jsonFiles) {
+        $relativePath = ConvertTo-RepoRelativePath -Path $file.FullName
+        if ($relativePath.StartsWith(".git/")) {
+            continue
+        }
+
+        $isExcluded = $false
+        foreach ($pattern in $generatedExclusions) {
+            if (Test-JsonFormatPathMatch -RelativePath $relativePath -Pattern $pattern) {
+                $isExcluded = $true
+                break
+            }
+        }
+        if ($isExcluded) {
+            continue
+        }
+
+        try {
+            $document = Get-Content -Raw -LiteralPath $file.FullName -Encoding UTF8 | ConvertFrom-Json
+        } catch {
+            Add-Error "Failed to parse JSON file ${relativePath}: $($_.Exception.Message)"
+            continue
+        }
+
+        $rootKeys = @($document.PSObject.Properties.Name)
+        $isCanonical = (($rootKeys -join ",") -eq "index,content,metadata")
+        if ($isCanonical) {
+            continue
+        }
+
+        if ($directExceptions.ContainsKey($relativePath)) {
+            if ([string]::IsNullOrWhiteSpace($directExceptions[$relativePath])) {
+                Add-Error "JSON format exception has empty reason: $relativePath"
+            }
+            continue
+        }
+
+        Add-Error "Non-canonical JSON file lacks explicit JSON-FORMAT-CONTRACT.json exception: $relativePath"
+    }
+}
+
 function Test-OpeningTocEmoji {
     param([System.IO.FileInfo]$File)
 
@@ -305,9 +394,11 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "LICENSE") -Needle "MIT License" -Label "LICENSE"
     Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.json") -Needle "audit_docs" -Label "QUALITY-GATE.json"
     Test-CanonicalListDocument -RelativePath "QUALITY-GATE.json" -RequiredContentKeys @("summary", "commands", "notes")
+    Test-CanonicalListDocument -RelativePath "JSON-FORMAT-CONTRACT.json" -RequiredContentKeys @("policy", "generated_exclusions", "direct_schema_exceptions", "migration_followups")
     Test-CanonicalListDocument -RelativePath "pipeline_featurelist.json" -RequiredContentKeys @("features", "feature_contracts")
     Test-CanonicalListDocument -RelativePath "templates/DOCS.json"
     Test-CanonicalListDocument -RelativePath "templates/code/DOCS.json"
+    Test-JsonFormatContract
     Test-ContainsText -Text (Get-RepoText -RelativePath ".gitignore") -Needle "/ignored/" -Label ".gitignore"
     $docIndex = Get-OptionalRepoText -RelativePath "docs-tech/cache/doc_index.json"
     if ($docIndex -match '"path":\s*"ignored/') {

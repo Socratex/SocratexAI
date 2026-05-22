@@ -494,7 +494,7 @@
         "document_item_edit_engine.py": {
             "path": "tools/documents/document_item_edit_engine.py",
             "category": "documents",
-            "description": "Internal engine for inserting, moving, migrating, and reading structured document items.",
+            "description": "Internal engine for inserting, moving, migrating, and reading canonical structured document content items.",
             "input": {
                 "required": [],
                 "optional": [
@@ -542,7 +542,7 @@
         "insert_document_item.ps1": {
             "path": "tools/documents/insert_document_item.ps1",
             "category": "documents",
-            "description": "Insert a document item; routes .json paths through json_item_insert.ps1/json_item_set.ps1 and non-JSON slim documents through document_item_edit_engine.py.",
+            "description": "Insert a canonical JSON document content item; routes .json paths through json_item_insert.ps1/json_item_set.ps1 and legacy non-JSON structured documents through document_item_edit_engine.py.",
             "input": {
                 "required": [
                     "-Path",
@@ -713,7 +713,7 @@
         "document_list_item_edit_engine.py": {
             "path": "tools/documents/document_list_item_edit_engine.py",
             "category": "documents",
-            "description": "Internal engine for duplicate checks and item insertion in list-style documents.",
+            "description": "Internal engine for duplicate checks and list-line insertion in canonical structured document content.",
             "input": {
                 "required": [],
                 "optional": [
@@ -1076,7 +1076,7 @@
         "migrate_document_schema.ps1": {
             "path": "tools/documents/migrate_document_schema.ps1",
             "category": "documents",
-            "description": "Migrate structured documents toward the current slim/canonical schema.",
+            "description": "Migrate supported structured documents toward the canonical index/content/metadata schema.",
             "input": {
                 "required": [],
                 "optional": [
@@ -1111,7 +1111,7 @@
         "normalize_document_structure.ps1": {
             "path": "tools/documents/normalize_document_structure.ps1",
             "category": "documents",
-            "description": "Normalize structured document layout and ordering for selected files.",
+            "description": "Normalize supported structured documents into canonical index/content/metadata layout and ordering.",
             "input": {
                 "required": [],
                 "optional": [

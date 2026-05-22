@@ -5,7 +5,7 @@
         "view_contract",
         "defined_views"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
             "content": "- Purpose\n- View Contract\n- Defined Views\n"
@@ -23,82 +23,82 @@
             "content": "Starter views cover the default context lanes requested for the project knowledge index:\n`session_start`, `architecture`, `debugging`, `performance`, `docs_workflow`, and `domain_modeling`.\n"
         }
     },
-    "meta": {
+    "metadata": {
         "document": {
             "title": "Knowledge Views",
             "type": "compiled_knowledge_config",
             "language": "en"
-        }
-    },
-    "views": [
-        {
-            "id": "session_start",
-            "title": "Session Start",
-            "description": "Core knowledge that should be loaded at the beginning of session context building.",
-            "tags": [
-                "engineering",
-                "workflow",
-                "docs-workflow"
-            ],
-            "match": "any",
-            "load_at_start": true,
-            "max_context_tier": 2
         },
-        {
-            "id": "architecture",
-            "title": "Architecture",
-            "description": "Architecture, ownership, runtime, and framework-boundary rules when a project records matching entries.",
-            "tags": [
-                "architecture"
-            ],
-            "match": "all",
-            "max_context_tier": 3
-        },
-        {
-            "id": "debugging",
-            "title": "Debugging",
-            "description": "Diagnostics, logging, verification, and failure-investigation guidance.",
-            "tags": [
-                "diagnostics",
-                "verification",
-                "debugging"
-            ],
-            "match": "any",
-            "max_context_tier": 3
-        },
-        {
-            "id": "performance",
-            "title": "Performance",
-            "description": "Runtime cost, performance budgets, and performance-sensitive verification guidance.",
-            "tags": [
-                "performance"
-            ],
-            "match": "any",
-            "max_context_tier": 3
-        },
-        {
-            "id": "docs_workflow",
-            "title": "Docs Workflow",
-            "description": "Documentation workflow, source-of-truth, finalizer, and compiled-knowledge rules.",
-            "tags": [
-                "docs-workflow",
-                "workflow",
-                "verification"
-            ],
-            "match": "any",
-            "max_context_tier": 3
-        },
-        {
-            "id": "domain_modeling",
-            "title": "Worldgen",
-            "description": "Generated-world, route graph, biome, persistence, and durable world-state guidance when a project records domain_modeling entries.",
-            "tags": [
-                "domain_modeling",
-                "persistence",
-                "data-first"
-            ],
-            "match": "any",
-            "max_context_tier": 3
-        }
-    ]
+        "views": [
+            {
+                "id": "session_start",
+                "title": "Session Start",
+                "description": "Core knowledge that should be loaded at the beginning of session context building.",
+                "tags": [
+                    "engineering",
+                    "workflow",
+                    "docs-workflow"
+                ],
+                "match": "any",
+                "load_at_start": true,
+                "max_context_tier": 2
+            },
+            {
+                "id": "architecture",
+                "title": "Architecture",
+                "description": "Architecture, ownership, runtime, and framework-boundary rules when a project records matching entries.",
+                "tags": [
+                    "architecture"
+                ],
+                "match": "all",
+                "max_context_tier": 3
+            },
+            {
+                "id": "debugging",
+                "title": "Debugging",
+                "description": "Diagnostics, logging, verification, and failure-investigation guidance.",
+                "tags": [
+                    "diagnostics",
+                    "verification",
+                    "debugging"
+                ],
+                "match": "any",
+                "max_context_tier": 3
+            },
+            {
+                "id": "performance",
+                "title": "Performance",
+                "description": "Runtime cost, performance budgets, and performance-sensitive verification guidance.",
+                "tags": [
+                    "performance"
+                ],
+                "match": "any",
+                "max_context_tier": 3
+            },
+            {
+                "id": "docs_workflow",
+                "title": "Docs Workflow",
+                "description": "Documentation workflow, source-of-truth, finalizer, and compiled-knowledge rules.",
+                "tags": [
+                    "docs-workflow",
+                    "workflow",
+                    "verification"
+                ],
+                "match": "any",
+                "max_context_tier": 3
+            },
+            {
+                "id": "domain_modeling",
+                "title": "Worldgen",
+                "description": "Generated-world, route graph, biome, persistence, and durable world-state guidance when a project records domain_modeling entries.",
+                "tags": [
+                    "domain_modeling",
+                    "persistence",
+                    "data-first"
+                ],
+                "match": "any",
+                "max_context_tier": 3
+            }
+        ]
+    }
 }

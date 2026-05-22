@@ -9,18 +9,10 @@
         "cleaning_rules",
         "promotion_boundary"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "recommended_files",
-                "defragmentation",
-                "sorting",
-                "cleaning_rules",
-                "promotion_boundary"
-            ]
+            "content": "- Overview\n- Summary\n- Recommended Files\n- Defragmentation\n- Sorting\n- Cleaning Rules\n- Promotion Boundary\n"
         },
         "overview": {
             "title": "Overview",
@@ -58,6 +50,8 @@
             "body": "## Promotion Boundary\n\nOnly promote raw instructions into the active plan when they have:\n\n- clear outcome,\n- ownership boundary,\n- scope limit,\n- verification path,\n- known non-goals.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Instruction Capture"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Instruction Capture"
+    }
 }

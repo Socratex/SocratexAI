@@ -7,16 +7,10 @@
         "creative_defaults",
         "review_gate"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "recommended_files",
-                "creative_defaults",
-                "review_gate"
-            ]
+            "content": "- Overview\n- Purpose\n- Recommended Files\n- Creative Defaults\n- Review Gate\n"
         },
         "overview": {
             "title": "Overview",
@@ -44,6 +38,8 @@
             "body": "## Review Gate\n\nCheck:\n\n- Does the work match the intended direction?\n- Are references visible and relevant?\n- Is feedback specific enough to act on?\n- Is the current version shippable, exploratory, or discarded?\n- Is the next iteration focused on one meaningful improvement?\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Project Pack: Creative"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Project Pack: Creative"
+    }
 }

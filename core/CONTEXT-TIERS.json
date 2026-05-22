@@ -9,7 +9,7 @@
         "consolidation_trigger",
         "migration_policy"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
             "content": "- Purpose\n- Tier Model\n- Human In Loop Research Gate\n- Budget Sequence\n- Knowledge Tiering\n- Consolidation Trigger\n- Migration Policy\n"

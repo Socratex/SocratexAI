@@ -8,17 +8,10 @@
         "staging_rules",
         "commit_rules"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "worktree_rules",
-                "branch_rules",
-                "staging_rules",
-                "commit_rules"
-            ]
+            "content": "- Overview\n- Summary\n- Worktree Rules\n- Branch Rules\n- Staging Rules\n- Commit Rules\n"
         },
         "overview": {
             "title": "Overview",
@@ -51,6 +44,8 @@
             "body": "## Commit Rules\n\n- Commit messages should name the behavior or contract changed.\n- Mention skipped verification in the final report.\n- Do not commit when required verification failed unless the user explicitly asks for a checkpoint commit.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Git Safety for Code Projects"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Git Safety for Code Projects"
+    }
 }

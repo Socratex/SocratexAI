@@ -9,18 +9,10 @@
         "emoji_activation",
         "failure_handling"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "when_to_run",
-                "required_checks",
-                "report_shape",
-                "emoji_activation",
-                "failure_handling"
-            ]
+            "content": "- Overview\n- Purpose\n- When To Run\n- Required Checks\n- Report Shape\n- <emoji> Activation\n- Failure Handling\n"
         },
         "overview": {
             "title": "Overview",
@@ -58,6 +50,8 @@
             "body": "## Failure Handling\n\nIf activation is incomplete:\n\n1. Stop the current task briefly.\n2. Load the missing file or explain why it is unavailable.\n3. Re-evaluate the user's prompt under the complete pipeline rules.\n4. Continue only after the missing rule source is handled or explicitly marked not applicable.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Activation Check"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Activation Check"
+    }
 }

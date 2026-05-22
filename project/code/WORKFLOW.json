@@ -14,7 +14,7 @@
         "roi_workflow",
         "context_cost_control"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
             "content": "- Overview\n- Summary\n- Read Order\n- Command Classifier\n- Task Type Router\n- General Workflow\n- Script-First Execution\n- Verification Boundary\n- Task Work Tracking\n- Branch-Scoped Workflow\n- ROI Workflow\n- Context Cost Control\n"
@@ -80,6 +80,8 @@
             "body": "## Context Cost Control\n\nUse `core/CONTEXT-COMPACTION.json` when a session becomes long, after several major passes, or after repeated retry loops.\n\nPrefer a hard reset after compacting `STATE.json` and relevant `context-docs/` over carrying stale live context indefinitely.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Code Workflow"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Code Workflow"
+    }
 }

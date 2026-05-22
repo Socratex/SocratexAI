@@ -7,16 +7,10 @@
         "behavior_impact",
         "profile_fit_check"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "profile_axes",
-                "behavior_impact",
-                "profile_fit_check"
-            ]
+            "content": "- Overview\n- Purpose\n- Profile Axes\n- Behavior Impact\n- Profile-Fit Check\n"
         },
         "overview": {
             "title": "Overview",
@@ -44,6 +38,8 @@
             "body": "## Profile-Fit Check\n\nBefore recommending a pattern or plan, ask:\n\n- Does this solution fit the lifecycle and test reality?\n- Is the task surgical, feature-sized, refactor-sized, or modernization-sized?\n- Does it reduce the user's stated highest pain?\n- Does it match the project's framework constraints?\n- Can it be verified with available tooling?\n- Is it high ROI for this profile, or only attractive in abstraction?\n\nIf the answer is weak, propose a better profile-fit option. In legacy surgical work, the profile-fit option is often a small local fix plus a note for a separate modernization task.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Project Profile"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Project Profile"
+    }
 }

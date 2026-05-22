@@ -5,7 +5,7 @@
         "tagged_rules",
         "purpose"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
             "content": "- Summary\n- Tagged Rules\n- Purpose\n"
@@ -649,7 +649,7 @@
             "content": "Use this file as the starter tagged knowledge source for SocratexPipeline engineering, workflow, and coding rules.\n"
         }
     },
-    "meta": {
+    "metadata": {
         "document": {
             "title": "Engineering Standards",
             "type": "technical_context",

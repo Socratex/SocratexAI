@@ -9,18 +9,10 @@
         "state_and_plan_contract",
         "branch_end"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "layout",
-                "session_start",
-                "file_language",
-                "state_and_plan_contract",
-                "branch_end"
-            ]
+            "content": "- Overview\n- Purpose\n- Layout\n- Session Start\n- File Language\n- State and Plan Contract\n- Branch End\n"
         },
         "overview": {
             "title": "Overview",
@@ -58,6 +50,8 @@
             "body": "## Branch End\n\nWhen the branch is merged or closed:\n\n- promote durable findings to `context-docs/`,\n- promote durable decisions to `DECISIONS.json`,\n- record shipped outcomes in `CHANGELOG.json` when appropriate and `changelog.enabled` is not `no`,\n- leave local branch files as reference unless the user asks to clean them.\n\nDo not promote every scratch note.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Branch Mode"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Branch Mode"
+    }
 }

@@ -9,18 +9,10 @@
         "invariant_visible",
         "verification_attached"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "known_solutions_alignment",
-                "domain_driven",
-                "architecture_decisive",
-                "invariant_visible",
-                "verification_attached"
-            ]
+            "content": "- Overview\n- Summary\n- Known-Solutions Alignment\n- Domain-Driven\n- Architecture-Decisive\n- Invariant-Visible\n- Verification-Attached\n"
         },
         "overview": {
             "title": "Overview",
@@ -58,6 +50,8 @@
             "body": "## Verification-Attached\n\nAttach verification to risky work.\n\nVerification can be:\n\n- unit tests,\n- integration tests,\n- contract tests,\n- typechecks,\n- linters,\n- build checks,\n- smoke tests,\n- manual reproduction steps.\n\nIf verification is not practical, record the residual risk.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "DDD-ADIV for Code Projects"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "DDD-ADIV for Code Projects"
+    }
 }

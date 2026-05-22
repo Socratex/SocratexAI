@@ -6,15 +6,10 @@
         "protocol",
         "install_hints"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "protocol",
-                "install_hints"
-            ]
+            "content": "- Overview\n- Purpose\n- Protocol\n- Install Hints\n"
         },
         "overview": {
             "title": "Overview",
@@ -37,6 +32,8 @@
             "body": "## Install Hints\n\nPrefer platform-specific install hints when known:\n\n- Python package: `python -m pip install --user <package>`\n- PowerShell on Linux: `sudo snap install powershell --classic`\n- PowerShell on macOS: `brew install --cask powershell`\n- PowerShell on Windows: `winget install --id Microsoft.PowerShell --source winget`, Microsoft Store, or GitHub releases.\n\nIf the platform cannot be detected, provide the generic runtime name and ask the user how they want dependencies installed.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Script Fallback"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Script Fallback"
+    }
 }

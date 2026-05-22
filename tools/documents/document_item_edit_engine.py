@@ -23,11 +23,24 @@ def write_document(path: Path, value: Any) -> None:
 def normalize_document(document: Any) -> dict[str, Any]:
     if not isinstance(document, dict):
         raise ValueError("Structured document must be a mapping.")
-    if "items" not in document:
-        document["items"] = {}
-    if not isinstance(document["items"], dict):
+    if "content" not in document and "items" not in document:
+        document["content"] = {}
+    if "content" in document and not isinstance(document["content"], dict):
+        raise ValueError("Document content must be a mapping.")
+    if "items" in document and not isinstance(document["items"], dict):
         raise ValueError("Document items must be a mapping.")
     return document_structure.slim_document(document)
+
+
+def item_collection(document: dict[str, Any]) -> dict[str, Any]:
+    content = document.get("content")
+    if isinstance(content, dict):
+        return content
+    items = document.get("items")
+    if isinstance(items, dict):
+        return items
+    document["content"] = {}
+    return document["content"]
 
 
 def item_keys(document: dict[str, Any]) -> list[str]:
@@ -36,10 +49,7 @@ def item_keys(document: dict[str, Any]) -> list[str]:
         return [str(key) for key in index if str(key)]
     if isinstance(index, dict):
         return [str(key) for key in index.keys() if str(key)]
-    items = document.get("items", {})
-    if isinstance(items, dict):
-        return [str(key) for key in items.keys()]
-    return []
+    return [str(key) for key in item_collection(document).keys()]
 
 
 def reorder_mapping(mapping: dict[str, Any], keys: list[str]) -> dict[str, Any]:
@@ -77,7 +87,8 @@ def apply_order(document: dict[str, Any], keys: list[str]) -> dict[str, Any]:
     if "quick_index" not in keys:
         keys = ["quick_index"] + keys
     document["index"] = keys
-    document["items"] = reorder_mapping(document["items"], keys)
+    document["content"] = reorder_mapping(item_collection(document), keys)
+    document.pop("items", None)
     return document_structure.slim_document(document)
 
 
@@ -109,10 +120,13 @@ def read_item_payload(args: argparse.Namespace) -> dict[str, Any]:
 
 def read_bulk_payload(path: Path) -> dict[str, dict[str, Any]]:
     payload = load_document(path)
-    if isinstance(payload, dict) and isinstance(payload.get("items"), dict):
-        payload = payload["items"]
+    if isinstance(payload, dict):
+        if isinstance(payload.get("content"), dict):
+            payload = payload["content"]
+        elif isinstance(payload.get("items"), dict):
+            payload = payload["items"]
     if not isinstance(payload, dict):
-        raise ValueError("--items-file must contain a mapping or an items mapping.")
+        raise ValueError("--items-file must contain a mapping, content mapping, or items mapping.")
 
     items: dict[str, dict[str, Any]] = {}
     for key, item in payload.items():
@@ -120,7 +134,7 @@ def read_bulk_payload(path: Path) -> dict[str, dict[str, Any]]:
         if not item_key:
             raise ValueError("--items-file contains an empty item key.")
         if item_key == "quick_index":
-            raise ValueError("Do not bulk-insert quick_index; it is generated from index/items.")
+            raise ValueError("Do not bulk-insert quick_index; it is generated from index/content.")
         if not isinstance(item, dict):
             raise ValueError(f"Bulk item must be a mapping: {item_key}")
         if str(item.get("title", "")).strip() == "":
@@ -134,7 +148,7 @@ def read_bulk_payload(path: Path) -> dict[str, dict[str, Any]]:
 def command_insert(args: argparse.Namespace) -> None:
     path = Path(args.path)
     document = normalize_document(load_document(path))
-    items = document["items"]
+    items = item_collection(document)
     if args.key in items and not args.replace:
         raise ValueError(f"Item already exists: {args.key}")
     items[args.key] = read_item_payload(args)
@@ -166,7 +180,7 @@ def place_keys(keys: list[str], new_keys: list[str], position: str, before: str,
 def command_bulk_insert(args: argparse.Namespace) -> None:
     path = Path(args.path)
     document = normalize_document(load_document(path))
-    items = document["items"]
+    items = item_collection(document)
     bulk_items = read_bulk_payload(Path(args.items_file))
     for key in bulk_items.keys():
         if key in items and not args.replace:
@@ -183,7 +197,7 @@ def command_bulk_insert(args: argparse.Namespace) -> None:
 def command_move(args: argparse.Namespace) -> None:
     path = Path(args.path)
     document = normalize_document(load_document(path))
-    if args.key not in document["items"]:
+    if args.key not in item_collection(document):
         raise ValueError(f"Item does not exist: {args.key}")
     keys = place_key(item_keys(document), args.key, args.position, args.before, args.after)
     document = apply_order(document, keys)
@@ -196,17 +210,19 @@ def command_migrate(args: argparse.Namespace) -> None:
     target_path = Path(args.target)
     source = normalize_document(load_document(source_path))
     target = normalize_document(load_document(target_path))
-    if args.key not in source["items"]:
+    source_items = item_collection(source)
+    target_items = item_collection(target)
+    if args.key not in source_items:
         raise ValueError(f"Source item does not exist: {args.key}")
-    if args.key in target["items"] and not args.replace:
+    if args.key in target_items and not args.replace:
         raise ValueError(f"Target item already exists: {args.key}")
 
-    target["items"][args.key] = copy.deepcopy(source["items"][args.key])
+    target_items[args.key] = copy.deepcopy(source_items[args.key])
     target_keys = place_key(item_keys(target), args.key, args.position, args.before, args.after)
     target = apply_order(target, target_keys)
 
     if not args.keep_source:
-        source["items"].pop(args.key, None)
+        source_items.pop(args.key, None)
         source_keys = [key for key in item_keys(source) if key != args.key]
         source = apply_order(source, source_keys)
 
@@ -223,7 +239,7 @@ def add_position_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Edit slim structured document items while keeping index and quick_index synchronized.")
+    parser = argparse.ArgumentParser(description="Edit canonical structured document content while keeping index and quick_index synchronized.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     insert = subparsers.add_parser("insert")

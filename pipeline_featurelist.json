@@ -3889,7 +3889,12 @@
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "JSON-FORMAT-CONTRACT.json",
+                    "tools/documents/document_structure_normalizer_engine.py",
+                    "tools/documents/document_schema_migration_engine.py",
+                    "tools/documents/document_item_edit_engine.py",
+                    "tools/documents/document_list_item_edit_engine.py"
                 ],
                 "required_scripts": [
                     "build_document_cache.ps1",
@@ -3906,7 +3911,11 @@
                     "json_refresh_index.ps1",
                     "json_migrate_content.ps1",
                     "normalize_json_files.ps1",
-                    "normalize_json_files.py"
+                    "normalize_json_files.py",
+                    "normalize_document_structure.ps1",
+                    "migrate_document_schema.ps1",
+                    "document_item_edit_engine.py",
+                    "document_list_item_edit_engine.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -3924,13 +3933,18 @@
                         "json_refresh_index.ps1",
                         "json_migrate_content.ps1",
                         "normalize_json_files.ps1",
-                        "normalize_json_files.py"
+                        "normalize_json_files.py",
+                        "normalize_document_structure.ps1",
+                        "migrate_document_schema.ps1",
+                        "document_item_edit_engine.py",
+                        "document_list_item_edit_engine.py"
                     ]
                 },
                 "required_docs": [
                     "DOCS.json",
                     "templates/DOCS.json",
-                    "templates/code/DOCS.json"
+                    "templates/code/DOCS.json",
+                    "JSON-FORMAT-CONTRACT.json"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
@@ -3941,7 +3955,9 @@
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/normalize_document_structure.ps1 -Check",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/migrate_document_schema.ps1 -Check"
                 ],
                 "known_failure_if_missing": "If 'json_contract_source_pipeline' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4367,7 +4383,12 @@
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "JSON-FORMAT-CONTRACT.json",
+                    "tools/documents/document_structure_normalizer_engine.py",
+                    "tools/documents/document_schema_migration_engine.py",
+                    "tools/documents/document_item_edit_engine.py",
+                    "tools/documents/document_list_item_edit_engine.py"
                 ],
                 "required_scripts": [
                     "build_document_cache.ps1",
@@ -4384,7 +4405,11 @@
                     "json_refresh_index.ps1",
                     "json_migrate_content.ps1",
                     "normalize_json_files.ps1",
-                    "normalize_json_files.py"
+                    "normalize_json_files.py",
+                    "normalize_document_structure.ps1",
+                    "migrate_document_schema.ps1",
+                    "document_item_edit_engine.py",
+                    "document_list_item_edit_engine.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -4402,13 +4427,18 @@
                         "json_refresh_index.ps1",
                         "json_migrate_content.ps1",
                         "normalize_json_files.ps1",
-                        "normalize_json_files.py"
+                        "normalize_json_files.py",
+                        "normalize_document_structure.ps1",
+                        "migrate_document_schema.ps1",
+                        "document_item_edit_engine.py",
+                        "document_list_item_edit_engine.py"
                     ]
                 },
                 "required_docs": [
                     "DOCS.json",
                     "templates/DOCS.json",
-                    "templates/code/DOCS.json"
+                    "templates/code/DOCS.json",
+                    "JSON-FORMAT-CONTRACT.json"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
@@ -4419,7 +4449,9 @@
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/normalize_document_structure.ps1 -Check",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/migrate_document_schema.ps1 -Check"
                 ],
                 "known_failure_if_missing": "If 'json_document_normalizer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5119,7 +5151,7 @@
                 "known_failure_if_missing": "Cheap update can fail before normalizing old child manifests, forcing high-AI-limit manual recovery instead of a low-cost update."
             },
             "canonical_index_content_metadata_document_schema": {
-                "summary": "Canonical JSON list documents use exactly root index, content, and metadata so scripts can cheaply inspect keys, route exact records, preserve local content, and normalize structure across source and child workspaces.",
+                "summary": "Canonical JSON list documents use exactly root index, content, and metadata by default, with every non-canonical source JSON either generated/runtime-owned or explicitly listed in JSON-FORMAT-CONTRACT.json.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "DOCS.json",
@@ -5135,7 +5167,49 @@
                     "tools/documents/json_read.ps1",
                     "tools/text/normalize_json_files.ps1",
                     "SCRIPTS.json",
-                    "CHANGELOG.json"
+                    "CHANGELOG.json",
+                    "JSON-FORMAT-CONTRACT.json",
+                    "tools/documents/document_structure_normalizer_engine.py",
+                    "tools/documents/document_schema_migration_engine.py",
+                    "tools/documents/document_item_edit_engine.py",
+                    "tools/documents/document_list_item_edit_engine.py",
+                    "context-docs/ENGINEERING.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "core/AGENT-CONTRACT.json",
+                    "core/COMMANDS.json",
+                    "core/CONTEXT-COMPACTION.json",
+                    "core/CONTEXT-TIERS.json",
+                    "core/INSTRUCTION-CAPTURE.json",
+                    "core/MEMORY-MODEL.json",
+                    "core/PROJECT-PROFILE.json",
+                    "core/PROMOTION-RULES.json",
+                    "core/REMOVAL-PROTOCOL.json",
+                    "core/ROI-BIAS.json",
+                    "core/SCRIPT-FALLBACK.json",
+                    "core/TASK-WORK.json",
+                    "docs-tech/KNOWLEDGE-VIEWS.json",
+                    "profiles/SocratexForeignLegacy/WORKFLOW.json",
+                    "project/code/BRANCH-MODE.json",
+                    "project/code/COMMANDS.json",
+                    "project/code/DDD-ADIV.json",
+                    "project/code/DIAGNOSTICS.json",
+                    "project/code/FROZEN-LAYERS.json",
+                    "project/code/GIT.json",
+                    "project/code/INSTRUCTION-CAPTURE.json",
+                    "project/code/PACK.json",
+                    "project/code/REGISTRIES.json",
+                    "project/code/WORKFLOW.json",
+                    "project/creative/PACK.json",
+                    "project/gamedev/PACK.json",
+                    "project/generic/PACK.json",
+                    "project/personal/PACK.json",
+                    "templates/PIPELINE-CONFIG.json",
+                    "templates/_INSTRUCTION-QUEUE.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "templates/context-docs-FROZEN_LAYERS.json",
+                    "templates/context-docs-TECHNICAL.json",
+                    "templates/docs-tech/KNOWLEDGE-VIEWS.json",
+                    "profiles/SocratexGamedev/SCRIPTS.json"
                 ],
                 "required_scripts": [
                     "check_pipeline_feature_contracts.ps1",
@@ -5145,7 +5219,11 @@
                     "audit_docs.ps1",
                     "json_list_doc.py",
                     "json_read.ps1",
-                    "normalize_json_files.ps1"
+                    "normalize_json_files.ps1",
+                    "normalize_document_structure.ps1",
+                    "migrate_document_schema.ps1",
+                    "document_item_edit_engine.py",
+                    "document_list_item_edit_engine.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -5156,7 +5234,11 @@
                         "audit_docs.ps1",
                         "json_list_doc.py",
                         "json_read.ps1",
-                        "normalize_json_files.ps1"
+                        "normalize_json_files.ps1",
+                        "normalize_document_structure.ps1",
+                        "migrate_document_schema.ps1",
+                        "document_item_edit_engine.py",
+                        "document_list_item_edit_engine.py"
                     ]
                 },
                 "required_docs": [
@@ -5165,7 +5247,12 @@
                     "PUBLIC-BOOTSTRAP.md",
                     "core/FILE-FORMATS.json",
                     "core/UPDATE-PROTOCOL.json",
-                    "SCRIPTS.json"
+                    "SCRIPTS.json",
+                    "JSON-FORMAT-CONTRACT.json",
+                    "context-docs/ENGINEERING.json",
+                    "project/code/WORKFLOW.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "profiles/SocratexGamedev/SCRIPTS.json"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
@@ -5176,12 +5263,17 @@
                     "Reject stale copied local shapes when they contradict the current index/content/metadata contract.",
                     "Keep plan, state, queues, feature lists, command catalogs, workflow catalogs, and context capsules as structured operational data, not narrative prose.",
                     "Preserve backward-compatible readers for older root features and root feature_contracts manifests.",
-                    "Run the feature contract checker and audit after schema changes."
+                    "Run the feature contract checker and audit after schema changes.",
+                    "Keep JSON-FORMAT-CONTRACT.json current whenever a non-canonical source JSON remains or a generated/runtime exclusion is added.",
+                    "Use canonical index/content/metadata for source-owned human/AI-readable JSON documents unless a direct-schema exception is explicitly justified.",
+                    "Keep document normalizer and migration tools pointed at index/content/metadata, not legacy index/items/meta."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/sync_pipeline_featurelist.ps1 -TargetPath <project> -SourceFeatureListPath pipeline_featurelist.json -DryRun"
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/sync_pipeline_featurelist.ps1 -TargetPath <project> -SourceFeatureListPath pipeline_featurelist.json -DryRun",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/normalize_document_structure.ps1 -Check",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/migrate_document_schema.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Scripts must special-case every manifest shape, old child updates can overwrite local structured sections, and source/child feature comparison stops being a stable low-cost document operation."
             },

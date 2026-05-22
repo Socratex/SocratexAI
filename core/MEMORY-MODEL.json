@@ -9,18 +9,10 @@
         "decisions",
         "context_capsules"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "active_state",
-                "branch_scoped_active_state",
-                "plan",
-                "backlog",
-                "decisions",
-                "context_capsules"
-            ]
+            "content": "- Overview\n- Active State\n- Branch-Scoped Active State\n- Plan\n- Backlog\n- Decisions\n- Context Capsules\n"
         },
         "overview": {
             "title": "Overview",
@@ -58,6 +50,8 @@
             "body": "## Context Capsules\n\nContext capsules store compact, current-state knowledge.\n\nUse them for:\n\n- invariants,\n- ownership contracts,\n- known traps,\n- source-of-truth paths,\n- performance or process heuristics.\n\nDo not use them for:\n\n- history,\n- scratch notes,\n- duplicated backlog,\n- speculative future roadmaps.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Memory Model"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Memory Model"
+    }
 }

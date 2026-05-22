@@ -7,16 +7,10 @@
         "gamedev_defaults",
         "verification"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "recommended_pairing",
-                "gamedev_defaults",
-                "verification"
-            ]
+            "content": "- Overview\n- Purpose\n- Recommended Pairing\n- Gamedev Defaults\n- Verification\n"
         },
         "overview": {
             "title": "Overview",
@@ -44,6 +38,8 @@
             "body": "## Verification\n\nUse the strongest practical game-project gate available:\n\n- unit or domain tests,\n- content validation,\n- asset import/export checks,\n- build/export smoke test,\n- frame-time or memory profiling,\n- replay or deterministic fixture checks,\n- manual playtest focused on the changed loop.\n\nIf the project has an engine-specific test runner or export command, prefer that command over generic manual checks.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Project Pack: Gamedev"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Project Pack: Gamedev"
+    }
 }

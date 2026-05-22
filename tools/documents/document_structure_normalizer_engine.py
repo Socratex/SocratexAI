@@ -4,7 +4,21 @@ import json
 from pathlib import Path
 from typing import Any
 
-EXCLUDED_PARTS = {".git", "Tools/Python312", "Tools/python-installer", "Tools/tmp"}
+EXCLUDED_PARTS = {
+    ".git",
+    "AI-compiled",
+    "docs-tech/cache",
+    "ignored",
+    "Tools/Python312",
+    "Tools/python-installer",
+    "Tools/tmp",
+}
+EXCLUDED_PATHS = {
+    "docs-tech/CODE_LINE_INDEX.json",
+    "docs-tech/LARGE_FILES.json",
+    "docs-tech/PIPELINE-BOOTSTRAP.json",
+    "docs-tech/TOOL-ERRORS.json",
+}
 
 
 class LiteralString(str):
@@ -29,6 +43,8 @@ def repo_relative(path: Path, repo_root: Path) -> str:
 
 def is_excluded(path: Path, repo_root: Path) -> bool:
     relative = repo_relative(path, repo_root)
+    if relative in EXCLUDED_PATHS:
+        return True
     return any(relative == part or relative.startswith(f"{part}/") for part in EXCLUDED_PARTS)
 
 
@@ -153,29 +169,55 @@ def build_quick_index_item(index_keys: list[str], items: dict[str, Any]) -> dict
     }
 
 
+def metadata_from_legacy_root(data: dict[str, Any]) -> dict[str, Any]:
+    metadata: dict[str, Any] = {}
+    for source_key in ("metadata", "meta"):
+        source = data.get(source_key)
+        if isinstance(source, dict):
+            metadata.update(copy.deepcopy(source))
+
+    for key, value in data.items():
+        if key in {"index", "quick_index", "items", "content", "metadata", "meta"}:
+            continue
+        metadata[key] = copy.deepcopy(value)
+    return metadata
+
+
+def canonical_document(index_keys: list[str], content: dict[str, Any], metadata: dict[str, Any], include_quick_index: bool) -> dict[str, Any]:
+    ordered_keys = ["quick_index"] + index_keys if include_quick_index else list(index_keys)
+    ordered_content: dict[str, Any] = {}
+    if include_quick_index:
+        ordered_content["quick_index"] = build_quick_index_item(index_keys, content)
+    ordered_content.update({key: content[key] for key in index_keys if key in content})
+    for key, value in content.items():
+        if key not in ordered_content:
+            ordered_content[key] = value
+
+    return {
+        "index": ordered_keys,
+        "content": ordered_content,
+        "metadata": metadata,
+    }
+
+
 def slim_document(data: Any) -> Any:
     if not isinstance(data, dict):
         return data
+
+    raw_content = data.get("content")
+    if isinstance(raw_content, dict):
+        content = copy.deepcopy(raw_content)
+        index_keys = order_item_keys(normalize_index_keys(data.get("index", []), content))
+        include_quick_index = "quick_index" in raw_content
+        return canonical_document(index_keys, content, metadata_from_legacy_root(data), include_quick_index)
+
     raw_items = data.get("items")
     if not isinstance(raw_items, dict):
         return data
 
-    slimmed_items = {key: slim_item(key, item) for key, item in raw_items.items()}
-    index_keys = order_item_keys(normalize_index_keys(data.get("index", []), slimmed_items))
-    ordered_keys = ["quick_index"] + index_keys
-    ordered_items = {"quick_index": build_quick_index_item(index_keys, slimmed_items)}
-    ordered_items.update({key: slimmed_items[key] for key in index_keys if key in slimmed_items})
-    result: dict[str, Any] = {
-        "index": ordered_keys,
-        "items": ordered_items,
-    }
-    for key, value in data.items():
-        if key in {"index", "quick_index", "items", "meta"}:
-            continue
-        result[key] = copy.deepcopy(value)
-    if isinstance(data.get("meta"), dict):
-        result["meta"] = copy.deepcopy(data["meta"])
-    return result
+    content = {key: slim_item(key, item) for key, item in raw_items.items()}
+    index_keys = order_item_keys(normalize_index_keys(data.get("index", []), content))
+    return canonical_document(index_keys, content, metadata_from_legacy_root(data), include_quick_index=True)
 
 
 def command_slim(args: argparse.Namespace) -> None:
@@ -196,11 +238,11 @@ def command_slim(args: argparse.Namespace) -> None:
         print(path)
     if args.check and changed:
         raise SystemExit(1)
-    print(f"OK: {'would slim' if args.check else 'slimmed'} {len(changed)} structured document(s).")
+    print(f"OK: {'would normalize' if args.check else 'normalized'} {len(changed)} structured document(s).")
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Slim structured JSON/JSON documents to index/items/meta layout.")
+    parser = argparse.ArgumentParser(description="Normalize structured JSON documents to canonical index/content/metadata layout.")
     parser.add_argument("paths", nargs="*", default=["**/*.json"])
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--check", action="store_true")

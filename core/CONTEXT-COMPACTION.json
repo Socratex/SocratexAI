@@ -8,17 +8,10 @@
         "what_not_to_store",
         "reset_message"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "when_to_recommend_a_hard_reset",
-                "before_reset",
-                "what_not_to_store",
-                "reset_message"
-            ]
+            "content": "- Overview\n- Summary\n- When to Recommend a Hard Reset\n- Before Reset\n- What Not to Store\n- Reset Message\n"
         },
         "overview": {
             "title": "Overview",
@@ -51,6 +44,8 @@
             "body": "## Reset Message\n\nUse a short factual recommendation:\n\n`A hard reset is recommended now because the session has accumulated broad context and the next task is a new scope. STATE/context-docs have been refreshed for continuation.`\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Context Compaction"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Context Compaction"
+    }
 }

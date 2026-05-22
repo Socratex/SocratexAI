@@ -7,16 +7,10 @@
         "execution_defaults",
         "review_gate"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "recommended_files",
-                "execution_defaults",
-                "review_gate"
-            ]
+            "content": "- Overview\n- Purpose\n- Recommended Files\n- Execution Defaults\n- Review Gate\n"
         },
         "overview": {
             "title": "Overview",
@@ -44,6 +38,8 @@
             "body": "## Review Gate\n\nCheck:\n\n- Is the next action concrete?\n- Is the expected artifact named?\n- Are blockers real or speculative?\n- Are dependencies external or internal?\n- Is the current plan still aligned with the target?\n- Is unresolved work preserved somewhere appropriate?\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Project Pack: Generic"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Project Pack: Generic"
+    }
 }

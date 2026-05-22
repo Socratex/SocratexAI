@@ -8,17 +8,10 @@
         "non_code_projects",
         "migration_rule"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "json_shape_contract",
-                "code_projects",
-                "non_code_projects",
-                "migration_rule"
-            ]
+            "content": "- Overview\n- Summary\n- JSON Shape Contract\n- Code Projects\n- Non-Code Projects\n- Migration Rule\n"
         },
         "overview": {
             "title": "Overview",
@@ -33,7 +26,7 @@
         "json_shape_contract": {
             "title": "JSON Shape Contract",
             "format": "markdown-section",
-            "body": "## JSON Shape Contract\n\nUse canonical JSON list-document shape for source routing catalogs, source feature manifests, source quality contracts, installed project DOCS templates, and new project-facing routing indexes: root `index`, `content`, and `metadata`, in that order.\n\nLegacy source-section documents under `core/` and `project/` may keep the established `index/items/schema/title` or `index/items/metadata` shape when they are read as section documents by existing tooling. Do not introduce that shape for new routing catalogs.\n\nInstalled project memory templates such as `STATE.json`, `_PLAN.json`, `TODO.json`, `BUGS.json`, `DECISIONS.json`, queues, team lenses, and configuration files may use their domain-specific schema. They are not list-document routing catalogs unless their own metadata says so.\n\n`templates/DOCS.json` and `templates/code/DOCS.json` are canonical list documents. Their `index` lists document paths, `content` maps those paths to role/read/write metadata, and `metadata` stores template summary and rules.\n\nWhen migrating older `summary/rules/documents` DOCS templates, move document entries into `content`, copy document keys into `index`, and move `summary` plus `rules` into `metadata`.\n"
+            "body": "## JSON Shape Contract\n\nUse canonical JSON list-document shape for every source-owned human/AI-readable repository JSON document that can reasonably use it: root `index`, `content`, and `metadata`, in that order.\n\nDo not introduce legacy `index/items`, `index/items/meta`, or `summary/rules/documents` source-document shapes. Existing source documents should migrate to `index/content/metadata` unless a tool, engine, external protocol, generated artifact, runtime/game data file, save, log, or operational config currently owns a different shape.\n\nAll non-canonical repository JSON files must be listed in `JSON-FORMAT-CONTRACT.json` with an explicit exception reason. Audit treats unlisted non-canonical JSON as a format violation.\n\nGenerated and local/runtime artifacts such as `AI-compiled/**`, `docs-tech/cache/**`, generated indexes, local `ignored/**`, logs, saves, and game-runtime-owned config are not source documents and do not need canonical wrapping.\n\n`templates/DOCS.json` and `templates/code/DOCS.json` are canonical list documents. Their `index` lists document paths, `content` maps those paths to role/read/write metadata, and `metadata` stores template summary and rules.\n\nWhen migrating older structured documents, move document entries into `content`, copy document keys into `index`, and move schema, routing, generation, status, title, and support fields into `metadata`.\n"
         },
         "code_projects": {
             "title": "Code Projects",
@@ -51,6 +44,8 @@
             "body": "## Migration Rule\n\nWhen converting a project from Markdown to JSON:\n\n1. Preserve all unresolved requirements.\n2. Convert agent-only structured registries first.\n3. Keep forced entrypoints, user scratches, and non-code user-facing memory as Markdown.\n4. Update the audit rules and initializer together.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "File Formats"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "File Formats"
+    }
 }

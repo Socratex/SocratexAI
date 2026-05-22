@@ -6,6 +6,7 @@
         "FLOWS.json",
         "SCRIPTS.json",
         "QUALITY-GATE.json",
+        "JSON-FORMAT-CONTRACT.json",
         "TODO.md",
         "pipeline_featurelist.json",
         "core/",
@@ -97,6 +98,13 @@
         "profiles/": {
             "role": "Reusable child-project profiles. Profiles define source-owned project-facing command, flow, script, and workflow artifacts that children consume as managed additions instead of forking ad hoc copies.",
             "read": "when update, import, initialization, or child override behavior changes"
+        },
+        "JSON-FORMAT-CONTRACT.json": {
+            "role": "Canonical JSON format and exception contract.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "When changing JSON document shape, audit rules, templates, generated artifacts, or project memory formats.",
+            "write_when": "When adding a new JSON format family, migrating direct-schema files, or approving a non-canonical exception."
         }
     },
     "metadata": {

@@ -7,16 +7,10 @@
         "freeze_candidate_examples",
         "non_local_changes"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "default_contract",
-                "freeze_candidate_examples",
-                "non_local_changes"
-            ]
+            "content": "- Overview\n- Summary\n- Default Contract\n- Freeze Candidate Examples\n- Non-Local Changes\n"
         },
         "overview": {
             "title": "Overview",
@@ -44,6 +38,8 @@
             "body": "## Non-Local Changes\n\nIf a new feature wants to change a frozen layer indirectly, first check whether an adapter, compatibility layer, or explicit extension point can avoid destabilizing the existing contract.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Frozen Layers for Code Projects"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Frozen Layers for Code Projects"
+    }
 }

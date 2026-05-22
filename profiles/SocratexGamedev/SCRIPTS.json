@@ -425,7 +425,7 @@
         },
         "yaml_to_json_list_doc.ps1": {
             "category": "Documents",
-            "description": "konwertuje slim YAML `index/items/meta` do listowego JSON `index/content/metadata`.",
+            "description": "normalizuje starsze dokumenty strukturalne do listowego JSON `index/content/metadata`.",
             "benefit": "migracje dokumentów YAML do JSON są powtarzalne i bez ręcznego przepisywania."
         },
         "yaml_to_json_list_doc.py": {

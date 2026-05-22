@@ -19,7 +19,7 @@
     "content": {
         "quick_index": {
             "title": "Quick Index",
-            "content": "- Purpose\n- Target Profile\n- Default Start\n- Task Lifecycle\n- Phase 1 — Read\n- Phase 2 — Decide\n- Phase 3 — Plan\n- Phase 4 — Implement\n- Phase 5 — Report\n- Phase 6 — Test\n- Phase 7 — Joint Verification\n- Phase 8 — Handoff\n- Communication Profile\n- Behavioral Rules\n"
+            "content": "- Purpose\n- Target Profile\n- Default Start\n- Task Lifecycle Overview\n- Phase 1 — Read\n- Phase 2 — Decide complexity\n- Phase 3 — Plan (when needed)\n- Phase 4 — Implement\n- Phase 5 — Report (business storytelling)\n- Phase 6 — Test\n- Phase 7 — Joint verification\n- Phase 8 — Handoff\n- Communication Profile\n- Behavioral Rules\n"
         },
         "purpose": {
             "title": "Purpose",
@@ -96,8 +96,8 @@
                 "When the default clean code-pack workflow is sufficient."
             ]
         },
-        "communication_profile_default": "foreign_legacy_code"
-    },
-    "schema": "socratex-document/v1",
-    "title": "Foreign/Legacy Business Programming Workflow"
+        "communication_profile_default": "foreign_legacy_code",
+        "schema": "socratex-document/v1",
+        "title": "Foreign/Legacy Business Programming Workflow"
+    }
 }

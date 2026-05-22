@@ -15,24 +15,10 @@
         "prompt",
         "instructions"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "continue",
-                "plan",
-                "bug",
-                "review",
-                "audit",
-                "finish",
-                "commit",
-                "log",
-                "diagnostics",
-                "prompt",
-                "instructions"
-            ]
+            "content": "- Overview\n- Summary\n- CONTINUE\n- PLAN\n- BUG\n- REVIEW\n- AUDIT\n- FINISH\n- COMMIT\n- LOG\n- DIAGNOSTICS\n- PROMPT\n- INSTRUCTIONS\n"
         },
         "overview": {
             "title": "Overview",
@@ -100,6 +86,8 @@
             "body": "## INSTRUCTIONS\n\nDefragment raw user instruction files.\n\nOrder:\n\n1. Read `core/INSTRUCTION-CAPTURE.json`.\n2. Read `project/code/INSTRUCTION-CAPTURE.json`.\n3. Inspect `_INSTRUCTIONS.md` first.\n4. Merge duplicates and split separable work into `_INSTRUCTION-QUEUE.json`.\n5. Promote executable passes into `_PLAN.json` only when they meet the pass contract.\n6. Move bugs, decisions, diagnostics, and context facts into the correct registry.\n7. Clear `_INSTRUCTIONS.md` after successful defragmentation.\n8. Remove completed entries from `_INSTRUCTION-QUEUE.json` after execution.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Code Commands"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Code Commands"
+    }
 }

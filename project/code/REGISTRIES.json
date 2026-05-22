@@ -9,18 +9,10 @@
         "changelog_registry",
         "decision_registry"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "bug_registry",
-                "solved_bug_registry",
-                "todo_registry",
-                "changelog_registry",
-                "decision_registry"
-            ]
+            "content": "- Overview\n- Summary\n- Bug Registry\n- Solved Bug Registry\n- TODO Registry\n- Changelog Registry\n- Decision Registry\n"
         },
         "overview": {
             "title": "Overview",
@@ -58,6 +50,8 @@
             "body": "## Decision Registry\n\n`DECISIONS.json` stores durable programming decisions.\n\nUse it for:\n\n- architecture boundaries,\n- source-of-truth choices,\n- persistence or schema decisions,\n- public API contracts,\n- significant tradeoffs,\n- non-obvious constraints.\n\nDo not use it for ordinary implementation notes.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Code Registries"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Code Registries"
+    }
 }

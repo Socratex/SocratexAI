@@ -17,7 +17,7 @@
         "safety_rules",
         "git_completion"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
             "content": "- Overview\n- Purpose\n- Operating Principles\n- Primary Known-Solutions Directive\n- Emoji Rule\n- DDD-ADIV Default\n- Project Memory Layers\n- Execution Passes\n- Known-Solution Bias\n- Quality Gates\n- Tool-First JSON\n- Communication Rules\n- Communication Profiles\n- Safety Rules\n- Git Completion\n"
@@ -97,6 +97,8 @@
             "content": "## Git Completion\n\nHard rule: use the project's subtask finish wrapper whenever practical for task closure.\nPrefer `tools/repo/finalize_task_check_commit_push.ps1 -Message \"<message>\"` when available; otherwise use the project's lower-level subtask finish wrapper.\nThe wrapper must discover changed files from git, run the batch finalizer, stage intentional source/assets/docs/config changes, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.\nIf the working tree is not clean after commit/push, the subtask is not closed."
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Agent Contract"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Agent Contract"
+    }
 }

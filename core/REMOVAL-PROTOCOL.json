@@ -8,17 +8,10 @@
         "default_preservation",
         "safety"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "command",
-                "workflow",
-                "default_preservation",
-                "safety"
-            ]
+            "content": "- Overview\n- Purpose\n- Command\n- Workflow\n- Default Preservation\n- Safety\n"
         },
         "overview": {
             "title": "Overview",
@@ -51,6 +44,8 @@
             "body": "## Safety\n\nNever remove project source files.\n\nNever recursively remove a path unless it is verified inside the target project and matches a SocratexAI-owned path.\n\nIf ownership is unclear, preserve the path and report it.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Removal Protocol"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Removal Protocol"
+    }
 }

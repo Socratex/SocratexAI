@@ -2,7 +2,17 @@
 
 ## Current Priority
 
-- No current source-priority item selected.
+1. Canonical JSON document format expansion.
+   Make `index/content/metadata` the preferred format for every repository JSON document that can reasonably be a human/AI-readable source document. Exclude runtime/game data such as game configs, saves, logs, generated runtime artifacts, and other files whose shape is owned by an engine or external protocol. First pass: classify every JSON file as canonical doc, migration candidate, domain/runtime exception, generated artifact, template, eval/result, or external-schema file. Then migrate safe candidates and add audit enforcement so every JSON file has either the canonical shape or an explicit allowed exception.
+
+2. Godot AI-readability sweeps, grouped by ownership area.
+   Do not run one huge sweep. Split into focused passes such as application/session flow, runtime state and diagnostics, player/movement/combat, UI/HUD, content/data loading, and tooling/editor scripts. Each pass should identify major `.gd` systems that need clearer ownership, naming, boundaries, diagnostics, or a short `AI_CONTRACT` header.
+
+3. Godot comment-discipline sweeps, grouped after the AI-readability passes.
+   For each Godot ownership area, keep comments that explain constraints, invariants, engine quirks, diagnostics, or warnings. Remove or replace narrative comments that merely restate code with clearer names, smaller methods, or explicit contracts.
+
+4. CI / quality gate publishing.
+   After the JSON and Godot readability/comment passes, make the local `run_quality_gate` contract easy to publish into the selected CI or release workflow without committing provider-specific CI files before a provider is chosen.
 
 ## Side Backlog
 

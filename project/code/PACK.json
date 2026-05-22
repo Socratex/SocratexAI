@@ -17,26 +17,10 @@
         "review_heuristics",
         "verification"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "recommended_files",
-                "required_reads_for_code_projects",
-                "technical_defaults",
-                "script_first_automation_directive",
-                "ddd_adiv_recommendation",
-                "known_solution_bias",
-                "task_type_routing",
-                "profile_aware_defaults",
-                "change_strategy",
-                "task_gating",
-                "reporting",
-                "review_heuristics",
-                "verification"
-            ]
+            "content": "- Overview\n- Purpose\n- Recommended Files\n- Required Reads for Code Projects\n- Technical Defaults\n- Script-First Automation Directive\n- DDD-ADIV Recommendation\n- Known-Solution Bias\n- Task Type Routing\n- Profile-Aware Defaults\n- Change Strategy\n- Task Gating\n- Reporting\n- Review Heuristics\n- Verification\n"
         },
         "overview": {
             "title": "Overview",
@@ -114,6 +98,8 @@
             "body": "## Verification\n\nUse the strongest practical quality gate available:\n\n- unit tests,\n- integration tests,\n- typecheck,\n- lint,\n- formatter check,\n- build,\n- smoke test,\n- manual reproduction,\n- diff check.\n\nIf verification is impossible or skipped, report it explicitly.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Project Pack: Code"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Project Pack: Code"
+    }
 }

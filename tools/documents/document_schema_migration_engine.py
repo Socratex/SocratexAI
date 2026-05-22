@@ -7,7 +7,21 @@ from typing import Any
 import document_structure_normalizer_engine as document_structure
 
 
-EXCLUDED_PARTS = {".git", "Tools/Python312", "Tools/python-installer", "Tools/tmp"}
+EXCLUDED_PARTS = {
+    ".git",
+    "AI-compiled",
+    "docs-tech/cache",
+    "ignored",
+    "Tools/Python312",
+    "Tools/python-installer",
+    "Tools/tmp",
+}
+EXCLUDED_PATHS = {
+    "docs-tech/CODE_LINE_INDEX.json",
+    "docs-tech/LARGE_FILES.json",
+    "docs-tech/PIPELINE-BOOTSTRAP.json",
+    "docs-tech/TOOL-ERRORS.json",
+}
 META_KEYS = ["document", "routing"]
 CONTENT_KEYS = ["sections", "current", "checkpoint", "immediate_focus", "non_regression_reminders", "risks", "read_next_if_needed"]
 REDUNDANT_LEGACY_INDEX_KEYS = ["pass_index", "bug_index"]
@@ -27,6 +41,8 @@ def repo_relative(path: Path, repo_root: Path) -> str:
 
 def is_excluded(path: Path, repo_root: Path) -> bool:
     relative = repo_relative(path, repo_root)
+    if relative in EXCLUDED_PATHS:
+        return True
     return any(relative == part or relative.startswith(f"{part}/") for part in EXCLUDED_PARTS)
 
 
@@ -119,7 +135,9 @@ def ensure_index(data: dict[str, Any], items: dict[str, Any]) -> list[dict[str, 
 def migrate_document(data: Any) -> Any:
     if not isinstance(data, dict):
         return data
-    if "index" in data and "items" in data:
+    if "index" in data and ("content" in data or "items" in data):
+        return document_structure.slim_document(data)
+    if not isinstance(data.get("sections"), dict) and not any(key in data for key in CONTENT_KEYS if key != "sections"):
         return data
 
     items = items_from_sections(data)
@@ -161,7 +179,7 @@ def command_migrate(args: argparse.Namespace) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Migrate structured JSON documents to the slim index/items/meta layout.")
+    parser = argparse.ArgumentParser(description="Migrate structured JSON documents to the canonical index/content/metadata layout.")
     parser.add_argument("paths", nargs="*", default=["**/*.json"])
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--check", action="store_true")

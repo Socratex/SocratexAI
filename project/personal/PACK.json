@@ -8,17 +8,10 @@
         "job_search_add_on",
         "review_gate"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "purpose",
-                "recommended_files",
-                "operating_defaults",
-                "job_search_add_on",
-                "review_gate"
-            ]
+            "content": "- Overview\n- Purpose\n- Recommended Files\n- Operating Defaults\n- Job Search Add-On\n- Review Gate\n"
         },
         "overview": {
             "title": "Overview",
@@ -51,6 +44,8 @@
             "body": "## Review Gate\n\nCheck:\n\n- Is the plan realistic for current capacity?\n- Are open loops visible?\n- Are follow-ups dated?\n- Is the next action concrete?\n- Are priorities based on expected leverage, not anxiety?\n- Is the system adding clarity rather than administrative burden?\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Project Pack: Personal"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Project Pack: Personal"
+    }
 }

@@ -93,7 +93,7 @@
     "is_duplicate": false,
     "note": "record source",
     "path": "context-docs/ENGINEERING.json",
-    "selector": "items.tagged_rules.value.27"
+    "selector": "content.tagged_rules.value.27"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",

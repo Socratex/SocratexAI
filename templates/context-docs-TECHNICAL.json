@@ -4,13 +4,10 @@
         "overview",
         "summary"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary"
-            ]
+            "content": "- Overview\n- Summary\n"
         },
         "overview": {
             "title": "Overview",
@@ -23,6 +20,8 @@
             "body": "## Summary\n\nCurrent technical architecture, ownership boundaries, invariants, and known traps.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Technical Context"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Technical Context"
+    }
 }

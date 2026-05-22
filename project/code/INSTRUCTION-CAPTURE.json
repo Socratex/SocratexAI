@@ -7,16 +7,10 @@
         "code_promotion_rules",
         "cleaning_rules"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "code_sorting_rules",
-                "code_promotion_rules",
-                "cleaning_rules"
-            ]
+            "content": "- Overview\n- Summary\n- Code Sorting Rules\n- Code Promotion Rules\n- Cleaning Rules\n"
         },
         "overview": {
             "title": "Overview",
@@ -44,6 +38,8 @@
             "body": "## Cleaning Rules\n\nAfter a code instruction is executed:\n\n- remove it from `_INSTRUCTION-QUEUE.json`,\n- update affected registries,\n- run the relevant quality gate,\n- update `STATE.json`,\n- do not keep completed instruction history in the queue.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Code Instruction Capture"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Code Instruction Capture"
+    }
 }

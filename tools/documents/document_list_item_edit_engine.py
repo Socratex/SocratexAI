@@ -26,11 +26,24 @@ def write_document(path: Path, value: Any) -> None:
 def normalize_document(document: Any) -> dict[str, Any]:
     if not isinstance(document, dict):
         raise ValueError("Structured document must be a mapping.")
-    if "items" not in document:
-        document["items"] = {}
-    if not isinstance(document["items"], dict):
+    if "content" not in document and "items" not in document:
+        document["content"] = {}
+    if "content" in document and not isinstance(document["content"], dict):
+        raise ValueError("Document content must be a mapping.")
+    if "items" in document and not isinstance(document["items"], dict):
         raise ValueError("Document items must be a mapping.")
     return document_structure.slim_document(document)
+
+
+def item_collection(document: dict[str, Any]) -> dict[str, Any]:
+    content = document.get("content")
+    if isinstance(content, dict):
+        return content
+    items = document.get("items")
+    if isinstance(items, dict):
+        return items
+    document["content"] = {}
+    return document["content"]
 
 
 def normalize_text(value: str) -> str:
@@ -93,7 +106,7 @@ def candidate_matches(document: dict[str, Any], terms: list[str], limit: int) ->
         raise ValueError("At least one term is required.")
 
     results: list[dict[str, Any]] = []
-    for key, item in document["items"].items():
+    for key, item in item_collection(document).items():
         item_key = str(key)
         text = item_search_text(item_key, item)
         text_lower = text.casefold()
@@ -142,7 +155,7 @@ def select_items_by_titles(document: dict[str, Any], titles: list[str]) -> list[
     selected: list[dict[str, str]] = []
     for requested, normalized in zip(titles, wanted):
         matches = []
-        for key, item in document["items"].items():
+        for key, item in item_collection(document).items():
             item_key = str(key)
             if normalize_text(item_key) == normalized or normalize_text(item_title(item, item_key)) == normalized:
                 matches.append(
@@ -158,7 +171,7 @@ def select_items_by_titles(document: dict[str, Any], titles: list[str]) -> list[
 
 
 def iter_scope_text(document: dict[str, Any], key: str, scope: str) -> list[tuple[str, str]]:
-    items = document["items"]
+    items = item_collection(document)
     if scope == "item":
         if key not in items:
             raise ValueError(f"Item does not exist: {key}")
@@ -229,7 +242,7 @@ def command_read_titles(args: argparse.Namespace) -> None:
 def command_insert(args: argparse.Namespace) -> None:
     path = Path(args.path)
     document = normalize_document(load_document(path))
-    items = document["items"]
+    items = item_collection(document)
     if args.key not in items:
         if not args.create_title:
             raise ValueError(f"Item does not exist: {args.key}")
@@ -256,7 +269,7 @@ def command_insert(args: argparse.Namespace) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Check and insert list lines in slim structured document item content.")
+    parser = argparse.ArgumentParser(description="Check and insert list lines in canonical structured document content.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     check = subparsers.add_parser("check")

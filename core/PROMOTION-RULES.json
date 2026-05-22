@@ -12,21 +12,10 @@
         "state_to_plan",
         "decisions_to_plan"
     ],
-    "items": {
+    "content": {
         "quick_index": {
             "title": "Quick Index",
-            "refs": [
-                "overview",
-                "summary",
-                "backlog_to_plan",
-                "plan_to_state",
-                "branch_state_to_durable_memory",
-                "plan_to_changelog",
-                "plan_or_backlog_to_decisions",
-                "plan_or_implementation_to_context_docs",
-                "state_to_plan",
-                "decisions_to_plan"
-            ]
+            "content": "- Overview\n- Summary\n- BACKLOG to PLAN\n- PLAN to STATE\n- BRANCH STATE to durable memory\n- PLAN to CHANGELOG\n- PLAN or BACKLOG to DECISIONS\n- PLAN or IMPLEMENTATION to context-docs\n- STATE to PLAN\n- DECISIONS to PLAN\n"
         },
         "overview": {
             "title": "Overview",
@@ -79,6 +68,8 @@
             "body": "## DECISIONS to PLAN\n\nA decision can create follow-up work, but the work belongs in the active plan or backlog, not inside the decision entry.\n"
         }
     },
-    "schema": "socratex-document/v1",
-    "title": "Promotion Rules"
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Promotion Rules"
+    }
 }
