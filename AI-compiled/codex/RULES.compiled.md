@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-d0d56ff79fcf
+Generated: source-005a572fe35a
 
 ## Source of Truth
 
@@ -374,6 +374,7 @@ Draft placeholder:
             "web_research_spike_to_named_implementation_plan_gate",
             "directive_hierarchy_context_budget",
             "task_flow_audit_closure",
+            "continue_user_clarification_gate",
             "ai_native_code_contract_headers",
             "source_pipeline_maintainer_backlog",
             "grouped_fragmented_task_state_handoff",
@@ -6305,6 +6306,42 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents can claim completion from prose while skipping the selected flow, omitting changelog truth, hiding manual tool bypass, or missing an obvious adversarial check on broad diffs."
+            },
+            "continue_user_clarification_gate": {
+                "summary": "CONTINUE flow checks whether the next pass needs user clarification, missing information, product direction, or a meaningful implementation choice before executing, and may stop mid-task to ask when new ambiguity appears.",
+                "required_paths": [
+                    "FLOWS.json",
+                    "profiles/SocratexGamedev/FLOWS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.ps1",
+                    "rebuild_ai_compiled_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.ps1",
+                        "rebuild_ai_compiled_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "FLOWS.json",
+                    "profiles/SocratexGamedev/FLOWS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the clarification checkpoint in CONTINUE flow before pass execution, not only in general approval rules.",
+                    "Ask the user before executing when the next pass needs missing facts, product direction, or a choice between meaningful implementation variants.",
+                    "Allow the agent to stop mid-task and ask when new ambiguity, missing information, product direction, or material risk appears.",
+                    "Do not block clear, reversible, source-owned work with unnecessary confirmation; proceed when everything is clear.",
+                    "Sync the managed package and child project flow files so source and installed projects share the same CONTINUE behavior."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                ],
+                "known_failure_if_missing": "Agents may treat CONTINUE as unconditional execution, guess through missing product or implementation information, or keep working after new ambiguity appears instead of pausing for user input."
             },
             "ai_native_code_contract_headers": {
                 "summary": "Reusable code-pipeline standard for short top-of-file JSON-like `AI_CONTRACT` comment headers on major systems, shared boundaries, diagnostics, runtime/performance modules, layer seams, and repeatedly agent-touched files, plus a dry-run helper for planning per-system rollout without mass boilerplate.",

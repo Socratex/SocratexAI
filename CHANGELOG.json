@@ -485,6 +485,12 @@
         "date": "2026-05-22",
         "feature": "changelog_oldest_first_contract",
         "change": "Standardized SocratexAI CHANGELOG.json as oldest-first and added audit/helper enforcement so JSON changelog entries are appended in chronological order. Why: The source pipeline should use one changelog ordering convention; oldest-first is easier to append and matches the project Markdown changelog policy."
+      },
+      {
+        "version": "0.2.0-alpha",
+        "date": "2026-05-22",
+        "feature": "continue_user_clarification_gate",
+        "change": "Added CONTINUE-flow clarification checkpoint. Why: CONTINUE should not mean guessing through missing user information, product direction, or meaningful implementation choices."
       }
     ]
   },

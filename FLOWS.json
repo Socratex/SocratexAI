@@ -8,6 +8,7 @@
         "pipeline_upgrade",
         "review",
         "quality_diagnostics",
+        "continue_command",
         "compile_command",
         "manual_mode"
     ],
@@ -98,6 +99,15 @@
                 "fix repeatable tooling failures in the owning tool",
                 "subroutine:task_flow_audit",
                 "rerun the failing script"
+            ]
+        },
+        "continue_command": {
+            "then": [
+                "load docs-tech/PIPELINE-BOOTSTRAP.json",
+                "resolve the next active pass, task, or target from the current plan/backlog contract",
+                "before executing, decide whether the task needs user clarification, missing information, product direction, or a choice between meaningful implementation variants",
+                "if clarification is needed, ask the user and wait instead of guessing; if everything is clear, proceed through the most specific matching flow",
+                "during execution, stop and ask the user when new ambiguity, missing information, product direction, or material risk appears"
             ]
         },
         "compile_command": {

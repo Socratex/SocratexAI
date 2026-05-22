@@ -153,6 +153,9 @@
             "then": [
                 "subroutine:load_context",
                 "Read _PLAN.json through Tools/documents/json_read.ps1.",
+                "Before executing the resolved pass or proposed target, decide whether you need user clarification, missing information, product direction, or a choice between meaningful implementation variants.",
+                "If clarification is needed, ask the user and wait instead of guessing; if everything is clear, proceed with the selected pass.",
+                "During execution, stop and ask the user when new ambiguity, missing information, product direction, or material risk appears.",
                 "Execute the next active pass from _PLAN.json if one exists.",
                 "If no active pass remains, read docs/TARGET.json.",
                 "Propose the most sensible next target-aligned item from docs/TODO.json.",
