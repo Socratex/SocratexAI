@@ -461,6 +461,12 @@
         "date": "2026-05-22",
         "feature": "json_format_contract_managed_package_sync",
         "change": "Added JSON-FORMAT-CONTRACT.json to managed package sync and pipeline-owned root path checks so installed child pipelines receive and enforce the canonical JSON format contract. Why: Riftbound update smoke failed because source feature contracts required the format contract inside the installed SocratexAI package, but the mirror sync did not copy it."
+      },
+      {
+        "version": "0.2.0-alpha",
+        "date": "2026-05-22",
+        "feature": "pipeline_package_json_format_exception",
+        "change": "Listed PIPELINE-PACKAGE.json as an explicit generated direct-schema exception in JSON-FORMAT-CONTRACT.json and recorded the package-manifest exception in the canonical data-document feature contract. Why: Riftbound embedded audit showed the managed package manifest is generated operational data, not a canonical source document."
       }
     ]
   },

@@ -29,14 +29,16 @@
                 "evals/expected-behaviors.json": "Eval protocol consumed by check_evals; keep direct schema until eval tooling is canonical-aware.",
                 "evals/personas.json": "Eval protocol consumed by check_evals; keep direct schema until eval tooling is canonical-aware.",
                 "evals/results/baseline.json": "Eval result protocol; keep direct schema for score comparison.",
-                "evals/results/with-pipeline.json": "Eval result protocol; keep direct schema for score comparison."
+                "evals/results/with-pipeline.json": "Eval result protocol; keep direct schema for score comparison.",
+                "PIPELINE-PACKAGE.json": "Generated managed package manifest written by sync_managed_pipeline_package.ps1; operational direct schema records package hashes, local overrides, generated paths, and protected paths."
             }
         },
         "migration_followups": {
             "title": "Migration Followups",
             "items": [
                 "Decide whether eval protocols should remain direct test fixtures or gain canonical wrappers.",
-                "Keep generated/local/runtime JSON out of canonical source-document enforcement unless ownership moves into SocratexPipeline source documents."
+                "Keep generated/local/runtime JSON out of canonical source-document enforcement unless ownership moves into SocratexPipeline source documents.",
+                "Keep PIPELINE-PACKAGE.json direct unless package manifest tooling grows a canonical read/write contract."
             ]
         }
     },

@@ -6427,7 +6427,8 @@
                     "Keep setup/import writers canonical-aware so initialized child projects do not downgrade PIPELINE-CONFIG.json back to a direct schema.",
                     "Keep changelog, workspace, task-work, and design-context readers compatible with both canonical and older direct documents during migration.",
                     "Keep document cache and JSON audit exclusions aligned with JSON-FORMAT-CONTRACT generated/runtime exclusions.",
-                    "Run JSON audit, document audit, check_task -Audit, and quality gate before publishing or syncing to child projects."
+                    "Run JSON audit, document audit, check_task -Audit, and quality gate before publishing or syncing to child projects.",
+                    "Keep generated package manifests such as PIPELINE-PACKAGE.json listed as explicit direct-schema exceptions instead of forcing operational manifests into prose/document shape."
                 ],
                 "verification_commands": [
                     "python3 tools/documents/audit_json_docs.py --repo-root .",
