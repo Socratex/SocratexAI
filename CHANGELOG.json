@@ -491,6 +491,12 @@
         "date": "2026-05-22",
         "feature": "continue_user_clarification_gate",
         "change": "Added CONTINUE-flow clarification checkpoint. Why: CONTINUE should not mean guessing through missing user information, product direction, or meaningful implementation choices."
+      },
+      {
+        "version": "0.2.0-alpha",
+        "date": "2026-05-23",
+        "feature": "json_node_edit_tools",
+        "change": "Added full-node-path JSON edit tooling with nested list operations, slash-separated paths for keys containing dots, wrapper help, and script-first JSON structural edit guidance. Why: Agents need a reliable way to reorder, move, delete, insert, and line-edit JSON nodes without manual structural patches."
       }
     ]
   },

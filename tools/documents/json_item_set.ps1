@@ -1,18 +1,31 @@
 param(
-	[Parameter(Mandatory = $true)]
-	[string]$Path,
-	[Parameter(Mandatory = $true)]
-	[string]$Key,
+	[string]$Path = "",
+	[string]$Key = "",
 	[string[]]$Text = @(),
 	[string]$ValueJson = "",
 	[string]$ValueJsonFile = "",
 	[switch]$ValueJsonStdin,
 	[string]$NewKey = "",
-	[string]$Collection = ""
+	[string]$Collection = "",
+	[switch]$Help
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+
+if ($Help) {
+	@"
+Usage:
+  json_item_set.ps1 -Path <file> -Key <key> [-Collection content] [-NewKey <key>] (-ValueJson|-ValueJsonFile|-ValueJsonStdin|-Text)
+
+For full node paths such as content.pass.steps, prefer:
+  json_node_edit.ps1 -Operation set -Path <file> -Node <node> ...
+"@
+	exit 0
+}
+
+if ([string]::IsNullOrWhiteSpace($Path)) { throw "-Path is required. Use -Help for examples." }
+if ([string]::IsNullOrWhiteSpace($Key)) { throw "-Key is required. Use -Help for examples." }
 
 . (Join-Path $PSScriptRoot "..\pipeline\resolve_tool_runtime.ps1")
 $python = Resolve-SocratexPython -SearchRoot $PSScriptRoot

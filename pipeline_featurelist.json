@@ -79,6 +79,7 @@
             "explicit_gamedev_project_pack",
             "json_document_normalizer",
             "json_list_document_tools",
+            "json_node_edit_tools",
             "json_tool_file_stdin_value_inputs",
             "script_input_output_contracts",
             "default_tool_error_hardening",
@@ -4467,6 +4468,7 @@
                 "summary": "Json List Document Tools capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
+                    "core/AGENT-CONTRACT.json",
                     "DOCS.json",
                     "tools/documents",
                     "tools/text/normalize_json_files.ps1",
@@ -4491,6 +4493,7 @@
                     "json_line_move.ps1",
                     "json_refresh_index.ps1",
                     "json_migrate_content.ps1",
+                    "json_node_edit.ps1",
                     "normalize_json_files.ps1",
                     "normalize_json_files.py"
                 ],
@@ -4509,6 +4512,7 @@
                         "json_line_move.ps1",
                         "json_refresh_index.ps1",
                         "json_migrate_content.ps1",
+                        "json_node_edit.ps1",
                         "normalize_json_files.ps1",
                         "normalize_json_files.py"
                     ]
@@ -4522,6 +4526,7 @@
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Use json_node_edit.ps1 for full-node-path JSON operations, nested list edits, and structural/order-only JSON changes.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -4530,6 +4535,47 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
                 "known_failure_if_missing": "If 'json_list_document_tools' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+            },
+            "json_node_edit_tools": {
+                "summary": "Full-node-path JSON edit tooling is active only when the wrapper, engine node operations, script catalog contract, agent contract guidance, and verification remain present.",
+                "required_paths": [
+                    "tools/documents/json_node_edit.ps1",
+                    "tools/documents/json_list_doc.py",
+                    "SCRIPTS.json",
+                    "core/AGENT-CONTRACT.json",
+                    "FLOWS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "json_node_edit.ps1",
+                    "json_list_doc.py",
+                    "json_read.ps1",
+                    "json_line_insert.ps1",
+                    "json_line_set.ps1",
+                    "json_line_move.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "json_node_edit.ps1",
+                        "json_list_doc.py",
+                        "json_read.ps1",
+                        "json_line_insert.ps1",
+                        "json_line_set.ps1",
+                        "json_line_move.ps1"
+                    ]
+                },
+                "required_docs": [],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Expose full node-path JSON operations through SCRIPTS.json.",
+                    "Keep structural/order-only JSON edits script-first in AGENT-CONTRACT and FLOWS.",
+                    "Verify nested list edits, dot-containing keys through slash paths, and legacy -FieldPath wrappers."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                ],
+                "known_failure_if_missing": "Agents fall back to manual JSON ordering patches or cannot target nested lists and keys containing dots safely."
             },
             "json_tool_file_stdin_value_inputs": {
                 "summary": "Json Tool File Stdin Value Inputs capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",

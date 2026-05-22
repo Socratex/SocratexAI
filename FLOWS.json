@@ -36,6 +36,7 @@
                 "load DOCS.json index",
                 "read target owner document with list_document_keys.ps1 or read_document_item.ps1",
                 "edit structured documents with insert_document_item.ps1, move_document_item.ps1, migrate_document_item.ps1, or insert_checked_document_list_item.ps1 when their contract fits",
+                "for JSON structural/order-only edits, use json_node_edit.ps1 or the narrow JSON wrappers before any manual content patch",
                 "run normalize_json_files.ps1 after JSON edits",
                 "subroutine:task_flow_audit",
                 "run check_task.ps1 at the final verification boundary"

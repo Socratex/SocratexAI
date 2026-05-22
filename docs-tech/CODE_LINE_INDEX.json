@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T21:39:20+02:00",
+  "generatedAt": "2026-05-23T00:11:08+02:00",
   "threshold": 300,
   "files": [
     {
@@ -12,6 +12,12 @@
       "path": "tools/documents/audit_docs.ps1",
       "lines": 680,
       "extension": ".ps1",
+      "large": true
+    },
+    {
+      "path": "tools/documents/json_list_doc.py",
+      "lines": 554,
+      "extension": ".py",
       "large": true
     },
     {
@@ -54,12 +60,6 @@
       "path": "tools/repo/check_pipeline_feature_contracts.ps1",
       "lines": 362,
       "extension": ".ps1",
-      "large": true
-    },
-    {
-      "path": "tools/documents/json_list_doc.py",
-      "lines": 343,
-      "extension": ".py",
       "large": true
     },
     {
@@ -209,6 +209,12 @@
     {
       "path": "tools/quality/check_evals.ps1",
       "lines": 129,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/documents/json_node_edit.ps1",
+      "lines": 126,
       "extension": ".ps1",
       "large": false
     },
@@ -435,9 +441,21 @@
       "large": false
     },
     {
+      "path": "tools/documents/json_item_insert.ps1",
+      "lines": 51,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/text/normalize_json_files.py",
       "lines": 51,
       "extension": ".py",
+      "large": false
+    },
+    {
+      "path": "tools/documents/json_item_set.ps1",
+      "lines": 49,
+      "extension": ".ps1",
       "large": false
     },
     {
@@ -459,19 +477,13 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_item_insert.ps1",
-      "lines": 41,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
       "path": "tools/repo/task_snapshot.ps1",
       "lines": 41,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/documents/json_item_set.ps1",
+      "path": "tools/documents/json_line_insert.ps1",
       "lines": 39,
       "extension": ".ps1",
       "large": false
@@ -479,6 +491,12 @@
     {
       "path": "tools/pipeline/pipeline_bootstrap_index.ps1",
       "lines": 39,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/documents/json_line_move.ps1",
+      "lines": 38,
       "extension": ".ps1",
       "large": false
     },
@@ -525,6 +543,24 @@
       "large": false
     },
     {
+      "path": "tools/documents/json_line_set.ps1",
+      "lines": 33,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/documents/json_item_move.ps1",
+      "lines": 32,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/documents/json_read.ps1",
+      "lines": 32,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/documents/bulk_insert_document_items.ps1",
       "lines": 31,
       "extension": ".ps1",
@@ -549,14 +585,14 @@
       "large": false
     },
     {
-      "path": "tools/knowledge/knowledge_compile.ps1",
+      "path": "tools/documents/json_item_delete.ps1",
       "lines": 28,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/documents/json_line_insert.ps1",
-      "lines": 27,
+      "path": "tools/knowledge/knowledge_compile.ps1",
+      "lines": 28,
       "extension": ".ps1",
       "large": false
     },
@@ -569,12 +605,6 @@
     {
       "path": "tools/knowledge/knowledge_file_delete.ps1",
       "lines": 27,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/documents/json_line_move.ps1",
-      "lines": 26,
       "extension": ".ps1",
       "large": false
     },
@@ -615,18 +645,6 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_item_move.ps1",
-      "lines": 22,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/documents/json_line_set.ps1",
-      "lines": 22,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
       "path": "tools/knowledge/knowledge_file_query.ps1",
       "lines": 21,
       "extension": ".ps1",
@@ -645,20 +663,8 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_read.ps1",
-      "lines": 20,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
       "path": "tools/documents/read_document_item.ps1",
       "lines": 20,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/documents/json_item_delete.ps1",
-      "lines": 18,
       "extension": ".ps1",
       "large": false
     },

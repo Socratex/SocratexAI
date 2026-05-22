@@ -35,6 +35,7 @@
         "json_list_doc.py",
         "json_refresh_index.ps1",
         "json_migrate_content.ps1",
+        "json_node_edit.ps1",
         "json_read.ps1",
         "json_item_insert.ps1",
         "json_item_set.ps1",
@@ -762,7 +763,7 @@
         },
         "json_list_doc.py": {
             "path": "tools/documents/json_list_doc.py",
-            "description": "Edit and read list-style JSON source documents while preserving collection order and root indexes.",
+            "description": "Edit and read list-style JSON source documents while preserving collection order, root indexes, full node paths, and nested list nodes.",
             "input": {
                 "required": [],
                 "optional": [
@@ -774,11 +775,16 @@
                     "--value-json-file",
                     "--value-json-stdin",
                     "--line",
+                    "--field-path",
                     "--new-key",
                     "--reference-line",
-                    "--reference-text"
+                    "--reference-text",
+                    "--reference-node",
+                    "--target-path",
+                    "--target-node",
+                    "--replace"
                 ],
-                "rule": "Use exactly one value source per insert-entry or set-entry call."
+                "rule": "Use wrapper scripts for normal document edits. Use exactly one value source per insert-entry, set-entry, insert-node, or set-node call."
             },
             "output": {
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
@@ -821,9 +827,41 @@
                 "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
             }
         },
+        "json_node_edit.ps1": {
+            "path": "tools/documents/json_node_edit.ps1",
+            "description": "Read, insert, set, move, delete, or line-edit JSON nodes by full node path, including nested lists and keys containing dots via slash-separated paths.",
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Operation",
+                    "-Path",
+                    "-Node"
+                ],
+                "optional": [
+                    "-TargetPath",
+                    "-TargetNode",
+                    "-Position",
+                    "-ReferenceNode",
+                    "-Line",
+                    "-ReferenceLine",
+                    "-ReferenceText",
+                    "-Text",
+                    "-ValueJson",
+                    "-ValueJsonFile",
+                    "-ValueJsonStdin",
+                    "-Replace",
+                    "-Help"
+                ],
+                "rule": "Use -Operation to choose read, insert, set, move, delete, insert-line, set-line, or move-line. Prefer this wrapper for structural/order-only JSON edits when the full node path is known; use slash-separated node paths when a path segment contains dots."
+            },
+            "output": {
+                "success": "Prints the selected JSON node or OK status after the operation.",
+                "failure": "Throws or exits nonzero when paths, references, value inputs, or list selectors are invalid."
+            }
+        },
         "json_read.ps1": {
             "path": "tools/documents/json_read.ps1",
-            "description": "Read a JSON document index, entry, or line from a selected collection.",
+            "description": "Read a JSON document index, entry, nested field, or line from a selected collection.",
             "category": "documents",
             "input": {
                 "required": [
@@ -831,10 +869,12 @@
                 ],
                 "optional": [
                     "-Key",
+                    "-FieldPath",
                     "-Line",
-                    "-Collection"
+                    "-Collection",
+                    "-Help"
                 ],
-                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+                "rule": "Run from the repository root. For full node paths, prefer json_node_edit.ps1."
             },
             "output": {
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
@@ -856,9 +896,10 @@
                     "-Text",
                     "-ValueJson",
                     "-ValueJsonFile",
-                    "-ValueJsonStdin"
+                    "-ValueJsonStdin",
+                    "-Help"
                 ],
-                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
+                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin. For full node paths or nested nodes, prefer json_node_edit.ps1."
             },
             "output": {
                 "success": "OK: inserted key.",
@@ -880,9 +921,10 @@
                     "-Text",
                     "-ValueJson",
                     "-ValueJsonFile",
-                    "-ValueJsonStdin"
+                    "-ValueJsonStdin",
+                    "-Help"
                 ],
-                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
+                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin. For full node paths or nested nodes, prefer json_node_edit.ps1."
             },
             "output": {
                 "success": "OK: updated key.",
@@ -902,9 +944,10 @@
                 "optional": [
                     "-Position",
                     "-Reference",
-                    "-Collection"
+                    "-Collection",
+                    "-Help"
                 ],
-                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+                "rule": "Use this collection/key wrapper for simple entries. For full node paths, nested nodes, or keys containing dots, prefer json_node_edit.ps1."
             },
             "output": {
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
@@ -921,9 +964,10 @@
                     "-Key"
                 ],
                 "optional": [
-                    "-Collection"
+                    "-Collection",
+                    "-Help"
                 ],
-                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+                "rule": "Use this collection/key wrapper for simple entries. For full node paths, nested nodes, or keys containing dots, prefer json_node_edit.ps1."
             },
             "output": {
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
@@ -932,7 +976,7 @@
         },
         "json_line_insert.ps1": {
             "path": "tools/documents/json_line_insert.ps1",
-            "description": "Insert one or more lines into a list-valued JSON entry.",
+            "description": "Insert one or more lines into a list-valued JSON entry or nested list field.",
             "category": "documents",
             "input": {
                 "required": [
@@ -944,9 +988,11 @@
                     "-Position",
                     "-ReferenceLine",
                     "-ReferenceText",
-                    "-Collection"
+                    "-FieldPath",
+                    "-Collection",
+                    "-Help"
                 ],
-                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+                "rule": "Use -FieldPath for nested lists under the selected entry. For full node paths, prefer json_node_edit.ps1 -Operation insert-line."
             },
             "output": {
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
@@ -955,7 +1001,7 @@
         },
         "json_line_set.ps1": {
             "path": "tools/documents/json_line_set.ps1",
-            "description": "Replace one line inside a list-valued JSON entry.",
+            "description": "Replace one line inside a list-valued JSON entry or nested list field.",
             "category": "documents",
             "input": {
                 "required": [
@@ -965,9 +1011,11 @@
                     "-Text"
                 ],
                 "optional": [
-                    "-Collection"
+                    "-FieldPath",
+                    "-Collection",
+                    "-Help"
                 ],
-                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+                "rule": "Use -FieldPath for nested lists under the selected entry. For full node paths, prefer json_node_edit.ps1 -Operation set-line."
             },
             "output": {
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
@@ -976,7 +1024,7 @@
         },
         "json_line_move.ps1": {
             "path": "tools/documents/json_line_move.ps1",
-            "description": "Move one line inside a list-valued JSON entry.",
+            "description": "Move one line inside a list-valued JSON entry or nested list field.",
             "category": "documents",
             "input": {
                 "required": [
@@ -988,9 +1036,11 @@
                     "-Position",
                     "-ReferenceLine",
                     "-ReferenceText",
-                    "-Collection"
+                    "-FieldPath",
+                    "-Collection",
+                    "-Help"
                 ],
-                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+                "rule": "Use -FieldPath for nested lists under the selected entry. For full node paths, prefer json_node_edit.ps1 -Operation move-line."
             },
             "output": {
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
@@ -1329,6 +1379,42 @@
                 "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
             }
         },
+        "grouped_task_handoff.ps1": {
+            "path": "tools/tasks/grouped_task_handoff.ps1",
+            "category": "tasks",
+            "description": "Write grouped fragmented-task STATE/PLAN handoff JSON and an optional next-subtask prompt.",
+            "input": {
+                "required": [
+                    "-TaskId",
+                    "-GroupId",
+                    "-SubtaskId"
+                ],
+                "optional": [
+                    "-ProjectRoot",
+                    "-Status",
+                    "-GroupGoal",
+                    "-SubtaskGoal",
+                    "-HandoffSummary",
+                    "-InspectedFiles",
+                    "-ChangedFiles",
+                    "-Verification",
+                    "-Risks",
+                    "-NextFiles",
+                    "-NextCommands",
+                    "-NextSubtaskId",
+                    "-NextSubtaskGoal",
+                    "-HandoffPath",
+                    "-PromptPath",
+                    "-NoPrompt",
+                    "-PrintJson"
+                ],
+                "rule": "Use named parameters only. From shell, pass list values as one quoted comma-separated string or from PowerShell as an explicit array; positional binding is disabled to prevent accidental path shifts."
+            },
+            "output": {
+                "success": "Updates handoff JSON, writes next-subtask prompt unless -NoPrompt is passed, and prints both paths.",
+                "failure": "Throws on invalid existing handoff JSON or missing required ids."
+            }
+        },
         "Initialize-SocratexPipeline.ps1": {
             "path": "tools/pipeline/Initialize-SocratexPipeline.ps1",
             "category": "pipeline",
@@ -1616,6 +1702,64 @@
             "output": {
                 "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
                 "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_tier_report.py": {
+            "path": "tools/knowledge/knowledge_tier_report.py",
+            "category": "knowledge",
+            "description": "Python engine behind knowledge_tier_report.ps1 and knowledge_tier_check.ps1.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--include-templates",
+                    "--strict",
+                    "--show-entries",
+                    "--format"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_tier_report.ps1": {
+            "path": "tools/knowledge/knowledge_tier_report.ps1",
+            "category": "knowledge",
+            "description": "Report source knowledge documentation entries grouped by context_tier, categories/tags, type, and document path.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-RepoRoot",
+                    "-IncludeTemplates",
+                    "-Strict",
+                    "-ShowEntries",
+                    "-Format markdown|json"
+                ],
+                "rule": "Use for tier audits and category summaries; add -Strict to turn missing or invalid tiers into a failing check."
+            },
+            "output": {
+                "success": "Prints markdown or JSON summary with counts by tier, category, and explicit tier coverage status.",
+                "failure": "With -Strict, exits nonzero when missing/invalid context_tier entries or JSON parse errors are found."
+            }
+        },
+        "knowledge_tier_check.ps1": {
+            "path": "tools/knowledge/knowledge_tier_check.ps1",
+            "category": "knowledge",
+            "description": "Fail when source knowledge documentation entries are missing explicit context_tier metadata or contain invalid tiers.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-RepoRoot",
+                    "-IncludeTemplates",
+                    "-Format markdown|json"
+                ],
+                "rule": "Use after knowledge tier migrations or before relying on tier-scoped context routing. Include templates when starter/template knowledge docs are in scope."
+            },
+            "output": {
+                "success": "Prints a tier coverage report with an explicit all-tiered status line and exits 0 when every discovered knowledge entry has a valid context_tier.",
+                "failure": "Exits nonzero and lists missing or invalid context_tier entries."
             }
         },
         "knowledge_query.ps1": {
@@ -2391,100 +2535,6 @@
                 "success": "Confirms the gate file exists, matches current HEAD, and covers the changed code paths.",
                 "failure": "Throws when the gate is missing, stale relative to HEAD or MaxAgeMinutes, or does not cover the declared design-context reads."
             }
-        },
-        "knowledge_tier_check.ps1": {
-            "path": "tools/knowledge/knowledge_tier_check.ps1",
-            "category": "knowledge",
-            "description": "Fail when source knowledge documentation entries are missing explicit context_tier metadata or contain invalid tiers.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "-RepoRoot",
-                    "-IncludeTemplates",
-                    "-Format markdown|json"
-                ],
-                "rule": "Use after knowledge tier migrations or before relying on tier-scoped context routing. Include templates when starter/template knowledge docs are in scope."
-            },
-            "output": {
-                "success": "Prints a tier coverage report with an explicit all-tiered status line and exits 0 when every discovered knowledge entry has a valid context_tier.",
-                "failure": "Exits nonzero and lists missing or invalid context_tier entries."
-            }
-        },
-        "knowledge_tier_report.ps1": {
-            "path": "tools/knowledge/knowledge_tier_report.ps1",
-            "category": "knowledge",
-            "description": "Report source knowledge documentation entries grouped by context_tier, categories/tags, type, and document path.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "-RepoRoot",
-                    "-IncludeTemplates",
-                    "-Strict",
-                    "-ShowEntries",
-                    "-Format markdown|json"
-                ],
-                "rule": "Use for tier audits and category summaries; add -Strict to turn missing or invalid tiers into a failing check."
-            },
-            "output": {
-                "success": "Prints markdown or JSON summary with counts by tier, category, and explicit tier coverage status.",
-                "failure": "With -Strict, exits nonzero when missing/invalid context_tier entries or JSON parse errors are found."
-            }
-        },
-        "knowledge_tier_report.py": {
-            "path": "tools/knowledge/knowledge_tier_report.py",
-            "category": "knowledge",
-            "description": "Python engine behind knowledge_tier_report.ps1 and knowledge_tier_check.ps1.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "--repo-root",
-                    "--include-templates",
-                    "--strict",
-                    "--show-entries",
-                    "--format"
-                ],
-                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
-            },
-            "output": {
-                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
-                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
-            }
-        },
-        "grouped_task_handoff.ps1": {
-            "path": "tools/tasks/grouped_task_handoff.ps1",
-            "category": "tasks",
-            "description": "Write grouped fragmented-task STATE/PLAN handoff JSON and an optional next-subtask prompt.",
-            "input": {
-                "required": [
-                    "-TaskId",
-                    "-GroupId",
-                    "-SubtaskId"
-                ],
-                "optional": [
-                    "-ProjectRoot",
-                    "-Status",
-                    "-GroupGoal",
-                    "-SubtaskGoal",
-                    "-HandoffSummary",
-                    "-InspectedFiles",
-                    "-ChangedFiles",
-                    "-Verification",
-                    "-Risks",
-                    "-NextFiles",
-                    "-NextCommands",
-                    "-NextSubtaskId",
-                    "-NextSubtaskGoal",
-                    "-HandoffPath",
-                    "-PromptPath",
-                    "-NoPrompt",
-                    "-PrintJson"
-                ],
-                "rule": "Use named parameters only. From shell, pass list values as one quoted comma-separated string or from PowerShell as an explicit array; positional binding is disabled to prevent accidental path shifts."
-            },
-            "output": {
-                "success": "Updates handoff JSON, writes next-subtask prompt unless -NoPrompt is passed, and prints both paths.",
-                "failure": "Throws on invalid existing handoff JSON or missing required ids."
-            }
         }
     },
     "metadata": {
@@ -2500,7 +2550,7 @@
         "script_io_contract": {
             "purpose": "Describe stable invocation contracts for scripts whose argument shape is not obvious from the script name alone.",
             "default_context_rule": "The default SCRIPTS context remains name/index-only; read input/output only before invoking a script whose argument shape is not obvious.",
-            "structured_json_rule": "For long, multiline, nested, or quote-heavy JSON, prefer file/stdin value inputs over inline shell arguments."
+            "structured_json_rule": "For long, multiline, nested, or quote-heavy JSON, prefer file/stdin value inputs over inline shell arguments. For order-only or structural JSON changes, use json_node_edit.ps1 or narrower JSON wrappers instead of manual patching."
         },
         "categories": {
             "documents": [
@@ -2521,6 +2571,7 @@
                 "json_list_doc.py",
                 "json_refresh_index.ps1",
                 "json_migrate_content.ps1",
+                "json_node_edit.ps1",
                 "json_read.ps1",
                 "json_item_insert.ps1",
                 "json_item_set.ps1",

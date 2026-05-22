@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-005a572fe35a
+Generated: source-59a5f2059870
 
 ## Source of Truth
 
@@ -259,7 +259,7 @@ Draft placeholder:
 {
     "title": "Tool-First JSON",
     "format": "markdown-section",
-    "body": "## Tool-First JSON\nUse SocratexAI tools for structured JSON documents in every project type, including generic, personal, and creative projects.\nIn non-code projects, this applies primarily to agent-only JSON files. User-facing Markdown memory can be edited as prose unless a dedicated Markdown tool exists.\nDefault tool discipline:\n- Use `tools/documents/list_document_keys.ps1` and `tools/documents/read_document_item.ps1` for selective reads when a JSON document is structured.\n- Use `tools/documents/insert_document_item.ps1` for controlled single-item insertion.\n- Use `tools/documents/bulk_insert_document_items.ps1` for controlled multi-item insertion into one document.\n- Use `tools/documents/move_document_item.ps1` for moving items inside one JSON document.\n- Use `tools/documents/migrate_document_item.ps1` for moving or copying items between JSON documents.\n- Treat document edit tools as transaction wrappers: the tool should own its write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.\n- Do not compose manual read/edit/normalize/cache/check/read command queues after a successful transactional document edit tool.\n- Use full `tools/documents/audit_docs.ps1` at the final verification boundary, not after every item edit; use `tools/pipeline/reinitialize_pipeline.ps1` when newly introduced initialized artifacts need to be added without overwriting existing memory.\n- Run status, audit, quality, line-index, and finish scripts at verification boundaries instead of after every micro-edit; for normal code-project work, complete the current edit scope, then run `tools/repo/finalize_task_check_commit_push.ps1 -Message \"<message>\"` when available.\n- `tools/repo/finalize_task_check_commit_push.ps1` is the preferred code-project closure command: it should discover changed files, normalize text, rebuild cache, refresh indexes, run audit/quality, stage intentional files, commit, push, and report final repository state.\n- If `tools/repo/finalize_task_check_commit_push.ps1` or an owned finalizer fails on a repeatable mechanical issue, improve the script before rerunning instead of preserving manual recovery steps.\n- Use `pipeline_featurelist.json` as the compact source/instance comparison layer; `tools/repo/open_pipeline_learning_issue.ps1` is the only public network intake path for pipeline improvement reports, while `tools/repo/learn_pipeline_features.ps1` is the maintainer-side promotion tool for reviewed reusable feature IDs.\n- Use `tools/knowledge/knowledge_select.ps1` to load compiled SQLite knowledge by named view, tag, type, source path, document path, entry name, or startup flag before expanding into heavier source documents.\n- Treat `AI-compiled/project/knowledge.sqlite` as generated output, not source of truth; edit sources first, refresh with `tools/knowledge/knowledge_compile.ps1` or targeted upserts, check with `tools/knowledge/knowledge_check.ps1`, and use `AI-compiled/project/knowledge-files/` plus `knowledge_file_*` scripts when SQLite is unavailable.\nFor structured JSON documents, full-text grep tools such as `Select-String`, `grep`, or `rg` are fallback tools, not the default read path. Use `tools/documents/read_document_item.ps1` when the stable key is known, `tools/documents/list_document_keys.ps1` when the local key list is needed, and `tools/documents/review_document_list_candidates.ps1` or `tools/documents/check_document_list_item_duplicates.ps1` when searching by intent or phrase. Use text grep on JSON only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.\nManual JSON edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.json`.\nNever silently bypass a relevant tool in a non-code project just because the project is not programming-related.\n- Use `tools/documents/insert_document_list_item.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing structured JSON item; it should replace chained key/read/search/manual-edit/check queues for that case.\n- Use `tools/documents/check_document_list_item_duplicates.ps1` before list insertion only when the user asks for a duplicate report or possible matches must be reviewed before choosing the target item.\n- For documentation updates outside context capsules and strictly technical agent memory, use the candidate-title flow by default: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>`, read only candidate sections with `tools/documents/read_document_items_by_title.ps1 -Titles <titles>`, then apply the update with one transactional insert or item script.\n- `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>` returns candidate titles, keys, matched terms, and excerpts so the agent can avoid broad reads before deciding whether an update is a duplicate.\n- `tools/documents/read_document_items_by_title.ps1 -Titles <titles>` reads only selected candidate sections by title or key after duplicate discovery.\n- Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title workflow: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>`, read only candidates with `tools/documents/read_document_items_by_title.ps1 -Titles <titles>`, then write once through a transactional document script."
+    "body": "## Tool-First JSON\nUse SocratexAI tools for structured JSON documents in every project type, including generic, personal, and creative projects.\nIn non-code projects, this applies primarily to agent-only JSON files. User-facing Markdown memory can be edited as prose unless a dedicated Markdown tool exists.\nDefault tool discipline:\n- Use `tools/documents/list_document_keys.ps1` and `tools/documents/read_document_item.ps1` for selective reads when a JSON document is structured.\n- Use `tools/documents/insert_document_item.ps1` for controlled single-item insertion.\n- Use `tools/documents/bulk_insert_document_items.ps1` for controlled multi-item insertion into one document.\n- Use `tools/documents/move_document_item.ps1` for moving items inside one JSON document.\n- Use `tools/documents/migrate_document_item.ps1` for moving or copying items between JSON documents.\n- Use `tools/documents/json_node_edit.ps1` when the full JSON node path is known, including nested list nodes and keys with dots through slash-separated paths.\n- For JSON operations that only change structure or order, such as move, reorder, delete, insert before/after, or migrate, use document/JSON scripts instead of manual JSON editing.\n- If one task requires both structural/order changes and content edits, perform the scripted structural operation first, then set or patch the content.\n- Treat document edit tools as transaction wrappers: the tool should own its write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.\n- Do not compose manual read/edit/normalize/cache/check/read command queues after a successful transactional document edit tool.\n- Use full `tools/documents/audit_docs.ps1` at the final verification boundary, not after every item edit; use `tools/pipeline/reinitialize_pipeline.ps1` when newly introduced initialized artifacts need to be added without overwriting existing memory.\n- Run status, audit, quality, line-index, and finish scripts at verification boundaries instead of after every micro-edit; for normal code-project work, complete the current edit scope, then run `tools/repo/finalize_task_check_commit_push.ps1 -Message \"<message>\"` when available.\n- `tools/repo/finalize_task_check_commit_push.ps1` is the preferred code-project closure command: it should discover changed files, normalize text, rebuild cache, refresh indexes, run audit/quality, stage intentional files, commit, push, and report final repository state.\n- If `tools/repo/finalize_task_check_commit_push.ps1` or an owned finalizer fails on a repeatable mechanical issue, improve the script before rerunning instead of preserving manual recovery steps.\n- Use `pipeline_featurelist.json` as the compact source/instance comparison layer; `tools/repo/open_pipeline_learning_issue.ps1` is the only public network intake path for pipeline improvement reports, while `tools/repo/learn_pipeline_features.ps1` is the maintainer-side promotion tool for reviewed reusable feature IDs.\n- Use `tools/knowledge/knowledge_select.ps1` to load compiled SQLite knowledge by named view, tag, type, source path, document path, entry name, or startup flag before expanding into heavier source documents.\n- Treat `AI-compiled/project/knowledge.sqlite` as generated output, not source of truth; edit sources first, refresh with `tools/knowledge/knowledge_compile.ps1` or targeted upserts, check with `tools/knowledge/knowledge_check.ps1`, and use `AI-compiled/project/knowledge-files/` plus `knowledge_file_*` scripts when SQLite is unavailable.\nFor structured JSON documents, full-text grep tools such as `Select-String`, `grep`, or `rg` are fallback tools, not the default read path. Use `tools/documents/read_document_item.ps1` when the stable key is known, `tools/documents/list_document_keys.ps1` when the local key list is needed, and `tools/documents/review_document_list_candidates.ps1` or `tools/documents/check_document_list_item_duplicates.ps1` when searching by intent or phrase. Use text grep on JSON only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.\nManual JSON edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.json`.\nNever silently bypass a relevant tool in a non-code project just because the project is not programming-related.\n- Use `tools/documents/insert_document_list_item.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing structured JSON item; it should replace chained key/read/search/manual-edit/check queues for that case.\n- Use `tools/documents/check_document_list_item_duplicates.ps1` before list insertion only when the user asks for a duplicate report or possible matches must be reviewed before choosing the target item.\n- For documentation updates outside context capsules and strictly technical agent memory, use the candidate-title flow by default: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>`, read only candidate sections with `tools/documents/read_document_items_by_title.ps1 -Titles <titles>`, then apply the update with one transactional insert or item script.\n- `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>` returns candidate titles, keys, matched terms, and excerpts so the agent can avoid broad reads before deciding whether an update is a duplicate.\n- `tools/documents/read_document_items_by_title.ps1 -Titles <titles>` reads only selected candidate sections by title or key after duplicate discovery.\n- Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title workflow: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>`, read only candidates with `tools/documents/read_document_items_by_title.ps1 -Titles <titles>`, then write once through a transactional document script."
 }
 
 ## Feature Manifest
@@ -346,6 +346,7 @@ Draft placeholder:
             "explicit_gamedev_project_pack",
             "json_document_normalizer",
             "json_list_document_tools",
+            "json_node_edit_tools",
             "json_tool_file_stdin_value_inputs",
             "script_input_output_contracts",
             "default_tool_error_hardening",
@@ -4734,6 +4735,7 @@ Draft placeholder:
                 "summary": "Json List Document Tools capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
+                    "core/AGENT-CONTRACT.json",
                     "DOCS.json",
                     "tools/documents",
                     "tools/text/normalize_json_files.ps1",
@@ -4758,6 +4760,7 @@ Draft placeholder:
                     "json_line_move.ps1",
                     "json_refresh_index.ps1",
                     "json_migrate_content.ps1",
+                    "json_node_edit.ps1",
                     "normalize_json_files.ps1",
                     "normalize_json_files.py"
                 ],
@@ -4776,6 +4779,7 @@ Draft placeholder:
                         "json_line_move.ps1",
                         "json_refresh_index.ps1",
                         "json_migrate_content.ps1",
+                        "json_node_edit.ps1",
                         "normalize_json_files.ps1",
                         "normalize_json_files.py"
                     ]
@@ -4789,6 +4793,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Use json_node_edit.ps1 for full-node-path JSON operations, nested list edits, and structural/order-only JSON changes.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -4797,6 +4802,47 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
                 "known_failure_if_missing": "If 'json_list_document_tools' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+            },
+            "json_node_edit_tools": {
+                "summary": "Full-node-path JSON edit tooling is active only when the wrapper, engine node operations, script catalog contract, agent contract guidance, and verification remain present.",
+                "required_paths": [
+                    "tools/documents/json_node_edit.ps1",
+                    "tools/documents/json_list_doc.py",
+                    "SCRIPTS.json",
+                    "core/AGENT-CONTRACT.json",
+                    "FLOWS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "json_node_edit.ps1",
+                    "json_list_doc.py",
+                    "json_read.ps1",
+                    "json_line_insert.ps1",
+                    "json_line_set.ps1",
+                    "json_line_move.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "json_node_edit.ps1",
+                        "json_list_doc.py",
+                        "json_read.ps1",
+                        "json_line_insert.ps1",
+                        "json_line_set.ps1",
+                        "json_line_move.ps1"
+                    ]
+                },
+                "required_docs": [],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Expose full node-path JSON operations through SCRIPTS.json.",
+                    "Keep structural/order-only JSON edits script-first in AGENT-CONTRACT and FLOWS.",
+                    "Verify nested list edits, dot-containing keys through slash paths, and legacy -FieldPath wrappers."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                ],
+                "known_failure_if_missing": "Agents fall back to manual JSON ordering patches or cannot target nested lists and keys containing dots safely."
             },
             "json_tool_file_stdin_value_inputs": {
                 "summary": "Json Tool File Stdin Value Inputs capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
