@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-59a5f2059870
+Generated: source-efecde5de220
 
 ## Source of Truth
 
@@ -4804,13 +4804,14 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'json_list_document_tools' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "json_node_edit_tools": {
-                "summary": "Full-node-path JSON edit tooling is active only when the wrapper, engine node operations, script catalog contract, agent contract guidance, and verification remain present.",
+                "summary": "Pipeline JSON manipulation scripts are active only when full-node-path tools, nested-list support, wrapper help, SCRIPTS metadata, and agent directives all require script-first structural/order-only JSON edits.",
                 "required_paths": [
                     "tools/documents/json_node_edit.ps1",
                     "tools/documents/json_list_doc.py",
                     "SCRIPTS.json",
                     "core/AGENT-CONTRACT.json",
                     "FLOWS.json",
+                    "WORKFLOW.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
@@ -4835,14 +4836,22 @@ Draft placeholder:
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Expose full node-path JSON operations through SCRIPTS.json.",
+                    "Keep SCRIPTS.json descriptions, required/optional parameters, help availability, value-source rules, and failure contracts aligned with wrapper behavior.",
                     "Keep structural/order-only JSON edits script-first in AGENT-CONTRACT and FLOWS.",
+                    "Keep WORKFLOW.json aligned so source-pipeline agents know to script structure/order first and patch content second.",
                     "Verify nested list edits, dot-containing keys through slash paths, and legacy -FieldPath wrappers."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "Agents fall back to manual JSON ordering patches or cannot target nested lists and keys containing dots safely."
+                "known_failure_if_missing": "Agents fall back to manual JSON ordering patches or cannot target nested lists and keys containing dots safely.",
+                "usage_directives": [
+                    "For JSON edits that only change structure or order, such as move, reorder, delete, insert before/after, or migrate, use json_node_edit.ps1 or the narrow JSON wrappers instead of manual patching.",
+                    "When one task needs both structural/order changes and content edits, run the scripted structural operation first, then set or patch the content.",
+                    "Use json_node_edit.ps1 when the full JSON node path is known; use slash-separated node paths when a segment contains dots.",
+                    "Keep SCRIPTS.json input/output/help metadata current for JSON wrapper parameters, value-source rules, nested selectors, and failure behavior."
+                ]
             },
             "json_tool_file_stdin_value_inputs": {
                 "summary": "Json Tool File Stdin Value Inputs capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
@@ -6354,7 +6363,7 @@ Draft placeholder:
                 "known_failure_if_missing": "Agents can claim completion from prose while skipping the selected flow, omitting changelog truth, hiding manual tool bypass, or missing an obvious adversarial check on broad diffs."
             },
             "continue_user_clarification_gate": {
-                "summary": "CONTINUE flow checks whether the next pass needs user clarification, missing information, product direction, or a meaningful implementation choice before executing, and may stop mid-task to ask when new ambiguity appears.",
+                "summary": "CONTINUE flow must explicitly check before execution whether the next pass needs user clarification, missing information, product direction, or a meaningful implementation choice, and the agent may stop before or during the task to ask when new ambiguity appears.",
                 "required_paths": [
                     "FLOWS.json",
                     "profiles/SocratexGamedev/FLOWS.json",
@@ -6387,7 +6396,13 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
-                "known_failure_if_missing": "Agents may treat CONTINUE as unconditional execution, guess through missing product or implementation information, or keep working after new ambiguity appears instead of pausing for user input."
+                "known_failure_if_missing": "Agents may treat CONTINUE as unconditional execution, guess through missing product or implementation information, or keep working after new ambiguity appears instead of pausing for user input.",
+                "behavior_contract": [
+                    "Before running a CONTINUE-resolved pass or task, the agent checks whether any user information, clarification, product direction, or meaningful implementation choice is needed.",
+                    "If clarification is needed before execution, the agent pauses and asks instead of guessing.",
+                    "If new ambiguity, missing information, product direction, or material risk appears during execution, the agent may stop mid-task and ask the user.",
+                    "If everything is clear and reversible/source-owned, the agent proceeds without unnecessary confirmation."
+                ]
             },
             "ai_native_code_contract_headers": {
                 "summary": "Reusable code-pipeline standard for short top-of-file JSON-like `AI_CONTRACT` comment headers on major systems, shared boundaries, diagnostics, runtime/performance modules, layer seams, and repeatedly agent-touched files, plus a dry-run helper for planning per-system rollout without mass boilerplate.",

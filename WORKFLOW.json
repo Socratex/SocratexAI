@@ -9,6 +9,7 @@
         "project_type_routing",
         "finish_contract",
         "tool_error_hardening",
+        "json_structural_edit_tooling",
         "single_entry_tool_handler"
     ],
     "content": {
@@ -22,6 +23,7 @@
                 "template_parity_for_reusable_pipeline_improvements",
                 "project_type_routing",
                 "finish_contract",
+                "json_structural_edit_tooling",
                 "single_entry_tool_handler"
             ]
         },
@@ -63,6 +65,10 @@
         "tool_error_hardening": {
             "title": "Tool Error Hardening",
             "rule": "When an owned repository script fails because input was easy to pass incorrectly, validation was missing, output was unclear, path/encoding/quoting handling was fragile, or the process failure is likely to recur, default to hardening the owning script, wrapper, help text, validation, or SCRIPTS.json input/output contract before retrying or immediately after unblocking the task. Treat manual recovery as temporary unless the failure is clearly a one-off typo, missing user data, or larger than the current task scope. Prefer file/stdin/structured inputs over fragile inline quoting for complex JSON."
+        },
+        "json_structural_edit_tooling": {
+            "title": "JSON Structural Edit Tooling",
+            "rule": "For JSON edits that only change structure or order, use tools/documents/json_node_edit.ps1 or the narrow JSON wrappers instead of manual patching. When one task needs both structural/order changes and content edits, run the scripted structural operation first, then set or patch content. Keep SCRIPTS.json input/output/help metadata current when adding or changing JSON document scripts."
         },
         "single_entry_tool_handler": {
             "title": "Single Entry Tool Handler",
