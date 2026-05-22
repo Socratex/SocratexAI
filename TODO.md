@@ -8,16 +8,19 @@
 2. Python parity for `audit_docs.ps1` and `check_pipeline_feature_contracts.ps1`.
    Port or wrap the two highest-use pipeline smoke scripts with Python implementations so the core audit/feature-contract checks work without PowerShell as the primary runtime. Keep PowerShell wrappers as compatibility entrypoints, but make the portable implementation OS-agnostic and reusable by CI, child projects, and non-Windows/non-pwsh hosts.
 
-3. Canonical JSON document format expansion.
+3. Document-native tier checker backend.
+   Make `knowledge_tier_check` and related tier tooling work from source documents directly, without requiring compiled SQLite. Treat document files plus `DOCS.json` as the source of truth; allow tier metadata in document metadata or an explicit `DOCS.json` override. Add backend selection such as `documents`, `knowledge_files`, `sqlite`, and `auto`, where `auto` uses SQLite only when it is current and declared, falls back to `knowledge_files` when appropriate, and otherwise scans documents directly. In `SCRIPTS.json`, make this explicit as a runtime contract: tier checks require compiled knowledge only when the SQLite backend is selected; document-native checks should remain available in projects without compiled SQLite.
+
+4. Canonical JSON document format expansion.
    Make `index/content/metadata` the preferred format for every repository JSON document that can reasonably be a human/AI-readable source document. Exclude runtime/game data such as game configs, saves, logs, generated runtime artifacts, and other files whose shape is owned by an engine or external protocol. First pass: classify every JSON file as canonical doc, migration candidate, domain/runtime exception, generated artifact, template, eval/result, or external-schema file. Then migrate safe candidates and add audit enforcement so every JSON file has either the canonical shape or an explicit allowed exception.
 
-4. Godot AI-readability sweeps, grouped by ownership area.
+5. Godot AI-readability sweeps, grouped by ownership area.
    Do not run one huge sweep. Split into focused passes such as application/session flow, runtime state and diagnostics, player/movement/combat, UI/HUD, content/data loading, and tooling/editor scripts. Each pass should identify major `.gd` systems that need clearer ownership, naming, boundaries, diagnostics, or a short `AI_CONTRACT` header.
 
-5. Godot comment-discipline sweeps, grouped after the AI-readability passes.
+6. Godot comment-discipline sweeps, grouped after the AI-readability passes.
    For each Godot ownership area, keep comments that explain constraints, invariants, engine quirks, diagnostics, or warnings. Remove or replace narrative comments that merely restate code with clearer names, smaller methods, or explicit contracts.
 
-6. CI / quality gate publishing.
+7. CI / quality gate publishing.
    After the JSON and Godot readability/comment passes, make the local `run_quality_gate` contract easy to publish into the selected CI or release workflow without committing provider-specific CI files before a provider is chosen.
 
 ## Side Backlog
