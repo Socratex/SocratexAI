@@ -112,7 +112,22 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "habits"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
     "tag": "helpers"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "legacy"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "tag": "process-design"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -391,6 +406,46 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "tag": "contracts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "tag": "ddd-adiv"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "tag": "helpers"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "tag": "legacy"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "tag": "ownership"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.match_surrounding_patterns",
     "tag": "best-practices"
   },
@@ -627,6 +682,46 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.context_tags_before_response",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "tag": "automation"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "tag": "contracts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "tag": "habits"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "tag": "process-design"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "tag": "tooling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "tag": "ux"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
     "tag": "workflow"
   },
   {

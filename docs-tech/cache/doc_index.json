@@ -290,118 +290,130 @@
           "ref": "items.tagged_rules.value.8",
           "status": ""
         },
-        "engineering.workflow.default_tool_error_hardening": {
+        "engineering.workflow.convenience_drives_habit": {
           "path": "items.tagged_rules.value.9",
-          "title": "Default Tool Error Hardening",
+          "title": "Convenience Drives Habit",
           "ref": "items.tagged_rules.value.9",
           "status": ""
         },
-        "engineering.coding.code_primary_source_of_truth": {
+        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
           "path": "items.tagged_rules.value.10",
-          "title": "Code Is The Primary Source Of Truth",
+          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
           "ref": "items.tagged_rules.value.10",
           "status": ""
         },
-        "engineering.coding.ai_native_code_contract_headers": {
+        "engineering.workflow.default_tool_error_hardening": {
           "path": "items.tagged_rules.value.11",
-          "title": "AI-Native Code Contract Headers",
+          "title": "Default Tool Error Hardening",
           "ref": "items.tagged_rules.value.11",
           "status": ""
         },
-        "engineering.coding.borrowed_before_invented": {
+        "engineering.coding.code_primary_source_of_truth": {
           "path": "items.tagged_rules.value.12",
-          "title": "Borrowed Before Invented",
+          "title": "Code Is The Primary Source Of Truth",
           "ref": "items.tagged_rules.value.12",
           "status": ""
         },
-        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
+        "engineering.coding.ai_native_code_contract_headers": {
           "path": "items.tagged_rules.value.13",
-          "title": "Web Research Spike To Named Implementation Plan Gate",
+          "title": "AI-Native Code Contract Headers",
           "ref": "items.tagged_rules.value.13",
           "status": ""
         },
-        "engineering.architecture.better_version_now_future_proof_by_default": {
+        "engineering.coding.borrowed_before_invented": {
           "path": "items.tagged_rules.value.14",
-          "title": "Better Version Now By Default",
+          "title": "Borrowed Before Invented",
           "ref": "items.tagged_rules.value.14",
           "status": ""
         },
-        "engineering.coding.production_grade_default": {
+        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
           "path": "items.tagged_rules.value.15",
-          "title": "Production-Grade Architectural Default",
+          "title": "Web Research Spike To Named Implementation Plan Gate",
           "ref": "items.tagged_rules.value.15",
           "status": ""
         },
-        "engineering.performance.lightweight_by_default_for_predictable_load": {
+        "engineering.architecture.better_version_now_future_proof_by_default": {
           "path": "items.tagged_rules.value.16",
-          "title": "Lightweight Futureproof For Predictable Load",
+          "title": "Better Version Now By Default",
           "ref": "items.tagged_rules.value.16",
           "status": ""
         },
-        "engineering.coding.ddd_adiv_when_possible": {
+        "engineering.coding.production_grade_default": {
           "path": "items.tagged_rules.value.17",
-          "title": "DDD-ADIV When Possible",
+          "title": "Production-Grade Architectural Default",
           "ref": "items.tagged_rules.value.17",
           "status": ""
         },
-        "engineering.coding.readability_first": {
+        "engineering.performance.lightweight_by_default_for_predictable_load": {
           "path": "items.tagged_rules.value.18",
-          "title": "Readability First",
+          "title": "Lightweight Futureproof For Predictable Load",
           "ref": "items.tagged_rules.value.18",
           "status": ""
         },
-        "engineering.coding.method_and_variable_extraction": {
+        "engineering.coding.ddd_adiv_when_possible": {
           "path": "items.tagged_rules.value.19",
-          "title": "Extract Methods and Intent-Revealing Variables",
+          "title": "DDD-ADIV When Possible",
           "ref": "items.tagged_rules.value.19",
           "status": ""
         },
-        "engineering.coding.codebase_as_contract": {
+        "engineering.coding.readability_first": {
           "path": "items.tagged_rules.value.20",
-          "title": "Codebase Is the Contract — Make It as Strict as Possible",
+          "title": "Readability First",
           "ref": "items.tagged_rules.value.20",
           "status": ""
         },
-        "engineering.coding.legacy_aware_change_split": {
+        "engineering.coding.method_and_variable_extraction": {
           "path": "items.tagged_rules.value.21",
-          "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
+          "title": "Extract Methods and Intent-Revealing Variables",
           "ref": "items.tagged_rules.value.21",
           "status": ""
         },
-        "engineering.coding.minimal_comments": {
+        "engineering.coding.codebase_as_contract": {
           "path": "items.tagged_rules.value.22",
-          "title": "Minimal Comments — Workarounds and Business Intent Only",
+          "title": "Codebase Is the Contract — Make It as Strict as Possible",
           "ref": "items.tagged_rules.value.22",
           "status": ""
         },
-        "engineering.coding.business_naming": {
+        "engineering.coding.legacy_aware_change_split": {
           "path": "items.tagged_rules.value.23",
-          "title": "Business Naming with Technical Suffix",
+          "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
           "ref": "items.tagged_rules.value.23",
           "status": ""
         },
-        "engineering.coding.match_surrounding_patterns": {
+        "engineering.coding.minimal_comments": {
           "path": "items.tagged_rules.value.24",
-          "title": "Match Surrounding Patterns Mid-Fix",
+          "title": "Minimal Comments — Workarounds and Business Intent Only",
           "ref": "items.tagged_rules.value.24",
           "status": ""
         },
-        "engineering.workflow.pair_programming_collaboration": {
+        "engineering.coding.business_naming": {
           "path": "items.tagged_rules.value.25",
-          "title": "Pair-Programming Stance",
+          "title": "Business Naming with Technical Suffix",
           "ref": "items.tagged_rules.value.25",
           "status": ""
         },
-        "engineering.workflow.verification_without_tests": {
+        "engineering.coding.match_surrounding_patterns": {
           "path": "items.tagged_rules.value.26",
-          "title": "Verification Discipline Without a Test Suite",
+          "title": "Match Surrounding Patterns Mid-Fix",
           "ref": "items.tagged_rules.value.26",
           "status": ""
         },
-        "engineering.workflow.tiered_context_hierarchy": {
+        "engineering.workflow.pair_programming_collaboration": {
           "path": "items.tagged_rules.value.27",
-          "title": "Tiered Context Hierarchy",
+          "title": "Pair-Programming Stance",
           "ref": "items.tagged_rules.value.27",
+          "status": ""
+        },
+        "engineering.workflow.verification_without_tests": {
+          "path": "items.tagged_rules.value.28",
+          "title": "Verification Discipline Without a Test Suite",
+          "ref": "items.tagged_rules.value.28",
+          "status": ""
+        },
+        "engineering.workflow.tiered_context_hierarchy": {
+          "path": "items.tagged_rules.value.29",
+          "title": "Tiered Context Hierarchy",
+          "ref": "items.tagged_rules.value.29",
           "status": ""
         }
       }

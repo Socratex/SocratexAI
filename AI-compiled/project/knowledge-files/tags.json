@@ -121,6 +121,10 @@
   },
   {
     "description": "",
+    "tag": "habits"
+  },
+  {
+    "description": "",
     "tag": "hashing"
   },
   {
@@ -189,6 +193,10 @@
   },
   {
     "description": "",
+    "tag": "process-design"
+  },
+  {
+    "description": "",
     "tag": "production-grade"
   },
   {
@@ -234,6 +242,10 @@
   {
     "description": "Top-down source organization.",
     "tag": "top-down"
+  },
+  {
+    "description": "",
+    "tag": "ux"
   },
   {
     "description": "Verification strategy and quality gates.",

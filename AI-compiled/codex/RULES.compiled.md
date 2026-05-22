@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-91637e85f89a
+Generated: source-9746f5ff8b3c
 
 ## Source of Truth
 
@@ -351,6 +351,7 @@ Draft placeholder:
             "default_tool_error_hardening",
             "code_primary_truth_and_comment_discipline",
             "helper_enforced_contracts",
+            "convenience_driven_programming_contracts",
             "compiled_context_alias_normalization",
             "json_routed_document_item_wrapper",
             "tool_error_registry_and_logger",
@@ -6225,22 +6226,22 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "sync_direction": "source_to_child",
-          "promotion_checklist": [
-            "Keep the standard generic in ENGINEERING: top-of-file comment-prefixed JSON-like fields for purpose, owns, must_not, design_goals, non_goals, diagnostics taxonomy/fields, layer name/cannot-depend-on, and short ai_notes.",
-            "Keep profile-specific meaning in profile WORKFLOW or project knowledge; gamedev should interpret headers through runtime/FPS budget, activation, diagnostics, layer purity, worldgen, traversal, combat, and gameplay ownership lenses.",
-            "Do not mass-tag source files during the feature promotion. First run the dry-run helper and add explicit per-system rollout passes when headers are worth the maintenance cost.",
-            "Avoid boilerplate on tiny leaf files, generated/vendor files, resource-only files, and obvious DTO/config files.",
-            "Keep the dry-run helper excluding generated, vendored, ignored, logs, managed embedded packages, test-smoke scripts, and local toolchain/runtime folders such as Tools/Python312, Tools/python-installer, and Tools/tmp.",
-            "Treat headers as reading/audit contracts only; still require clear code names, tests/smokes, schemas, runtime diagnostics, and mechanical dependency checks where those are the real enforcement layer.",
-            "Sync the managed package so child projects receive the rule, script, script catalog entry, feature contract, and gamedev contextual action."
-          ],
+                "promotion_checklist": [
+                    "Keep the standard generic in ENGINEERING: top-of-file comment-prefixed JSON-like fields for purpose, owns, must_not, design_goals, non_goals, diagnostics taxonomy/fields, layer name/cannot-depend-on, and short ai_notes.",
+                    "Keep profile-specific meaning in profile WORKFLOW or project knowledge; gamedev should interpret headers through runtime/FPS budget, activation, diagnostics, layer purity, worldgen, traversal, combat, and gameplay ownership lenses.",
+                    "Do not mass-tag source files during the feature promotion. First run the dry-run helper and add explicit per-system rollout passes when headers are worth the maintenance cost.",
+                    "Avoid boilerplate on tiny leaf files, generated/vendor files, resource-only files, and obvious DTO/config files.",
+                    "Keep the dry-run helper excluding generated, vendored, ignored, logs, managed embedded packages, test-smoke scripts, and local toolchain/runtime folders such as Tools/Python312, Tools/python-installer, and Tools/tmp.",
+                    "Treat headers as reading/audit contracts only; still require clear code names, tests/smokes, schemas, runtime diagnostics, and mechanical dependency checks where those are the real enforcement layer.",
+                    "Sync the managed package so child projects receive the rule, script, script catalog entry, feature contract, and gamedev contextual action."
+                ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/codebase/ai_native_contract_dry_run.ps1 -ProjectRoot .",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
-        "known_failure_if_missing": "Agents may keep relearning source ownership from broad reads, add inconsistent comments, miss diagnostic taxonomy/layer-purity constraints, include vendored/toolchain/test/managed-package files as rollout candidates, or mass-add stale boilerplate without a per-system rollout plan."
-      },
+                "known_failure_if_missing": "Agents may keep relearning source ownership from broad reads, add inconsistent comments, miss diagnostic taxonomy/layer-purity constraints, include vendored/toolchain/test/managed-package files as rollout candidates, or mass-add stale boilerplate without a per-system rollout plan."
+            },
             "source_pipeline_maintainer_backlog": {
                 "summary": "Source-only maintainer backlog and current-priority lane for deferred or promoted SocratexPipeline cleanup, directive hierarchy, context-bloat, research-flow, task-flow-audit, adversarial-audit, and audit ideas that should not become always-loaded directives until promoted.",
                 "required_paths": [
@@ -6452,6 +6453,46 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents keep doing broad work in one live context window, wait manually between every small subtask, or lose critical state between fragmented sessions because STATE/PLAN handoff artifacts are absent."
+            },
+            "convenience_driven_programming_contracts": {
+                "summary": "Programming guidance treats convenience as the durable path to habit: code/process contracts should be carried by defaults, helpers, tools, checks, templates, or UI/process affordances; legacy zones use helper contracts while non-legacy zones use DDD-ADIV boundaries by default.",
+                "required_paths": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "knowledge_code_context.ps1",
+                    "knowledge_compile.ps1",
+                    "check_pipeline_feature_contracts.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "knowledge_code_context.ps1",
+                        "knowledge_compile.ps1",
+                        "check_pipeline_feature_contracts.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep source contract, code pack, engineering context, starter template, and feature contract in the same promotion.",
+                    "State that willpower-only conventions are fragile and should be converted into convenient defaults, helpers, scripts, templates, checks, or affordances where practical.",
+                    "State the legacy/non-legacy distinction: legacy uses helper contracts/adapters/seams/checks; non-legacy and actively modernized code use DDD-ADIV boundaries by default.",
+                    "Run the feature contract checker and recompile generated context before publishing or syncing to child projects."
+                ],
+                "verification_commands": [
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                ],
+                "known_failure_if_missing": "Agents may prescribe heroic discipline, checklist-only habits, or DDD-purity migrations in legacy zones instead of making the correct behavior convenient and enforceable through the right contract shape."
             }
         }
     },

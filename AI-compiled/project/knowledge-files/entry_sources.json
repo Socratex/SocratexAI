@@ -49,6 +49,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "is_duplicate": false,
+    "note": "Helper contracts are the legacy-compatible enforcement path.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "engineering.architecture.helper_enforced_contracts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.knowledge_file_fallback",
     "is_duplicate": false,
     "note": "Source pipeline file-fallback rule.",
@@ -85,7 +93,7 @@
     "is_duplicate": false,
     "note": "record source",
     "path": "context-docs/ENGINEERING.json",
-    "selector": "items.tagged_rules.value.25"
+    "selector": "items.tagged_rules.value.27"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -185,6 +193,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "is_duplicate": false,
+    "note": "Shared directive asks agents to prefer durable defaults, helpers, checks, and tooling over willpower-only process.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
     "is_duplicate": false,
     "note": "Shared directive for web-first known-solution checks before non-obvious code writes.",
@@ -281,6 +297,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "is_duplicate": true,
+    "note": "Non-legacy default still follows the full DDD-ADIV definition.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "domain_driven"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.verification_without_tests",
     "is_duplicate": true,
     "note": "Verification-attached dimension supports manual reproduction steps when other verification is impractical.",
@@ -294,6 +318,14 @@
     "note": "Code pack applies the directive to programming implementation defaults.",
     "path": "project/code/PACK.json",
     "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "is_duplicate": true,
+    "note": "Profile-aware defaults decide whether the task is legacy/surgical or non-legacy/modernizable.",
+    "path": "project/code/PACK.json",
+    "selector": "profile_aware_defaults"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -332,6 +364,14 @@
     "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
     "is_duplicate": true,
     "note": "Code pack technical defaults require lightweight-by-default contracts where load is predictable.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "is_duplicate": true,
+    "note": "Code pack carries this rule into programming work.",
     "path": "project/code/PACK.json",
     "selector": "technical_defaults"
   },
