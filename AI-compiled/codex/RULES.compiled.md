@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-fab914d5417c
+Generated: source-dba77465b7f8
 
 ## Source of Truth
 
@@ -4827,7 +4827,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'json_tool_file_stdin_value_inputs' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "script_input_output_contracts": {
-                "summary": "Script Input Output Contracts capability is active only when critical script catalog entries carry description, input, and output contracts and audit_docs enforces that baseline.",
+                "summary": "Script Input Output Contracts capability is active only when every script catalog entry carries description, input, and output contracts and audit_docs enforces that full baseline.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "core/AGENT-CONTRACT.json",
@@ -4852,7 +4852,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
-                    "Ensure critical closure, audit, quality, compiled-context, and line-index scripts in SCRIPTS.json include description/input/output fields.",
+                    "Ensure every SCRIPTS.json entry includes description/input/output fields with input.required, input.optional, input.rule, output.success, and output.failure.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],

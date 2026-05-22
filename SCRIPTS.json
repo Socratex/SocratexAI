@@ -163,11 +163,36 @@
         },
         "audit_json_docs.py": {
             "path": "tools/documents/audit_json_docs.py",
-            "category": "documents"
+            "category": "documents",
+            "description": "Validate JSON document files for parseability and repository document conventions.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "check_code_context_gate.ps1": {
             "path": "tools/codebase/check_code_context_gate.ps1",
-            "category": "codebase"
+            "category": "codebase",
+            "description": "Verify that required compiled code-guidance context was loaded for the current HEAD before code-changing work.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-MaxAgeMinutes"
+                ],
+                "rule": "Run from the repository root when verifying codebase context or generated codebase indexes."
+            },
+            "output": {
+                "success": "Completes the codebase verification or reporting step and exits 0 when the contract is satisfied.",
+                "failure": "Throws or exits nonzero when required codebase context or generated codebase artifacts are missing or stale."
+            }
         },
         "check_ai_compiled_context.ps1": {
             "path": "tools/pipeline/check_ai_compiled_context.ps1",
@@ -306,7 +331,19 @@
         },
         "check_utf8_writes.ps1": {
             "path": "tools/text/check_utf8_writes.ps1",
-            "category": "text"
+            "category": "text",
+            "description": "Scan PowerShell scripts for unsafe text writes that could bypass the repository UTF-8 helpers.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths"
+                ],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Completes text normalization, repair, write, or check work and prints OK or the generated output.",
+                "failure": "Throws or exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
         },
         "legacy_commit_task_compatibility_wrapper.ps1": {
             "path": "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
@@ -334,39 +371,173 @@
         },
         "compile_pipeline_context.ps1": {
             "path": "tools/pipeline/compile_pipeline_context.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Compile agent-facing instruction context from source pipeline documents into AI-compiled artifacts.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-OutputDir",
+                    "-Check"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "generate_installed_agent_instructions.ps1": {
             "path": "tools/pipeline/generate_installed_agent_instructions.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Generate installed-project AGENTS.md instructions for selected Socratex pipeline packs.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Packs",
+                    "-OutputPath"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "configure_powershell_utf8.ps1": {
             "path": "tools/setup/configure_powershell_utf8.ps1",
-            "category": "setup"
+            "category": "setup",
+            "description": "Configure PowerShell profile settings so interactive shells use UTF-8 consistently.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Check",
+                    "-AllHosts",
+                    "-EnableProfileExecution"
+                ],
+                "rule": "Run from the repository root or setup target when checking host/runtime setup."
+            },
+            "output": {
+                "success": "Completes setup probing or configuration and prints the resulting setup status.",
+                "failure": "Throws or exits nonzero when runtime detection or requested setup configuration fails."
+            }
         },
         "console_summary.ps1": {
             "path": "tools/diagnostics/console_summary.ps1",
-            "category": "diagnostics"
+            "category": "diagnostics",
+            "description": "Summarize the current console log into a compact diagnostics artifact.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-ConsoleLogPath",
+                    "-OutputPath"
+                ],
+                "rule": "Run from the repository root when producing diagnostics artifacts from logs or console output."
+            },
+            "output": {
+                "success": "Writes or prints the requested diagnostics summary.",
+                "failure": "Throws or exits nonzero when log inputs are missing, unreadable, or summary writing fails."
+            }
         },
         "context_tags.ps1": {
             "path": "tools/knowledge/context_tags.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Extract normalized context tags from task text for knowledge selection and routing.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Text",
+                    "-RepoRoot",
+                    "-NoDefaults",
+                    "-Json",
+                    "-AsKnowledgeSelectArgs"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "detect_project_stack.ps1": {
             "path": "tools/setup/detect_project_stack.ps1",
-            "category": "setup"
+            "category": "setup",
+            "description": "Detect the target project stack and emit setup hints for pipeline initialization.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-TargetPath"
+                ],
+                "rule": "Run from the repository root or setup target when checking host/runtime setup."
+            },
+            "output": {
+                "success": "Completes setup probing or configuration and prints the resulting setup status.",
+                "failure": "Throws or exits nonzero when runtime detection or requested setup configuration fails."
+            }
         },
         "build_document_cache.ps1": {
             "path": "tools/documents/build_document_cache.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Build the structured document read cache for selected repository JSON documents.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-OutputDir"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "document_item_edit_engine.py": {
             "path": "tools/documents/document_item_edit_engine.py",
-            "category": "documents"
+            "category": "documents",
+            "description": "Internal engine for inserting, moving, migrating, and reading structured document items.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--position",
+                    "--before",
+                    "--after",
+                    "--title",
+                    "--content",
+                    "--content-file",
+                    "--item-file",
+                    "--allow-empty",
+                    "--replace",
+                    "--keep-source"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "bulk_insert_document_items.ps1": {
             "path": "tools/documents/bulk_insert_document_items.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Insert multiple structured document items from a payload file through the document edit engine.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-ItemsFile"
+                ],
+                "optional": [
+                    "-Position",
+                    "-Before",
+                    "-After",
+                    "-Replace",
+                    "-NoPostEdit"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "insert_document_item.ps1": {
             "path": "tools/documents/insert_document_item.ps1",
@@ -389,7 +560,6 @@
                     "-Replace",
                     "-NoPostEdit"
                 ],
-                "json_routing": "For .json paths, -Title/-Content/-ContentFile are wrapped as {title, content}; -ItemFile must contain a JSON value; -Replace routes to json_item_set.ps1; insert routes to json_item_insert.ps1.",
                 "rule": "Use -ContentFile or -ItemFile for multiline or quote-heavy content. For direct JSON control, use json_item_insert.ps1/json_item_set.ps1."
             },
             "output": {
@@ -399,64 +569,219 @@
         },
         "migrate_document_item.ps1": {
             "path": "tools/documents/migrate_document_item.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Move or copy one structured document item from a source document to a target document.",
+            "input": {
+                "required": [
+                    "-Source",
+                    "-Target",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Position",
+                    "-Before",
+                    "-After",
+                    "-KeepSource",
+                    "-Replace",
+                    "-NoPostEdit"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "move_document_item.ps1": {
             "path": "tools/documents/move_document_item.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Move an item within a structured document while preserving document ordering rules.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Position",
+                    "-Before",
+                    "-After",
+                    "-NoPostEdit"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "list_document_keys.ps1": {
             "path": "tools/documents/list_document_keys.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "List ordered keys from a structured document for selection and edit planning.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "-Json"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "check_document_list_item_duplicates.ps1": {
             "path": "tools/documents/check_document_list_item_duplicates.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Check whether a proposed list-document item duplicates existing title, URL, text, or search terms.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "-Key",
+                    "-Scope",
+                    "-Text",
+                    "-Url",
+                    "-Terms",
+                    "-Limit",
+                    "-Json",
+                    "-FailOnDuplicate"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "insert_document_list_item.ps1": {
             "path": "tools/documents/insert_document_list_item.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Insert a validated list-document item while applying duplicate policy and title creation rules.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key",
+                    "-Text"
+                ],
+                "optional": [
+                    "-Url",
+                    "-DuplicateScope",
+                    "-CreateTitle",
+                    "-AllowDuplicate",
+                    "-NoPostEdit"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "insert_checked_document_list_item.ps1": {
             "path": "tools/documents/insert_checked_document_list_item.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Insert a list-document item and run the standard task checks around the edit.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key",
+                    "-Text"
+                ],
+                "optional": [
+                    "-Url",
+                    "-DuplicateScope",
+                    "-CreateTitle",
+                    "-AllowDuplicate",
+                    "-Audit",
+                    "-MarkdownEmoji",
+                    "-NoLineIndex",
+                    "-NoNormalize",
+                    "-NoStat",
+                    "-NoStatus"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "document_list_item_edit_engine.py": {
             "path": "tools/documents/document_list_item_edit_engine.py",
-            "category": "documents"
+            "category": "documents",
+            "description": "Internal engine for duplicate checks and item insertion in list-style documents.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--key",
+                    "--scope",
+                    "--text",
+                    "--url",
+                    "--terms",
+                    "--limit",
+                    "--json",
+                    "--fail-on-duplicate",
+                    "--titles",
+                    "--allow-duplicate",
+                    "--create-title"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "review_document_list_candidates.ps1": {
             "path": "tools/documents/review_document_list_candidates.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Preview duplicate candidates for a proposed list-document insertion.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Path",
+                    "-Key",
+                    "-Scope",
+                    "-Text",
+                    "-Url",
+                    "-Terms",
+                    "-Limit",
+                    "-Json",
+                    "-FailOnDuplicate"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "json_list_doc.py": {
             "path": "tools/documents/json_list_doc.py",
             "description": "Edit and read list-style JSON source documents while preserving collection order and root indexes.",
             "input": {
-                "commands": [
-                    "read",
-                    "insert-entry",
-                    "set-entry",
-                    "move-entry",
-                    "delete-entry",
-                    "refresh-index",
-                    "migrate-content",
-                    "insert-line",
-                    "set-line",
-                    "move-line"
-                ],
-                "value_sources": [
+                "required": [],
+                "optional": [
+                    "--collection",
+                    "--position",
+                    "--reference",
                     "--text",
                     "--value-json",
                     "--value-json-file",
-                    "--value-json-stdin"
+                    "--value-json-stdin",
+                    "--line",
+                    "--new-key",
+                    "--reference-line",
+                    "--reference-text"
                 ],
-                "preferred_structured_value_source": "--value-json-file or --value-json-stdin for multiline, nested, or quote-heavy JSON.",
                 "rule": "Use exactly one value source per insert-entry or set-entry call."
             },
             "output": {
-                "read": "JSON payload printed to stdout.",
-                "mutation_success": "OK: operation target.",
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
                 "failure": "Non-zero exit with ERROR message on stderr/stdout from the Python wrapper."
             },
             "category": "documents"
@@ -464,17 +789,57 @@
         "json_refresh_index.ps1": {
             "path": "tools/documents/json_refresh_index.ps1",
             "description": "Refresh a root index from a JSON document collection such as content.",
-            "category": "documents"
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "-Collection"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "json_migrate_content.ps1": {
             "path": "tools/documents/json_migrate_content.ps1",
             "description": "Move an old root collection into the canonical content object and rebuild index.",
-            "category": "documents"
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-SourceKey"
+                ],
+                "optional": [],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "json_read.ps1": {
             "path": "tools/documents/json_read.ps1",
             "description": "Read a JSON document index, entry, or line from a selected collection.",
-            "category": "documents"
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "-Key",
+                    "-Line",
+                    "-Collection"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "json_item_insert.ps1": {
             "path": "tools/documents/json_item_insert.ps1",
@@ -493,7 +858,6 @@
                     "-ValueJsonFile",
                     "-ValueJsonStdin"
                 ],
-                "preferred_structured_value_source": "Use -ValueJsonFile or -ValueJsonStdin for multiline, nested, or quote-heavy JSON.",
                 "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
             },
             "output": {
@@ -518,7 +882,6 @@
                     "-ValueJsonFile",
                     "-ValueJsonStdin"
                 ],
-                "preferred_structured_value_source": "Use -ValueJsonFile or -ValueJsonStdin for multiline, nested, or quote-heavy JSON.",
                 "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin."
             },
             "output": {
@@ -530,63 +893,271 @@
         "json_item_move.ps1": {
             "path": "tools/documents/json_item_move.ps1",
             "description": "Move a JSON entry relative to another entry.",
-            "category": "documents"
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Position",
+                    "-Reference",
+                    "-Collection"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "json_item_delete.ps1": {
             "path": "tools/documents/json_item_delete.ps1",
             "description": "Delete a JSON entry and refresh collection ordering.",
-            "category": "documents"
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key"
+                ],
+                "optional": [
+                    "-Collection"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "json_line_insert.ps1": {
             "path": "tools/documents/json_line_insert.ps1",
             "description": "Insert one or more lines into a list-valued JSON entry.",
-            "category": "documents"
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key",
+                    "-Text"
+                ],
+                "optional": [
+                    "-Position",
+                    "-ReferenceLine",
+                    "-ReferenceText",
+                    "-Collection"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "json_line_set.ps1": {
             "path": "tools/documents/json_line_set.ps1",
             "description": "Replace one line inside a list-valued JSON entry.",
-            "category": "documents"
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key",
+                    "-Line",
+                    "-Text"
+                ],
+                "optional": [
+                    "-Collection"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "json_line_move.ps1": {
             "path": "tools/documents/json_line_move.ps1",
             "description": "Move one line inside a list-valued JSON entry.",
-            "category": "documents"
+            "category": "documents",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Key",
+                    "-Line"
+                ],
+                "optional": [
+                    "-Position",
+                    "-ReferenceLine",
+                    "-ReferenceText",
+                    "-Collection"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "run_document_post_edit_checks.ps1": {
             "path": "tools/documents/run_document_post_edit_checks.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Run document post-edit cache, audit, normalization, and task-check steps after document edits.",
+            "input": {
+                "required": [
+                    "-Paths"
+                ],
+                "optional": [
+                    "-NoCache",
+                    "-Audit",
+                    "-NoAudit"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "read_document_item.ps1": {
             "path": "tools/documents/read_document_item.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Read one structured document item by selector, with optional JSON output.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Selector"
+                ],
+                "optional": [
+                    "-Json"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "read_document_items_by_title.ps1": {
             "path": "tools/documents/read_document_items_by_title.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Read multiple structured document items by title with optional JSON output.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Titles"
+                ],
+                "optional": [
+                    "-Json"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "document_read_cache_engine.py": {
             "path": "tools/documents/document_read_cache_engine.py",
-            "category": "documents"
+            "category": "documents",
+            "description": "Internal engine for building and querying cached structured document reads.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--json",
+                    "--output-dir",
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "migrate_document_schema.ps1": {
             "path": "tools/documents/migrate_document_schema.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Migrate structured documents toward the current slim/canonical schema.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-Check",
+                    "-NoPostEdit"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "document_schema_migration_engine.py": {
             "path": "tools/documents/document_schema_migration_engine.py",
-            "category": "documents"
+            "category": "documents",
+            "description": "Internal engine for structured document schema migration and dry-check mode.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--check"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "normalize_document_structure.ps1": {
             "path": "tools/documents/normalize_document_structure.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Normalize structured document layout and ordering for selected files.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-Check",
+                    "-NoPostEdit"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "document_structure_normalizer_engine.py": {
             "path": "tools/documents/document_structure_normalizer_engine.py",
-            "category": "documents"
+            "category": "documents",
+            "description": "Internal engine for structured document normalization and check mode.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--check"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "check_toolchain_health.ps1": {
             "path": "tools/repo/check_toolchain_health.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Check repository toolchain health and optionally include document audit coverage.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-AuditDocs"
+                ],
+                "rule": "Run from the repository root as part of task, git, learning, or repository health workflows."
+            },
+            "output": {
+                "success": "Completes the repository workflow step and exits 0 when the requested operation succeeds.",
+                "failure": "Throws or exits nonzero when required inputs, repository state, external tooling, or workflow checks fail."
+            }
         },
         "finalize_task_check_commit_push.ps1": {
             "path": "tools/repo/finalize_task_check_commit_push.ps1",
@@ -682,31 +1253,159 @@
         },
         "generate_embedded_config_payload.py": {
             "path": "tools/pipeline/generate_embedded_config_payload.py",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Generate an embedded configuration payload for pipeline distribution or installation scripts.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "import_existing_project.ps1": {
             "path": "tools/pipeline/import_existing_project.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Import an existing project into a SocratexPipeline layout using selected packs and profile settings.",
+            "input": {
+                "required": [
+                    "-TargetPath"
+                ],
+                "optional": [
+                    "-Packs",
+                    "-Profile",
+                    "-AiMode",
+                    "-Language",
+                    "-BranchMode",
+                    "-CreateProjectFiles",
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "init_branch_memory.ps1": {
             "path": "tools/pipeline/init_branch_memory.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Initialize branch-scoped memory files and related ignore rules for a project branch.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Branch",
+                    "-BranchFilesDir",
+                    "-TemplateDir",
+                    "-EnsureGitignore",
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "init_task_work.ps1": {
             "path": "tools/pipeline/init_task_work.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Initialize task work state from a title/source request in the project pipeline workspace.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Path",
+                    "-Title",
+                    "-SourceRequest",
+                    "-Force",
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "Initialize-SocratexPipeline.ps1": {
             "path": "tools/pipeline/Initialize-SocratexPipeline.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Initialize a SocratexPipeline project from templates, packs, profile answers, and setup options.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-ProjectName",
+                    "-Language",
+                    "-AiMode",
+                    "-FirstTarget",
+                    "-FirstSessionSuccess",
+                    "-CommunicationProfile",
+                    "-UseChangelog",
+                    "-UseGit",
+                    "-AiMayCommit",
+                    "-AiMayPush",
+                    "-BranchMode",
+                    "-ExternalChangesPossible",
+                    "-ForceDddAdiv",
+                    "-ImportPipelinePackage",
+                    "-PackageManagerDetection",
+                    "-ProjectLifecycle",
+                    "-TestCoverage",
+                    "-Framework",
+                    "-FrameworkKind",
+                    "-Linter",
+                    "-Ci",
+                    "-Docs",
+                    "-TeamSize",
+                    "-Velocity",
+                    "-HighestPain",
+                    "-StackTags",
+                    "-BranchFilesLanguage",
+                    "-DirectiveMode",
+                    "-KeepPacks",
+                    "-CreateFiles",
+                    "-CompileAgent",
+                    "-RunAudit",
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "install_powershell.ps1": {
             "path": "tools/setup/install_powershell.ps1",
-            "category": "setup"
+            "category": "setup",
+            "description": "Install or report PowerShell availability for hosts that need the pipeline PowerShell runtime.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Apply"
+                ],
+                "rule": "Run from the repository root or setup target when checking host/runtime setup."
+            },
+            "output": {
+                "success": "Completes setup probing or configuration and prints the resulting setup status.",
+                "failure": "Throws or exits nonzero when runtime detection or requested setup configuration fails."
+            }
         },
         "knowledge_check.ps1": {
             "path": "tools/knowledge/knowledge_check.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Verify compiled SQLite knowledge artifacts against source knowledge documents.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_code_context.ps1": {
             "path": "tools/knowledge/knowledge_code_context.ps1",
@@ -727,59 +1426,282 @@
         },
         "knowledge_compile.ps1": {
             "path": "tools/knowledge/knowledge_compile.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Compile source knowledge documents into the SQLite knowledge database.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_delete.ps1": {
             "path": "tools/knowledge/knowledge_delete.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Delete a knowledge entry from the SQLite knowledge database by path/name.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "-Name"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_file_check.ps1": {
             "path": "tools/knowledge/knowledge_file_check.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Verify JSON file-fallback knowledge artifacts against source knowledge documents.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_file_compile.ps1": {
             "path": "tools/knowledge/knowledge_file_compile.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Compile source knowledge documents into JSON file-fallback knowledge tables.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_file_delete.ps1": {
             "path": "tools/knowledge/knowledge_file_delete.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Delete a knowledge entry from JSON file-fallback knowledge tables.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "-Name"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_file_query.ps1": {
             "path": "tools/knowledge/knowledge_file_query.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Query JSON file-fallback knowledge tables by tags, type, tiers, source, document, or name.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Tags",
+                    "-Match",
+                    "-Type",
+                    "-LoadAtStart",
+                    "-ContextTier",
+                    "-MaxContextTier",
+                    "-SourcePath",
+                    "-DocumentPath",
+                    "-Name",
+                    "-Format"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_file_rename.ps1": {
             "path": "tools/knowledge/knowledge_file_rename.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Rename a knowledge entry path in JSON file-fallback knowledge tables.",
+            "input": {
+                "required": [
+                    "-OldPath",
+                    "-NewPath"
+                ],
+                "optional": [],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_file_select.ps1": {
             "path": "tools/knowledge/knowledge_file_select.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Select formatted knowledge context from JSON file-fallback tables.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Tags",
+                    "-Match",
+                    "-Type",
+                    "-LoadAtStart",
+                    "-ContextTier",
+                    "-MaxContextTier",
+                    "-SourcePath",
+                    "-DocumentPath",
+                    "-Name",
+                    "-Format"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_file_upsert.ps1": {
             "path": "tools/knowledge/knowledge_file_upsert.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Upsert a source knowledge document entry into JSON file-fallback knowledge tables.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_index.py": {
             "path": "tools/knowledge/knowledge_index.py",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Internal engine for compiling, querying, selecting, renaming, and mutating knowledge indexes.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--db",
+                    "--manifest",
+                    "--file-dir",
+                    "--path",
+                    "--old-path",
+                    "--new-path",
+                    "--name",
+                    "--tags",
+                    "--match",
+                    "--type",
+                    "--view",
+                    "--load-at-start",
+                    "--context-tier",
+                    "--max-context-tier",
+                    "--source-path",
+                    "--document-path",
+                    "--format"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_query.ps1": {
             "path": "tools/knowledge/knowledge_query.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Query compiled SQLite knowledge by tags, type, tiers, source, document, or name.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Tags",
+                    "-Match",
+                    "-Type",
+                    "-LoadAtStart",
+                    "-ContextTier",
+                    "-MaxContextTier",
+                    "-SourcePath",
+                    "-DocumentPath",
+                    "-Name",
+                    "-Format"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_rename.ps1": {
             "path": "tools/knowledge/knowledge_rename.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Rename a knowledge entry path in the compiled SQLite knowledge database.",
+            "input": {
+                "required": [
+                    "-OldPath",
+                    "-NewPath"
+                ],
+                "optional": [],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_select.ps1": {
             "path": "tools/knowledge/knowledge_select.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Select formatted knowledge context from compiled SQLite knowledge or file fallback.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Tags",
+                    "-Match",
+                    "-Type",
+                    "-View",
+                    "-LoadAtStart",
+                    "-ContextTier",
+                    "-MaxContextTier",
+                    "-SourcePath",
+                    "-DocumentPath",
+                    "-Name",
+                    "-FileFallback",
+                    "-Format"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "knowledge_upsert.ps1": {
             "path": "tools/knowledge/knowledge_upsert.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Upsert a source knowledge document entry into the compiled SQLite knowledge database.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "learn_pipeline_features.ps1": {
             "path": "tools/repo/learn_pipeline_features.ps1",
@@ -797,43 +1719,189 @@
         },
         "log_summary.ps1": {
             "path": "tools/diagnostics/log_summary.ps1",
-            "category": "diagnostics"
+            "category": "diagnostics",
+            "description": "Summarize one or more task logs into a compact diagnostics output file.",
+            "input": {
+                "required": [
+                    "-Description"
+                ],
+                "optional": [
+                    "-LogsPath",
+                    "-TailLines",
+                    "-OutputPath"
+                ],
+                "rule": "Run from the repository root when producing diagnostics artifacts from logs or console output."
+            },
+            "output": {
+                "success": "Writes or prints the requested diagnostics summary.",
+                "failure": "Throws or exits nonzero when log inputs are missing, unreadable, or summary writing fails."
+            }
         },
         "migrate_ai_pipeline.ps1": {
             "path": "tools/pipeline/migrate_ai_pipeline.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Migrate an older AI pipeline installation to the current SocratexPipeline template and pack layout.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-TargetPath",
+                    "-LegacyDirectiveFiles",
+                    "-Packs",
+                    "-DirectiveMode",
+                    "-CreateProjectFiles",
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "normalize_documents.bat": {
             "path": "tools/text/normalize_documents.bat",
-            "category": "text"
+            "category": "text",
+            "description": "Windows convenience wrapper for repository document normalization.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Completes text normalization, repair, write, or check work and prints OK or the generated output.",
+                "failure": "Throws or exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
         },
         "normalize_json_files.ps1": {
             "path": "tools/text/normalize_json_files.ps1",
-            "category": "text"
+            "category": "text",
+            "description": "Normalize JSON files through the repository JSON normalizer and optional check mode.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-Check"
+                ],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Completes text normalization, repair, write, or check work and prints OK or the generated output.",
+                "failure": "Throws or exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
         },
         "normalize_json_files.py": {
             "path": "tools/text/normalize_json_files.py",
-            "category": "text"
+            "category": "text",
+            "description": "Internal JSON normalizer preserving repository formatting conventions.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--check"
+                ],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Completes text normalization, repair, write, or check work and prints OK or the generated output.",
+                "failure": "Throws or exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
         },
         "normalize_markdown_emoji.ps1": {
             "path": "tools/documents/normalize_markdown_emoji.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Normalize markdown heading emoji markers, with check mode for task verification.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-DefaultEmoji",
+                    "-Check"
+                ],
+                "rule": "Run from the repository root and prefer wrapper scripts over internal engines for normal document edits."
+            },
+            "output": {
+                "success": "Completes the document operation or check and prints the requested result or OK status.",
+                "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
         },
         "normalize_text_files.ps1": {
             "path": "tools/text/normalize_text_files.ps1",
-            "category": "text"
+            "category": "text",
+            "description": "Normalize repository text file line endings and final newlines, with check mode support.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-Check"
+                ],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Completes text normalization, repair, write, or check work and prints OK or the generated output.",
+                "failure": "Throws or exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
         },
         "open_pipeline_learning_issue.ps1": {
             "path": "tools/repo/open_pipeline_learning_issue.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Open or print a GitHub issue request for pipeline learning discovered in a child project.",
+            "input": {
+                "required": [
+                    "-ProjectPath"
+                ],
+                "optional": [
+                    "-SourceFeatureListPath",
+                    "-Owner",
+                    "-Repo",
+                    "-IssueTitle",
+                    "-LearnedSummary",
+                    "-ChangedScripts",
+                    "-ReporterInstruction",
+                    "-ExcludePatterns",
+                    "-Open"
+                ],
+                "rule": "Run from the repository root as part of task, git, learning, or repository health workflows."
+            },
+            "output": {
+                "success": "Completes the repository workflow step and exits 0 when the requested operation succeeds.",
+                "failure": "Throws or exits nonzero when required inputs, repository state, external tooling, or workflow checks fail."
+            }
         },
         "pipeline_bootstrap_index.ps1": {
             "path": "tools/pipeline/pipeline_bootstrap_index.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Refresh or check the compact pipeline bootstrap index used at task startup.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Output",
+                    "-Check"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "pipeline_bootstrap_index.py": {
             "path": "tools/pipeline/pipeline_bootstrap_index.py",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Internal engine for building the pipeline bootstrap index from source document catalogs.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--output",
+                    "--documents",
+                    "--check"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "resolve_tool_runtime.ps1": {
             "path": "tools/pipeline/resolve_tool_runtime.ps1",
@@ -893,23 +1961,93 @@
         },
         "reinitialize_pipeline.ps1": {
             "path": "tools/pipeline/reinitialize_pipeline.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Reinitialize a project pipeline package from current source templates and selected packs.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-TargetPath",
+                    "-Packs",
+                    "-UseChangelog",
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "remove_pipeline.ps1": {
             "path": "tools/pipeline/remove_pipeline.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Remove SocratexPipeline files from a target project with dry-run and restore options.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-TargetPath",
+                    "-DirectiveFiles",
+                    "-RestoreOldDirectives",
+                    "-RemoveLocalWorkingFiles",
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "repair_mojibake.ps1": {
             "path": "tools/text/repair_mojibake.ps1",
-            "category": "text"
+            "category": "text",
+            "description": "Repair common mojibake text corruption in selected files, with check mode support.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-Check"
+                ],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Completes text normalization, repair, write, or check work and prints OK or the generated output.",
+                "failure": "Throws or exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
         },
         "report_pipeline_learning.ps1": {
             "path": "tools/repo/report_pipeline_learning.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Generate a pipeline learning report from changed child-project artifacts.",
+            "input": {
+                "required": [
+                    "-ProjectPath"
+                ],
+                "optional": [
+                    "-SourceFeatureListPath",
+                    "-ExcludePatterns",
+                    "-OutputPath"
+                ],
+                "rule": "Run from the repository root as part of task, git, learning, or repository health workflows."
+            },
+            "output": {
+                "success": "Completes the repository workflow step and exits 0 when the requested operation succeeds.",
+                "failure": "Throws or exits nonzero when required inputs, repository state, external tooling, or workflow checks fail."
+            }
         },
         "run_quality_fix.ps1": {
             "path": "tools/quality/run_quality_fix.ps1",
-            "category": "quality"
+            "category": "quality",
+            "description": "Run repository quality fix steps that can safely repair generated or normalized artifacts.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the repository root as part of task verification or quality repair workflows."
+            },
+            "output": {
+                "success": "Completes the quality fix/check operation and exits 0 when selected work succeeds.",
+                "failure": "Throws or exits nonzero when selected quality repair or verification cannot complete."
+            }
         },
         "run_quality_gate.ps1": {
             "path": "tools/quality/run_quality_gate.ps1",
@@ -946,7 +2084,21 @@
         },
         "set_directives.ps1": {
             "path": "tools/pipeline/set_directives.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Apply, merge, or replace top-level directive files in a target pipeline installation.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Mode",
+                    "-TargetPath",
+                    "-DirectiveFiles"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "sync_pipeline_featurelist.ps1": {
             "path": "tools/repo/sync_pipeline_featurelist.ps1",
@@ -1047,19 +2199,72 @@
         },
         "upgrade_from_reference_project.ps1": {
             "path": "tools/pipeline/upgrade_from_reference_project.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Upgrade a target project from a reference project pipeline snapshot.",
+            "input": {
+                "required": [
+                    "-ReferenceProjectPath"
+                ],
+                "optional": [
+                    "-TargetPath",
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or an explicit target path when initializing, syncing, compiling, or migrating pipeline packages."
+            },
+            "output": {
+                "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
+                "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
         },
         "utf8_file_helpers.ps1": {
             "path": "tools/text/utf8_file_helpers.ps1",
-            "category": "text"
+            "category": "text",
+            "description": "Load reusable UTF-8 file write helpers for PowerShell scripts.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Completes text normalization, repair, write, or check work and prints OK or the generated output.",
+                "failure": "Throws or exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
         },
         "run_interactive_setup.ps1": {
             "path": "tools/setup/run_interactive_setup.ps1",
-            "category": "setup"
+            "category": "setup",
+            "description": "Run the interactive setup flow or dry-run it for verification.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-DryRun"
+                ],
+                "rule": "Run from the repository root or setup target when checking host/runtime setup."
+            },
+            "output": {
+                "success": "Completes setup probing or configuration and prints the resulting setup status.",
+                "failure": "Throws or exits nonzero when runtime detection or requested setup configuration fails."
+            }
         },
         "write_utf8_file.ps1": {
             "path": "tools/text/write_utf8_file.ps1",
-            "category": "text"
+            "category": "text",
+            "description": "Write text through the repository UTF-8 helper with line-ending and newline controls.",
+            "input": {
+                "required": [
+                    "-Path",
+                    "-Value"
+                ],
+                "optional": [
+                    "-NoNewline",
+                    "-LineEnding"
+                ],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Completes text normalization, repair, write, or check work and prints OK or the generated output.",
+                "failure": "Throws or exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
         },
         "sync_managed_pipeline_package.ps1": {
             "path": "tools/pipeline/sync_managed_pipeline_package.ps1",
@@ -1094,7 +2299,6 @@
                     "-AllowStale",
                     "-Json"
                 ],
-                "aliases": "When called through tool_handler.ps1, aliases such as scripts, commands, flows, docs, workflow, rules, entrypoint, bootstrap, engineering, and agent_contract are normalized before invocation.",
                 "rule": "Prefer tool_handler.ps1 for normal use so aliases and stale checks are normalized before this script runs."
             },
             "output": {
@@ -1229,7 +2433,22 @@
         "knowledge_tier_report.py": {
             "path": "tools/knowledge/knowledge_tier_report.py",
             "category": "knowledge",
-            "description": "Python engine behind knowledge_tier_report.ps1 and knowledge_tier_check.ps1."
+            "description": "Python engine behind knowledge_tier_report.ps1 and knowledge_tier_check.ps1.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--include-templates",
+                    "--strict",
+                    "--show-entries",
+                    "--format"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         },
         "grouped_task_handoff.ps1": {
             "path": "tools/tasks/grouped_task_handoff.ps1",
@@ -1260,8 +2479,6 @@
                     "-NoPrompt",
                     "-PrintJson"
                 ],
-                "default_handoff": "docs-tech/cache/grouped_task_handoff.json",
-                "default_prompt": "docs-tech/cache/next_subtask_prompt.md",
                 "rule": "Use named parameters only. From shell, pass list values as one quoted comma-separated string or from PowerShell as an explicit array; positional binding is disabled to prevent accidental path shifts."
             },
             "output": {

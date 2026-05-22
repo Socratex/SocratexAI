@@ -115,6 +115,38 @@ function Test-ScriptContract {
             Add-Error "Script catalog entry is missing ${field}: $Name"
         }
     }
+
+    if (($entry.PSObject.Properties.Name -contains "description") -and [string]::IsNullOrWhiteSpace([string]$entry.description)) {
+        Add-Error "Script catalog entry has empty description: $Name"
+    }
+
+    if ($entry.PSObject.Properties.Name -contains "input") {
+        foreach ($field in @("required", "optional", "rule")) {
+            if (-not ($entry.input.PSObject.Properties.Name -contains $field)) {
+                Add-Error "Script catalog entry is missing input.${field}: $Name"
+            }
+        }
+
+        if (($entry.input.PSObject.Properties.Name -contains "rule") -and [string]::IsNullOrWhiteSpace([string]$entry.input.rule)) {
+            Add-Error "Script catalog entry has empty input.rule: $Name"
+        }
+    }
+
+    if ($entry.PSObject.Properties.Name -contains "output") {
+        foreach ($field in @("success", "failure")) {
+            if (-not ($entry.output.PSObject.Properties.Name -contains $field)) {
+                Add-Error "Script catalog entry is missing output.${field}: $Name"
+            }
+        }
+
+        if (($entry.output.PSObject.Properties.Name -contains "success") -and [string]::IsNullOrWhiteSpace([string]$entry.output.success)) {
+            Add-Error "Script catalog entry has empty output.success: $Name"
+        }
+
+        if (($entry.output.PSObject.Properties.Name -contains "failure") -and [string]::IsNullOrWhiteSpace([string]$entry.output.failure)) {
+            Add-Error "Script catalog entry has empty output.failure: $Name"
+        }
+    }
 }
 
 function Test-CanonicalListDocument {
@@ -528,8 +560,12 @@ try {
         }
     }
 
-    foreach ($tool in @("audit_docs.ps1", "check_evals.ps1", "check_runtime.py", "check_task.ps1", "run_quality_gate.ps1", "check_ai_compiled_context.ps1", "rebuild_ai_compiled_context.ps1", "knowledge_code_context.ps1", "update_code_line_index.ps1", "task_snapshot.ps1", "end_prompt_snapshot.ps1", "legacy_commit_task_compatibility_wrapper.ps1", "task_flow_audit.ps1", "run_final_task_checks.ps1", "finalize_changed_files_commit_push.ps1", "finalize_task_check_commit_push.ps1")) {
-        Test-ScriptContract -Name $tool
+    $scriptCatalogForContracts = Get-ScriptCatalog
+    if ($null -ne $scriptCatalogForContracts) {
+        foreach ($tool in @($scriptCatalogForContracts.index)) {
+            Test-ScriptExists -Name $tool
+            Test-ScriptContract -Name $tool
+        }
     }
 
     $markdownFiles = @(
