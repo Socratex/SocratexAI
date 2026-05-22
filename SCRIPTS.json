@@ -501,7 +501,25 @@
         },
         "finalize_task_check_commit_push.ps1": {
             "path": "tools/repo/finalize_task_check_commit_push.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Preferred Git-backed task finalizer: run checks including quality, commit, and push.",
+            "input": {
+                "required": [
+                    "-Message"
+                ],
+                "optional": [
+                    "-QualityCommand",
+                    "-StrictAudit",
+                    "-NoPush",
+                    "-NoAudit",
+                    "-AllowPreStaged"
+                ],
+                "rule": "Use for normal task closure when changed files should be committed and pushed. It delegates to finalize_changed_files_commit_push.ps1 with quality enabled."
+            },
+            "output": {
+                "success": "Checks pass, intentional paths are committed, push runs unless disabled, and final repository state is reported.",
+                "failure": "Throws when checks, staging, commit, push, or clean-tree verification fail."
+            }
         },
         "end_prompt_snapshot.ps1": {
             "path": "tools/repo/end_prompt_snapshot.ps1",
@@ -509,11 +527,51 @@
         },
         "finalize_changed_files_commit_push.ps1": {
             "path": "tools/repo/finalize_changed_files_commit_push.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Lower-level Git-derived changed-file finisher used by the preferred task finalizer.",
+            "input": {
+                "required": [
+                    "-Message"
+                ],
+                "optional": [
+                    "-Quality",
+                    "-QualityCommand",
+                    "-NoQuality",
+                    "-StrictAudit",
+                    "-NoAudit",
+                    "-NoPush",
+                    "-AllowPreStaged"
+                ],
+                "rule": "Runs quality by default; pass -NoQuality only for an explicitly degraded no-quality closure."
+            },
+            "output": {
+                "success": "Runs final checks, stages git-derived non-local-artifact paths, commits, pushes unless disabled, and reports remaining status.",
+                "failure": "Throws on pre-staged changes unless allowed, empty candidate set, failed checks, failed git operations, or dirty final state."
+            }
         },
         "run_final_task_checks.ps1": {
             "path": "tools/repo/run_final_task_checks.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Run no-commit final verification steps, with quality gate available as an explicit option.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Quality",
+                    "-QualityCommand",
+                    "-StrictAudit",
+                    "-NoAudit",
+                    "-NoLineIndex",
+                    "-NoNormalize",
+                    "-NoDocCache",
+                    "-NoOutput",
+                    "-NoSound"
+                ],
+                "rule": "Use directly for debugging or no-commit checks. Commit finalizers should call it with -Quality unless closure is intentionally degraded."
+            },
+            "output": {
+                "success": "Refreshes/checks closure artifacts and exits 0 after OK.",
+                "failure": "Throws when any selected verification step fails."
+            }
         },
         "generate_embedded_config_payload.py": {
             "path": "tools/pipeline/generate_embedded_config_payload.py",

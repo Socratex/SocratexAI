@@ -150,10 +150,10 @@ function Test-PipelineOwnedPath {
     param([string]$Path)
 
     $normalized = ConvertTo-RepoRelativePath -Path $Path
-    if ($normalized -match '^(tools|core|project|profiles|templates|adapters|evals)/') {
-        return $true
-    }
     if ($normalized -match '^AI-compiled/') {
+        return $false
+    }
+    if ($normalized -match '^(tools|core|project|profiles|templates|adapters|evals)/') {
         return $true
     }
     if ($normalized -match '^(AGENTS\.md|PUBLIC-BOOTSTRAP\.md|QUALITY-GATE\.json|CHANGELOG\.json|COMMANDS\.json|DOCS\.json|FLOWS\.json|SCRIPTS\.json|WORKFLOW\.json|pipeline_featurelist\.json)$') {

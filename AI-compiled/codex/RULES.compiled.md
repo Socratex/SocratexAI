@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-ae13bd81346a
+Generated: source-cdbce2dd35df
 
 ## Source of Truth
 
@@ -1027,7 +1027,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'code_line_index' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "batch_task_checks": {
-                "summary": "Batch Task Checks capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Batch Task Checks capability is active only when source artifacts, catalogs, update path, canonical quality-gate contract, and compiled-context freshness verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/repo",
@@ -1079,12 +1079,13 @@ Draft placeholder:
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_sensitive_reference_leaks.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1"
                 ],
                 "known_failure_if_missing": "If 'batch_task_checks' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "git_batch_finishers": {
-                "summary": "Git Batch Finishers capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Git Batch Finishers capability is active only when commit finalizers run quality by default and their listed source artifacts, catalogs, update path, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/repo",
@@ -1138,7 +1139,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'git_batch_finishers' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "canonical_done_finalizer": {
-                "summary": "Canonical Done Finalizer capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Canonical Done Finalizer capability is active only when the preferred finalizer runs audit and quality before commit/push and its listed source artifacts, catalogs, update path, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/repo",
@@ -1246,7 +1247,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'toolchain_doctor' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "generic_multi_stack_quality_gate": {
-                "summary": "Generic Multi Stack Quality Gate capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Generic Multi Stack Quality Gate capability is active only when QUALITY-GATE.json uses the canonical list-document shape and its executable contract remains wired into the finalizers and source checks.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/repo",

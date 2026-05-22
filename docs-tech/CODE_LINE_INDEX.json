@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T13:49:20+02:00",
+  "generatedAt": "2026-05-22T14:09:58+02:00",
   "threshold": 300,
   "files": [
     {
@@ -10,7 +10,7 @@
     },
     {
       "path": "tools/documents/audit_docs.ps1",
-      "lines": 449,
+      "lines": 487,
       "extension": ".ps1",
       "large": true
     },
@@ -75,14 +75,14 @@
       "large": true
     },
     {
-      "path": "tools/repo/end_prompt_snapshot.ps1",
-      "lines": 252,
+      "path": "tools/repo/check_task.ps1",
+      "lines": 259,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/repo/check_task.ps1",
-      "lines": 249,
+      "path": "tools/repo/end_prompt_snapshot.ps1",
+      "lines": 252,
       "extension": ".ps1",
       "large": false
     },
@@ -190,7 +190,7 @@
     },
     {
       "path": "tools/repo/finalize_changed_files_commit_push.ps1",
-      "lines": 148,
+      "lines": 150,
       "extension": ".ps1",
       "large": false
     },
@@ -363,6 +363,12 @@
       "large": false
     },
     {
+      "path": "tools/quality/run_quality_gate_contract.ps1",
+      "lines": 69,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/repo/finalize_task_check_commit_push.ps1",
       "lines": 67,
       "extension": ".ps1",
@@ -395,12 +401,6 @@
     {
       "path": "tools/knowledge/knowledge_query.ps1",
       "lines": 64,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/quality/run_quality_gate_contract.ps1",
-      "lines": 61,
       "extension": ".ps1",
       "large": false
     },

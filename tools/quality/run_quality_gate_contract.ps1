@@ -18,11 +18,20 @@ if (-not (Test-Path -LiteralPath $gatePath)) {
 }
 
 $gate = Get-Content -Raw -LiteralPath $gatePath | ConvertFrom-Json
-if ($null -eq $gate.commands) {
-    throw "Quality gate contract has no commands object: $gatePath"
+$commandsObject = $null
+if ($gate.PSObject.Properties.Name -contains "content" -and
+    $null -ne $gate.content -and
+    $gate.content.PSObject.Properties.Name -contains "commands") {
+    $commandsObject = $gate.content.commands
+} elseif ($gate.PSObject.Properties.Name -contains "commands") {
+    $commandsObject = $gate.commands
 }
 
-$commands = @($gate.commands.PSObject.Properties)
+if ($null -eq $commandsObject) {
+    throw "Quality gate contract has no content.commands object: $gatePath"
+}
+
+$commands = @($commandsObject.PSObject.Properties)
 if ($CommandNames -and $CommandNames.Count -gt 0) {
     $CommandNames = @($CommandNames | ForEach-Object {
         $_ -split "," | ForEach-Object { $_.Trim() } | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }

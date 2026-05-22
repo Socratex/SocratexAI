@@ -96,6 +96,38 @@ function Test-ScriptExists {
     }
 }
 
+function Test-CanonicalListDocument {
+    param(
+        [string]$RelativePath,
+        [string[]]$RequiredContentKeys = @()
+    )
+
+    $path = Join-Path $repoRoot $RelativePath
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+        Add-Error "Missing canonical JSON list document: $RelativePath"
+        return
+    }
+
+    try {
+        $document = Get-Content -Raw -LiteralPath $path -Encoding UTF8 | ConvertFrom-Json
+    } catch {
+        Add-Error "Failed to parse JSON list document ${RelativePath}: $($_.Exception.Message)"
+        return
+    }
+
+    $rootKeys = @($document.PSObject.Properties.Name)
+    if (($rootKeys -join ",") -ne "index,content,metadata") {
+        Add-Error "$RelativePath must use canonical root keys in this order: index, content, metadata."
+        return
+    }
+
+    foreach ($requiredKey in $RequiredContentKeys) {
+        if (-not ($document.content.PSObject.Properties.Name -contains $requiredKey)) {
+            Add-Error "$RelativePath content is missing required key: $requiredKey"
+        }
+    }
+}
+
 function Test-OpeningTocEmoji {
     param([System.IO.FileInfo]$File)
 
@@ -219,6 +251,8 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "CHANGELOG.json") -Needle "0.2.0-alpha" -Label "CHANGELOG.json"
     Test-ContainsText -Text (Get-RepoText -RelativePath "LICENSE") -Needle "MIT License" -Label "LICENSE"
     Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.json") -Needle "audit_docs" -Label "QUALITY-GATE.json"
+    Test-CanonicalListDocument -RelativePath "QUALITY-GATE.json" -RequiredContentKeys @("summary", "commands", "notes")
+    Test-CanonicalListDocument -RelativePath "pipeline_featurelist.json" -RequiredContentKeys @("features", "feature_contracts")
     Test-ContainsText -Text (Get-RepoText -RelativePath ".gitignore") -Needle "/ignored/" -Label ".gitignore"
     $docIndex = Get-OptionalRepoText -RelativePath "docs-tech/cache/doc_index.json"
     if ($docIndex -match '"path":\s*"ignored/') {
@@ -238,6 +272,15 @@ try {
         if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $compiledFile))) {
             Add-Error "Missing compiled AI instruction artifact: $compiledFile"
         }
+    }
+    $compiledContextCheckScript = Join-Path $repoRoot "tools/pipeline/check_ai_compiled_context.ps1"
+    if (Test-Path -LiteralPath $compiledContextCheckScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $compiledContextCheckScript
+        if ($LASTEXITCODE -ne 0) {
+            Add-Error "Compiled AI context freshness check failed with exit code $LASTEXITCODE"
+        }
+    } else {
+        Add-Error "Missing compiled AI context freshness checker: tools/pipeline/check_ai_compiled_context.ps1"
     }
     foreach ($evalFile in @("evals/README.md", "evals/personas.json", "evals/expected-behaviors.json", "evals/scoring.md", "evals/results/baseline.json", "evals/results/with-pipeline.json")) {
         if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $evalFile))) {

@@ -23,6 +23,7 @@ $utf8WriteCheckScript = Join-Path $repoRoot "tools\text\check_utf8_writes.ps1"
 $pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
 $codeContextGateScript = Join-Path $repoRoot "tools\codebase\check_code_context_gate.ps1"
 $projectDesignContextGateScript = Join-Path $repoRoot "tools\codebase\check_project_design_context_gate.ps1"
+$compiledContextRebuildScript = Join-Path $repoRoot "tools\pipeline\rebuild_ai_compiled_context.ps1"
 
 function Invoke-CheckCommand {
 	param(
@@ -248,6 +249,15 @@ try {
 	}
 
 	if ($Audit) {
+		if (Test-Path -LiteralPath $compiledContextRebuildScript -PathType Leaf) {
+			Invoke-CheckCommand -Label "compiled AI instructions refresh" -Command "powershell" -Arguments @(
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				$compiledContextRebuildScript
+			)
+		}
 		Invoke-CheckCommand -Label "audit docs" -Command "powershell" -Arguments @(
 			"-NoProfile",
 			"-ExecutionPolicy",

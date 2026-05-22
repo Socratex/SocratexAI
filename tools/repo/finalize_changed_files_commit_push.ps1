@@ -3,6 +3,7 @@ param(
 	[string]$Message,
 	[switch]$Quality,
 	[string[]]$QualityCommand,
+	[switch]$NoQuality,
 	[switch]$StrictAudit,
 	[switch]$NoAudit,
 	[switch]$NoPush,
@@ -85,6 +86,7 @@ try {
 	if ($initialCandidates.Count -eq 0) {
 		throw "No changed non-local-artifact paths to close."
 	}
+	$runQuality = $Quality -or (-not $NoQuality)
 
 	$finishArgs = @(
 		"-NoProfile",
@@ -94,7 +96,7 @@ try {
 		$finishScript,
 		"-NoSound"
 	)
-	if ($Quality) {
+	if ($runQuality) {
 		$finishArgs += "-Quality"
 	}
 	if ($QualityCommand -and $QualityCommand.Count -gt 0) {

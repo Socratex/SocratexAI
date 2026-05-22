@@ -1,7 +1,7 @@
 {
   "schema": "socratex-compiled-agent-index/v1",
   "role": "generated_agent_cache",
-  "generated_at": "source-ae13bd81346a",
+  "generated_at": "source-cdbce2dd35df",
   "do_not_edit_manually": true,
   "targets": [
     "codex"

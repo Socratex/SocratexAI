@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-instructions/v1",
-  "generated_at": "source-ae13bd81346a",
+  "generated_at": "source-cdbce2dd35df",
   "role": "generated_agent_cache",
   "source_of_truth": "source instruction files outside AI-compiled",
   "do_not_edit_manually": true,
@@ -31,7 +31,7 @@
     "WORKFLOW.json": "c05fa86b73da6443e80c4f26bfd841ad99638ccecbad5d9b2ae6c0121a74d1bf",
     "COMMANDS.json": "7ae768535f5e697de610b6351a040ff4757683690240ca225c2d7a3931bf0f0d",
     "FLOWS.json": "5dac133c70ffd2a4dfb99eb6eece4ee8e7e17da471c76c6a4aa9f70104dcc77d",
-    "SCRIPTS.json": "c279c8aa9d5828fe069b0ec284ebb8b23151f470ad9a47eb47d21cd2da26a0aa",
+    "SCRIPTS.json": "ba2adfcf38e40dd0042ea4ccb2e95522a8c70e6eb788fb0ad4c076acb27661cb",
     "docs-tech/PIPELINE-BOOTSTRAP.json": "6c03ee889715ce1f9570e8d6b7aada6cf0a39dbb335b615dcdbfb50b03751b77",
     "core/AGENT-CONTRACT.json": "14162f53ba9da7752b0461304e4c13458c32293a5daecae3d4be9806e6e0e7ae",
     "core/CONTEXT-TIERS.json": "35cdff060072083fa23537851d7c5d194566e2b2353526d674e6090be322f4c3",
