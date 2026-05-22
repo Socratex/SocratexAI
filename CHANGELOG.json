@@ -8,6 +8,12 @@
     "entries": [
       {
         "version": "0.2.0-alpha",
+        "date": "2026-05-22",
+        "feature": "pipeline_update_and_removal_protocols",
+        "change": "Fixed existing-project import closure for fresh business/code projects: import_existing_project.ps1 now builds the installed document cache before compiling knowledge, and compiles knowledge after the final imported PIPELINE-CONFIG.json is written. Why: child imports should immediately pass audit_docs and feature-contract checks without a manual cache/knowledge repair step."
+      },
+      {
+        "version": "0.2.0-alpha",
         "date": "2026-05-21",
         "feature": "foreign_legacy_business_work_model",
         "change": "Added a third work model alongside default code pack and SocratexGamedev: profiles/SocratexForeignLegacy/WORKFLOW.json. Targets foreign or legacy business codebases where the agent does not fully know the domain, the codebase is messy, and the user is the domain reviewer plus tester. Defines an 8-phase task lifecycle (Read, Decide, Plan, Implement, Report, Test, Joint Verification, Handoff), language- and company-agnostic, with business-storytelling end-of-task reports, explicit unknown-unknown surfacing, and manual test scenarios for what cannot be safely auto-tested. PR/ticket/deployment lifecycle stays user-owned. Why: legacy/foreign business work has a fundamentally different shape than greenfield code or gamedev — agent does not own domain knowledge or testing infrastructure, so the work model must front-load reading + planning, defer architecture decisions, and produce paste-ready handoff text instead of initiating shared-system writes."

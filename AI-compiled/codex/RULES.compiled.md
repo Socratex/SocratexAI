@@ -1326,6 +1326,7 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "CHANGELOG.json",
                     "tools/documents/audit_docs.ps1",
+                    "tools/documents/build_document_cache.ps1",
                     "tools/pipeline/update_pipeline_from_link.ps1",
                     "tools/pipeline/sync_managed_pipeline_package.ps1"
                 ],
@@ -1347,6 +1348,7 @@ Draft placeholder:
                     "report_pipeline_learning.ps1",
                     "open_pipeline_learning_issue.ps1",
                     "check_pipeline_featurelist_update.ps1",
+                    "build_document_cache.ps1",
                     "audit_docs.ps1"
                 ],
                 "required_catalog_entries": {
@@ -1368,6 +1370,7 @@ Draft placeholder:
                         "report_pipeline_learning.ps1",
                         "open_pipeline_learning_issue.ps1",
                         "check_pipeline_featurelist_update.ps1",
+                        "build_document_cache.ps1",
                         "audit_docs.ps1"
                     ]
                 },
@@ -1381,6 +1384,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Ensure fresh existing-project imports build the installed document cache before compiling knowledge, after the final imported PIPELINE-CONFIG.json is written.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -1388,7 +1392,7 @@ Draft placeholder:
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "If 'pipeline_update_and_removal_protocols' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+                "known_failure_if_missing": "If 'pipeline_update_and_removal_protocols' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, import document cache, or imported knowledge freshness is absent."
             },
             "pipeline_update_artifact_sync": {
                 "summary": "Pipeline Update Artifact Sync capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",

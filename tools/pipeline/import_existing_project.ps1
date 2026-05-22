@@ -299,13 +299,6 @@ if (-not $DryRun) {
     if (Test-Path -LiteralPath $syncFeatureListScript) {
         & $PowerShellCommand -NoProfile -ExecutionPolicy Bypass -File $syncFeatureListScript -TargetPath $TargetRoot
     }
-    $knowledgeCompileScript = Join-Path $InstallRoot "tools\knowledge\knowledge_compile.ps1"
-    if (Test-Path -LiteralPath $knowledgeCompileScript) {
-        & $PowerShellCommand -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
-        if ($LASTEXITCODE -ne 0) {
-            throw "knowledge_compile failed with exit code $LASTEXITCODE"
-        }
-    }
     $hasCodePack = $Packs -contains "code"
     $configPath = if ($hasCodePack) {
         Join-Path $InstallRoot "PIPELINE-CONFIG.json"
@@ -369,6 +362,22 @@ if (-not $DryRun) {
         }
         $config = New-CanonicalJsonDocument -Content $configContent -Title "Pipeline Config" -Role "Imported SocratexPipeline configuration."
         [System.IO.File]::WriteAllText($configPath, (($config | ConvertTo-Json -Depth 8) + [Environment]::NewLine), [System.Text.UTF8Encoding]::new($false))
+    }
+
+    $documentCacheScript = Join-Path $InstallRoot "tools\documents\build_document_cache.ps1"
+    if (Test-Path -LiteralPath $documentCacheScript) {
+        & $PowerShellCommand -NoProfile -ExecutionPolicy Bypass -File $documentCacheScript
+        if ($LASTEXITCODE -ne 0) {
+            throw "build_document_cache failed with exit code $LASTEXITCODE"
+        }
+    }
+
+    $knowledgeCompileScript = Join-Path $InstallRoot "tools\knowledge\knowledge_compile.ps1"
+    if (Test-Path -LiteralPath $knowledgeCompileScript) {
+        & $PowerShellCommand -NoProfile -ExecutionPolicy Bypass -File $knowledgeCompileScript
+        if ($LASTEXITCODE -ne 0) {
+            throw "knowledge_compile failed with exit code $LASTEXITCODE"
+        }
     }
 }
 
