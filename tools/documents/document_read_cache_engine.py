@@ -8,10 +8,20 @@ from typing import Any
 LONG_TEXT_LIMIT = 120
 EXCLUDED_CACHE_PARTS = {
     ".git",
+    "AI-compiled",
     "ignored",
     "Tools/Python312",
     "Tools/python-installer",
     "Tools/tmp",
+}
+EXCLUDED_CACHE_PATH_PREFIXES = {
+    "docs-tech/cache/",
+}
+EXCLUDED_CACHE_PATHS = {
+    "docs-tech/CODE_LINE_INDEX.json",
+    "docs-tech/LARGE_FILES.json",
+    "docs-tech/PIPELINE-BOOTSTRAP.json",
+    "docs-tech/TOOL-ERRORS.json",
 }
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -332,7 +342,7 @@ def collect_keys(value: Any, path: str, keys: dict[str, dict[str, Any]]) -> None
             collect_keys(child, f"{path}.{index}" if path else str(index), keys)
 
 
-def expand_paths(patterns: list[str]) -> list[Path]:
+def expand_paths(patterns: list[str], repo_root: Path) -> list[Path]:
     paths: list[Path] = []
     for pattern in patterns:
         matches = glob.glob(pattern, recursive=True)
@@ -344,14 +354,23 @@ def expand_paths(patterns: list[str]) -> list[Path]:
         {
             path.resolve()
             for path in paths
-            if path.exists() and path.is_file() and not is_excluded_cache_path(path)
+            if path.exists() and path.is_file() and not is_excluded_cache_path(path, repo_root)
         }
     )
 
 
-def is_excluded_cache_path(path: Path) -> bool:
+def is_excluded_cache_path(path: Path, repo_root: Path) -> bool:
     normalized_parts = {part.replace("\\", "/").lower() for part in path.parts}
     normalized_path = path.as_posix().lower()
+    try:
+        relative_path = path.resolve().relative_to(repo_root).as_posix().lower()
+    except ValueError:
+        relative_path = normalized_path
+    for excluded in EXCLUDED_CACHE_PATH_PREFIXES:
+        if relative_path.startswith(excluded.lower()):
+            return True
+    if relative_path in {item.lower() for item in EXCLUDED_CACHE_PATHS}:
+        return True
     for excluded in EXCLUDED_CACHE_PARTS:
         normalized_excluded = excluded.replace("\\", "/").lower()
         if "/" in normalized_excluded:
@@ -385,7 +404,7 @@ def command_build_cache(args: argparse.Namespace) -> None:
     repo_root = Path(args.repo_root).resolve()
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    document_caches = [build_document_cache(path, repo_root) for path in expand_paths(args.paths)]
+    document_caches = [build_document_cache(path, repo_root) for path in expand_paths(args.paths, repo_root)]
     cache = {
         "schema_version": 1,
         "documents": document_caches,

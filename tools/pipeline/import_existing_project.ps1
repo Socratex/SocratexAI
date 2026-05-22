@@ -150,6 +150,36 @@ Project-specific code generation rules belong here when they are durable and rev
 "@ -NoNewline
 }
 
+function Get-CanonicalContent {
+    param([object]$Document)
+
+    if ($null -ne $Document -and
+        $Document.PSObject.Properties.Name -contains "content" -and
+        $null -ne $Document.content -and
+        $Document.content -is [pscustomobject]) {
+        return $Document.content
+    }
+    return $Document
+}
+
+function New-CanonicalJsonDocument {
+    param(
+        [object]$Content,
+        [string]$Title,
+        [string]$Role
+    )
+
+    return [ordered]@{
+        index = @($Content.Keys)
+        content = $Content
+        metadata = [ordered]@{
+            schema = "socratex-data-document/v1"
+            title = $Title
+            role = $Role
+        }
+    }
+}
+
 Write-Host "==> importing SocratexPipeline into existing project"
 Write-Host "Target: $TargetRoot"
 Write-Host "Install root: $InstallRoot"
@@ -287,13 +317,14 @@ if (-not $DryRun) {
         $existingConfig = Get-Content -Raw -LiteralPath $configPath
         try {
             $existingConfigJson = $existingConfig | ConvertFrom-Json
-            $shouldWriteConfig = [string]$existingConfigJson.language -eq "TBD"
+            $existingConfigContent = Get-CanonicalContent -Document $existingConfigJson
+            $shouldWriteConfig = [string]$existingConfigContent.language -eq "TBD"
         } catch {
             $shouldWriteConfig = $true
         }
     }
     if ($shouldWriteConfig) {
-        $config = [ordered]@{
+        $configContent = [ordered]@{
             summary = "Imported SocratexPipeline configuration."
             language = $Language
             active_project_packs = @($Packs)
@@ -310,15 +341,15 @@ if (-not $DryRun) {
             }
         }
         if ($hasCodePack) {
-            $config["changelog"] = [ordered]@{ enabled = "yes" }
-            $config["workflow"] = [ordered]@{
+            $configContent["changelog"] = [ordered]@{ enabled = "yes" }
+            $configContent["workflow"] = [ordered]@{
                 branch_mode = $BranchMode
                 branch_files_dir = "ignored/ai-socratex"
                 branch_state_file = "ignored/ai-socratex/<branch>-STATE.md"
                 branch_plan_file = "ignored/ai-socratex/<branch>-PLAN.md"
                 branch_files_language = "prompt-language"
             }
-            $config["project_profile"] = [ordered]@{
+            $configContent["project_profile"] = [ordered]@{
                 lifecycle = "TBD"
                 test_coverage = "TBD"
                 framework = "TBD"
@@ -331,11 +362,12 @@ if (-not $DryRun) {
                 highest_pain = "TBD"
                 stack = @()
             }
-            $config["runtime_status"] = [ordered]@{
+            $configContent["runtime_status"] = [ordered]@{
                 python3 = [ordered]@{ ok = "TBD"; version = "TBD"; install_hint = "TBD" }
                 pwsh = [ordered]@{ ok = "TBD"; version = "TBD"; install_hint = "TBD"; install_supported = "TBD"; fallback_recommendation = "TBD" }
             }
         }
+        $config = New-CanonicalJsonDocument -Content $configContent -Title "Pipeline Config" -Role "Imported SocratexPipeline configuration."
         [System.IO.File]::WriteAllText($configPath, (($config | ConvertTo-Json -Depth 8) + [Environment]::NewLine), [System.Text.UTF8Encoding]::new($false))
     }
 }

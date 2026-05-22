@@ -7,6 +7,16 @@ from typing import Any
 
 REQUIRED_LEGACY_DOCUMENT_KEYS = {"id", "key", "title", "type", "version", "owner", "language", "canonical", "generated"}
 EXCLUDED_PARTS = {".git", "Tools/Python312", "Tools/python-installer", "Tools/tmp", "ignored"}
+EXCLUDED_PATH_PREFIXES = {
+    "AI-compiled/",
+    "docs-tech/cache/",
+}
+EXCLUDED_PATHS = {
+    "docs-tech/CODE_LINE_INDEX.json",
+    "docs-tech/LARGE_FILES.json",
+    "docs-tech/PIPELINE-BOOTSTRAP.json",
+    "docs-tech/TOOL-ERRORS.json",
+}
 
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -19,7 +29,11 @@ def repo_path(path: Path, repo_root: Path) -> str:
 
 def is_excluded(path: Path, repo_root: Path) -> bool:
     relative = repo_path(path, repo_root)
-    return any(relative == part or relative.startswith(f"{part}/") for part in EXCLUDED_PARTS)
+    return (
+        any(relative == part or relative.startswith(f"{part}/") for part in EXCLUDED_PARTS)
+        or any(relative.startswith(prefix) for prefix in EXCLUDED_PATH_PREFIXES)
+        or relative in EXCLUDED_PATHS
+    )
 
 
 def load_json(path: Path) -> Any:
@@ -75,6 +89,7 @@ def validate_compact_document(data: dict[str, Any], relative: str) -> list[str]:
     content = data.get("content")
     collection = items if isinstance(items, dict) else content
     collection_name = "items" if isinstance(items, dict) else "content"
+    requires_object_items = collection_name == "items"
     if not isinstance(collection, dict):
         errors.append(f"{relative}: compact document must have an items or content object.")
         collection = {}
@@ -101,12 +116,14 @@ def validate_compact_document(data: dict[str, Any], relative: str) -> list[str]:
         if item_key not in collection:
             errors.append(f"{relative}: {location} points at missing item: {item_key}.")
     for item_key, item in collection.items():
-        if not isinstance(item, dict):
+        if requires_object_items and not isinstance(item, dict):
             errors.append(f"{relative}: {collection_name}.{item_key} must be an object.")
+            continue
+        if not isinstance(item, dict):
             continue
         if "title" in item and str(item.get("title", "")).strip() == "":
             errors.append(f"{relative}: {collection_name}.{item_key}.title must not be empty.")
-        if not item:
+        if requires_object_items and not item:
             errors.append(f"{relative}: {collection_name}.{item_key} must contain data.")
     if collection_name == "items":
         if "quick_index" not in collection:
@@ -199,8 +216,9 @@ def validate_pipeline_config_schema(repo_root: Path) -> list[str]:
         data = load_json(path)
     except Exception as exc:
         return [f"{relative}: JSON parse failed: {exc}"]
+    content = data.get("content") if isinstance(data.get("content"), dict) else data
     errors: list[str] = []
-    pipeline = data.get("pipeline")
+    pipeline = content.get("pipeline")
     if not isinstance(pipeline, dict):
         errors.append(f"{relative}: missing pipeline object.")
     elif "update_source" not in pipeline:
@@ -209,15 +227,15 @@ def validate_pipeline_config_schema(repo_root: Path) -> list[str]:
         errors.append(f"{relative}: missing pipeline.remove_command.")
     elif "reinitialize_command" not in pipeline:
         errors.append(f"{relative}: missing pipeline.reinitialize_command.")
-    if not isinstance(data.get("changelog"), dict):
+    if not isinstance(content.get("changelog"), dict):
         errors.append(f"{relative}: missing changelog object.")
-    if not isinstance(data.get("communication"), dict):
+    if not isinstance(content.get("communication"), dict):
         errors.append(f"{relative}: missing communication object.")
-    if not isinstance(data.get("project_profile"), dict):
+    if not isinstance(content.get("project_profile"), dict):
         errors.append(f"{relative}: missing project_profile object.")
-    if not isinstance(data.get("runtime_status"), dict):
+    if not isinstance(content.get("runtime_status"), dict):
         errors.append(f"{relative}: missing runtime_status object.")
-    workflow = data.get("workflow")
+    workflow = content.get("workflow")
     if not isinstance(workflow, dict):
         errors.append(f"{relative}: missing workflow object.")
     elif "branch_mode" not in workflow:

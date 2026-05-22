@@ -77,11 +77,15 @@ function Get-LatestJsonChangelogEntry {
 	param([string]$Path)
 
 	$document = Get-Content -Raw -LiteralPath $Path -Encoding UTF8 | ConvertFrom-Json
-	if (-not $document.PSObject.Properties.Name.Contains("entries")) {
+	$changelog = $document
+	if ($document.PSObject.Properties.Name.Contains("content") -and $null -ne $document.content) {
+		$changelog = $document.content
+	}
+	if (-not $changelog.PSObject.Properties.Name.Contains("entries")) {
 		return ""
 	}
 
-	$entries = @($document.entries)
+	$entries = @($changelog.entries)
 	if ($entries.Count -eq 0) {
 		return ""
 	}

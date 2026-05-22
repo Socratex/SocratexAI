@@ -26,41 +26,17 @@
         "direct_schema_exceptions": {
             "title": "Direct Schema Exceptions",
             "paths": {
-                "CHANGELOG.json": "Changelog registry currently has script-owned `summary/entries` protocol; migrate after changelog readers/writers are canonical-aware.",
                 "evals/expected-behaviors.json": "Eval protocol consumed by check_evals; keep direct schema until eval tooling is canonical-aware.",
                 "evals/personas.json": "Eval protocol consumed by check_evals; keep direct schema until eval tooling is canonical-aware.",
                 "evals/results/baseline.json": "Eval result protocol; keep direct schema for score comparison.",
-                "evals/results/with-pipeline.json": "Eval result protocol; keep direct schema for score comparison.",
-                "templates/WORKFLOW.json": "Installed project workflow template has direct project-facing schema; migrate after project workflow readers are canonical-aware.",
-                "templates/code/BUGS-SOLVED.json": "Installed project memory template; migrate with the project-memory canonicalization group.",
-                "templates/code/BUGS.json": "Installed project memory template; migrate with the project-memory canonicalization group.",
-                "templates/code/CHANGELOG.json": "Installed project changelog template mirrors current changelog script protocol.",
-                "templates/code/DECISIONS.json": "Installed project memory template; migrate with the project-memory canonicalization group.",
-                "templates/code/PIPELINE-CONFIG.json": "Operational config template read and updated by setup/reinitialization scripts through direct properties.",
-                "templates/code/STATE.json": "Installed active-state template; migrate with the project-memory canonicalization group.",
-                "templates/code/TODO.json": "Installed backlog template; migrate with the project-memory canonicalization group.",
-                "templates/code/_INSTRUCTION-QUEUE.json": "Installed instruction queue template; migrate with queue tooling.",
-                "templates/code/_PLAN.json": "Installed plan template; migrate with project-memory plan tooling.",
-                "templates/code/_PROMPT-QUEUE.json": "Installed prompt queue template; migrate with queue tooling.",
-                "templates/code/context-docs/FROZEN_LAYERS.json": "Installed context capsule template; migrate with project context template group.",
-                "templates/code/context-docs/TECHNICAL.json": "Installed context capsule template; migrate with project context template group.",
-                "templates/code/current_task.json": "Temporary task handoff schema; keep direct until task tooling is canonical-aware.",
-                "templates/team/experience.json": "Team role lens direct schema; migrate with team-lens template group.",
-                "templates/team/performance.json": "Team role lens direct schema; migrate with team-lens template group.",
-                "templates/team/pipeline.json": "Team role lens direct schema; migrate with team-lens template group.",
-                "templates/team/product.json": "Team role lens direct schema; migrate with team-lens template group.",
-                "templates/team/technical.json": "Team role lens direct schema; migrate with team-lens template group.",
-                "templates/workspace.json": "Workspace marker schema consumed by workspace resolver; keep direct as an external/local marker protocol."
+                "evals/results/with-pipeline.json": "Eval result protocol; keep direct schema for score comparison."
             }
         },
         "migration_followups": {
             "title": "Migration Followups",
             "items": [
-                "Make changelog readers/writers canonical-aware, then migrate root and template CHANGELOG.json.",
-                "Define canonical project-memory templates for STATE, PLAN, TODO, BUGS, DECISIONS, prompt/instruction queues, and context capsules.",
                 "Decide whether eval protocols should remain direct test fixtures or gain canonical wrappers.",
-                "Decide whether team role lenses should become canonical documents or remain compact direct role schemas.",
-                "Keep PIPELINE-CONFIG and workspace marker direct until every setup/update/reinitialize reader supports canonical accessors."
+                "Keep generated/local/runtime JSON out of canonical source-document enforcement unless ownership moves into SocratexPipeline source documents."
             ]
         }
     },

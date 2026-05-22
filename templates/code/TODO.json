@@ -1,4 +1,15 @@
 {
-    "items": {},
-    "summary": "Actionable code backlog not yet promoted into the active plan."
+    "index": [
+        "items",
+        "summary"
+    ],
+    "content": {
+        "items": {},
+        "summary": "Actionable code backlog not yet promoted into the active plan."
+    },
+    "metadata": {
+        "schema": "socratex-data-document/v1",
+        "title": "Todo",
+        "role": "Installed task backlog template."
+    }
 }

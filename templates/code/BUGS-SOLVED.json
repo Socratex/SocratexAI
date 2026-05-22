@@ -1,4 +1,15 @@
 {
-    "summary": "Confirmed resolved bugs.",
-    "resolved_bugs": {}
+    "index": [
+        "summary",
+        "resolved_bugs"
+    ],
+    "content": {
+        "summary": "Confirmed resolved bugs.",
+        "resolved_bugs": {}
+    },
+    "metadata": {
+        "schema": "socratex-data-document/v1",
+        "title": "Bugs Solved",
+        "role": "Installed resolved bug memory template."
+    }
 }

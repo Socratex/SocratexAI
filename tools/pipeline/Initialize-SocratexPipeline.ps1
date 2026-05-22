@@ -221,6 +221,24 @@ Project-specific code generation rules belong here when they are durable and rev
 "@ -NoNewline
 }
 
+function New-CanonicalJsonDocument {
+    param(
+        [object]$Content,
+        [string]$Title,
+        [string]$Role
+    )
+
+    return [ordered]@{
+        index = @($Content.Keys)
+        content = $Content
+        metadata = [ordered]@{
+            schema = "socratex-data-document/v1"
+            title = $Title
+            role = $Role
+        }
+    }
+}
+
 if ($CreateFiles) {
     if ($DryRun) {
         Write-Output "Would copy root controller: $(Join-Path $TemplateDir 'SOCRATEX.md') -> $(Join-Path $Root 'SOCRATEX.md')"
@@ -292,7 +310,7 @@ if ($CreateFiles) {
         } catch {
             $runtimeStatus["check_error"] = "runtime check failed"
         }
-        $config = [ordered]@{
+        $configContent = [ordered]@{
             summary = "Initialized project configuration for SocratexPipeline."
             language = $Language
             active_project_packs = @($KeepPacks)
@@ -340,6 +358,7 @@ if ($CreateFiles) {
             }
             runtime_status = $runtimeStatus
         }
+        $config = New-CanonicalJsonDocument -Content $configContent -Title "Pipeline Config" -Role "Initialized project configuration for SocratexPipeline."
         [System.IO.File]::WriteAllText((Join-Path $InstallRoot "PIPELINE-CONFIG.json"), (($config | ConvertTo-Json -Depth 8) + [Environment]::NewLine), [System.Text.UTF8Encoding]::new($false))
     }
 

@@ -1,26 +1,38 @@
 {
-    "purpose": "Active and future execution passes only.",
-    "pass_index": [
-        {
-            "id": "pass_1",
-            "title": "Initial execution pass"
-        }
+    "index": [
+        "purpose",
+        "pass_index",
+        "passes"
     ],
-    "passes": {
-        "pass_1": {
-            "goal": "TBD",
-            "touched_domains": [],
-            "scope_boundaries": "TBD",
-            "expected_outcome": "TBD",
-            "verification": "TBD",
-            "not_doing_yet": "TBD",
-            "roi": {
-                "value_axes": [],
-                "effort": "TBD",
-                "risk": "TBD",
-                "reversibility": "TBD",
-                "why_now": "TBD"
+    "content": {
+        "purpose": "Active and future execution passes only.",
+        "pass_index": [
+            {
+                "id": "pass_1",
+                "title": "Initial execution pass"
+            }
+        ],
+        "passes": {
+            "pass_1": {
+                "goal": "TBD",
+                "touched_domains": [],
+                "scope_boundaries": "TBD",
+                "expected_outcome": "TBD",
+                "verification": "TBD",
+                "not_doing_yet": "TBD",
+                "roi": {
+                    "value_axes": [],
+                    "effort": "TBD",
+                    "risk": "TBD",
+                    "reversibility": "TBD",
+                    "why_now": "TBD"
+                }
             }
         }
+    },
+    "metadata": {
+        "schema": "socratex-data-document/v1",
+        "title": " Plan",
+        "role": "Installed execution plan template."
     }
 }

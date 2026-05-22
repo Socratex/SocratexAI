@@ -1,7 +1,21 @@
 {
-    "summary": "Current technical architecture, ownership boundaries, invariants, and known traps.",
-    "invariants": [],
-    "ownership_contracts": [],
-    "source_of_truth": [],
-    "known_traps": []
+    "index": [
+        "summary",
+        "invariants",
+        "ownership_contracts",
+        "source_of_truth",
+        "known_traps"
+    ],
+    "content": {
+        "summary": "Current technical architecture, ownership boundaries, invariants, and known traps.",
+        "invariants": [],
+        "ownership_contracts": [],
+        "source_of_truth": [],
+        "known_traps": []
+    },
+    "metadata": {
+        "schema": "socratex-data-document/v1",
+        "title": "Technical",
+        "role": "Installed technical context capsule template."
+    }
 }

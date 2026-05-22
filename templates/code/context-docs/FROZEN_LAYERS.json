@@ -1,4 +1,15 @@
 {
-    "summary": "Working layers that should not be changed casually.",
-    "layers": []
+    "index": [
+        "summary",
+        "layers"
+    ],
+    "content": {
+        "summary": "Working layers that should not be changed casually.",
+        "layers": []
+    },
+    "metadata": {
+        "schema": "socratex-data-document/v1",
+        "title": "Frozen Layers",
+        "role": "Installed context capsule template for frozen layers."
+    }
 }

@@ -48,8 +48,12 @@ function Add-JsonChangelogEntry {
 	)
 
 	$document = $Content | ConvertFrom-Json
-	if (-not $document.PSObject.Properties.Name.Contains("entries")) {
-		throw "JSON changelog must contain top-level entries field."
+	$changelog = $document
+	if ($document.PSObject.Properties.Name.Contains("content") -and $null -ne $document.content) {
+		$changelog = $document.content
+	}
+	if (-not $changelog.PSObject.Properties.Name.Contains("entries")) {
+		throw "JSON changelog must contain entries field either at top-level or under content."
 	}
 
 	$change = ($EntrySummary -join " ").Trim()
@@ -57,14 +61,14 @@ function Add-JsonChangelogEntry {
 		$change = "$change Why: $($EntryWhy.Trim())"
 	}
 
-	$entries = @($document.entries)
+	$entries = @($changelog.entries)
 	$entries += [pscustomobject]@{
 		version = $EntryVersion
 		date = $EntryDate.ToString("yyyy-MM-dd")
 		feature = $EntryFeature
 		change = $change
 	}
-	$document.entries = $entries
+	$changelog.entries = $entries
 	$newContent = ($document | ConvertTo-Json -Depth 8) + [Environment]::NewLine
 	[System.IO.File]::WriteAllText($FullPath, $newContent, $utf8NoBom)
 	Write-Host "OK: appended JSON changelog entry for $EntryFeature."

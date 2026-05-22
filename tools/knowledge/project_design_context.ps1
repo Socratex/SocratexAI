@@ -15,10 +15,14 @@ if (-not (Test-Path -LiteralPath $configPath -PathType Leaf)) {
 }
 
 $config = Get-Content -Raw -LiteralPath $configPath | ConvertFrom-Json
+$configContent = $config
+if ($config.PSObject.Properties.Name -contains "content" -and $null -ne $config.content) {
+	$configContent = $config.content
+}
 
 $reads = @()
-if ($config.PSObject.Properties.Name -contains "code_design_required_reads") {
-	$reads = @($config.code_design_required_reads)
+if ($configContent.PSObject.Properties.Name -contains "code_design_required_reads") {
+	$reads = @($configContent.code_design_required_reads)
 }
 
 if ($reads.Count -eq 0) {

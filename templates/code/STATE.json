@@ -1,9 +1,25 @@
 {
-    "summary": "Current active project state.",
-    "current_objective": "TBD",
-    "current_pass": "TBD",
-    "next_action": "TBD",
-    "blockers": [],
-    "risks": [],
-    "non_regression_reminders": []
+    "index": [
+        "summary",
+        "current_objective",
+        "current_pass",
+        "next_action",
+        "blockers",
+        "risks",
+        "non_regression_reminders"
+    ],
+    "content": {
+        "summary": "Current active project state.",
+        "current_objective": "TBD",
+        "current_pass": "TBD",
+        "next_action": "TBD",
+        "blockers": [],
+        "risks": [],
+        "non_regression_reminders": []
+    },
+    "metadata": {
+        "schema": "socratex-data-document/v1",
+        "title": "State",
+        "role": "Installed active state template."
+    }
 }

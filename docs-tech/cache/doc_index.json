@@ -2,197 +2,6 @@
   "schema_version": 1,
   "documents": [
     {
-      "path": "AI-compiled/INDEX.json",
-      "document": {},
-      "routing": {},
-      "toc": [],
-      "top_level_keys": [
-        "schema",
-        "role",
-        "generated_at",
-        "do_not_edit_manually",
-        "targets",
-        "entrypoints",
-        "recompile_command",
-        "check_command"
-      ],
-      "keys": {
-        "schema": {
-          "path": "schema",
-          "title": "schema",
-          "ref": "schema",
-          "status": ""
-        },
-        "role": {
-          "path": "role",
-          "title": "role",
-          "ref": "role",
-          "status": ""
-        },
-        "generated_at": {
-          "path": "generated_at",
-          "title": "generated_at",
-          "ref": "generated_at",
-          "status": ""
-        },
-        "do_not_edit_manually": {
-          "path": "do_not_edit_manually",
-          "title": "do_not_edit_manually",
-          "ref": "do_not_edit_manually",
-          "status": ""
-        },
-        "targets": {
-          "path": "targets",
-          "title": "targets",
-          "ref": "targets",
-          "status": ""
-        },
-        "entrypoints": {
-          "path": "entrypoints",
-          "title": "entrypoints",
-          "ref": "entrypoints",
-          "status": ""
-        },
-        "recompile_command": {
-          "path": "recompile_command",
-          "title": "recompile_command",
-          "ref": "recompile_command",
-          "status": ""
-        },
-        "check_command": {
-          "path": "check_command",
-          "title": "check_command",
-          "ref": "check_command",
-          "status": ""
-        }
-      }
-    },
-    {
-      "path": "AI-compiled/checksum.json",
-      "document": {},
-      "routing": {},
-      "toc": [],
-      "top_level_keys": [
-        "schema",
-        "generated_at",
-        "source_hashes",
-        "output_hashes"
-      ],
-      "keys": {
-        "schema": {
-          "path": "schema",
-          "title": "schema",
-          "ref": "schema",
-          "status": ""
-        },
-        "generated_at": {
-          "path": "generated_at",
-          "title": "generated_at",
-          "ref": "generated_at",
-          "status": ""
-        },
-        "source_hashes": {
-          "path": "source_hashes",
-          "title": "source_hashes",
-          "ref": "source_hashes",
-          "status": ""
-        },
-        "output_hashes": {
-          "path": "output_hashes",
-          "title": "output_hashes",
-          "ref": "output_hashes",
-          "status": ""
-        }
-      }
-    },
-    {
-      "path": "AI-compiled/compile-report.json",
-      "document": {},
-      "routing": {},
-      "toc": [],
-      "top_level_keys": [
-        "schema",
-        "generated_at",
-        "role",
-        "source_of_truth",
-        "do_not_edit_manually",
-        "targets",
-        "packs",
-        "files",
-        "recompile_command",
-        "check_command",
-        "sources"
-      ],
-      "keys": {
-        "schema": {
-          "path": "schema",
-          "title": "schema",
-          "ref": "schema",
-          "status": ""
-        },
-        "generated_at": {
-          "path": "generated_at",
-          "title": "generated_at",
-          "ref": "generated_at",
-          "status": ""
-        },
-        "role": {
-          "path": "role",
-          "title": "role",
-          "ref": "role",
-          "status": ""
-        },
-        "source_of_truth": {
-          "path": "source_of_truth",
-          "title": "source_of_truth",
-          "ref": "source_of_truth",
-          "status": ""
-        },
-        "do_not_edit_manually": {
-          "path": "do_not_edit_manually",
-          "title": "do_not_edit_manually",
-          "ref": "do_not_edit_manually",
-          "status": ""
-        },
-        "targets": {
-          "path": "targets",
-          "title": "targets",
-          "ref": "targets",
-          "status": ""
-        },
-        "packs": {
-          "path": "packs",
-          "title": "packs",
-          "ref": "packs",
-          "status": ""
-        },
-        "files": {
-          "path": "files",
-          "title": "files",
-          "ref": "files",
-          "status": ""
-        },
-        "recompile_command": {
-          "path": "recompile_command",
-          "title": "recompile_command",
-          "ref": "recompile_command",
-          "status": ""
-        },
-        "check_command": {
-          "path": "check_command",
-          "title": "check_command",
-          "ref": "check_command",
-          "status": ""
-        },
-        "sources": {
-          "path": "sources",
-          "title": "sources",
-          "ref": "sources",
-          "status": ""
-        }
-      }
-    },
-    {
       "path": "context-docs/ENGINEERING.json",
       "document": {
         "title": "Engineering Standards",
@@ -208,212 +17,212 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "meta"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
           "status": ""
         },
         "tagged_rules": {
-          "path": "items.tagged_rules",
+          "path": "content.tagged_rules",
           "title": "Tagged Rules",
-          "ref": "items.tagged_rules",
+          "ref": "content.tagged_rules",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "engineering.workflow.knowledge_sqlite_generated_layer": {
-          "path": "items.tagged_rules.value.0",
+          "path": "content.tagged_rules.value.0",
           "title": "SQLite Knowledge Is Generated",
-          "ref": "items.tagged_rules.value.0",
+          "ref": "content.tagged_rules.value.0",
           "status": ""
         },
         "engineering.workflow.knowledge_views": {
-          "path": "items.tagged_rules.value.1",
+          "path": "content.tagged_rules.value.1",
           "title": "Query Context Through Named Views",
-          "ref": "items.tagged_rules.value.1",
+          "ref": "content.tagged_rules.value.1",
           "status": ""
         },
         "engineering.workflow.context_tags_before_response": {
-          "path": "items.tagged_rules.value.2",
+          "path": "content.tagged_rules.value.2",
           "title": "Context Tags Before Response",
-          "ref": "items.tagged_rules.value.2",
+          "ref": "content.tagged_rules.value.2",
           "status": ""
         },
         "engineering.workflow.knowledge_hash_gate": {
-          "path": "items.tagged_rules.value.3",
+          "path": "content.tagged_rules.value.3",
           "title": "Validate Source Hashes Before Trusting SQLite",
-          "ref": "items.tagged_rules.value.3",
+          "ref": "content.tagged_rules.value.3",
           "status": ""
         },
         "engineering.workflow.knowledge_file_fallback": {
-          "path": "items.tagged_rules.value.4",
+          "path": "content.tagged_rules.value.4",
           "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
-          "ref": "items.tagged_rules.value.4",
+          "ref": "content.tagged_rules.value.4",
           "status": ""
         },
         "engineering.workflow.load_standards_before_code": {
-          "path": "items.tagged_rules.value.5",
+          "path": "content.tagged_rules.value.5",
           "title": "Load Engineering Standards Before Code Work",
-          "ref": "items.tagged_rules.value.5",
+          "ref": "content.tagged_rules.value.5",
           "status": ""
         },
         "engineering.workflow.normalized_content_hashes": {
-          "path": "items.tagged_rules.value.6",
+          "path": "content.tagged_rules.value.6",
           "title": "Normalized Content Hashes For Compiled Knowledge",
-          "ref": "items.tagged_rules.value.6",
+          "ref": "content.tagged_rules.value.6",
           "status": ""
         },
         "engineering.coding.explicit_diagnosable_flow": {
-          "path": "items.tagged_rules.value.7",
+          "path": "content.tagged_rules.value.7",
           "title": "Explicit Diagnosable Flow",
-          "ref": "items.tagged_rules.value.7",
+          "ref": "content.tagged_rules.value.7",
           "status": ""
         },
         "engineering.architecture.helper_enforced_contracts": {
-          "path": "items.tagged_rules.value.8",
+          "path": "content.tagged_rules.value.8",
           "title": "Helpers Enforce Contracts By Convenience",
-          "ref": "items.tagged_rules.value.8",
+          "ref": "content.tagged_rules.value.8",
           "status": ""
         },
         "engineering.workflow.convenience_drives_habit": {
-          "path": "items.tagged_rules.value.9",
+          "path": "content.tagged_rules.value.9",
           "title": "Convenience Drives Habit",
-          "ref": "items.tagged_rules.value.9",
+          "ref": "content.tagged_rules.value.9",
           "status": ""
         },
         "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
-          "path": "items.tagged_rules.value.10",
+          "path": "content.tagged_rules.value.10",
           "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
-          "ref": "items.tagged_rules.value.10",
+          "ref": "content.tagged_rules.value.10",
           "status": ""
         },
         "engineering.workflow.default_tool_error_hardening": {
-          "path": "items.tagged_rules.value.11",
+          "path": "content.tagged_rules.value.11",
           "title": "Default Tool Error Hardening",
-          "ref": "items.tagged_rules.value.11",
+          "ref": "content.tagged_rules.value.11",
           "status": ""
         },
         "engineering.coding.code_primary_source_of_truth": {
-          "path": "items.tagged_rules.value.12",
+          "path": "content.tagged_rules.value.12",
           "title": "Code Is The Primary Source Of Truth",
-          "ref": "items.tagged_rules.value.12",
+          "ref": "content.tagged_rules.value.12",
           "status": ""
         },
         "engineering.coding.ai_native_code_contract_headers": {
-          "path": "items.tagged_rules.value.13",
+          "path": "content.tagged_rules.value.13",
           "title": "AI-Native Code Contract Headers",
-          "ref": "items.tagged_rules.value.13",
+          "ref": "content.tagged_rules.value.13",
           "status": ""
         },
         "engineering.coding.borrowed_before_invented": {
-          "path": "items.tagged_rules.value.14",
+          "path": "content.tagged_rules.value.14",
           "title": "Borrowed Before Invented",
-          "ref": "items.tagged_rules.value.14",
+          "ref": "content.tagged_rules.value.14",
           "status": ""
         },
         "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
-          "path": "items.tagged_rules.value.15",
+          "path": "content.tagged_rules.value.15",
           "title": "Web Research Spike To Named Implementation Plan Gate",
-          "ref": "items.tagged_rules.value.15",
+          "ref": "content.tagged_rules.value.15",
           "status": ""
         },
         "engineering.architecture.better_version_now_future_proof_by_default": {
-          "path": "items.tagged_rules.value.16",
+          "path": "content.tagged_rules.value.16",
           "title": "Better Version Now By Default",
-          "ref": "items.tagged_rules.value.16",
+          "ref": "content.tagged_rules.value.16",
           "status": ""
         },
         "engineering.coding.production_grade_default": {
-          "path": "items.tagged_rules.value.17",
+          "path": "content.tagged_rules.value.17",
           "title": "Production-Grade Architectural Default",
-          "ref": "items.tagged_rules.value.17",
+          "ref": "content.tagged_rules.value.17",
           "status": ""
         },
         "engineering.performance.lightweight_by_default_for_predictable_load": {
-          "path": "items.tagged_rules.value.18",
+          "path": "content.tagged_rules.value.18",
           "title": "Lightweight Futureproof For Predictable Load",
-          "ref": "items.tagged_rules.value.18",
+          "ref": "content.tagged_rules.value.18",
           "status": ""
         },
         "engineering.coding.ddd_adiv_when_possible": {
-          "path": "items.tagged_rules.value.19",
+          "path": "content.tagged_rules.value.19",
           "title": "DDD-ADIV When Possible",
-          "ref": "items.tagged_rules.value.19",
+          "ref": "content.tagged_rules.value.19",
           "status": ""
         },
         "engineering.coding.readability_first": {
-          "path": "items.tagged_rules.value.20",
+          "path": "content.tagged_rules.value.20",
           "title": "Readability First",
-          "ref": "items.tagged_rules.value.20",
+          "ref": "content.tagged_rules.value.20",
           "status": ""
         },
         "engineering.coding.method_and_variable_extraction": {
-          "path": "items.tagged_rules.value.21",
+          "path": "content.tagged_rules.value.21",
           "title": "Extract Methods and Intent-Revealing Variables",
-          "ref": "items.tagged_rules.value.21",
+          "ref": "content.tagged_rules.value.21",
           "status": ""
         },
         "engineering.coding.codebase_as_contract": {
-          "path": "items.tagged_rules.value.22",
+          "path": "content.tagged_rules.value.22",
           "title": "Codebase Is the Contract — Make It as Strict as Possible",
-          "ref": "items.tagged_rules.value.22",
+          "ref": "content.tagged_rules.value.22",
           "status": ""
         },
         "engineering.coding.legacy_aware_change_split": {
-          "path": "items.tagged_rules.value.23",
+          "path": "content.tagged_rules.value.23",
           "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
-          "ref": "items.tagged_rules.value.23",
+          "ref": "content.tagged_rules.value.23",
           "status": ""
         },
         "engineering.coding.minimal_comments": {
-          "path": "items.tagged_rules.value.24",
+          "path": "content.tagged_rules.value.24",
           "title": "Minimal Comments — Workarounds and Business Intent Only",
-          "ref": "items.tagged_rules.value.24",
+          "ref": "content.tagged_rules.value.24",
           "status": ""
         },
         "engineering.coding.business_naming": {
-          "path": "items.tagged_rules.value.25",
+          "path": "content.tagged_rules.value.25",
           "title": "Business Naming with Technical Suffix",
-          "ref": "items.tagged_rules.value.25",
+          "ref": "content.tagged_rules.value.25",
           "status": ""
         },
         "engineering.coding.match_surrounding_patterns": {
-          "path": "items.tagged_rules.value.26",
+          "path": "content.tagged_rules.value.26",
           "title": "Match Surrounding Patterns Mid-Fix",
-          "ref": "items.tagged_rules.value.26",
+          "ref": "content.tagged_rules.value.26",
           "status": ""
         },
         "engineering.workflow.pair_programming_collaboration": {
-          "path": "items.tagged_rules.value.27",
+          "path": "content.tagged_rules.value.27",
           "title": "Pair-Programming Stance",
-          "ref": "items.tagged_rules.value.27",
+          "ref": "content.tagged_rules.value.27",
           "status": ""
         },
         "engineering.workflow.verification_without_tests": {
-          "path": "items.tagged_rules.value.28",
+          "path": "content.tagged_rules.value.28",
           "title": "Verification Discipline Without a Test Suite",
-          "ref": "items.tagged_rules.value.28",
+          "ref": "content.tagged_rules.value.28",
           "status": ""
         },
         "engineering.workflow.tiered_context_hierarchy": {
-          "path": "items.tagged_rules.value.29",
+          "path": "content.tagged_rules.value.29",
           "title": "Tiered Context Hierarchy",
-          "ref": "items.tagged_rules.value.29",
+          "ref": "content.tagged_rules.value.29",
           "status": ""
         }
       }
@@ -434,57 +243,56 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "when_to_run": {
-          "path": "items.when_to_run",
+          "path": "content.when_to_run",
           "title": "When To Run",
-          "ref": "items.when_to_run",
+          "ref": "content.when_to_run",
           "status": ""
         },
         "required_checks": {
-          "path": "items.required_checks",
+          "path": "content.required_checks",
           "title": "Required Checks",
-          "ref": "items.required_checks",
+          "ref": "content.required_checks",
           "status": ""
         },
         "report_shape": {
-          "path": "items.report_shape",
+          "path": "content.report_shape",
           "title": "Report Shape",
-          "ref": "items.report_shape",
+          "ref": "content.report_shape",
           "status": ""
         },
         "emoji_activation": {
-          "path": "items.emoji_activation",
+          "path": "content.emoji_activation",
           "title": "<emoji> Activation",
-          "ref": "items.emoji_activation",
+          "ref": "content.emoji_activation",
           "status": ""
         },
         "failure_handling": {
-          "path": "items.failure_handling",
+          "path": "content.failure_handling",
           "title": "Failure Handling",
-          "ref": "items.failure_handling",
+          "ref": "content.failure_handling",
           "status": ""
         }
       }
@@ -513,105 +321,104 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "operating_principles": {
-          "path": "items.operating_principles",
+          "path": "content.operating_principles",
           "title": "Operating Principles",
-          "ref": "items.operating_principles",
+          "ref": "content.operating_principles",
           "status": ""
         },
         "primary_known_solutions_directive": {
-          "path": "items.primary_known_solutions_directive",
+          "path": "content.primary_known_solutions_directive",
           "title": "Primary Known-Solutions Directive",
-          "ref": "items.primary_known_solutions_directive",
+          "ref": "content.primary_known_solutions_directive",
           "status": ""
         },
         "emoji_rule": {
-          "path": "items.emoji_rule",
+          "path": "content.emoji_rule",
           "title": "Emoji Rule",
-          "ref": "items.emoji_rule",
+          "ref": "content.emoji_rule",
           "status": ""
         },
         "ddd_adiv_default": {
-          "path": "items.ddd_adiv_default",
+          "path": "content.ddd_adiv_default",
           "title": "DDD-ADIV Default",
-          "ref": "items.ddd_adiv_default",
+          "ref": "content.ddd_adiv_default",
           "status": ""
         },
         "project_memory_layers": {
-          "path": "items.project_memory_layers",
+          "path": "content.project_memory_layers",
           "title": "Project Memory Layers",
-          "ref": "items.project_memory_layers",
+          "ref": "content.project_memory_layers",
           "status": ""
         },
         "execution_passes": {
-          "path": "items.execution_passes",
+          "path": "content.execution_passes",
           "title": "Execution Passes",
-          "ref": "items.execution_passes",
+          "ref": "content.execution_passes",
           "status": ""
         },
         "known_solution_bias": {
-          "path": "items.known_solution_bias",
+          "path": "content.known_solution_bias",
           "title": "Known-Solution Bias",
-          "ref": "items.known_solution_bias",
+          "ref": "content.known_solution_bias",
           "status": ""
         },
         "quality_gates": {
-          "path": "items.quality_gates",
+          "path": "content.quality_gates",
           "title": "Quality Gates",
-          "ref": "items.quality_gates",
+          "ref": "content.quality_gates",
           "status": ""
         },
         "tool_first_json": {
-          "path": "items.tool_first_json",
+          "path": "content.tool_first_json",
           "title": "Tool-First JSON",
-          "ref": "items.tool_first_json",
+          "ref": "content.tool_first_json",
           "status": ""
         },
         "communication_rules": {
-          "path": "items.communication_rules",
+          "path": "content.communication_rules",
           "title": "Communication Rules",
-          "ref": "items.communication_rules",
+          "ref": "content.communication_rules",
           "status": ""
         },
         "communication_profiles": {
-          "path": "items.communication_profiles",
+          "path": "content.communication_profiles",
           "title": "Communication Profiles",
-          "ref": "items.communication_profiles",
+          "ref": "content.communication_profiles",
           "status": ""
         },
         "safety_rules": {
-          "path": "items.safety_rules",
+          "path": "content.safety_rules",
           "title": "Safety Rules",
-          "ref": "items.safety_rules",
+          "ref": "content.safety_rules",
           "status": ""
         },
         "git_completion": {
-          "path": "items.git_completion",
+          "path": "content.git_completion",
           "title": "Git Completion",
-          "ref": "items.git_completion",
+          "ref": "content.git_completion",
           "status": ""
         }
       }
@@ -633,63 +440,62 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "init": {
-          "path": "items.init",
+          "path": "content.init",
           "title": "INIT",
-          "ref": "items.init",
+          "ref": "content.init",
           "status": ""
         },
         "continue": {
-          "path": "items.continue",
+          "path": "content.continue",
           "title": "CONTINUE",
-          "ref": "items.continue",
+          "ref": "content.continue",
           "status": ""
         },
         "capture": {
-          "path": "items.capture",
+          "path": "content.capture",
           "title": "CAPTURE",
-          "ref": "items.capture",
+          "ref": "content.capture",
           "status": ""
         },
         "plan": {
-          "path": "items.plan",
+          "path": "content.plan",
           "title": "PLAN",
-          "ref": "items.plan",
+          "ref": "content.plan",
           "status": ""
         },
         "review": {
-          "path": "items.review",
+          "path": "content.review",
           "title": "REVIEW",
-          "ref": "items.review",
+          "ref": "content.review",
           "status": ""
         },
         "audit": {
-          "path": "items.audit",
+          "path": "content.audit",
           "title": "AUDIT",
-          "ref": "items.audit",
+          "ref": "content.audit",
           "status": ""
         },
         "finish": {
-          "path": "items.finish",
+          "path": "content.finish",
           "title": "FINISH",
-          "ref": "items.finish",
+          "ref": "content.finish",
           "status": ""
         }
       }
@@ -709,51 +515,50 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
           "status": ""
         },
         "when_to_recommend_a_hard_reset": {
-          "path": "items.when_to_recommend_a_hard_reset",
+          "path": "content.when_to_recommend_a_hard_reset",
           "title": "When to Recommend a Hard Reset",
-          "ref": "items.when_to_recommend_a_hard_reset",
+          "ref": "content.when_to_recommend_a_hard_reset",
           "status": ""
         },
         "before_reset": {
-          "path": "items.before_reset",
+          "path": "content.before_reset",
           "title": "Before Reset",
-          "ref": "items.before_reset",
+          "ref": "content.before_reset",
           "status": ""
         },
         "what_not_to_store": {
-          "path": "items.what_not_to_store",
+          "path": "content.what_not_to_store",
           "title": "What Not to Store",
-          "ref": "items.what_not_to_store",
+          "ref": "content.what_not_to_store",
           "status": ""
         },
         "reset_message": {
-          "path": "items.reset_message",
+          "path": "content.reset_message",
           "title": "Reset Message",
-          "ref": "items.reset_message",
+          "ref": "content.reset_message",
           "status": ""
         }
       }
@@ -778,56 +583,56 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
+        "content",
         "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "tier_model": {
-          "path": "items.tier_model",
+          "path": "content.tier_model",
           "title": "Tier Model",
-          "ref": "items.tier_model",
+          "ref": "content.tier_model",
           "status": ""
         },
         "human_in_loop_research_gate": {
-          "path": "items.human_in_loop_research_gate",
+          "path": "content.human_in_loop_research_gate",
           "title": "Human In Loop Research Gate",
-          "ref": "items.human_in_loop_research_gate",
+          "ref": "content.human_in_loop_research_gate",
           "status": ""
         },
         "budget_sequence": {
-          "path": "items.budget_sequence",
+          "path": "content.budget_sequence",
           "title": "Budget Sequence",
-          "ref": "items.budget_sequence",
+          "ref": "content.budget_sequence",
           "status": ""
         },
         "knowledge_tiering": {
-          "path": "items.knowledge_tiering",
+          "path": "content.knowledge_tiering",
           "title": "Knowledge Tiering",
-          "ref": "items.knowledge_tiering",
+          "ref": "content.knowledge_tiering",
           "status": ""
         },
         "consolidation_trigger": {
-          "path": "items.consolidation_trigger",
+          "path": "content.consolidation_trigger",
           "title": "Consolidation Trigger",
-          "ref": "items.consolidation_trigger",
+          "ref": "content.consolidation_trigger",
           "status": ""
         },
         "migration_policy": {
-          "path": "items.migration_policy",
+          "path": "content.migration_policy",
           "title": "Migration Policy",
-          "ref": "items.migration_policy",
+          "ref": "content.migration_policy",
           "status": ""
         }
       }
@@ -840,51 +645,57 @@
         "quick_index",
         "overview",
         "summary",
+        "json_shape_contract",
         "code_projects",
         "non_code_projects",
         "migration_rule"
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "json_shape_contract": {
+          "path": "content.json_shape_contract",
+          "title": "JSON Shape Contract",
+          "ref": "content.json_shape_contract",
           "status": ""
         },
         "code_projects": {
-          "path": "items.code_projects",
+          "path": "content.code_projects",
           "title": "Code Projects",
-          "ref": "items.code_projects",
+          "ref": "content.code_projects",
           "status": ""
         },
         "non_code_projects": {
-          "path": "items.non_code_projects",
+          "path": "content.non_code_projects",
           "title": "Non-Code Projects",
-          "ref": "items.non_code_projects",
+          "ref": "content.non_code_projects",
           "status": ""
         },
         "migration_rule": {
-          "path": "items.migration_rule",
+          "path": "content.migration_rule",
           "title": "Migration Rule",
-          "ref": "items.migration_rule",
+          "ref": "content.migration_rule",
           "status": ""
         }
       }
@@ -905,57 +716,56 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
           "status": ""
         },
         "recommended_files": {
-          "path": "items.recommended_files",
+          "path": "content.recommended_files",
           "title": "Recommended Files",
-          "ref": "items.recommended_files",
+          "ref": "content.recommended_files",
           "status": ""
         },
         "defragmentation": {
-          "path": "items.defragmentation",
+          "path": "content.defragmentation",
           "title": "Defragmentation",
-          "ref": "items.defragmentation",
+          "ref": "content.defragmentation",
           "status": ""
         },
         "sorting": {
-          "path": "items.sorting",
+          "path": "content.sorting",
           "title": "Sorting",
-          "ref": "items.sorting",
+          "ref": "content.sorting",
           "status": ""
         },
         "cleaning_rules": {
-          "path": "items.cleaning_rules",
+          "path": "content.cleaning_rules",
           "title": "Cleaning Rules",
-          "ref": "items.cleaning_rules",
+          "ref": "content.cleaning_rules",
           "status": ""
         },
         "promotion_boundary": {
-          "path": "items.promotion_boundary",
+          "path": "content.promotion_boundary",
           "title": "Promotion Boundary",
-          "ref": "items.promotion_boundary",
+          "ref": "content.promotion_boundary",
           "status": ""
         }
       }
@@ -976,57 +786,56 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "active_state": {
-          "path": "items.active_state",
+          "path": "content.active_state",
           "title": "Active State",
-          "ref": "items.active_state",
+          "ref": "content.active_state",
           "status": ""
         },
         "branch_scoped_active_state": {
-          "path": "items.branch_scoped_active_state",
+          "path": "content.branch_scoped_active_state",
           "title": "Branch-Scoped Active State",
-          "ref": "items.branch_scoped_active_state",
+          "ref": "content.branch_scoped_active_state",
           "status": ""
         },
         "plan": {
-          "path": "items.plan",
+          "path": "content.plan",
           "title": "Plan",
-          "ref": "items.plan",
+          "ref": "content.plan",
           "status": ""
         },
         "backlog": {
-          "path": "items.backlog",
+          "path": "content.backlog",
           "title": "Backlog",
-          "ref": "items.backlog",
+          "ref": "content.backlog",
           "status": ""
         },
         "decisions": {
-          "path": "items.decisions",
+          "path": "content.decisions",
           "title": "Decisions",
-          "ref": "items.decisions",
+          "ref": "content.decisions",
           "status": ""
         },
         "context_capsules": {
-          "path": "items.context_capsules",
+          "path": "content.context_capsules",
           "title": "Context Capsules",
-          "ref": "items.context_capsules",
+          "ref": "content.context_capsules",
           "status": ""
         }
       }
@@ -1045,45 +854,44 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "profile_axes": {
-          "path": "items.profile_axes",
+          "path": "content.profile_axes",
           "title": "Profile Axes",
-          "ref": "items.profile_axes",
+          "ref": "content.profile_axes",
           "status": ""
         },
         "behavior_impact": {
-          "path": "items.behavior_impact",
+          "path": "content.behavior_impact",
           "title": "Behavior Impact",
-          "ref": "items.behavior_impact",
+          "ref": "content.behavior_impact",
           "status": ""
         },
         "profile_fit_check": {
-          "path": "items.profile_fit_check",
+          "path": "content.profile_fit_check",
           "title": "Profile-Fit Check",
-          "ref": "items.profile_fit_check",
+          "ref": "content.profile_fit_check",
           "status": ""
         }
       }
@@ -1107,75 +915,74 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
           "status": ""
         },
         "backlog_to_plan": {
-          "path": "items.backlog_to_plan",
+          "path": "content.backlog_to_plan",
           "title": "BACKLOG to PLAN",
-          "ref": "items.backlog_to_plan",
+          "ref": "content.backlog_to_plan",
           "status": ""
         },
         "plan_to_state": {
-          "path": "items.plan_to_state",
+          "path": "content.plan_to_state",
           "title": "PLAN to STATE",
-          "ref": "items.plan_to_state",
+          "ref": "content.plan_to_state",
           "status": ""
         },
         "branch_state_to_durable_memory": {
-          "path": "items.branch_state_to_durable_memory",
+          "path": "content.branch_state_to_durable_memory",
           "title": "BRANCH STATE to durable memory",
-          "ref": "items.branch_state_to_durable_memory",
+          "ref": "content.branch_state_to_durable_memory",
           "status": ""
         },
         "plan_to_changelog": {
-          "path": "items.plan_to_changelog",
+          "path": "content.plan_to_changelog",
           "title": "PLAN to CHANGELOG",
-          "ref": "items.plan_to_changelog",
+          "ref": "content.plan_to_changelog",
           "status": ""
         },
         "plan_or_backlog_to_decisions": {
-          "path": "items.plan_or_backlog_to_decisions",
+          "path": "content.plan_or_backlog_to_decisions",
           "title": "PLAN or BACKLOG to DECISIONS",
-          "ref": "items.plan_or_backlog_to_decisions",
+          "ref": "content.plan_or_backlog_to_decisions",
           "status": ""
         },
         "plan_or_implementation_to_context_docs": {
-          "path": "items.plan_or_implementation_to_context_docs",
+          "path": "content.plan_or_implementation_to_context_docs",
           "title": "PLAN or IMPLEMENTATION to context-docs",
-          "ref": "items.plan_or_implementation_to_context_docs",
+          "ref": "content.plan_or_implementation_to_context_docs",
           "status": ""
         },
         "state_to_plan": {
-          "path": "items.state_to_plan",
+          "path": "content.state_to_plan",
           "title": "STATE to PLAN",
-          "ref": "items.state_to_plan",
+          "ref": "content.state_to_plan",
           "status": ""
         },
         "decisions_to_plan": {
-          "path": "items.decisions_to_plan",
+          "path": "content.decisions_to_plan",
           "title": "DECISIONS to PLAN",
-          "ref": "items.decisions_to_plan",
+          "ref": "content.decisions_to_plan",
           "status": ""
         }
       }
@@ -1195,51 +1002,50 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "command": {
-          "path": "items.command",
+          "path": "content.command",
           "title": "Command",
-          "ref": "items.command",
+          "ref": "content.command",
           "status": ""
         },
         "workflow": {
-          "path": "items.workflow",
+          "path": "content.workflow",
           "title": "Workflow",
-          "ref": "items.workflow",
+          "ref": "content.workflow",
           "status": ""
         },
         "default_preservation": {
-          "path": "items.default_preservation",
+          "path": "content.default_preservation",
           "title": "Default Preservation",
-          "ref": "items.default_preservation",
+          "ref": "content.default_preservation",
           "status": ""
         },
         "safety": {
-          "path": "items.safety",
+          "path": "content.safety",
           "title": "Safety",
-          "ref": "items.safety",
+          "ref": "content.safety",
           "status": ""
         }
       }
@@ -1262,69 +1068,68 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "value_axes": {
-          "path": "items.value_axes",
+          "path": "content.value_axes",
           "title": "Value Axes",
-          "ref": "items.value_axes",
+          "ref": "content.value_axes",
           "status": ""
         },
         "cost_axes": {
-          "path": "items.cost_axes",
+          "path": "content.cost_axes",
           "title": "Cost Axes",
-          "ref": "items.cost_axes",
+          "ref": "content.cost_axes",
           "status": ""
         },
         "roi_rule": {
-          "path": "items.roi_rule",
+          "path": "content.roi_rule",
           "title": "ROI Rule",
-          "ref": "items.roi_rule",
+          "ref": "content.roi_rule",
           "status": ""
         },
         "profile_weight": {
-          "path": "items.profile_weight",
+          "path": "content.profile_weight",
           "title": "Profile Weight",
-          "ref": "items.profile_weight",
+          "ref": "content.profile_weight",
           "status": ""
         },
         "roi_picks": {
-          "path": "items.roi_picks",
+          "path": "content.roi_picks",
           "title": "ROI Picks",
-          "ref": "items.roi_picks",
+          "ref": "content.roi_picks",
           "status": ""
         },
         "emoji_roi_picks": {
-          "path": "items.emoji_roi_picks",
+          "path": "content.emoji_roi_picks",
           "title": "<emoji> ROI Picks",
-          "ref": "items.emoji_roi_picks",
+          "ref": "content.emoji_roi_picks",
           "status": ""
         },
         "anti_pattern": {
-          "path": "items.anti_pattern",
+          "path": "content.anti_pattern",
           "title": "Anti-Pattern",
-          "ref": "items.anti_pattern",
+          "ref": "content.anti_pattern",
           "status": ""
         }
       }
@@ -1342,39 +1147,38 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "protocol": {
-          "path": "items.protocol",
+          "path": "content.protocol",
           "title": "Protocol",
-          "ref": "items.protocol",
+          "ref": "content.protocol",
           "status": ""
         },
         "install_hints": {
-          "path": "items.install_hints",
+          "path": "content.install_hints",
           "title": "Install Hints",
-          "ref": "items.install_hints",
+          "ref": "content.install_hints",
           "status": ""
         }
       }
@@ -1399,81 +1203,80 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "when_to_use": {
-          "path": "items.when_to_use",
+          "path": "content.when_to_use",
           "title": "When To Use",
-          "ref": "items.when_to_use",
+          "ref": "content.when_to_use",
           "status": ""
         },
         "default_file": {
-          "path": "items.default_file",
+          "path": "content.default_file",
           "title": "Default File",
-          "ref": "items.default_file",
+          "ref": "content.default_file",
           "status": ""
         },
         "minimal_schema": {
-          "path": "items.minimal_schema",
+          "path": "content.minimal_schema",
           "title": "Minimal Schema",
-          "ref": "items.minimal_schema",
+          "ref": "content.minimal_schema",
           "status": ""
         },
         "workflow": {
-          "path": "items.workflow",
+          "path": "content.workflow",
           "title": "Workflow",
-          "ref": "items.workflow",
-          "status": ""
-        },
-        "promotion": {
-          "path": "items.promotion",
-          "title": "Promotion",
-          "ref": "items.promotion",
-          "status": ""
-        },
-        "structured_document_edits": {
-          "path": "items.structured_document_edits",
-          "title": "Structured Document Edits",
-          "ref": "items.structured_document_edits",
-          "status": ""
-        },
-        "grouped_fragmentation": {
-          "path": "items.grouped_fragmentation",
-          "title": "Grouped Fragmentation",
-          "ref": "items.grouped_fragmentation",
-          "status": ""
-        },
-        "handoff_schema": {
-          "path": "items.handoff_schema",
-          "title": "Handoff Schema",
-          "ref": "items.handoff_schema",
+          "ref": "content.workflow",
           "status": ""
         },
         "automation_boundary": {
-          "path": "items.automation_boundary",
+          "path": "content.automation_boundary",
           "title": "Automation Boundary",
-          "ref": "items.automation_boundary",
+          "ref": "content.automation_boundary",
+          "status": ""
+        },
+        "handoff_schema": {
+          "path": "content.handoff_schema",
+          "title": "Handoff Schema",
+          "ref": "content.handoff_schema",
+          "status": ""
+        },
+        "grouped_fragmentation": {
+          "path": "content.grouped_fragmentation",
+          "title": "Grouped Fragmentation",
+          "ref": "content.grouped_fragmentation",
+          "status": ""
+        },
+        "promotion": {
+          "path": "content.promotion",
+          "title": "Promotion",
+          "ref": "content.promotion",
+          "status": ""
+        },
+        "structured_document_edits": {
+          "path": "content.structured_document_edits",
+          "title": "Structured Document Edits",
+          "ref": "content.structured_document_edits",
           "status": ""
         }
       }
@@ -1495,63 +1298,62 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "source_resolution": {
-          "path": "items.source_resolution",
+          "path": "content.source_resolution",
           "title": "Source Resolution",
-          "ref": "items.source_resolution",
+          "ref": "content.source_resolution",
           "status": ""
         },
         "update_command": {
-          "path": "items.update_command",
+          "path": "content.update_command",
           "title": "Update Command",
-          "ref": "items.update_command",
+          "ref": "content.update_command",
           "status": ""
         },
         "feature_learning": {
-          "path": "items.feature_learning",
+          "path": "content.feature_learning",
           "title": "Feature Learning",
-          "ref": "items.feature_learning",
+          "ref": "content.feature_learning",
           "status": ""
         },
         "upgrade_enforcement": {
-          "path": "items.upgrade_enforcement",
+          "path": "content.upgrade_enforcement",
           "title": "Upgrade Enforcement",
-          "ref": "items.upgrade_enforcement",
+          "ref": "content.upgrade_enforcement",
           "status": ""
         },
         "workflow": {
-          "path": "items.workflow",
+          "path": "content.workflow",
           "title": "Workflow",
-          "ref": "items.workflow",
+          "ref": "content.workflow",
           "status": ""
         },
         "safety": {
-          "path": "items.safety",
+          "path": "content.safety",
           "title": "Safety",
-          "ref": "items.safety",
+          "ref": "content.safety",
           "status": ""
         }
       }
@@ -1610,37 +1412,6 @@
       }
     },
     {
-      "path": "docs-tech/CODE_LINE_INDEX.json",
-      "document": {},
-      "routing": {},
-      "toc": [],
-      "top_level_keys": [
-        "generatedAt",
-        "threshold",
-        "files"
-      ],
-      "keys": {
-        "generatedAt": {
-          "path": "generatedAt",
-          "title": "generatedAt",
-          "ref": "generatedAt",
-          "status": ""
-        },
-        "threshold": {
-          "path": "threshold",
-          "title": "threshold",
-          "ref": "threshold",
-          "status": ""
-        },
-        "files": {
-          "path": "files",
-          "title": "files",
-          "ref": "files",
-          "status": ""
-        }
-      }
-    },
-    {
       "path": "docs-tech/KNOWLEDGE-VIEWS.json",
       "document": {
         "title": "Knowledge Views",
@@ -1656,212 +1427,68 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "meta",
-        "views"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "purpose": {
-          "path": "items.purpose",
+          "path": "content.purpose",
           "title": "Purpose",
-          "ref": "items.purpose",
+          "ref": "content.purpose",
           "status": ""
         },
         "view_contract": {
-          "path": "items.view_contract",
+          "path": "content.view_contract",
           "title": "View Contract",
-          "ref": "items.view_contract",
+          "ref": "content.view_contract",
           "status": ""
         },
         "defined_views": {
-          "path": "items.defined_views",
+          "path": "content.defined_views",
           "title": "Defined Views",
-          "ref": "items.defined_views",
+          "ref": "content.defined_views",
           "status": ""
         },
         "session_start": {
-          "path": "views.0",
+          "path": "metadata.views.0",
           "title": "Session Start",
-          "ref": "views.0",
+          "ref": "metadata.views.0",
           "status": ""
         },
         "architecture": {
-          "path": "views.1",
+          "path": "metadata.views.1",
           "title": "Architecture",
-          "ref": "views.1",
+          "ref": "metadata.views.1",
           "status": ""
         },
         "debugging": {
-          "path": "views.2",
+          "path": "metadata.views.2",
           "title": "Debugging",
-          "ref": "views.2",
+          "ref": "metadata.views.2",
           "status": ""
         },
         "performance": {
-          "path": "views.3",
+          "path": "metadata.views.3",
           "title": "Performance",
-          "ref": "views.3",
+          "ref": "metadata.views.3",
           "status": ""
         },
         "docs_workflow": {
-          "path": "views.4",
+          "path": "metadata.views.4",
           "title": "Docs Workflow",
-          "ref": "views.4",
+          "ref": "metadata.views.4",
           "status": ""
         },
         "domain_modeling": {
-          "path": "views.5",
+          "path": "metadata.views.5",
           "title": "Worldgen",
-          "ref": "views.5",
-          "status": ""
-        }
-      }
-    },
-    {
-      "path": "docs-tech/LARGE_FILES.json",
-      "document": {
-        "title": "📏 Large Files",
-        "type": "technical",
-        "language": "en"
-      },
-      "routing": {
-        "purpose": "Generated JSON index of code files above the large-file threshold.",
-        "read_when": [
-          "When checking large source-owned files or deciding whether a file should be split.",
-          "When code line index tooling is in scope."
-        ],
-        "do_not_read_when": [
-          "When the current task is unrelated to repository size, ownership, or tooling."
-        ]
-      },
-      "toc": [
-        "quick_index",
-        "summary",
-        "large_file_index",
-        "maintenance"
-      ],
-      "top_level_keys": [
-        "index",
-        "items",
-        "meta"
-      ],
-      "keys": {
-        "quick_index": {
-          "path": "items.quick_index",
-          "title": "Quick Index",
-          "ref": "items.quick_index",
-          "status": ""
-        },
-        "summary": {
-          "path": "items.summary",
-          "title": "📌 Summary",
-          "ref": "items.summary",
-          "status": ""
-        },
-        "large_file_index": {
-          "path": "items.large_file_index",
-          "title": "📊 Large File Index",
-          "ref": "items.large_file_index",
-          "status": ""
-        },
-        "maintenance": {
-          "path": "items.maintenance",
-          "title": "🛠 Maintenance",
-          "ref": "items.maintenance",
-          "status": ""
-        }
-      }
-    },
-    {
-      "path": "docs-tech/PIPELINE-BOOTSTRAP.json",
-      "document": {
-        "title": "Pipeline Bootstrap Index",
-        "type": "pipeline_bootstrap_index",
-        "language": "en"
-      },
-      "routing": {},
-      "toc": [
-        "DOCS.json",
-        "WORKFLOW.json",
-        "COMMANDS.json",
-        "FLOWS.json",
-        "SCRIPTS.json"
-      ],
-      "top_level_keys": [
-        "index",
-        "content",
-        "metadata"
-      ],
-      "keys": {
-        "DOCS.json": {
-          "path": "content.DOCS.json",
-          "title": "DOCS.json",
-          "ref": "content.DOCS.json",
-          "status": ""
-        },
-        "WORKFLOW.json": {
-          "path": "content.WORKFLOW.json",
-          "title": "WORKFLOW.json",
-          "ref": "content.WORKFLOW.json",
-          "status": ""
-        },
-        "COMMANDS.json": {
-          "path": "content.COMMANDS.json",
-          "title": "COMMANDS.json",
-          "ref": "content.COMMANDS.json",
-          "status": ""
-        },
-        "FLOWS.json": {
-          "path": "content.FLOWS.json",
-          "title": "FLOWS.json",
-          "ref": "content.FLOWS.json",
-          "status": ""
-        },
-        "SCRIPTS.json": {
-          "path": "content.SCRIPTS.json",
-          "title": "SCRIPTS.json",
-          "ref": "content.SCRIPTS.json",
-          "status": ""
-        }
-      }
-    },
-    {
-      "path": "docs-tech/TOOL-ERRORS.json",
-      "document": {
-        "title": "Tool Errors",
-        "type": "tool_error_registry",
-        "language": "en"
-      },
-      "routing": {},
-      "toc": [],
-      "top_level_keys": [
-        "index",
-        "content",
-        "metadata"
-      ],
-      "keys": {
-        "index": {
-          "path": "index",
-          "title": "index",
-          "ref": "index",
-          "status": ""
-        },
-        "content": {
-          "path": "content",
-          "title": "content",
-          "ref": "content",
-          "status": ""
-        },
-        "metadata": {
-          "path": "metadata",
-          "title": "metadata",
-          "ref": "metadata",
+          "ref": "metadata.views.5",
           "status": ""
         }
       }
@@ -1996,31 +1623,144 @@
     },
     {
       "path": "templates/DOCS.json",
-      "document": {},
+      "document": {
+        "title": "Non-Code Project Document Index",
+        "type": "document_index",
+        "language": "en"
+      },
       "routing": {},
-      "toc": [],
+      "toc": [
+        "SOCRATEX.md",
+        "PIPELINE-CONFIG.json",
+        "DOCS.json",
+        "docs-tech/KNOWLEDGE-VIEWS.json",
+        "AI-compiled/project/knowledge.sqlite",
+        "AI-compiled/project/knowledge-files/",
+        "STATE.md",
+        "WORKFLOW.json",
+        "team/*.json",
+        "_PLAN.md",
+        "BACKLOG.md",
+        "DECISIONS.md",
+        "ISSUES.md",
+        "JOURNAL.md",
+        "REVIEW.md",
+        "_INSTRUCTIONS.md",
+        "_INSTRUCTION-QUEUE.json",
+        "context-docs/*.json"
+      ],
       "top_level_keys": [
-        "summary",
-        "rules",
-        "documents"
+        "index",
+        "content",
+        "metadata"
       ],
       "keys": {
-        "summary": {
-          "path": "summary",
-          "title": "summary",
-          "ref": "summary",
+        "SOCRATEX.md": {
+          "path": "content.SOCRATEX.md",
+          "title": "",
+          "ref": "content.SOCRATEX.md",
           "status": ""
         },
-        "rules": {
-          "path": "rules",
-          "title": "rules",
-          "ref": "rules",
+        "PIPELINE-CONFIG.json": {
+          "path": "content.PIPELINE-CONFIG.json",
+          "title": "",
+          "ref": "content.PIPELINE-CONFIG.json",
           "status": ""
         },
-        "documents": {
-          "path": "documents",
-          "title": "documents",
-          "ref": "documents",
+        "DOCS.json": {
+          "path": "content.DOCS.json",
+          "title": "",
+          "ref": "content.DOCS.json",
+          "status": ""
+        },
+        "docs-tech/KNOWLEDGE-VIEWS.json": {
+          "path": "content.docs-tech/KNOWLEDGE-VIEWS.json",
+          "title": "",
+          "ref": "content.docs-tech/KNOWLEDGE-VIEWS.json",
+          "status": ""
+        },
+        "AI-compiled/project/knowledge.sqlite": {
+          "path": "content.AI-compiled/project/knowledge.sqlite",
+          "title": "",
+          "ref": "content.AI-compiled/project/knowledge.sqlite",
+          "status": ""
+        },
+        "AI-compiled/project/knowledge-files/": {
+          "path": "content.AI-compiled/project/knowledge-files/",
+          "title": "",
+          "ref": "content.AI-compiled/project/knowledge-files/",
+          "status": ""
+        },
+        "STATE.md": {
+          "path": "content.STATE.md",
+          "title": "",
+          "ref": "content.STATE.md",
+          "status": ""
+        },
+        "WORKFLOW.json": {
+          "path": "content.WORKFLOW.json",
+          "title": "",
+          "ref": "content.WORKFLOW.json",
+          "status": ""
+        },
+        "team/*.json": {
+          "path": "content.team/*.json",
+          "title": "",
+          "ref": "content.team/*.json",
+          "status": ""
+        },
+        "_PLAN.md": {
+          "path": "content._PLAN.md",
+          "title": "",
+          "ref": "content._PLAN.md",
+          "status": ""
+        },
+        "BACKLOG.md": {
+          "path": "content.BACKLOG.md",
+          "title": "",
+          "ref": "content.BACKLOG.md",
+          "status": ""
+        },
+        "DECISIONS.md": {
+          "path": "content.DECISIONS.md",
+          "title": "",
+          "ref": "content.DECISIONS.md",
+          "status": ""
+        },
+        "ISSUES.md": {
+          "path": "content.ISSUES.md",
+          "title": "",
+          "ref": "content.ISSUES.md",
+          "status": ""
+        },
+        "JOURNAL.md": {
+          "path": "content.JOURNAL.md",
+          "title": "",
+          "ref": "content.JOURNAL.md",
+          "status": ""
+        },
+        "REVIEW.md": {
+          "path": "content.REVIEW.md",
+          "title": "",
+          "ref": "content.REVIEW.md",
+          "status": ""
+        },
+        "_INSTRUCTIONS.md": {
+          "path": "content._INSTRUCTIONS.md",
+          "title": "",
+          "ref": "content._INSTRUCTIONS.md",
+          "status": ""
+        },
+        "_INSTRUCTION-QUEUE.json": {
+          "path": "content._INSTRUCTION-QUEUE.json",
+          "title": "",
+          "ref": "content._INSTRUCTION-QUEUE.json",
+          "status": ""
+        },
+        "context-docs/*.json": {
+          "path": "content.context-docs/*.json",
+          "title": "",
+          "ref": "content.context-docs/*.json",
           "status": ""
         }
       }
@@ -2043,69 +1783,68 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
           "status": ""
         },
         "language": {
-          "path": "items.language",
+          "path": "content.language",
           "title": "Language",
-          "ref": "items.language",
+          "ref": "content.language",
           "status": ""
         },
         "active_project_packs": {
-          "path": "items.active_project_packs",
+          "path": "content.active_project_packs",
           "title": "Active Project Packs",
-          "ref": "items.active_project_packs",
+          "ref": "content.active_project_packs",
           "status": ""
         },
         "ai_operating_mode": {
-          "path": "items.ai_operating_mode",
+          "path": "content.ai_operating_mode",
           "title": "AI Operating Mode",
-          "ref": "items.ai_operating_mode",
+          "ref": "content.ai_operating_mode",
           "status": ""
         },
         "git": {
-          "path": "items.git",
+          "path": "content.git",
           "title": "Git",
-          "ref": "items.git",
+          "ref": "content.git",
           "status": ""
         },
         "first_target": {
-          "path": "items.first_target",
+          "path": "content.first_target",
           "title": "First Target",
-          "ref": "items.first_target",
+          "ref": "content.first_target",
           "status": ""
         },
         "first_session_success_criteria": {
-          "path": "items.first_session_success_criteria",
+          "path": "content.first_session_success_criteria",
           "title": "First-Session Success Criteria",
-          "ref": "items.first_session_success_criteria",
+          "ref": "content.first_session_success_criteria",
           "status": ""
         },
         "communication": {
-          "path": "items.communication",
+          "path": "content.communication",
           "title": "Communication",
-          "ref": "items.communication",
+          "ref": "content.communication",
           "status": ""
         }
       }
@@ -2114,8 +1853,7 @@
       "path": "templates/WORKFLOW.json",
       "document": {},
       "routing": {},
-      "toc": [],
-      "top_level_keys": [
+      "toc": [
         "summary",
         "usage",
         "responsibility_boundaries",
@@ -2125,17 +1863,70 @@
         "agent_behavior",
         "team_on_demand"
       ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
       "keys": {
-        "example_missing_core_loop": {
-          "path": "active_pain_points.0",
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "usage": {
+          "path": "content.usage",
           "title": "",
-          "ref": "active_pain_points.0",
+          "ref": "content.usage",
+          "status": ""
+        },
+        "responsibility_boundaries": {
+          "path": "content.responsibility_boundaries",
+          "title": "",
+          "ref": "content.responsibility_boundaries",
+          "status": ""
+        },
+        "task_routing": {
+          "path": "content.task_routing",
+          "title": "",
+          "ref": "content.task_routing",
+          "status": ""
+        },
+        "active_pain_points": {
+          "path": "content.active_pain_points",
+          "title": "active_pain_points",
+          "ref": "content.active_pain_points",
+          "status": ""
+        },
+        "priority_rules": {
+          "path": "content.priority_rules",
+          "title": "priority_rules",
+          "ref": "content.priority_rules",
+          "status": ""
+        },
+        "agent_behavior": {
+          "path": "content.agent_behavior",
+          "title": "",
+          "ref": "content.agent_behavior",
+          "status": ""
+        },
+        "team_on_demand": {
+          "path": "content.team_on_demand",
+          "title": "",
+          "ref": "content.team_on_demand",
+          "status": ""
+        },
+        "example_missing_core_loop": {
+          "path": "content.active_pain_points.0",
+          "title": "",
+          "ref": "content.active_pain_points.0",
           "status": "example_replace_me"
         },
         "example_quality_or_reliability": {
-          "path": "active_pain_points.1",
+          "path": "content.active_pain_points.1",
           "title": "",
-          "ref": "active_pain_points.1",
+          "ref": "content.active_pain_points.1",
           "status": "example_replace_me"
         }
       }
@@ -2151,27 +1942,26 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
           "status": ""
         }
       }
@@ -2187,27 +1977,26 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
           "status": ""
         }
       }
@@ -2223,27 +2012,26 @@
       ],
       "top_level_keys": [
         "index",
-        "items",
-        "schema",
-        "title"
+        "content",
+        "metadata"
       ],
       "keys": {
         "quick_index": {
-          "path": "items.quick_index",
+          "path": "content.quick_index",
           "title": "Quick Index",
-          "ref": "items.quick_index",
+          "ref": "content.quick_index",
           "status": ""
         },
         "overview": {
-          "path": "items.overview",
+          "path": "content.overview",
           "title": "Overview",
-          "ref": "items.overview",
+          "ref": "content.overview",
           "status": ""
         },
         "summary": {
-          "path": "items.summary",
+          "path": "content.summary",
           "title": "Summary",
-          "ref": "items.summary",
+          "ref": "content.summary",
           "status": ""
         }
       }
@@ -2252,8 +2040,7 @@
       "path": "templates/workspace.json",
       "document": {},
       "routing": {},
-      "toc": [],
-      "top_level_keys": [
+      "toc": [
         "schema",
         "workspace_name",
         "projects_dir",
@@ -2263,53 +2050,58 @@
         "drive_exports_dir",
         "google_drive_projects_uri"
       ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
       "keys": {
         "schema": {
-          "path": "schema",
+          "path": "content.schema",
           "title": "schema",
-          "ref": "schema",
+          "ref": "content.schema",
           "status": ""
         },
         "workspace_name": {
-          "path": "workspace_name",
+          "path": "content.workspace_name",
           "title": "workspace_name",
-          "ref": "workspace_name",
+          "ref": "content.workspace_name",
           "status": ""
         },
         "projects_dir": {
-          "path": "projects_dir",
+          "path": "content.projects_dir",
           "title": "projects_dir",
-          "ref": "projects_dir",
+          "ref": "content.projects_dir",
           "status": ""
         },
         "socratex_ai_dir": {
-          "path": "socratex_ai_dir",
+          "path": "content.socratex_ai_dir",
           "title": "socratex_ai_dir",
-          "ref": "socratex_ai_dir",
+          "ref": "content.socratex_ai_dir",
           "status": ""
         },
         "tools_dir": {
-          "path": "tools_dir",
+          "path": "content.tools_dir",
           "title": "tools_dir",
-          "ref": "tools_dir",
+          "ref": "content.tools_dir",
           "status": ""
         },
         "archive_dir": {
-          "path": "archive_dir",
+          "path": "content.archive_dir",
           "title": "archive_dir",
-          "ref": "archive_dir",
+          "ref": "content.archive_dir",
           "status": ""
         },
         "drive_exports_dir": {
-          "path": "drive_exports_dir",
+          "path": "content.drive_exports_dir",
           "title": "drive_exports_dir",
-          "ref": "drive_exports_dir",
+          "ref": "content.drive_exports_dir",
           "status": ""
         },
         "google_drive_projects_uri": {
-          "path": "google_drive_projects_uri",
+          "path": "content.google_drive_projects_uri",
           "title": "google_drive_projects_uri",
-          "ref": "google_drive_projects_uri",
+          "ref": "content.google_drive_projects_uri",
           "status": ""
         }
       }

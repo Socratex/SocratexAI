@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T15:24:52+02:00",
+  "generatedAt": "2026-05-22T15:49:00+02:00",
   "threshold": 300,
   "files": [
     {
@@ -27,21 +27,21 @@
       "large": true
     },
     {
-      "path": "tools/pipeline/tool_handler.ps1",
-      "lines": 376,
-      "extension": ".ps1",
+      "path": "tools/documents/document_read_cache_engine.py",
+      "lines": 388,
+      "extension": ".py",
       "large": true
     },
     {
       "path": "tools/pipeline/Initialize-SocratexPipeline.ps1",
-      "lines": 371,
+      "lines": 388,
       "extension": ".ps1",
       "large": true
     },
     {
-      "path": "tools/documents/document_read_cache_engine.py",
-      "lines": 369,
-      "extension": ".py",
+      "path": "tools/pipeline/tool_handler.ps1",
+      "lines": 376,
+      "extension": ".ps1",
       "large": true
     },
     {
@@ -64,7 +64,7 @@
     },
     {
       "path": "tools/pipeline/import_existing_project.ps1",
-      "lines": 305,
+      "lines": 333,
       "extension": ".ps1",
       "large": true
     },
@@ -94,8 +94,14 @@
     },
     {
       "path": "tools/repo/task_flow_audit.ps1",
-      "lines": 246,
+      "lines": 250,
       "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/documents/audit_json_docs.py",
+      "lines": 237,
+      "extension": ".py",
       "large": false
     },
     {
@@ -114,12 +120,6 @@
       "path": "tools/documents/normalize_markdown_emoji.ps1",
       "lines": 220,
       "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/documents/audit_json_docs.py",
-      "lines": 219,
-      "extension": ".py",
       "large": false
     },
     {
@@ -189,14 +189,14 @@
       "large": false
     },
     {
-      "path": "tools/pipeline/tool_error_log.ps1",
-      "lines": 154,
+      "path": "tools/pipeline/resolve_workspace_root.ps1",
+      "lines": 155,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/pipeline/resolve_workspace_root.ps1",
-      "lines": 151,
+      "path": "tools/pipeline/tool_error_log.ps1",
+      "lines": 154,
       "extension": ".ps1",
       "large": false
     },
@@ -219,20 +219,20 @@
       "large": false
     },
     {
-      "path": "tools/documents/insert_document_item.ps1",
-      "lines": 109,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
       "path": "tools/repo/add_changelog_entry.ps1",
-      "lines": 109,
+      "lines": 113,
       "extension": ".ps1",
       "large": false
     },
     {
       "path": "tools/codebase/check_project_design_context_gate.ps1",
-      "lines": 106,
+      "lines": 110,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/documents/insert_document_item.ps1",
+      "lines": 109,
       "extension": ".ps1",
       "large": false
     },
@@ -249,14 +249,14 @@
       "large": false
     },
     {
-      "path": "tools/knowledge/context_tags.ps1",
-      "lines": 104,
+      "path": "tools/knowledge/project_design_context.ps1",
+      "lines": 105,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/knowledge/project_design_context.ps1",
-      "lines": 101,
+      "path": "tools/knowledge/context_tags.ps1",
+      "lines": 104,
       "extension": ".ps1",
       "large": false
     },
@@ -477,6 +477,12 @@
       "large": false
     },
     {
+      "path": "tools/pipeline/init_task_work.ps1",
+      "lines": 37,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/pipeline/compile_pipeline_context.ps1",
       "lines": 36,
       "extension": ".ps1",
@@ -520,12 +526,6 @@
     },
     {
       "path": "tools/documents/check_document_list_item_duplicates.ps1",
-      "lines": 30,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/pipeline/init_task_work.ps1",
       "lines": 30,
       "extension": ".ps1",
       "large": false

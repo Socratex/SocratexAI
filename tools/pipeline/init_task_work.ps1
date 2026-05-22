@@ -29,8 +29,15 @@ if ($DryRun) {
 }
 
 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $targetPath) | Out-Null
-$content = Get-Content -Raw -LiteralPath $templatePath
-$content = $content.Replace("title: TBD", "title: $Title")
-$content = $content.Replace("source_request: TBD", "source_request: $SourceRequest")
+$document = Get-Content -Raw -LiteralPath $templatePath | ConvertFrom-Json
+$taskDocument = $document
+if ($document.PSObject.Properties.Name -contains "content" -and $null -ne $document.content) {
+    $taskDocument = $document.content
+}
+if ($taskDocument.PSObject.Properties.Name -contains "task" -and $null -ne $taskDocument.task) {
+    $taskDocument.task.title = $Title
+    $taskDocument.task.source_request = $SourceRequest
+}
+$content = ($document | ConvertTo-Json -Depth 12) + [Environment]::NewLine
 Write-Utf8File -Path $targetPath -Value $content -NoNewline
 Write-Host "Created task work file: $targetPath"

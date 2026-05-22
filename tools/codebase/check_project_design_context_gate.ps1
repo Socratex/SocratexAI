@@ -72,9 +72,13 @@ if (-not (Test-Path -LiteralPath $configPath -PathType Leaf)) {
 }
 
 $config = Get-Content -Raw -LiteralPath $configPath | ConvertFrom-Json
+$configContent = $config
+if ($config.PSObject.Properties.Name -contains "content" -and $null -ne $config.content) {
+	$configContent = $config.content
+}
 $declaredReads = @()
-if ($config.PSObject.Properties.Name -contains "code_design_required_reads") {
-	$declaredReads = @($config.code_design_required_reads)
+if ($configContent.PSObject.Properties.Name -contains "code_design_required_reads") {
+	$declaredReads = @($configContent.code_design_required_reads)
 }
 if ($declaredReads.Count -eq 0) {
 	Write-Host "OK: project declares no code_design_required_reads; per-project design gate is a no-op."

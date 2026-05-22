@@ -1,4 +1,15 @@
 {
-    "items": [],
-    "summary": "Defragmented prompt queue for programming work."
+    "index": [
+        "items",
+        "summary"
+    ],
+    "content": {
+        "items": [],
+        "summary": "Defragmented prompt queue for programming work."
+    },
+    "metadata": {
+        "schema": "socratex-data-document/v1",
+        "title": " Prompt Queue",
+        "role": "Installed prompt capture queue template."
+    }
 }

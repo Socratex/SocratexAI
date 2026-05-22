@@ -24,7 +24,11 @@ function Read-WorkspaceConfig {
 	param([string]$Path)
 
 	try {
-		return (Get-Content -Raw -LiteralPath $Path -Encoding UTF8 | ConvertFrom-Json)
+		$document = Get-Content -Raw -LiteralPath $Path -Encoding UTF8 | ConvertFrom-Json
+		if ($document.PSObject.Properties.Name.Contains("content") -and $null -ne $document.content) {
+			return $document.content
+		}
+		return $document
 	} catch {
 		throw "workspace.json is not valid JSON: $Path"
 	}

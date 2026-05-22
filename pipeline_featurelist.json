@@ -109,7 +109,8 @@
             "task_flow_audit_closure",
             "ai_native_code_contract_headers",
             "source_pipeline_maintainer_backlog",
-            "grouped_fragmented_task_state_handoff"
+            "grouped_fragmented_task_state_handoff",
+            "canonical_data_document_templates"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -6335,6 +6336,99 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
                 ],
                 "known_failure_if_missing": "Agents may prescribe heroic discipline, checklist-only habits, or DDD-purity migrations in legacy zones instead of making the correct behavior convenient and enforceable through the right contract shape."
+            },
+            "canonical_data_document_templates": {
+                "summary": "Starter templates and source changelog use canonical index/content/metadata JSON data-document wrappers, while setup, import, workspace, changelog, task-work, design-context, document-cache, and JSON-audit tooling remain canonical/direct aware.",
+                "required_paths": [
+                    "CHANGELOG.json",
+                    "JSON-FORMAT-CONTRACT.json",
+                    "pipeline_featurelist.json",
+                    "templates/WORKFLOW.json",
+                    "templates/code/BUGS-SOLVED.json",
+                    "templates/code/BUGS.json",
+                    "templates/code/CHANGELOG.json",
+                    "templates/code/DECISIONS.json",
+                    "templates/code/PIPELINE-CONFIG.json",
+                    "templates/code/STATE.json",
+                    "templates/code/TODO.json",
+                    "templates/code/_INSTRUCTION-QUEUE.json",
+                    "templates/code/_PLAN.json",
+                    "templates/code/_PROMPT-QUEUE.json",
+                    "templates/code/context-docs/FROZEN_LAYERS.json",
+                    "templates/code/context-docs/TECHNICAL.json",
+                    "templates/code/current_task.json",
+                    "templates/team/experience.json",
+                    "templates/team/performance.json",
+                    "templates/team/pipeline.json",
+                    "templates/team/product.json",
+                    "templates/team/technical.json",
+                    "templates/workspace.json",
+                    "tools/codebase/check_project_design_context_gate.ps1",
+                    "tools/documents/audit_json_docs.py",
+                    "tools/documents/document_read_cache_engine.py",
+                    "tools/knowledge/project_design_context.ps1",
+                    "tools/pipeline/Initialize-SocratexPipeline.ps1",
+                    "tools/pipeline/import_existing_project.ps1",
+                    "tools/pipeline/init_task_work.ps1",
+                    "tools/pipeline/resolve_workspace_root.ps1",
+                    "tools/repo/add_changelog_entry.ps1",
+                    "tools/repo/task_flow_audit.ps1"
+                ],
+                "required_scripts": [
+                    "audit_docs.ps1",
+                    "audit_json_docs.py",
+                    "build_document_cache.ps1",
+                    "check_project_design_context_gate.ps1",
+                    "project_design_context.ps1",
+                    "Initialize-SocratexPipeline.ps1",
+                    "import_existing_project.ps1",
+                    "init_task_work.ps1",
+                    "resolve_workspace_root.ps1",
+                    "add_changelog_entry.ps1",
+                    "task_flow_audit.ps1",
+                    "check_pipeline_feature_contracts.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "audit_docs.ps1",
+                        "audit_json_docs.py",
+                        "build_document_cache.ps1",
+                        "check_project_design_context_gate.ps1",
+                        "project_design_context.ps1",
+                        "Initialize-SocratexPipeline.ps1",
+                        "import_existing_project.ps1",
+                        "init_task_work.ps1",
+                        "resolve_workspace_root.ps1",
+                        "add_changelog_entry.ps1",
+                        "task_flow_audit.ps1",
+                        "check_pipeline_feature_contracts.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "JSON-FORMAT-CONTRACT.json",
+                    "CHANGELOG.json",
+                    "pipeline_featurelist.json",
+                    "templates/WORKFLOW.json",
+                    "templates/code/PIPELINE-CONFIG.json",
+                    "templates/code/CHANGELOG.json",
+                    "templates/workspace.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep reusable starter JSON templates in root index/content/metadata shape unless the file is generated, runtime-owned, or an explicit eval/external protocol exception.",
+                    "Use socratex-data-document/v1 when canonical wrappers carry operational data instead of prose section objects.",
+                    "Keep setup/import writers canonical-aware so initialized child projects do not downgrade PIPELINE-CONFIG.json back to a direct schema.",
+                    "Keep changelog, workspace, task-work, and design-context readers compatible with both canonical and older direct documents during migration.",
+                    "Keep document cache and JSON audit exclusions aligned with JSON-FORMAT-CONTRACT generated/runtime exclusions.",
+                    "Run JSON audit, document audit, check_task -Audit, and quality gate before publishing or syncing to child projects."
+                ],
+                "verification_commands": [
+                    "python3 tools/documents/audit_json_docs.py --repo-root .",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_task.ps1 -Audit",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1"
+                ],
+                "known_failure_if_missing": "Child projects receive direct-schema starter memory/config/team files, setup/import rewrites canonical config back to flat JSON, or source/child comparison misses template data-document parity because only prose docs use canonical wrappers."
             }
         }
     },
@@ -6342,7 +6436,7 @@
         "schema": "socratex-pipeline-featurelist/v4",
         "pipeline_id": "socratex_pipeline",
         "role": "source",
-        "updated_at": "2026-05-21",
+        "updated_at": "2026-05-22",
         "comparison_contract": "Use content.features for cheap source/instance comparison; use content.feature_contracts for artifact-level synchronization and promotion checks. Root index/content/metadata is the canonical JSON list-document shape.",
         "required_root_keys": [
             "index",
