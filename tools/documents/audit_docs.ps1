@@ -96,6 +96,27 @@ function Test-ScriptExists {
     }
 }
 
+function Test-ScriptContract {
+    param([string]$Name)
+
+    $catalog = Get-ScriptCatalog
+    if ($null -eq $catalog) {
+        return
+    }
+
+    if (-not ($catalog.content.PSObject.Properties.Name -contains $Name)) {
+        Add-Error "Missing script catalog entry: $Name"
+        return
+    }
+
+    $entry = $catalog.content.PSObject.Properties[$Name].Value
+    foreach ($field in @("description", "input", "output")) {
+        if (-not ($entry.PSObject.Properties.Name -contains $field)) {
+            Add-Error "Script catalog entry is missing ${field}: $Name"
+        }
+    }
+}
+
 function Test-CanonicalListDocument {
     param(
         [string]$RelativePath,
@@ -505,6 +526,10 @@ try {
                 Test-ScriptExists -Name $tool
             }
         }
+    }
+
+    foreach ($tool in @("audit_docs.ps1", "check_evals.ps1", "check_runtime.py", "check_task.ps1", "run_quality_gate.ps1", "check_ai_compiled_context.ps1", "rebuild_ai_compiled_context.ps1", "knowledge_code_context.ps1", "update_code_line_index.ps1", "task_snapshot.ps1", "end_prompt_snapshot.ps1", "legacy_commit_task_compatibility_wrapper.ps1", "task_flow_audit.ps1", "run_final_task_checks.ps1", "finalize_changed_files_commit_push.ps1", "finalize_task_check_commit_push.ps1")) {
+        Test-ScriptContract -Name $tool
     }
 
     $markdownFiles = @(

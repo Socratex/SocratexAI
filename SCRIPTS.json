@@ -145,7 +145,21 @@
         },
         "audit_docs.ps1": {
             "path": "tools/documents/audit_docs.ps1",
-            "category": "documents"
+            "category": "documents",
+            "description": "Audit source-pipeline document, template, compiled-context, eval, feature-contract, and required-tool consistency.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-StateSoftLimit",
+                    "-Initialized",
+                    "-Strict"
+                ],
+                "rule": "Run from the repository root for source-pipeline self-checks; use -Initialized when validating an initialized project shape."
+            },
+            "output": {
+                "success": "Prints OK with warning count after required documents, compiled context, evals, templates, and feature contracts pass.",
+                "failure": "Throws when required files, text anchors, compiled context freshness, evals, feature contracts, or strict warnings fail."
+            }
         },
         "audit_json_docs.py": {
             "path": "tools/documents/audit_json_docs.py",
@@ -157,11 +171,35 @@
         },
         "check_ai_compiled_context.ps1": {
             "path": "tools/pipeline/check_ai_compiled_context.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Check that AI-compiled instruction and knowledge artifacts are current against their tracked source hashes.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-OutputDir"
+                ],
+                "rule": "Run after source instruction, workflow, script catalog, template, or knowledge changes; rebuild first when stale output is expected."
+            },
+            "output": {
+                "success": "Prints OK when knowledge DB hashes and compiled agent instructions match source files.",
+                "failure": "Exits nonzero when compiled artifacts are missing or stale."
+            }
         },
         "check_evals.ps1": {
             "path": "tools/quality/check_evals.ps1",
-            "category": "quality"
+            "category": "quality",
+            "description": "Verify the manual eval framework files, prompt scenarios, personas, expected behaviors, scoring docs, and result JSONs are present and internally linked.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-EvalDir"
+                ],
+                "rule": "Run from the repository root; use -EvalDir only when checking a nonstandard eval directory."
+            },
+            "output": {
+                "success": "Prints OK when required eval files parse and scenario references are consistent.",
+                "failure": "Throws when eval files are missing, invalid JSON, or internally inconsistent."
+            }
         },
         "check_pipeline_featurelist_update.ps1": {
             "path": "tools/repo/check_pipeline_featurelist_update.ps1",
@@ -212,7 +250,19 @@
         },
         "check_runtime.py": {
             "path": "tools/quality/check_runtime.py",
-            "category": "quality"
+            "category": "quality",
+            "description": "Report Python and PowerShell runtime availability as JSON for setup and degraded-mode decisions.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--root-key"
+                ],
+                "rule": "Run through the resolved Python runtime when setup or update needs toolchain status."
+            },
+            "output": {
+                "success": "Prints a JSON object with python3 and pwsh availability, versions, install hints, and fallback recommendation.",
+                "failure": "Exits nonzero when Python itself is unavailable or runtime probing cannot complete."
+            }
         },
         "ai_native_contract_dry_run.ps1": {
             "path": "tools/codebase/ai_native_contract_dry_run.ps1",
@@ -233,7 +283,26 @@
         },
         "check_task.ps1": {
             "path": "tools/repo/check_task.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Run the compact repository task check: code-context gate, normalization, bootstrap, diff, UTF-8, feature-list guard, line index, and optional docs audit.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Paths",
+                    "-ProjectRoot",
+                    "-Audit",
+                    "-MarkdownEmoji",
+                    "-NoLineIndex",
+                    "-NoNormalize",
+                    "-NoStat",
+                    "-NoStatus"
+                ],
+                "rule": "Use before committing changed source-pipeline files; pass -Audit for broad or document-affecting changes."
+            },
+            "output": {
+                "success": "Refreshes/checks selected artifacts and prints OK: task check completed.",
+                "failure": "Throws when any selected gate, normalizer check, bootstrap check, audit, or git check fails."
+            }
         },
         "check_utf8_writes.ps1": {
             "path": "tools/text/check_utf8_writes.ps1",
@@ -241,7 +310,27 @@
         },
         "legacy_commit_task_compatibility_wrapper.ps1": {
             "path": "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Compatibility wrapper that forwards legacy commit-task calls to finalize_changed_files_commit_push.ps1.",
+            "input": {
+                "required": [
+                    "-Message"
+                ],
+                "optional": [
+                    "-Paths",
+                    "-Quality",
+                    "-QualityCommand",
+                    "-StrictAudit",
+                    "-NoAudit",
+                    "-NoPush",
+                    "-AllowPreStaged"
+                ],
+                "rule": "Use only for older automation; new flows should call finalize_changed_files_commit_push.ps1 or finalize_task_check_commit_push.ps1 directly."
+            },
+            "output": {
+                "success": "Delegates to the modern finalizer and exits 0 when it succeeds.",
+                "failure": "Throws when delegation or the underlying finalizer fails."
+            }
         },
         "compile_pipeline_context.ps1": {
             "path": "tools/pipeline/compile_pipeline_context.ps1",
@@ -525,7 +614,19 @@
         },
         "end_prompt_snapshot.ps1": {
             "path": "tools/repo/end_prompt_snapshot.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Generate the end-of-task OUTPUT/PROMPT-SNAPSHOT summary including recent checks and quality gate context.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-NoSound"
+                ],
+                "rule": "Run near final closure unless output snapshot generation is intentionally skipped."
+            },
+            "output": {
+                "success": "Writes/prints the closure snapshot and optionally emits the configured completion cue.",
+                "failure": "Throws when snapshot generation or output writing fails."
+            }
         },
         "finalize_changed_files_commit_push.ps1": {
             "path": "tools/repo/finalize_changed_files_commit_push.ps1",
@@ -609,7 +710,20 @@
         },
         "knowledge_code_context.ps1": {
             "path": "tools/knowledge/knowledge_code_context.ps1",
-            "category": "knowledge"
+            "category": "knowledge",
+            "description": "Load the full compiled engineering/code guidance set and write the freshness marker used by code-context gates.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-RepoRoot",
+                    "-OutputPath"
+                ],
+                "rule": "Run before code-touching work or when check_code_context_gate.ps1 reports a stale/missing marker."
+            },
+            "output": {
+                "success": "Prints the loaded code-guidance rules and writes ignored/code_context_gate.json for the current HEAD.",
+                "failure": "Exits nonzero when compiled knowledge is stale, unavailable, or missing required guidance coverage."
+            }
         },
         "knowledge_compile.ps1": {
             "path": "tools/knowledge/knowledge_compile.ps1",
@@ -761,7 +875,21 @@
         },
         "rebuild_ai_compiled_context.ps1": {
             "path": "tools/pipeline/rebuild_ai_compiled_context.ps1",
-            "category": "pipeline"
+            "category": "pipeline",
+            "description": "Rebuild AI-compiled instruction files, SQLite knowledge database, and JSON knowledge-file fallback from source documents.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-OutputDir",
+                    "-Packs",
+                    "-Check"
+                ],
+                "rule": "Run after source instruction, workflow, script catalog, template, or knowledge changes; use -Check to verify without writing."
+            },
+            "output": {
+                "success": "Refreshes generated AI-compiled artifacts and prints OK when complete.",
+                "failure": "Throws or exits nonzero when source compilation, knowledge compilation, or check mode fails."
+            }
         },
         "reinitialize_pipeline.ps1": {
             "path": "tools/pipeline/reinitialize_pipeline.ps1",
@@ -785,7 +913,19 @@
         },
         "run_quality_gate.ps1": {
             "path": "tools/quality/run_quality_gate.ps1",
-            "category": "quality"
+            "category": "quality",
+            "description": "Run the repository quality gate, defaulting to QUALITY-GATE.json through run_quality_gate_contract.ps1 when no explicit command is supplied.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Command"
+                ],
+                "rule": "Run without arguments for the source-pipeline smoke contract; use -Command only for an explicit ad hoc quality command."
+            },
+            "output": {
+                "success": "Runs the selected quality command or contract and exits 0 when all selected checks pass.",
+                "failure": "Throws when the explicit command exits nonzero or any QUALITY-GATE command fails."
+            }
         },
         "run_quality_gate_contract.ps1": {
             "path": "tools/quality/run_quality_gate_contract.ps1",
@@ -824,7 +964,17 @@
         },
         "task_snapshot.ps1": {
             "path": "tools/repo/task_snapshot.ps1",
-            "category": "repo"
+            "category": "repo",
+            "description": "Print a compact snapshot of current task-relevant project files and git state for finish/check workflows.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from finalizers or manually near closure when a quick task-state snapshot is useful."
+            },
+            "output": {
+                "success": "Prints available task/memory files and repository status context.",
+                "failure": "Throws when repository inspection fails."
+            }
         },
         "task_flow_audit.ps1": {
             "path": "tools/repo/task_flow_audit.ps1",
@@ -850,7 +1000,24 @@
         },
         "update_code_line_index.ps1": {
             "path": "tools/codebase/update_code_line_index.ps1",
-            "category": "codebase"
+            "category": "codebase",
+            "description": "Refresh or check docs-tech/CODE_LINE_INDEX.json and docs-tech/LARGE_FILES.json for tracked code files.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-IndexPath",
+                    "-LargeFilesPath",
+                    "-LargeFileThreshold",
+                    "-Paths",
+                    "-ChangedOnly",
+                    "-Check"
+                ],
+                "rule": "Run after code or script changes; use -ChangedOnly for normal task closure and -Check to fail on stale indexes."
+            },
+            "output": {
+                "success": "Writes or verifies the code line index and large-file list, then prints indexed file counts.",
+                "failure": "Throws when git/path discovery fails or check mode finds stale generated indexes."
+            }
         },
         "update_pipeline_from_link.ps1": {
             "path": "tools/pipeline/update_pipeline_from_link.ps1",

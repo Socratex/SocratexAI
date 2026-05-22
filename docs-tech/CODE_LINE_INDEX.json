@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T14:25:49+02:00",
+  "generatedAt": "2026-05-22T14:32:29+02:00",
   "threshold": 300,
   "files": [
     {
@@ -10,7 +10,7 @@
     },
     {
       "path": "tools/documents/audit_docs.ps1",
-      "lines": 491,
+      "lines": 511,
       "extension": ".ps1",
       "large": true
     },

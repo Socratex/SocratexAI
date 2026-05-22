@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-6cbc48370a77
+Generated: source-fab914d5417c
 
 ## Source of Truth
 
@@ -4827,11 +4827,12 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'json_tool_file_stdin_value_inputs' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "script_input_output_contracts": {
-                "summary": "Script Input Output Contracts capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Script Input Output Contracts capability is active only when critical script catalog entries carry description, input, and output contracts and audit_docs enforces that baseline.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
+                    "SCRIPTS.json",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],
@@ -4844,12 +4845,14 @@ Draft placeholder:
                     ]
                 },
                 "required_docs": [
-                    "core/AGENT-CONTRACT.json"
+                    "core/AGENT-CONTRACT.json",
+                    "SCRIPTS.json"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Ensure critical closure, audit, quality, compiled-context, and line-index scripts in SCRIPTS.json include description/input/output fields.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
