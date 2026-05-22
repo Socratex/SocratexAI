@@ -345,11 +345,15 @@ def collect_keys(value: Any, path: str, keys: dict[str, dict[str, Any]]) -> None
 def expand_paths(patterns: list[str], repo_root: Path) -> list[Path]:
     paths: list[Path] = []
     for pattern in patterns:
-        matches = glob.glob(pattern, recursive=True)
+        normalized_pattern = pattern.replace("\\", "/")
+        if normalized_pattern == "__ALL_JSON__":
+            paths.extend(repo_root.rglob("*.json"))
+            continue
+        matches = glob.glob(normalized_pattern, recursive=True)
         if matches:
             paths.extend(Path(match) for match in matches)
         else:
-            paths.append(Path(pattern))
+            paths.append(Path(normalized_pattern))
     return sorted(
         {
             path.resolve()

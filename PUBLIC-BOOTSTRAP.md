@@ -105,23 +105,20 @@ After the profile interview, list the three most relevant known-solution familie
 
 After Project Profile Interview and before programming questions, run the runtime check when tools are available:
 
-```powershell
-python tools/quality/check_runtime.py --root-key runtime_status
+```bash
+python tools/quality/check_runtime.py --root-key runtime_status --strict
 ```
 
 Report missing runtimes or libraries.
 
 If something is missing, follow `core/SCRIPT-FALLBACK.json`: propose installing the missing runtime before using manual fallback.
 
-If PowerShell 7 (`pwsh`) is missing, treat it as the first setup improvement:
+If Python 3.10+ is missing, treat that as the first setup blocker:
 
-1. Run `tools/setup/install_powershell.ps1` when PowerShell-compatible shell execution is available.
-2. Present the detected install command and ask for explicit approval before using `-Apply`.
-3. After installation, rerun `tools/quality/check_runtime.py --root-key runtime_status`.
-4. If the platform cannot support PowerShell, recommend one of:
-   - use lite/no-tools mode,
-   - run SocratexAI from a supported host or container,
-   - port required scripts to the target shell before relying on automation.
+1. Present the detected install or repair option for the platform.
+2. Ask for explicit approval before installing or changing system/runtime state.
+3. After installation or path repair, rerun `tools/quality/check_runtime.py --root-key runtime_status --strict`.
+4. If Python cannot be installed on the target host, recommend lite/no-tools mode or running SocratexAI from a supported host/container.
 
 Store the result in `PIPELINE-CONFIG.json` under `runtime_status`.
 
@@ -287,14 +284,14 @@ Cheap update is the default. It should refresh the managed `SocratexAI/` package
 
 Preferred public update command:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source "https://github.com/Socratex/SocratexAI.git" -SourceMode Git
+```bash
+python SocratexAI/tools/pipeline/update_pipeline_from_link.py --source "https://github.com/Socratex/SocratexAI.git" --source-mode Git
 ```
 
 Use full verification only when the user has enough time/budget or when debugging the update itself:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source "https://github.com/Socratex/SocratexAI.git" -SourceMode Git -FullVerify
+```bash
+python SocratexAI/tools/pipeline/update_pipeline_from_link.py --source "https://github.com/Socratex/SocratexAI.git" --source-mode Git --full-verify
 ```
 
 Use `-ReinitializeNew` only when the update explicitly introduces newly initialized files that should be created in the project root. Reinitialization must be missing-only and must not overwrite project memory.

@@ -1,16 +1,16 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-f0cc892dffc8",
+  "generated_at": "source-9fde97881266",
   "source_hashes": {
     "AGENTS.md": "c2e7d0359d8c2faa695de4880c06ffa41aea651e13f0012c7f892ca92e02c589",
-    "README.md": "60702ed0de7e1dd8fd2c08b2a7a3c0706e362a5feb7398228e0cc045b835fae1",
-    "PUBLIC-BOOTSTRAP.md": "a2987b9b5549e62cf0ecc014fdd15650177299d026eea1416c1b2e2c0afe44e1",
+    "README.md": "05759399dc97a94232d2229fec7ce9718cb339adc51da20b8d3cc774c4337b87",
+    "PUBLIC-BOOTSTRAP.md": "59e87ec81843983d17d33eb410da9e3b579cfbb3ea2355fb6c2e79a287fe1ec8",
     "DOCS.json": "b31ccc879c58334234b6dd69160d5eeba5cbab3150fd5720450c58640d43832d",
     "WORKFLOW.json": "ef3a395ec2d7bf090753f009439d0c00e8caa855103ec77635159350781a061a",
     "COMMANDS.json": "7ae768535f5e697de610b6351a040ff4757683690240ca225c2d7a3931bf0f0d",
     "FLOWS.json": "5cb99a77abd7084209df0fba49059ccbb08f7b5cfcdcf768f2e48a7463eb35f9",
-    "SCRIPTS.json": "3c4bb14f7273b031fa3c094ecf90721fcc5150608bd5cb44b63299a1cac9f8c3",
-    "docs-tech/PIPELINE-BOOTSTRAP.json": "e356ac7f496a932222281858202adb50b184f80cec2c470305eceb12820fcfb6",
+    "SCRIPTS.json": "1bdce89058441f46aa13bd6c0dd76e17f6e27091baa675cebfa807be6c7622d6",
+    "docs-tech/PIPELINE-BOOTSTRAP.json": "550903576d18072c736a4c4a31f7fa92d367e6910823c71b20206a7224f1892a",
     "core/AGENT-CONTRACT.json": "0f47bfa2684a60ef2473cfdbbc0cc219d8d28e5c4967c3e11f863dd9ddb601c7",
     "core/CONTEXT-TIERS.json": "25e29acd6a07970ce1ab35d2a2ba1e74345ba0d23b16968318247592c0354658",
     "core/MEMORY-MODEL.json": "5a989d881ac7f56300a2988b4e4cc71dd113daba895b94a7805eb8a21818bc33",
@@ -18,7 +18,7 @@
     "core/FILE-FORMATS.json": "3b1fcf43bf6d2cec200e50c088a1b018c1a3fe1493abcb538886eef410bdf7e0",
     "core/ROI-BIAS.json": "47175df855cc3153181ca03c1c9c4a16a2e1be51d58bfd9d4f73a53407729205",
     "core/TASK-WORK.json": "bc5d77ba63dbe5b1e03f60a264e30dcb6a56b14d0fd7ce924074cfb1c856f572",
-    "core/SCRIPT-FALLBACK.json": "6914d0a9301637621d841f11b01d4122d4e63e06553a7c9dc27651065a64572a",
+    "core/SCRIPT-FALLBACK.json": "9f23457b878f30afdd5998076ccd9c82e01c4444025e18c6552245b8f73428b6",
     "context-docs/ENGINEERING.json": "2fefd26f8d9c04b24fedd347fa582999555883308435426136c6aad449f44f4f",
     "docs-tech/KNOWLEDGE-VIEWS.json": "6ab59e0b5de1b08b161c3d2e486fcbe543e8c897a2c3d2c9c90c66c764281cc6",
     "tools/knowledge/knowledge_index.py": "3c91959fba395e7963cf07a5ae8c78ac1b68b4dcaf7e55409f9ff1f485893d3a",
@@ -53,11 +53,11 @@
   },
   "output_hashes": {
     "README.md": "d066b6cd837082095c4a037ac3c5619ba562ed9762f239a8e4cce0ea94e35659",
-    "INDEX.json": "ad4bc9e31193ab60e70e440d1b8625c53770cd592844fe835729dca7566df925",
-    "codex/ENTRYPOINT.md": "5ea72c47884de4ee023e14abfe35c7a6234b5c2ac9b6fc9a41b9457f61ae4c29",
-    "codex/RULES.compiled.md": "099beb4ff607b5658f275dbe0e3de86addfd9ef91dfe630e672c03cdb577a0cd",
-    "codex/WORKFLOW.compiled.md": "39465d52d856575ab8e730f5a35a7bbde87530bfb2cfd9f9e490d285fbc8113a",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "58754356c5ee7ba22b0ed744ee87bbb90bad44796390a2062849acd652bb472c",
-    "codex/TEAM.compiled.md": "98f2c11c85f87a5ab0041f11841a030e98146f348568930cc5fb47a38156a63c"
+    "INDEX.json": "aa6a81869f1a6f317b69731f1527e0bfe41599044a6617896ea3db5cbbf3c3e3",
+    "codex/ENTRYPOINT.md": "5cb913d13b9e4e64330d6e39d544dea097c43ba798ba31933ef36be085b5271c",
+    "codex/RULES.compiled.md": "5d3a986c04a10f2c7ab174dca107902c50c2f3022c13ab1da3328fa51a49853c",
+    "codex/WORKFLOW.compiled.md": "4c7576bcf0765068292c12da1f0dcc0e124ae52fe51b28d3c43324d748d09df8",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "716614474af50eb490763173b96936ec517923ff0a3b9d288b2015c9e5aa5bcc",
+    "codex/TEAM.compiled.md": "e1451213e831b2ab06329335291ac8eaf4c72e022b92ad6f9b6284413bc850af"
   }
 }

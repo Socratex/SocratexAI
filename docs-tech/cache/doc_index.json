@@ -2,6 +2,1539 @@
   "schema_version": 1,
   "documents": [
     {
+      "path": "CHANGELOG.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "entries"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "entries": {
+          "path": "content.entries",
+          "title": "entries",
+          "ref": "content.entries",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "COMMANDS.json",
+      "document": {
+        "title": "Source Pipeline Commands",
+        "type": "command_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "CONTEXT",
+        "CONTINUE",
+        "PLAN",
+        "BUG",
+        "REVIEW",
+        "AUDIT",
+        "FINISH",
+        "COMMIT",
+        "LOG",
+        "DIAGNOSTICS",
+        "PROMPT",
+        "INSTRUCTIONS",
+        "COMPILE"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "CONTEXT": {
+          "path": "content.CONTEXT",
+          "title": "",
+          "ref": "content.CONTEXT",
+          "status": ""
+        },
+        "CONTINUE": {
+          "path": "content.CONTINUE",
+          "title": "",
+          "ref": "content.CONTINUE",
+          "status": ""
+        },
+        "PLAN": {
+          "path": "content.PLAN",
+          "title": "",
+          "ref": "content.PLAN",
+          "status": ""
+        },
+        "BUG": {
+          "path": "content.BUG",
+          "title": "",
+          "ref": "content.BUG",
+          "status": ""
+        },
+        "REVIEW": {
+          "path": "content.REVIEW",
+          "title": "",
+          "ref": "content.REVIEW",
+          "status": ""
+        },
+        "AUDIT": {
+          "path": "content.AUDIT",
+          "title": "",
+          "ref": "content.AUDIT",
+          "status": ""
+        },
+        "FINISH": {
+          "path": "content.FINISH",
+          "title": "",
+          "ref": "content.FINISH",
+          "status": ""
+        },
+        "COMMIT": {
+          "path": "content.COMMIT",
+          "title": "",
+          "ref": "content.COMMIT",
+          "status": ""
+        },
+        "LOG": {
+          "path": "content.LOG",
+          "title": "",
+          "ref": "content.LOG",
+          "status": ""
+        },
+        "DIAGNOSTICS": {
+          "path": "content.DIAGNOSTICS",
+          "title": "",
+          "ref": "content.DIAGNOSTICS",
+          "status": ""
+        },
+        "PROMPT": {
+          "path": "content.PROMPT",
+          "title": "",
+          "ref": "content.PROMPT",
+          "status": ""
+        },
+        "INSTRUCTIONS": {
+          "path": "content.INSTRUCTIONS",
+          "title": "",
+          "ref": "content.INSTRUCTIONS",
+          "status": ""
+        },
+        "COMPILE": {
+          "path": "content.COMPILE",
+          "title": "",
+          "ref": "content.COMPILE",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "DOCS.json",
+      "document": {
+        "title": "Source Pipeline Document Index",
+        "type": "document_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "DOCS.json",
+        "WORKFLOW.json",
+        "COMMANDS.json",
+        "FLOWS.json",
+        "SCRIPTS.json",
+        "QUALITY-GATE.json",
+        "JSON-FORMAT-CONTRACT.json",
+        "TODO.md",
+        "pipeline_featurelist.json",
+        "core/",
+        "core/WORKSPACE.json",
+        "core/CONTEXT-TIERS.json",
+        "core/communication-profiles/",
+        "profiles/",
+        "project/",
+        "templates/",
+        "tools/",
+        "docs-tech/",
+        "docs-tech/TOOL-ERRORS.json",
+        "AI-compiled/"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "DOCS.json": {
+          "path": "content.DOCS.json",
+          "title": "",
+          "ref": "content.DOCS.json",
+          "status": ""
+        },
+        "WORKFLOW.json": {
+          "path": "content.WORKFLOW.json",
+          "title": "",
+          "ref": "content.WORKFLOW.json",
+          "status": ""
+        },
+        "COMMANDS.json": {
+          "path": "content.COMMANDS.json",
+          "title": "",
+          "ref": "content.COMMANDS.json",
+          "status": ""
+        },
+        "FLOWS.json": {
+          "path": "content.FLOWS.json",
+          "title": "",
+          "ref": "content.FLOWS.json",
+          "status": ""
+        },
+        "SCRIPTS.json": {
+          "path": "content.SCRIPTS.json",
+          "title": "",
+          "ref": "content.SCRIPTS.json",
+          "status": ""
+        },
+        "QUALITY-GATE.json": {
+          "path": "content.QUALITY-GATE.json",
+          "title": "",
+          "ref": "content.QUALITY-GATE.json",
+          "status": ""
+        },
+        "TODO.md": {
+          "path": "content.TODO.md",
+          "title": "",
+          "ref": "content.TODO.md",
+          "status": ""
+        },
+        "pipeline_featurelist.json": {
+          "path": "content.pipeline_featurelist.json",
+          "title": "",
+          "ref": "content.pipeline_featurelist.json",
+          "status": ""
+        },
+        "core/": {
+          "path": "content.core/",
+          "title": "",
+          "ref": "content.core/",
+          "status": ""
+        },
+        "core/WORKSPACE.json": {
+          "path": "content.core/WORKSPACE.json",
+          "title": "",
+          "ref": "content.core/WORKSPACE.json",
+          "status": ""
+        },
+        "core/CONTEXT-TIERS.json": {
+          "path": "content.core/CONTEXT-TIERS.json",
+          "title": "",
+          "ref": "content.core/CONTEXT-TIERS.json",
+          "status": ""
+        },
+        "project/": {
+          "path": "content.project/",
+          "title": "",
+          "ref": "content.project/",
+          "status": ""
+        },
+        "templates/": {
+          "path": "content.templates/",
+          "title": "",
+          "ref": "content.templates/",
+          "status": ""
+        },
+        "tools/": {
+          "path": "content.tools/",
+          "title": "",
+          "ref": "content.tools/",
+          "status": ""
+        },
+        "docs-tech/": {
+          "path": "content.docs-tech/",
+          "title": "",
+          "ref": "content.docs-tech/",
+          "status": ""
+        },
+        "AI-compiled/": {
+          "path": "content.AI-compiled/",
+          "title": "",
+          "ref": "content.AI-compiled/",
+          "status": ""
+        },
+        "docs-tech/TOOL-ERRORS.json": {
+          "path": "content.docs-tech/TOOL-ERRORS.json",
+          "title": "",
+          "ref": "content.docs-tech/TOOL-ERRORS.json",
+          "status": ""
+        },
+        "core/communication-profiles/": {
+          "path": "content.core/communication-profiles/",
+          "title": "",
+          "ref": "content.core/communication-profiles/",
+          "status": ""
+        },
+        "profiles/": {
+          "path": "content.profiles/",
+          "title": "",
+          "ref": "content.profiles/",
+          "status": ""
+        },
+        "JSON-FORMAT-CONTRACT.json": {
+          "path": "content.JSON-FORMAT-CONTRACT.json",
+          "title": "",
+          "ref": "content.JSON-FORMAT-CONTRACT.json",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "FLOWS.json",
+      "document": {
+        "title": "Source Pipeline Flows",
+        "type": "flow_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "multi_prompt",
+        "direct_answer",
+        "documentation_edit",
+        "implementation",
+        "broad_refactor",
+        "pipeline_upgrade",
+        "review",
+        "quality_diagnostics",
+        "continue_command",
+        "compile_command",
+        "manual_mode"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "multi_prompt": {
+          "path": "content.multi_prompt",
+          "title": "",
+          "ref": "content.multi_prompt",
+          "status": ""
+        },
+        "direct_answer": {
+          "path": "content.direct_answer",
+          "title": "",
+          "ref": "content.direct_answer",
+          "status": ""
+        },
+        "documentation_edit": {
+          "path": "content.documentation_edit",
+          "title": "",
+          "ref": "content.documentation_edit",
+          "status": ""
+        },
+        "implementation": {
+          "path": "content.implementation",
+          "title": "",
+          "ref": "content.implementation",
+          "status": ""
+        },
+        "broad_refactor": {
+          "path": "content.broad_refactor",
+          "title": "",
+          "ref": "content.broad_refactor",
+          "status": ""
+        },
+        "pipeline_upgrade": {
+          "path": "content.pipeline_upgrade",
+          "title": "",
+          "ref": "content.pipeline_upgrade",
+          "status": ""
+        },
+        "review": {
+          "path": "content.review",
+          "title": "",
+          "ref": "content.review",
+          "status": ""
+        },
+        "quality_diagnostics": {
+          "path": "content.quality_diagnostics",
+          "title": "",
+          "ref": "content.quality_diagnostics",
+          "status": ""
+        },
+        "continue_command": {
+          "path": "content.continue_command",
+          "title": "",
+          "ref": "content.continue_command",
+          "status": ""
+        },
+        "compile_command": {
+          "path": "content.compile_command",
+          "title": "",
+          "ref": "content.compile_command",
+          "status": ""
+        },
+        "manual_mode": {
+          "path": "content.manual_mode",
+          "title": "",
+          "ref": "content.manual_mode",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "JSON-FORMAT-CONTRACT.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "policy",
+        "generated_exclusions",
+        "direct_schema_exceptions",
+        "migration_followups"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "policy": {
+          "path": "content.policy",
+          "title": "Canonical JSON Format Policy",
+          "ref": "content.policy",
+          "status": ""
+        },
+        "generated_exclusions": {
+          "path": "content.generated_exclusions",
+          "title": "Generated Or Runtime Exclusions",
+          "ref": "content.generated_exclusions",
+          "status": ""
+        },
+        "direct_schema_exceptions": {
+          "path": "content.direct_schema_exceptions",
+          "title": "Direct Schema Exceptions",
+          "ref": "content.direct_schema_exceptions",
+          "status": ""
+        },
+        "migration_followups": {
+          "path": "content.migration_followups",
+          "title": "Migration Followups",
+          "ref": "content.migration_followups",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "QUALITY-GATE.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "commands",
+        "notes"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "commands": {
+          "path": "content.commands",
+          "title": "",
+          "ref": "content.commands",
+          "status": ""
+        },
+        "notes": {
+          "path": "content.notes",
+          "title": "notes",
+          "ref": "content.notes",
+          "status": ""
+        },
+        "powershell_parse": {
+          "path": "commands.powershell_parse",
+          "title": "powershell_parse",
+          "ref": "commands.powershell_parse",
+          "status": ""
+        },
+        "audit_docs": {
+          "path": "commands.audit_docs",
+          "title": "audit_docs",
+          "ref": "commands.audit_docs",
+          "status": ""
+        },
+        "eval_framework": {
+          "path": "commands.eval_framework",
+          "title": "eval_framework",
+          "ref": "commands.eval_framework",
+          "status": ""
+        },
+        "sensitive_reference_smoke": {
+          "path": "commands.sensitive_reference_smoke",
+          "title": "sensitive_reference_smoke",
+          "ref": "commands.sensitive_reference_smoke",
+          "status": ""
+        },
+        "transactional_doc_tools": {
+          "path": "commands.transactional_doc_tools",
+          "title": "transactional_doc_tools",
+          "ref": "commands.transactional_doc_tools",
+          "status": ""
+        },
+        "init_dry_run": {
+          "path": "commands.init_dry_run",
+          "title": "init_dry_run",
+          "ref": "commands.init_dry_run",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "SCRIPTS.json",
+      "document": {
+        "title": "Source Pipeline Script Index",
+        "type": "script_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "add_changelog_entry.ps1",
+        "audit_docs.ps1",
+        "audit_docs.py",
+        "audit_json_docs.py",
+        "check_code_context_gate.ps1",
+        "check_ai_compiled_context.ps1",
+        "check_ai_compiled_context.py",
+        "check_evals.ps1",
+        "check_pipeline_featurelist_update.ps1",
+        "check_pipeline_feature_contracts.ps1",
+        "check_pipeline_feature_contracts.py",
+        "check_sensitive_reference_leaks.ps1",
+        "check_runtime.py",
+        "python_runtime.py",
+        "pipeline_package.py",
+        "ai_native_contract_dry_run.ps1",
+        "check_task.ps1",
+        "check_utf8_writes.ps1",
+        "legacy_commit_task_compatibility_wrapper.ps1",
+        "compile_pipeline_context.ps1",
+        "generate_installed_agent_instructions.ps1",
+        "configure_powershell_utf8.ps1",
+        "console_summary.ps1",
+        "context_tags.ps1",
+        "detect_project_stack.ps1",
+        "build_document_cache.ps1",
+        "document_item_edit_engine.py",
+        "bulk_insert_document_items.ps1",
+        "insert_document_item.ps1",
+        "migrate_document_item.ps1",
+        "move_document_item.ps1",
+        "list_document_keys.ps1",
+        "check_document_list_item_duplicates.ps1",
+        "insert_document_list_item.ps1",
+        "insert_checked_document_list_item.ps1",
+        "document_list_item_edit_engine.py",
+        "review_document_list_candidates.ps1",
+        "json_list_doc.py",
+        "json_refresh_index.ps1",
+        "json_migrate_content.ps1",
+        "json_node_edit.ps1",
+        "json_read.ps1",
+        "json_item_insert.ps1",
+        "json_item_set.ps1",
+        "json_item_move.ps1",
+        "json_item_delete.ps1",
+        "json_line_insert.ps1",
+        "json_line_set.ps1",
+        "json_line_move.ps1",
+        "run_document_post_edit_checks.ps1",
+        "read_document_item.ps1",
+        "read_document_items_by_title.ps1",
+        "document_read_cache_engine.py",
+        "migrate_document_schema.ps1",
+        "document_schema_migration_engine.py",
+        "normalize_document_structure.ps1",
+        "document_structure_normalizer_engine.py",
+        "check_toolchain_health.ps1",
+        "finalize_task_check_commit_push.ps1",
+        "end_prompt_snapshot.ps1",
+        "finalize_changed_files_commit_push.ps1",
+        "run_final_task_checks.ps1",
+        "generate_embedded_config_payload.py",
+        "import_existing_project.ps1",
+        "init_branch_memory.ps1",
+        "init_task_work.ps1",
+        "grouped_task_handoff.ps1",
+        "Initialize-SocratexPipeline.ps1",
+        "install_powershell.ps1",
+        "knowledge_check.ps1",
+        "knowledge_code_context.ps1",
+        "knowledge_compile.ps1",
+        "knowledge_delete.ps1",
+        "knowledge_file_check.ps1",
+        "knowledge_file_compile.ps1",
+        "knowledge_file_delete.ps1",
+        "knowledge_file_query.ps1",
+        "knowledge_file_rename.ps1",
+        "knowledge_file_select.ps1",
+        "knowledge_file_upsert.ps1",
+        "knowledge_index.py",
+        "knowledge_tier_report.py",
+        "knowledge_tier_report.ps1",
+        "knowledge_tier_check.ps1",
+        "knowledge_tier_check.py",
+        "knowledge_query.ps1",
+        "knowledge_rename.ps1",
+        "knowledge_select.ps1",
+        "knowledge_upsert.ps1",
+        "learn_pipeline_features.ps1",
+        "log_summary.ps1",
+        "migrate_ai_pipeline.ps1",
+        "normalize_documents.bat",
+        "normalize_json_files.ps1",
+        "normalize_json_files.py",
+        "normalize_markdown_emoji.ps1",
+        "normalize_text_files.ps1",
+        "open_pipeline_learning_issue.ps1",
+        "pipeline_bootstrap_index.ps1",
+        "pipeline_bootstrap_index.py",
+        "pipeline_sweep.py",
+        "pipeline_sweep.ps1",
+        "resolve_tool_runtime.ps1",
+        "resolve_workspace_root.ps1",
+        "rebuild_ai_compiled_context.ps1",
+        "reinitialize_pipeline.ps1",
+        "remove_pipeline.ps1",
+        "repair_mojibake.ps1",
+        "report_pipeline_learning.ps1",
+        "run_quality_fix.ps1",
+        "run_quality_gate.ps1",
+        "run_quality_gate_contract.ps1",
+        "set_directives.ps1",
+        "sync_pipeline_featurelist.ps1",
+        "sync_pipeline_featurelist.py",
+        "task_snapshot.ps1",
+        "task_flow_audit.ps1",
+        "update_code_line_index.ps1",
+        "update_pipeline_from_link.ps1",
+        "update_pipeline_from_link.py",
+        "upgrade_from_reference_project.ps1",
+        "utf8_file_helpers.ps1",
+        "run_interactive_setup.ps1",
+        "write_utf8_file.ps1",
+        "sync_managed_pipeline_package.ps1",
+        "sync_managed_pipeline_package.py",
+        "read_compiled_context.ps1",
+        "tool_error_log.ps1",
+        "tool_handler.ps1",
+        "project_design_context.ps1",
+        "check_project_design_context_gate.ps1"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "add_changelog_entry.ps1": {
+          "path": "content.add_changelog_entry.ps1",
+          "title": "",
+          "ref": "content.add_changelog_entry.ps1",
+          "status": ""
+        },
+        "audit_docs.ps1": {
+          "path": "content.audit_docs.ps1",
+          "title": "",
+          "ref": "content.audit_docs.ps1",
+          "status": ""
+        },
+        "audit_docs.py": {
+          "path": "content.audit_docs.py",
+          "title": "",
+          "ref": "content.audit_docs.py",
+          "status": ""
+        },
+        "audit_json_docs.py": {
+          "path": "content.audit_json_docs.py",
+          "title": "",
+          "ref": "content.audit_json_docs.py",
+          "status": ""
+        },
+        "check_code_context_gate.ps1": {
+          "path": "content.check_code_context_gate.ps1",
+          "title": "",
+          "ref": "content.check_code_context_gate.ps1",
+          "status": ""
+        },
+        "check_ai_compiled_context.ps1": {
+          "path": "content.check_ai_compiled_context.ps1",
+          "title": "",
+          "ref": "content.check_ai_compiled_context.ps1",
+          "status": ""
+        },
+        "check_ai_compiled_context.py": {
+          "path": "content.check_ai_compiled_context.py",
+          "title": "",
+          "ref": "content.check_ai_compiled_context.py",
+          "status": ""
+        },
+        "check_evals.ps1": {
+          "path": "content.check_evals.ps1",
+          "title": "",
+          "ref": "content.check_evals.ps1",
+          "status": ""
+        },
+        "check_pipeline_featurelist_update.ps1": {
+          "path": "content.check_pipeline_featurelist_update.ps1",
+          "title": "",
+          "ref": "content.check_pipeline_featurelist_update.ps1",
+          "status": ""
+        },
+        "check_pipeline_feature_contracts.ps1": {
+          "path": "content.check_pipeline_feature_contracts.ps1",
+          "title": "",
+          "ref": "content.check_pipeline_feature_contracts.ps1",
+          "status": ""
+        },
+        "check_pipeline_feature_contracts.py": {
+          "path": "content.check_pipeline_feature_contracts.py",
+          "title": "",
+          "ref": "content.check_pipeline_feature_contracts.py",
+          "status": ""
+        },
+        "check_sensitive_reference_leaks.ps1": {
+          "path": "content.check_sensitive_reference_leaks.ps1",
+          "title": "",
+          "ref": "content.check_sensitive_reference_leaks.ps1",
+          "status": ""
+        },
+        "check_runtime.py": {
+          "path": "content.check_runtime.py",
+          "title": "",
+          "ref": "content.check_runtime.py",
+          "status": ""
+        },
+        "python_runtime.py": {
+          "path": "content.python_runtime.py",
+          "title": "",
+          "ref": "content.python_runtime.py",
+          "status": ""
+        },
+        "pipeline_package.py": {
+          "path": "content.pipeline_package.py",
+          "title": "",
+          "ref": "content.pipeline_package.py",
+          "status": ""
+        },
+        "ai_native_contract_dry_run.ps1": {
+          "path": "content.ai_native_contract_dry_run.ps1",
+          "title": "",
+          "ref": "content.ai_native_contract_dry_run.ps1",
+          "status": ""
+        },
+        "check_task.ps1": {
+          "path": "content.check_task.ps1",
+          "title": "",
+          "ref": "content.check_task.ps1",
+          "status": ""
+        },
+        "check_utf8_writes.ps1": {
+          "path": "content.check_utf8_writes.ps1",
+          "title": "",
+          "ref": "content.check_utf8_writes.ps1",
+          "status": ""
+        },
+        "legacy_commit_task_compatibility_wrapper.ps1": {
+          "path": "content.legacy_commit_task_compatibility_wrapper.ps1",
+          "title": "",
+          "ref": "content.legacy_commit_task_compatibility_wrapper.ps1",
+          "status": ""
+        },
+        "compile_pipeline_context.ps1": {
+          "path": "content.compile_pipeline_context.ps1",
+          "title": "",
+          "ref": "content.compile_pipeline_context.ps1",
+          "status": ""
+        },
+        "generate_installed_agent_instructions.ps1": {
+          "path": "content.generate_installed_agent_instructions.ps1",
+          "title": "",
+          "ref": "content.generate_installed_agent_instructions.ps1",
+          "status": ""
+        },
+        "configure_powershell_utf8.ps1": {
+          "path": "content.configure_powershell_utf8.ps1",
+          "title": "",
+          "ref": "content.configure_powershell_utf8.ps1",
+          "status": ""
+        },
+        "console_summary.ps1": {
+          "path": "content.console_summary.ps1",
+          "title": "",
+          "ref": "content.console_summary.ps1",
+          "status": ""
+        },
+        "context_tags.ps1": {
+          "path": "content.context_tags.ps1",
+          "title": "",
+          "ref": "content.context_tags.ps1",
+          "status": ""
+        },
+        "detect_project_stack.ps1": {
+          "path": "content.detect_project_stack.ps1",
+          "title": "",
+          "ref": "content.detect_project_stack.ps1",
+          "status": ""
+        },
+        "build_document_cache.ps1": {
+          "path": "content.build_document_cache.ps1",
+          "title": "",
+          "ref": "content.build_document_cache.ps1",
+          "status": ""
+        },
+        "document_item_edit_engine.py": {
+          "path": "content.document_item_edit_engine.py",
+          "title": "",
+          "ref": "content.document_item_edit_engine.py",
+          "status": ""
+        },
+        "bulk_insert_document_items.ps1": {
+          "path": "content.bulk_insert_document_items.ps1",
+          "title": "",
+          "ref": "content.bulk_insert_document_items.ps1",
+          "status": ""
+        },
+        "insert_document_item.ps1": {
+          "path": "content.insert_document_item.ps1",
+          "title": "",
+          "ref": "content.insert_document_item.ps1",
+          "status": ""
+        },
+        "migrate_document_item.ps1": {
+          "path": "content.migrate_document_item.ps1",
+          "title": "",
+          "ref": "content.migrate_document_item.ps1",
+          "status": ""
+        },
+        "move_document_item.ps1": {
+          "path": "content.move_document_item.ps1",
+          "title": "",
+          "ref": "content.move_document_item.ps1",
+          "status": ""
+        },
+        "list_document_keys.ps1": {
+          "path": "content.list_document_keys.ps1",
+          "title": "",
+          "ref": "content.list_document_keys.ps1",
+          "status": ""
+        },
+        "check_document_list_item_duplicates.ps1": {
+          "path": "content.check_document_list_item_duplicates.ps1",
+          "title": "",
+          "ref": "content.check_document_list_item_duplicates.ps1",
+          "status": ""
+        },
+        "insert_document_list_item.ps1": {
+          "path": "content.insert_document_list_item.ps1",
+          "title": "",
+          "ref": "content.insert_document_list_item.ps1",
+          "status": ""
+        },
+        "insert_checked_document_list_item.ps1": {
+          "path": "content.insert_checked_document_list_item.ps1",
+          "title": "",
+          "ref": "content.insert_checked_document_list_item.ps1",
+          "status": ""
+        },
+        "document_list_item_edit_engine.py": {
+          "path": "content.document_list_item_edit_engine.py",
+          "title": "",
+          "ref": "content.document_list_item_edit_engine.py",
+          "status": ""
+        },
+        "review_document_list_candidates.ps1": {
+          "path": "content.review_document_list_candidates.ps1",
+          "title": "",
+          "ref": "content.review_document_list_candidates.ps1",
+          "status": ""
+        },
+        "json_list_doc.py": {
+          "path": "content.json_list_doc.py",
+          "title": "",
+          "ref": "content.json_list_doc.py",
+          "status": ""
+        },
+        "json_refresh_index.ps1": {
+          "path": "content.json_refresh_index.ps1",
+          "title": "",
+          "ref": "content.json_refresh_index.ps1",
+          "status": ""
+        },
+        "json_migrate_content.ps1": {
+          "path": "content.json_migrate_content.ps1",
+          "title": "",
+          "ref": "content.json_migrate_content.ps1",
+          "status": ""
+        },
+        "json_node_edit.ps1": {
+          "path": "content.json_node_edit.ps1",
+          "title": "",
+          "ref": "content.json_node_edit.ps1",
+          "status": ""
+        },
+        "json_read.ps1": {
+          "path": "content.json_read.ps1",
+          "title": "",
+          "ref": "content.json_read.ps1",
+          "status": ""
+        },
+        "json_item_insert.ps1": {
+          "path": "content.json_item_insert.ps1",
+          "title": "",
+          "ref": "content.json_item_insert.ps1",
+          "status": ""
+        },
+        "json_item_set.ps1": {
+          "path": "content.json_item_set.ps1",
+          "title": "",
+          "ref": "content.json_item_set.ps1",
+          "status": ""
+        },
+        "json_item_move.ps1": {
+          "path": "content.json_item_move.ps1",
+          "title": "",
+          "ref": "content.json_item_move.ps1",
+          "status": ""
+        },
+        "json_item_delete.ps1": {
+          "path": "content.json_item_delete.ps1",
+          "title": "",
+          "ref": "content.json_item_delete.ps1",
+          "status": ""
+        },
+        "json_line_insert.ps1": {
+          "path": "content.json_line_insert.ps1",
+          "title": "",
+          "ref": "content.json_line_insert.ps1",
+          "status": ""
+        },
+        "json_line_set.ps1": {
+          "path": "content.json_line_set.ps1",
+          "title": "",
+          "ref": "content.json_line_set.ps1",
+          "status": ""
+        },
+        "json_line_move.ps1": {
+          "path": "content.json_line_move.ps1",
+          "title": "",
+          "ref": "content.json_line_move.ps1",
+          "status": ""
+        },
+        "run_document_post_edit_checks.ps1": {
+          "path": "content.run_document_post_edit_checks.ps1",
+          "title": "",
+          "ref": "content.run_document_post_edit_checks.ps1",
+          "status": ""
+        },
+        "read_document_item.ps1": {
+          "path": "content.read_document_item.ps1",
+          "title": "",
+          "ref": "content.read_document_item.ps1",
+          "status": ""
+        },
+        "read_document_items_by_title.ps1": {
+          "path": "content.read_document_items_by_title.ps1",
+          "title": "",
+          "ref": "content.read_document_items_by_title.ps1",
+          "status": ""
+        },
+        "document_read_cache_engine.py": {
+          "path": "content.document_read_cache_engine.py",
+          "title": "",
+          "ref": "content.document_read_cache_engine.py",
+          "status": ""
+        },
+        "migrate_document_schema.ps1": {
+          "path": "content.migrate_document_schema.ps1",
+          "title": "",
+          "ref": "content.migrate_document_schema.ps1",
+          "status": ""
+        },
+        "document_schema_migration_engine.py": {
+          "path": "content.document_schema_migration_engine.py",
+          "title": "",
+          "ref": "content.document_schema_migration_engine.py",
+          "status": ""
+        },
+        "normalize_document_structure.ps1": {
+          "path": "content.normalize_document_structure.ps1",
+          "title": "",
+          "ref": "content.normalize_document_structure.ps1",
+          "status": ""
+        },
+        "document_structure_normalizer_engine.py": {
+          "path": "content.document_structure_normalizer_engine.py",
+          "title": "",
+          "ref": "content.document_structure_normalizer_engine.py",
+          "status": ""
+        },
+        "check_toolchain_health.ps1": {
+          "path": "content.check_toolchain_health.ps1",
+          "title": "",
+          "ref": "content.check_toolchain_health.ps1",
+          "status": ""
+        },
+        "finalize_task_check_commit_push.ps1": {
+          "path": "content.finalize_task_check_commit_push.ps1",
+          "title": "",
+          "ref": "content.finalize_task_check_commit_push.ps1",
+          "status": ""
+        },
+        "end_prompt_snapshot.ps1": {
+          "path": "content.end_prompt_snapshot.ps1",
+          "title": "",
+          "ref": "content.end_prompt_snapshot.ps1",
+          "status": ""
+        },
+        "finalize_changed_files_commit_push.ps1": {
+          "path": "content.finalize_changed_files_commit_push.ps1",
+          "title": "",
+          "ref": "content.finalize_changed_files_commit_push.ps1",
+          "status": ""
+        },
+        "run_final_task_checks.ps1": {
+          "path": "content.run_final_task_checks.ps1",
+          "title": "",
+          "ref": "content.run_final_task_checks.ps1",
+          "status": ""
+        },
+        "generate_embedded_config_payload.py": {
+          "path": "content.generate_embedded_config_payload.py",
+          "title": "",
+          "ref": "content.generate_embedded_config_payload.py",
+          "status": ""
+        },
+        "import_existing_project.ps1": {
+          "path": "content.import_existing_project.ps1",
+          "title": "",
+          "ref": "content.import_existing_project.ps1",
+          "status": ""
+        },
+        "init_branch_memory.ps1": {
+          "path": "content.init_branch_memory.ps1",
+          "title": "",
+          "ref": "content.init_branch_memory.ps1",
+          "status": ""
+        },
+        "init_task_work.ps1": {
+          "path": "content.init_task_work.ps1",
+          "title": "",
+          "ref": "content.init_task_work.ps1",
+          "status": ""
+        },
+        "grouped_task_handoff.ps1": {
+          "path": "content.grouped_task_handoff.ps1",
+          "title": "",
+          "ref": "content.grouped_task_handoff.ps1",
+          "status": ""
+        },
+        "Initialize-SocratexPipeline.ps1": {
+          "path": "content.Initialize-SocratexPipeline.ps1",
+          "title": "",
+          "ref": "content.Initialize-SocratexPipeline.ps1",
+          "status": ""
+        },
+        "install_powershell.ps1": {
+          "path": "content.install_powershell.ps1",
+          "title": "",
+          "ref": "content.install_powershell.ps1",
+          "status": ""
+        },
+        "knowledge_check.ps1": {
+          "path": "content.knowledge_check.ps1",
+          "title": "",
+          "ref": "content.knowledge_check.ps1",
+          "status": ""
+        },
+        "knowledge_code_context.ps1": {
+          "path": "content.knowledge_code_context.ps1",
+          "title": "",
+          "ref": "content.knowledge_code_context.ps1",
+          "status": ""
+        },
+        "knowledge_compile.ps1": {
+          "path": "content.knowledge_compile.ps1",
+          "title": "",
+          "ref": "content.knowledge_compile.ps1",
+          "status": ""
+        },
+        "knowledge_delete.ps1": {
+          "path": "content.knowledge_delete.ps1",
+          "title": "",
+          "ref": "content.knowledge_delete.ps1",
+          "status": ""
+        },
+        "knowledge_file_check.ps1": {
+          "path": "content.knowledge_file_check.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_check.ps1",
+          "status": ""
+        },
+        "knowledge_file_compile.ps1": {
+          "path": "content.knowledge_file_compile.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_compile.ps1",
+          "status": ""
+        },
+        "knowledge_file_delete.ps1": {
+          "path": "content.knowledge_file_delete.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_delete.ps1",
+          "status": ""
+        },
+        "knowledge_file_query.ps1": {
+          "path": "content.knowledge_file_query.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_query.ps1",
+          "status": ""
+        },
+        "knowledge_file_rename.ps1": {
+          "path": "content.knowledge_file_rename.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_rename.ps1",
+          "status": ""
+        },
+        "knowledge_file_select.ps1": {
+          "path": "content.knowledge_file_select.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_select.ps1",
+          "status": ""
+        },
+        "knowledge_file_upsert.ps1": {
+          "path": "content.knowledge_file_upsert.ps1",
+          "title": "",
+          "ref": "content.knowledge_file_upsert.ps1",
+          "status": ""
+        },
+        "knowledge_index.py": {
+          "path": "content.knowledge_index.py",
+          "title": "",
+          "ref": "content.knowledge_index.py",
+          "status": ""
+        },
+        "knowledge_tier_report.py": {
+          "path": "content.knowledge_tier_report.py",
+          "title": "",
+          "ref": "content.knowledge_tier_report.py",
+          "status": ""
+        },
+        "knowledge_tier_report.ps1": {
+          "path": "content.knowledge_tier_report.ps1",
+          "title": "",
+          "ref": "content.knowledge_tier_report.ps1",
+          "status": ""
+        },
+        "knowledge_tier_check.ps1": {
+          "path": "content.knowledge_tier_check.ps1",
+          "title": "",
+          "ref": "content.knowledge_tier_check.ps1",
+          "status": ""
+        },
+        "knowledge_tier_check.py": {
+          "path": "content.knowledge_tier_check.py",
+          "title": "",
+          "ref": "content.knowledge_tier_check.py",
+          "status": ""
+        },
+        "knowledge_query.ps1": {
+          "path": "content.knowledge_query.ps1",
+          "title": "",
+          "ref": "content.knowledge_query.ps1",
+          "status": ""
+        },
+        "knowledge_rename.ps1": {
+          "path": "content.knowledge_rename.ps1",
+          "title": "",
+          "ref": "content.knowledge_rename.ps1",
+          "status": ""
+        },
+        "knowledge_select.ps1": {
+          "path": "content.knowledge_select.ps1",
+          "title": "",
+          "ref": "content.knowledge_select.ps1",
+          "status": ""
+        },
+        "knowledge_upsert.ps1": {
+          "path": "content.knowledge_upsert.ps1",
+          "title": "",
+          "ref": "content.knowledge_upsert.ps1",
+          "status": ""
+        },
+        "learn_pipeline_features.ps1": {
+          "path": "content.learn_pipeline_features.ps1",
+          "title": "",
+          "ref": "content.learn_pipeline_features.ps1",
+          "status": ""
+        },
+        "log_summary.ps1": {
+          "path": "content.log_summary.ps1",
+          "title": "",
+          "ref": "content.log_summary.ps1",
+          "status": ""
+        },
+        "migrate_ai_pipeline.ps1": {
+          "path": "content.migrate_ai_pipeline.ps1",
+          "title": "",
+          "ref": "content.migrate_ai_pipeline.ps1",
+          "status": ""
+        },
+        "normalize_documents.bat": {
+          "path": "content.normalize_documents.bat",
+          "title": "",
+          "ref": "content.normalize_documents.bat",
+          "status": ""
+        },
+        "normalize_json_files.ps1": {
+          "path": "content.normalize_json_files.ps1",
+          "title": "",
+          "ref": "content.normalize_json_files.ps1",
+          "status": ""
+        },
+        "normalize_json_files.py": {
+          "path": "content.normalize_json_files.py",
+          "title": "",
+          "ref": "content.normalize_json_files.py",
+          "status": ""
+        },
+        "normalize_markdown_emoji.ps1": {
+          "path": "content.normalize_markdown_emoji.ps1",
+          "title": "",
+          "ref": "content.normalize_markdown_emoji.ps1",
+          "status": ""
+        },
+        "normalize_text_files.ps1": {
+          "path": "content.normalize_text_files.ps1",
+          "title": "",
+          "ref": "content.normalize_text_files.ps1",
+          "status": ""
+        },
+        "open_pipeline_learning_issue.ps1": {
+          "path": "content.open_pipeline_learning_issue.ps1",
+          "title": "",
+          "ref": "content.open_pipeline_learning_issue.ps1",
+          "status": ""
+        },
+        "pipeline_bootstrap_index.ps1": {
+          "path": "content.pipeline_bootstrap_index.ps1",
+          "title": "",
+          "ref": "content.pipeline_bootstrap_index.ps1",
+          "status": ""
+        },
+        "pipeline_bootstrap_index.py": {
+          "path": "content.pipeline_bootstrap_index.py",
+          "title": "",
+          "ref": "content.pipeline_bootstrap_index.py",
+          "status": ""
+        },
+        "pipeline_sweep.py": {
+          "path": "content.pipeline_sweep.py",
+          "title": "",
+          "ref": "content.pipeline_sweep.py",
+          "status": ""
+        },
+        "pipeline_sweep.ps1": {
+          "path": "content.pipeline_sweep.ps1",
+          "title": "",
+          "ref": "content.pipeline_sweep.ps1",
+          "status": ""
+        },
+        "resolve_tool_runtime.ps1": {
+          "path": "content.resolve_tool_runtime.ps1",
+          "title": "",
+          "ref": "content.resolve_tool_runtime.ps1",
+          "status": ""
+        },
+        "resolve_workspace_root.ps1": {
+          "path": "content.resolve_workspace_root.ps1",
+          "title": "",
+          "ref": "content.resolve_workspace_root.ps1",
+          "status": ""
+        },
+        "rebuild_ai_compiled_context.ps1": {
+          "path": "content.rebuild_ai_compiled_context.ps1",
+          "title": "",
+          "ref": "content.rebuild_ai_compiled_context.ps1",
+          "status": ""
+        },
+        "reinitialize_pipeline.ps1": {
+          "path": "content.reinitialize_pipeline.ps1",
+          "title": "",
+          "ref": "content.reinitialize_pipeline.ps1",
+          "status": ""
+        },
+        "remove_pipeline.ps1": {
+          "path": "content.remove_pipeline.ps1",
+          "title": "",
+          "ref": "content.remove_pipeline.ps1",
+          "status": ""
+        },
+        "repair_mojibake.ps1": {
+          "path": "content.repair_mojibake.ps1",
+          "title": "",
+          "ref": "content.repair_mojibake.ps1",
+          "status": ""
+        },
+        "report_pipeline_learning.ps1": {
+          "path": "content.report_pipeline_learning.ps1",
+          "title": "",
+          "ref": "content.report_pipeline_learning.ps1",
+          "status": ""
+        },
+        "run_quality_fix.ps1": {
+          "path": "content.run_quality_fix.ps1",
+          "title": "",
+          "ref": "content.run_quality_fix.ps1",
+          "status": ""
+        },
+        "run_quality_gate.ps1": {
+          "path": "content.run_quality_gate.ps1",
+          "title": "",
+          "ref": "content.run_quality_gate.ps1",
+          "status": ""
+        },
+        "run_quality_gate_contract.ps1": {
+          "path": "content.run_quality_gate_contract.ps1",
+          "title": "",
+          "ref": "content.run_quality_gate_contract.ps1",
+          "status": ""
+        },
+        "set_directives.ps1": {
+          "path": "content.set_directives.ps1",
+          "title": "",
+          "ref": "content.set_directives.ps1",
+          "status": ""
+        },
+        "sync_pipeline_featurelist.ps1": {
+          "path": "content.sync_pipeline_featurelist.ps1",
+          "title": "",
+          "ref": "content.sync_pipeline_featurelist.ps1",
+          "status": ""
+        },
+        "sync_pipeline_featurelist.py": {
+          "path": "content.sync_pipeline_featurelist.py",
+          "title": "",
+          "ref": "content.sync_pipeline_featurelist.py",
+          "status": ""
+        },
+        "task_snapshot.ps1": {
+          "path": "content.task_snapshot.ps1",
+          "title": "",
+          "ref": "content.task_snapshot.ps1",
+          "status": ""
+        },
+        "task_flow_audit.ps1": {
+          "path": "content.task_flow_audit.ps1",
+          "title": "",
+          "ref": "content.task_flow_audit.ps1",
+          "status": ""
+        },
+        "update_code_line_index.ps1": {
+          "path": "content.update_code_line_index.ps1",
+          "title": "",
+          "ref": "content.update_code_line_index.ps1",
+          "status": ""
+        },
+        "update_pipeline_from_link.ps1": {
+          "path": "content.update_pipeline_from_link.ps1",
+          "title": "",
+          "ref": "content.update_pipeline_from_link.ps1",
+          "status": ""
+        },
+        "update_pipeline_from_link.py": {
+          "path": "content.update_pipeline_from_link.py",
+          "title": "",
+          "ref": "content.update_pipeline_from_link.py",
+          "status": ""
+        },
+        "upgrade_from_reference_project.ps1": {
+          "path": "content.upgrade_from_reference_project.ps1",
+          "title": "",
+          "ref": "content.upgrade_from_reference_project.ps1",
+          "status": ""
+        },
+        "utf8_file_helpers.ps1": {
+          "path": "content.utf8_file_helpers.ps1",
+          "title": "",
+          "ref": "content.utf8_file_helpers.ps1",
+          "status": ""
+        },
+        "run_interactive_setup.ps1": {
+          "path": "content.run_interactive_setup.ps1",
+          "title": "",
+          "ref": "content.run_interactive_setup.ps1",
+          "status": ""
+        },
+        "write_utf8_file.ps1": {
+          "path": "content.write_utf8_file.ps1",
+          "title": "",
+          "ref": "content.write_utf8_file.ps1",
+          "status": ""
+        },
+        "sync_managed_pipeline_package.ps1": {
+          "path": "content.sync_managed_pipeline_package.ps1",
+          "title": "",
+          "ref": "content.sync_managed_pipeline_package.ps1",
+          "status": ""
+        },
+        "sync_managed_pipeline_package.py": {
+          "path": "content.sync_managed_pipeline_package.py",
+          "title": "",
+          "ref": "content.sync_managed_pipeline_package.py",
+          "status": ""
+        },
+        "read_compiled_context.ps1": {
+          "path": "content.read_compiled_context.ps1",
+          "title": "",
+          "ref": "content.read_compiled_context.ps1",
+          "status": ""
+        },
+        "tool_error_log.ps1": {
+          "path": "content.tool_error_log.ps1",
+          "title": "",
+          "ref": "content.tool_error_log.ps1",
+          "status": ""
+        },
+        "tool_handler.ps1": {
+          "path": "content.tool_handler.ps1",
+          "title": "",
+          "ref": "content.tool_handler.ps1",
+          "status": ""
+        },
+        "project_design_context.ps1": {
+          "path": "content.project_design_context.ps1",
+          "title": "",
+          "ref": "content.project_design_context.ps1",
+          "status": ""
+        },
+        "check_project_design_context_gate.ps1": {
+          "path": "content.check_project_design_context_gate.ps1",
+          "title": "",
+          "ref": "content.check_project_design_context_gate.ps1",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "WORKFLOW.json",
+      "document": {
+        "title": "Source Pipeline Workflow",
+        "type": "workflow",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "pipeline_bootstrap_directive",
+        "json_source_contract",
+        "workflow_workflow_contract",
+        "generic_programming_baseline",
+        "template_parity_for_reusable_pipeline_improvements",
+        "project_type_routing",
+        "finish_contract",
+        "tool_error_hardening",
+        "json_structural_edit_tooling",
+        "single_entry_tool_handler"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "pipeline_bootstrap_directive": {
+          "path": "content.pipeline_bootstrap_directive",
+          "title": "Pipeline Bootstrap Directive",
+          "ref": "content.pipeline_bootstrap_directive",
+          "status": ""
+        },
+        "json_source_contract": {
+          "path": "content.json_source_contract",
+          "title": "JSON Source Contract",
+          "ref": "content.json_source_contract",
+          "status": ""
+        },
+        "workflow_workflow_contract": {
+          "path": "content.workflow_workflow_contract",
+          "title": "Workflow/Workflow Contract",
+          "ref": "content.workflow_workflow_contract",
+          "status": ""
+        },
+        "generic_programming_baseline": {
+          "path": "content.generic_programming_baseline",
+          "title": "Generic Programming Baseline",
+          "ref": "content.generic_programming_baseline",
+          "status": ""
+        },
+        "template_parity_for_reusable_pipeline_improvements": {
+          "path": "content.template_parity_for_reusable_pipeline_improvements",
+          "title": "Template Parity For Reusable Pipeline Improvements",
+          "ref": "content.template_parity_for_reusable_pipeline_improvements",
+          "status": ""
+        },
+        "project_type_routing": {
+          "path": "content.project_type_routing",
+          "title": "Project Type Routing",
+          "ref": "content.project_type_routing",
+          "status": ""
+        },
+        "finish_contract": {
+          "path": "content.finish_contract",
+          "title": "Finish Contract",
+          "ref": "content.finish_contract",
+          "status": ""
+        },
+        "tool_error_hardening": {
+          "path": "content.tool_error_hardening",
+          "title": "Tool Error Hardening",
+          "ref": "content.tool_error_hardening",
+          "status": ""
+        },
+        "json_structural_edit_tooling": {
+          "path": "content.json_structural_edit_tooling",
+          "title": "JSON Structural Edit Tooling",
+          "ref": "content.json_structural_edit_tooling",
+          "status": ""
+        },
+        "single_entry_tool_handler": {
+          "path": "content.single_entry_tool_handler",
+          "title": "Single Entry Tool Handler",
+          "ref": "content.single_entry_tool_handler",
+          "status": ""
+        }
+      }
+    },
+    {
       "path": "context-docs/ENGINEERING.json",
       "document": {
         "title": "Engineering Standards",
@@ -1622,6 +3155,2694 @@
       }
     },
     {
+      "path": "evals/results/baseline.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "run",
+        "results"
+      ],
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "run": {
+          "path": "run",
+          "title": "run",
+          "ref": "run",
+          "status": ""
+        },
+        "results": {
+          "path": "results",
+          "title": "results",
+          "ref": "results",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "evals/results/with-pipeline.json",
+      "document": {},
+      "routing": {},
+      "toc": [],
+      "top_level_keys": [
+        "schema",
+        "run",
+        "results"
+      ],
+      "keys": {
+        "schema": {
+          "path": "schema",
+          "title": "schema",
+          "ref": "schema",
+          "status": ""
+        },
+        "run": {
+          "path": "run",
+          "title": "run",
+          "ref": "run",
+          "status": ""
+        },
+        "results": {
+          "path": "results",
+          "title": "results",
+          "ref": "results",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "pipeline_featurelist.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "features",
+        "feature_contracts"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "features": {
+          "path": "content.features",
+          "title": "features",
+          "ref": "content.features",
+          "status": ""
+        },
+        "feature_contracts": {
+          "path": "content.feature_contracts",
+          "title": "",
+          "ref": "content.feature_contracts",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "profiles/SocratexForeignLegacy/WORKFLOW.json",
+      "document": {
+        "title": "Foreign/Legacy Business Programming Workflow",
+        "type": "workflow_profile",
+        "language": "en"
+      },
+      "routing": {
+        "purpose": "Work model for legacy or unfamiliar business codebases — 8-phase task lifecycle with business storytelling, explicit unknown-unknown surfacing, user-owned lifecycle handoff.",
+        "read_when": [
+          "When PIPELINE-CONFIG.json sets the active project profile reference to SocratexForeignLegacy.",
+          "<text 125 chars: When the task is foreign/legacy business code and the user expects business storytelling plus user-owned PR/ticket lifec...>"
+        ],
+        "do_not_read_when": [
+          "When the project is greenfield with agent-owned architecture.",
+          "When the project is game engine or simulation work — use SocratexGamedev profile instead.",
+          "When the default clean code-pack workflow is sufficient."
+        ]
+      },
+      "toc": [
+        "quick_index",
+        "purpose",
+        "target_profile",
+        "default_start",
+        "task_lifecycle",
+        "phase_1_read",
+        "phase_2_decide",
+        "phase_3_plan",
+        "phase_4_implement",
+        "phase_5_report",
+        "phase_6_test",
+        "phase_7_joint_verification",
+        "phase_8_handoff",
+        "communication_profile",
+        "behavioral_rules"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "target_profile": {
+          "path": "content.target_profile",
+          "title": "Target Profile",
+          "ref": "content.target_profile",
+          "status": ""
+        },
+        "default_start": {
+          "path": "content.default_start",
+          "title": "Default Start",
+          "ref": "content.default_start",
+          "status": ""
+        },
+        "task_lifecycle": {
+          "path": "content.task_lifecycle",
+          "title": "Task Lifecycle Overview",
+          "ref": "content.task_lifecycle",
+          "status": ""
+        },
+        "phase_1_read": {
+          "path": "content.phase_1_read",
+          "title": "Phase 1 — Read",
+          "ref": "content.phase_1_read",
+          "status": ""
+        },
+        "phase_2_decide": {
+          "path": "content.phase_2_decide",
+          "title": "Phase 2 — Decide complexity",
+          "ref": "content.phase_2_decide",
+          "status": ""
+        },
+        "phase_3_plan": {
+          "path": "content.phase_3_plan",
+          "title": "Phase 3 — Plan (when needed)",
+          "ref": "content.phase_3_plan",
+          "status": ""
+        },
+        "phase_4_implement": {
+          "path": "content.phase_4_implement",
+          "title": "Phase 4 — Implement",
+          "ref": "content.phase_4_implement",
+          "status": ""
+        },
+        "phase_5_report": {
+          "path": "content.phase_5_report",
+          "title": "Phase 5 — Report (business storytelling)",
+          "ref": "content.phase_5_report",
+          "status": ""
+        },
+        "phase_6_test": {
+          "path": "content.phase_6_test",
+          "title": "Phase 6 — Test",
+          "ref": "content.phase_6_test",
+          "status": ""
+        },
+        "phase_7_joint_verification": {
+          "path": "content.phase_7_joint_verification",
+          "title": "Phase 7 — Joint verification",
+          "ref": "content.phase_7_joint_verification",
+          "status": ""
+        },
+        "phase_8_handoff": {
+          "path": "content.phase_8_handoff",
+          "title": "Phase 8 — Handoff",
+          "ref": "content.phase_8_handoff",
+          "status": ""
+        },
+        "communication_profile": {
+          "path": "content.communication_profile",
+          "title": "Communication Profile",
+          "ref": "content.communication_profile",
+          "status": ""
+        },
+        "behavioral_rules": {
+          "path": "content.behavioral_rules",
+          "title": "Behavioral Rules",
+          "ref": "content.behavioral_rules",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "profiles/SocratexGamedev/COMMANDS.json",
+      "document": {
+        "title": "COMMANDS",
+        "type": "command_catalog",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "CONTEXT",
+        "CONTINUE",
+        "DO PASS N",
+        "PROMPT",
+        "BUG",
+        "CONSOLE",
+        "LOG <description>",
+        "AUDIT",
+        "COMPILE"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "CONTEXT": {
+          "path": "content.CONTEXT",
+          "title": "CONTEXT",
+          "ref": "content.CONTEXT",
+          "status": ""
+        },
+        "CONTINUE": {
+          "path": "content.CONTINUE",
+          "title": "CONTINUE",
+          "ref": "content.CONTINUE",
+          "status": ""
+        },
+        "DO PASS N": {
+          "path": "content.DO PASS N",
+          "title": "DO PASS N",
+          "ref": "content.DO PASS N",
+          "status": ""
+        },
+        "PROMPT": {
+          "path": "content.PROMPT",
+          "title": "PROMPT",
+          "ref": "content.PROMPT",
+          "status": ""
+        },
+        "BUG": {
+          "path": "content.BUG",
+          "title": "BUG",
+          "ref": "content.BUG",
+          "status": ""
+        },
+        "CONSOLE": {
+          "path": "content.CONSOLE",
+          "title": "CONSOLE",
+          "ref": "content.CONSOLE",
+          "status": ""
+        },
+        "LOG <description>": {
+          "path": "content.LOG <description>",
+          "title": "LOG <description>",
+          "ref": "content.LOG <description>",
+          "status": ""
+        },
+        "AUDIT": {
+          "path": "content.AUDIT",
+          "title": "AUDIT",
+          "ref": "content.AUDIT",
+          "status": ""
+        },
+        "COMPILE": {
+          "path": "content.COMPILE",
+          "title": "COMPILE",
+          "ref": "content.COMPILE",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "profiles/SocratexGamedev/FLOWS.json",
+      "document": {
+        "title": "FLOWS",
+        "type": "flow_catalog",
+        "language": "en",
+        "default_type_priority": 10
+      },
+      "routing": {},
+      "toc": [
+        "multi_prompt",
+        "direct_answer",
+        "documentation_edit",
+        "implementation",
+        "broad_refactor",
+        "planning",
+        "review",
+        "quality_diagnostics",
+        "visual_change",
+        "audio_change",
+        "context_command",
+        "continue_command",
+        "prompt_command",
+        "bug_command",
+        "console_command",
+        "log_command",
+        "audit_command",
+        "compile_command",
+        "requested_work_style",
+        "manual_mode"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "multi_prompt": {
+          "path": "content.multi_prompt",
+          "title": "",
+          "ref": "content.multi_prompt",
+          "status": ""
+        },
+        "direct_answer": {
+          "path": "content.direct_answer",
+          "title": "",
+          "ref": "content.direct_answer",
+          "status": ""
+        },
+        "documentation_edit": {
+          "path": "content.documentation_edit",
+          "title": "",
+          "ref": "content.documentation_edit",
+          "status": ""
+        },
+        "implementation": {
+          "path": "content.implementation",
+          "title": "",
+          "ref": "content.implementation",
+          "status": ""
+        },
+        "broad_refactor": {
+          "path": "content.broad_refactor",
+          "title": "",
+          "ref": "content.broad_refactor",
+          "status": ""
+        },
+        "planning": {
+          "path": "content.planning",
+          "title": "",
+          "ref": "content.planning",
+          "status": ""
+        },
+        "review": {
+          "path": "content.review",
+          "title": "",
+          "ref": "content.review",
+          "status": ""
+        },
+        "quality_diagnostics": {
+          "path": "content.quality_diagnostics",
+          "title": "",
+          "ref": "content.quality_diagnostics",
+          "status": ""
+        },
+        "visual_change": {
+          "path": "content.visual_change",
+          "title": "",
+          "ref": "content.visual_change",
+          "status": ""
+        },
+        "audio_change": {
+          "path": "content.audio_change",
+          "title": "",
+          "ref": "content.audio_change",
+          "status": ""
+        },
+        "context_command": {
+          "path": "content.context_command",
+          "title": "",
+          "ref": "content.context_command",
+          "status": ""
+        },
+        "continue_command": {
+          "path": "content.continue_command",
+          "title": "",
+          "ref": "content.continue_command",
+          "status": ""
+        },
+        "prompt_command": {
+          "path": "content.prompt_command",
+          "title": "",
+          "ref": "content.prompt_command",
+          "status": ""
+        },
+        "bug_command": {
+          "path": "content.bug_command",
+          "title": "",
+          "ref": "content.bug_command",
+          "status": ""
+        },
+        "console_command": {
+          "path": "content.console_command",
+          "title": "",
+          "ref": "content.console_command",
+          "status": ""
+        },
+        "log_command": {
+          "path": "content.log_command",
+          "title": "",
+          "ref": "content.log_command",
+          "status": ""
+        },
+        "audit_command": {
+          "path": "content.audit_command",
+          "title": "",
+          "ref": "content.audit_command",
+          "status": ""
+        },
+        "compile_command": {
+          "path": "content.compile_command",
+          "title": "",
+          "ref": "content.compile_command",
+          "status": ""
+        },
+        "requested_work_style": {
+          "path": "content.requested_work_style",
+          "title": "",
+          "ref": "content.requested_work_style",
+          "status": ""
+        },
+        "manual_mode": {
+          "path": "content.manual_mode",
+          "title": "",
+          "ref": "content.manual_mode",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "profiles/SocratexGamedev/PROFILE.json",
+      "document": {
+        "title": "SocratexGamedev Profile",
+        "type": "pipeline_profile",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "summary",
+        "purpose",
+        "managed_project_files",
+        "child_override_policy",
+        "project_stack"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "managed_project_files": {
+          "path": "content.managed_project_files",
+          "title": "Managed Project Files",
+          "ref": "content.managed_project_files",
+          "status": ""
+        },
+        "child_override_policy": {
+          "path": "content.child_override_policy",
+          "title": "Child Override Policy",
+          "ref": "content.child_override_policy",
+          "status": ""
+        },
+        "project_stack": {
+          "path": "content.project_stack",
+          "title": "Project Stack",
+          "ref": "content.project_stack",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "profiles/SocratexGamedev/SCRIPTS.json",
+      "document": {
+        "title": "SCRIPTS",
+        "type": "script_catalog",
+        "language": "pl"
+      },
+      "routing": {},
+      "toc": [
+        "audit_docs.ps1",
+        "audit_yaml_docs.py",
+        "doc_build_cache.ps1",
+        "doc_item.py",
+        "doc_item_bulk_insert.ps1",
+        "doc_item_insert.ps1",
+        "doc_item_migrate.ps1",
+        "doc_item_move.ps1",
+        "doc_keys.ps1",
+        "doc_list_check.ps1",
+        "doc_list_insert.ps1",
+        "doc_list_insert_checked.ps1",
+        "doc_list_item.py",
+        "doc_list_review.ps1",
+        "doc_post_edit.ps1",
+        "doc_read.ps1",
+        "doc_read_titles.ps1",
+        "doc_route.ps1",
+        "doc_search.ps1",
+        "json_list_doc.py",
+        "json_refresh_index.ps1",
+        "json_migrate_content.ps1",
+        "json_read.ps1",
+        "json_item_insert.ps1",
+        "json_item_set.ps1",
+        "json_item_move.ps1",
+        "json_item_delete.ps1",
+        "json_line_insert.ps1",
+        "json_line_set.ps1",
+        "json_line_move.ps1",
+        "doc_tool.py",
+        "docs_migrator.ps1",
+        "docs_migrator.py",
+        "yaml_to_json_list_doc.ps1",
+        "yaml_to_json_list_doc.py",
+        "docs_slim.ps1",
+        "docs_slim.py",
+        "markdown_list_insert_checked.ps1",
+        "normalize_markdown_emoji.ps1",
+        "context_tags.ps1",
+        "knowledge_check.ps1",
+        "knowledge_code_context.ps1",
+        "knowledge_compile.ps1",
+        "knowledge_delete.ps1",
+        "knowledge_index.py",
+        "knowledge_query.ps1",
+        "knowledge_rename.ps1",
+        "knowledge_select.ps1",
+        "knowledge_upsert.ps1",
+        "knowledge_validate.ps1",
+        "open_knowledge_db.ps1",
+        "add_changelog_entry.ps1",
+        "check_task.ps1",
+        "commit_task.ps1",
+        "done.ps1",
+        "end_prompt_snapshot.ps1",
+        "finish_subtask.ps1",
+        "finish_task.ps1",
+        "task_snapshot.ps1",
+        "Utf8File.ps1",
+        "check_utf8_writes.ps1",
+        "normalize_text_files.ps1",
+        "normalize_json_files.ps1",
+        "normalize_json_files.py",
+        "normalize_documents.bat",
+        "repair_mojibake.ps1",
+        "repair_yaml_block_indentation.ps1",
+        "repair_yaml_block_indentation.py",
+        "write_utf8_file.ps1",
+        "check_code_context_gate.ps1",
+        "load_programming_context.ps1",
+        "update_code_line_index.ps1",
+        "bootstrap_dotnet_sdk.ps1",
+        "bootstrap_godot_console.ps1",
+        "archive_logs_for_run.ps1",
+        "build_and_run.ps1",
+        "changed_quality_gate.ps1",
+        "check_csharp.ps1",
+        "clear_logs.bat",
+        "console_summary.ps1",
+        "export-playtest.bat",
+        "export-playtest.ps1",
+        "export_windows_playtest.ps1",
+        "gdscript_outline.ps1",
+        "generate_embedded_config_payload.py",
+        "godot_capture.ps1",
+        "log_summary.ps1",
+        "operator_mission.ps1",
+        "performance_benchmark_report.ps1",
+        "prepare_operator_test_config.ps1",
+        "route_retest_report.ps1",
+        "run_map_performance_smoke.ps1",
+        "wait_operator_event.ps1",
+        "run_godot_script.ps1",
+        "run_headless.ps1",
+        "run-game.bat",
+        "run_biome_distribution_diagnostics.ps1",
+        "run_biome_walk_benchmark.ps1",
+        "run_quality_fix.ps1",
+        "run_quality_gate.ps1",
+        "run_smoke_diagnostics.ps1",
+        "run_terrain_diagnostics.ps1",
+        "set_game_version.ps1",
+        "worker_lifecycle_report.ps1",
+        "check_project_context.ps1",
+        "compile.ps1",
+        "compile_project_context.ps1",
+        "flow_read.ps1",
+        "flow_tool.py",
+        "load_type_context.ps1",
+        "type_context_loader.py",
+        "project_context_compiler.py",
+        "tool_handler.ps1",
+        "tool_error_log.ps1",
+        "read_compiled_context.ps1",
+        "resolve_python.ps1",
+        "configure_powershell_tool_path.ps1",
+        "configure_powershell_utf8.ps1",
+        "doctor.ps1",
+        "play_completion_sound.ps1",
+        "pipeline_bootstrap_index.ps1",
+        "pipeline_bootstrap_index.py"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "audit_docs.ps1": {
+          "path": "content.audit_docs.ps1",
+          "title": "",
+          "ref": "content.audit_docs.ps1",
+          "status": ""
+        },
+        "audit_yaml_docs.py": {
+          "path": "content.audit_yaml_docs.py",
+          "title": "",
+          "ref": "content.audit_yaml_docs.py",
+          "status": ""
+        },
+        "doc_build_cache.ps1": {
+          "path": "content.doc_build_cache.ps1",
+          "title": "",
+          "ref": "content.doc_build_cache.ps1",
+          "status": ""
+        },
+        "doc_item.py": {
+          "path": "content.doc_item.py",
+          "title": "",
+          "ref": "content.doc_item.py",
+          "status": ""
+        },
+        "doc_item_bulk_insert.ps1": {
+          "path": "content.doc_item_bulk_insert.ps1",
+          "title": "",
+          "ref": "content.doc_item_bulk_insert.ps1",
+          "status": ""
+        },
+        "doc_item_insert.ps1": {
+          "path": "content.doc_item_insert.ps1",
+          "title": "",
+          "ref": "content.doc_item_insert.ps1",
+          "status": ""
+        },
+        "doc_item_migrate.ps1": {
+          "path": "content.doc_item_migrate.ps1",
+          "title": "",
+          "ref": "content.doc_item_migrate.ps1",
+          "status": ""
+        },
+        "doc_item_move.ps1": {
+          "path": "content.doc_item_move.ps1",
+          "title": "",
+          "ref": "content.doc_item_move.ps1",
+          "status": ""
+        },
+        "doc_keys.ps1": {
+          "path": "content.doc_keys.ps1",
+          "title": "",
+          "ref": "content.doc_keys.ps1",
+          "status": ""
+        },
+        "doc_list_check.ps1": {
+          "path": "content.doc_list_check.ps1",
+          "title": "",
+          "ref": "content.doc_list_check.ps1",
+          "status": ""
+        },
+        "doc_list_insert.ps1": {
+          "path": "content.doc_list_insert.ps1",
+          "title": "",
+          "ref": "content.doc_list_insert.ps1",
+          "status": ""
+        },
+        "doc_list_insert_checked.ps1": {
+          "path": "content.doc_list_insert_checked.ps1",
+          "title": "",
+          "ref": "content.doc_list_insert_checked.ps1",
+          "status": ""
+        },
+        "doc_list_item.py": {
+          "path": "content.doc_list_item.py",
+          "title": "",
+          "ref": "content.doc_list_item.py",
+          "status": ""
+        },
+        "doc_list_review.ps1": {
+          "path": "content.doc_list_review.ps1",
+          "title": "",
+          "ref": "content.doc_list_review.ps1",
+          "status": ""
+        },
+        "doc_post_edit.ps1": {
+          "path": "content.doc_post_edit.ps1",
+          "title": "",
+          "ref": "content.doc_post_edit.ps1",
+          "status": ""
+        },
+        "doc_read.ps1": {
+          "path": "content.doc_read.ps1",
+          "title": "",
+          "ref": "content.doc_read.ps1",
+          "status": ""
+        },
+        "doc_read_titles.ps1": {
+          "path": "content.doc_read_titles.ps1",
+          "title": "",
+          "ref": "content.doc_read_titles.ps1",
+          "status": ""
+        },
+        "doc_route.ps1": {
+          "path": "content.doc_route.ps1",
+          "title": "",
+          "ref": "content.doc_route.ps1",
+          "status": ""
+        },
+        "doc_search.ps1": {
+          "path": "content.doc_search.ps1",
+          "title": "",
+          "ref": "content.doc_search.ps1",
+          "status": ""
+        },
+        "json_list_doc.py": {
+          "path": "content.json_list_doc.py",
+          "title": "",
+          "ref": "content.json_list_doc.py",
+          "status": ""
+        },
+        "json_refresh_index.ps1": {
+          "path": "content.json_refresh_index.ps1",
+          "title": "",
+          "ref": "content.json_refresh_index.ps1",
+          "status": ""
+        },
+        "json_migrate_content.ps1": {
+          "path": "content.json_migrate_content.ps1",
+          "title": "",
+          "ref": "content.json_migrate_content.ps1",
+          "status": ""
+        },
+        "json_read.ps1": {
+          "path": "content.json_read.ps1",
+          "title": "",
+          "ref": "content.json_read.ps1",
+          "status": ""
+        },
+        "json_item_insert.ps1": {
+          "path": "content.json_item_insert.ps1",
+          "title": "",
+          "ref": "content.json_item_insert.ps1",
+          "status": ""
+        },
+        "json_item_set.ps1": {
+          "path": "content.json_item_set.ps1",
+          "title": "",
+          "ref": "content.json_item_set.ps1",
+          "status": ""
+        },
+        "json_item_move.ps1": {
+          "path": "content.json_item_move.ps1",
+          "title": "",
+          "ref": "content.json_item_move.ps1",
+          "status": ""
+        },
+        "json_item_delete.ps1": {
+          "path": "content.json_item_delete.ps1",
+          "title": "",
+          "ref": "content.json_item_delete.ps1",
+          "status": ""
+        },
+        "json_line_insert.ps1": {
+          "path": "content.json_line_insert.ps1",
+          "title": "",
+          "ref": "content.json_line_insert.ps1",
+          "status": ""
+        },
+        "json_line_set.ps1": {
+          "path": "content.json_line_set.ps1",
+          "title": "",
+          "ref": "content.json_line_set.ps1",
+          "status": ""
+        },
+        "json_line_move.ps1": {
+          "path": "content.json_line_move.ps1",
+          "title": "",
+          "ref": "content.json_line_move.ps1",
+          "status": ""
+        },
+        "doc_tool.py": {
+          "path": "content.doc_tool.py",
+          "title": "",
+          "ref": "content.doc_tool.py",
+          "status": ""
+        },
+        "docs_migrator.ps1": {
+          "path": "content.docs_migrator.ps1",
+          "title": "",
+          "ref": "content.docs_migrator.ps1",
+          "status": ""
+        },
+        "docs_migrator.py": {
+          "path": "content.docs_migrator.py",
+          "title": "",
+          "ref": "content.docs_migrator.py",
+          "status": ""
+        },
+        "yaml_to_json_list_doc.ps1": {
+          "path": "content.yaml_to_json_list_doc.ps1",
+          "title": "",
+          "ref": "content.yaml_to_json_list_doc.ps1",
+          "status": ""
+        },
+        "yaml_to_json_list_doc.py": {
+          "path": "content.yaml_to_json_list_doc.py",
+          "title": "",
+          "ref": "content.yaml_to_json_list_doc.py",
+          "status": ""
+        },
+        "docs_slim.ps1": {
+          "path": "content.docs_slim.ps1",
+          "title": "",
+          "ref": "content.docs_slim.ps1",
+          "status": ""
+        },
+        "docs_slim.py": {
+          "path": "content.docs_slim.py",
+          "title": "",
+          "ref": "content.docs_slim.py",
+          "status": ""
+        },
+        "markdown_list_insert_checked.ps1": {
+          "path": "content.markdown_list_insert_checked.ps1",
+          "title": "",
+          "ref": "content.markdown_list_insert_checked.ps1",
+          "status": ""
+        },
+        "normalize_markdown_emoji.ps1": {
+          "path": "content.normalize_markdown_emoji.ps1",
+          "title": "",
+          "ref": "content.normalize_markdown_emoji.ps1",
+          "status": ""
+        },
+        "context_tags.ps1": {
+          "path": "content.context_tags.ps1",
+          "title": "",
+          "ref": "content.context_tags.ps1",
+          "status": ""
+        },
+        "knowledge_check.ps1": {
+          "path": "content.knowledge_check.ps1",
+          "title": "",
+          "ref": "content.knowledge_check.ps1",
+          "status": ""
+        },
+        "knowledge_code_context.ps1": {
+          "path": "content.knowledge_code_context.ps1",
+          "title": "",
+          "ref": "content.knowledge_code_context.ps1",
+          "status": ""
+        },
+        "knowledge_compile.ps1": {
+          "path": "content.knowledge_compile.ps1",
+          "title": "",
+          "ref": "content.knowledge_compile.ps1",
+          "status": ""
+        },
+        "knowledge_delete.ps1": {
+          "path": "content.knowledge_delete.ps1",
+          "title": "",
+          "ref": "content.knowledge_delete.ps1",
+          "status": ""
+        },
+        "knowledge_index.py": {
+          "path": "content.knowledge_index.py",
+          "title": "",
+          "ref": "content.knowledge_index.py",
+          "status": ""
+        },
+        "knowledge_query.ps1": {
+          "path": "content.knowledge_query.ps1",
+          "title": "",
+          "ref": "content.knowledge_query.ps1",
+          "status": ""
+        },
+        "knowledge_rename.ps1": {
+          "path": "content.knowledge_rename.ps1",
+          "title": "",
+          "ref": "content.knowledge_rename.ps1",
+          "status": ""
+        },
+        "knowledge_select.ps1": {
+          "path": "content.knowledge_select.ps1",
+          "title": "",
+          "ref": "content.knowledge_select.ps1",
+          "status": ""
+        },
+        "knowledge_upsert.ps1": {
+          "path": "content.knowledge_upsert.ps1",
+          "title": "",
+          "ref": "content.knowledge_upsert.ps1",
+          "status": ""
+        },
+        "knowledge_validate.ps1": {
+          "path": "content.knowledge_validate.ps1",
+          "title": "",
+          "ref": "content.knowledge_validate.ps1",
+          "status": ""
+        },
+        "open_knowledge_db.ps1": {
+          "path": "content.open_knowledge_db.ps1",
+          "title": "",
+          "ref": "content.open_knowledge_db.ps1",
+          "status": ""
+        },
+        "add_changelog_entry.ps1": {
+          "path": "content.add_changelog_entry.ps1",
+          "title": "",
+          "ref": "content.add_changelog_entry.ps1",
+          "status": ""
+        },
+        "check_task.ps1": {
+          "path": "content.check_task.ps1",
+          "title": "",
+          "ref": "content.check_task.ps1",
+          "status": ""
+        },
+        "commit_task.ps1": {
+          "path": "content.commit_task.ps1",
+          "title": "",
+          "ref": "content.commit_task.ps1",
+          "status": ""
+        },
+        "done.ps1": {
+          "path": "content.done.ps1",
+          "title": "",
+          "ref": "content.done.ps1",
+          "status": ""
+        },
+        "end_prompt_snapshot.ps1": {
+          "path": "content.end_prompt_snapshot.ps1",
+          "title": "",
+          "ref": "content.end_prompt_snapshot.ps1",
+          "status": ""
+        },
+        "finish_subtask.ps1": {
+          "path": "content.finish_subtask.ps1",
+          "title": "",
+          "ref": "content.finish_subtask.ps1",
+          "status": ""
+        },
+        "finish_task.ps1": {
+          "path": "content.finish_task.ps1",
+          "title": "",
+          "ref": "content.finish_task.ps1",
+          "status": ""
+        },
+        "task_snapshot.ps1": {
+          "path": "content.task_snapshot.ps1",
+          "title": "",
+          "ref": "content.task_snapshot.ps1",
+          "status": ""
+        },
+        "Utf8File.ps1": {
+          "path": "content.Utf8File.ps1",
+          "title": "",
+          "ref": "content.Utf8File.ps1",
+          "status": ""
+        },
+        "check_utf8_writes.ps1": {
+          "path": "content.check_utf8_writes.ps1",
+          "title": "",
+          "ref": "content.check_utf8_writes.ps1",
+          "status": ""
+        },
+        "normalize_text_files.ps1": {
+          "path": "content.normalize_text_files.ps1",
+          "title": "",
+          "ref": "content.normalize_text_files.ps1",
+          "status": ""
+        },
+        "normalize_json_files.ps1": {
+          "path": "content.normalize_json_files.ps1",
+          "title": "",
+          "ref": "content.normalize_json_files.ps1",
+          "status": ""
+        },
+        "normalize_json_files.py": {
+          "path": "content.normalize_json_files.py",
+          "title": "",
+          "ref": "content.normalize_json_files.py",
+          "status": ""
+        },
+        "normalize_documents.bat": {
+          "path": "content.normalize_documents.bat",
+          "title": "",
+          "ref": "content.normalize_documents.bat",
+          "status": ""
+        },
+        "repair_mojibake.ps1": {
+          "path": "content.repair_mojibake.ps1",
+          "title": "",
+          "ref": "content.repair_mojibake.ps1",
+          "status": ""
+        },
+        "repair_yaml_block_indentation.ps1": {
+          "path": "content.repair_yaml_block_indentation.ps1",
+          "title": "",
+          "ref": "content.repair_yaml_block_indentation.ps1",
+          "status": ""
+        },
+        "repair_yaml_block_indentation.py": {
+          "path": "content.repair_yaml_block_indentation.py",
+          "title": "",
+          "ref": "content.repair_yaml_block_indentation.py",
+          "status": ""
+        },
+        "write_utf8_file.ps1": {
+          "path": "content.write_utf8_file.ps1",
+          "title": "",
+          "ref": "content.write_utf8_file.ps1",
+          "status": ""
+        },
+        "check_code_context_gate.ps1": {
+          "path": "content.check_code_context_gate.ps1",
+          "title": "",
+          "ref": "content.check_code_context_gate.ps1",
+          "status": ""
+        },
+        "load_programming_context.ps1": {
+          "path": "content.load_programming_context.ps1",
+          "title": "",
+          "ref": "content.load_programming_context.ps1",
+          "status": ""
+        },
+        "update_code_line_index.ps1": {
+          "path": "content.update_code_line_index.ps1",
+          "title": "",
+          "ref": "content.update_code_line_index.ps1",
+          "status": ""
+        },
+        "bootstrap_dotnet_sdk.ps1": {
+          "path": "content.bootstrap_dotnet_sdk.ps1",
+          "title": "",
+          "ref": "content.bootstrap_dotnet_sdk.ps1",
+          "status": ""
+        },
+        "bootstrap_godot_console.ps1": {
+          "path": "content.bootstrap_godot_console.ps1",
+          "title": "",
+          "ref": "content.bootstrap_godot_console.ps1",
+          "status": ""
+        },
+        "archive_logs_for_run.ps1": {
+          "path": "content.archive_logs_for_run.ps1",
+          "title": "",
+          "ref": "content.archive_logs_for_run.ps1",
+          "status": ""
+        },
+        "build_and_run.ps1": {
+          "path": "content.build_and_run.ps1",
+          "title": "",
+          "ref": "content.build_and_run.ps1",
+          "status": ""
+        },
+        "changed_quality_gate.ps1": {
+          "path": "content.changed_quality_gate.ps1",
+          "title": "",
+          "ref": "content.changed_quality_gate.ps1",
+          "status": ""
+        },
+        "check_csharp.ps1": {
+          "path": "content.check_csharp.ps1",
+          "title": "",
+          "ref": "content.check_csharp.ps1",
+          "status": ""
+        },
+        "clear_logs.bat": {
+          "path": "content.clear_logs.bat",
+          "title": "",
+          "ref": "content.clear_logs.bat",
+          "status": ""
+        },
+        "console_summary.ps1": {
+          "path": "content.console_summary.ps1",
+          "title": "",
+          "ref": "content.console_summary.ps1",
+          "status": ""
+        },
+        "export-playtest.bat": {
+          "path": "content.export-playtest.bat",
+          "title": "",
+          "ref": "content.export-playtest.bat",
+          "status": ""
+        },
+        "export-playtest.ps1": {
+          "path": "content.export-playtest.ps1",
+          "title": "",
+          "ref": "content.export-playtest.ps1",
+          "status": ""
+        },
+        "export_windows_playtest.ps1": {
+          "path": "content.export_windows_playtest.ps1",
+          "title": "",
+          "ref": "content.export_windows_playtest.ps1",
+          "status": ""
+        },
+        "gdscript_outline.ps1": {
+          "path": "content.gdscript_outline.ps1",
+          "title": "",
+          "ref": "content.gdscript_outline.ps1",
+          "status": ""
+        },
+        "generate_embedded_config_payload.py": {
+          "path": "content.generate_embedded_config_payload.py",
+          "title": "",
+          "ref": "content.generate_embedded_config_payload.py",
+          "status": ""
+        },
+        "godot_capture.ps1": {
+          "path": "content.godot_capture.ps1",
+          "title": "",
+          "ref": "content.godot_capture.ps1",
+          "status": ""
+        },
+        "log_summary.ps1": {
+          "path": "content.log_summary.ps1",
+          "title": "",
+          "ref": "content.log_summary.ps1",
+          "status": ""
+        },
+        "operator_mission.ps1": {
+          "path": "content.operator_mission.ps1",
+          "title": "",
+          "ref": "content.operator_mission.ps1",
+          "status": ""
+        },
+        "performance_benchmark_report.ps1": {
+          "path": "content.performance_benchmark_report.ps1",
+          "title": "",
+          "ref": "content.performance_benchmark_report.ps1",
+          "status": ""
+        },
+        "prepare_operator_test_config.ps1": {
+          "path": "content.prepare_operator_test_config.ps1",
+          "title": "",
+          "ref": "content.prepare_operator_test_config.ps1",
+          "status": ""
+        },
+        "route_retest_report.ps1": {
+          "path": "content.route_retest_report.ps1",
+          "title": "",
+          "ref": "content.route_retest_report.ps1",
+          "status": ""
+        },
+        "run_map_performance_smoke.ps1": {
+          "path": "content.run_map_performance_smoke.ps1",
+          "title": "",
+          "ref": "content.run_map_performance_smoke.ps1",
+          "status": ""
+        },
+        "wait_operator_event.ps1": {
+          "path": "content.wait_operator_event.ps1",
+          "title": "",
+          "ref": "content.wait_operator_event.ps1",
+          "status": ""
+        },
+        "run_godot_script.ps1": {
+          "path": "content.run_godot_script.ps1",
+          "title": "",
+          "ref": "content.run_godot_script.ps1",
+          "status": ""
+        },
+        "run_headless.ps1": {
+          "path": "content.run_headless.ps1",
+          "title": "",
+          "ref": "content.run_headless.ps1",
+          "status": ""
+        },
+        "run-game.bat": {
+          "path": "content.run-game.bat",
+          "title": "",
+          "ref": "content.run-game.bat",
+          "status": ""
+        },
+        "run_biome_distribution_diagnostics.ps1": {
+          "path": "content.run_biome_distribution_diagnostics.ps1",
+          "title": "",
+          "ref": "content.run_biome_distribution_diagnostics.ps1",
+          "status": ""
+        },
+        "run_biome_walk_benchmark.ps1": {
+          "path": "content.run_biome_walk_benchmark.ps1",
+          "title": "",
+          "ref": "content.run_biome_walk_benchmark.ps1",
+          "status": ""
+        },
+        "run_quality_fix.ps1": {
+          "path": "content.run_quality_fix.ps1",
+          "title": "",
+          "ref": "content.run_quality_fix.ps1",
+          "status": ""
+        },
+        "run_quality_gate.ps1": {
+          "path": "content.run_quality_gate.ps1",
+          "title": "",
+          "ref": "content.run_quality_gate.ps1",
+          "status": ""
+        },
+        "run_smoke_diagnostics.ps1": {
+          "path": "content.run_smoke_diagnostics.ps1",
+          "title": "",
+          "ref": "content.run_smoke_diagnostics.ps1",
+          "status": ""
+        },
+        "run_terrain_diagnostics.ps1": {
+          "path": "content.run_terrain_diagnostics.ps1",
+          "title": "",
+          "ref": "content.run_terrain_diagnostics.ps1",
+          "status": ""
+        },
+        "set_game_version.ps1": {
+          "path": "content.set_game_version.ps1",
+          "title": "",
+          "ref": "content.set_game_version.ps1",
+          "status": ""
+        },
+        "worker_lifecycle_report.ps1": {
+          "path": "content.worker_lifecycle_report.ps1",
+          "title": "",
+          "ref": "content.worker_lifecycle_report.ps1",
+          "status": ""
+        },
+        "check_project_context.ps1": {
+          "path": "content.check_project_context.ps1",
+          "title": "",
+          "ref": "content.check_project_context.ps1",
+          "status": ""
+        },
+        "compile.ps1": {
+          "path": "content.compile.ps1",
+          "title": "",
+          "ref": "content.compile.ps1",
+          "status": ""
+        },
+        "compile_project_context.ps1": {
+          "path": "content.compile_project_context.ps1",
+          "title": "",
+          "ref": "content.compile_project_context.ps1",
+          "status": ""
+        },
+        "flow_read.ps1": {
+          "path": "content.flow_read.ps1",
+          "title": "",
+          "ref": "content.flow_read.ps1",
+          "status": ""
+        },
+        "flow_tool.py": {
+          "path": "content.flow_tool.py",
+          "title": "",
+          "ref": "content.flow_tool.py",
+          "status": ""
+        },
+        "load_type_context.ps1": {
+          "path": "content.load_type_context.ps1",
+          "title": "",
+          "ref": "content.load_type_context.ps1",
+          "status": ""
+        },
+        "type_context_loader.py": {
+          "path": "content.type_context_loader.py",
+          "title": "",
+          "ref": "content.type_context_loader.py",
+          "status": ""
+        },
+        "project_context_compiler.py": {
+          "path": "content.project_context_compiler.py",
+          "title": "",
+          "ref": "content.project_context_compiler.py",
+          "status": ""
+        },
+        "tool_handler.ps1": {
+          "path": "content.tool_handler.ps1",
+          "title": "",
+          "ref": "content.tool_handler.ps1",
+          "status": ""
+        },
+        "tool_error_log.ps1": {
+          "path": "content.tool_error_log.ps1",
+          "title": "",
+          "ref": "content.tool_error_log.ps1",
+          "status": ""
+        },
+        "read_compiled_context.ps1": {
+          "path": "content.read_compiled_context.ps1",
+          "title": "",
+          "ref": "content.read_compiled_context.ps1",
+          "status": ""
+        },
+        "resolve_python.ps1": {
+          "path": "content.resolve_python.ps1",
+          "title": "",
+          "ref": "content.resolve_python.ps1",
+          "status": ""
+        },
+        "configure_powershell_tool_path.ps1": {
+          "path": "content.configure_powershell_tool_path.ps1",
+          "title": "",
+          "ref": "content.configure_powershell_tool_path.ps1",
+          "status": ""
+        },
+        "configure_powershell_utf8.ps1": {
+          "path": "content.configure_powershell_utf8.ps1",
+          "title": "",
+          "ref": "content.configure_powershell_utf8.ps1",
+          "status": ""
+        },
+        "doctor.ps1": {
+          "path": "content.doctor.ps1",
+          "title": "",
+          "ref": "content.doctor.ps1",
+          "status": ""
+        },
+        "play_completion_sound.ps1": {
+          "path": "content.play_completion_sound.ps1",
+          "title": "",
+          "ref": "content.play_completion_sound.ps1",
+          "status": ""
+        },
+        "pipeline_bootstrap_index.ps1": {
+          "path": "content.pipeline_bootstrap_index.ps1",
+          "title": "",
+          "ref": "content.pipeline_bootstrap_index.ps1",
+          "status": ""
+        },
+        "pipeline_bootstrap_index.py": {
+          "path": "content.pipeline_bootstrap_index.py",
+          "title": "",
+          "ref": "content.pipeline_bootstrap_index.py",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "profiles/SocratexGamedev/WORKFLOW.json",
+      "document": {
+        "title": "Codex Workflow",
+        "type": "workflow",
+        "language": "en"
+      },
+      "routing": {
+        "purpose": "Compact project workflow router, including task classification, read rules, approval behavior, finish checks, and contextual action rules.",
+        "read_when": [
+          "When this document is explicitly referenced.",
+          "When workflow rules select this document for the current task."
+        ],
+        "do_not_read_when": [
+          "When a smaller current-state or subsystem capsule is sufficient."
+        ]
+      },
+      "toc": [
+        "quick_index",
+        "pipeline_bootstrap_directive",
+        "audit_output_contract",
+        "default_start",
+        "feature_bug_steer_direction",
+        "contextual_actions_purpose",
+        "contextual_actions",
+        "task_classifier",
+        "broad_work_definition",
+        "approval_rules",
+        "finish_checklist",
+        "purpose",
+        "read_discipline",
+        "working_checks"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "pipeline_bootstrap_directive": {
+          "path": "content.pipeline_bootstrap_directive",
+          "title": "Pipeline Bootstrap Directive",
+          "ref": "content.pipeline_bootstrap_directive",
+          "status": ""
+        },
+        "audit_output_contract": {
+          "path": "content.audit_output_contract",
+          "title": "Audit Output Contract",
+          "ref": "content.audit_output_contract",
+          "status": ""
+        },
+        "default_start": {
+          "path": "content.default_start",
+          "title": "Default Start",
+          "ref": "content.default_start",
+          "status": ""
+        },
+        "feature_bug_steer_direction": {
+          "path": "content.feature_bug_steer_direction",
+          "title": "Feature And Bug Steer Direction",
+          "ref": "content.feature_bug_steer_direction",
+          "status": ""
+        },
+        "contextual_actions_purpose": {
+          "path": "content.contextual_actions_purpose",
+          "title": "Workflow Contextual Actions Purpose",
+          "ref": "content.contextual_actions_purpose",
+          "status": ""
+        },
+        "contextual_actions": {
+          "path": "content.contextual_actions",
+          "title": "Workflow Contextual Actions",
+          "ref": "content.contextual_actions",
+          "status": ""
+        },
+        "task_classifier": {
+          "path": "content.task_classifier",
+          "title": "Task Classifier",
+          "ref": "content.task_classifier",
+          "status": ""
+        },
+        "broad_work_definition": {
+          "path": "content.broad_work_definition",
+          "title": "Broad Work Definition",
+          "ref": "content.broad_work_definition",
+          "status": ""
+        },
+        "approval_rules": {
+          "path": "content.approval_rules",
+          "title": "Approval Rules",
+          "ref": "content.approval_rules",
+          "status": ""
+        },
+        "finish_checklist": {
+          "path": "content.finish_checklist",
+          "title": "Finish Checklist",
+          "ref": "content.finish_checklist",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "read_discipline": {
+          "path": "content.read_discipline",
+          "title": "Read Discipline",
+          "ref": "content.read_discipline",
+          "status": ""
+        },
+        "working_checks": {
+          "path": "content.working_checks",
+          "title": "Working Checks",
+          "ref": "content.working_checks",
+          "status": ""
+        },
+        "respect_flow_boundary": {
+          "path": "content.contextual_actions.items.0",
+          "title": "",
+          "ref": "content.contextual_actions.items.0",
+          "status": "active"
+        },
+        "apply_target_document_format": {
+          "path": "content.contextual_actions.items.1",
+          "title": "",
+          "ref": "content.contextual_actions.items.1",
+          "status": "active"
+        },
+        "use_document_duplicate_check": {
+          "path": "content.contextual_actions.items.2",
+          "title": "",
+          "ref": "content.contextual_actions.items.2",
+          "status": "active"
+        },
+        "preserve_planning_boundaries": {
+          "path": "content.contextual_actions.items.3",
+          "title": "",
+          "ref": "content.contextual_actions.items.3",
+          "status": "active"
+        },
+        "check_active_pressure_before_priority_change": {
+          "path": "content.contextual_actions.items.4",
+          "title": "",
+          "ref": "content.contextual_actions.items.4",
+          "status": "active"
+        },
+        "ctx_fun_loop_first": {
+          "path": "content.contextual_actions.items.5",
+          "title": "",
+          "ref": "content.contextual_actions.items.5",
+          "status": "active"
+        },
+        "ctx_enemy_validation_pressure": {
+          "path": "content.contextual_actions.items.6",
+          "title": "",
+          "ref": "content.contextual_actions.items.6",
+          "status": "active"
+        },
+        "ctx_performance_budget_awareness": {
+          "path": "content.contextual_actions.items.7",
+          "title": "",
+          "ref": "content.contextual_actions.items.7",
+          "status": "active"
+        },
+        "ctx_better_version_now_future_fit": {
+          "path": "content.contextual_actions.items.8",
+          "title": "",
+          "ref": "content.contextual_actions.items.8",
+          "status": "active"
+        },
+        "ctx_ai_native_runtime_contract_headers": {
+          "path": "content.contextual_actions.items.9",
+          "title": "",
+          "ref": "content.contextual_actions.items.9",
+          "status": "active"
+        },
+        "ctx_future_first_prerequisites": {
+          "path": "content.contextual_actions.items.10",
+          "title": "",
+          "ref": "content.contextual_actions.items.10",
+          "status": "active"
+        },
+        "evidence_first_reporting": {
+          "path": "content.contextual_actions.items.11",
+          "title": "",
+          "ref": "content.contextual_actions.items.11",
+          "status": "active"
+        },
+        "owner_pressure_is_sticky": {
+          "path": "content.contextual_actions.items.12",
+          "title": "",
+          "ref": "content.contextual_actions.items.12",
+          "status": "active"
+        },
+        "respect_user_override_after_tradeoff": {
+          "path": "content.contextual_actions.items.13",
+          "title": "",
+          "ref": "content.contextual_actions.items.13",
+          "status": "active"
+        },
+        "apply_contextual_actions_only_when_relevant": {
+          "path": "content.contextual_actions.items.14",
+          "title": "",
+          "ref": "content.contextual_actions.items.14",
+          "status": "active"
+        },
+        "handle_unclassified_flow_uncertainty": {
+          "path": "content.contextual_actions.items.15",
+          "title": "",
+          "ref": "content.contextual_actions.items.15",
+          "status": "active"
+        },
+        "use_role_lenses_on_demand": {
+          "path": "content.contextual_actions.items.16",
+          "title": "",
+          "ref": "content.contextual_actions.items.16",
+          "status": "active"
+        },
+        "audit_findings_policy": {
+          "path": "content.contextual_actions.items.17",
+          "title": "",
+          "ref": "content.contextual_actions.items.17",
+          "status": "active"
+        },
+        "diagnostic_human_units_and_causality": {
+          "path": "content.contextual_actions.items.18",
+          "title": "",
+          "ref": "content.contextual_actions.items.18",
+          "status": "active"
+        },
+        "root_cause_over_symptom_patch": {
+          "path": "content.contextual_actions.items.19",
+          "title": "",
+          "ref": "content.contextual_actions.items.19",
+          "status": "active"
+        },
+        "vision_to_plan_requires_approval": {
+          "path": "content.contextual_actions.items.20",
+          "title": "",
+          "ref": "content.contextual_actions.items.20",
+          "status": "active"
+        },
+        "on_tool_result_error_repair_script_contract": {
+          "path": "content.contextual_actions.items.21",
+          "title": "",
+          "ref": "content.contextual_actions.items.21",
+          "status": "active"
+        },
+        "workflow_contextual_action_update_permission": {
+          "path": "content.contextual_actions.items.22",
+          "title": "",
+          "ref": "content.contextual_actions.items.22",
+          "status": "active"
+        }
+      }
+    },
+    {
+      "path": "project/code/BRANCH-MODE.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "layout",
+        "session_start",
+        "file_language",
+        "state_and_plan_contract",
+        "branch_end"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "layout": {
+          "path": "content.layout",
+          "title": "Layout",
+          "ref": "content.layout",
+          "status": ""
+        },
+        "session_start": {
+          "path": "content.session_start",
+          "title": "Session Start",
+          "ref": "content.session_start",
+          "status": ""
+        },
+        "file_language": {
+          "path": "content.file_language",
+          "title": "File Language",
+          "ref": "content.file_language",
+          "status": ""
+        },
+        "state_and_plan_contract": {
+          "path": "content.state_and_plan_contract",
+          "title": "State and Plan Contract",
+          "ref": "content.state_and_plan_contract",
+          "status": ""
+        },
+        "branch_end": {
+          "path": "content.branch_end",
+          "title": "Branch End",
+          "ref": "content.branch_end",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/COMMANDS.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "continue",
+        "plan",
+        "bug",
+        "review",
+        "audit",
+        "finish",
+        "commit",
+        "log",
+        "diagnostics",
+        "prompt",
+        "instructions"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "continue": {
+          "path": "content.continue",
+          "title": "CONTINUE",
+          "ref": "content.continue",
+          "status": ""
+        },
+        "plan": {
+          "path": "content.plan",
+          "title": "PLAN",
+          "ref": "content.plan",
+          "status": ""
+        },
+        "bug": {
+          "path": "content.bug",
+          "title": "BUG",
+          "ref": "content.bug",
+          "status": ""
+        },
+        "review": {
+          "path": "content.review",
+          "title": "REVIEW",
+          "ref": "content.review",
+          "status": ""
+        },
+        "audit": {
+          "path": "content.audit",
+          "title": "AUDIT",
+          "ref": "content.audit",
+          "status": ""
+        },
+        "finish": {
+          "path": "content.finish",
+          "title": "FINISH",
+          "ref": "content.finish",
+          "status": ""
+        },
+        "commit": {
+          "path": "content.commit",
+          "title": "COMMIT",
+          "ref": "content.commit",
+          "status": ""
+        },
+        "log": {
+          "path": "content.log",
+          "title": "LOG",
+          "ref": "content.log",
+          "status": ""
+        },
+        "diagnostics": {
+          "path": "content.diagnostics",
+          "title": "DIAGNOSTICS",
+          "ref": "content.diagnostics",
+          "status": ""
+        },
+        "prompt": {
+          "path": "content.prompt",
+          "title": "PROMPT",
+          "ref": "content.prompt",
+          "status": ""
+        },
+        "instructions": {
+          "path": "content.instructions",
+          "title": "INSTRUCTIONS",
+          "ref": "content.instructions",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/DDD-ADIV.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "known_solutions_alignment",
+        "domain_driven",
+        "architecture_decisive",
+        "invariant_visible",
+        "verification_attached"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "known_solutions_alignment": {
+          "path": "content.known_solutions_alignment",
+          "title": "Known-Solutions Alignment",
+          "ref": "content.known_solutions_alignment",
+          "status": ""
+        },
+        "domain_driven": {
+          "path": "content.domain_driven",
+          "title": "Domain-Driven",
+          "ref": "content.domain_driven",
+          "status": ""
+        },
+        "architecture_decisive": {
+          "path": "content.architecture_decisive",
+          "title": "Architecture-Decisive",
+          "ref": "content.architecture_decisive",
+          "status": ""
+        },
+        "invariant_visible": {
+          "path": "content.invariant_visible",
+          "title": "Invariant-Visible",
+          "ref": "content.invariant_visible",
+          "status": ""
+        },
+        "verification_attached": {
+          "path": "content.verification_attached",
+          "title": "Verification-Attached",
+          "ref": "content.verification_attached",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/DIAGNOSTICS.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "required_project_setup",
+        "diagnostic_intake",
+        "workflow",
+        "generic_command",
+        "human_readable_reporting",
+        "evidence_handling"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "required_project_setup": {
+          "path": "content.required_project_setup",
+          "title": "Required Project Setup",
+          "ref": "content.required_project_setup",
+          "status": ""
+        },
+        "diagnostic_intake": {
+          "path": "content.diagnostic_intake",
+          "title": "Diagnostic Intake",
+          "ref": "content.diagnostic_intake",
+          "status": ""
+        },
+        "workflow": {
+          "path": "content.workflow",
+          "title": "Workflow",
+          "ref": "content.workflow",
+          "status": ""
+        },
+        "generic_command": {
+          "path": "content.generic_command",
+          "title": "Generic Command",
+          "ref": "content.generic_command",
+          "status": ""
+        },
+        "human_readable_reporting": {
+          "path": "content.human_readable_reporting",
+          "title": "Human-Readable Reporting",
+          "ref": "content.human_readable_reporting",
+          "status": ""
+        },
+        "evidence_handling": {
+          "path": "content.evidence_handling",
+          "title": "Evidence Handling",
+          "ref": "content.evidence_handling",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/FROZEN-LAYERS.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "default_contract",
+        "freeze_candidate_examples",
+        "non_local_changes"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "default_contract": {
+          "path": "content.default_contract",
+          "title": "Default Contract",
+          "ref": "content.default_contract",
+          "status": ""
+        },
+        "freeze_candidate_examples": {
+          "path": "content.freeze_candidate_examples",
+          "title": "Freeze Candidate Examples",
+          "ref": "content.freeze_candidate_examples",
+          "status": ""
+        },
+        "non_local_changes": {
+          "path": "content.non_local_changes",
+          "title": "Non-Local Changes",
+          "ref": "content.non_local_changes",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/GIT.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "worktree_rules",
+        "branch_rules",
+        "staging_rules",
+        "commit_rules"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "worktree_rules": {
+          "path": "content.worktree_rules",
+          "title": "Worktree Rules",
+          "ref": "content.worktree_rules",
+          "status": ""
+        },
+        "branch_rules": {
+          "path": "content.branch_rules",
+          "title": "Branch Rules",
+          "ref": "content.branch_rules",
+          "status": ""
+        },
+        "staging_rules": {
+          "path": "content.staging_rules",
+          "title": "Staging Rules",
+          "ref": "content.staging_rules",
+          "status": ""
+        },
+        "commit_rules": {
+          "path": "content.commit_rules",
+          "title": "Commit Rules",
+          "ref": "content.commit_rules",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/INSTRUCTION-CAPTURE.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "code_sorting_rules",
+        "code_promotion_rules",
+        "cleaning_rules"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "code_sorting_rules": {
+          "path": "content.code_sorting_rules",
+          "title": "Code Sorting Rules",
+          "ref": "content.code_sorting_rules",
+          "status": ""
+        },
+        "code_promotion_rules": {
+          "path": "content.code_promotion_rules",
+          "title": "Code Promotion Rules",
+          "ref": "content.code_promotion_rules",
+          "status": ""
+        },
+        "cleaning_rules": {
+          "path": "content.cleaning_rules",
+          "title": "Cleaning Rules",
+          "ref": "content.cleaning_rules",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/PACK.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "required_reads_for_code_projects",
+        "technical_defaults",
+        "script_first_automation_directive",
+        "ddd_adiv_recommendation",
+        "known_solution_bias",
+        "task_type_routing",
+        "profile_aware_defaults",
+        "change_strategy",
+        "task_gating",
+        "reporting",
+        "review_heuristics",
+        "verification"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "content.recommended_files",
+          "title": "Recommended Files",
+          "ref": "content.recommended_files",
+          "status": ""
+        },
+        "required_reads_for_code_projects": {
+          "path": "content.required_reads_for_code_projects",
+          "title": "Required Reads for Code Projects",
+          "ref": "content.required_reads_for_code_projects",
+          "status": ""
+        },
+        "technical_defaults": {
+          "path": "content.technical_defaults",
+          "title": "Technical Defaults",
+          "ref": "content.technical_defaults",
+          "status": ""
+        },
+        "script_first_automation_directive": {
+          "path": "content.script_first_automation_directive",
+          "title": "Script-First Automation Directive",
+          "ref": "content.script_first_automation_directive",
+          "status": ""
+        },
+        "ddd_adiv_recommendation": {
+          "path": "content.ddd_adiv_recommendation",
+          "title": "DDD-ADIV Recommendation",
+          "ref": "content.ddd_adiv_recommendation",
+          "status": ""
+        },
+        "known_solution_bias": {
+          "path": "content.known_solution_bias",
+          "title": "Known-Solution Bias",
+          "ref": "content.known_solution_bias",
+          "status": ""
+        },
+        "task_type_routing": {
+          "path": "content.task_type_routing",
+          "title": "Task Type Routing",
+          "ref": "content.task_type_routing",
+          "status": ""
+        },
+        "profile_aware_defaults": {
+          "path": "content.profile_aware_defaults",
+          "title": "Profile-Aware Defaults",
+          "ref": "content.profile_aware_defaults",
+          "status": ""
+        },
+        "change_strategy": {
+          "path": "content.change_strategy",
+          "title": "Change Strategy",
+          "ref": "content.change_strategy",
+          "status": ""
+        },
+        "task_gating": {
+          "path": "content.task_gating",
+          "title": "Task Gating",
+          "ref": "content.task_gating",
+          "status": ""
+        },
+        "reporting": {
+          "path": "content.reporting",
+          "title": "Reporting",
+          "ref": "content.reporting",
+          "status": ""
+        },
+        "review_heuristics": {
+          "path": "content.review_heuristics",
+          "title": "Review Heuristics",
+          "ref": "content.review_heuristics",
+          "status": ""
+        },
+        "verification": {
+          "path": "content.verification",
+          "title": "Verification",
+          "ref": "content.verification",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/REGISTRIES.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "bug_registry",
+        "solved_bug_registry",
+        "todo_registry",
+        "changelog_registry",
+        "decision_registry"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "bug_registry": {
+          "path": "content.bug_registry",
+          "title": "Bug Registry",
+          "ref": "content.bug_registry",
+          "status": ""
+        },
+        "solved_bug_registry": {
+          "path": "content.solved_bug_registry",
+          "title": "Solved Bug Registry",
+          "ref": "content.solved_bug_registry",
+          "status": ""
+        },
+        "todo_registry": {
+          "path": "content.todo_registry",
+          "title": "TODO Registry",
+          "ref": "content.todo_registry",
+          "status": ""
+        },
+        "changelog_registry": {
+          "path": "content.changelog_registry",
+          "title": "Changelog Registry",
+          "ref": "content.changelog_registry",
+          "status": ""
+        },
+        "decision_registry": {
+          "path": "content.decision_registry",
+          "title": "Decision Registry",
+          "ref": "content.decision_registry",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/WORKFLOW.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "summary",
+        "read_order",
+        "command_classifier",
+        "task_type_router",
+        "general_workflow",
+        "script_first_execution",
+        "verification_boundary",
+        "task_work_tracking",
+        "branch_scoped_workflow",
+        "roi_workflow",
+        "context_cost_control"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "read_order": {
+          "path": "content.read_order",
+          "title": "Read Order",
+          "ref": "content.read_order",
+          "status": ""
+        },
+        "command_classifier": {
+          "path": "content.command_classifier",
+          "title": "Command Classifier",
+          "ref": "content.command_classifier",
+          "status": ""
+        },
+        "task_type_router": {
+          "path": "content.task_type_router",
+          "title": "Task Type Router",
+          "ref": "content.task_type_router",
+          "status": ""
+        },
+        "general_workflow": {
+          "path": "content.general_workflow",
+          "title": "General Workflow",
+          "ref": "content.general_workflow",
+          "status": ""
+        },
+        "script_first_execution": {
+          "path": "content.script_first_execution",
+          "title": "Script-First Execution",
+          "ref": "content.script_first_execution",
+          "status": ""
+        },
+        "verification_boundary": {
+          "path": "content.verification_boundary",
+          "title": "Verification Boundary",
+          "ref": "content.verification_boundary",
+          "status": ""
+        },
+        "task_work_tracking": {
+          "path": "content.task_work_tracking",
+          "title": "Task Work Tracking",
+          "ref": "content.task_work_tracking",
+          "status": ""
+        },
+        "branch_scoped_workflow": {
+          "path": "content.branch_scoped_workflow",
+          "title": "Branch-Scoped Workflow",
+          "ref": "content.branch_scoped_workflow",
+          "status": ""
+        },
+        "roi_workflow": {
+          "path": "content.roi_workflow",
+          "title": "ROI Workflow",
+          "ref": "content.roi_workflow",
+          "status": ""
+        },
+        "context_cost_control": {
+          "path": "content.context_cost_control",
+          "title": "Context Cost Control",
+          "ref": "content.context_cost_control",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/creative/PACK.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "creative_defaults",
+        "review_gate"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "content.recommended_files",
+          "title": "Recommended Files",
+          "ref": "content.recommended_files",
+          "status": ""
+        },
+        "creative_defaults": {
+          "path": "content.creative_defaults",
+          "title": "Creative Defaults",
+          "ref": "content.creative_defaults",
+          "status": ""
+        },
+        "review_gate": {
+          "path": "content.review_gate",
+          "title": "Review Gate",
+          "ref": "content.review_gate",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/gamedev/PACK.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_pairing",
+        "gamedev_defaults",
+        "verification"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "recommended_pairing": {
+          "path": "content.recommended_pairing",
+          "title": "Recommended Pairing",
+          "ref": "content.recommended_pairing",
+          "status": ""
+        },
+        "gamedev_defaults": {
+          "path": "content.gamedev_defaults",
+          "title": "Gamedev Defaults",
+          "ref": "content.gamedev_defaults",
+          "status": ""
+        },
+        "verification": {
+          "path": "content.verification",
+          "title": "Verification",
+          "ref": "content.verification",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/generic/PACK.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "execution_defaults",
+        "review_gate"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "content.recommended_files",
+          "title": "Recommended Files",
+          "ref": "content.recommended_files",
+          "status": ""
+        },
+        "execution_defaults": {
+          "path": "content.execution_defaults",
+          "title": "Execution Defaults",
+          "ref": "content.execution_defaults",
+          "status": ""
+        },
+        "review_gate": {
+          "path": "content.review_gate",
+          "title": "Review Gate",
+          "ref": "content.review_gate",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/personal/PACK.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "recommended_files",
+        "operating_defaults",
+        "job_search_add_on",
+        "review_gate"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "recommended_files": {
+          "path": "content.recommended_files",
+          "title": "Recommended Files",
+          "ref": "content.recommended_files",
+          "status": ""
+        },
+        "operating_defaults": {
+          "path": "content.operating_defaults",
+          "title": "Operating Defaults",
+          "ref": "content.operating_defaults",
+          "status": ""
+        },
+        "job_search_add_on": {
+          "path": "content.job_search_add_on",
+          "title": "Job Search Add-On",
+          "ref": "content.job_search_add_on",
+          "status": ""
+        },
+        "review_gate": {
+          "path": "content.review_gate",
+          "title": "Review Gate",
+          "ref": "content.review_gate",
+          "status": ""
+        }
+      }
+    },
+    {
       "path": "templates/DOCS.json",
       "document": {
         "title": "Non-Code Project Document Index",
@@ -1967,6 +6188,932 @@
       }
     },
     {
+      "path": "templates/code/BUGS-SOLVED.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "resolved_bugs"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "resolved_bugs": {
+          "path": "content.resolved_bugs",
+          "title": "",
+          "ref": "content.resolved_bugs",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/BUGS.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "bugs"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "bugs": {
+          "path": "content.bugs",
+          "title": "",
+          "ref": "content.bugs",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/CHANGELOG.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "entries"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "entries": {
+          "path": "content.entries",
+          "title": "entries",
+          "ref": "content.entries",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/DECISIONS.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "decisions"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "decisions": {
+          "path": "content.decisions",
+          "title": "",
+          "ref": "content.decisions",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/DOCS.json",
+      "document": {
+        "title": "Code Project Document Index",
+        "type": "document_index",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "SOCRATEX.md",
+        "PIPELINE-CONFIG.json",
+        "DOCS.json",
+        "STATE.json",
+        "WORKFLOW.json",
+        "team/*.json",
+        "_PLAN.json",
+        "TODO.json",
+        "DECISIONS.json",
+        "BUGS.json",
+        "BUGS-SOLVED.json",
+        "CHANGELOG.json",
+        "_PROMPTS.md",
+        "_PROMPT-QUEUE.json",
+        "_INSTRUCTIONS.md",
+        "_INSTRUCTION-QUEUE.json",
+        "docs-tech/cache/current_task.json",
+        "docs-tech/KNOWLEDGE-VIEWS.json",
+        "AI-compiled/project/knowledge.sqlite",
+        "AI-compiled/project/knowledge-files/",
+        "context-docs/ENGINEERING.json",
+        "context-docs/*.json",
+        "ignored/ai-socratex/*.md"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "SOCRATEX.md": {
+          "path": "content.SOCRATEX.md",
+          "title": "",
+          "ref": "content.SOCRATEX.md",
+          "status": ""
+        },
+        "PIPELINE-CONFIG.json": {
+          "path": "content.PIPELINE-CONFIG.json",
+          "title": "",
+          "ref": "content.PIPELINE-CONFIG.json",
+          "status": ""
+        },
+        "DOCS.json": {
+          "path": "content.DOCS.json",
+          "title": "",
+          "ref": "content.DOCS.json",
+          "status": ""
+        },
+        "STATE.json": {
+          "path": "content.STATE.json",
+          "title": "",
+          "ref": "content.STATE.json",
+          "status": ""
+        },
+        "WORKFLOW.json": {
+          "path": "content.WORKFLOW.json",
+          "title": "",
+          "ref": "content.WORKFLOW.json",
+          "status": ""
+        },
+        "team/*.json": {
+          "path": "content.team/*.json",
+          "title": "",
+          "ref": "content.team/*.json",
+          "status": ""
+        },
+        "_PLAN.json": {
+          "path": "content._PLAN.json",
+          "title": "",
+          "ref": "content._PLAN.json",
+          "status": ""
+        },
+        "TODO.json": {
+          "path": "content.TODO.json",
+          "title": "",
+          "ref": "content.TODO.json",
+          "status": ""
+        },
+        "DECISIONS.json": {
+          "path": "content.DECISIONS.json",
+          "title": "",
+          "ref": "content.DECISIONS.json",
+          "status": ""
+        },
+        "BUGS.json": {
+          "path": "content.BUGS.json",
+          "title": "",
+          "ref": "content.BUGS.json",
+          "status": ""
+        },
+        "BUGS-SOLVED.json": {
+          "path": "content.BUGS-SOLVED.json",
+          "title": "",
+          "ref": "content.BUGS-SOLVED.json",
+          "status": ""
+        },
+        "CHANGELOG.json": {
+          "path": "content.CHANGELOG.json",
+          "title": "",
+          "ref": "content.CHANGELOG.json",
+          "status": ""
+        },
+        "_PROMPTS.md": {
+          "path": "content._PROMPTS.md",
+          "title": "",
+          "ref": "content._PROMPTS.md",
+          "status": ""
+        },
+        "_PROMPT-QUEUE.json": {
+          "path": "content._PROMPT-QUEUE.json",
+          "title": "",
+          "ref": "content._PROMPT-QUEUE.json",
+          "status": ""
+        },
+        "_INSTRUCTIONS.md": {
+          "path": "content._INSTRUCTIONS.md",
+          "title": "",
+          "ref": "content._INSTRUCTIONS.md",
+          "status": ""
+        },
+        "_INSTRUCTION-QUEUE.json": {
+          "path": "content._INSTRUCTION-QUEUE.json",
+          "title": "",
+          "ref": "content._INSTRUCTION-QUEUE.json",
+          "status": ""
+        },
+        "docs-tech/cache/current_task.json": {
+          "path": "content.docs-tech/cache/current_task.json",
+          "title": "",
+          "ref": "content.docs-tech/cache/current_task.json",
+          "status": ""
+        },
+        "docs-tech/KNOWLEDGE-VIEWS.json": {
+          "path": "content.docs-tech/KNOWLEDGE-VIEWS.json",
+          "title": "",
+          "ref": "content.docs-tech/KNOWLEDGE-VIEWS.json",
+          "status": ""
+        },
+        "AI-compiled/project/knowledge.sqlite": {
+          "path": "content.AI-compiled/project/knowledge.sqlite",
+          "title": "",
+          "ref": "content.AI-compiled/project/knowledge.sqlite",
+          "status": ""
+        },
+        "AI-compiled/project/knowledge-files/": {
+          "path": "content.AI-compiled/project/knowledge-files/",
+          "title": "",
+          "ref": "content.AI-compiled/project/knowledge-files/",
+          "status": ""
+        },
+        "context-docs/ENGINEERING.json": {
+          "path": "content.context-docs/ENGINEERING.json",
+          "title": "",
+          "ref": "content.context-docs/ENGINEERING.json",
+          "status": ""
+        },
+        "context-docs/*.json": {
+          "path": "content.context-docs/*.json",
+          "title": "",
+          "ref": "content.context-docs/*.json",
+          "status": ""
+        },
+        "ignored/ai-socratex/*.md": {
+          "path": "content.ignored/ai-socratex/*.md",
+          "title": "",
+          "ref": "content.ignored/ai-socratex/*.md",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/PIPELINE-CONFIG.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "language",
+        "active_project_packs",
+        "ai_operating_mode",
+        "git",
+        "ai_may_commit",
+        "ai_may_push",
+        "branch_workflow",
+        "external_changes_possible",
+        "force_ddd_adiv",
+        "import_pipeline_package",
+        "package_manager_detection",
+        "directive_mode",
+        "first_target",
+        "first_session_success_criteria",
+        "changelog",
+        "communication",
+        "pipeline",
+        "workflow",
+        "project_profile",
+        "runtime_status"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "language": {
+          "path": "content.language",
+          "title": "language",
+          "ref": "content.language",
+          "status": ""
+        },
+        "active_project_packs": {
+          "path": "content.active_project_packs",
+          "title": "active_project_packs",
+          "ref": "content.active_project_packs",
+          "status": ""
+        },
+        "ai_operating_mode": {
+          "path": "content.ai_operating_mode",
+          "title": "ai_operating_mode",
+          "ref": "content.ai_operating_mode",
+          "status": ""
+        },
+        "git": {
+          "path": "content.git",
+          "title": "git",
+          "ref": "content.git",
+          "status": ""
+        },
+        "ai_may_commit": {
+          "path": "content.ai_may_commit",
+          "title": "ai_may_commit",
+          "ref": "content.ai_may_commit",
+          "status": ""
+        },
+        "ai_may_push": {
+          "path": "content.ai_may_push",
+          "title": "ai_may_push",
+          "ref": "content.ai_may_push",
+          "status": ""
+        },
+        "branch_workflow": {
+          "path": "content.branch_workflow",
+          "title": "branch_workflow",
+          "ref": "content.branch_workflow",
+          "status": ""
+        },
+        "external_changes_possible": {
+          "path": "content.external_changes_possible",
+          "title": "external_changes_possible",
+          "ref": "content.external_changes_possible",
+          "status": ""
+        },
+        "force_ddd_adiv": {
+          "path": "content.force_ddd_adiv",
+          "title": "force_ddd_adiv",
+          "ref": "content.force_ddd_adiv",
+          "status": ""
+        },
+        "import_pipeline_package": {
+          "path": "content.import_pipeline_package",
+          "title": "import_pipeline_package",
+          "ref": "content.import_pipeline_package",
+          "status": ""
+        },
+        "package_manager_detection": {
+          "path": "content.package_manager_detection",
+          "title": "package_manager_detection",
+          "ref": "content.package_manager_detection",
+          "status": ""
+        },
+        "directive_mode": {
+          "path": "content.directive_mode",
+          "title": "directive_mode",
+          "ref": "content.directive_mode",
+          "status": ""
+        },
+        "first_target": {
+          "path": "content.first_target",
+          "title": "first_target",
+          "ref": "content.first_target",
+          "status": ""
+        },
+        "first_session_success_criteria": {
+          "path": "content.first_session_success_criteria",
+          "title": "first_session_success_criteria",
+          "ref": "content.first_session_success_criteria",
+          "status": ""
+        },
+        "changelog": {
+          "path": "content.changelog",
+          "title": "",
+          "ref": "content.changelog",
+          "status": ""
+        },
+        "communication": {
+          "path": "content.communication",
+          "title": "",
+          "ref": "content.communication",
+          "status": ""
+        },
+        "pipeline": {
+          "path": "content.pipeline",
+          "title": "",
+          "ref": "content.pipeline",
+          "status": ""
+        },
+        "workflow": {
+          "path": "content.workflow",
+          "title": "",
+          "ref": "content.workflow",
+          "status": ""
+        },
+        "project_profile": {
+          "path": "content.project_profile",
+          "title": "",
+          "ref": "content.project_profile",
+          "status": ""
+        },
+        "runtime_status": {
+          "path": "content.runtime_status",
+          "title": "",
+          "ref": "content.runtime_status",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/STATE.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "current_objective",
+        "current_pass",
+        "next_action",
+        "blockers",
+        "risks",
+        "non_regression_reminders"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "current_objective": {
+          "path": "content.current_objective",
+          "title": "current_objective",
+          "ref": "content.current_objective",
+          "status": ""
+        },
+        "current_pass": {
+          "path": "content.current_pass",
+          "title": "current_pass",
+          "ref": "content.current_pass",
+          "status": ""
+        },
+        "next_action": {
+          "path": "content.next_action",
+          "title": "next_action",
+          "ref": "content.next_action",
+          "status": ""
+        },
+        "blockers": {
+          "path": "content.blockers",
+          "title": "blockers",
+          "ref": "content.blockers",
+          "status": ""
+        },
+        "risks": {
+          "path": "content.risks",
+          "title": "risks",
+          "ref": "content.risks",
+          "status": ""
+        },
+        "non_regression_reminders": {
+          "path": "content.non_regression_reminders",
+          "title": "non_regression_reminders",
+          "ref": "content.non_regression_reminders",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/TODO.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "items",
+        "summary"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "items": {
+          "path": "content.items",
+          "title": "",
+          "ref": "content.items",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/_INSTRUCTION-QUEUE.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "queue"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "queue": {
+          "path": "content.queue",
+          "title": "queue",
+          "ref": "content.queue",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/_PLAN.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "purpose",
+        "pass_index",
+        "passes"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "purpose": {
+          "path": "content.purpose",
+          "title": "purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "pass_index": {
+          "path": "content.pass_index",
+          "title": "pass_index",
+          "ref": "content.pass_index",
+          "status": ""
+        },
+        "passes": {
+          "path": "content.passes",
+          "title": "",
+          "ref": "content.passes",
+          "status": ""
+        },
+        "pass_1": {
+          "path": "content.pass_index.0",
+          "title": "Initial execution pass",
+          "ref": "content.pass_index.0",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/_PROMPT-QUEUE.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "items",
+        "summary"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "items": {
+          "path": "content.items",
+          "title": "items",
+          "ref": "content.items",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/context-docs/ENGINEERING.json",
+      "document": {
+        "title": "Engineering Standards",
+        "type": "technical_context",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "summary",
+        "tagged_rules",
+        "purpose"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "tagged_rules": {
+          "path": "content.tagged_rules",
+          "title": "Tagged Rules",
+          "ref": "content.tagged_rules",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "engineering.workflow.knowledge_sqlite_generated_layer": {
+          "path": "content.tagged_rules.value.0",
+          "title": "SQLite Knowledge Is Generated",
+          "ref": "content.tagged_rules.value.0",
+          "status": ""
+        },
+        "engineering.workflow.knowledge_views": {
+          "path": "content.tagged_rules.value.1",
+          "title": "Query Context Through Named Views",
+          "ref": "content.tagged_rules.value.1",
+          "status": ""
+        },
+        "engineering.workflow.context_tags_before_response": {
+          "path": "content.tagged_rules.value.2",
+          "title": "Context Tags Before Response",
+          "ref": "content.tagged_rules.value.2",
+          "status": ""
+        },
+        "engineering.workflow.knowledge_hash_gate": {
+          "path": "content.tagged_rules.value.3",
+          "title": "Validate Source Hashes Before Trusting SQLite",
+          "ref": "content.tagged_rules.value.3",
+          "status": ""
+        },
+        "engineering.workflow.knowledge_file_fallback": {
+          "path": "content.tagged_rules.value.4",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
+          "ref": "content.tagged_rules.value.4",
+          "status": ""
+        },
+        "engineering.workflow.load_standards_before_code": {
+          "path": "content.tagged_rules.value.5",
+          "title": "Load Engineering Standards Before Code Work",
+          "ref": "content.tagged_rules.value.5",
+          "status": ""
+        },
+        "engineering.workflow.normalized_content_hashes": {
+          "path": "content.tagged_rules.value.6",
+          "title": "Normalized Content Hashes For Compiled Knowledge",
+          "ref": "content.tagged_rules.value.6",
+          "status": ""
+        },
+        "engineering.coding.explicit_diagnosable_flow": {
+          "path": "content.tagged_rules.value.7",
+          "title": "Explicit Diagnosable Flow",
+          "ref": "content.tagged_rules.value.7",
+          "status": ""
+        },
+        "engineering.coding.ai_native_code_contract_headers": {
+          "path": "content.tagged_rules.value.8",
+          "title": "AI-Native Code Contract Headers",
+          "ref": "content.tagged_rules.value.8",
+          "status": ""
+        },
+        "engineering.architecture.helper_enforced_contracts": {
+          "path": "content.tagged_rules.value.9",
+          "title": "Helpers Enforce Contracts By Convenience",
+          "ref": "content.tagged_rules.value.9",
+          "status": ""
+        },
+        "engineering.workflow.convenience_drives_habit": {
+          "path": "content.tagged_rules.value.10",
+          "title": "Convenience Drives Habit",
+          "ref": "content.tagged_rules.value.10",
+          "status": ""
+        },
+        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
+          "path": "content.tagged_rules.value.11",
+          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
+          "ref": "content.tagged_rules.value.11",
+          "status": ""
+        },
+        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
+          "path": "content.tagged_rules.value.12",
+          "title": "Web Research Spike To Named Implementation Plan Gate",
+          "ref": "content.tagged_rules.value.12",
+          "status": ""
+        },
+        "engineering.workflow.tiered_context_hierarchy": {
+          "path": "content.tagged_rules.value.13",
+          "title": "Tiered Context Hierarchy",
+          "ref": "content.tagged_rules.value.13",
+          "status": ""
+        },
+        "engineering.architecture.better_version_now_future_proof_by_default": {
+          "path": "content.tagged_rules.value.14",
+          "title": "Better Version Now By Default",
+          "ref": "content.tagged_rules.value.14",
+          "status": ""
+        },
+        "engineering.performance.lightweight_by_default_for_predictable_load": {
+          "path": "content.tagged_rules.value.15",
+          "title": "Lightweight Futureproof For Predictable Load",
+          "ref": "content.tagged_rules.value.15",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/context-docs/FROZEN_LAYERS.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "layers"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "layers": {
+          "path": "content.layers",
+          "title": "layers",
+          "ref": "content.layers",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/context-docs/TECHNICAL.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "summary",
+        "invariants",
+        "ownership_contracts",
+        "source_of_truth",
+        "known_traps"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "invariants": {
+          "path": "content.invariants",
+          "title": "invariants",
+          "ref": "content.invariants",
+          "status": ""
+        },
+        "ownership_contracts": {
+          "path": "content.ownership_contracts",
+          "title": "ownership_contracts",
+          "ref": "content.ownership_contracts",
+          "status": ""
+        },
+        "source_of_truth": {
+          "path": "content.source_of_truth",
+          "title": "source_of_truth",
+          "ref": "content.source_of_truth",
+          "status": ""
+        },
+        "known_traps": {
+          "path": "content.known_traps",
+          "title": "known_traps",
+          "ref": "content.known_traps",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/current_task.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "task",
+        "micro_tasks",
+        "questions",
+        "risks",
+        "next_suggestions"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "task": {
+          "path": "content.task",
+          "title": "TBD",
+          "ref": "content.task",
+          "status": ""
+        },
+        "micro_tasks": {
+          "path": "content.micro_tasks",
+          "title": "micro_tasks",
+          "ref": "content.micro_tasks",
+          "status": ""
+        },
+        "questions": {
+          "path": "content.questions",
+          "title": "questions",
+          "ref": "content.questions",
+          "status": ""
+        },
+        "risks": {
+          "path": "content.risks",
+          "title": "risks",
+          "ref": "content.risks",
+          "status": ""
+        },
+        "next_suggestions": {
+          "path": "content.next_suggestions",
+          "title": "next_suggestions",
+          "ref": "content.next_suggestions",
+          "status": ""
+        },
+        "inspect_context": {
+          "path": "content.micro_tasks.0",
+          "title": "",
+          "ref": "content.micro_tasks.0",
+          "status": "pending"
+        },
+        "implement_change": {
+          "path": "content.micro_tasks.1",
+          "title": "",
+          "ref": "content.micro_tasks.1",
+          "status": "pending"
+        },
+        "verify": {
+          "path": "content.micro_tasks.2",
+          "title": "",
+          "ref": "content.micro_tasks.2",
+          "status": "pending"
+        }
+      }
+    },
+    {
       "path": "templates/context-docs-FROZEN_LAYERS.json",
       "document": {},
       "routing": {},
@@ -2037,6 +7184,88 @@
       }
     },
     {
+      "path": "templates/docs-tech/KNOWLEDGE-VIEWS.json",
+      "document": {
+        "title": "Knowledge Views",
+        "type": "compiled_knowledge_config",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "purpose",
+        "view_contract",
+        "defined_views"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "view_contract": {
+          "path": "content.view_contract",
+          "title": "View Contract",
+          "ref": "content.view_contract",
+          "status": ""
+        },
+        "defined_views": {
+          "path": "content.defined_views",
+          "title": "Defined Views",
+          "ref": "content.defined_views",
+          "status": ""
+        },
+        "session_start": {
+          "path": "metadata.views.0",
+          "title": "Session Start",
+          "ref": "metadata.views.0",
+          "status": ""
+        },
+        "architecture": {
+          "path": "metadata.views.1",
+          "title": "Architecture",
+          "ref": "metadata.views.1",
+          "status": ""
+        },
+        "debugging": {
+          "path": "metadata.views.2",
+          "title": "Debugging",
+          "ref": "metadata.views.2",
+          "status": ""
+        },
+        "performance": {
+          "path": "metadata.views.3",
+          "title": "Performance",
+          "ref": "metadata.views.3",
+          "status": ""
+        },
+        "docs_workflow": {
+          "path": "metadata.views.4",
+          "title": "Docs Workflow",
+          "ref": "metadata.views.4",
+          "status": ""
+        },
+        "domain_modeling": {
+          "path": "metadata.views.5",
+          "title": "Worldgen",
+          "ref": "metadata.views.5",
+          "status": ""
+        }
+      }
+    },
+    {
       "path": "templates/pipeline-sweep.projects.json",
       "document": {
         "title": "Pipeline Sweep Project Config Template",
@@ -2071,6 +7300,321 @@
           "path": "content.projects",
           "title": "projects",
           "ref": "content.projects",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/team/experience.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "role": {
+          "path": "content.role",
+          "title": "",
+          "ref": "content.role",
+          "status": ""
+        },
+        "mission": {
+          "path": "content.mission",
+          "title": "",
+          "ref": "content.mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "content.prioritize_sections",
+          "title": "",
+          "ref": "content.prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "content.preferred_skills",
+          "title": "preferred_skills",
+          "ref": "content.preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "content.control_questions",
+          "title": "control_questions",
+          "ref": "content.control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "content.red_flags",
+          "title": "red_flags",
+          "ref": "content.red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "content.veto",
+          "title": "",
+          "ref": "content.veto",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/team/performance.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "role": {
+          "path": "content.role",
+          "title": "",
+          "ref": "content.role",
+          "status": ""
+        },
+        "mission": {
+          "path": "content.mission",
+          "title": "",
+          "ref": "content.mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "content.prioritize_sections",
+          "title": "",
+          "ref": "content.prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "content.preferred_skills",
+          "title": "preferred_skills",
+          "ref": "content.preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "content.control_questions",
+          "title": "control_questions",
+          "ref": "content.control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "content.red_flags",
+          "title": "red_flags",
+          "ref": "content.red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "content.veto",
+          "title": "",
+          "ref": "content.veto",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/team/pipeline.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "role": {
+          "path": "content.role",
+          "title": "",
+          "ref": "content.role",
+          "status": ""
+        },
+        "mission": {
+          "path": "content.mission",
+          "title": "",
+          "ref": "content.mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "content.prioritize_sections",
+          "title": "",
+          "ref": "content.prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "content.preferred_skills",
+          "title": "preferred_skills",
+          "ref": "content.preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "content.control_questions",
+          "title": "control_questions",
+          "ref": "content.control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "content.red_flags",
+          "title": "red_flags",
+          "ref": "content.red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "content.veto",
+          "title": "",
+          "ref": "content.veto",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/team/product.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "role": {
+          "path": "content.role",
+          "title": "",
+          "ref": "content.role",
+          "status": ""
+        },
+        "mission": {
+          "path": "content.mission",
+          "title": "",
+          "ref": "content.mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "content.prioritize_sections",
+          "title": "",
+          "ref": "content.prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "content.preferred_skills",
+          "title": "preferred_skills",
+          "ref": "content.preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "content.control_questions",
+          "title": "control_questions",
+          "ref": "content.control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "content.red_flags",
+          "title": "red_flags",
+          "ref": "content.red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "content.veto",
+          "title": "",
+          "ref": "content.veto",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/team/technical.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "role",
+        "mission",
+        "prioritize_sections",
+        "preferred_skills",
+        "control_questions",
+        "red_flags",
+        "veto"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "role": {
+          "path": "content.role",
+          "title": "",
+          "ref": "content.role",
+          "status": ""
+        },
+        "mission": {
+          "path": "content.mission",
+          "title": "",
+          "ref": "content.mission",
+          "status": ""
+        },
+        "prioritize_sections": {
+          "path": "content.prioritize_sections",
+          "title": "",
+          "ref": "content.prioritize_sections",
+          "status": ""
+        },
+        "preferred_skills": {
+          "path": "content.preferred_skills",
+          "title": "preferred_skills",
+          "ref": "content.preferred_skills",
+          "status": ""
+        },
+        "control_questions": {
+          "path": "content.control_questions",
+          "title": "control_questions",
+          "ref": "content.control_questions",
+          "status": ""
+        },
+        "red_flags": {
+          "path": "content.red_flags",
+          "title": "red_flags",
+          "ref": "content.red_flags",
+          "status": ""
+        },
+        "veto": {
+          "path": "content.veto",
+          "title": "",
+          "ref": "content.veto",
           "status": ""
         }
       }

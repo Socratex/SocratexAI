@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-f0cc892dffc8
+Generated: source-9fde97881266
 
 ## Source of Truth
 
@@ -1219,7 +1219,9 @@ Draft placeholder:
                     "run_quality_gate_contract.ps1",
                     "run_quality_fix.ps1",
                     "check_runtime.py",
-                    "audit_docs.ps1"
+                    "audit_docs.ps1",
+                    "audit_docs.py",
+                    "check_pipeline_feature_contracts.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -1232,7 +1234,9 @@ Draft placeholder:
                         "run_quality_gate_contract.ps1",
                         "run_quality_fix.ps1",
                         "check_runtime.py",
-                        "audit_docs.ps1"
+                        "audit_docs.ps1",
+                        "audit_docs.py",
+                        "check_pipeline_feature_contracts.py"
                     ]
                 },
                 "required_docs": [
@@ -1333,7 +1337,13 @@ Draft placeholder:
                     "tools/documents/audit_docs.ps1",
                     "tools/documents/build_document_cache.ps1",
                     "tools/pipeline/update_pipeline_from_link.ps1",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1"
+                    "tools/pipeline/sync_managed_pipeline_package.ps1",
+                    "tools/pipeline/update_pipeline_from_link.py",
+                    "tools/pipeline/sync_managed_pipeline_package.py",
+                    "tools/pipeline/pipeline_package.py",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
                     "sync_managed_pipeline_package.ps1",
@@ -1354,7 +1364,13 @@ Draft placeholder:
                     "open_pipeline_learning_issue.ps1",
                     "check_pipeline_featurelist_update.ps1",
                     "build_document_cache.ps1",
-                    "audit_docs.ps1"
+                    "audit_docs.ps1",
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "sync_pipeline_featurelist.py",
+                    "check_pipeline_feature_contracts.py",
+                    "audit_docs.py",
+                    "pipeline_package.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -1376,7 +1392,13 @@ Draft placeholder:
                         "open_pipeline_learning_issue.ps1",
                         "check_pipeline_featurelist_update.ps1",
                         "build_document_cache.ps1",
-                        "audit_docs.ps1"
+                        "audit_docs.ps1",
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "sync_pipeline_featurelist.py",
+                        "check_pipeline_feature_contracts.py",
+                        "audit_docs.py",
+                        "pipeline_package.py"
                     ]
                 },
                 "required_docs": [
@@ -5047,7 +5069,12 @@ Draft placeholder:
                     "templates/code",
                     "tools/documents/audit_docs.ps1",
                     "tools/pipeline/update_pipeline_from_link.ps1",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1"
+                    "tools/pipeline/sync_managed_pipeline_package.ps1",
+                    "tools/pipeline/sync_managed_pipeline_package.py",
+                    "tools/pipeline/pipeline_package.py",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
                     "sync_managed_pipeline_package.ps1",
@@ -5067,7 +5094,12 @@ Draft placeholder:
                     "report_pipeline_learning.ps1",
                     "open_pipeline_learning_issue.ps1",
                     "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "audit_docs.ps1",
+                    "sync_managed_pipeline_package.py",
+                    "sync_pipeline_featurelist.py",
+                    "check_pipeline_feature_contracts.py",
+                    "audit_docs.py",
+                    "pipeline_package.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -5088,7 +5120,12 @@ Draft placeholder:
                         "report_pipeline_learning.ps1",
                         "open_pipeline_learning_issue.ps1",
                         "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "audit_docs.ps1",
+                        "sync_managed_pipeline_package.py",
+                        "sync_pipeline_featurelist.py",
+                        "check_pipeline_feature_contracts.py",
+                        "audit_docs.py",
+                        "pipeline_package.py"
                     ]
                 },
                 "required_docs": [
@@ -5443,7 +5480,12 @@ Draft placeholder:
                     "tools/pipeline/pipeline_sweep.ps1",
                     "templates/pipeline-sweep.projects.json",
                     "SCRIPTS.json",
-                    "pipeline_featurelist.json"
+                    "pipeline_featurelist.json",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/knowledge/knowledge_tier_check.py",
+                    "tools/documents/audit_docs.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/pipeline/update_pipeline_from_link.py"
                 ],
                 "required_scripts": [
                     "pipeline_sweep.py",
@@ -5452,7 +5494,12 @@ Draft placeholder:
                     "check_pipeline_feature_contracts.ps1",
                     "audit_docs.ps1",
                     "knowledge_tier_check.ps1",
-                    "compile_pipeline_context.ps1"
+                    "compile_pipeline_context.ps1",
+                    "update_pipeline_from_link.py",
+                    "check_pipeline_feature_contracts.py",
+                    "audit_docs.py",
+                    "knowledge_tier_check.py",
+                    "check_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -5462,7 +5509,12 @@ Draft placeholder:
                         "check_pipeline_feature_contracts.ps1",
                         "audit_docs.ps1",
                         "knowledge_tier_check.ps1",
-                        "compile_pipeline_context.ps1"
+                        "compile_pipeline_context.ps1",
+                        "update_pipeline_from_link.py",
+                        "check_pipeline_feature_contracts.py",
+                        "audit_docs.py",
+                        "knowledge_tier_check.py",
+                        "check_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -5890,7 +5942,9 @@ Draft placeholder:
                     "tools/pipeline/pipeline_bootstrap_index.ps1",
                     "tools/documents",
                     "tools/knowledge",
-                    "tools/text/normalize_json_files.ps1"
+                    "tools/text/normalize_json_files.ps1",
+                    "tools/pipeline/python_runtime.py",
+                    "tools/quality/check_runtime.py"
                 ],
                 "required_scripts": [
                     "resolve_tool_runtime.ps1",
@@ -5932,7 +5986,9 @@ Draft placeholder:
                     "knowledge_rename.ps1",
                     "knowledge_select.ps1",
                     "knowledge_upsert.ps1",
-                    "normalize_json_files.ps1"
+                    "normalize_json_files.ps1",
+                    "python_runtime.py",
+                    "check_runtime.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -5975,7 +6031,9 @@ Draft placeholder:
                         "knowledge_rename.ps1",
                         "knowledge_select.ps1",
                         "knowledge_upsert.ps1",
-                        "normalize_json_files.ps1"
+                        "normalize_json_files.ps1",
+                        "python_runtime.py",
+                        "check_runtime.py"
                     ]
                 },
                 "required_docs": [
@@ -6621,7 +6679,8 @@ Draft placeholder:
                     "tools/knowledge/knowledge_tier_report.ps1",
                     "tools/knowledge/knowledge_tier_check.ps1",
                     "tools/knowledge/knowledge_file_query.ps1",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1"
+                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "tools/knowledge/knowledge_tier_check.py"
                 ],
                 "required_scripts": [
                     "knowledge_index.py",
@@ -6633,7 +6692,8 @@ Draft placeholder:
                     "knowledge_tier_check.ps1",
                     "knowledge_file_query.ps1",
                     "compile_pipeline_context.ps1",
-                    "check_pipeline_feature_contracts.ps1"
+                    "check_pipeline_feature_contracts.ps1",
+                    "knowledge_tier_check.py"
                 ],
                 "required_catalog_entries": {
                     "DOCS.json": [
@@ -6647,7 +6707,8 @@ Draft placeholder:
                         "knowledge_tier_report.py",
                         "knowledge_tier_report.ps1",
                         "knowledge_tier_check.ps1",
-                        "knowledge_file_query.ps1"
+                        "knowledge_file_query.ps1",
+                        "knowledge_tier_check.py"
                     ]
                 },
                 "required_docs": [

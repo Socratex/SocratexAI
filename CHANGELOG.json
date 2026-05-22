@@ -509,6 +509,12 @@
         "date": "2026-05-23",
         "feature": "pipeline_sweep_upgrade_tool",
         "change": "Added a Python-first pipeline sweep runner with PowerShell wrapper, config template, catalog metadata, and feature contract for repeatable cross-project update/smoke sweeps. Why: Manual source-to-child upgrade sweeps were relying on agent memory instead of a reusable tool."
+      },
+      {
+        "version": "0.2.0-alpha",
+        "date": "2026-05-23",
+        "feature": "python_first_pipeline_migration",
+        "change": "Added Python-first runtime, update, managed-package sync, feature-contract, document-audit, compiled-context-anchor, tier-check, and featurelist-sync entrypoints, and moved pipeline_sweep.py to call Python smoke/update commands. Why: SocratexPipeline should not require a permanent PowerShell compatibility layer for update and smoke automation."
       }
     ]
   },

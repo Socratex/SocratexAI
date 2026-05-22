@@ -120,7 +120,7 @@ Code projects can store `project_profile`, `runtime_status`, and `workflow.branc
 
 The agent uses `project_profile` to filter known solutions, `ROI-BIAS.md` to rank recommendations, and `SCRIPT-FALLBACK.md` when tools cannot run.
 
-PowerShell 7 (`pwsh`) is the preferred automation runtime. During setup, the agent should check it first, run `tools/setup/install_powershell.ps1` when missing, and recommend lite/no-tools mode, a supported host/container, or porting scripts if the target system cannot support PowerShell.
+Python 3.10+ is the required automation runtime. During setup, the agent should run `tools/quality/check_runtime.py --strict`, set `SOCRATEX_PYTHON` when discovery needs help, and ask before any install or repair path. PowerShell scripts are migration debt unless a specific non-pipeline exception is documented.
 
 If the AI environment is limited, read `tools/lite-option/README.md` before selecting artifacts.
 
@@ -155,7 +155,7 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 
 ## Update, Upgrade, Migrate
 
-- `SocratexAI/tools/pipeline/update_pipeline_from_link.ps1`: public user update from a latest pipeline source.
+- `SocratexAI/tools/pipeline/update_pipeline_from_link.py`: public user update from a latest pipeline source.
 - `SocratexAI/tools/pipeline/reinitialize_pipeline.ps1`: missing-only reinitialization after setup or update.
 - `SocratexAI/tools/pipeline/remove_pipeline.ps1`: remove the installed pipeline through a bounded remover.
 - `SocratexAI/tools/pipeline/upgrade_from_reference_project.ps1`: maintainer upgrade from the active reference source pipeline.
@@ -182,8 +182,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipel
 
 To check for drift without writing files:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1
+```bash
+python tools/pipeline/check_ai_compiled_context.py
 ```
 
 For direct knowledge-layer work:

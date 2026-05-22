@@ -2,14 +2,19 @@
     "index": [
         "add_changelog_entry.ps1",
         "audit_docs.ps1",
+        "audit_docs.py",
         "audit_json_docs.py",
         "check_code_context_gate.ps1",
         "check_ai_compiled_context.ps1",
+        "check_ai_compiled_context.py",
         "check_evals.ps1",
         "check_pipeline_featurelist_update.ps1",
         "check_pipeline_feature_contracts.ps1",
+        "check_pipeline_feature_contracts.py",
         "check_sensitive_reference_leaks.ps1",
         "check_runtime.py",
+        "python_runtime.py",
+        "pipeline_package.py",
         "ai_native_contract_dry_run.ps1",
         "check_task.ps1",
         "check_utf8_writes.ps1",
@@ -79,6 +84,7 @@
         "knowledge_tier_report.py",
         "knowledge_tier_report.ps1",
         "knowledge_tier_check.ps1",
+        "knowledge_tier_check.py",
         "knowledge_query.ps1",
         "knowledge_rename.ps1",
         "knowledge_select.ps1",
@@ -108,15 +114,18 @@
         "run_quality_gate_contract.ps1",
         "set_directives.ps1",
         "sync_pipeline_featurelist.ps1",
+        "sync_pipeline_featurelist.py",
         "task_snapshot.ps1",
         "task_flow_audit.ps1",
         "update_code_line_index.ps1",
         "update_pipeline_from_link.ps1",
+        "update_pipeline_from_link.py",
         "upgrade_from_reference_project.ps1",
         "utf8_file_helpers.ps1",
         "run_interactive_setup.ps1",
         "write_utf8_file.ps1",
         "sync_managed_pipeline_package.ps1",
+        "sync_managed_pipeline_package.py",
         "read_compiled_context.ps1",
         "tool_error_log.ps1",
         "tool_handler.ps1",
@@ -162,6 +171,24 @@
             "output": {
                 "success": "Prints OK with warning count after required documents, compiled context, evals, templates, and feature contracts pass.",
                 "failure": "Throws when required files, text anchors, compiled context freshness, evals, feature contracts, or strict warnings fail."
+            }
+        },
+        "audit_docs.py": {
+            "path": "tools/documents/audit_docs.py",
+            "category": "documents",
+            "description": "Python-first document audit entrypoint for JSON document contracts and smoke sweeps.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--strict",
+                    "--initialized"
+                ],
+                "rule": "Run from the repository root or pass --repo-root. This is the Python smoke entrypoint; broader legacy audit parity remains tracked as migration debt until all PowerShell-only checks are ported."
+            },
+            "output": {
+                "success": "Runs the Python JSON document audit and prints OK when document contracts pass.",
+                "failure": "Exits nonzero when JSON documents, generated document cache, or checked template schema rules fail."
             }
         },
         "audit_json_docs.py": {
@@ -213,6 +240,23 @@
                 "failure": "Exits nonzero when compiled artifacts are missing or stale."
             }
         },
+        "check_ai_compiled_context.py": {
+            "path": "tools/pipeline/check_ai_compiled_context.py",
+            "category": "pipeline",
+            "description": "Python cheap check for compiled-context anchor files and bootstrap-index freshness.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--output-dir"
+                ],
+                "rule": "Use for Python-first smoke sweeps when full compiled-context regeneration is not being requested."
+            },
+            "output": {
+                "success": "Prints OK when required compiled-context anchors exist and the bootstrap index is current.",
+                "failure": "Exits nonzero when compiled-context anchors are missing or the bootstrap index is stale."
+            }
+        },
         "check_evals.ps1": {
             "path": "tools/quality/check_evals.ps1",
             "category": "quality",
@@ -259,6 +303,23 @@
                 "failure": "Throws when a feature lacks contract fields, required artifacts are missing, catalog entries are absent, or changed pipeline paths are uncovered."
             }
         },
+        "check_pipeline_feature_contracts.py": {
+            "path": "tools/repo/check_pipeline_feature_contracts.py",
+            "category": "repo",
+            "description": "Python-first validator for pipeline_featurelist.json feature artifact contracts and changed pipeline-owned path coverage.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--paths"
+                ],
+                "rule": "Use this Python entrypoint for source and installed-package feature contract checks. Pass changed paths for focused task verification; omit paths for a full feature contract audit."
+            },
+            "output": {
+                "success": "Prints the number of covered feature contracts and confirms changed pipeline paths are assigned.",
+                "failure": "Exits nonzero when feature contracts, required artifacts, catalog entries, managed-package coverage, or changed-path coverage fail."
+            }
+        },
         "check_sensitive_reference_leaks.ps1": {
             "path": "tools/repo/check_sensitive_reference_leaks.ps1",
             "category": "repo",
@@ -279,17 +340,52 @@
         "check_runtime.py": {
             "path": "tools/quality/check_runtime.py",
             "category": "quality",
-            "description": "Report Python and PowerShell runtime availability as JSON for setup and degraded-mode decisions.",
+            "description": "Report required Python runtime availability as JSON for setup, update, and degraded-mode decisions.",
             "input": {
                 "required": [],
                 "optional": [
-                    "--root-key"
+                    "--root-key",
+                    "--profile",
+                    "--strict",
+                    "--json"
                 ],
-                "rule": "Run through the resolved Python runtime when setup or update needs toolchain status."
+                "rule": "Run through the current Python runtime when setup or update needs toolchain status; set SOCRATEX_PYTHON to override discovery."
             },
             "output": {
-                "success": "Prints a JSON object with python3 and pwsh availability, versions, install hints, and fallback recommendation.",
-                "failure": "Exits nonzero when Python itself is unavailable or runtime probing cannot complete."
+                "success": "Prints a JSON object with Python availability, version, executable, source, minimum/recommended version, and install hints.",
+                "failure": "With --strict, exits nonzero when Python 3.10+ cannot be resolved."
+            }
+        },
+        "python_runtime.py": {
+            "path": "tools/pipeline/python_runtime.py",
+            "category": "pipeline",
+            "description": "Resolve and report the required SocratexPipeline Python runtime without depending on PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--root-key",
+                    "--search-root",
+                    "--strict"
+                ],
+                "rule": "Use before Python-first pipeline tools when runtime availability is uncertain. Set SOCRATEX_PYTHON to override discovery."
+            },
+            "output": {
+                "success": "Prints JSON runtime status with executable, version, source, minimum version, and install hint fields.",
+                "failure": "With --strict, exits nonzero when Python 3.10+ cannot be resolved."
+            }
+        },
+        "pipeline_package.py": {
+            "path": "tools/pipeline/pipeline_package.py",
+            "category": "pipeline",
+            "description": "Shared managed-package constants for Python-first update and feature-contract tooling.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Internal helper imported by Python pipeline tools; not normally invoked directly."
+            },
+            "output": {
+                "success": "Provides default managed package, generated, and protected path constants to Python callers.",
+                "failure": "Import fails when the source package is missing or Python cannot read the file."
             }
         },
         "ai_native_contract_dry_run.ps1": {
@@ -1764,6 +1860,24 @@
                 "failure": "Exits nonzero and lists missing or invalid context_tier entries."
             }
         },
+        "knowledge_tier_check.py": {
+            "path": "tools/knowledge/knowledge_tier_check.py",
+            "category": "knowledge",
+            "description": "Python-first strict checker for context_tier metadata on knowledge documentation entries.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--include-templates",
+                    "--format"
+                ],
+                "rule": "Run after knowledge tier migrations or before relying on tier-scoped context routing. Include templates when starter/template knowledge docs are in scope."
+            },
+            "output": {
+                "success": "Prints a tier coverage report and exits 0 when every discovered knowledge entry has a valid context_tier.",
+                "failure": "Exits nonzero and lists missing or invalid context_tier entries or parse errors."
+            }
+        },
         "knowledge_query.ps1": {
             "path": "tools/knowledge/knowledge_query.ps1",
             "category": "knowledge",
@@ -2071,7 +2185,7 @@
             },
             "output": {
                 "success": "Prints per-project update/smoke/finalizer results and a concise pass/fail/manual-attention summary.",
-                "failure": "Exits nonzero when config is invalid, a project path is missing, PowerShell cannot be resolved, or an executed phase fails."
+                "failure": "Exits nonzero when config is invalid, a project path is missing, Python cannot be resolved, or an executed phase fails."
             }
         },
         "pipeline_sweep.ps1": {
@@ -2311,6 +2425,27 @@
                 "failure": "Throws or exits nonzero with a concrete error."
             }
         },
+        "sync_pipeline_featurelist.py": {
+            "path": "tools/repo/sync_pipeline_featurelist.py",
+            "category": "repo",
+            "description": "Python-first instance pipeline_featurelist.json synchronizer from source feature manifests.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--target-path",
+                    "--source-feature-list-path",
+                    "--output-path",
+                    "--pipeline-id",
+                    "--extra-features",
+                    "--dry-run"
+                ],
+                "rule": "Run after installed package updates so child projects can compare their local feature set against the source feature list."
+            },
+            "output": {
+                "success": "Writes or prints the instance feature list and reports same/missing/extra counts.",
+                "failure": "Exits nonzero when the source feature list is missing, empty, or invalid."
+            }
+        },
         "task_snapshot.ps1": {
             "path": "tools/repo/task_snapshot.ps1",
             "category": "repo",
@@ -2392,6 +2527,33 @@
             "output": {
                 "success": "Mirrors managed SocratexAI paths, preserves project-owned files, runs cheap checks, and reports skipped full verification unless -FullVerify was used.",
                 "failure": "Throws on unresolved source, unsafe sync, failed reinitialization, failed directive update, failed feature-contract check, or failed full verification."
+            }
+        },
+        "update_pipeline_from_link.py": {
+            "path": "tools/pipeline/update_pipeline_from_link.py",
+            "category": "pipeline",
+            "description": "Python-first updater for installed SocratexAI packages from local path, zip URL, or shallow Git source.",
+            "input": {
+                "required": [
+                    "--source"
+                ],
+                "optional": [
+                    "--target-path",
+                    "--source-mode",
+                    "--git-ref",
+                    "--packs",
+                    "--profile",
+                    "--directive-mode",
+                    "--directive-files",
+                    "--reinitialize-new",
+                    "--full-verify",
+                    "--dry-run"
+                ],
+                "rule": "Default mode is cheap: managed package mirror, featurelist sync, directive refresh, and Python feature-contract check. Use --full-verify only for heavier post-update verification."
+            },
+            "output": {
+                "success": "Mirrors managed SocratexAI paths, preserves project-owned files, runs cheap checks, and reports skipped full verification unless --full-verify was used.",
+                "failure": "Exits nonzero on unresolved source, unsafe sync, failed directive update, failed feature-contract check, or failed full verification."
             }
         },
         "upgrade_from_reference_project.ps1": {
@@ -2481,6 +2643,33 @@
             "output": {
                 "success": "Prints mirrored managed paths and OK when complete.",
                 "failure": "Throws on unsafe destination paths or copy/remove failures."
+            }
+        },
+        "sync_managed_pipeline_package.py": {
+            "path": "tools/pipeline/sync_managed_pipeline_package.py",
+            "category": "pipeline",
+            "description": "Python-first managed SocratexAI package mirror for source-owned package paths inside child projects.",
+            "input": {
+                "required": [
+                    "--source-root",
+                    "--install-root"
+                ],
+                "optional": [
+                    "--project-root",
+                    "--profile",
+                    "--managed-paths",
+                    "--child-generated-paths",
+                    "--protected-paths",
+                    "--apply-project-profile",
+                    "--prune-unmanaged",
+                    "--force-managed",
+                    "--dry-run"
+                ],
+                "rule": "Use only for source-owned SocratexAI package paths; project memory and configuration outside SocratexAI remain child-owned."
+            },
+            "output": {
+                "success": "Writes package manifest, reports preserved local overrides, and prints OK when complete.",
+                "failure": "Exits nonzero on unsafe paths, missing profile files, invalid manifests, or copy/remove failures."
             }
         },
         "read_compiled_context.ps1": {
@@ -2608,6 +2797,7 @@
         "categories": {
             "documents": [
                 "audit_docs.ps1",
+                "audit_docs.py",
                 "audit_json_docs.py",
                 "build_document_cache.ps1",
                 "document_item_edit_engine.py",
@@ -2657,6 +2847,8 @@
                 "knowledge_file_select.ps1",
                 "knowledge_file_upsert.ps1",
                 "knowledge_index.py",
+                "knowledge_tier_report.py",
+                "knowledge_tier_check.py",
                 "knowledge_query.ps1",
                 "knowledge_rename.ps1",
                 "knowledge_select.ps1",
@@ -2665,6 +2857,8 @@
             "repo": [
                 "add_changelog_entry.ps1",
                 "check_pipeline_featurelist_update.ps1",
+                "check_pipeline_feature_contracts.py",
+                "sync_pipeline_featurelist.py",
                 "check_sensitive_reference_leaks.ps1",
                 "check_task.ps1",
                 "check_toolchain_health.ps1",
@@ -2682,6 +2876,11 @@
             ],
             "pipeline": [
                 "check_ai_compiled_context.ps1",
+                "check_ai_compiled_context.py",
+                "python_runtime.py",
+                "pipeline_package.py",
+                "update_pipeline_from_link.py",
+                "sync_managed_pipeline_package.py",
                 "compile_pipeline_context.ps1",
                 "generate_installed_agent_instructions.ps1",
                 "generate_embedded_config_payload.py",

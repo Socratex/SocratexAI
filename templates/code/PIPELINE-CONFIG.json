@@ -48,9 +48,15 @@
             "version": "0.2.0-alpha",
             "update_source": "TBD",
             "public_bootstrap_url": "TBD",
-            "update_command": "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/update_pipeline_from_link.ps1 -Source \"<source>\" -Packs code -ReinitializeNew",
-            "remove_command": "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/remove_pipeline.ps1 -TargetPath .",
-            "reinitialize_command": "powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/reinitialize_pipeline.ps1 -TargetPath ."
+            "update_command": [
+                "python SocratexAI/tools/pipeline/update_pipeline_from_link.py --source \"<source>\" --packs code --reinitialize-new"
+            ],
+            "remove_command": [
+                "python SocratexAI/tools/pipeline/remove_pipeline.py --target-path ."
+            ],
+            "reinitialize_command": [
+                "python SocratexAI/tools/pipeline/reinitialize_pipeline.py --target-path ."
+            ]
         },
         "workflow": {
             "branch_mode": "linear",
@@ -76,14 +82,11 @@
             "python3": {
                 "ok": "TBD",
                 "version": "TBD",
+                "executable": "TBD",
+                "source": "TBD",
+                "minimum_version": "3.10",
+                "recommended_version": "3.12",
                 "install_hint": "TBD"
-            },
-            "pwsh": {
-                "ok": "TBD",
-                "version": "TBD",
-                "install_hint": "TBD",
-                "install_supported": "TBD",
-                "fallback_recommendation": "TBD"
             }
         }
     },

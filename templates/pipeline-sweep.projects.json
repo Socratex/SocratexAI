@@ -42,7 +42,7 @@
             "language": "en"
         },
         "contract": [
-            "Copy this template outside the source package and replace absolute paths before running pipeline_sweep.ps1 or pipeline_sweep.py.",
+            "Copy this template outside the source package and replace absolute paths before running pipeline_sweep.py.",
             "Dry-run is the default. Use --execute only when the printed plan matches the intended project sweep.",
             "Keep destructive cleanup, dependency installs, and project-specific finalizers out unless they are explicitly configured and operator-approved."
         ]

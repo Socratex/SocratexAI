@@ -1,7 +1,6 @@
 import argparse
 import json
 import os
-import shutil
 import subprocess
 import sys
 import time
@@ -82,14 +81,6 @@ def tail(text: str, limit: int = 1800) -> str:
     if len(normalized) <= limit:
         return normalized
     return normalized[-limit:]
-
-
-def find_executable(candidates: list[str]) -> str:
-    for candidate in candidates:
-        found = shutil.which(candidate)
-        if found:
-            return found
-    return ""
 
 
 def resolve_repo_root(start: Path) -> Path:
@@ -209,32 +200,29 @@ def git_status(project: Project, execute: bool) -> list[CommandResult]:
     ]
 
 
-def update_command(project: Project, source_root: Path, pwsh: str) -> list[str]:
+def update_command(project: Project, source_root: Path, python: str) -> list[str]:
     command = [
-        pwsh,
-        "-NoLogo",
-        "-NoProfile",
-        "-File",
-        str(source_root / "tools" / "pipeline" / "update_pipeline_from_link.ps1"),
-        "-Source",
+        python,
+        str(source_root / "tools" / "pipeline" / "update_pipeline_from_link.py"),
+        "--source",
         str(source_root),
-        "-SourceMode",
+        "--source-mode",
         "LocalPath",
-        "-TargetPath",
+        "--target-path",
         str(project.path),
     ]
     if project.profile:
-        command += ["-Profile", project.profile]
+        command += ["--profile", project.profile]
     if project.packs:
-        command += ["-Packs", *project.packs]
+        command += ["--packs", *project.packs]
     if project.directive_mode:
-        command += ["-DirectiveMode", project.directive_mode]
+        command += ["--directive-mode", project.directive_mode]
     if project.directive_files:
-        command += ["-DirectiveFiles", *project.directive_files]
+        command += ["--directive-files", *project.directive_files]
     if project.reinitialize_new:
-        command += ["-ReinitializeNew"]
+        command += ["--reinitialize-new"]
     if project.full_verify:
-        command += ["-FullVerify"]
+        command += ["--full-verify"]
     return command
 
 
@@ -247,24 +235,24 @@ def script_root_for(project: Project) -> Path:
     return project.path
 
 
-def smoke_command(project: Project, smoke: str, pwsh: str) -> tuple[str, list[str], Path, str]:
+def smoke_command(project: Project, smoke: str, python: str) -> tuple[str, list[str], Path, str]:
     root = script_root_for(project)
     mapping: dict[str, tuple[Path, list[str]]] = {
         "feature_contracts": (
-            root / "tools" / "repo" / "check_pipeline_feature_contracts.ps1",
-            [],
+            root / "tools" / "repo" / "check_pipeline_feature_contracts.py",
+            ["--repo-root", str(root)],
         ),
         "docs_audit": (
-            root / "tools" / "documents" / "audit_docs.ps1",
-            [],
+            root / "tools" / "documents" / "audit_docs.py",
+            ["--repo-root", str(root)],
         ),
         "compiled_context": (
-            root / "tools" / "pipeline" / "compile_pipeline_context.ps1",
-            ["-Check"],
+            root / "tools" / "pipeline" / "check_ai_compiled_context.py",
+            ["--repo-root", str(root)],
         ),
         "tier_check": (
-            root / "tools" / "knowledge" / "knowledge_tier_check.ps1",
-            ["-IncludeTemplates"],
+            root / "tools" / "knowledge" / "knowledge_tier_check.py",
+            ["--repo-root", str(root), "--include-templates"],
         ),
     }
     if smoke == "git_clean":
@@ -274,7 +262,7 @@ def smoke_command(project: Project, smoke: str, pwsh: str) -> tuple[str, list[st
     script, extra = mapping[smoke]
     if not script.is_file():
         return smoke, [], root, f"missing script: {script}"
-    return smoke, [pwsh, "-NoLogo", "-NoProfile", "-File", str(script), *extra], root, ""
+    return smoke, [python, str(script), *extra], root, ""
 
 
 def print_result(result: CommandResult, json_mode: bool) -> None:
@@ -325,7 +313,7 @@ def project_report(project: Project, results: list[CommandResult]) -> dict[str, 
 def run_project(
     project: Project,
     source_root: Path,
-    pwsh: str,
+    python: str,
     execute: bool,
     include_update: bool,
     include_smoke: bool,
@@ -350,7 +338,7 @@ def run_project(
         print_result(result, json_mode)
 
     if include_update and project.role != "source" and project.update:
-        result = run_command("pipeline update", update_command(project, source_root, pwsh), project.path, execute)
+        result = run_command("pipeline update", update_command(project, source_root, python), project.path, execute)
         results.append(result)
         print_result(result, json_mode)
         if stop_on_failure and not result.ok:
@@ -358,7 +346,7 @@ def run_project(
 
     if include_smoke:
         for smoke in project.smoke:
-            label, command, cwd, skip_reason = smoke_command(project, smoke, pwsh)
+            label, command, cwd, skip_reason = smoke_command(project, smoke, python)
             result = (
                 CommandResult(label=label, command=command, cwd=cwd, exit_code=None, skipped=True, reason=skip_reason)
                 if skip_reason
@@ -408,9 +396,9 @@ def main() -> int:
     if not projects:
         raise SystemExit("No projects configured. Use --config or --project NAME=PATH.")
 
-    pwsh = os.environ.get("SOCRATEX_PWSH", "") or find_executable(["pwsh", "powershell", "powershell.exe"])
-    if not pwsh:
-        raise SystemExit("PowerShell is required. Install pwsh or set SOCRATEX_PWSH.")
+    python = os.environ.get("SOCRATEX_PYTHON", "") or sys.executable
+    if not python:
+        raise SystemExit("Python is required. Install Python 3.10+ or set SOCRATEX_PYTHON.")
 
     include_update = args.all or args.update
     include_smoke = args.all or args.smoke or not (args.update or args.finalize)
@@ -420,7 +408,7 @@ def main() -> int:
         run_project(
             project=project,
             source_root=source_root,
-            pwsh=pwsh,
+            python=python,
             execute=args.execute,
             include_update=include_update,
             include_smoke=include_smoke,

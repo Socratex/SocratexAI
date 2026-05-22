@@ -562,11 +562,11 @@ try {
     Test-ContainsText -Text $activationCheck -Needle "emoji rule" -Label "core/ACTIVATION-CHECK.json"
     Test-ContainsText -Text $updateProtocol -Needle "Source Resolution" -Label "core/UPDATE-PROTOCOL.json"
     Test-ContainsText -Text $updateProtocol -Needle "pipeline.update_source" -Label "core/UPDATE-PROTOCOL.json"
-    Test-ContainsText -Text $updateProtocol -Needle "update_pipeline_from_link.ps1" -Label "core/UPDATE-PROTOCOL.json"
-    Test-ContainsText -Text $updateProtocol -Needle "reinitialize_pipeline.ps1" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "update_pipeline_from_link.py" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "--reinitialize-new" -Label "core/UPDATE-PROTOCOL.json"
     Test-ContainsText -Text $updateProtocol -Needle "pipeline_featurelist.json" -Label "core/UPDATE-PROTOCOL.json"
-    Test-ContainsText -Text $updateProtocol -Needle "learn_pipeline_features.ps1" -Label "core/UPDATE-PROTOCOL.json"
-    Test-ContainsText -Text $updateProtocol -Needle "open_pipeline_learning_issue.ps1" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "feature-learning tool" -Label "core/UPDATE-PROTOCOL.json"
+    Test-ContainsText -Text $updateProtocol -Needle "PowerShell-only feature-learning commands are migration debt" -Label "core/UPDATE-PROTOCOL.json"
     Test-ContainsText -Text $removalProtocol -Needle "remove_pipeline.ps1" -Label "core/REMOVAL-PROTOCOL.json"
     Test-ContainsText -Text $removalProtocol -Needle "Default Preservation" -Label "core/REMOVAL-PROTOCOL.json"
     Test-ContainsText -Text $projectProfile -Needle "Profile-Fit Check" -Label "core/PROJECT-PROFILE.json"
@@ -648,7 +648,7 @@ try {
             }
         }
 
-        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "sync_managed_pipeline_package.ps1", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_reference_project.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "run_document_post_edit_checks.ps1", "bulk_insert_document_items.ps1", "migrate_document_item.ps1", "move_document_item.ps1", "insert_document_item.ps1", "sync_pipeline_featurelist.ps1", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1", "check_pipeline_feature_contracts.ps1", "check_evals.ps1", "compile_pipeline_context.ps1", "knowledge_compile.ps1", "knowledge_check.ps1", "knowledge_select.ps1", "knowledge_upsert.ps1", "knowledge_delete.ps1", "knowledge_rename.ps1", "knowledge_query.ps1", "knowledge_file_compile.ps1", "knowledge_file_check.ps1", "knowledge_file_select.ps1", "knowledge_file_upsert.ps1", "knowledge_file_delete.ps1", "knowledge_file_rename.ps1", "knowledge_file_query.ps1")) {
+        foreach ($tool in @("detect_project_stack.ps1", "set_directives.ps1", "update_pipeline_from_link.ps1", "update_pipeline_from_link.py", "sync_managed_pipeline_package.ps1", "sync_managed_pipeline_package.py", "pipeline_package.py", "remove_pipeline.ps1", "reinitialize_pipeline.ps1", "install_powershell.ps1", "upgrade_from_reference_project.ps1", "migrate_ai_pipeline.ps1", "check_runtime.py", "python_runtime.py", "init_branch_memory.ps1", "init_task_work.ps1", "run_document_post_edit_checks.ps1", "bulk_insert_document_items.ps1", "migrate_document_item.ps1", "move_document_item.ps1", "insert_document_item.ps1", "sync_pipeline_featurelist.ps1", "sync_pipeline_featurelist.py", "learn_pipeline_features.ps1", "report_pipeline_learning.ps1", "open_pipeline_learning_issue.ps1", "check_pipeline_featurelist_update.ps1", "check_pipeline_feature_contracts.ps1", "check_pipeline_feature_contracts.py", "check_evals.ps1", "compile_pipeline_context.ps1", "check_ai_compiled_context.py", "audit_docs.py", "knowledge_compile.ps1", "knowledge_check.ps1", "knowledge_select.ps1", "knowledge_upsert.ps1", "knowledge_delete.ps1", "knowledge_rename.ps1", "knowledge_query.ps1", "knowledge_tier_check.py", "knowledge_file_compile.ps1", "knowledge_file_check.ps1", "knowledge_file_select.ps1", "knowledge_file_upsert.ps1", "knowledge_file_delete.ps1", "knowledge_file_rename.ps1", "knowledge_file_query.ps1")) {
             Test-ScriptExists -Name $tool
         }
         foreach ($tool in @("rebuild_ai_compiled_context.ps1", "check_ai_compiled_context.ps1")) {
@@ -680,8 +680,8 @@ try {
         $pipelineConfigTemplate = Get-RepoText -RelativePath "templates/code/PIPELINE-CONFIG.json"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle '"project_profile"' -Label "templates/code/PIPELINE-CONFIG.json"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle '"runtime_status"' -Label "templates/code/PIPELINE-CONFIG.json"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"install_supported"' -Label "templates/code/PIPELINE-CONFIG.json"
-        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"fallback_recommendation"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"executable"' -Label "templates/code/PIPELINE-CONFIG.json"
+        Test-ContainsText -Text $pipelineConfigTemplate -Needle '"minimum_version"' -Label "templates/code/PIPELINE-CONFIG.json"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle '"branch_mode"' -Label "templates/code/PIPELINE-CONFIG.json"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle '"update_source"' -Label "templates/code/PIPELINE-CONFIG.json"
         Test-ContainsText -Text $pipelineConfigTemplate -Needle '"remove_command"' -Label "templates/code/PIPELINE-CONFIG.json"

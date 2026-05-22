@@ -1,5 +1,5 @@
 param(
-	[string[]]$Paths = @("**\*.json"),
+	[string[]]$Paths = @("__ALL_JSON__"),
 	[string]$OutputDir = "docs-tech\cache"
 )
 

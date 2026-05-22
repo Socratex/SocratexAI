@@ -8,12 +8,12 @@
         "summary": "SocratexPipeline self-check quality gate.",
         "commands": {
             "powershell_parse": {
-                "description": "Parse all repository PowerShell scripts.",
-                "command": "$parseFailures = @(); Get-ChildItem tools -Filter '*.ps1' -File -Recurse | ForEach-Object { $parseErrors = $null; [System.Management.Automation.PSParser]::Tokenize((Get-Content -Raw $_.FullName), [ref]$parseErrors) | Out-Null; if ($parseErrors) { $parseFailures += $_.FullName } }; if ($parseFailures.Count -gt 0) { throw ('PowerShell parse failed: ' + ($parseFailures -join ', ')) }"
+                "description": "Compile all Python repository tooling that is part of the Python-first path.",
+                "command": "python -m py_compile tools/pipeline/python_runtime.py tools/pipeline/pipeline_package.py tools/pipeline/pipeline_sweep.py tools/pipeline/sync_managed_pipeline_package.py tools/pipeline/update_pipeline_from_link.py tools/repo/check_pipeline_feature_contracts.py tools/repo/sync_pipeline_featurelist.py tools/documents/audit_docs.py tools/knowledge/knowledge_tier_check.py tools/quality/check_runtime.py"
             },
             "audit_docs": {
-                "description": "Run SocratexPipeline document audit.",
-                "command": "pwsh -NoLogo -NoProfile -File tools/documents/audit_docs.ps1"
+                "description": "Run SocratexPipeline Python document audit.",
+                "command": "python tools/documents/audit_docs.py --repo-root ."
             },
             "eval_framework": {
                 "description": "Check manual eval framework structure and internal links.",
@@ -24,8 +24,8 @@
                 "command": "pwsh -NoLogo -NoProfile -File tools/repo/check_sensitive_reference_leaks.ps1"
             },
             "transactional_doc_tools": {
-                "description": "Check transactional document edit tools in dry-check mode.",
-                "command": "pwsh -NoLogo -NoProfile -File tools/documents/normalize_document_structure.ps1 -Check -Paths project/code/WORKFLOW.json && pwsh -NoLogo -NoProfile -File tools/documents/migrate_document_schema.ps1 -Check -Paths project/code/WORKFLOW.json"
+                "description": "Check Python JSON document tooling and feature-contract coverage.",
+                "command": "python tools/documents/json_list_doc.py read SCRIPTS.json && python tools/repo/check_pipeline_feature_contracts.py"
             },
             "init_dry_run": {
                 "description": "Smoke-test code project initialization without writing files.",
