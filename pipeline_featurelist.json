@@ -151,6 +151,7 @@
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Verify installed task checks and finalizers resolve the child project Git root separately from the installed SocratexAI package root.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -870,7 +871,7 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "If 'git_batch_finishers' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+                "known_failure_if_missing": "If 'git_batch_finishers' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, or installed child-project root handling is absent."
             },
             "canonical_done_finalizer": {
                 "summary": "Canonical Done Finalizer capability is active only when the preferred finalizer runs audit and quality before commit/push and its listed source artifacts, catalogs, update path, and verification remain present.",
@@ -917,6 +918,7 @@
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Verify installed finalizers resolve the child project Git root separately from the installed SocratexAI package root before normalizing, indexing, auditing task flow, or running quality commands.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -924,7 +926,7 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "If 'canonical_done_finalizer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+                "known_failure_if_missing": "If 'canonical_done_finalizer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, or installed child-project root handling is absent."
             },
             "toolchain_doctor": {
                 "summary": "Toolchain Doctor capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",

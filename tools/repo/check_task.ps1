@@ -12,18 +12,29 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
-$textNormalizeScript = Join-Path $repoRoot "tools\text\normalize_text_files.ps1"
-$jsonNormalizeScript = Join-Path $repoRoot "tools\text\normalize_json_files.ps1"
-$bootstrapScript = Join-Path $repoRoot "tools\pipeline\pipeline_bootstrap_index.ps1"
-$markdownEmojiScript = Join-Path $repoRoot "tools\documents\normalize_markdown_emoji.ps1"
-$auditScript = Join-Path $repoRoot "tools\documents\audit_docs.ps1"
-$lineIndexScript = Join-Path $repoRoot "tools\codebase\update_code_line_index.ps1"
-$utf8WriteCheckScript = Join-Path $repoRoot "tools\text\check_utf8_writes.ps1"
+function Resolve-WorkTreeRoot {
+	param([string]$FallbackRoot)
+
+	$gitRoot = @(git -C $FallbackRoot rev-parse --show-toplevel 2>$null)
+	if ($LASTEXITCODE -eq 0 -and $gitRoot.Count -gt 0 -and -not [string]::IsNullOrWhiteSpace([string]$gitRoot[0])) {
+		return (Resolve-Path -LiteralPath ([string]$gitRoot[0])).Path
+	}
+	return (Resolve-Path -LiteralPath $FallbackRoot).Path
+}
+
+$packageRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+$repoRoot = Resolve-WorkTreeRoot -FallbackRoot $packageRoot
+$textNormalizeScript = Join-Path $packageRoot "tools\text\normalize_text_files.ps1"
+$jsonNormalizeScript = Join-Path $packageRoot "tools\text\normalize_json_files.ps1"
+$bootstrapScript = Join-Path $packageRoot "tools\pipeline\pipeline_bootstrap_index.ps1"
+$markdownEmojiScript = Join-Path $packageRoot "tools\documents\normalize_markdown_emoji.ps1"
+$auditScript = Join-Path $packageRoot "tools\documents\audit_docs.ps1"
+$lineIndexScript = Join-Path $packageRoot "tools\codebase\update_code_line_index.ps1"
+$utf8WriteCheckScript = Join-Path $packageRoot "tools\text\check_utf8_writes.ps1"
 $pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
-$codeContextGateScript = Join-Path $repoRoot "tools\codebase\check_code_context_gate.ps1"
-$projectDesignContextGateScript = Join-Path $repoRoot "tools\codebase\check_project_design_context_gate.ps1"
-$compiledContextRebuildScript = Join-Path $repoRoot "tools\pipeline\rebuild_ai_compiled_context.ps1"
+$codeContextGateScript = Join-Path $packageRoot "tools\codebase\check_code_context_gate.ps1"
+$projectDesignContextGateScript = Join-Path $packageRoot "tools\codebase\check_project_design_context_gate.ps1"
+$compiledContextRebuildScript = Join-Path $packageRoot "tools\pipeline\rebuild_ai_compiled_context.ps1"
 
 function Invoke-CheckCommand {
 	param(
@@ -87,7 +98,9 @@ function Invoke-TextNormalization {
 		"-ExecutionPolicy",
 		"Bypass",
 		"-File",
-		$textNormalizeScript
+		$textNormalizeScript,
+		"-Root",
+		$repoRoot
 	)
 	if ($Check) {
 		$normalizationArgs += "-Check"
@@ -140,7 +153,9 @@ try {
 			"-ExecutionPolicy",
 			"Bypass",
 			"-File",
-			$jsonNormalizeScript
+			$jsonNormalizeScript,
+			"-Root",
+			$repoRoot
 		)
 		Invoke-CheckCommand -Label "JSON normalization refresh" -Command "powershell" -Arguments $jsonArgs
 	}
@@ -161,6 +176,8 @@ try {
 			"Bypass",
 			"-File",
 			$jsonNormalizeScript,
+			"-Root",
+			$repoRoot,
 			"-Check"
 		)
 		Invoke-CheckCommand -Label "JSON normalization check" -Command "powershell" -Arguments $jsonCheckArgs
@@ -234,6 +251,8 @@ try {
 			"Bypass",
 			"-File",
 			$lineIndexScript,
+			"-Root",
+			$repoRoot,
 			"-ChangedOnly"
 		)
 		Invoke-TextNormalization -Label "post-generator text normalization refresh"
@@ -243,6 +262,8 @@ try {
 			"Bypass",
 			"-File",
 			$lineIndexScript,
+			"-Root",
+			$repoRoot,
 			"-ChangedOnly",
 			"-Check"
 		)

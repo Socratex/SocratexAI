@@ -1,12 +1,18 @@
 param(
 	[string[]]$Paths = @("AGENTS.md", "DOCS.json"),
+	[string]$Root = "",
 	[switch]$Check
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$packageRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$repoRoot = if ([string]::IsNullOrWhiteSpace($Root)) {
+	$packageRoot
+} else {
+	Resolve-Path -LiteralPath $Root
+}
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 function Convert-TextToLf {

@@ -11,10 +11,21 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+function Resolve-WorkTreeRoot {
+	param([string]$FallbackRoot)
+
+	$gitRoot = @(git -C $FallbackRoot rev-parse --show-toplevel 2>$null)
+	if ($LASTEXITCODE -eq 0 -and $gitRoot.Count -gt 0 -and -not [string]::IsNullOrWhiteSpace([string]$gitRoot[0])) {
+		return (Resolve-Path -LiteralPath ([string]$gitRoot[0])).Path
+	}
+	return (Resolve-Path -LiteralPath $FallbackRoot).Path
+}
+
+$packageRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 $repoRoot = if ([string]::IsNullOrWhiteSpace($ProjectRoot)) {
-	Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+	Resolve-WorkTreeRoot -FallbackRoot $packageRoot
 } else {
-	Resolve-Path -LiteralPath $ProjectRoot
+	(Resolve-Path -LiteralPath $ProjectRoot).Path
 }
 
 function Invoke-GitLines {

@@ -1,5 +1,6 @@
 param(
 	[string]$OutputPath = "",
+	[string]$Root = "",
 	[string]$CompletionSoundScriptPath = $env:CODEX_COMPLETION_SOUND_SCRIPT,
 	[int]$StateTailLines = 80,
 	[int]$MaxListItems = 40,
@@ -9,8 +10,13 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
-. (Join-Path $repoRoot "tools\text\utf8_file_helpers.ps1")
+$packageRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+$repoRoot = if ([string]::IsNullOrWhiteSpace($Root)) {
+	$packageRoot
+} else {
+	(Resolve-Path -LiteralPath $Root).Path
+}
+. (Join-Path $packageRoot "tools\text\utf8_file_helpers.ps1")
 if ([string]::IsNullOrWhiteSpace($OutputPath)) {
 	$OutputPath = Join-Path $repoRoot "OUTPUT"
 }
@@ -212,7 +218,7 @@ function Add-StateTail {
 		return
 	}
 
-	$docRead = Join-Path $repoRoot "tools\documents\read_document_item.ps1"
+	$docRead = Join-Path $packageRoot "tools\documents\read_document_item.ps1"
 	if (Test-Path -LiteralPath $docRead) {
 		foreach ($selector in @("current", "immediate_focus", "risks")) {
 			$Lines.Add("")

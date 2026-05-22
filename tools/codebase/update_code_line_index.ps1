@@ -3,6 +3,7 @@ param(
 	[string]$LargeFilesPath = "docs-tech/LARGE_FILES.json",
 	[int]$LargeFileThreshold = 300,
 	[string[]]$Paths = @(),
+	[string]$Root = "",
 	[switch]$ChangedOnly,
 	[switch]$Check
 )
@@ -10,7 +11,12 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$packageRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$repoRoot = if ([string]::IsNullOrWhiteSpace($Root)) {
+	$packageRoot
+} else {
+	Resolve-Path -LiteralPath $Root
+}
 $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 $codeExtensions = @(
 	".gd",

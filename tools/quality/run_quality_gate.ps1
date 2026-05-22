@@ -1,12 +1,18 @@
 param(
     [string[]]$Command,
+    [string]$Root = "",
     [switch]$Skip
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$Root = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$packageRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$Root = if ([string]::IsNullOrWhiteSpace($Root)) {
+    $packageRoot
+} else {
+    Resolve-Path -LiteralPath $Root
+}
 $contractRunner = Join-Path $PSScriptRoot "run_quality_gate_contract.ps1"
 $qualityGateContract = Join-Path $Root "QUALITY-GATE.json"
 
@@ -27,7 +33,7 @@ try {
     }
 
     if ((Test-Path -LiteralPath $qualityGateContract) -and (Test-Path -LiteralPath $contractRunner)) {
-        pwsh -NoLogo -NoProfile -File $contractRunner -Path $qualityGateContract
+        pwsh -NoLogo -NoProfile -File $contractRunner -Path $qualityGateContract -Root $Root
         exit $LASTEXITCODE
     }
 

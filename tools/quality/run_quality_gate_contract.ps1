@@ -1,12 +1,18 @@
 param(
     [string]$Path = "QUALITY-GATE.json",
+    [string]$Root = "",
     [string[]]$CommandNames
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$packageRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+$repoRoot = if ([string]::IsNullOrWhiteSpace($Root)) {
+    $packageRoot
+} else {
+    Resolve-Path -LiteralPath $Root
+}
 $gatePath = if ([System.IO.Path]::IsPathRooted($Path)) {
     $Path
 } else {

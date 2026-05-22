@@ -15,18 +15,29 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+function Resolve-WorkTreeRoot {
+	param([string]$FallbackRoot)
+
+	$gitRoot = @(git -C $FallbackRoot rev-parse --show-toplevel 2>$null)
+	if ($LASTEXITCODE -eq 0 -and $gitRoot.Count -gt 0 -and -not [string]::IsNullOrWhiteSpace([string]$gitRoot[0])) {
+		return (Resolve-Path -LiteralPath ([string]$gitRoot[0])).Path
+	}
+	return (Resolve-Path -LiteralPath $FallbackRoot).Path
+}
+
+$packageRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+$repoRoot = Resolve-WorkTreeRoot -FallbackRoot $packageRoot
 $taskSnapshotScript = Join-Path $PSScriptRoot "task_snapshot.ps1"
 $taskFlowAuditScript = Join-Path $PSScriptRoot "task_flow_audit.ps1"
-$auditScript = Join-Path $repoRoot "tools\documents\audit_docs.ps1"
-$lineIndexScript = Join-Path $repoRoot "tools\codebase\update_code_line_index.ps1"
-$textNormalizeScript = Join-Path $repoRoot "tools\text\normalize_text_files.ps1"
-$docCacheScript = Join-Path $repoRoot "tools\documents\build_document_cache.ps1"
-$qualityScript = Join-Path $repoRoot "tools\quality\run_quality_gate.ps1"
+$auditScript = Join-Path $packageRoot "tools\documents\audit_docs.ps1"
+$lineIndexScript = Join-Path $packageRoot "tools\codebase\update_code_line_index.ps1"
+$textNormalizeScript = Join-Path $packageRoot "tools\text\normalize_text_files.ps1"
+$docCacheScript = Join-Path $packageRoot "tools\documents\build_document_cache.ps1"
+$qualityScript = Join-Path $packageRoot "tools\quality\run_quality_gate.ps1"
 $outputScript = Join-Path $PSScriptRoot "end_prompt_snapshot.ps1"
 $pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
-$compiledInstructionsRecompileScript = Join-Path $repoRoot "tools\pipeline\rebuild_ai_compiled_context.ps1"
-$compiledInstructionsCheckScript = Join-Path $repoRoot "tools\pipeline\check_ai_compiled_context.ps1"
+$compiledInstructionsRecompileScript = Join-Path $packageRoot "tools\pipeline\rebuild_ai_compiled_context.ps1"
+$compiledInstructionsCheckScript = Join-Path $packageRoot "tools\pipeline\check_ai_compiled_context.ps1"
 
 function Invoke-RepoCommand {
 	param(
@@ -66,6 +77,8 @@ function Invoke-ChangedTextNormalization {
 		"Bypass",
 		"-File",
 		$textNormalizeScript,
+		"-Root",
+		$repoRoot,
 		"-Paths"
 	)
 	$normalizeArgs += $changedTextPaths
@@ -97,6 +110,8 @@ try {
 			"Bypass",
 			"-File",
 			$lineIndexScript,
+			"-Root",
+			$repoRoot,
 			"-ChangedOnly"
 		)
 		Invoke-ChangedTextNormalization -Label "post-generator text normalization refresh"
@@ -112,7 +127,7 @@ try {
 		)
 	}
 
-	& powershell -NoProfile -ExecutionPolicy Bypass -File $taskSnapshotScript
+	& powershell -NoProfile -ExecutionPolicy Bypass -File $taskSnapshotScript -Root $repoRoot
 	if ($LASTEXITCODE -ne 0) {
 		throw "task snapshot failed with exit code $LASTEXITCODE"
 	}
@@ -127,7 +142,9 @@ try {
 			"-ExecutionPolicy",
 			"Bypass",
 			"-File",
-			$taskFlowAuditScript
+			$taskFlowAuditScript,
+			"-ProjectRoot",
+			$repoRoot
 		)
 		if ($RequireTaskFlowEvidence) {
 			$taskFlowAuditArgs += "-RequireClosureEvidence"
@@ -166,6 +183,8 @@ try {
 			"Bypass",
 			"-File",
 			$lineIndexScript,
+			"-Root",
+			$repoRoot,
 			"-ChangedOnly",
 			"-Check"
 		)
@@ -191,7 +210,9 @@ try {
 			"-ExecutionPolicy",
 			"Bypass",
 			"-File",
-			$qualityScript
+			$qualityScript,
+			"-Root",
+			$repoRoot
 		)
 		if ($QualityCommand -and $QualityCommand.Count -gt 0) {
 			$qualityArgs += "-Command"
@@ -210,7 +231,9 @@ try {
 			"-ExecutionPolicy",
 			"Bypass",
 			"-File",
-			$outputScript
+			$outputScript,
+			"-Root",
+			$repoRoot
 		)
 		if ($NoSound) {
 			$outputArgs += "-NoSound"

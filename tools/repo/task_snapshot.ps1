@@ -1,11 +1,27 @@
 param(
+    [string]$Root = "",
     [switch]$NoGit
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$Root = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+function Resolve-WorkTreeRoot {
+    param([string]$FallbackRoot)
+
+    $gitRoot = @(git -C $FallbackRoot rev-parse --show-toplevel 2>$null)
+    if ($LASTEXITCODE -eq 0 -and $gitRoot.Count -gt 0 -and -not [string]::IsNullOrWhiteSpace([string]$gitRoot[0])) {
+        return (Resolve-Path -LiteralPath ([string]$gitRoot[0])).Path
+    }
+    return (Resolve-Path -LiteralPath $FallbackRoot).Path
+}
+
+$packageRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+$Root = if ([string]::IsNullOrWhiteSpace($Root)) {
+    Resolve-WorkTreeRoot -FallbackRoot $packageRoot
+} else {
+    (Resolve-Path -LiteralPath $Root).Path
+}
 
 Push-Location -LiteralPath $Root
 try {

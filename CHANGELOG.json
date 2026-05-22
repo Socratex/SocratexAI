@@ -9,6 +9,12 @@
       {
         "version": "0.2.0-alpha",
         "date": "2026-05-22",
+        "feature": "git_batch_finishers",
+        "change": "Fixed installed child-project task checks and finalizers so package-owned tools resolve the target Git worktree separately from the installed SocratexAI package root. Normalization, changed-file discovery, line indexing, task snapshots, task-flow audit, output snapshots, and explicit quality commands now run against the child project root while still loading scripts from the package. Why: business/code child projects should be able to run check_task and finalizers without tools looking for project files inside SocratexAI/."
+      },
+      {
+        "version": "0.2.0-alpha",
+        "date": "2026-05-22",
         "feature": "pipeline_update_and_removal_protocols",
         "change": "Fixed existing-project import closure for fresh business/code projects: import_existing_project.ps1 now builds the installed document cache before compiling knowledge, and compiles knowledge after the final imported PIPELINE-CONFIG.json is written. Why: child imports should immediately pass audit_docs and feature-contract checks without a manual cache/knowledge repair step."
       },

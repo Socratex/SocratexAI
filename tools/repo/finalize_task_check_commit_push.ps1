@@ -13,7 +13,18 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$repoRoot = Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")
+function Resolve-WorkTreeRoot {
+	param([string]$FallbackRoot)
+
+	$gitRoot = @(git -C $FallbackRoot rev-parse --show-toplevel 2>$null)
+	if ($LASTEXITCODE -eq 0 -and $gitRoot.Count -gt 0 -and -not [string]::IsNullOrWhiteSpace([string]$gitRoot[0])) {
+		return (Resolve-Path -LiteralPath ([string]$gitRoot[0])).Path
+	}
+	return (Resolve-Path -LiteralPath $FallbackRoot).Path
+}
+
+$packageRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+$repoRoot = Resolve-WorkTreeRoot -FallbackRoot $packageRoot
 $finishSubtaskScript = Join-Path $PSScriptRoot "finalize_changed_files_commit_push.ps1"
 
 if ([string]::IsNullOrWhiteSpace($Message)) {

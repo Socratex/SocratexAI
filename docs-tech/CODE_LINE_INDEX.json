@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T21:03:56+02:00",
+  "generatedAt": "2026-05-22T21:14:59+02:00",
   "threshold": 300,
   "files": [
     {
@@ -46,7 +46,7 @@
     },
     {
       "path": "tools/codebase/update_code_line_index.ps1",
-      "lines": 363,
+      "lines": 369,
       "extension": ".ps1",
       "large": true
     },
@@ -76,7 +76,19 @@
     },
     {
       "path": "tools/repo/check_task.ps1",
+      "lines": 278,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/repo/task_flow_audit.ps1",
       "lines": 259,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/repo/end_prompt_snapshot.ps1",
+      "lines": 258,
       "extension": ".ps1",
       "large": false
     },
@@ -84,18 +96,6 @@
       "path": "tools/documents/document_list_item_edit_engine.py",
       "lines": 254,
       "extension": ".py",
-      "large": false
-    },
-    {
-      "path": "tools/repo/end_prompt_snapshot.ps1",
-      "lines": 252,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/repo/task_flow_audit.ps1",
-      "lines": 250,
-      "extension": ".ps1",
       "large": false
     },
     {
@@ -114,6 +114,12 @@
       "path": "tools/documents/document_item_edit_engine.py",
       "lines": 232,
       "extension": ".py",
+      "large": false
+    },
+    {
+      "path": "tools/repo/run_final_task_checks.ps1",
+      "lines": 223,
+      "extension": ".ps1",
       "large": false
     },
     {
@@ -138,12 +144,6 @@
       "path": "tools/documents/document_structure_normalizer_engine.py",
       "lines": 204,
       "extension": ".py",
-      "large": false
-    },
-    {
-      "path": "tools/repo/run_final_task_checks.ps1",
-      "lines": 202,
-      "extension": ".ps1",
       "large": false
     },
     {
@@ -178,7 +178,7 @@
     },
     {
       "path": "tools/repo/finalize_changed_files_commit_push.ps1",
-      "lines": 159,
+      "lines": 168,
       "extension": ".ps1",
       "large": false
     },
@@ -321,6 +321,18 @@
       "large": false
     },
     {
+      "path": "tools/repo/finalize_task_check_commit_push.ps1",
+      "lines": 85,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/text/normalize_text_files.ps1",
+      "lines": 81,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/text/utf8_file_helpers.ps1",
       "lines": 81,
       "extension": ".ps1",
@@ -339,13 +351,7 @@
       "large": false
     },
     {
-      "path": "tools/repo/finalize_task_check_commit_push.ps1",
-      "lines": 76,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/text/normalize_text_files.ps1",
+      "path": "tools/quality/run_quality_gate_contract.ps1",
       "lines": 75,
       "extension": ".ps1",
       "large": false
@@ -365,12 +371,6 @@
     {
       "path": "tools/knowledge/knowledge_select.ps1",
       "lines": 70,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/quality/run_quality_gate_contract.ps1",
-      "lines": 69,
       "extension": ".ps1",
       "large": false
     },
@@ -423,6 +423,12 @@
       "large": false
     },
     {
+      "path": "tools/quality/run_quality_gate.ps1",
+      "lines": 53,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/documents/insert_checked_document_list_item.ps1",
       "lines": 52,
       "extension": ".ps1",
@@ -441,12 +447,6 @@
       "large": false
     },
     {
-      "path": "tools/quality/run_quality_gate.ps1",
-      "lines": 47,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
       "path": "tools/documents/migrate_document_schema.ps1",
       "lines": 43,
       "extension": ".ps1",
@@ -460,6 +460,12 @@
     },
     {
       "path": "tools/documents/json_item_insert.ps1",
+      "lines": 41,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/repo/task_snapshot.ps1",
       "lines": 41,
       "extension": ".ps1",
       "large": false
@@ -537,6 +543,12 @@
       "large": false
     },
     {
+      "path": "tools/text/normalize_json_files.ps1",
+      "lines": 29,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/knowledge/knowledge_compile.ps1",
       "lines": 28,
       "extension": ".ps1",
@@ -556,12 +568,6 @@
     },
     {
       "path": "tools/knowledge/knowledge_file_delete.ps1",
-      "lines": 27,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/repo/task_snapshot.ps1",
       "lines": 27,
       "extension": ".ps1",
       "large": false
@@ -604,12 +610,6 @@
     },
     {
       "path": "tools/knowledge/knowledge_upsert.ps1",
-      "lines": 23,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/text/normalize_json_files.ps1",
       "lines": 23,
       "extension": ".ps1",
       "large": false
