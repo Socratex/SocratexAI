@@ -491,14 +491,20 @@ try {
             Add-Error "Missing compiled AI instruction artifact: $compiledFile"
         }
     }
-    $compiledContextCheckScript = Join-Path $repoRoot "tools/pipeline/check_ai_compiled_context.ps1"
-    if (Test-Path -LiteralPath $compiledContextCheckScript) {
-        & powershell -NoProfile -ExecutionPolicy Bypass -File $compiledContextCheckScript
+    $compiledContextPythonCheckScript = Join-Path $repoRoot "tools/pipeline/check_ai_compiled_context.py"
+    $compiledContextPowerShellCheckScript = Join-Path $repoRoot "tools/pipeline/check_ai_compiled_context.ps1"
+    if (Test-Path -LiteralPath $compiledContextPythonCheckScript) {
+        & python3 $compiledContextPythonCheckScript --repo-root $repoRoot
+        if ($LASTEXITCODE -ne 0) {
+            Add-Error "Compiled AI context freshness check failed with exit code $LASTEXITCODE"
+        }
+    } elseif (Test-Path -LiteralPath $compiledContextPowerShellCheckScript) {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $compiledContextPowerShellCheckScript
         if ($LASTEXITCODE -ne 0) {
             Add-Error "Compiled AI context freshness check failed with exit code $LASTEXITCODE"
         }
     } else {
-        Add-Error "Missing compiled AI context freshness checker: tools/pipeline/check_ai_compiled_context.ps1"
+        Add-Error "Missing compiled AI context freshness checker: tools/pipeline/check_ai_compiled_context.py"
     }
     foreach ($evalFile in @("evals/README.md", "evals/personas.json", "evals/expected-behaviors.json", "evals/scoring.md", "evals/results/baseline.json", "evals/results/with-pipeline.json")) {
         if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $evalFile))) {

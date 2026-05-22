@@ -1414,7 +1414,8 @@ Draft placeholder:
                     "Ensure fresh existing-project imports build the installed document cache before compiling knowledge, after the final imported PIPELINE-CONFIG.json is written.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
-                    "Refresh the installed SocratexAI document cache after managed package sync and before full verification so child audits validate current package files instead of stale cache entries."
+                    "Refresh the installed SocratexAI document cache after managed package sync and before full verification so child audits validate current package files instead of stale cache entries.",
+                    "Prefer tools/pipeline/check_ai_compiled_context.py from audit_docs.ps1 when present so installed child packages use the Python-first compiled-context smoke before falling back to the legacy PowerShell checker."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
