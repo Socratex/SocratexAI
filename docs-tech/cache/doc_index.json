@@ -2037,6 +2037,45 @@
       }
     },
     {
+      "path": "templates/pipeline-sweep.projects.json",
+      "document": {
+        "title": "Pipeline Sweep Project Config Template",
+        "type": "pipeline_sweep_config",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "source",
+        "defaults",
+        "projects"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "source": {
+          "path": "content.source",
+          "title": "source",
+          "ref": "content.source",
+          "status": ""
+        },
+        "defaults": {
+          "path": "content.defaults",
+          "title": "",
+          "ref": "content.defaults",
+          "status": ""
+        },
+        "projects": {
+          "path": "content.projects",
+          "title": "projects",
+          "ref": "content.projects",
+          "status": ""
+        }
+      }
+    },
+    {
       "path": "templates/workspace.json",
       "document": {},
       "routing": {},

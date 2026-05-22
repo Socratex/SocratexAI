@@ -97,6 +97,7 @@
             "managed_pipeline_root_catalog_sync",
             "feature_artifact_contracts",
             "cheap_idempotent_pipeline_update",
+            "pipeline_sweep_upgrade_tool",
             "legacy_feature_manifest_update_recovery",
             "canonical_index_content_metadata_document_schema",
             "cross_platform_tool_runtime_resolution",
@@ -5167,6 +5168,59 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
                 "known_failure_if_missing": "Old or low-budget child projects may spend unnecessary AI/tool time on full rebuilds, overwrite project-owned state, copy stale local shapes, skip mandatory validation scripts, or fail to receive structural source changes from Git cheaply."
+            },
+            "pipeline_sweep_upgrade_tool": {
+                "summary": "Automate repeatable SocratexPipeline source-to-child update and smoke sweeps across explicit project lists, while leaving drift interpretation and repairs to the operator/agent.",
+                "required_paths": [
+                    "tools/pipeline/pipeline_sweep.py",
+                    "tools/pipeline/pipeline_sweep.ps1",
+                    "templates/pipeline-sweep.projects.json",
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "pipeline_sweep.py",
+                    "pipeline_sweep.ps1",
+                    "update_pipeline_from_link.ps1",
+                    "check_pipeline_feature_contracts.ps1",
+                    "audit_docs.ps1",
+                    "knowledge_tier_check.ps1",
+                    "compile_pipeline_context.ps1"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "pipeline_sweep.py",
+                        "pipeline_sweep.ps1",
+                        "update_pipeline_from_link.ps1",
+                        "check_pipeline_feature_contracts.ps1",
+                        "audit_docs.ps1",
+                        "knowledge_tier_check.ps1",
+                        "compile_pipeline_context.ps1"
+                    ]
+                },
+                "required_docs": [
+                    "templates/pipeline-sweep.projects.json",
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the sweep runner Python-first and OS-agnostic; PowerShell remains a catalog wrapper, not the core implementation.",
+                    "Require explicit project config or NAME=PATH arguments so the tool does not depend on agent memory or private hardcoded workspaces.",
+                    "Keep dry-run as the default and require --execute/-Execute before update, smoke, or finalizer commands run.",
+                    "Model projects through status, update, smoke, optional finalizer, and summary phases instead of one-off manual command sequences.",
+                    "Run or print standard smoke coverage for docs audit, feature contracts, compiled context, tier checks, and git cleanliness where applicable.",
+                    "Keep destructive cleanup, dependency installation, and project-specific finalizers out of the default path unless they are explicitly configured and operator-approved.",
+                    "Use the summary to decide which drift needs AI/operator interpretation instead of treating the script as an autonomous repair agent.",
+                    "Sync the managed package so child projects receive the runner, wrapper, config template, catalog entries, and feature contract."
+                ],
+                "verification_commands": [
+                    "python3 -m py_compile tools/pipeline/pipeline_sweep.py",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/pipeline_sweep.ps1 -Help",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                ],
+                "known_failure_if_missing": "Agents must manually remember every project, update command, smoke command, tier check, and drift summary, so future source-pipeline upgrades become inconsistent as project count grows."
             },
             "legacy_feature_manifest_update_recovery": {
                 "summary": "Cheap update and learning tools can recover older child feature manifests that use project-shaped index/content documents instead of current root features arrays.",

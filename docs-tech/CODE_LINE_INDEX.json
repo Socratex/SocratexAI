@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-23T00:11:08+02:00",
+  "generatedAt": "2026-05-23T00:41:48+02:00",
   "threshold": 300,
   "files": [
     {
@@ -30,6 +30,12 @@
       "path": "tools/pipeline/sync_managed_pipeline_package.ps1",
       "lines": 398,
       "extension": ".ps1",
+      "large": true
+    },
+    {
+      "path": "tools/pipeline/pipeline_sweep.py",
+      "lines": 395,
+      "extension": ".py",
       "large": true
     },
     {
@@ -496,6 +502,12 @@
     },
     {
       "path": "tools/documents/json_line_move.ps1",
+      "lines": 38,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/pipeline/pipeline_sweep.ps1",
       "lines": 38,
       "extension": ".ps1",
       "large": false

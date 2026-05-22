@@ -1,0 +1,50 @@
+{
+    "index": [
+        "source",
+        "defaults",
+        "projects"
+    ],
+    "content": {
+        "source": "/absolute/path/to/SocratexAI",
+        "defaults": {
+            "smoke": [
+                "feature_contracts",
+                "docs_audit",
+                "compiled_context",
+                "tier_check",
+                "git_clean"
+            ],
+            "full_verify": false,
+            "reinitialize_new": false
+        },
+        "projects": [
+            {
+                "name": "SocratexAI",
+                "path": "/absolute/path/to/SocratexAI",
+                "role": "source",
+                "update": false
+            },
+            {
+                "name": "ChildProject",
+                "path": "/absolute/path/to/ChildProject",
+                "role": "child",
+                "profile": "",
+                "packs": [],
+                "update": true,
+                "full_verify": true
+            }
+        ]
+    },
+    "metadata": {
+        "document": {
+            "title": "Pipeline Sweep Project Config Template",
+            "type": "pipeline_sweep_config",
+            "language": "en"
+        },
+        "contract": [
+            "Copy this template outside the source package and replace absolute paths before running pipeline_sweep.ps1 or pipeline_sweep.py.",
+            "Dry-run is the default. Use --execute only when the printed plan matches the intended project sweep.",
+            "Keep destructive cleanup, dependency installs, and project-specific finalizers out unless they are explicitly configured and operator-approved."
+        ]
+    }
+}

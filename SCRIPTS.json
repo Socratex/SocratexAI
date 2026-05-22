@@ -94,6 +94,8 @@
         "open_pipeline_learning_issue.ps1",
         "pipeline_bootstrap_index.ps1",
         "pipeline_bootstrap_index.py",
+        "pipeline_sweep.py",
+        "pipeline_sweep.ps1",
         "resolve_tool_runtime.ps1",
         "resolve_workspace_root.ps1",
         "rebuild_ai_compiled_context.ps1",
@@ -2045,6 +2047,57 @@
             "output": {
                 "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
                 "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
+        },
+        "pipeline_sweep.py": {
+            "path": "tools/pipeline/pipeline_sweep.py",
+            "category": "pipeline",
+            "description": "Python-first runner that sweeps SocratexPipeline source and child-project update, smoke, status, and summary phases from an explicit project config.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--config",
+                    "--source",
+                    "--project",
+                    "--execute",
+                    "--update",
+                    "--smoke",
+                    "--finalize",
+                    "--all",
+                    "--stop-on-failure",
+                    "--json"
+                ],
+                "rule": "Dry-run is the default. Pass projects explicitly as NAME=PATH or source:NAME=PATH, or through a config file; use --execute only after the printed update/smoke plan matches the intended sweep."
+            },
+            "output": {
+                "success": "Prints per-project update/smoke/finalizer results and a concise pass/fail/manual-attention summary.",
+                "failure": "Exits nonzero when config is invalid, a project path is missing, PowerShell cannot be resolved, or an executed phase fails."
+            }
+        },
+        "pipeline_sweep.ps1": {
+            "path": "tools/pipeline/pipeline_sweep.ps1",
+            "category": "pipeline",
+            "description": "PowerShell wrapper for the cross-project SocratexPipeline sweep upgrade and smoke runner.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Config",
+                    "-Source",
+                    "-Project",
+                    "-Execute",
+                    "-Update",
+                    "-Smoke",
+                    "-Finalize",
+                    "-All",
+                    "-StopOnFailure",
+                    "-Json",
+                    "-Help"
+                ],
+                "rule": "Use this wrapper when operating from PowerShell or a script catalog. Dry-run is default; -Execute is required to run update, smoke, or finalizer commands. -Project accepts NAME=PATH, source:NAME=PATH, or comma-separated specs."
+            },
+            "output": {
+                "success": "Delegates to pipeline_sweep.py and returns its per-project pass/fail/manual-attention summary.",
+                "failure": "Throws when runtime resolution fails, config/project input is invalid, or the Python runner exits nonzero."
             }
         },
         "resolve_tool_runtime.ps1": {

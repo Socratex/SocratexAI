@@ -503,6 +503,12 @@
         "date": "2026-05-23",
         "feature": "featurelist_behavior_contract_details",
         "change": "Clarified feature contracts for CONTINUE clarification checkpoints and script-first JSON structural edit tooling, including SCRIPTS metadata and workflow directive requirements. Why: The reusable feature list should preserve not only file presence but also the behavioral rules agents must follow."
+      },
+      {
+        "version": "0.2.0-alpha",
+        "date": "2026-05-23",
+        "feature": "pipeline_sweep_upgrade_tool",
+        "change": "Added a Python-first pipeline sweep runner with PowerShell wrapper, config template, catalog metadata, and feature contract for repeatable cross-project update/smoke sweeps. Why: Manual source-to-child upgrade sweeps were relying on agent memory instead of a reusable tool."
       }
     ]
   },
