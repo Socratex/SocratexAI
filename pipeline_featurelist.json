@@ -1146,11 +1146,13 @@
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Ensure fresh existing-project imports build the installed document cache before compiling knowledge, after the final imported PIPELINE-CONFIG.json is written.",
                     "Run the feature contract checker before promoting or publishing the update.",
-                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
+                    "Refresh the installed SocratexAI document cache after managed package sync and before full verification so child audits validate current package files instead of stale cache entries."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "python tools/pipeline/update_pipeline_from_link.py --source . --source-mode LocalPath --target-path <child> --full-verify"
                 ],
                 "known_failure_if_missing": "If 'pipeline_update_and_removal_protocols' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, import document cache, or imported knowledge freshness is absent."
             },

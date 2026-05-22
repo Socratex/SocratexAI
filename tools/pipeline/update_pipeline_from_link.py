@@ -104,6 +104,25 @@ def update_directives(target_root: Path, mode: str, directive_files: list[str], 
             target.write_text(merged, encoding="utf-8", newline="\n")
 
 
+def refresh_document_cache(install_root: Path) -> None:
+    cache_engine = install_root / "tools" / "documents" / "document_read_cache_engine.py"
+    if not cache_engine.is_file():
+        return
+    run(
+        [
+            sys.executable,
+            str(cache_engine),
+            "build-cache",
+            "__ALL_JSON__",
+            "--output-dir",
+            str(install_root / "docs-tech" / "cache"),
+            "--repo-root",
+            str(install_root),
+        ],
+        install_root,
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Update an installed SocratexPipeline package.")
     parser.add_argument("--source", required=True)
@@ -161,6 +180,7 @@ def main() -> int:
         if args.reinitialize_new:
             print("WARNING: --reinitialize-new still requires the legacy reinitializer until its Python port lands.")
         if not args.dry_run:
+            refresh_document_cache(install_root)
             feature_sync = install_root / "tools" / "repo" / "sync_pipeline_featurelist.py"
             if feature_sync.is_file():
                 run([sys.executable, str(feature_sync), "--target-path", str(target_root)], target_root)

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-23T01:45:16+02:00",
+  "generatedAt": "2026-05-23T01:46:41+02:00",
   "threshold": 300,
   "files": [
     {
@@ -183,6 +183,12 @@
       "large": false
     },
     {
+      "path": "tools/pipeline/update_pipeline_from_link.py",
+      "lines": 178,
+      "extension": ".py",
+      "large": false
+    },
+    {
       "path": "tools/repo/learn_pipeline_features.ps1",
       "lines": 176,
       "extension": ".ps1",
@@ -198,12 +204,6 @@
       "path": "tools/repo/finalize_changed_files_commit_push.ps1",
       "lines": 168,
       "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/pipeline/update_pipeline_from_link.py",
-      "lines": 160,
-      "extension": ".py",
       "large": false
     },
     {
