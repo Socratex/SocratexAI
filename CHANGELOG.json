@@ -455,6 +455,12 @@
         "date": "2026-05-22",
         "feature": "canonical_data_document_templates",
         "change": "Canonicalized source changelog and starter JSON templates as index/content/metadata data documents, narrowed direct-schema exceptions to eval protocols, and made setup/import/changelog/workspace/task/design-context tooling canonical-aware. Why: Reusable pipeline upgrades should propagate stronger machine-readable templates to child projects instead of preserving flat starter schemas."
+      },
+      {
+        "version": "0.2.0-alpha",
+        "date": "2026-05-22",
+        "feature": "json_format_contract_managed_package_sync",
+        "change": "Added JSON-FORMAT-CONTRACT.json to managed package sync and pipeline-owned root path checks so installed child pipelines receive and enforce the canonical JSON format contract. Why: Riftbound update smoke failed because source feature contracts required the format contract inside the installed SocratexAI package, but the mirror sync did not copy it."
       }
     ]
   },

@@ -28,6 +28,7 @@ param(
         "COMMANDS.json",
         "DOCS.json",
         "FLOWS.json",
+        "JSON-FORMAT-CONTRACT.json",
         "LICENSE",
         "PUBLIC-BOOTSTRAP.md",
         "QUALITY-GATE.json",

@@ -156,7 +156,7 @@ function Test-PipelineOwnedPath {
     if ($normalized -match '^(tools|core|project|profiles|templates|adapters|evals)/') {
         return $true
     }
-    if ($normalized -match '^(AGENTS\.md|PUBLIC-BOOTSTRAP\.md|QUALITY-GATE\.json|CHANGELOG\.json|COMMANDS\.json|DOCS\.json|FLOWS\.json|SCRIPTS\.json|WORKFLOW\.json|pipeline_featurelist\.json)$') {
+    if ($normalized -match '^(AGENTS\.md|PUBLIC-BOOTSTRAP\.md|QUALITY-GATE\.json|CHANGELOG\.json|COMMANDS\.json|DOCS\.json|FLOWS\.json|JSON-FORMAT-CONTRACT\.json|SCRIPTS\.json|WORKFLOW\.json|pipeline_featurelist\.json)$') {
         return $true
     }
     return $false

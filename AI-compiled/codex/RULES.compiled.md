@@ -6639,7 +6639,9 @@ Draft placeholder:
                     "tools/pipeline/init_task_work.ps1",
                     "tools/pipeline/resolve_workspace_root.ps1",
                     "tools/repo/add_changelog_entry.ps1",
-                    "tools/repo/task_flow_audit.ps1"
+                    "tools/repo/task_flow_audit.ps1",
+                    "tools/pipeline/sync_managed_pipeline_package.ps1",
+                    "tools/repo/check_pipeline_featurelist_update.ps1"
                 ],
                 "required_scripts": [
                     "audit_docs.ps1",
@@ -6653,7 +6655,9 @@ Draft placeholder:
                     "resolve_workspace_root.ps1",
                     "add_changelog_entry.ps1",
                     "task_flow_audit.ps1",
-                    "check_pipeline_feature_contracts.ps1"
+                    "check_pipeline_feature_contracts.ps1",
+                    "sync_managed_pipeline_package.ps1",
+                    "check_pipeline_featurelist_update.ps1"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -6668,7 +6672,9 @@ Draft placeholder:
                         "resolve_workspace_root.ps1",
                         "add_changelog_entry.ps1",
                         "task_flow_audit.ps1",
-                        "check_pipeline_feature_contracts.ps1"
+                        "check_pipeline_feature_contracts.ps1",
+                        "sync_managed_pipeline_package.ps1",
+                        "check_pipeline_featurelist_update.ps1"
                     ]
                 },
                 "required_docs": [
@@ -6684,6 +6690,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Keep reusable starter JSON templates in root index/content/metadata shape unless the file is generated, runtime-owned, or an explicit eval/external protocol exception.",
                     "Use socratex-data-document/v1 when canonical wrappers carry operational data instead of prose section objects.",
+                    "Keep JSON-FORMAT-CONTRACT.json mirrored into installed SocratexAI packages because source feature contracts validate it inside child pipeline roots.",
                     "Keep setup/import writers canonical-aware so initialized child projects do not downgrade PIPELINE-CONFIG.json back to a direct schema.",
                     "Keep changelog, workspace, task-work, and design-context readers compatible with both canonical and older direct documents during migration.",
                     "Keep document cache and JSON audit exclusions aligned with JSON-FORMAT-CONTRACT generated/runtime exclusions.",
