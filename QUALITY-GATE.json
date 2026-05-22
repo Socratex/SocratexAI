@@ -25,7 +25,7 @@
             },
             "transactional_doc_tools": {
                 "description": "Check transactional document edit tools in dry-check mode.",
-                "command": "pwsh -NoLogo -NoProfile -File tools/documents/normalize_document_structure.ps1 -Check -Paths project/code/WORKFLOW.json; pwsh -NoLogo -NoProfile -File tools/documents/migrate_document_schema.ps1 -Check -Paths project/code/WORKFLOW.json"
+                "command": "pwsh -NoLogo -NoProfile -File tools/documents/normalize_document_structure.ps1 -Check -Paths project/code/WORKFLOW.json && pwsh -NoLogo -NoProfile -File tools/documents/migrate_document_schema.ps1 -Check -Paths project/code/WORKFLOW.json"
             },
             "init_dry_run": {
                 "description": "Smoke-test code project initialization without writing files.",

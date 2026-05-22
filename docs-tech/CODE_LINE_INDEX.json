@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T14:18:23+02:00",
+  "generatedAt": "2026-05-22T14:25:49+02:00",
   "threshold": 300,
   "files": [
     {
@@ -87,6 +87,12 @@
       "large": false
     },
     {
+      "path": "tools/repo/task_flow_audit.ps1",
+      "lines": 246,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/documents/document_list_item_edit_engine.py",
       "lines": 243,
       "extension": ".py",
@@ -129,13 +135,13 @@
       "large": false
     },
     {
-      "path": "tools/repo/report_pipeline_learning.ps1",
-      "lines": 192,
+      "path": "tools/repo/run_final_task_checks.ps1",
+      "lines": 202,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/repo/run_final_task_checks.ps1",
+      "path": "tools/repo/report_pipeline_learning.ps1",
       "lines": 192,
       "extension": ".ps1",
       "large": false
@@ -143,12 +149,6 @@
     {
       "path": "tools/tasks/grouped_task_handoff.ps1",
       "lines": 185,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/repo/task_flow_audit.ps1",
-      "lines": 184,
       "extension": ".ps1",
       "large": false
     },
@@ -177,6 +177,12 @@
       "large": false
     },
     {
+      "path": "tools/repo/finalize_changed_files_commit_push.ps1",
+      "lines": 159,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/pipeline/tool_error_log.ps1",
       "lines": 154,
       "extension": ".ps1",
@@ -185,12 +191,6 @@
     {
       "path": "tools/pipeline/resolve_workspace_root.ps1",
       "lines": 151,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/repo/finalize_changed_files_commit_push.ps1",
-      "lines": 150,
       "extension": ".ps1",
       "large": false
     },
@@ -339,6 +339,12 @@
       "large": false
     },
     {
+      "path": "tools/repo/finalize_task_check_commit_push.ps1",
+      "lines": 76,
+      "extension": ".ps1",
+      "large": false
+    },
+    {
       "path": "tools/text/normalize_text_files.ps1",
       "lines": 75,
       "extension": ".ps1",
@@ -365,12 +371,6 @@
     {
       "path": "tools/quality/run_quality_gate_contract.ps1",
       "lines": 69,
-      "extension": ".ps1",
-      "large": false
-    },
-    {
-      "path": "tools/repo/finalize_task_check_commit_push.ps1",
-      "lines": 67,
       "extension": ".ps1",
       "large": false
     },

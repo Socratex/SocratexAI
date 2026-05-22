@@ -3,7 +3,9 @@ param(
 	[string]$ProjectRoot = "",
 	[string]$ChangelogPath = "",
 	[switch]$Complex,
-	[switch]$NoChangelog
+	[switch]$NoChangelog,
+	[switch]$RequireClosureEvidence,
+	[string]$ClosureEvidencePath = ""
 )
 
 Set-StrictMode -Version Latest
@@ -159,6 +161,70 @@ function Test-ComplexTaskShape {
 	return $false
 }
 
+function Test-NonEmptyEvidenceValue {
+	param(
+		[object]$Evidence,
+		[string]$PropertyName
+	)
+
+	if (-not ($Evidence.PSObject.Properties.Name -contains $PropertyName)) {
+		return $false
+	}
+	$value = $Evidence.$PropertyName
+	if ($null -eq $value) {
+		return $false
+	}
+	if ($value -is [string]) {
+		return -not [string]::IsNullOrWhiteSpace($value)
+	}
+	if ($value -is [System.Collections.IEnumerable]) {
+		return @($value).Count -gt 0
+	}
+	return $true
+}
+
+function Test-ClosureEvidence {
+	param(
+		[string]$Path,
+		[bool]$IsComplex
+	)
+
+	if ([string]::IsNullOrWhiteSpace($Path)) {
+		throw "Closure evidence is required. Pass -ClosureEvidencePath <json>."
+	}
+	if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
+		throw "Closure evidence file not found: $Path"
+	}
+
+	$evidence = Get-Content -Raw -LiteralPath $Path -Encoding UTF8 | ConvertFrom-Json
+	$required = @(
+		"context_route",
+		"flow_execution",
+		"closure_evidence",
+		"changelog_truth",
+		"tool_failure_response",
+		"tool_discipline"
+	)
+	foreach ($name in $required) {
+		if (-not (Test-NonEmptyEvidenceValue -Evidence $evidence -PropertyName $name)) {
+			throw "Closure evidence is missing or empty: $name"
+		}
+	}
+
+	if (-not ($evidence.closure_evidence.PSObject.Properties.Name -contains "changed_files") -or @($evidence.closure_evidence.changed_files).Count -eq 0) {
+		throw "Closure evidence must include closure_evidence.changed_files."
+	}
+	if (-not ($evidence.closure_evidence.PSObject.Properties.Name -contains "verification_commands") -or @($evidence.closure_evidence.verification_commands).Count -eq 0) {
+		throw "Closure evidence must include closure_evidence.verification_commands."
+	}
+	if ($IsComplex -and -not (Test-NonEmptyEvidenceValue -Evidence $evidence -PropertyName "adversarial_review")) {
+		throw "Complex task closure evidence must include adversarial_review."
+	}
+
+	Write-Host ""
+	Write-Host "OK: closure evidence file satisfies task-flow audit contract: $Path"
+}
+
 Push-Location -LiteralPath $repoRoot
 try {
 	$changedPaths = @(Get-ChangedPaths)
@@ -205,6 +271,10 @@ try {
 		Write-Host "- Check whether the diff actually implements the claim, not just the intended direction."
 		Write-Host "- Check for missing verification, hidden scope expansion, tool bypass, stale plan/state, and future retrofit debt."
 		Write-Host "- Report one concise pass/fail/risk result in closure."
+	}
+
+	if ($RequireClosureEvidence) {
+		Test-ClosureEvidence -Path $ClosureEvidencePath -IsComplex $isComplex
 	}
 } finally {
 	Pop-Location

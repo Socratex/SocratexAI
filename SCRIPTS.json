@@ -512,9 +512,11 @@
                     "-StrictAudit",
                     "-NoPush",
                     "-NoAudit",
-                    "-AllowPreStaged"
+                    "-AllowPreStaged",
+                    "-RequireTaskFlowEvidence",
+                    "-TaskFlowEvidencePath"
                 ],
-                "rule": "Use for normal task closure when changed files should be committed and pushed. It delegates to finalize_changed_files_commit_push.ps1 with quality enabled."
+                "rule": "Use for normal task closure when changed files should be committed and pushed. It delegates to finalize_changed_files_commit_push.ps1 with quality enabled. Pass -RequireTaskFlowEvidence with -TaskFlowEvidencePath to hard-gate closure on artifact evidence JSON."
             },
             "output": {
                 "success": "Checks pass, intentional paths are committed, push runs unless disabled, and final repository state is reported.",
@@ -540,9 +542,11 @@
                     "-StrictAudit",
                     "-NoAudit",
                     "-NoPush",
-                    "-AllowPreStaged"
+                    "-AllowPreStaged",
+                    "-RequireTaskFlowEvidence",
+                    "-TaskFlowEvidencePath"
                 ],
-                "rule": "Runs quality by default; pass -NoQuality only for an explicitly degraded no-quality closure."
+                "rule": "Runs quality by default; pass -NoQuality only for an explicitly degraded no-quality closure. Pass -RequireTaskFlowEvidence with -TaskFlowEvidencePath to hard-gate closure on artifact evidence JSON."
             },
             "output": {
                 "success": "Runs final checks, stages git-derived non-local-artifact paths, commits, pushes unless disabled, and reports remaining status.",
@@ -564,9 +568,11 @@
                     "-NoNormalize",
                     "-NoDocCache",
                     "-NoOutput",
-                    "-NoSound"
+                    "-NoSound",
+                    "-RequireTaskFlowEvidence",
+                    "-TaskFlowEvidencePath"
                 ],
-                "rule": "Use directly for debugging or no-commit checks. Commit finalizers should call it with -Quality unless closure is intentionally degraded."
+                "rule": "Use directly for debugging or no-commit checks. Commit finalizers should call it with -Quality unless closure is intentionally degraded. Pass -RequireTaskFlowEvidence with -TaskFlowEvidencePath when a machine-readable closure artifact must be validated."
             },
             "output": {
                 "success": "Refreshes/checks closure artifacts and exits 0 after OK.",
@@ -831,13 +837,15 @@
                     "-ProjectRoot",
                     "-ChangelogPath",
                     "-Complex",
-                    "-NoChangelog"
+                    "-NoChangelog",
+                    "-RequireClosureEvidence",
+                    "-ClosureEvidencePath"
                 ],
-                "rule": "Run near task closure after changes exist; pass -ProjectRoot when invoking the managed package copy from a child-project wrapper; pass -Complex for explicitly high-risk tasks when the heuristic is insufficient."
+                "rule": "Run near task closure after changes exist; pass -ProjectRoot when invoking the managed package copy from a child-project wrapper; pass -Complex for explicitly high-risk tasks when the heuristic is insufficient. Pass -RequireClosureEvidence with -ClosureEvidencePath to validate artifact evidence JSON."
             },
             "output": {
-                "success": "Exits 0 and prints required closure artifacts, latest changelog evidence when present, and complex-task adversarial review prompts when applicable.",
-                "failure": "Throws when git or changelog parsing fails."
+                "success": "Exits 0 and prints required closure artifacts, latest changelog evidence when present, complex-task adversarial review prompts when applicable, and validates closure evidence when required.",
+                "failure": "Throws when git or changelog parsing fails, required evidence is missing, or evidence lacks required closure fields."
             }
         },
         "update_code_line_index.ps1": {

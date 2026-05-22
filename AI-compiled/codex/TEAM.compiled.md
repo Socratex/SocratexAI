@@ -1,6 +1,6 @@
 # Compiled Team Role Lenses
 
-Generated: source-acf437e3d2d1
+Generated: source-6cbc48370a77
 
 Team files are on-demand decision lenses. Load only when the user names a role, asks for team-style review, or WORKFLOW.json routes the task to that role.
 

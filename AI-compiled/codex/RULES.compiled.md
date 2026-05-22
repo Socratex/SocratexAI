@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-acf437e3d2d1
+Generated: source-6cbc48370a77
 
 ## Source of Truth
 
@@ -6147,7 +6147,7 @@ Draft placeholder:
                 ]
             },
             "task_flow_audit_closure": {
-                "summary": "Artifact-based task closure asks agents to prove the selected flow was executed with concrete artifacts, and adds a short changelog-driven adversarial review for complex or high-risk diffs.",
+                "summary": "Artifact-based task closure asks agents to prove the selected flow was executed with concrete artifacts, supports machine-readable closure evidence gating, and adds a short changelog-driven adversarial review for complex or high-risk diffs.",
                 "required_paths": [
                     "core/AGENT-CONTRACT.json",
                     "project/code/WORKFLOW.json",
@@ -6163,6 +6163,7 @@ Draft placeholder:
                 "required_scripts": [
                     "task_flow_audit.ps1",
                     "run_final_task_checks.ps1",
+                    "finalize_changed_files_commit_push.ps1",
                     "finalize_task_check_commit_push.ps1",
                     "check_pipeline_feature_contracts.ps1",
                     "rebuild_ai_compiled_context.ps1"
@@ -6171,6 +6172,7 @@ Draft placeholder:
                     "SCRIPTS": [
                         "task_flow_audit.ps1",
                         "run_final_task_checks.ps1",
+                        "finalize_changed_files_commit_push.ps1",
                         "finalize_task_check_commit_push.ps1",
                         "check_pipeline_feature_contracts.ps1",
                         "rebuild_ai_compiled_context.ps1"
@@ -6192,6 +6194,7 @@ Draft placeholder:
                     "When an installed child-project wrapper calls the managed package copy, pass `-ProjectRoot` so the audit reads the child repository diff and changelog instead of the embedded SocratexAI package.",
                     "For complex or high-risk work, run the adversarial review from the changelog append: read what the changelog claims changed, then test the diff and verification against that claim.",
                     "Keep tiny obvious fixes lightweight: they still answer the core artifacts, but they do not need the complex adversarial section unless the heuristic or agent flags risk.",
+                    "Use `-RequireClosureEvidence` or finalizer `-RequireTaskFlowEvidence` when a closure must fail without machine-readable evidence fields.",
                     "Update source and profile FLOWS through subroutines, then sync managed package children so installed projects inherit the rule."
                 ],
                 "verification_commands": [

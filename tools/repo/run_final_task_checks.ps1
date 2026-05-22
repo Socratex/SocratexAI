@@ -7,7 +7,9 @@ param(
 	[switch]$NoNormalize,
 	[switch]$NoDocCache,
 	[switch]$NoOutput,
-	[switch]$NoSound
+	[switch]$NoSound,
+	[switch]$RequireTaskFlowEvidence,
+	[string]$TaskFlowEvidencePath = ""
 )
 
 Set-StrictMode -Version Latest
@@ -120,13 +122,21 @@ try {
 	}
 
 	if (Test-Path -LiteralPath $taskFlowAuditScript) {
-		Invoke-RepoCommand -Label "task flow audit" -Command "powershell" -Arguments @(
+		$taskFlowAuditArgs = @(
 			"-NoProfile",
 			"-ExecutionPolicy",
 			"Bypass",
 			"-File",
 			$taskFlowAuditScript
 		)
+		if ($RequireTaskFlowEvidence) {
+			$taskFlowAuditArgs += "-RequireClosureEvidence"
+			if (-not [string]::IsNullOrWhiteSpace($TaskFlowEvidencePath)) {
+				$taskFlowAuditArgs += "-ClosureEvidencePath"
+				$taskFlowAuditArgs += $TaskFlowEvidencePath
+			}
+		}
+		Invoke-RepoCommand -Label "task flow audit" -Command "powershell" -Arguments $taskFlowAuditArgs
 	}
 
 	if ((Test-Path -LiteralPath ".git") -and (Test-Path -LiteralPath $pipelineFeatureListCheckScript)) {

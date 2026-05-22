@@ -7,7 +7,9 @@ param(
 	[switch]$StrictAudit,
 	[switch]$NoAudit,
 	[switch]$NoPush,
-	[switch]$AllowPreStaged
+	[switch]$AllowPreStaged,
+	[switch]$RequireTaskFlowEvidence,
+	[string]$TaskFlowEvidencePath = ""
 )
 
 Set-StrictMode -Version Latest
@@ -108,6 +110,13 @@ try {
 	}
 	if ($NoAudit) {
 		$finishArgs += "-NoAudit"
+	}
+	if ($RequireTaskFlowEvidence) {
+		$finishArgs += "-RequireTaskFlowEvidence"
+		if (-not [string]::IsNullOrWhiteSpace($TaskFlowEvidencePath)) {
+			$finishArgs += "-TaskFlowEvidencePath"
+			$finishArgs += $TaskFlowEvidencePath
+		}
 	}
 	& powershell @finishArgs
 	if ($LASTEXITCODE -ne 0) {
