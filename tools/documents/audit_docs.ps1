@@ -181,6 +181,76 @@ function Test-CanonicalListDocument {
     }
 }
 
+function ConvertTo-ChangelogDate {
+	param(
+		[string]$DateText,
+		[string]$RelativePath,
+		[int]$Index
+	)
+
+	if ([string]::IsNullOrWhiteSpace($DateText)) {
+		Add-Error "$RelativePath content.entries[$Index] is missing date."
+		return $null
+	}
+
+	$parsed = [datetime]::MinValue
+	foreach ($format in @("yyyy-MM-dd HH:mm", "yyyy-MM-dd")) {
+		if ([datetime]::TryParseExact(
+			$DateText,
+			$format,
+			[System.Globalization.CultureInfo]::InvariantCulture,
+			[System.Globalization.DateTimeStyles]::None,
+			[ref]$parsed
+		)) {
+			return $parsed
+		}
+	}
+
+	Add-Error "$RelativePath content.entries[$Index] has invalid date format: $DateText"
+	return $null
+}
+
+function Test-JsonChangelogOldestFirst {
+	param([string]$RelativePath)
+
+	$path = Join-Path $repoRoot $RelativePath
+	if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+		Add-Error "Missing changelog file: $RelativePath"
+		return
+	}
+
+	try {
+		$document = Get-Content -Raw -LiteralPath $path -Encoding UTF8 | ConvertFrom-Json
+	} catch {
+		Add-Error "Failed to parse changelog ${RelativePath}: $($_.Exception.Message)"
+		return
+	}
+
+	$changelog = $document
+	if ($document.PSObject.Properties.Name.Contains("content") -and $null -ne $document.content) {
+		$changelog = $document.content
+	}
+	if (-not $changelog.PSObject.Properties.Name.Contains("entries")) {
+		Add-Error "$RelativePath must contain content.entries."
+		return
+	}
+
+	$previous = $null
+	$entries = @($changelog.entries)
+	for ($index = 0; $index -lt $entries.Count; $index += 1) {
+		$entry = $entries[$index]
+		$dateText = if ($entry.PSObject.Properties.Name.Contains("date")) { [string]$entry.date } else { "" }
+		$current = ConvertTo-ChangelogDate -DateText $dateText -RelativePath $RelativePath -Index $index
+		if ($null -eq $current) {
+			continue
+		}
+		if ($null -ne $previous -and $current -lt $previous) {
+			Add-Error "$RelativePath content.entries must be sorted oldest-first by date; entry $index ($dateText) is older than the previous entry."
+		}
+		$previous = $current
+	}
+}
+
 function ConvertTo-RepoRelativePath {
     param([string]$Path)
 
@@ -391,6 +461,8 @@ try {
     Test-ContainsText -Text (Get-RepoText -RelativePath "templates/SOCRATEX.md") -Needle "REMOVAL-PROTOCOL.json" -Label "templates/SOCRATEX.md"
     Test-ContainsText -Text (Get-RepoText -RelativePath "VERSION") -Needle "0.2.0-alpha" -Label "VERSION"
     Test-ContainsText -Text (Get-RepoText -RelativePath "CHANGELOG.json") -Needle "0.2.0-alpha" -Label "CHANGELOG.json"
+    Test-CanonicalListDocument -RelativePath "CHANGELOG.json" -RequiredContentKeys @("summary", "entries")
+    Test-JsonChangelogOldestFirst -RelativePath "CHANGELOG.json"
     Test-ContainsText -Text (Get-RepoText -RelativePath "LICENSE") -Needle "MIT License" -Label "LICENSE"
     Test-ContainsText -Text (Get-RepoText -RelativePath "QUALITY-GATE.json") -Needle "audit_docs" -Label "QUALITY-GATE.json"
     Test-CanonicalListDocument -RelativePath "QUALITY-GATE.json" -RequiredContentKeys @("summary", "commands", "notes")

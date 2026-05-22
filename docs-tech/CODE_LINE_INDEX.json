@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T21:14:59+02:00",
+  "generatedAt": "2026-05-22T21:39:20+02:00",
   "threshold": 300,
   "files": [
     {
@@ -10,7 +10,7 @@
     },
     {
       "path": "tools/documents/audit_docs.ps1",
-      "lines": 617,
+      "lines": 680,
       "extension": ".ps1",
       "large": true
     },
@@ -220,7 +220,7 @@
     },
     {
       "path": "tools/repo/add_changelog_entry.ps1",
-      "lines": 113,
+      "lines": 125,
       "extension": ".ps1",
       "large": false
     },

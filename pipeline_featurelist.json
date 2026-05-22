@@ -6370,6 +6370,7 @@
                     "templates/team/technical.json",
                     "templates/workspace.json",
                     "tools/codebase/check_project_design_context_gate.ps1",
+                    "tools/documents/audit_docs.ps1",
                     "tools/documents/audit_json_docs.py",
                     "tools/documents/document_read_cache_engine.py",
                     "tools/knowledge/project_design_context.ps1",
@@ -6432,6 +6433,7 @@
                     "Keep JSON-FORMAT-CONTRACT.json mirrored into installed SocratexAI packages because source feature contracts validate it inside child pipeline roots.",
                     "Keep setup/import writers canonical-aware so initialized child projects do not downgrade PIPELINE-CONFIG.json back to a direct schema.",
                     "Keep changelog, workspace, task-work, and design-context readers compatible with both canonical and older direct documents during migration.",
+                    "Keep source CHANGELOG.json sorted oldest-first and enforce that convention in audit_docs.ps1 and add_changelog_entry.ps1.",
                     "Keep document cache and JSON audit exclusions aligned with JSON-FORMAT-CONTRACT generated/runtime exclusions.",
                     "Run JSON audit, document audit, check_task -Audit, and quality gate before publishing or syncing to child projects.",
                     "Keep generated package manifests such as PIPELINE-PACKAGE.json listed as explicit direct-schema exceptions instead of forcing operational manifests into prose/document shape."

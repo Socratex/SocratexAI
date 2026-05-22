@@ -16,6 +16,9 @@ $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 function Get-ChangelogDate {
 	param([string]$DateText)
 
+	if ($DateText -match '^\d{4}-\d{2}-\d{2}$') {
+		return [datetime]::ParseExact($DateText, "yyyy-MM-dd", [System.Globalization.CultureInfo]::InvariantCulture)
+	}
 	return [datetime]::ParseExact($DateText, "yyyy-MM-dd HH:mm", [System.Globalization.CultureInfo]::InvariantCulture)
 }
 
@@ -62,6 +65,15 @@ function Add-JsonChangelogEntry {
 	}
 
 	$entries = @($changelog.entries)
+	if ($entries.Count -gt 0) {
+		$lastEntry = $entries[$entries.Count - 1]
+		if ($lastEntry.PSObject.Properties.Name.Contains("date") -and -not [string]::IsNullOrWhiteSpace([string]$lastEntry.date)) {
+			$lastDate = Get-ChangelogDate -DateText ([string]$lastEntry.date)
+			if ($EntryDate.Date -lt $lastDate.Date) {
+				throw "Refusing to append an older JSON changelog date. Last entry is $($lastDate.ToString("yyyy-MM-dd")); requested $($EntryDate.ToString("yyyy-MM-dd"))."
+			}
+		}
+	}
 	$entries += [pscustomobject]@{
 		version = $EntryVersion
 		date = $EntryDate.ToString("yyyy-MM-dd")
