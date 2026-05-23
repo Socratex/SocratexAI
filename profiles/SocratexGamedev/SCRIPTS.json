@@ -145,7 +145,8 @@
         "pipeline_bootstrap_index.py",
         "utf8_file_helpers.py",
         "json_node_edit.py",
-        "gdscript_comment_contract_check.py"
+        "gdscript_comment_contract_check.py",
+        "check_godot_scripts.py"
     ],
     "content": {
         "audit_docs.ps1": {
@@ -1705,6 +1706,26 @@
             "output": {
                 "success": "Markdown-like report or JSON with counts, paths, rollout groups, and optional audit file.",
                 "failure": "Non-zero only in strict modes when required comments are missing or input path is invalid."
+            }
+        },
+        "check_godot_scripts.py": {
+            "path": "Tools/gamedev/check_godot_scripts.py",
+            "category": "Gamedev",
+            "description": "Pythonowy GDScript load/parse checker przez Godot script_load_smoke harness.",
+            "benefit": "Szybko sprawdza ładowanie skryptów bez PowerShell i bez bezpośredniego uruchamiania domain scripts jako main.",
+            "input": {
+                "required": [
+                    "--scripts <paths>"
+                ],
+                "optional": [
+                    "positional paths",
+                    "comma-separated path lists"
+                ],
+                "rule": "Akceptuje res://, Game/... oraz lokalne ścieżki .gd; normalizuje je do res:// i przekazuje do script_load_smoke.gd."
+            },
+            "output": {
+                "success": "Exit 0 po poprawnym załadowaniu wskazanych skryptów przez Godot smoke harness.",
+                "failure": "Exit non-zero przy braku wejścia, błędzie normalizacji albo błędzie Godot smoke."
             }
         }
     },
