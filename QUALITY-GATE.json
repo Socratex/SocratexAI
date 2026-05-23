@@ -7,25 +7,25 @@
     "content": {
         "summary": "SocratexPipeline self-check quality gate.",
         "commands": {
-            "powershell_parse": {
+            "python_compile": {
                 "description": "Compile all Python repository tooling that is part of the Python-first path.",
-                "command": "python -m py_compile tools/pipeline/python_runtime.py tools/pipeline/pipeline_package.py tools/pipeline/pipeline_sweep.py tools/pipeline/sync_managed_pipeline_package.py tools/pipeline/update_pipeline_from_link.py tools/repo/check_pipeline_feature_contracts.py tools/repo/sync_pipeline_featurelist.py tools/documents/audit_docs.py tools/knowledge/knowledge_tier_check.py tools/quality/check_runtime.py"
+                "command": "python -B tools/quality/check_python_syntax.py tools/pipeline/python_runtime.py tools/pipeline/pipeline_package.py tools/pipeline/pipeline_sweep.py tools/pipeline/sync_managed_pipeline_package.py tools/pipeline/update_pipeline_from_link.py tools/repo/check_pipeline_feature_contracts.py tools/repo/sync_pipeline_featurelist.py tools/repo/check_sensitive_reference_leaks.py tools/documents/audit_docs.py tools/knowledge/knowledge_tier_check.py tools/quality/check_runtime.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/quality/run_quality_gate_contract.py"
             },
             "audit_docs": {
                 "description": "Run SocratexPipeline Python document audit.",
-                "command": "python tools/documents/audit_docs.py --repo-root ."
+                "command": "python -B tools/documents/audit_docs.py --repo-root ."
             },
             "eval_framework": {
                 "description": "Check manual eval framework structure and internal links.",
-                "command": "pwsh -NoLogo -NoProfile -File tools/quality/check_evals.ps1"
+                "command": "python -B tools/quality/check_evals.py --repo-root ."
             },
             "sensitive_reference_smoke": {
                 "description": "Check that private project, domain, and identity references have not leaked into the source pipeline.",
-                "command": "pwsh -NoLogo -NoProfile -File tools/repo/check_sensitive_reference_leaks.ps1"
+                "command": "python -B tools/repo/check_sensitive_reference_leaks.py --repo-root ."
             },
             "transactional_doc_tools": {
                 "description": "Check Python JSON document tooling and feature-contract coverage.",
-                "command": "python tools/json/json_list_doc.py read SCRIPTS.json && python tools/repo/check_pipeline_feature_contracts.py"
+                "command": "python -B tools/json/json_list_doc.py read SCRIPTS.json && python -B tools/repo/check_pipeline_feature_contracts.py"
             },
             "init_dry_run": {
                 "description": "Smoke-test code project initialization without writing files.",
@@ -41,6 +41,6 @@
         "schema": "socratex-list-document/v1",
         "title": "Quality Gate",
         "role": "Source pipeline smoke and self-check command contract.",
-        "compatibility": "tools/quality/run_quality_gate_contract.ps1 also accepts the legacy root commands shape as migration input."
+        "compatibility": "tools/quality/run_quality_gate_contract.py accepts the legacy root commands shape as migration input; the PowerShell runner remains a temporary compatibility wrapper during retirement."
     }
 }

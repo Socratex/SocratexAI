@@ -466,10 +466,10 @@
           "ref": "content.notes",
           "status": ""
         },
-        "powershell_parse": {
-          "path": "commands.powershell_parse",
-          "title": "powershell_parse",
-          "ref": "commands.powershell_parse",
+        "python_compile": {
+          "path": "commands.python_compile",
+          "title": "python_compile",
+          "ref": "commands.python_compile",
           "status": ""
         },
         "audit_docs": {
@@ -521,10 +521,13 @@
         "check_ai_compiled_context.ps1",
         "check_ai_compiled_context.py",
         "check_evals.ps1",
+        "check_evals.py",
         "check_pipeline_featurelist_update.ps1",
         "check_pipeline_feature_contracts.ps1",
         "check_pipeline_feature_contracts.py",
         "check_sensitive_reference_leaks.ps1",
+        "check_sensitive_reference_leaks.py",
+        "check_python_syntax.py",
         "check_runtime.py",
         "script_runtime_gate.py",
         "python_runtime.py",
@@ -627,6 +630,7 @@
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
         "run_quality_gate_contract.ps1",
+        "run_quality_gate_contract.py",
         "set_directives.ps1",
         "sync_pipeline_featurelist.ps1",
         "sync_pipeline_featurelist.py",
@@ -701,6 +705,12 @@
           "ref": "content.check_evals.ps1",
           "status": ""
         },
+        "check_evals.py": {
+          "path": "content.check_evals.py",
+          "title": "",
+          "ref": "content.check_evals.py",
+          "status": ""
+        },
         "check_pipeline_featurelist_update.ps1": {
           "path": "content.check_pipeline_featurelist_update.ps1",
           "title": "",
@@ -723,6 +733,18 @@
           "path": "content.check_sensitive_reference_leaks.ps1",
           "title": "",
           "ref": "content.check_sensitive_reference_leaks.ps1",
+          "status": ""
+        },
+        "check_sensitive_reference_leaks.py": {
+          "path": "content.check_sensitive_reference_leaks.py",
+          "title": "",
+          "ref": "content.check_sensitive_reference_leaks.py",
+          "status": ""
+        },
+        "check_python_syntax.py": {
+          "path": "content.check_python_syntax.py",
+          "title": "",
+          "ref": "content.check_python_syntax.py",
           "status": ""
         },
         "check_runtime.py": {
@@ -1335,6 +1357,12 @@
           "path": "content.run_quality_gate_contract.ps1",
           "title": "",
           "ref": "content.run_quality_gate_contract.ps1",
+          "status": ""
+        },
+        "run_quality_gate_contract.py": {
+          "path": "content.run_quality_gate_contract.py",
+          "title": "",
+          "ref": "content.run_quality_gate_contract.py",
           "status": ""
         },
         "set_directives.ps1": {

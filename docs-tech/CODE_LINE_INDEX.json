@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-23T13:15:08+02:00",
+  "generatedAt": "2026-05-23T14:35:41+02:00",
   "threshold": 300,
   "files": [
     {
@@ -267,6 +267,12 @@
       "large": false
     },
     {
+      "path": "tools/quality/check_evals.py",
+      "lines": 116,
+      "extension": ".py",
+      "large": false
+    },
+    {
       "path": "tools/codebase/check_project_design_context_gate.ps1",
       "lines": 110,
       "extension": ".ps1",
@@ -405,6 +411,12 @@
       "large": false
     },
     {
+      "path": "tools/quality/run_quality_gate_contract.py",
+      "lines": 77,
+      "extension": ".py",
+      "large": false
+    },
+    {
       "path": "tools/quality/run_quality_gate_contract.ps1",
       "lines": 75,
       "extension": ".ps1",
@@ -414,6 +426,12 @@
       "path": "tools/diagnostics/console_summary.ps1",
       "lines": 73,
       "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/repo/check_sensitive_reference_leaks.py",
+      "lines": 73,
+      "extension": ".py",
       "large": false
     },
     {
@@ -618,6 +636,12 @@
       "path": "tools/json/json_read.ps1",
       "lines": 32,
       "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/quality/check_python_syntax.py",
+      "lines": 32,
+      "extension": ".py",
       "large": false
     },
     {

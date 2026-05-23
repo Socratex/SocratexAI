@@ -23,6 +23,7 @@
             "canonical_done_finalizer",
             "toolchain_doctor",
             "generic_multi_stack_quality_gate",
+            "python_quality_gate_contract_runner",
             "pipeline_update_and_removal_protocols",
             "pipeline_update_artifact_sync",
             "pipeline_source_text_normalization",
@@ -1053,6 +1054,52 @@
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
                 "known_failure_if_missing": "If 'generic_multi_stack_quality_gate' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+            },
+            "python_quality_gate_contract_runner": {
+                "summary": "Python-first quality gate contract runner executes QUALITY-GATE.json and ports eval plus sensitive-reference checks off the retired command runtime.",
+                "required_paths": [
+                    "pipeline_featurelist.json",
+                    "SCRIPTS.json",
+                    "QUALITY-GATE.json",
+                    "tools/quality/run_quality_gate_contract.py",
+                    "tools/quality/check_evals.py",
+                    "tools/quality/check_python_syntax.py",
+                    "tools/repo/check_sensitive_reference_leaks.py"
+                ],
+                "required_scripts": [
+                    "run_quality_gate_contract.py",
+                    "check_evals.py",
+                    "check_python_syntax.py",
+                    "check_sensitive_reference_leaks.py",
+                    "check_pipeline_feature_contracts.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "run_quality_gate_contract.py",
+                        "check_evals.py",
+                        "check_python_syntax.py",
+                        "check_sensitive_reference_leaks.py",
+                        "check_pipeline_feature_contracts.py"
+                    ]
+                },
+                "required_docs": [
+                    "SCRIPTS.json",
+                    "QUALITY-GATE.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep QUALITY-GATE.json executable by the Python runner without invoking the retired command runtime for Python-first checks.",
+                    "Keep the eval framework and sensitive-reference smoke checks behaviorally equivalent to their legacy wrappers until the wrappers are deleted.",
+                    "Compile and run the Python runner plus focused command subsets before promoting the quality-gate path.",
+                    "Sync the managed package so installed child projects receive the Python runner and checker entries."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py",
+                    "python3 -B tools/quality/run_quality_gate_contract.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
+                ],
+                "known_failure_if_missing": "QUALITY-GATE.json remains dependent on the retired command runtime even when individual Python checks exist, so Pass 0S cannot close without preserving source and child smoke coverage."
             },
             "pipeline_update_and_removal_protocols": {
                 "summary": "Pipeline Update And Removal Protocols capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
@@ -6795,7 +6842,7 @@
         "schema": "socratex-pipeline-featurelist/v4",
         "pipeline_id": "socratex_pipeline",
         "role": "source",
-        "updated_at": "2026-05-22",
+        "updated_at": "2026-05-23",
         "comparison_contract": "Use content.features for cheap source/instance comparison; use content.feature_contracts for artifact-level synchronization and promotion checks. Root index/content/metadata is the canonical JSON list-document shape.",
         "required_root_keys": [
             "index",

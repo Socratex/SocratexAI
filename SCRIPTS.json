@@ -8,10 +8,13 @@
         "check_ai_compiled_context.ps1",
         "check_ai_compiled_context.py",
         "check_evals.ps1",
+        "check_evals.py",
         "check_pipeline_featurelist_update.ps1",
         "check_pipeline_feature_contracts.ps1",
         "check_pipeline_feature_contracts.py",
         "check_sensitive_reference_leaks.ps1",
+        "check_sensitive_reference_leaks.py",
+        "check_python_syntax.py",
         "check_runtime.py",
         "script_runtime_gate.py",
         "python_runtime.py",
@@ -114,6 +117,7 @@
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
         "run_quality_gate_contract.ps1",
+        "run_quality_gate_contract.py",
         "set_directives.ps1",
         "sync_pipeline_featurelist.ps1",
         "sync_pipeline_featurelist.py",
@@ -277,6 +281,23 @@
                 "failure": "Throws when eval files are missing, invalid JSON, or internally inconsistent."
             }
         },
+        "check_evals.py": {
+            "path": "tools/quality/check_evals.py",
+            "category": "quality",
+            "description": "Python-first checker for manual eval framework files, prompt scenarios, personas, expected behaviors, scoring docs, and result JSONs.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--eval-dir"
+                ],
+                "rule": "Run from the repository root or pass --repo-root. Use --eval-dir only when checking a nonstandard eval directory."
+            },
+            "output": {
+                "success": "Prints OK when required eval files parse and scenario references are consistent.",
+                "failure": "Exits nonzero when eval files are missing, invalid JSON, or internally inconsistent."
+            }
+        },
         "check_pipeline_featurelist_update.ps1": {
             "path": "tools/repo/check_pipeline_featurelist_update.ps1",
             "category": "repo",
@@ -339,6 +360,41 @@
             "output": {
                 "success": "Exits 0 when no blocked private references are found.",
                 "failure": "Exits nonzero and prints file, line, rule, and matched text for every blocked reference up to MaxFindings."
+            }
+        },
+        "check_sensitive_reference_leaks.py": {
+            "path": "tools/repo/check_sensitive_reference_leaks.py",
+            "category": "repo",
+            "description": "Python-first smoke-test for private project, private domain, and private identity references before publication or pipeline sync.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--max-findings"
+                ],
+                "rule": "Run without arguments from the source pipeline repository; pass --repo-root only when checking another checkout."
+            },
+            "output": {
+                "success": "Exits 0 when no blocked private references are found.",
+                "failure": "Exits nonzero and prints file, line, rule, and matched text for every blocked reference up to max findings."
+            }
+        },
+        "check_python_syntax.py": {
+            "path": "tools/quality/check_python_syntax.py",
+            "category": "quality",
+            "description": "Check Python source syntax in memory without writing bytecode cache files.",
+            "input": {
+                "required": [
+                    "paths"
+                ],
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Use this instead of py_compile for Python-first quality gates that must not create __pycache__ artifacts."
+            },
+            "output": {
+                "success": "Prints OK with the number of checked Python files.",
+                "failure": "Exits nonzero when a source file is missing or cannot compile."
             }
         },
         "check_runtime.py": {
@@ -2456,6 +2512,24 @@
                 "failure": "Throws when the contract is missing, a command key is unknown, command text is empty, or any selected command exits nonzero."
             }
         },
+        "run_quality_gate_contract.py": {
+            "path": "tools/quality/run_quality_gate_contract.py",
+            "category": "quality",
+            "description": "Python-first executor for the repository QUALITY-GATE.json command contract.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--path",
+                    "--repo-root",
+                    "--command-names"
+                ],
+                "rule": "Run without arguments from the repository root to execute QUALITY-GATE.json. Pass --command-names with comma-separated or repeated keys to run a focused subset."
+            },
+            "output": {
+                "success": "Runs every selected quality-gate command and exits 0 after printing OK.",
+                "failure": "Exits nonzero when the contract is missing, a command key is unknown, command text is empty, or any selected command exits nonzero."
+            }
+        },
         "set_directives.ps1": {
             "path": "tools/pipeline/set_directives.ps1",
             "category": "pipeline",
@@ -2910,6 +2984,7 @@
                 "check_pipeline_feature_contracts.py",
                 "sync_pipeline_featurelist.py",
                 "check_sensitive_reference_leaks.ps1",
+                "check_sensitive_reference_leaks.py",
                 "check_task.ps1",
                 "check_toolchain_health.ps1",
                 "legacy_commit_task_compatibility_wrapper.ps1",
@@ -2972,10 +3047,13 @@
             ],
             "quality": [
                 "check_evals.ps1",
+                "check_evals.py",
+                "check_python_syntax.py",
                 "check_runtime.py",
                 "run_quality_fix.ps1",
                 "run_quality_gate.ps1",
-                "run_quality_gate_contract.ps1"
+                "run_quality_gate_contract.ps1",
+                "run_quality_gate_contract.py"
             ],
             "diagnostics": [
                 "console_summary.ps1",
