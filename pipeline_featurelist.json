@@ -775,12 +775,14 @@
                     "tools/quality",
                     "QUALITY-GATE.json",
                     "project/code/GIT.json",
+                    "tools/repo/finalize_changed_files_commit_push.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],
                 "required_scripts": [
                     "finalize_task_check_commit_push.ps1",
                     "finalize_changed_files_commit_push.ps1",
+                    "finalize_changed_files_commit_push.py",
                     "run_final_task_checks.ps1",
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
@@ -839,6 +841,7 @@
                 "required_scripts": [
                     "finalize_task_check_commit_push.ps1",
                     "finalize_changed_files_commit_push.ps1",
+                    "finalize_changed_files_commit_push.py",
                     "run_final_task_checks.ps1",
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
@@ -876,6 +879,8 @@
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/repo/finalize_changed_files_commit_push.py tools/repo/run_final_task_checks.py",
+                    "python3 -B tools/repo/finalize_changed_files_commit_push.py --help",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
@@ -1068,6 +1073,7 @@
                     "tools/quality/check_evals.py",
                     "tools/quality/check_python_syntax.py",
                     "tools/repo/run_final_task_checks.py",
+                    "tools/repo/finalize_changed_files_commit_push.py",
                     "tools/repo/run_final_task_checks.ps1",
                     "tools/repo/check_sensitive_reference_leaks.py"
                 ],
@@ -1075,6 +1081,7 @@
                     "run_quality_gate_contract.py",
                     "run_quality_gate.py",
                     "run_final_task_checks.py",
+                    "finalize_changed_files_commit_push.py",
                     "check_evals.py",
                     "check_python_syntax.py",
                     "check_sensitive_reference_leaks.py",
@@ -1085,6 +1092,7 @@
                         "run_quality_gate_contract.py",
                         "run_quality_gate.py",
                         "run_final_task_checks.py",
+                        "finalize_changed_files_commit_push.py",
                         "check_evals.py",
                         "check_python_syntax.py",
                         "check_sensitive_reference_leaks.py",
@@ -1100,17 +1108,17 @@
                 "promotion_checklist": [
                     "Keep QUALITY-GATE.json executable by the Python runner without invoking the retired command runtime for Python-first checks.",
                     "Keep source finalizer quality execution pointed at run_quality_gate.py while the broader finalizer itself is being ported.",
-                    "Keep run_final_task_checks.py check-only until Python generators replace all refresh steps; do not claim it is the full committing finalizer path.",
+                    "Keep run_final_task_checks.py check-only until Python generators replace all refresh steps; use finalize_changed_files_commit_push.py only for Python commit/push orchestration around the current Python-backed checks.",
                     "Keep the eval framework and sensitive-reference smoke checks behaviorally equivalent to their legacy wrappers until the wrappers are deleted.",
                     "Compile and run the Python runner plus focused command subsets before promoting the quality-gate path.",
                     "Sync the managed package so installed child projects receive the Python runner and checker entries."
                 ],
                 "verification_commands": [
-                    "python3 -B tools/quality/check_python_syntax.py tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py",
+                    "python3 -B tools/quality/check_python_syntax.py tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py tools/repo/finalize_changed_files_commit_push.py",
                     "python3 -B tools/repo/run_final_task_checks.py --quality --quality-command-names python_compile,eval_framework,sensitive_reference_smoke,transactional_doc_tools",
                     "python3 -B tools/quality/run_quality_gate.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
                     "python3 -B tools/quality/run_quality_gate_contract.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
-                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py tools/repo/run_final_task_checks.ps1 QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py tools/repo/finalize_changed_files_commit_push.py tools/repo/run_final_task_checks.ps1 QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
                 ],
                 "known_failure_if_missing": "QUALITY-GATE.json remains dependent on the retired command runtime even when individual Python checks exist, so Pass 0S cannot close without preserving source and child smoke coverage."
             },

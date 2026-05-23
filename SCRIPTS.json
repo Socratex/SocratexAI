@@ -66,6 +66,7 @@
         "finalize_task_check_commit_push.ps1",
         "end_prompt_snapshot.ps1",
         "finalize_changed_files_commit_push.ps1",
+        "finalize_changed_files_commit_push.py",
         "run_final_task_checks.ps1",
         "run_final_task_checks.py",
         "generate_embedded_config_payload.py",
@@ -1492,6 +1493,32 @@
             "output": {
                 "success": "Runs final checks, stages git-derived non-local-artifact paths, commits, pushes unless disabled, and reports remaining status.",
                 "failure": "Throws on pre-staged changes unless allowed, empty candidate set, failed checks, failed git operations, or dirty final state."
+            }
+        },
+        "finalize_changed_files_commit_push.py": {
+            "path": "tools/repo/finalize_changed_files_commit_push.py",
+            "category": "repo",
+            "description": "Python-first Git-derived changed-file finisher for source-pipeline task closure.",
+            "input": {
+                "required": [
+                    "--message"
+                ],
+                "optional": [
+                    "--repo-root",
+                    "--paths",
+                    "--no-push",
+                    "--no-quality",
+                    "--quality-command",
+                    "--quality-command-names",
+                    "--strict-audit",
+                    "--no-audit",
+                    "--allow-pre-staged"
+                ],
+                "rule": "Use during Pass 0S to close source-pipeline tasks through Python final checks, git staging, commit, and optional push."
+            },
+            "output": {
+                "success": "Runs Python-backed final checks, stages git-derived non-local-artifact paths, commits, pushes unless disabled, and reports remaining status.",
+                "failure": "Exits nonzero on pre-staged changes unless allowed, empty candidate set, failed checks, failed git operations, or dirty final state."
             }
         },
         "run_final_task_checks.ps1": {
@@ -3034,6 +3061,7 @@
                 "legacy_commit_task_compatibility_wrapper.ps1",
                 "finalize_task_check_commit_push.ps1",
                 "finalize_changed_files_commit_push.ps1",
+                "finalize_changed_files_commit_push.py",
                 "run_final_task_checks.ps1",
                 "run_final_task_checks.py",
                 "end_prompt_snapshot.ps1",
