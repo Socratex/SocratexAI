@@ -80,6 +80,7 @@
             "json_document_normalizer",
             "json_list_document_tools",
             "json_node_edit_tools",
+            "portable_json_tooling_pack",
             "json_tool_file_stdin_value_inputs",
             "script_input_output_contracts",
             "default_tool_error_hardening",
@@ -4499,6 +4500,8 @@
                     "core/AGENT-CONTRACT.json",
                     "DOCS.json",
                     "tools/documents",
+                    "tools/json",
+                    "tools/json/README.md",
                     "tools/text/normalize_json_files.ps1",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
@@ -4511,6 +4514,7 @@
                     "build_document_cache.ps1",
                     "audit_docs.ps1",
                     "json_list_doc.py",
+                    "smoke_json_tools.py",
                     "json_read.ps1",
                     "json_item_insert.ps1",
                     "json_item_set.ps1",
@@ -4530,6 +4534,7 @@
                         "build_document_cache.ps1",
                         "audit_docs.ps1",
                         "json_list_doc.py",
+                        "smoke_json_tools.py",
                         "json_read.ps1",
                         "json_item_insert.ps1",
                         "json_item_set.ps1",
@@ -4560,15 +4565,16 @@
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "python3 tools/json/smoke_json_tools.py"
                 ],
                 "known_failure_if_missing": "If 'json_list_document_tools' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "json_node_edit_tools": {
                 "summary": "Pipeline JSON manipulation scripts are active only when full-node-path tools, nested-list support, wrapper help, SCRIPTS metadata, and agent directives all require script-first structural/order-only JSON edits.",
                 "required_paths": [
-                    "tools/documents/json_node_edit.ps1",
-                    "tools/documents/json_list_doc.py",
+                    "tools/json/json_node_edit.ps1",
+                    "tools/json/json_list_doc.py",
                     "SCRIPTS.json",
                     "core/AGENT-CONTRACT.json",
                     "FLOWS.json",
@@ -4604,7 +4610,8 @@
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "python3 tools/json/smoke_json_tools.py"
                 ],
                 "known_failure_if_missing": "Agents fall back to manual JSON ordering patches or cannot target nested lists and keys containing dots safely.",
                 "usage_directives": [
@@ -4613,6 +4620,82 @@
                     "Use json_node_edit.ps1 when the full JSON node path is known; use slash-separated node paths when a segment contains dots.",
                     "Keep SCRIPTS.json input/output/help metadata current for JSON wrapper parameters, value-source rules, nested selectors, and failure behavior."
                 ]
+            },
+            "portable_json_tooling_pack": {
+                "summary": "Generic JSON manipulation helpers live in tools/json as a portable pack that can be copied between projects without the higher-level document routing/cache workflow.",
+                "required_paths": [
+                    "tools/json",
+                    "tools/json/README.md",
+                    "tools/json/json_list_doc.py",
+                    "tools/json/json_node_edit.ps1",
+                    "tools/json/json_read.ps1",
+                    "tools/json/json_item_insert.ps1",
+                    "tools/json/json_item_set.ps1",
+                    "tools/json/json_item_move.ps1",
+                    "tools/json/json_item_delete.ps1",
+                    "tools/json/json_line_insert.ps1",
+                    "tools/json/json_line_set.ps1",
+                    "tools/json/json_line_move.ps1",
+                    "tools/json/json_refresh_index.ps1",
+                    "tools/json/json_migrate_content.ps1",
+                    "tools/json/audit_json_docs.py",
+                    "tools/json/smoke_json_tools.py",
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "json_list_doc.py",
+                    "json_node_edit.ps1",
+                    "json_read.ps1",
+                    "json_item_insert.ps1",
+                    "json_item_set.ps1",
+                    "json_item_move.ps1",
+                    "json_item_delete.ps1",
+                    "json_line_insert.ps1",
+                    "json_line_set.ps1",
+                    "json_line_move.ps1",
+                    "json_refresh_index.ps1",
+                    "json_migrate_content.ps1",
+                    "audit_json_docs.py",
+                    "smoke_json_tools.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "json_list_doc.py",
+                        "json_node_edit.ps1",
+                        "json_read.ps1",
+                        "json_item_insert.ps1",
+                        "json_item_set.ps1",
+                        "json_item_move.ps1",
+                        "json_item_delete.ps1",
+                        "json_line_insert.ps1",
+                        "json_line_set.ps1",
+                        "json_line_move.ps1",
+                        "json_refresh_index.ps1",
+                        "json_migrate_content.ps1",
+                        "audit_json_docs.py",
+                        "smoke_json_tools.py"
+                    ]
+                },
+                "required_docs": [
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep generic JSON operations under tools/json so they can be copied as a small portable pack.",
+                    "Keep tools/documents focused on DOCS routing, document cache, markdown/list-document helpers, and project document audits.",
+                    "Use tools/json for structure/order-only JSON edits before any manual content patching when both are needed.",
+                    "Keep SCRIPTS.json paths and categories pointing to tools/json for JSON helpers.",
+                    "Run the portable JSON smoke after moving or editing JSON helpers, then run document audit and feature-contract checks.",
+                    "Sync child projects so embedded SocratexAI packages receive the same tools/json layout."
+                ],
+                "verification_commands": [
+                    "python3 tools/json/smoke_json_tools.py",
+                    "python3 tools/json/audit_json_docs.py --repo-root .",
+                    "python3 tools/repo/check_pipeline_feature_contracts.py"
+                ],
+                "known_failure_if_missing": "JSON helpers remain mixed into document workflow folders, making them harder to copy between projects and easier to confuse with project-specific document/cache tooling."
             },
             "json_tool_file_stdin_value_inputs": {
                 "summary": "Json Tool File Stdin Value Inputs capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
@@ -5161,7 +5244,7 @@
                     "core/FILE-FORMATS.json",
                     "core/UPDATE-PROTOCOL.json",
                     "tools/documents/audit_docs.ps1",
-                    "tools/documents/json_list_doc.py",
+                    "tools/json/json_list_doc.py",
                     "tools/text/normalize_json_files.ps1",
                     "SCRIPTS.json"
                 ],
@@ -5337,8 +5420,8 @@
                     "tools/repo/learn_pipeline_features.ps1",
                     "tools/repo/report_pipeline_learning.ps1",
                     "tools/documents/audit_docs.ps1",
-                    "tools/documents/json_list_doc.py",
-                    "tools/documents/json_read.ps1",
+                    "tools/json/json_list_doc.py",
+                    "tools/json/json_read.ps1",
                     "tools/text/normalize_json_files.ps1",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
@@ -5495,7 +5578,7 @@
                 "required_paths": [
                     "tools/pipeline/tool_error_log.ps1",
                     "docs-tech/TOOL-ERRORS.json",
-                    "tools/documents/json_item_insert.ps1",
+                    "tools/json/json_item_insert.ps1",
                     "SCRIPTS.json",
                     "DOCS.json",
                     "pipeline_featurelist.json"
@@ -5531,8 +5614,8 @@
                 "summary": "Document item insertion is JSON-safe only when .json paths route through JSON list-document tools.",
                 "required_paths": [
                     "tools/documents/insert_document_item.ps1",
-                    "tools/documents/json_item_insert.ps1",
-                    "tools/documents/json_item_set.ps1",
+                    "tools/json/json_item_insert.ps1",
+                    "tools/json/json_item_set.ps1",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json"
                 ],
@@ -6591,7 +6674,7 @@
                     "templates/workspace.json",
                     "tools/codebase/check_project_design_context_gate.ps1",
                     "tools/documents/audit_docs.ps1",
-                    "tools/documents/audit_json_docs.py",
+                    "tools/json/audit_json_docs.py",
                     "tools/documents/document_read_cache_engine.py",
                     "tools/knowledge/project_design_context.ps1",
                     "tools/pipeline/Initialize-SocratexPipeline.ps1",
@@ -6659,7 +6742,7 @@
                     "Keep generated package manifests such as PIPELINE-PACKAGE.json listed as explicit direct-schema exceptions instead of forcing operational manifests into prose/document shape."
                 ],
                 "verification_commands": [
-                    "python3 tools/documents/audit_json_docs.py --repo-root .",
+                    "python3 tools/json/audit_json_docs.py --repo-root .",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_task.ps1 -Audit",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1"

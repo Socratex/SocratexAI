@@ -20,8 +20,9 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 if ([System.IO.Path]::GetExtension($Path).ToLowerInvariant() -eq ".json") {
-	$jsonItemInsert = Join-Path $PSScriptRoot "json_item_insert.ps1"
-	$jsonItemSet = Join-Path $PSScriptRoot "json_item_set.ps1"
+	$jsonToolRoot = Join-Path $PSScriptRoot "..\json"
+	$jsonItemInsert = Join-Path $jsonToolRoot "json_item_insert.ps1"
+	$jsonItemSet = Join-Path $jsonToolRoot "json_item_set.ps1"
 	$jsonPosition = $Position
 	$jsonReference = ""
 	if ($Replace) {

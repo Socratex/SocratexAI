@@ -19,14 +19,14 @@
             "Reports what context is loaded and the next executable step."
         ],
         "CONTINUE": [
-            "Executes the next active pass read from _PLAN.json with Tools/documents/json_read.ps1.",
+            "Executes the next active pass read from _PLAN.json with Tools/json/json_read.ps1.",
             "If no active pass remains, uses docs/TARGET.json as the prioritization lens.",
             "Proposes the next target-aligned item from TODO, vision documents, or ideas instead of adding it without approval.",
             "For code-touching work, loads programming context with Tools/codebase/load_programming_context.ps1 before source inspection.",
             "After completing a pass, removes only that completed pass from _PLAN.json with JSON document scripts and finalizes through Tools/repo/done.ps1."
         ],
         "DO PASS N": [
-            "Executes the explicitly requested pass read from _PLAN.json with Tools/documents/json_read.ps1.",
+            "Executes the explicitly requested pass read from _PLAN.json with Tools/json/json_read.ps1.",
             "Treats the pass definition as the scope contract.",
             "Refreshes the pass definition first with JSON document scripts if it is stale.",
             "Preserves every unresolved future pass unless the user explicitly changes the plan, then finalizes through Tools/repo/done.ps1."
@@ -35,11 +35,11 @@
             "Reads _PROMPTS.md before _PROMPT-QUEUE.json.",
             "Executes one actionable prompt immediately.",
             "Defragments multiple prompts into _PROMPT-QUEUE.json with JSON document scripts, merges overlaps, sorts them, and clears _PROMPTS.md.",
-            "If _PROMPTS.md is empty, executes the next actionable queue pass read with Tools/documents/json_read.ps1.",
+            "If _PROMPTS.md is empty, executes the next actionable queue pass read with Tools/json/json_read.ps1.",
             "After successful execution, removes only the completed queue scope with JSON document scripts and finalizes through Tools/repo/done.ps1."
         ],
         "BUG": [
-            "Reads docs-tech/BUGS.json with Tools/documents/json_read.ps1.",
+            "Reads docs-tech/BUGS.json with Tools/json/json_read.ps1.",
             "Selects the active bug with the best mix of current leverage, diagnostic readiness, reproduction likelihood, and future-change cost.",
             "Applies the smallest useful diagnostic step or source-owned fix.",
             "Asks the user to test before moving the bug to docs-tech/BUGS-SOLVED.json with JSON document scripts.",

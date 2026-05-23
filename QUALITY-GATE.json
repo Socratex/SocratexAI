@@ -25,7 +25,7 @@
             },
             "transactional_doc_tools": {
                 "description": "Check Python JSON document tooling and feature-contract coverage.",
-                "command": "python tools/documents/json_list_doc.py read SCRIPTS.json && python tools/repo/check_pipeline_feature_contracts.py"
+                "command": "python tools/json/json_list_doc.py read SCRIPTS.json && python tools/repo/check_pipeline_feature_contracts.py"
             },
             "init_dry_run": {
                 "description": "Smoke-test code project initialization without writing files.",

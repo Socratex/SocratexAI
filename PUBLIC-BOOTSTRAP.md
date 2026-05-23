@@ -178,7 +178,7 @@ Default to merge when uncertain.
 
 During setup, update, upgrade, and migration, the current pipeline contract dictates file structure, response style, and required tooling.
 
-Do not copy an older local file shape just because it already exists. Before writing structured files, validate the current target format from `SocratexAI/core/FILE-FORMATS.json` and the JSON list-document tooling in `SocratexAI/tools/documents/json_list_doc.py`.
+Do not copy an older local file shape just because it already exists. Before writing structured files, validate the current target format from `SocratexAI/core/FILE-FORMATS.json` and the JSON list-document tooling in `SocratexAI/tools/json/json_list_doc.py`.
 
 Canonical JSON list documents must use exactly this root order:
 

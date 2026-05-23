@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-23T01:55:22+02:00",
+  "generatedAt": "2026-05-23T02:17:07+02:00",
   "threshold": 300,
   "files": [
     {
@@ -15,7 +15,7 @@
       "large": true
     },
     {
-      "path": "tools/documents/json_list_doc.py",
+      "path": "tools/json/json_list_doc.py",
       "lines": 554,
       "extension": ".py",
       "large": true
@@ -111,7 +111,7 @@
       "large": false
     },
     {
-      "path": "tools/documents/audit_json_docs.py",
+      "path": "tools/json/audit_json_docs.py",
       "lines": 237,
       "extension": ".py",
       "large": false
@@ -243,7 +243,7 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_node_edit.ps1",
+      "path": "tools/json/json_node_edit.ps1",
       "lines": 126,
       "extension": ".ps1",
       "large": false
@@ -268,7 +268,7 @@
     },
     {
       "path": "tools/documents/insert_document_item.ps1",
-      "lines": 109,
+      "lines": 110,
       "extension": ".ps1",
       "large": false
     },
@@ -317,6 +317,12 @@
     {
       "path": "tools/pipeline/generate_embedded_config_payload.py",
       "lines": 100,
+      "extension": ".py",
+      "large": false
+    },
+    {
+      "path": "tools/json/smoke_json_tools.py",
+      "lines": 99,
       "extension": ".py",
       "large": false
     },
@@ -471,7 +477,7 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_item_insert.ps1",
+      "path": "tools/json/json_item_insert.ps1",
       "lines": 51,
       "extension": ".ps1",
       "large": false
@@ -483,7 +489,7 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_item_set.ps1",
+      "path": "tools/json/json_item_set.ps1",
       "lines": 49,
       "extension": ".ps1",
       "large": false
@@ -525,7 +531,7 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_line_insert.ps1",
+      "path": "tools/json/json_line_insert.ps1",
       "lines": 39,
       "extension": ".ps1",
       "large": false
@@ -537,7 +543,7 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_line_move.ps1",
+      "path": "tools/json/json_line_move.ps1",
       "lines": 38,
       "extension": ".ps1",
       "large": false
@@ -591,19 +597,19 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_line_set.ps1",
+      "path": "tools/json/json_line_set.ps1",
       "lines": 33,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/documents/json_item_move.ps1",
+      "path": "tools/json/json_item_move.ps1",
       "lines": 32,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/documents/json_read.ps1",
+      "path": "tools/json/json_read.ps1",
       "lines": 32,
       "extension": ".ps1",
       "large": false
@@ -633,7 +639,7 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_item_delete.ps1",
+      "path": "tools/json/json_item_delete.ps1",
       "lines": 28,
       "extension": ".ps1",
       "large": false
@@ -747,13 +753,13 @@
       "large": false
     },
     {
-      "path": "tools/documents/json_refresh_index.ps1",
+      "path": "tools/json/json_refresh_index.ps1",
       "lines": 16,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/documents/json_migrate_content.ps1",
+      "path": "tools/json/json_migrate_content.ps1",
       "lines": 15,
       "extension": ".ps1",
       "large": false

@@ -269,8 +269,8 @@ $operationMap = @{
     "document_read" = @{ script = "read_document_item.ps1"; path = "tools\documents\read_document_item.ps1" }
     "doc_item_insert" = @{ script = "insert_document_item.ps1"; path = "tools\documents\insert_document_item.ps1" }
     "document_item_insert" = @{ script = "insert_document_item.ps1"; path = "tools\documents\insert_document_item.ps1" }
-    "json_item_insert" = @{ script = "json_item_insert.ps1"; path = "tools\documents\json_item_insert.ps1" }
-    "json_item_set" = @{ script = "json_item_set.ps1"; path = "tools\documents\json_item_set.ps1" }
+    "json_item_insert" = @{ script = "json_item_insert.ps1"; path = "tools\json\json_item_insert.ps1" }
+    "json_item_set" = @{ script = "json_item_set.ps1"; path = "tools\json\json_item_set.ps1" }
     "tool_error_log" = @{ script = "tool_error_log.ps1"; path = "tools\pipeline\tool_error_log.ps1" }
 }
 

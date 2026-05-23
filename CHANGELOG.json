@@ -527,6 +527,12 @@
         "date": "2026-05-23",
         "feature": "python_first_pipeline_migration_evidence",
         "change": "Tightened feature contracts so PowerShell-to-Python migration claims require successor/deferred mapping plus executed source and child smoke verification. Why: A reduced PowerShell reference count is not enough evidence that migrated tools behave correctly."
+      },
+      {
+        "version": "0.2.0-alpha",
+        "date": "2026-05-23",
+        "feature": "portable_json_tooling_pack",
+        "change": "Moved generic JSON manipulation and JSON audit helpers into tools/json as a portable pack with a dedicated README and smoke test, and updated script catalog, feature contracts, workflow guidance, and quality-gate references. Why: JSON tooling should be easy to copy between projects and separate from higher-level document routing/cache workflow."
       }
     ]
   },

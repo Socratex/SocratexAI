@@ -149,7 +149,7 @@ try {
         ($entry | ConvertTo-Json -Depth 20),
         [System.Text.UTF8Encoding]::new($false)
     )
-    $jsonItemInsert = Join-Path $packageRoot "tools\documents\json_item_insert.ps1"
+    $jsonItemInsert = Join-Path $packageRoot "tools\json\json_item_insert.ps1"
     $appendOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File $jsonItemInsert -Path $resolvedPath -Key $entryKey -ValueJsonFile $tempJsonFile 2>&1
     if ($LASTEXITCODE -ne 0) {
         throw "tool_error_log failed to append '$entryKey' with exit code $LASTEXITCODE`: $($appendOutput -join "`n")"

@@ -551,6 +551,7 @@
         "document_list_item_edit_engine.py",
         "review_document_list_candidates.ps1",
         "json_list_doc.py",
+        "smoke_json_tools.py",
         "json_refresh_index.ps1",
         "json_migrate_content.ps1",
         "json_node_edit.ps1",
@@ -877,6 +878,12 @@
           "path": "content.json_list_doc.py",
           "title": "",
           "ref": "content.json_list_doc.py",
+          "status": ""
+        },
+        "smoke_json_tools.py": {
+          "path": "content.smoke_json_tools.py",
+          "title": "",
+          "ref": "content.smoke_json_tools.py",
           "status": ""
         },
         "json_refresh_index.ps1": {

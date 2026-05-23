@@ -68,7 +68,7 @@
         },
         "json_structural_edit_tooling": {
             "title": "JSON Structural Edit Tooling",
-            "rule": "For JSON edits that only change structure or order, use tools/documents/json_node_edit.ps1 or the narrow JSON wrappers instead of manual patching. When one task needs both structural/order changes and content edits, run the scripted structural operation first, then set or patch content. Keep SCRIPTS.json input/output/help metadata current when adding or changing JSON document scripts."
+            "rule": "For JSON edits that only change structure or order, use tools/json/json_node_edit.ps1 or the narrow JSON wrappers instead of manual patching. When one task needs both structural/order changes and content edits, run the scripted structural operation first, then set or patch content. Keep SCRIPTS.json input/output/help metadata current when adding or changing JSON document scripts."
         },
         "single_entry_tool_handler": {
             "title": "Single Entry Tool Handler",

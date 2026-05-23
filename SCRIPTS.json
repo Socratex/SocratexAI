@@ -38,6 +38,7 @@
         "document_list_item_edit_engine.py",
         "review_document_list_candidates.ps1",
         "json_list_doc.py",
+        "smoke_json_tools.py",
         "json_refresh_index.ps1",
         "json_migrate_content.ps1",
         "json_node_edit.ps1",
@@ -192,8 +193,10 @@
             }
         },
         "audit_json_docs.py": {
-            "path": "tools/documents/audit_json_docs.py",
-            "category": "documents",
+            "path": "tools/json/audit_json_docs.py",
+            "category": [
+                "json"
+            ],
             "description": "Validate JSON document files for parseability and repository document conventions.",
             "input": {
                 "required": [],
@@ -860,7 +863,7 @@
             }
         },
         "json_list_doc.py": {
-            "path": "tools/documents/json_list_doc.py",
+            "path": "tools/json/json_list_doc.py",
             "description": "Edit and read list-style JSON source documents while preserving collection order, root indexes, full node paths, and nested list nodes.",
             "input": {
                 "required": [],
@@ -888,12 +891,30 @@
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
                 "failure": "Non-zero exit with ERROR message on stderr/stdout from the Python wrapper."
             },
-            "category": "documents"
+            "category": [
+                "json"
+            ]
+        },
+        "smoke_json_tools.py": {
+            "path": "tools/json/smoke_json_tools.py",
+            "description": "Smoke-test portable JSON tooling operations on temporary fixtures: read-node, set-node, insert-node-line, move-node-line, refresh-index, and migrate-content.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run from the SocratexAI repository root after moving or changing tools/json helpers."
+            },
+            "output": {
+                "success": "Prints OK when all portable JSON operations behave as expected.",
+                "failure": "Non-zero exit with the failed child command or assertion."
+            },
+            "category": "json"
         },
         "json_refresh_index.ps1": {
-            "path": "tools/documents/json_refresh_index.ps1",
+            "path": "tools/json/json_refresh_index.ps1",
             "description": "Refresh a root index from a JSON document collection such as content.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Path"
@@ -909,9 +930,11 @@
             }
         },
         "json_migrate_content.ps1": {
-            "path": "tools/documents/json_migrate_content.ps1",
+            "path": "tools/json/json_migrate_content.ps1",
             "description": "Move an old root collection into the canonical content object and rebuild index.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Path",
@@ -926,9 +949,11 @@
             }
         },
         "json_node_edit.ps1": {
-            "path": "tools/documents/json_node_edit.ps1",
+            "path": "tools/json/json_node_edit.ps1",
             "description": "Read, insert, set, move, delete, or line-edit JSON nodes by full node path, including nested lists and keys containing dots via slash-separated paths.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Operation",
@@ -958,9 +983,11 @@
             }
         },
         "json_read.ps1": {
-            "path": "tools/documents/json_read.ps1",
+            "path": "tools/json/json_read.ps1",
             "description": "Read a JSON document index, entry, nested field, or line from a selected collection.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Path"
@@ -980,7 +1007,7 @@
             }
         },
         "json_item_insert.ps1": {
-            "path": "tools/documents/json_item_insert.ps1",
+            "path": "tools/json/json_item_insert.ps1",
             "description": "Insert a JSON entry at start, end, before, or after another entry.",
             "input": {
                 "required": [
@@ -1003,10 +1030,12 @@
                 "success": "OK: inserted key.",
                 "failure": "Throws json_item_insert failed with the child process exit code."
             },
-            "category": "documents"
+            "category": [
+                "json"
+            ]
         },
         "json_item_set.ps1": {
-            "path": "tools/documents/json_item_set.ps1",
+            "path": "tools/json/json_item_set.ps1",
             "description": "Replace or rename a JSON entry in a selected collection.",
             "input": {
                 "required": [
@@ -1028,12 +1057,16 @@
                 "success": "OK: updated key.",
                 "failure": "Throws json_item_set failed with the child process exit code."
             },
-            "category": "documents"
+            "category": [
+                "json"
+            ]
         },
         "json_item_move.ps1": {
-            "path": "tools/documents/json_item_move.ps1",
+            "path": "tools/json/json_item_move.ps1",
             "description": "Move a JSON entry relative to another entry.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Path",
@@ -1053,9 +1086,11 @@
             }
         },
         "json_item_delete.ps1": {
-            "path": "tools/documents/json_item_delete.ps1",
+            "path": "tools/json/json_item_delete.ps1",
             "description": "Delete a JSON entry and refresh collection ordering.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Path",
@@ -1073,9 +1108,11 @@
             }
         },
         "json_line_insert.ps1": {
-            "path": "tools/documents/json_line_insert.ps1",
+            "path": "tools/json/json_line_insert.ps1",
             "description": "Insert one or more lines into a list-valued JSON entry or nested list field.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Path",
@@ -1098,9 +1135,11 @@
             }
         },
         "json_line_set.ps1": {
-            "path": "tools/documents/json_line_set.ps1",
+            "path": "tools/json/json_line_set.ps1",
             "description": "Replace one line inside a list-valued JSON entry or nested list field.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Path",
@@ -1121,9 +1160,11 @@
             }
         },
         "json_line_move.ps1": {
-            "path": "tools/documents/json_line_move.ps1",
+            "path": "tools/json/json_line_move.ps1",
             "description": "Move one line inside a list-valued JSON entry or nested list field.",
-            "category": "documents",
+            "category": [
+                "json"
+            ],
             "input": {
                 "required": [
                     "-Path",
@@ -2798,7 +2839,6 @@
             "documents": [
                 "audit_docs.ps1",
                 "audit_docs.py",
-                "audit_json_docs.py",
                 "build_document_cache.ps1",
                 "document_item_edit_engine.py",
                 "bulk_insert_document_items.ps1",
@@ -2811,18 +2851,6 @@
                 "insert_checked_document_list_item.ps1",
                 "document_list_item_edit_engine.py",
                 "review_document_list_candidates.ps1",
-                "json_list_doc.py",
-                "json_refresh_index.ps1",
-                "json_migrate_content.ps1",
-                "json_node_edit.ps1",
-                "json_read.ps1",
-                "json_item_insert.ps1",
-                "json_item_set.ps1",
-                "json_item_move.ps1",
-                "json_item_delete.ps1",
-                "json_line_insert.ps1",
-                "json_line_set.ps1",
-                "json_line_move.ps1",
                 "run_document_post_edit_checks.ps1",
                 "read_document_item.ps1",
                 "read_document_items_by_title.ps1",
@@ -2934,6 +2962,22 @@
             "codebase": [
                 "check_code_context_gate.ps1",
                 "update_code_line_index.ps1"
+            ],
+            "json": [
+                "audit_json_docs.py",
+                "json_list_doc.py",
+                "json_refresh_index.ps1",
+                "json_migrate_content.ps1",
+                "json_node_edit.ps1",
+                "json_read.ps1",
+                "json_item_insert.ps1",
+                "json_item_set.ps1",
+                "json_item_move.ps1",
+                "json_item_delete.ps1",
+                "json_line_insert.ps1",
+                "json_line_set.ps1",
+                "json_line_move.ps1",
+                "smoke_json_tools.py"
             ]
         },
         "category_rule": "Scripts live under tools/<category>/ and SCRIPTS.json keeps the filename index plus exact categorized path for execution."

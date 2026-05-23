@@ -22,7 +22,7 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(args.repo_root).resolve()
-    audit_json = root / "tools" / "documents" / "audit_json_docs.py"
+    audit_json = root / "tools" / "json" / "audit_json_docs.py"
     if not audit_json.is_file():
         print(f"ERROR: missing JSON audit engine: {audit_json}", file=sys.stderr)
         return 1

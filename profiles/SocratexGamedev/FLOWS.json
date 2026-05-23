@@ -27,7 +27,7 @@
             "then": [
                 "Identify every separable task in the prompt before editing files.",
                 "Merge duplicate or overlapping tasks from input into one scope instead of creating parallel duplicates.",
-                "Check _PLAN.json with Tools/documents/json_read.ps1 to find other duplicates - if found - append input tasks to existing PLAN entries with JSON document scripts instead of adding new tasks to PLAN",
+                "Check _PLAN.json with Tools/json/json_read.ps1 to find other duplicates - if found - append input tasks to existing PLAN entries with JSON document scripts instead of adding new tasks to PLAN",
                 "Add remaining tasks to PLAN with JSON document scripts to proper places among existing PLAN steps - by prerequisite cost: first tasks that unlocks or optimizes later work, then diagnostics or bugfixes, then implementation features.",
                 "Execute only the first approved/current task unless the user clearly asks for more in one run.",
                 "Treat each resulting task independently through the most specific matching flow.",
@@ -152,7 +152,7 @@
             "when": "Standalone CONTINUE command or explicit pass execution from _PLAN.json.",
             "then": [
                 "subroutine:load_context",
-                "Read _PLAN.json through Tools/documents/json_read.ps1.",
+                "Read _PLAN.json through Tools/json/json_read.ps1.",
                 "Before executing the resolved pass or proposed target, decide whether you need user clarification, missing information, product direction, or a choice between meaningful implementation variants.",
                 "If clarification is needed, ask the user and wait instead of guessing; if everything is clear, proceed with the selected pass.",
                 "During execution, stop and ask the user when new ambiguity, missing information, product direction, or material risk appears.",
@@ -186,7 +186,7 @@
         "bug_command": {
             "when": "Standalone BUG command or active bug-registry work.",
             "then": [
-                "Read docs-tech/BUGS.json through Tools/documents/json_read.ps1.",
+                "Read docs-tech/BUGS.json through Tools/json/json_read.ps1.",
                 "subroutine:load_context",
                 "Select the next active bug by current focus, diagnostic readiness, reproduction likelihood, and future-change cost.",
                 "Execute the smallest useful diagnostic step or source-owned fix.",
@@ -423,8 +423,8 @@
             ],
             "inspect_structured_document": [
                 "Inspect keys with Tools/documents/doc_keys.ps1 before reading structured YAML or JSON content.",
-                "Read only selected sections with Tools/documents/doc_read.ps1 or Tools/documents/json_read.ps1 unless full-file structure is necessary.",
-                "Use Tools/documents/doc_route.ps1 or Tools/documents/doc_search.ps1 when the relevant item is unknown; use Tools/documents/json_refresh_index.ps1 when a list-style JSON index must be regenerated from content."
+                "Read only selected sections with Tools/documents/doc_read.ps1 or Tools/json/json_read.ps1 unless full-file structure is necessary.",
+                "Use Tools/documents/doc_route.ps1 or Tools/documents/doc_search.ps1 when the relevant item is unknown; use Tools/json/json_refresh_index.ps1 when a list-style JSON index must be regenerated from content."
             ],
             "inspect_gdscript": [
                 "Use Tools/gamedev/gdscript_outline.ps1 before full GDScript reads when applicable.",
@@ -437,7 +437,7 @@
             ],
             "edit_safely": [
                 "Make the smallest safe edit at the owning boundary.",
-                "Preserve unresolved tasks and future scope by moving, merging, splitting, or renaming instead of deleting with Tools/documents/json_item_insert.ps1, json_item_set.ps1, json_item_move.ps1, json_item_delete.ps1, json_line_insert.ps1, json_line_set.ps1, or json_line_move.ps1 for supported JSON edits.",
+                "Preserve unresolved tasks and future scope by moving, merging, splitting, or renaming instead of deleting with Tools/json/json_item_insert.ps1, json_item_set.ps1, json_item_move.ps1, json_item_delete.ps1, json_line_insert.ps1, json_line_set.ps1, or json_line_move.ps1 for supported JSON edits.",
                 "Use repository scripts for structured, repeated, or contract-managed edits when available."
             ],
             "update_triggered_docs": [
