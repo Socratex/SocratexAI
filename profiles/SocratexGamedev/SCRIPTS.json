@@ -103,7 +103,7 @@
         "export-playtest.bat",
         "export-playtest.ps1",
         "export_windows_playtest.ps1",
-        "gdscript_outline.ps1",
+        "gdscript_outline.py",
         "generate_embedded_config_payload.py",
         "godot_capture.py",
         "log_summary.py",
@@ -711,25 +711,26 @@
             "description": "przygotowuje playtestowy eksport Windows.",
             "benefit": "łatwiej dostarczyć build do uruchomienia poza edytorem."
         },
-        "gdscript_outline.ps1": {
+        "gdscript_outline.py": {
+            "path": "Tools/gamedev/gdscript_outline.py",
             "category": "Gamedev",
             "description": "pokazuje strukturę plików GDScript.",
             "benefit": "szybciej rozumiesz kod bez czytania całych plików.",
             "input": {
                 "required": [
-                    "-Path"
+                    "--path"
                 ],
                 "optional": [
-                    "-Preset",
-                    "-Header",
-                    "-Members",
-                    "-Methods",
-                    "-Calls",
-                    "-References",
-                    "-Json",
-                    "-Method",
-                    "-Symbol",
-                    "-MaxReferences"
+                    "--preset",
+                    "--header",
+                    "--members",
+                    "--methods",
+                    "--calls",
+                    "--references",
+                    "--json",
+                    "--method",
+                    "--symbol",
+                    "--max-references"
                 ],
                 "path_resolution": "Accepts existing paths, directories, wildcards, repo-relative paths, and unique .gd basenames resolved under Game/."
             }
@@ -1895,7 +1896,7 @@
                 "export-playtest.bat",
                 "export-playtest.ps1",
                 "export_windows_playtest.ps1",
-                "gdscript_outline.ps1",
+                "gdscript_outline.py",
                 "generate_embedded_config_payload.py",
                 "godot_capture.py",
                 "log_summary.py",

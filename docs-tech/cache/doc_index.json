@@ -4165,7 +4165,7 @@
         "export-playtest.bat",
         "export-playtest.ps1",
         "export_windows_playtest.ps1",
-        "gdscript_outline.ps1",
+        "gdscript_outline.py",
         "generate_embedded_config_payload.py",
         "godot_capture.py",
         "log_summary.py",
@@ -4703,10 +4703,10 @@
           "ref": "content.export_windows_playtest.ps1",
           "status": ""
         },
-        "gdscript_outline.ps1": {
-          "path": "content.gdscript_outline.ps1",
+        "gdscript_outline.py": {
+          "path": "content.gdscript_outline.py",
           "title": "",
-          "ref": "content.gdscript_outline.ps1",
+          "ref": "content.gdscript_outline.py",
           "status": ""
         },
         "generate_embedded_config_payload.py": {

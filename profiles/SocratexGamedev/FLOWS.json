@@ -427,7 +427,7 @@
                 "Use Tools/documents/doc_route.ps1 or Tools/documents/doc_search.ps1 when the relevant item is unknown; use Tools/json/json_refresh_index.ps1 when a list-style JSON index must be regenerated from content."
             ],
             "inspect_gdscript": [
-                "Use Tools/gamedev/gdscript_outline.ps1 before full GDScript reads when applicable.",
+                "Use python3 -B Tools/gamedev/gdscript_outline.py before full GDScript reads when applicable.",
                 "Read only the relevant line ranges or files needed for the change."
             ],
             "check_potential_duplicates": [
