@@ -526,6 +526,7 @@
         "check_pipeline_feature_contracts.py",
         "check_sensitive_reference_leaks.ps1",
         "check_runtime.py",
+        "script_runtime_gate.py",
         "python_runtime.py",
         "pipeline_package.py",
         "ai_native_contract_dry_run.ps1",
@@ -728,6 +729,12 @@
           "path": "content.check_runtime.py",
           "title": "",
           "ref": "content.check_runtime.py",
+          "status": ""
+        },
+        "script_runtime_gate.py": {
+          "path": "content.script_runtime_gate.py",
+          "title": "",
+          "ref": "content.script_runtime_gate.py",
           "status": ""
         },
         "python_runtime.py": {

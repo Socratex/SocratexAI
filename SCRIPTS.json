@@ -13,6 +13,7 @@
         "check_pipeline_feature_contracts.py",
         "check_sensitive_reference_leaks.ps1",
         "check_runtime.py",
+        "script_runtime_gate.py",
         "python_runtime.py",
         "pipeline_package.py",
         "ai_native_contract_dry_run.ps1",
@@ -357,6 +358,27 @@
             "output": {
                 "success": "Prints a JSON object with Python availability, version, executable, source, minimum/recommended version, and install hints.",
                 "failure": "With --strict, exits nonzero when Python 3.10+ cannot be resolved."
+            }
+        },
+        "script_runtime_gate.py": {
+            "path": "tools/quality/script_runtime_gate.py",
+            "category": "quality",
+            "description": "Python gate that fails while tracked automation still contains retired script files or canonical references to the retired command runtime.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--json",
+                    "--write-report",
+                    "--max-examples",
+                    "--max-line-length",
+                    "--skip-part"
+                ],
+                "rule": "Run from the repository root or pass --repo-root. Do not pass --skip-part for final verification; it exists only for local exploratory slicing."
+            },
+            "output": {
+                "success": "Exits 0 and reports pass when no retired script files or canonical retired-runtime references remain.",
+                "failure": "Exits nonzero and reports counts, top-level ownership groups, blocked script files, and reference locations."
             }
         },
         "python_runtime.py": {

@@ -84,6 +84,7 @@
             "check_pipeline_feature_contracts.py",
             "check_sensitive_reference_leaks.ps1",
             "check_runtime.py",
+            "script_runtime_gate.py",
             "python_runtime.py",
             "pipeline_package.py",
             "ai_native_contract_dry_run.ps1",

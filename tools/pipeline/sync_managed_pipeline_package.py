@@ -15,6 +15,10 @@ from typing import Any
 from pipeline_package import DEFAULT_CHILD_GENERATED_PATHS, DEFAULT_MANAGED_PATHS, DEFAULT_PROTECTED_PATHS
 
 
+GENERATED_CACHE_DIRS = {"__pycache__"}
+GENERATED_CACHE_SUFFIXES = {".pyc", ".pyo"}
+
+
 def normalize_path(value: str) -> str:
     return value.replace("\\", "/").strip("/")
 
@@ -72,6 +76,8 @@ def source_files_for_path(source_root: Path, relative: str, child_generated_path
     files: list[Path] = []
     for path in sorted(source_path.rglob("*")):
         if not path.is_file():
+            continue
+        if any(part in GENERATED_CACHE_DIRS for part in path.parts) or path.suffix.lower() in GENERATED_CACHE_SUFFIXES:
             continue
         rel = relative_path(source_root, path)
         if rel.startswith((".git/", ".agents/", ".codex/")):
