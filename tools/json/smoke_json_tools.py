@@ -25,6 +25,12 @@ def main() -> int:
     script_dir = Path(__file__).resolve().parent
     root = script_dir.parents[1]
     tool = script_dir / "json_list_doc.py"
+    node_tool = script_dir / "json_node_edit.py"
+    read_tool = script_dir / "json_read.py"
+    line_insert_tool = script_dir / "json_line_insert.py"
+    line_move_tool = script_dir / "json_line_move.py"
+    refresh_tool = script_dir / "json_refresh_index.py"
+    migrate_tool = script_dir / "json_migrate_content.py"
     with tempfile.TemporaryDirectory(prefix="socratex-json-smoke-") as temp_name:
         temp = Path(temp_name)
         fixture = temp / "list-doc.json"
@@ -45,13 +51,17 @@ def main() -> int:
             newline="\n",
         )
 
-        run([sys.executable, str(tool), "read-node", str(fixture), "content.alpha.title"], root)
+        run([sys.executable, "-B", str(read_tool), str(fixture), "alpha", "--collection", "content"], root)
+        run([sys.executable, "-B", str(node_tool), "read", "--path", str(fixture), "--node", "content.alpha.title"], root)
         run(
             [
                 sys.executable,
-                str(tool),
-                "set-node",
+                "-B",
+                str(node_tool),
+                "set",
+                "--path",
                 str(fixture),
+                "--node",
                 "content.alpha.title",
                 "--value-json",
                 '"Alpha Updated"',
@@ -61,10 +71,16 @@ def main() -> int:
         run(
             [
                 sys.executable,
-                str(tool),
-                "insert-node-line",
+                "-B",
+                str(line_insert_tool),
+                "--path",
                 str(fixture),
-                "content.alpha.steps",
+                "--key",
+                "alpha",
+                "--collection",
+                "content",
+                "--field-path",
+                "steps",
                 "--position",
                 "after",
                 "--reference-text",
@@ -77,10 +93,16 @@ def main() -> int:
         run(
             [
                 sys.executable,
-                str(tool),
-                "move-node-line",
+                "-B",
+                str(line_move_tool),
+                "--path",
                 str(fixture),
-                "content.alpha.steps",
+                "--key",
+                "alpha",
+                "--collection",
+                "content",
+                "--field-path",
+                "steps",
                 "--line",
                 "2",
                 "--position",
@@ -88,7 +110,7 @@ def main() -> int:
             ],
             root,
         )
-        run([sys.executable, str(tool), "refresh-index", str(fixture)], root)
+        run([sys.executable, "-B", str(refresh_tool), str(fixture)], root)
 
         updated = load(fixture)
         assert updated["content"]["alpha"]["title"] == "Alpha Updated"
@@ -101,7 +123,7 @@ def main() -> int:
             encoding="utf-8",
             newline="\n",
         )
-        run([sys.executable, str(tool), "migrate-content", str(migrate_fixture), "items"], root)
+        run([sys.executable, "-B", str(migrate_tool), str(migrate_fixture), "items"], root)
         migrated = load(migrate_fixture)
         assert migrated["index"] == ["one", "two"]
         assert set(migrated["content"]) == {"one", "two"}

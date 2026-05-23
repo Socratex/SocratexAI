@@ -20,16 +20,27 @@
         "doc_route.ps1",
         "doc_search.ps1",
         "json_list_doc.py",
+        "json_wrapper_entrypoints.py",
         "json_refresh_index.ps1",
+        "json_refresh_index.py",
         "json_migrate_content.ps1",
+        "json_migrate_content.py",
         "json_read.ps1",
+        "json_read.py",
         "json_item_insert.ps1",
+        "json_item_insert.py",
         "json_item_set.ps1",
+        "json_item_set.py",
         "json_item_move.ps1",
+        "json_item_move.py",
         "json_item_delete.ps1",
+        "json_item_delete.py",
         "json_line_insert.ps1",
+        "json_line_insert.py",
         "json_line_set.ps1",
+        "json_line_set.py",
         "json_line_move.ps1",
+        "json_line_move.py",
         "doc_tool.py",
         "docs_migrator.ps1",
         "docs_migrator.py",
@@ -131,7 +142,8 @@
         "play_completion_sound.ps1",
         "pipeline_bootstrap_index.ps1",
         "pipeline_bootstrap_index.py",
-        "utf8_file_helpers.py"
+        "utf8_file_helpers.py",
+        "json_node_edit.py"
     ],
     "content": {
         "audit_docs.ps1": {
@@ -1225,6 +1237,324 @@
                 "success": "Writes the target file as UTF-8 without BOM and prints OK.",
                 "failure": "Exits nonzero when the target cannot be written."
             }
+        },
+        "json_wrapper_entrypoints.py": {
+            "path": "tools/json/json_wrapper_entrypoints.py",
+            "category": "json",
+            "description": "Shared Python implementation for native JSON wrapper entrypoints.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Internal module imported by json_*.py wrappers; use the wrapper scripts directly."
+            },
+            "output": {
+                "success": "Routes wrapper arguments to json_list_doc.py without PowerShell.",
+                "failure": "Raises or exits nonzero when wrapper arguments or JSON document operations fail."
+            }
+        },
+        "json_refresh_index.py": {
+            "path": "tools/json/json_refresh_index.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_refresh_index JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_migrate_content.py": {
+            "path": "tools/json/json_migrate_content.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_migrate_content JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_node_edit.py": {
+            "path": "tools/json/json_node_edit.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_node_edit JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "operation",
+                    "node",
+                    "--path",
+                    "--operation",
+                    "--node",
+                    "--target-path",
+                    "--target-node",
+                    "--position",
+                    "--reference-node",
+                    "--line",
+                    "--reference-line",
+                    "--reference-text",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin",
+                    "--replace"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_read.py": {
+            "path": "tools/json/json_read.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_read JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_item_insert.py": {
+            "path": "tools/json/json_item_insert.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_item_insert JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_item_set.py": {
+            "path": "tools/json/json_item_set.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_item_set JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_item_move.py": {
+            "path": "tools/json/json_item_move.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_item_move JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_item_delete.py": {
+            "path": "tools/json/json_item_delete.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_item_delete JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_line_insert.py": {
+            "path": "tools/json/json_line_insert.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_line_insert JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_line_set.py": {
+            "path": "tools/json/json_line_set.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_line_set JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
+        "json_line_move.py": {
+            "path": "tools/json/json_line_move.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_line_move JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "key",
+                    "--collection",
+                    "--position",
+                    "--reference",
+                    "--field-path",
+                    "--line",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
         }
     },
     "metadata": {
@@ -1377,6 +1707,20 @@
                 "repair_mojibake.py",
                 "utf8_file_helpers.py",
                 "write_utf8_file.py"
+            ],
+            "json": [
+                "json_refresh_index.py",
+                "json_migrate_content.py",
+                "json_node_edit.py",
+                "json_read.py",
+                "json_item_insert.py",
+                "json_item_set.py",
+                "json_item_move.py",
+                "json_item_delete.py",
+                "json_line_insert.py",
+                "json_line_set.py",
+                "json_line_move.py",
+                "json_wrapper_entrypoints.py"
             ]
         },
         "script_io_contract": {
