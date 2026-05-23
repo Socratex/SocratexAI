@@ -144,6 +144,7 @@
         "sync_managed_pipeline_package.ps1",
         "sync_managed_pipeline_package.py",
         "read_compiled_context.ps1",
+        "read_compiled_context.py",
         "tool_error_log.ps1",
         "tool_handler.ps1",
         "project_design_context.ps1",
@@ -3094,6 +3095,26 @@
                 "failure": "Throws when no alias/path matches or when a compiled output hash is stale."
             }
         },
+        "read_compiled_context.py": {
+            "path": "tools/pipeline/read_compiled_context.py",
+            "category": "pipeline",
+            "description": "Read a source compiled instruction file or a compact source context document by alias without PowerShell.",
+            "input": {
+                "required": [
+                    "document"
+                ],
+                "optional": [
+                    "--compiled-root",
+                    "--allow-stale",
+                    "--json"
+                ],
+                "rule": "Prefer this Python reader for no-PowerShell source context reads during the runtime retirement pass."
+            },
+            "output": {
+                "success": "Compiled or source context content by default, or JSON with selected path and content when --json is used.",
+                "failure": "Exits nonzero when no alias/path matches or when a compiled output hash is stale."
+            }
+        },
         "tool_error_log.ps1": {
             "path": "tools/pipeline/tool_error_log.ps1",
             "category": "pipeline",
@@ -3301,7 +3322,8 @@
                 "sync_managed_pipeline_package.ps1",
                 "tool_handler.ps1",
                 "tool_error_log.ps1",
-                "read_compiled_context.ps1"
+                "read_compiled_context.ps1",
+                "read_compiled_context.py"
             ],
             "setup": [
                 "configure_powershell_utf8.ps1",

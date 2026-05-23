@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-23T18:32:08+02:00",
+    "generatedAt": "2026-05-23T18:55:46+02:00",
     "threshold": 300,
     "files": [
         {
@@ -276,6 +276,12 @@
             "path": "tools/quality/check_evals.ps1",
             "lines": 129,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/read_compiled_context.py",
+            "lines": 127,
+            "extension": ".py",
             "large": false
         },
         {

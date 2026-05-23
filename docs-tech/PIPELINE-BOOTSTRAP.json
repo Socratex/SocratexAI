@@ -215,6 +215,7 @@
             "sync_managed_pipeline_package.ps1",
             "sync_managed_pipeline_package.py",
             "read_compiled_context.ps1",
+            "read_compiled_context.py",
             "tool_error_log.ps1",
             "tool_handler.ps1",
             "project_design_context.ps1",

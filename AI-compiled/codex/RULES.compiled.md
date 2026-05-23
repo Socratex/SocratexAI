@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-17556fbef001
+Generated: source-e479f6b62c84
 
 ## Source of Truth
 
@@ -5922,6 +5922,7 @@ Draft placeholder:
                     "tools/pipeline/tool_handler.ps1",
                     "tools/pipeline/tool_error_log.ps1",
                     "tools/pipeline/read_compiled_context.ps1",
+                    "tools/pipeline/read_compiled_context.py",
                     "SCRIPTS.json",
                     "WORKFLOW.json",
                     "pipeline_featurelist.json"
@@ -5929,13 +5930,15 @@ Draft placeholder:
                 "required_scripts": [
                     "tool_handler.ps1",
                     "tool_error_log.ps1",
-                    "read_compiled_context.ps1"
+                    "read_compiled_context.ps1",
+                    "read_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "tool_handler.ps1",
                         "tool_error_log.ps1",
-                        "read_compiled_context.ps1"
+                        "read_compiled_context.ps1",
+                        "read_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -6033,17 +6036,20 @@ Draft placeholder:
                 "summary": "Compiled context aliases are active only when the reader and handler normalize common short names against compiled/source context.",
                 "required_paths": [
                     "tools/pipeline/read_compiled_context.ps1",
+                    "tools/pipeline/read_compiled_context.py",
                     "tools/pipeline/tool_handler.ps1",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
                     "read_compiled_context.ps1",
+                    "read_compiled_context.py",
                     "tool_handler.ps1"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "read_compiled_context.ps1",
+                        "read_compiled_context.py",
                         "tool_handler.ps1"
                     ]
                 },
