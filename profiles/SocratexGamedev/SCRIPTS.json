@@ -105,7 +105,7 @@
         "export_windows_playtest.ps1",
         "gdscript_outline.ps1",
         "generate_embedded_config_payload.py",
-        "godot_capture.ps1",
+        "godot_capture.py",
         "log_summary.py",
         "operator_mission.ps1",
         "performance_benchmark_report.ps1",
@@ -738,11 +738,6 @@
             "category": "Gamedev",
             "description": "przygotowuje dane konfiguracyjne do użycia przez grę.",
             "benefit": "runtime dostaje spójny pakiet ustawień."
-        },
-        "godot_capture.ps1": {
-            "category": "Gamedev",
-            "description": "uruchamia Godota i zbiera wynik diagnostyczny.",
-            "benefit": "runtime można sprawdzać bez ręcznego przeklejania logów."
         },
         "operator_mission.ps1": {
             "category": "Gamedev",
@@ -1771,6 +1766,25 @@
                 "success": "Exit 0 i JSON report z by_worker, events, parse_error_count oraz lifecycle_event_count.",
                 "failure": "Exit non-zero przy braku logu, błędnym wejściu albo błędzie zapisu raportu."
             }
+        },
+        "godot_capture.py": {
+            "path": "Tools/gamedev/godot_capture.py",
+            "category": "Gamedev",
+            "description": "Uruchamia Godota z logiem diagnostycznym i failuje na issue lines bez PowerShell.",
+            "benefit": "Szybko łapie ERROR/WARNING/SCRIPT ERROR z Godot logu, używając wspólnego resolvera Godota z run_godot_script.py.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--name/-Name",
+                    "--log-path/-LogPath",
+                    "--godot-args/-GodotArgs"
+                ],
+                "rule": "Domyślnie uruchamia --headless --quit i zapisuje log do logs-diagnostics/godot_<name>_<timestamp>.log."
+            },
+            "output": {
+                "success": "Exit 0, log path i summary z issue_lines=0.",
+                "failure": "Exit non-zero przy błędzie Godota albo wykrytych ERROR/WARNING/SCRIPT ERROR lines w logu."
+            }
         }
     },
     "metadata": {
@@ -1883,7 +1897,7 @@
                 "export_windows_playtest.ps1",
                 "gdscript_outline.ps1",
                 "generate_embedded_config_payload.py",
-                "godot_capture.ps1",
+                "godot_capture.py",
                 "log_summary.py",
                 "operator_mission.ps1",
                 "performance_benchmark_report.ps1",
