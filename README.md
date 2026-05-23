@@ -188,9 +188,9 @@ python tools/pipeline/check_ai_compiled_context.py
 
 For direct knowledge-layer work:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_code_context.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_code_context.ps1 -Views architecture,performance
+```bash
+python3 -B tools/knowledge/knowledge_code_context.py
+python3 -B tools/knowledge/knowledge_code_context.py --views architecture performance
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -View session_start
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -Tags engineering,workflow
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_check.ps1

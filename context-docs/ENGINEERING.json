@@ -243,7 +243,7 @@
                     "subtype": "workflow_rule",
                     "title": "Load Engineering Standards Before Code Work",
                     "summary": "Any code-touching task must load the full compiled code-guidance set before source edits.",
-                    "rule": "For implementation, refactor, bugfix, code review, or any task that may touch source code, run `tools/knowledge/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. The loaded base set must include engineering, coding, architecture, best practices, borrowed-before-invented, production-grade software engineering, DDD-ADIV, future-first, data-first ownership, runtime boundaries, diagnostics, performance, and verification rules. Additional task views may be added, but they must not replace the full base set. `tools/repo/check_task.ps1` should fail changed-code checks when the fresh `ignored/code_context_gate.json` marker from that helper is missing, loaded for another HEAD, or incomplete.",
+                    "rule": "For implementation, refactor, bugfix, code review, or any task that may touch source code, run `tools/knowledge/knowledge_code_context.py` before the first code read/write that could lead to an edit. The loaded base set must include engineering, coding, architecture, best practices, borrowed-before-invented, production-grade software engineering, DDD-ADIV, future-first, data-first ownership, runtime boundaries, diagnostics, performance, and verification rules. Additional task views may be added, but they must not replace the full base set. `tools/repo/check_task.ps1` should fail changed-code checks when the fresh `ignored/code_context_gate.json` marker from that helper is missing, loaded for another HEAD, or incomplete.",
                     "rationale": "Professional code quality depends on keeping the complete active project engineering standard in context every time, not on a narrow subset or visible-chat memory.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -275,7 +275,7 @@
                             "note": "Script-first workflow repeats the preferred query command."
                         },
                         {
-                            "path": "tools/knowledge/knowledge_code_context.ps1",
+                            "path": "tools/knowledge/knowledge_code_context.py",
                             "selector": "script",
                             "note": "Canonical helper for loading the code-task engineering context slice."
                         },

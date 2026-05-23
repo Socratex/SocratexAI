@@ -40,4 +40,4 @@ For code projects, also read:
 
 Adapter-specific files under `adapters/` are intentionally thin pointers. The shared contract in `core/AGENT-CONTRACT.json` is the source of truth.
 
-For any task that may touch source code, run `tools/knowledge/knowledge_code_context.ps1` before the first code read/write that could lead to an edit. Treat additional named views as additive only; `tools/repo/check_task.ps1` enforces the fresh full-guidance marker for changed-code tasks.
+For any task that may touch source code, run `tools/knowledge/knowledge_code_context.py` before the first code read/write that could lead to an edit. Treat additional named views as additive only; `tools/repo/check_task.ps1` enforces the fresh full-guidance marker for changed-code tasks.

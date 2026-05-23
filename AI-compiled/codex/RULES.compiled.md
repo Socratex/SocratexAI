@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-77ec5d4b1a8b
+Generated: source-952ea4ee4c27
 
 ## Source of Truth
 

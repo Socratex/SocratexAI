@@ -516,7 +516,7 @@
     "entry_name": "engineering.workflow.load_standards_before_code",
     "is_duplicate": true,
     "note": "Canonical helper for loading the code-task engineering context slice.",
-    "path": "tools/knowledge/knowledge_code_context.ps1",
+    "path": "tools/knowledge/knowledge_code_context.py",
     "selector": "script"
   },
   {
