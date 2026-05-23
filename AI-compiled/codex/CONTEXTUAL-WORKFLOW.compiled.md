@@ -1,8 +1,8 @@
 # Compiled Contextual Workflow Rules
 
-Generated: source-1b3ebee6b64c
+Generated: source-272096aa390a
 
-WORKFLOW.json is opt-in priority context, not default context.
+`WORKFLOW.json` is opt-in priority context, not default context.
 
 Read it when:
 
@@ -12,4 +12,4 @@ Read it when:
 
 Do not read it for narrow local fixes without priority or planning impact.
 
-Installed projects get WORKFLOW.json from 	emplates/WORKFLOW.json.
+Installed projects get `WORKFLOW.json` from `templates/WORKFLOW.json`.

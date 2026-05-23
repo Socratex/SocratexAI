@@ -2498,8 +2498,11 @@
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
+                    "tools/pipeline/compile_pipeline_context.py",
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
                     "tools/pipeline/check_ai_compiled_context.ps1",
+                    "tools/pipeline/check_ai_compiled_context.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],
@@ -2520,8 +2523,11 @@
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "compile_pipeline_context.py",
                     "rebuild_ai_compiled_context.ps1",
+                    "rebuild_ai_compiled_context.py",
                     "check_ai_compiled_context.ps1",
+                    "check_ai_compiled_context.py",
                     "audit_docs.ps1"
                 ],
                 "required_catalog_entries": {
@@ -2542,8 +2548,11 @@
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "compile_pipeline_context.py",
                         "rebuild_ai_compiled_context.ps1",
+                        "rebuild_ai_compiled_context.py",
                         "check_ai_compiled_context.ps1",
+                        "check_ai_compiled_context.py",
                         "audit_docs.ps1"
                     ]
                 },
@@ -2555,11 +2564,15 @@
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Prefer rebuild_ai_compiled_context.py for Python-first compiled context refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py --check",
+                    "python3 -B tools/pipeline/rebuild_ai_compiled_context.py --check",
+                    "python3 -B tools/pipeline/check_ai_compiled_context.py --repo-root .",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py --paths tools/pipeline/compile_pipeline_context.py tools/pipeline/rebuild_ai_compiled_context.py tools/pipeline/check_ai_compiled_context.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
                 "known_failure_if_missing": "If 'compiled_agent_instruction_layer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."

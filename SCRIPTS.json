@@ -24,6 +24,7 @@
         "check_utf8_writes.ps1",
         "legacy_commit_task_compatibility_wrapper.ps1",
         "compile_pipeline_context.ps1",
+        "compile_pipeline_context.py",
         "generate_installed_agent_instructions.ps1",
         "configure_powershell_utf8.ps1",
         "console_summary.ps1",
@@ -114,6 +115,7 @@
         "resolve_tool_runtime.ps1",
         "resolve_workspace_root.ps1",
         "rebuild_ai_compiled_context.ps1",
+        "rebuild_ai_compiled_context.py",
         "reinitialize_pipeline.ps1",
         "remove_pipeline.ps1",
         "repair_mojibake.ps1",
@@ -571,6 +573,24 @@
             "output": {
                 "success": "Completes the pipeline operation and writes, checks, or prints the requested pipeline artifact.",
                 "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
+            }
+        },
+        "compile_pipeline_context.py": {
+            "path": "tools/pipeline/compile_pipeline_context.py",
+            "category": "pipeline",
+            "description": "Python orchestration entrypoint for refreshing or checking pipeline bootstrap and AI-compiled context.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--output-dir",
+                    "--check"
+                ],
+                "rule": "Use this as the Python-first replacement for compile_pipeline_context.ps1 during Pass 0S."
+            },
+            "output": {
+                "success": "Refreshes/checks pipeline bootstrap and AI-compiled context through Python tools.",
+                "failure": "Exits nonzero when bootstrap, compiled context generation, or compiled context check fails."
             }
         },
         "generate_installed_agent_instructions.ps1": {
@@ -2483,6 +2503,25 @@
                 "failure": "Throws or exits nonzero when source compilation, knowledge compilation, or check mode fails."
             }
         },
+        "rebuild_ai_compiled_context.py": {
+            "path": "tools/pipeline/rebuild_ai_compiled_context.py",
+            "category": "pipeline",
+            "description": "Python generator for AI-compiled instruction files, SQLite knowledge database, and JSON knowledge-file fallback from source documents.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--output-dir",
+                    "--packs",
+                    "--check"
+                ],
+                "rule": "Use this as the Python-first compiled context refresh/check path; keep the legacy wrapper only until the no-PowerShell deletion pass."
+            },
+            "output": {
+                "success": "Refreshes or checks generated AI-compiled artifacts and prints OK when complete.",
+                "failure": "Exits nonzero when source compilation, knowledge compilation, or check mode fails."
+            }
+        },
         "reinitialize_pipeline.ps1": {
             "path": "tools/pipeline/reinitialize_pipeline.ps1",
             "category": "pipeline",
@@ -3162,6 +3201,7 @@
                 "check_ai_compiled_context.py",
                 "python_runtime.py",
                 "pipeline_package.py",
+                "compile_pipeline_context.py",
                 "update_pipeline_from_link.py",
                 "sync_managed_pipeline_package.py",
                 "compile_pipeline_context.ps1",
@@ -3177,6 +3217,7 @@
                 "resolve_tool_runtime.ps1",
                 "resolve_workspace_root.ps1",
                 "rebuild_ai_compiled_context.ps1",
+                "rebuild_ai_compiled_context.py",
                 "reinitialize_pipeline.ps1",
                 "remove_pipeline.ps1",
                 "set_directives.ps1",

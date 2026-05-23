@@ -17,6 +17,15 @@ def main() -> int:
 
     root = Path(args.repo_root).resolve()
     output = root / args.output_dir
+    rebuild = root / "tools" / "pipeline" / "rebuild_ai_compiled_context.py"
+    if rebuild.is_file():
+        completed = subprocess.run(
+            [sys.executable, "-B", str(rebuild), "--repo-root", str(root), "--output-dir", args.output_dir, "--check"],
+            cwd=root,
+            check=False,
+        )
+        return completed.returncode
+
     required = [
         output / "codex" / "ENTRYPOINT.md",
         output / "codex" / "RULES.compiled.md",

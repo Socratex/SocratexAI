@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-1b3ebee6b64c",
+  "generated_at": "source-272096aa390a",
   "source_hashes": {
     "AGENTS.md": "c2e7d0359d8c2faa695de4880c06ffa41aea651e13f0012c7f892ca92e02c589",
     "README.md": "05759399dc97a94232d2229fec7ce9718cb339adc51da20b8d3cc774c4337b87",
@@ -9,8 +9,8 @@
     "WORKFLOW.json": "c7b3e9619a47afe964b765ff9cbd9b52bf9f1a2a8498b6c2999a16b915f9e6ab",
     "COMMANDS.json": "7ae768535f5e697de610b6351a040ff4757683690240ca225c2d7a3931bf0f0d",
     "FLOWS.json": "5cb99a77abd7084209df0fba49059ccbb08f7b5cfcdcf768f2e48a7463eb35f9",
-    "SCRIPTS.json": "26bb4e78f98a51f2f0d3baee1e4f4c1e95357f3dc6875cc3f4015f84799a42b5",
-    "docs-tech/PIPELINE-BOOTSTRAP.json": "ccd6e31c04cdfb78c443b4a70a24bc882facf52a2156a23fca0cb4291d56c438",
+    "SCRIPTS.json": "44db0aa13c94206f99ba9d7e129d4eaf809ed0b6a1e113cd218bfb408a9a6d31",
+    "docs-tech/PIPELINE-BOOTSTRAP.json": "685a9fac55e154a1660f4dab4344ef11d7af0fb9c0a77b7a4bb38b88b134c330",
     "core/AGENT-CONTRACT.json": "a3c11846310c54c5f1318b287d854bcd076229ce6a9f1cdb76eaf6f6dd4d3a85",
     "core/CONTEXT-TIERS.json": "25e29acd6a07970ce1ab35d2a2ba1e74345ba0d23b16968318247592c0354658",
     "core/MEMORY-MODEL.json": "5a989d881ac7f56300a2988b4e4cc71dd113daba895b94a7805eb8a21818bc33",
@@ -31,6 +31,10 @@
     "tools/knowledge/knowledge_file_select.ps1": "ec9ed6c6ba10fd748e79b0bdfe62e857bfcd3f25b43ff509024214059bddf1f1",
     "tools/pipeline/pipeline_bootstrap_index.py": "784412b98a2e6f5c59837d0f7c5565473d97e59ae811370062f67aa4eb42755a",
     "tools/pipeline/pipeline_bootstrap_index.ps1": "c7a6642e6e2ebde39abec94856cde3f074c837215c26f93301c4c0f16dd44599",
+    "tools/pipeline/compile_pipeline_context.py": "b03f7a55531df3a2c8e3693c8ad76fe975c8054bb2e39d571bb2f82540cf06ab",
+    "tools/pipeline/compile_pipeline_context.ps1": "a9dbc2cf8dd5755152beb62f46009b9fb2471fdd073bab7660349b089cc031b0",
+    "tools/pipeline/rebuild_ai_compiled_context.py": "7864e6f597a01604b43054b1a31b653861c7666713de1d4b18346c3b35566081",
+    "tools/pipeline/check_ai_compiled_context.py": "75fcb01413d36f8e9a334f23295b3204db541e0e199d020442b1030695c503e3",
     "templates/WORKFLOW.json": "3ff145e0fb1907c456978a8c8068d1f16dc68c89bf020e013e1facf1ad641433",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "6ab59e0b5de1b08b161c3d2e486fcbe543e8c897a2c3d2c9c90c66c764281cc6",
     "templates/code/context-docs/ENGINEERING.json": "33a3498d57610d3fd9d909cf282e191f51a260351201514d90e3a03a26ad62b8",
@@ -52,12 +56,12 @@
     "project/gamedev/PACK.json": "2d82f949e3f88e56b3cbf61d1089d22dbb55e0084031196428efc19ae0495d4c"
   },
   "output_hashes": {
-    "README.md": "d066b6cd837082095c4a037ac3c5619ba562ed9762f239a8e4cce0ea94e35659",
-    "INDEX.json": "f3afda3adc3438d5b3cba956fe5416387bd640d35edfbc9475976be861cf4146",
-    "codex/ENTRYPOINT.md": "d66bc59daf1b3c27b79dcb7760bb2890ac6a46a722589f6c804496ddcb9fead2",
-    "codex/RULES.compiled.md": "413792a33231bfe690a1f51f3847de6ea70bf94ce3f383fe5a4bac5ce3fad886",
-    "codex/WORKFLOW.compiled.md": "99e520ee0b82e5f0d2251ae9a77425ee702510346d22acfd21e6550b1fd75c2c",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "a368bdd02dc86493b13f6bcc41230f1b10cf6de44e8fb86714bc187c1440fa42",
-    "codex/TEAM.compiled.md": "cc602954f1098ad52acfb779e7efad9d6f2942c50ace95f1e80980d078d62262"
+    "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
+    "INDEX.json": "20d6610065309de75a3a69ecaf30f900068975823dfddb15dbca4162ff6754d6",
+    "codex/ENTRYPOINT.md": "eea3d7c73759581ed81684255218f5bcbab5a49206e812a05deb87c268e7d0e2",
+    "codex/RULES.compiled.md": "f40aea8fa853039e316f6a6dee0e1968852fe66923311eb08546ce14acb3b465",
+    "codex/WORKFLOW.compiled.md": "035fc37928aead60cc0ab99d206a27c7116f2b0fd8b1da31574f2236166008f4",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "83085a9438a3fdb3eba29bff3e6e0f5c4cf5abab03dd1301a5d660eb6fa11aa4",
+    "codex/TEAM.compiled.md": "27c62ca0673351b53cbb6389d77a984a4747dcf1fe532e0428014cb429452d28"
   }
 }

@@ -4,8 +4,8 @@ Generated read-optimized agent instructions.
 
 Do not edit this directory manually. Edit source instructions and run:
 
-~~~powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/rebuild_ai_compiled_context.ps1
+~~~bash
+python -B tools/pipeline/rebuild_ai_compiled_context.py
 ~~~
 
-Codex starts at codex/ENTRYPOINT.md.
+Codex starts at `codex/ENTRYPOINT.md`.

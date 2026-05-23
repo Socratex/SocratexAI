@@ -1,11 +1,11 @@
 # Compiled Rules for Codex
 
-Generated: source-1b3ebee6b64c
+Generated: source-272096aa390a
 
 ## Source of Truth
 
 - Source instructions remain authoritative.
-- AI-compiled/ is a generated read-optimized cache.
+- `AI-compiled/` is a generated read-optimized cache.
 - Do not edit compiled files manually.
 - Recompile after source instruction, workflow, template, or pack changes.
 
@@ -17,17 +17,20 @@ Generated: source-1b3ebee6b64c
     "body": "## Purpose\n\nThis file is the shared instruction contract for all adapters and project packs.\n\nThe agent's job is to preserve project continuity, make state explicit, execute concrete work, and keep decisions falsifiable.\n"
 }
 
+
 {
     "title": "Operating Principles",
     "format": "markdown-section",
     "body": "## Operating Principles\n\n- Prefer epistemic accuracy over agreement, optimism, or style.\n- Separate observed facts, reasoned inference, speculation, and value judgment.\n- Do not mirror the user's belief unless it is independently supported by evidence.\n- Challenge vague, unsupported, contradictory, or likely false assumptions when the correction is useful.\n- State uncertainty explicitly when confidence is limited.\n- Prefer explicit contracts over hidden convention.\n- Preserve momentum when the request is clear.\n- Ask questions only when missing information materially changes the action.\n- Keep project-facing files concise, current, and useful.\n- Read `DOCS.json` before reading, creating, renaming, or updating project documents.\n- Update `DOCS.json` whenever a durable document is added, removed, renamed, or its role changes.\n- Prefer the smallest meaningful ownership slice.\n- Avoid broad sweeps when a narrow contract point solves the problem.\n- Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.\n- Prefer high-ROI improvements over comprehensive but low-impact passes.\n- When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.\n- Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.\n- For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text when a tag extractor is available, then query the compiled knowledge layer by those tags before answering or executing. Treat tag-selected notes as routing context, not a replacement for exact source reads when edits or high-stakes claims depend on source truth.\n- When improving reusable SocratexPipeline behavior, keep source contracts, project packs, templates, feature contracts, and compiled/update surfaces in parity. If the user says to improve the template too, treat template parity as mandatory acceptance criteria, not as a follow-up.\n"
 }
 
+
 {
     "title": "Project Memory Layers",
     "format": "markdown-section",
     "body": "## Project Memory Layers\n\nUse these concepts regardless of file names:\n\n- Active state: the current checkpoint, next action, blockers, and risks.\n- Workflow: owner-written active pain points, priority challenge rules, and team-on-demand routing.\n- Execution plan: active and near-future passes.\n- Backlog: valuable work not yet selected for execution.\n- Decision log: durable choices and why they were made.\n- Issue registry: active defects, risks, or unresolved problems.\n- Context capsules: short technical or domain memory that prevents rereading or repeated mistakes.\n- Completion log: shipped outcomes and major fixes.\n\nContext tier rule: keep Tier 1 as the small always-loaded core and decision gates; route operating rules through Tier 2, deep patterns through Tier 3, history/vision/backlog through Tier 4, and FOMO/inactive inspiration through Tier 5. Read `core/CONTEXT-TIERS.json` before changing directive hierarchy, startup context, knowledge tiering, or context budgets.\n\nRequired selective reads:\n- `core/PROMOTION-RULES.json` before moving work between memory layers.\n- `core/CONTEXT-TIERS.json` before changing directive hierarchy, context budget, compiled-knowledge routing, or knowledgebase tier metadata.\n- `core/PROJECT-PROFILE.json` when `PIPELINE-CONFIG.json` contains `project_profile`.\n- `core/ROI-BIAS.json` before ranking recommendations, planning work, or reviewing tradeoffs.\n- `core/SCRIPT-FALLBACK.json` before bypassing any script that cannot run.\n- `core/TASK-WORK.json` before broad multi-step work that needs a temporary micro-task plan.\n- `core/INSTRUCTION-CAPTURE.json` before rewriting files that collect raw user instructions.\n- `core/FILE-FORMATS.json` before creating or renaming project memory files.\n- `WORKFLOW.json` after active state only when priority steering, feature triage, planning, or broad project-risk judgment matters.\n- `team/*.json` only on demand: when the user names a role, asks for team-style review, or `WORKFLOW.json` routes the task to that role. Treat team files as decision lenses, not default context.\n"
 }
+
 
 ## Context Tiers
 
@@ -126,7 +129,7 @@ Generated: source-1b3ebee6b64c
 
 ## Communication Profiles
 
-Source of truth: core/communication-profiles/*.txt.
+Source of truth: `core/communication-profiles/*.txt`.
 
 ### epistemic
 
@@ -261,6 +264,7 @@ Draft placeholder:
     "format": "markdown-section",
     "body": "## Tool-First JSON\nUse SocratexAI tools for structured JSON documents in every project type, including generic, personal, and creative projects.\nIn non-code projects, this applies primarily to agent-only JSON files. User-facing Markdown memory can be edited as prose unless a dedicated Markdown tool exists.\nDefault tool discipline:\n- Use `tools/documents/list_document_keys.ps1` and `tools/documents/read_document_item.ps1` for selective reads when a JSON document is structured.\n- Use `tools/documents/insert_document_item.ps1` for controlled single-item insertion.\n- Use `tools/documents/bulk_insert_document_items.ps1` for controlled multi-item insertion into one document.\n- Use `tools/documents/move_document_item.ps1` for moving items inside one JSON document.\n- Use `tools/documents/migrate_document_item.ps1` for moving or copying items between JSON documents.\n- Use `tools/json/json_node_edit.ps1` when the full JSON node path is known, including nested list nodes and keys with dots through slash-separated paths.\n- For JSON operations that only change structure or order, such as move, reorder, delete, insert before/after, or migrate, use document/JSON scripts instead of manual JSON editing.\n- If one task requires both structural/order changes and content edits, perform the scripted structural operation first, then set or patch the content.\n- Treat document edit tools as transaction wrappers: the tool should own its write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.\n- Do not compose manual read/edit/normalize/cache/check/read command queues after a successful transactional document edit tool.\n- Use full `tools/documents/audit_docs.ps1` at the final verification boundary, not after every item edit; use `tools/pipeline/reinitialize_pipeline.ps1` when newly introduced initialized artifacts need to be added without overwriting existing memory.\n- Run status, audit, quality, line-index, and finish scripts at verification boundaries instead of after every micro-edit; for normal code-project work, complete the current edit scope, then run `tools/repo/finalize_task_check_commit_push.ps1 -Message \"<message>\"` when available.\n- `tools/repo/finalize_task_check_commit_push.ps1` is the preferred code-project closure command: it should discover changed files, normalize text, rebuild cache, refresh indexes, run audit/quality, stage intentional files, commit, push, and report final repository state.\n- If `tools/repo/finalize_task_check_commit_push.ps1` or an owned finalizer fails on a repeatable mechanical issue, improve the script before rerunning instead of preserving manual recovery steps.\n- Use `pipeline_featurelist.json` as the compact source/instance comparison layer; `tools/repo/open_pipeline_learning_issue.ps1` is the only public network intake path for pipeline improvement reports, while `tools/repo/learn_pipeline_features.ps1` is the maintainer-side promotion tool for reviewed reusable feature IDs.\n- Use `tools/knowledge/knowledge_select.ps1` to load compiled SQLite knowledge by named view, tag, type, source path, document path, entry name, or startup flag before expanding into heavier source documents.\n- Treat `AI-compiled/project/knowledge.sqlite` as generated output, not source of truth; edit sources first, refresh with `tools/knowledge/knowledge_compile.ps1` or targeted upserts, check with `tools/knowledge/knowledge_check.ps1`, and use `AI-compiled/project/knowledge-files/` plus `knowledge_file_*` scripts when SQLite is unavailable.\nFor structured JSON documents, full-text grep tools such as `Select-String`, `grep`, or `rg` are fallback tools, not the default read path. Use `tools/documents/read_document_item.ps1` when the stable key is known, `tools/documents/list_document_keys.ps1` when the local key list is needed, and `tools/documents/review_document_list_candidates.ps1` or `tools/documents/check_document_list_item_duplicates.ps1` when searching by intent or phrase. Use text grep on JSON only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.\nManual JSON edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.json`.\nNever silently bypass a relevant tool in a non-code project just because the project is not programming-related.\n- Use `tools/documents/insert_document_list_item.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing structured JSON item; it should replace chained key/read/search/manual-edit/check queues for that case.\n- Use `tools/documents/check_document_list_item_duplicates.ps1` before list insertion only when the user asks for a duplicate report or possible matches must be reviewed before choosing the target item.\n- For documentation updates outside context capsules and strictly technical agent memory, use the candidate-title flow by default: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>`, read only candidate sections with `tools/documents/read_document_items_by_title.ps1 -Titles <titles>`, then apply the update with one transactional insert or item script.\n- `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>` returns candidate titles, keys, matched terms, and excerpts so the agent can avoid broad reads before deciding whether an update is a duplicate.\n- `tools/documents/read_document_items_by_title.ps1 -Titles <titles>` reads only selected candidate sections by title or key after duplicate discovery.\n- Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title workflow: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>`, read only candidates with `tools/documents/read_document_items_by_title.ps1 -Titles <titles>`, then write once through a transactional document script."
 }
+
 
 ## Feature Manifest
 
@@ -722,6 +726,7 @@ Draft placeholder:
                     "tools/documents",
                     "tools/text/normalize_json_files.ps1",
                     "tools/text/normalize_json_files.py",
+                    "tools/documents/build_document_cache.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
@@ -891,6 +896,7 @@ Draft placeholder:
                 ],
                 "required_scripts": [
                     "build_document_cache.ps1",
+                    "build_document_cache.py",
                     "audit_docs.ps1",
                     "json_list_doc.py",
                     "json_read.ps1",
@@ -909,6 +915,7 @@ Draft placeholder:
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "build_document_cache.ps1",
+                        "build_document_cache.py",
                         "audit_docs.ps1",
                         "json_list_doc.py",
                         "json_read.ps1",
@@ -934,10 +941,14 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Prefer build_document_cache.py for Python-first document cache refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/documents/build_document_cache.py tools/documents/document_read_cache_engine.py",
+                    "python3 -B tools/documents/build_document_cache.py --output-dir /tmp/socratex-doc-cache-smoke",
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/documents/build_document_cache.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
@@ -999,6 +1010,7 @@ Draft placeholder:
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
+                    "tools/codebase/update_code_line_index.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],
@@ -1006,6 +1018,7 @@ Draft placeholder:
                     "knowledge_code_context.ps1",
                     "check_code_context_gate.ps1",
                     "update_code_line_index.ps1",
+                    "update_code_line_index.py",
                     "audit_docs.ps1"
                 ],
                 "required_catalog_entries": {
@@ -1013,6 +1026,7 @@ Draft placeholder:
                         "knowledge_code_context.ps1",
                         "check_code_context_gate.ps1",
                         "update_code_line_index.ps1",
+                        "update_code_line_index.py",
                         "audit_docs.ps1"
                     ]
                 },
@@ -1025,10 +1039,14 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Prefer update_code_line_index.py for Python-first line-index refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/codebase/update_code_line_index.py",
+                    "python3 -B tools/codebase/update_code_line_index.py --check",
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/codebase/update_code_line_index.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
@@ -1042,12 +1060,14 @@ Draft placeholder:
                     "tools/quality",
                     "QUALITY-GATE.json",
                     "project/code/GIT.json",
+                    "tools/repo/finalize_changed_files_commit_push.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],
                 "required_scripts": [
                     "finalize_task_check_commit_push.ps1",
                     "finalize_changed_files_commit_push.ps1",
+                    "finalize_changed_files_commit_push.py",
                     "run_final_task_checks.ps1",
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
@@ -1106,6 +1126,7 @@ Draft placeholder:
                 "required_scripts": [
                     "finalize_task_check_commit_push.ps1",
                     "finalize_changed_files_commit_push.ps1",
+                    "finalize_changed_files_commit_push.py",
                     "run_final_task_checks.ps1",
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
@@ -1143,6 +1164,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/repo/finalize_changed_files_commit_push.py tools/repo/run_final_task_checks.py",
+                    "python3 -B tools/repo/finalize_changed_files_commit_push.py --help",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
@@ -1335,6 +1358,7 @@ Draft placeholder:
                     "tools/quality/check_evals.py",
                     "tools/quality/check_python_syntax.py",
                     "tools/repo/run_final_task_checks.py",
+                    "tools/repo/finalize_changed_files_commit_push.py",
                     "tools/repo/run_final_task_checks.ps1",
                     "tools/repo/check_sensitive_reference_leaks.py"
                 ],
@@ -1342,6 +1366,7 @@ Draft placeholder:
                     "run_quality_gate_contract.py",
                     "run_quality_gate.py",
                     "run_final_task_checks.py",
+                    "finalize_changed_files_commit_push.py",
                     "check_evals.py",
                     "check_python_syntax.py",
                     "check_sensitive_reference_leaks.py",
@@ -1352,6 +1377,7 @@ Draft placeholder:
                         "run_quality_gate_contract.py",
                         "run_quality_gate.py",
                         "run_final_task_checks.py",
+                        "finalize_changed_files_commit_push.py",
                         "check_evals.py",
                         "check_python_syntax.py",
                         "check_sensitive_reference_leaks.py",
@@ -1367,17 +1393,17 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Keep QUALITY-GATE.json executable by the Python runner without invoking the retired command runtime for Python-first checks.",
                     "Keep source finalizer quality execution pointed at run_quality_gate.py while the broader finalizer itself is being ported.",
-                    "Keep run_final_task_checks.py check-only until Python generators replace all refresh steps; do not claim it is the full committing finalizer path.",
+                    "Keep run_final_task_checks.py check-only until Python generators replace all refresh steps; use finalize_changed_files_commit_push.py only for Python commit/push orchestration around the current Python-backed checks.",
                     "Keep the eval framework and sensitive-reference smoke checks behaviorally equivalent to their legacy wrappers until the wrappers are deleted.",
                     "Compile and run the Python runner plus focused command subsets before promoting the quality-gate path.",
                     "Sync the managed package so installed child projects receive the Python runner and checker entries."
                 ],
                 "verification_commands": [
-                    "python3 -B tools/quality/check_python_syntax.py tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py",
+                    "python3 -B tools/quality/check_python_syntax.py tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py tools/repo/finalize_changed_files_commit_push.py",
                     "python3 -B tools/repo/run_final_task_checks.py --quality --quality-command-names python_compile,eval_framework,sensitive_reference_smoke,transactional_doc_tools",
                     "python3 -B tools/quality/run_quality_gate.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
                     "python3 -B tools/quality/run_quality_gate_contract.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
-                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py tools/repo/run_final_task_checks.ps1 QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py tools/repo/finalize_changed_files_commit_push.py tools/repo/run_final_task_checks.ps1 QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
                 ],
                 "known_failure_if_missing": "QUALITY-GATE.json remains dependent on the retired command runtime even when individual Python checks exist, so Pass 0S cannot close without preserving source and child smoke coverage."
             },
@@ -1949,19 +1975,25 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'directive_compiler_and_setter' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "prompt_and_output_snapshots": {
-                "summary": "Prompt And Output Snapshots capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Prompt And Output Snapshots capability is active only when Python task and OUTPUT snapshot helpers, catalogs, update path, and verification remain present.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
+                    "tools/repo/task_snapshot.py",
+                    "tools/repo/end_prompt_snapshot.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],
                 "required_scripts": [
+                    "task_snapshot.py",
+                    "end_prompt_snapshot.py",
                     "audit_docs.ps1"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
+                        "task_snapshot.py",
+                        "end_prompt_snapshot.py",
                         "audit_docs.ps1"
                     ]
                 },
@@ -1972,14 +2004,19 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Keep Python snapshot helpers behaviorally aligned with the finalizer output needs before replacing legacy calls.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/repo/task_snapshot.py tools/repo/end_prompt_snapshot.py",
+                    "python3 -B tools/repo/task_snapshot.py --max-lines 20",
+                    "python3 -B tools/repo/end_prompt_snapshot.py --output-path /tmp/socratex-output-snapshot-smoke --no-sound",
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/repo/task_snapshot.py tools/repo/end_prompt_snapshot.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
-                "known_failure_if_missing": "If 'prompt_and_output_snapshots' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+                "known_failure_if_missing": "If 'prompt_and_output_snapshots' is listed without these artifacts, finalizers keep depending on legacy snapshot helpers even after the Python commit path exists."
             },
             "changelog_entry_helper": {
                 "summary": "Changelog Entry Helper capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
@@ -2732,8 +2769,11 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
+                    "tools/pipeline/compile_pipeline_context.py",
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
                     "tools/pipeline/check_ai_compiled_context.ps1",
+                    "tools/pipeline/check_ai_compiled_context.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],
@@ -2754,8 +2794,11 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "compile_pipeline_context.py",
                     "rebuild_ai_compiled_context.ps1",
+                    "rebuild_ai_compiled_context.py",
                     "check_ai_compiled_context.ps1",
+                    "check_ai_compiled_context.py",
                     "audit_docs.ps1"
                 ],
                 "required_catalog_entries": {
@@ -2776,8 +2819,11 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "compile_pipeline_context.py",
                         "rebuild_ai_compiled_context.ps1",
+                        "rebuild_ai_compiled_context.py",
                         "check_ai_compiled_context.ps1",
+                        "check_ai_compiled_context.py",
                         "audit_docs.ps1"
                     ]
                 },
@@ -2789,11 +2835,15 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Prefer rebuild_ai_compiled_context.py for Python-first compiled context refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py --check",
+                    "python3 -B tools/pipeline/rebuild_ai_compiled_context.py --check",
+                    "python3 -B tools/pipeline/check_ai_compiled_context.py --repo-root .",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py --paths tools/pipeline/compile_pipeline_context.py tools/pipeline/rebuild_ai_compiled_context.py tools/pipeline/check_ai_compiled_context.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],
                 "known_failure_if_missing": "If 'compiled_agent_instruction_layer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
