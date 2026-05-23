@@ -4159,7 +4159,7 @@
         "archive_logs_for_run.py",
         "build_and_run.ps1",
         "changed_quality_gate.py",
-        "check_csharp.ps1",
+        "check_csharp.py",
         "clear_logs.bat",
         "console_summary.py",
         "export-playtest.bat",
@@ -4674,10 +4674,10 @@
           "ref": "content.changed_quality_gate.py",
           "status": ""
         },
-        "check_csharp.ps1": {
-          "path": "content.check_csharp.ps1",
+        "check_csharp.py": {
+          "path": "content.check_csharp.py",
           "title": "",
-          "ref": "content.check_csharp.ps1",
+          "ref": "content.check_csharp.py",
           "status": ""
         },
         "clear_logs.bat": {

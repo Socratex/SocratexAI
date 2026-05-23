@@ -97,7 +97,7 @@
         "archive_logs_for_run.py",
         "build_and_run.ps1",
         "changed_quality_gate.py",
-        "check_csharp.ps1",
+        "check_csharp.py",
         "clear_logs.bat",
         "console_summary.py",
         "export-playtest.bat",
@@ -694,10 +694,23 @@
                 ]
             }
         },
-        "check_csharp.ps1": {
+        "check_csharp.py": {
+            "path": "Tools/gamedev/check_csharp.py",
             "category": "Gamedev",
-            "description": "sprawdza część C# projektu.",
-            "benefit": "domena C# nie psuje się po zmianach."
+            "description": "sprawdza część C# projektu przez Pythonowy smoke build/run/profile.",
+            "benefit": "domena C# nie psuje się po zmianach i nie wymaga PowerShell.",
+            "input": {
+                "optional": [
+                    "--require-dotnet-sdk",
+                    "--profile",
+                    "--allow-csc-fallback",
+                    "--configuration",
+                    "-RequireDotnetSdk",
+                    "-Profile",
+                    "-AllowCscFallback",
+                    "-Configuration"
+                ]
+            }
         },
         "clear_logs.bat": {
             "category": "Gamedev",
@@ -1924,7 +1937,7 @@
                 "bootstrap_godot_console.ps1",
                 "build_and_run.ps1",
                 "changed_quality_gate.py",
-                "check_csharp.ps1",
+                "check_csharp.py",
                 "clear_logs.bat",
                 "console_summary.py",
                 "export-playtest.bat",
