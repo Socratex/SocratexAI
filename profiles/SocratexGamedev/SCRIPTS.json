@@ -41,8 +41,10 @@
         "normalize_markdown_emoji.ps1",
         "context_tags.ps1",
         "knowledge_check.ps1",
+        "knowledge_check.py",
         "knowledge_code_context.ps1",
         "knowledge_compile.ps1",
+        "knowledge_compile.py",
         "knowledge_delete.ps1",
         "knowledge_index.py",
         "knowledge_query.ps1",
@@ -1037,6 +1039,30 @@
             "category": "Pipeline",
             "description": "implementuje generowanie docs-tech/PIPELINE-BOOTSTRAP.json.",
             "benefit": "bootstrap index jest deterministyczny i może być sprawdzany w finalizerze."
+        },
+        "knowledge_check.py": {
+            "category": "knowledge",
+            "description": "Verify compiled SQLite knowledge artifacts against source knowledge documents without PowerShell, with JSON file fallback validation.",
+            "benefit": "nie pracujesz na przestarzałym kontekście.",
+            "path": "tools/knowledge/knowledge_check.py",
+            "input": {
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            }
+        },
+        "knowledge_compile.py": {
+            "category": "knowledge",
+            "description": "Compile source knowledge documents into the SQLite knowledge database and JSON fallback without PowerShell.",
+            "benefit": "skompilowany kontekst odzwierciedla aktualne dokumenty.",
+            "path": "tools/knowledge/knowledge_compile.py",
+            "input": {
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            }
         }
     },
     "metadata": {

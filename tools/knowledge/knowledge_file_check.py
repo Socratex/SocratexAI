@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+"""Check the compiled JSON knowledge file fallback."""
+
+from __future__ import annotations
+
+import argparse
+import subprocess
+import sys
+from pathlib import Path
+
+
+def configure_stdio() -> None:
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
+
+
+def main() -> int:
+    configure_stdio()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--repo-root", default="")
+    args = parser.parse_args()
+
+    repo_root = Path(args.repo_root).resolve() if args.repo_root else Path(__file__).resolve().parents[2]
+    tool = Path(__file__).resolve().with_name("knowledge_index.py")
+    command = [sys.executable, "-B", str(tool), "file-check", "--repo-root", str(repo_root)]
+    return subprocess.run(command, cwd=repo_root, text=True, check=False).returncode
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

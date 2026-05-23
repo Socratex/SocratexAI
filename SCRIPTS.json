@@ -82,16 +82,21 @@
         "Initialize-SocratexPipeline.py",
         "install_powershell.ps1",
         "knowledge_check.ps1",
+        "knowledge_check.py",
         "knowledge_code_context.ps1",
         "knowledge_code_context.py",
         "knowledge_compile.ps1",
+        "knowledge_compile.py",
         "knowledge_delete.ps1",
         "knowledge_file_check.ps1",
+        "knowledge_file_check.py",
         "knowledge_file_compile.ps1",
+        "knowledge_file_compile.py",
         "knowledge_file_delete.ps1",
         "knowledge_file_query.ps1",
         "knowledge_file_rename.ps1",
         "knowledge_file_select.ps1",
+        "knowledge_file_select.py",
         "knowledge_file_upsert.ps1",
         "knowledge_index.py",
         "knowledge_tier_report.py",
@@ -3269,6 +3274,96 @@
                 "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
                 "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
             }
+        },
+        "knowledge_check.py": {
+            "path": "tools/knowledge/knowledge_check.py",
+            "category": "knowledge",
+            "description": "Verify compiled SQLite knowledge artifacts against source knowledge documents without PowerShell, with JSON file fallback validation.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_compile.py": {
+            "path": "tools/knowledge/knowledge_compile.py",
+            "category": "knowledge",
+            "description": "Compile source knowledge documents into the SQLite knowledge database and JSON fallback without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_file_check.py": {
+            "path": "tools/knowledge/knowledge_file_check.py",
+            "category": "knowledge",
+            "description": "Verify JSON file-fallback knowledge artifacts against source knowledge documents without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_file_compile.py": {
+            "path": "tools/knowledge/knowledge_file_compile.py",
+            "category": "knowledge",
+            "description": "Compile source knowledge documents into JSON file-fallback knowledge tables without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_file_select.py": {
+            "path": "tools/knowledge/knowledge_file_select.py",
+            "category": "knowledge",
+            "description": "Select formatted knowledge context from JSON file-fallback tables without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--tags",
+                    "--match",
+                    "--type",
+                    "--load-at-start",
+                    "--context-tier",
+                    "--max-context-tier",
+                    "--source-path",
+                    "--document-path",
+                    "--name",
+                    "--format"
+                ],
+                "rule": "Run from the repository root after source knowledge changes or when selecting compiled knowledge context using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         }
     },
     "metadata": {
@@ -3317,16 +3412,21 @@
                 "context_tags.ps1",
                 "context_tags.py",
                 "knowledge_check.ps1",
+                "knowledge_check.py",
                 "knowledge_code_context.ps1",
                 "knowledge_code_context.py",
                 "knowledge_compile.ps1",
+                "knowledge_compile.py",
                 "knowledge_delete.ps1",
                 "knowledge_file_check.ps1",
+                "knowledge_file_check.py",
                 "knowledge_file_compile.ps1",
+                "knowledge_file_compile.py",
                 "knowledge_file_delete.ps1",
                 "knowledge_file_query.ps1",
                 "knowledge_file_rename.ps1",
                 "knowledge_file_select.ps1",
+                "knowledge_file_select.py",
                 "knowledge_file_upsert.ps1",
                 "knowledge_index.py",
                 "knowledge_tier_report.py",

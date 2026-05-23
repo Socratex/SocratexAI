@@ -595,16 +595,21 @@
         "Initialize-SocratexPipeline.py",
         "install_powershell.ps1",
         "knowledge_check.ps1",
+        "knowledge_check.py",
         "knowledge_code_context.ps1",
         "knowledge_code_context.py",
         "knowledge_compile.ps1",
+        "knowledge_compile.py",
         "knowledge_delete.ps1",
         "knowledge_file_check.ps1",
+        "knowledge_file_check.py",
         "knowledge_file_compile.ps1",
+        "knowledge_file_compile.py",
         "knowledge_file_delete.ps1",
         "knowledge_file_query.ps1",
         "knowledge_file_rename.ps1",
         "knowledge_file_select.ps1",
+        "knowledge_file_select.py",
         "knowledge_file_upsert.ps1",
         "knowledge_index.py",
         "knowledge_tier_report.py",
@@ -1582,6 +1587,36 @@
           "path": "content.knowledge_select.py",
           "title": "",
           "ref": "content.knowledge_select.py",
+          "status": ""
+        },
+        "knowledge_check.py": {
+          "path": "content.knowledge_check.py",
+          "title": "",
+          "ref": "content.knowledge_check.py",
+          "status": ""
+        },
+        "knowledge_compile.py": {
+          "path": "content.knowledge_compile.py",
+          "title": "",
+          "ref": "content.knowledge_compile.py",
+          "status": ""
+        },
+        "knowledge_file_check.py": {
+          "path": "content.knowledge_file_check.py",
+          "title": "",
+          "ref": "content.knowledge_file_check.py",
+          "status": ""
+        },
+        "knowledge_file_compile.py": {
+          "path": "content.knowledge_file_compile.py",
+          "title": "",
+          "ref": "content.knowledge_file_compile.py",
+          "status": ""
+        },
+        "knowledge_file_select.py": {
+          "path": "content.knowledge_file_select.py",
+          "title": "",
+          "ref": "content.knowledge_file_select.py",
           "status": ""
         }
       }
@@ -3894,8 +3929,10 @@
         "normalize_markdown_emoji.ps1",
         "context_tags.ps1",
         "knowledge_check.ps1",
+        "knowledge_check.py",
         "knowledge_code_context.ps1",
         "knowledge_compile.ps1",
+        "knowledge_compile.py",
         "knowledge_delete.ps1",
         "knowledge_index.py",
         "knowledge_query.ps1",
@@ -4712,6 +4749,18 @@
           "path": "content.pipeline_bootstrap_index.py",
           "title": "",
           "ref": "content.pipeline_bootstrap_index.py",
+          "status": ""
+        },
+        "knowledge_check.py": {
+          "path": "content.knowledge_check.py",
+          "title": "",
+          "ref": "content.knowledge_check.py",
+          "status": ""
+        },
+        "knowledge_compile.py": {
+          "path": "content.knowledge_compile.py",
+          "title": "",
+          "ref": "content.knowledge_compile.py",
           "status": ""
         }
       }

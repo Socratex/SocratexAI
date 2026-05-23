@@ -7,9 +7,9 @@ A user asks:
 The project has:
 
 ```text
-tools/knowledge/context_tags.ps1
-tools/knowledge/knowledge_select.ps1
-tools/knowledge/knowledge_file_select.ps1
+tools/knowledge/context_tags.py
+tools/knowledge/knowledge_select.py
+tools/knowledge/knowledge_file_select.py
 AI-compiled/project/knowledge.sqlite
 AI-compiled/project/knowledge-files/
 project/code/WORKFLOW.json

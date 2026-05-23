@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-23T19:37:53+02:00",
+    "generatedAt": "2026-05-23T19:47:31+02:00",
     "threshold": 300,
     "files": [
         {
@@ -24,6 +24,12 @@
             "path": "tools/pipeline/rebuild_ai_compiled_context.ps1",
             "lines": 434,
             "extension": ".ps1",
+            "large": true
+        },
+        {
+            "path": "tools/pipeline/rebuild_ai_compiled_context.py",
+            "lines": 431,
+            "extension": ".py",
             "large": true
         },
         {
@@ -567,6 +573,12 @@
             "large": false
         },
         {
+            "path": "tools/pipeline/compile_pipeline_context.py",
+            "lines": 57,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/quality/run_quality_gate.ps1",
             "lines": 53,
             "extension": ".ps1",
@@ -597,6 +609,12 @@
             "large": false
         },
         {
+            "path": "tools/pipeline/check_ai_compiled_context.py",
+            "lines": 49,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/quality/run_quality_fix.ps1",
             "lines": 48,
             "extension": ".ps1",
@@ -617,12 +635,6 @@
         {
             "path": "tools/documents/build_document_cache.py",
             "lines": 42,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/check_ai_compiled_context.py",
-            "lines": 41,
             "extension": ".py",
             "large": false
         },
@@ -687,6 +699,12 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_check.py",
+            "lines": 35,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/audit_docs.py",
             "lines": 34,
             "extension": ".py",
@@ -726,6 +744,12 @@
             "path": "tools/json/json_read.ps1",
             "lines": 32,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_compile.py",
+            "lines": 32,
+            "extension": ".py",
             "large": false
         },
         {
@@ -825,6 +849,18 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_file_check.py",
+            "lines": 22,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_file_compile.py",
+            "lines": 22,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/knowledge/knowledge_file_query.ps1",
             "lines": 21,
             "extension": ".ps1",
@@ -888,6 +924,12 @@
             "path": "tools/knowledge/knowledge_file_compile.ps1",
             "lines": 15,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_file_select.py",
+            "lines": 13,
+            "extension": ".py",
             "large": false
         },
         {
