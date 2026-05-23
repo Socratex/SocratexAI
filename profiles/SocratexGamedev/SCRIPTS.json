@@ -123,7 +123,7 @@
         "run_quality_gate.ps1",
         "run_smoke_diagnostics.py",
         "run_terrain_diagnostics.py",
-        "set_game_version.ps1",
+        "set_game_version.py",
         "worker_lifecycle_report.ps1",
         "check_project_context.ps1",
         "compile.ps1",
@@ -826,11 +826,6 @@
             "category": "Gamedev",
             "description": "uruchamia pełny gate jakości gry.",
             "benefit": "masz jedno miejsce do potwierdzenia, że projekt nadal działa."
-        },
-        "set_game_version.ps1": {
-            "category": "Gamedev",
-            "description": "ustawia wersję gry.",
-            "benefit": "buildy mają spójne oznaczenie."
         },
         "worker_lifecycle_report.ps1": {
             "category": "Gamedev",
@@ -1727,6 +1722,25 @@
                 "success": "Exit 0 po poprawnym załadowaniu wskazanych skryptów przez Godot smoke harness.",
                 "failure": "Exit non-zero przy braku wejścia, błędzie normalizacji albo błędzie Godot smoke."
             }
+        },
+        "set_game_version.py": {
+            "path": "Tools/gamedev/set_game_version.py",
+            "category": "Gamedev",
+            "description": "Ustawia wersję gry i metadane eksportu Windows bez PowerShell.",
+            "benefit": "Buildy mają spójne oznaczenie w build_version.cfg, project.godot i export_presets.cfg.",
+            "input": {
+                "required": [
+                    "version"
+                ],
+                "optional": [
+                    "--version/-Version"
+                ],
+                "rule": "Akceptuje X.Y.Z albo X.Y.Z.0; rewizje inne niż .0 są celowo blokowane przez obecny model wersji."
+            },
+            "output": {
+                "success": "Exit 0 i zaktualizowane Game/build_version.cfg, Game/project.godot oraz Game/export_presets.cfg.",
+                "failure": "Exit non-zero przy złym formacie wersji albo brakującym prefiksie linii w plikach konfiguracyjnych."
+            }
         }
     },
     "metadata": {
@@ -1852,7 +1866,7 @@
                 "run_quality_gate.ps1",
                 "run_smoke_diagnostics.py",
                 "run_terrain_diagnostics.py",
-                "set_game_version.ps1",
+                "set_game_version.py",
                 "worker_lifecycle_report.ps1",
                 "archive_logs_for_run.py",
                 "wait_operator_event.py",
