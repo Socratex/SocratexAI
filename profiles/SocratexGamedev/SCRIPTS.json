@@ -112,17 +112,17 @@
         "prepare_operator_test_config.py",
         "send_operator_command.py",
         "route_retest_report.ps1",
-        "run_map_performance_smoke.ps1",
+        "run_map_performance_smoke.py",
         "wait_operator_event.py",
-        "run_godot_script.ps1",
+        "run_godot_script.py",
         "run_headless.ps1",
         "run-game.bat",
-        "run_biome_distribution_diagnostics.ps1",
-        "run_biome_walk_benchmark.ps1",
+        "run_biome_distribution_diagnostics.py",
+        "run_biome_walk_benchmark.py",
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
         "run_smoke_diagnostics.ps1",
-        "run_terrain_diagnostics.ps1",
+        "run_terrain_diagnostics.py",
         "set_game_version.ps1",
         "worker_lifecycle_report.ps1",
         "check_project_context.ps1",
@@ -796,30 +796,6 @@
                 "failure": "Throws when no benchmark report exists or the selected report cannot be parsed."
             }
         },
-        "run_map_performance_smoke.ps1": {
-            "category": "Gamedev",
-            "description": "uruchamia domenowy smoke benchmark mapy, chunk gate, save i reveal.",
-            "benefit": "regresje w hot-pathach mapy są wykrywane przed playtestem."
-        },
-        "run_godot_script.ps1": {
-            "category": "Gamedev",
-            "description": "uruchamia pojedynczy skrypt Godota w trybie headless przez lokalny Godot console executable.",
-            "benefit": "można odpalić konkretny smoke/benchmark bez zgadywania ścieżki wrappera.",
-            "input": {
-                "required": [
-                    "-Script"
-                ],
-                "optional": [
-                    "-GodotArgs"
-                ],
-                "example": "Tools/gamedev/run_godot_script.ps1 -Script 'res://test-scripts/performance_diagnostic_contract_smoke.gd'",
-                "compatibility_alias": "Tools/godot/run_headless.ps1 forwards to this script."
-            },
-            "output": {
-                "success": "OK: Godot script completed: <script>",
-                "failure": "Throws Godot script failed: <script>."
-            }
-        },
         "run_headless.ps1": {
             "category": "Gamedev",
             "description": "kompatybilnościowy alias dla uruchamiania pojedynczego headless skryptu Godota.",
@@ -831,23 +807,13 @@
                 "optional": [
                     "-GodotArgs"
                 ],
-                "forwards_to": "Tools/gamedev/run_godot_script.ps1"
+                "forwards_to": "Tools/gamedev/run_godot_script.py"
             }
         },
         "run-game.bat": {
             "category": "Gamedev",
             "description": "top-level batch uruchamiający grę.",
             "benefit": "masz szybki skrót do lokalnego startu bez wchodzenia w Tools/."
-        },
-        "run_biome_distribution_diagnostics.ps1": {
-            "category": "Gamedev",
-            "description": "sprawdza rozkład biomów.",
-            "benefit": "worldgen można oceniać na danych zamiast na wrażeniu."
-        },
-        "run_biome_walk_benchmark.ps1": {
-            "category": "Gamedev",
-            "description": "uruchamia headless runtime benchmark chodzenia po dostępnych biomach.",
-            "benefit": "można porównać koszt traversal/streamingu/map reveal per biom bez ręcznego łapania F8."
         },
         "run_quality_fix.ps1": {
             "category": "Gamedev",
@@ -863,11 +829,6 @@
             "category": "Gamedev",
             "description": "wykonuje szybkie diagnostyki smoke.",
             "benefit": "szybko wykrywasz oczywiste regresje runtime."
-        },
-        "run_terrain_diagnostics.ps1": {
-            "category": "Gamedev",
-            "description": "sprawdza generowanie terenu.",
-            "benefit": "problemy worldgen są łatwiejsze do odtworzenia."
         },
         "set_game_version.ps1": {
             "category": "Gamedev",
@@ -1627,6 +1588,85 @@
                 "success": "Prints event_received=true and selected event metadata.",
                 "failure": "Prints event_received=false and exits non-zero after timeout."
             }
+        },
+        "run_map_performance_smoke.py": {
+            "category": "Gamedev",
+            "description": "uruchamia domenowy smoke benchmark mapy, chunk gate, save i reveal.",
+            "benefit": "regresje w hot-pathach mapy są wykrywane przed playtestem.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "godot args after --"
+                ]
+            },
+            "output": {
+                "success": "OK: Godot script completed.",
+                "failure": "Exit non-zero when Godot script fails."
+            }
+        },
+        "run_godot_script.py": {
+            "category": "Gamedev",
+            "description": "uruchamia pojedynczy skrypt Godota w trybie headless przez lokalny Godot executable.",
+            "benefit": "można odpalić konkretny smoke/benchmark bez PowerShell.",
+            "input": {
+                "required": [
+                    "--script"
+                ],
+                "optional": [
+                    "--godot-args"
+                ],
+                "example": "python3 -B Tools/gamedev/run_godot_script.py --script res://test-scripts/performance_diagnostic_contract_smoke.gd",
+                "compatibility_alias": "Tools/godot/run_headless.ps1 forwards to this script until that wrapper is retired."
+            },
+            "output": {
+                "success": "OK: Godot script completed: <script>",
+                "failure": "Exit non-zero when Godot or the script fails."
+            }
+        },
+        "run_biome_distribution_diagnostics.py": {
+            "category": "Gamedev",
+            "description": "sprawdza rozkład biomów.",
+            "benefit": "worldgen można oceniać na danych zamiast na wrażeniu.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "godot args after --"
+                ]
+            },
+            "output": {
+                "success": "OK: Godot script completed.",
+                "failure": "Exit non-zero when probe fails."
+            }
+        },
+        "run_biome_walk_benchmark.py": {
+            "category": "Gamedev",
+            "description": "uruchamia headless runtime benchmark chodzenia po dostępnych biomach.",
+            "benefit": "można porównać koszt traversal/streamingu/map reveal per biom bez ręcznego łapania F8.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "godot args after --"
+                ]
+            },
+            "output": {
+                "success": "OK: Godot script completed.",
+                "failure": "Exit non-zero when benchmark fails."
+            }
+        },
+        "run_terrain_diagnostics.py": {
+            "category": "Gamedev",
+            "description": "sprawdza generowanie terenu.",
+            "benefit": "problemy worldgen są łatwiejsze do odtworzenia.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "godot args after --"
+                ]
+            },
+            "output": {
+                "success": "OK: Godot script completed.",
+                "failure": "Exit non-zero when probe fails."
+            }
         }
     },
     "metadata": {
@@ -1747,15 +1787,18 @@
                 "send_operator_command.py",
                 "route_retest_report.ps1",
                 "run-game.bat",
-                "run_biome_distribution_diagnostics.ps1",
+                "run_biome_distribution_diagnostics.py",
                 "run_quality_fix.ps1",
                 "run_quality_gate.ps1",
                 "run_smoke_diagnostics.ps1",
-                "run_terrain_diagnostics.ps1",
+                "run_terrain_diagnostics.py",
                 "set_game_version.ps1",
                 "worker_lifecycle_report.ps1",
                 "archive_logs_for_run.py",
-                "wait_operator_event.py"
+                "wait_operator_event.py",
+                "run_map_performance_smoke.py",
+                "run_godot_script.py",
+                "run_biome_walk_benchmark.py"
             ],
             "Pipeline": [
                 "check_project_context.ps1",
