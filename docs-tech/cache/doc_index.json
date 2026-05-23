@@ -558,18 +558,30 @@
         "document_list_item_edit_engine.py",
         "review_document_list_candidates.ps1",
         "json_list_doc.py",
+        "json_wrapper_entrypoints.py",
         "smoke_json_tools.py",
         "json_refresh_index.ps1",
+        "json_refresh_index.py",
         "json_migrate_content.ps1",
+        "json_migrate_content.py",
         "json_node_edit.ps1",
+        "json_node_edit.py",
         "json_read.ps1",
+        "json_read.py",
         "json_item_insert.ps1",
+        "json_item_insert.py",
         "json_item_set.ps1",
+        "json_item_set.py",
         "json_item_move.ps1",
+        "json_item_move.py",
         "json_item_delete.ps1",
+        "json_item_delete.py",
         "json_line_insert.ps1",
+        "json_line_insert.py",
         "json_line_set.ps1",
+        "json_line_set.py",
         "json_line_move.ps1",
+        "json_line_move.py",
         "run_document_post_edit_checks.ps1",
         "read_document_item.ps1",
         "read_document_items_by_title.ps1",
@@ -1702,6 +1714,78 @@
           "title": "",
           "ref": "content.write_utf8_file.py",
           "status": ""
+        },
+        "json_wrapper_entrypoints.py": {
+          "path": "content.json_wrapper_entrypoints.py",
+          "title": "",
+          "ref": "content.json_wrapper_entrypoints.py",
+          "status": ""
+        },
+        "json_refresh_index.py": {
+          "path": "content.json_refresh_index.py",
+          "title": "",
+          "ref": "content.json_refresh_index.py",
+          "status": ""
+        },
+        "json_migrate_content.py": {
+          "path": "content.json_migrate_content.py",
+          "title": "",
+          "ref": "content.json_migrate_content.py",
+          "status": ""
+        },
+        "json_node_edit.py": {
+          "path": "content.json_node_edit.py",
+          "title": "",
+          "ref": "content.json_node_edit.py",
+          "status": ""
+        },
+        "json_read.py": {
+          "path": "content.json_read.py",
+          "title": "",
+          "ref": "content.json_read.py",
+          "status": ""
+        },
+        "json_item_insert.py": {
+          "path": "content.json_item_insert.py",
+          "title": "",
+          "ref": "content.json_item_insert.py",
+          "status": ""
+        },
+        "json_item_set.py": {
+          "path": "content.json_item_set.py",
+          "title": "",
+          "ref": "content.json_item_set.py",
+          "status": ""
+        },
+        "json_item_move.py": {
+          "path": "content.json_item_move.py",
+          "title": "",
+          "ref": "content.json_item_move.py",
+          "status": ""
+        },
+        "json_item_delete.py": {
+          "path": "content.json_item_delete.py",
+          "title": "",
+          "ref": "content.json_item_delete.py",
+          "status": ""
+        },
+        "json_line_insert.py": {
+          "path": "content.json_line_insert.py",
+          "title": "",
+          "ref": "content.json_line_insert.py",
+          "status": ""
+        },
+        "json_line_set.py": {
+          "path": "content.json_line_set.py",
+          "title": "",
+          "ref": "content.json_line_set.py",
+          "status": ""
+        },
+        "json_line_move.py": {
+          "path": "content.json_line_move.py",
+          "title": "",
+          "ref": "content.json_line_move.py",
+          "status": ""
         }
       }
     },
@@ -1874,166 +1958,172 @@
           "ref": "content.tagged_rules.value.4",
           "status": ""
         },
-        "engineering.workflow.knowledge_hash_gate": {
+        "engineering.workflow.shared_script_base_gate": {
           "path": "content.tagged_rules.value.5",
-          "title": "Validate Source Hashes Before Trusting SQLite",
+          "title": "Prefer Shared Script Bases Over Local Variants",
           "ref": "content.tagged_rules.value.5",
           "status": ""
         },
-        "engineering.workflow.knowledge_file_fallback": {
+        "engineering.workflow.knowledge_hash_gate": {
           "path": "content.tagged_rules.value.6",
-          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
+          "title": "Validate Source Hashes Before Trusting SQLite",
           "ref": "content.tagged_rules.value.6",
           "status": ""
         },
-        "engineering.workflow.load_standards_before_code": {
+        "engineering.workflow.knowledge_file_fallback": {
           "path": "content.tagged_rules.value.7",
-          "title": "Load Engineering Standards Before Code Work",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
           "ref": "content.tagged_rules.value.7",
           "status": ""
         },
-        "engineering.workflow.normalized_content_hashes": {
+        "engineering.workflow.load_standards_before_code": {
           "path": "content.tagged_rules.value.8",
-          "title": "Normalized Content Hashes For Compiled Knowledge",
+          "title": "Load Engineering Standards Before Code Work",
           "ref": "content.tagged_rules.value.8",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.normalized_content_hashes": {
           "path": "content.tagged_rules.value.9",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Normalized Content Hashes For Compiled Knowledge",
           "ref": "content.tagged_rules.value.9",
           "status": ""
         },
-        "engineering.architecture.helper_enforced_contracts": {
+        "engineering.coding.explicit_diagnosable_flow": {
           "path": "content.tagged_rules.value.10",
-          "title": "Helpers Enforce Contracts By Convenience",
+          "title": "Explicit Diagnosable Flow",
           "ref": "content.tagged_rules.value.10",
           "status": ""
         },
-        "engineering.workflow.convenience_drives_habit": {
+        "engineering.architecture.helper_enforced_contracts": {
           "path": "content.tagged_rules.value.11",
-          "title": "Convenience Drives Habit",
+          "title": "Helpers Enforce Contracts By Convenience",
           "ref": "content.tagged_rules.value.11",
           "status": ""
         },
-        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
+        "engineering.workflow.convenience_drives_habit": {
           "path": "content.tagged_rules.value.12",
-          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
+          "title": "Convenience Drives Habit",
           "ref": "content.tagged_rules.value.12",
           "status": ""
         },
-        "engineering.workflow.default_tool_error_hardening": {
+        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
           "path": "content.tagged_rules.value.13",
-          "title": "Default Tool Error Hardening",
+          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
           "ref": "content.tagged_rules.value.13",
           "status": ""
         },
-        "engineering.coding.code_primary_source_of_truth": {
+        "engineering.workflow.default_tool_error_hardening": {
           "path": "content.tagged_rules.value.14",
-          "title": "Code Is The Primary Source Of Truth",
+          "title": "Default Tool Error Hardening",
           "ref": "content.tagged_rules.value.14",
           "status": ""
         },
-        "engineering.coding.ai_native_code_contract_headers": {
+        "engineering.coding.code_primary_source_of_truth": {
           "path": "content.tagged_rules.value.15",
-          "title": "AI-Native Code Contract Headers",
+          "title": "Code Is The Primary Source Of Truth",
           "ref": "content.tagged_rules.value.15",
           "status": ""
         },
-        "engineering.coding.borrowed_before_invented": {
+        "engineering.coding.ai_native_code_contract_headers": {
           "path": "content.tagged_rules.value.16",
-          "title": "Borrowed Before Invented",
+          "title": "AI-Native Code Contract Headers",
           "ref": "content.tagged_rules.value.16",
           "status": ""
         },
-        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
+        "engineering.coding.borrowed_before_invented": {
           "path": "content.tagged_rules.value.17",
-          "title": "Web Research Spike To Named Implementation Plan Gate",
+          "title": "Borrowed Before Invented",
           "ref": "content.tagged_rules.value.17",
           "status": ""
         },
-        "engineering.architecture.better_version_now_future_proof_by_default": {
+        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
           "path": "content.tagged_rules.value.18",
-          "title": "Better Version Now By Default",
+          "title": "Web Research Spike To Named Implementation Plan Gate",
           "ref": "content.tagged_rules.value.18",
           "status": ""
         },
-        "engineering.coding.production_grade_default": {
+        "engineering.architecture.better_version_now_future_proof_by_default": {
           "path": "content.tagged_rules.value.19",
-          "title": "Production-Grade Architectural Default",
+          "title": "Better Version Now By Default",
           "ref": "content.tagged_rules.value.19",
           "status": ""
         },
-        "engineering.performance.lightweight_by_default_for_predictable_load": {
+        "engineering.coding.production_grade_default": {
           "path": "content.tagged_rules.value.20",
-          "title": "Lightweight Futureproof For Predictable Load",
+          "title": "Production-Grade Architectural Default",
           "ref": "content.tagged_rules.value.20",
           "status": ""
         },
-        "engineering.coding.ddd_adiv_when_possible": {
+        "engineering.performance.lightweight_by_default_for_predictable_load": {
           "path": "content.tagged_rules.value.21",
-          "title": "DDD-ADIV When Possible",
+          "title": "Lightweight Futureproof For Predictable Load",
           "ref": "content.tagged_rules.value.21",
           "status": ""
         },
-        "engineering.coding.readability_first": {
+        "engineering.coding.ddd_adiv_when_possible": {
           "path": "content.tagged_rules.value.22",
-          "title": "Readability First",
+          "title": "DDD-ADIV When Possible",
           "ref": "content.tagged_rules.value.22",
           "status": ""
         },
-        "engineering.coding.method_and_variable_extraction": {
+        "engineering.coding.readability_first": {
           "path": "content.tagged_rules.value.23",
-          "title": "Extract Methods and Intent-Revealing Variables",
+          "title": "Readability First",
           "ref": "content.tagged_rules.value.23",
           "status": ""
         },
-        "engineering.coding.codebase_as_contract": {
+        "engineering.coding.method_and_variable_extraction": {
           "path": "content.tagged_rules.value.24",
-          "title": "Codebase Is the Contract — Make It as Strict as Possible",
+          "title": "Extract Methods and Intent-Revealing Variables",
           "ref": "content.tagged_rules.value.24",
           "status": ""
         },
-        "engineering.coding.legacy_aware_change_split": {
+        "engineering.coding.codebase_as_contract": {
           "path": "content.tagged_rules.value.25",
-          "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
+          "title": "Codebase Is the Contract — Make It as Strict as Possible",
           "ref": "content.tagged_rules.value.25",
           "status": ""
         },
-        "engineering.coding.minimal_comments": {
+        "engineering.coding.legacy_aware_change_split": {
           "path": "content.tagged_rules.value.26",
-          "title": "Minimal Comments — Workarounds and Business Intent Only",
+          "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
           "ref": "content.tagged_rules.value.26",
           "status": ""
         },
-        "engineering.coding.business_naming": {
+        "engineering.coding.minimal_comments": {
           "path": "content.tagged_rules.value.27",
-          "title": "Business Naming with Technical Suffix",
+          "title": "Minimal Comments — Workarounds and Business Intent Only",
           "ref": "content.tagged_rules.value.27",
           "status": ""
         },
-        "engineering.coding.match_surrounding_patterns": {
+        "engineering.coding.business_naming": {
           "path": "content.tagged_rules.value.28",
-          "title": "Match Surrounding Patterns Mid-Fix",
+          "title": "Business Naming with Technical Suffix",
           "ref": "content.tagged_rules.value.28",
           "status": ""
         },
-        "engineering.workflow.pair_programming_collaboration": {
+        "engineering.coding.match_surrounding_patterns": {
           "path": "content.tagged_rules.value.29",
-          "title": "Pair-Programming Stance",
+          "title": "Match Surrounding Patterns Mid-Fix",
           "ref": "content.tagged_rules.value.29",
           "status": ""
         },
-        "engineering.workflow.verification_without_tests": {
+        "engineering.workflow.pair_programming_collaboration": {
           "path": "content.tagged_rules.value.30",
-          "title": "Verification Discipline Without a Test Suite",
+          "title": "Pair-Programming Stance",
           "ref": "content.tagged_rules.value.30",
           "status": ""
         },
-        "engineering.workflow.tiered_context_hierarchy": {
+        "engineering.workflow.verification_without_tests": {
           "path": "content.tagged_rules.value.31",
-          "title": "Tiered Context Hierarchy",
+          "title": "Verification Discipline Without a Test Suite",
           "ref": "content.tagged_rules.value.31",
+          "status": ""
+        },
+        "engineering.workflow.tiered_context_hierarchy": {
+          "path": "content.tagged_rules.value.32",
+          "title": "Tiered Context Hierarchy",
+          "ref": "content.tagged_rules.value.32",
           "status": ""
         }
       }
@@ -3992,16 +4082,27 @@
         "doc_route.ps1",
         "doc_search.ps1",
         "json_list_doc.py",
+        "json_wrapper_entrypoints.py",
         "json_refresh_index.ps1",
+        "json_refresh_index.py",
         "json_migrate_content.ps1",
+        "json_migrate_content.py",
         "json_read.ps1",
+        "json_read.py",
         "json_item_insert.ps1",
+        "json_item_insert.py",
         "json_item_set.ps1",
+        "json_item_set.py",
         "json_item_move.ps1",
+        "json_item_move.py",
         "json_item_delete.ps1",
+        "json_item_delete.py",
         "json_line_insert.ps1",
+        "json_line_insert.py",
         "json_line_set.ps1",
+        "json_line_set.py",
         "json_line_move.ps1",
+        "json_line_move.py",
         "doc_tool.py",
         "docs_migrator.ps1",
         "docs_migrator.py",
@@ -4055,36 +4156,37 @@
         "update_code_line_index.ps1",
         "bootstrap_dotnet_sdk.ps1",
         "bootstrap_godot_console.ps1",
-        "archive_logs_for_run.ps1",
+        "archive_logs_for_run.py",
         "build_and_run.ps1",
         "changed_quality_gate.ps1",
         "check_csharp.ps1",
         "clear_logs.bat",
-        "console_summary.ps1",
+        "console_summary.py",
         "export-playtest.bat",
         "export-playtest.ps1",
         "export_windows_playtest.ps1",
         "gdscript_outline.ps1",
         "generate_embedded_config_payload.py",
-        "godot_capture.ps1",
-        "log_summary.ps1",
+        "godot_capture.py",
+        "log_summary.py",
         "operator_mission.ps1",
         "performance_benchmark_report.ps1",
-        "prepare_operator_test_config.ps1",
+        "prepare_operator_test_config.py",
+        "send_operator_command.py",
         "route_retest_report.ps1",
-        "run_map_performance_smoke.ps1",
-        "wait_operator_event.ps1",
-        "run_godot_script.ps1",
+        "run_map_performance_smoke.py",
+        "wait_operator_event.py",
+        "run_godot_script.py",
         "run_headless.ps1",
         "run-game.bat",
-        "run_biome_distribution_diagnostics.ps1",
-        "run_biome_walk_benchmark.ps1",
+        "run_biome_distribution_diagnostics.py",
+        "run_biome_walk_benchmark.py",
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
-        "run_smoke_diagnostics.ps1",
-        "run_terrain_diagnostics.ps1",
-        "set_game_version.ps1",
-        "worker_lifecycle_report.ps1",
+        "run_smoke_diagnostics.py",
+        "run_terrain_diagnostics.py",
+        "set_game_version.py",
+        "worker_lifecycle_report.py",
         "check_project_context.ps1",
         "compile.ps1",
         "compile_project_context.ps1",
@@ -4103,7 +4205,11 @@
         "play_completion_sound.ps1",
         "pipeline_bootstrap_index.ps1",
         "pipeline_bootstrap_index.py",
-        "utf8_file_helpers.py"
+        "utf8_file_helpers.py",
+        "json_node_edit.py",
+        "gdscript_comment_contract_check.py",
+        "check_godot_scripts.py",
+        "gamedev_report_helpers.py"
       ],
       "top_level_keys": [
         "index",
@@ -4555,12 +4661,6 @@
           "ref": "content.bootstrap_godot_console.ps1",
           "status": ""
         },
-        "archive_logs_for_run.ps1": {
-          "path": "content.archive_logs_for_run.ps1",
-          "title": "",
-          "ref": "content.archive_logs_for_run.ps1",
-          "status": ""
-        },
         "build_and_run.ps1": {
           "path": "content.build_and_run.ps1",
           "title": "",
@@ -4583,12 +4683,6 @@
           "path": "content.clear_logs.bat",
           "title": "",
           "ref": "content.clear_logs.bat",
-          "status": ""
-        },
-        "console_summary.ps1": {
-          "path": "content.console_summary.ps1",
-          "title": "",
-          "ref": "content.console_summary.ps1",
           "status": ""
         },
         "export-playtest.bat": {
@@ -4621,18 +4715,6 @@
           "ref": "content.generate_embedded_config_payload.py",
           "status": ""
         },
-        "godot_capture.ps1": {
-          "path": "content.godot_capture.ps1",
-          "title": "",
-          "ref": "content.godot_capture.ps1",
-          "status": ""
-        },
-        "log_summary.ps1": {
-          "path": "content.log_summary.ps1",
-          "title": "",
-          "ref": "content.log_summary.ps1",
-          "status": ""
-        },
         "operator_mission.ps1": {
           "path": "content.operator_mission.ps1",
           "title": "",
@@ -4645,34 +4727,10 @@
           "ref": "content.performance_benchmark_report.ps1",
           "status": ""
         },
-        "prepare_operator_test_config.ps1": {
-          "path": "content.prepare_operator_test_config.ps1",
-          "title": "",
-          "ref": "content.prepare_operator_test_config.ps1",
-          "status": ""
-        },
         "route_retest_report.ps1": {
           "path": "content.route_retest_report.ps1",
           "title": "",
           "ref": "content.route_retest_report.ps1",
-          "status": ""
-        },
-        "run_map_performance_smoke.ps1": {
-          "path": "content.run_map_performance_smoke.ps1",
-          "title": "",
-          "ref": "content.run_map_performance_smoke.ps1",
-          "status": ""
-        },
-        "wait_operator_event.ps1": {
-          "path": "content.wait_operator_event.ps1",
-          "title": "",
-          "ref": "content.wait_operator_event.ps1",
-          "status": ""
-        },
-        "run_godot_script.ps1": {
-          "path": "content.run_godot_script.ps1",
-          "title": "",
-          "ref": "content.run_godot_script.ps1",
           "status": ""
         },
         "run_headless.ps1": {
@@ -4687,18 +4745,6 @@
           "ref": "content.run-game.bat",
           "status": ""
         },
-        "run_biome_distribution_diagnostics.ps1": {
-          "path": "content.run_biome_distribution_diagnostics.ps1",
-          "title": "",
-          "ref": "content.run_biome_distribution_diagnostics.ps1",
-          "status": ""
-        },
-        "run_biome_walk_benchmark.ps1": {
-          "path": "content.run_biome_walk_benchmark.ps1",
-          "title": "",
-          "ref": "content.run_biome_walk_benchmark.ps1",
-          "status": ""
-        },
         "run_quality_fix.ps1": {
           "path": "content.run_quality_fix.ps1",
           "title": "",
@@ -4709,30 +4755,6 @@
           "path": "content.run_quality_gate.ps1",
           "title": "",
           "ref": "content.run_quality_gate.ps1",
-          "status": ""
-        },
-        "run_smoke_diagnostics.ps1": {
-          "path": "content.run_smoke_diagnostics.ps1",
-          "title": "",
-          "ref": "content.run_smoke_diagnostics.ps1",
-          "status": ""
-        },
-        "run_terrain_diagnostics.ps1": {
-          "path": "content.run_terrain_diagnostics.ps1",
-          "title": "",
-          "ref": "content.run_terrain_diagnostics.ps1",
-          "status": ""
-        },
-        "set_game_version.ps1": {
-          "path": "content.set_game_version.ps1",
-          "title": "",
-          "ref": "content.set_game_version.ps1",
-          "status": ""
-        },
-        "worker_lifecycle_report.ps1": {
-          "path": "content.worker_lifecycle_report.ps1",
-          "title": "",
-          "ref": "content.worker_lifecycle_report.ps1",
           "status": ""
         },
         "check_project_context.ps1": {
@@ -4901,6 +4923,186 @@
           "path": "content.write_utf8_file.py",
           "title": "",
           "ref": "content.write_utf8_file.py",
+          "status": ""
+        },
+        "json_wrapper_entrypoints.py": {
+          "path": "content.json_wrapper_entrypoints.py",
+          "title": "",
+          "ref": "content.json_wrapper_entrypoints.py",
+          "status": ""
+        },
+        "json_refresh_index.py": {
+          "path": "content.json_refresh_index.py",
+          "title": "",
+          "ref": "content.json_refresh_index.py",
+          "status": ""
+        },
+        "json_migrate_content.py": {
+          "path": "content.json_migrate_content.py",
+          "title": "",
+          "ref": "content.json_migrate_content.py",
+          "status": ""
+        },
+        "json_node_edit.py": {
+          "path": "content.json_node_edit.py",
+          "title": "",
+          "ref": "content.json_node_edit.py",
+          "status": ""
+        },
+        "json_read.py": {
+          "path": "content.json_read.py",
+          "title": "",
+          "ref": "content.json_read.py",
+          "status": ""
+        },
+        "json_item_insert.py": {
+          "path": "content.json_item_insert.py",
+          "title": "",
+          "ref": "content.json_item_insert.py",
+          "status": ""
+        },
+        "json_item_set.py": {
+          "path": "content.json_item_set.py",
+          "title": "",
+          "ref": "content.json_item_set.py",
+          "status": ""
+        },
+        "json_item_move.py": {
+          "path": "content.json_item_move.py",
+          "title": "",
+          "ref": "content.json_item_move.py",
+          "status": ""
+        },
+        "json_item_delete.py": {
+          "path": "content.json_item_delete.py",
+          "title": "",
+          "ref": "content.json_item_delete.py",
+          "status": ""
+        },
+        "json_line_insert.py": {
+          "path": "content.json_line_insert.py",
+          "title": "",
+          "ref": "content.json_line_insert.py",
+          "status": ""
+        },
+        "json_line_set.py": {
+          "path": "content.json_line_set.py",
+          "title": "",
+          "ref": "content.json_line_set.py",
+          "status": ""
+        },
+        "json_line_move.py": {
+          "path": "content.json_line_move.py",
+          "title": "",
+          "ref": "content.json_line_move.py",
+          "status": ""
+        },
+        "archive_logs_for_run.py": {
+          "path": "content.archive_logs_for_run.py",
+          "title": "",
+          "ref": "content.archive_logs_for_run.py",
+          "status": ""
+        },
+        "console_summary.py": {
+          "path": "content.console_summary.py",
+          "title": "",
+          "ref": "content.console_summary.py",
+          "status": ""
+        },
+        "log_summary.py": {
+          "path": "content.log_summary.py",
+          "title": "",
+          "ref": "content.log_summary.py",
+          "status": ""
+        },
+        "prepare_operator_test_config.py": {
+          "path": "content.prepare_operator_test_config.py",
+          "title": "",
+          "ref": "content.prepare_operator_test_config.py",
+          "status": ""
+        },
+        "send_operator_command.py": {
+          "path": "content.send_operator_command.py",
+          "title": "",
+          "ref": "content.send_operator_command.py",
+          "status": ""
+        },
+        "wait_operator_event.py": {
+          "path": "content.wait_operator_event.py",
+          "title": "",
+          "ref": "content.wait_operator_event.py",
+          "status": ""
+        },
+        "run_map_performance_smoke.py": {
+          "path": "content.run_map_performance_smoke.py",
+          "title": "",
+          "ref": "content.run_map_performance_smoke.py",
+          "status": ""
+        },
+        "run_godot_script.py": {
+          "path": "content.run_godot_script.py",
+          "title": "",
+          "ref": "content.run_godot_script.py",
+          "status": ""
+        },
+        "run_biome_distribution_diagnostics.py": {
+          "path": "content.run_biome_distribution_diagnostics.py",
+          "title": "",
+          "ref": "content.run_biome_distribution_diagnostics.py",
+          "status": ""
+        },
+        "run_biome_walk_benchmark.py": {
+          "path": "content.run_biome_walk_benchmark.py",
+          "title": "",
+          "ref": "content.run_biome_walk_benchmark.py",
+          "status": ""
+        },
+        "run_terrain_diagnostics.py": {
+          "path": "content.run_terrain_diagnostics.py",
+          "title": "",
+          "ref": "content.run_terrain_diagnostics.py",
+          "status": ""
+        },
+        "run_smoke_diagnostics.py": {
+          "path": "content.run_smoke_diagnostics.py",
+          "title": "",
+          "ref": "content.run_smoke_diagnostics.py",
+          "status": ""
+        },
+        "gdscript_comment_contract_check.py": {
+          "path": "content.gdscript_comment_contract_check.py",
+          "title": "",
+          "ref": "content.gdscript_comment_contract_check.py",
+          "status": ""
+        },
+        "check_godot_scripts.py": {
+          "path": "content.check_godot_scripts.py",
+          "title": "",
+          "ref": "content.check_godot_scripts.py",
+          "status": ""
+        },
+        "set_game_version.py": {
+          "path": "content.set_game_version.py",
+          "title": "",
+          "ref": "content.set_game_version.py",
+          "status": ""
+        },
+        "gamedev_report_helpers.py": {
+          "path": "content.gamedev_report_helpers.py",
+          "title": "",
+          "ref": "content.gamedev_report_helpers.py",
+          "status": ""
+        },
+        "worker_lifecycle_report.py": {
+          "path": "content.worker_lifecycle_report.py",
+          "title": "",
+          "ref": "content.worker_lifecycle_report.py",
+          "status": ""
+        },
+        "godot_capture.py": {
+          "path": "content.godot_capture.py",
+          "title": "",
+          "ref": "content.godot_capture.py",
           "status": ""
         }
       }
@@ -7263,82 +7465,88 @@
           "ref": "content.tagged_rules.value.4",
           "status": ""
         },
-        "engineering.workflow.knowledge_hash_gate": {
+        "engineering.workflow.shared_script_base_gate": {
           "path": "content.tagged_rules.value.5",
-          "title": "Validate Source Hashes Before Trusting SQLite",
+          "title": "Prefer Shared Script Bases Over Local Variants",
           "ref": "content.tagged_rules.value.5",
           "status": ""
         },
-        "engineering.workflow.knowledge_file_fallback": {
+        "engineering.workflow.knowledge_hash_gate": {
           "path": "content.tagged_rules.value.6",
-          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
+          "title": "Validate Source Hashes Before Trusting SQLite",
           "ref": "content.tagged_rules.value.6",
           "status": ""
         },
-        "engineering.workflow.load_standards_before_code": {
+        "engineering.workflow.knowledge_file_fallback": {
           "path": "content.tagged_rules.value.7",
-          "title": "Load Engineering Standards Before Code Work",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
           "ref": "content.tagged_rules.value.7",
           "status": ""
         },
-        "engineering.workflow.normalized_content_hashes": {
+        "engineering.workflow.load_standards_before_code": {
           "path": "content.tagged_rules.value.8",
-          "title": "Normalized Content Hashes For Compiled Knowledge",
+          "title": "Load Engineering Standards Before Code Work",
           "ref": "content.tagged_rules.value.8",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.normalized_content_hashes": {
           "path": "content.tagged_rules.value.9",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Normalized Content Hashes For Compiled Knowledge",
           "ref": "content.tagged_rules.value.9",
           "status": ""
         },
-        "engineering.coding.ai_native_code_contract_headers": {
+        "engineering.coding.explicit_diagnosable_flow": {
           "path": "content.tagged_rules.value.10",
-          "title": "AI-Native Code Contract Headers",
+          "title": "Explicit Diagnosable Flow",
           "ref": "content.tagged_rules.value.10",
           "status": ""
         },
-        "engineering.architecture.helper_enforced_contracts": {
+        "engineering.coding.ai_native_code_contract_headers": {
           "path": "content.tagged_rules.value.11",
-          "title": "Helpers Enforce Contracts By Convenience",
+          "title": "AI-Native Code Contract Headers",
           "ref": "content.tagged_rules.value.11",
           "status": ""
         },
-        "engineering.workflow.convenience_drives_habit": {
+        "engineering.architecture.helper_enforced_contracts": {
           "path": "content.tagged_rules.value.12",
-          "title": "Convenience Drives Habit",
+          "title": "Helpers Enforce Contracts By Convenience",
           "ref": "content.tagged_rules.value.12",
           "status": ""
         },
-        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
+        "engineering.workflow.convenience_drives_habit": {
           "path": "content.tagged_rules.value.13",
-          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
+          "title": "Convenience Drives Habit",
           "ref": "content.tagged_rules.value.13",
           "status": ""
         },
-        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
+        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
           "path": "content.tagged_rules.value.14",
-          "title": "Web Research Spike To Named Implementation Plan Gate",
+          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
           "ref": "content.tagged_rules.value.14",
           "status": ""
         },
-        "engineering.workflow.tiered_context_hierarchy": {
+        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
           "path": "content.tagged_rules.value.15",
-          "title": "Tiered Context Hierarchy",
+          "title": "Web Research Spike To Named Implementation Plan Gate",
           "ref": "content.tagged_rules.value.15",
           "status": ""
         },
-        "engineering.architecture.better_version_now_future_proof_by_default": {
+        "engineering.workflow.tiered_context_hierarchy": {
           "path": "content.tagged_rules.value.16",
-          "title": "Better Version Now By Default",
+          "title": "Tiered Context Hierarchy",
           "ref": "content.tagged_rules.value.16",
           "status": ""
         },
-        "engineering.performance.lightweight_by_default_for_predictable_load": {
+        "engineering.architecture.better_version_now_future_proof_by_default": {
           "path": "content.tagged_rules.value.17",
-          "title": "Lightweight Futureproof For Predictable Load",
+          "title": "Better Version Now By Default",
           "ref": "content.tagged_rules.value.17",
+          "status": ""
+        },
+        "engineering.performance.lightweight_by_default_for_predictable_load": {
+          "path": "content.tagged_rules.value.18",
+          "title": "Lightweight Futureproof For Predictable Load",
+          "ref": "content.tagged_rules.value.18",
           "status": ""
         }
       }
