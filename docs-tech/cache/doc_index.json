@@ -4158,13 +4158,14 @@
         "bootstrap_godot_console.ps1",
         "archive_logs_for_run.py",
         "build_and_run.ps1",
-        "changed_quality_gate.ps1",
+        "changed_quality_gate.py",
         "check_csharp.ps1",
         "clear_logs.bat",
         "console_summary.py",
         "export-playtest.bat",
         "export-playtest.ps1",
         "export_windows_playtest.ps1",
+        "gamedev_quality_helpers.py",
         "gdscript_outline.py",
         "generate_embedded_config_payload.py",
         "godot_capture.py",
@@ -4667,10 +4668,10 @@
           "ref": "content.build_and_run.ps1",
           "status": ""
         },
-        "changed_quality_gate.ps1": {
-          "path": "content.changed_quality_gate.ps1",
+        "changed_quality_gate.py": {
+          "path": "content.changed_quality_gate.py",
           "title": "",
-          "ref": "content.changed_quality_gate.ps1",
+          "ref": "content.changed_quality_gate.py",
           "status": ""
         },
         "check_csharp.ps1": {
@@ -4701,6 +4702,12 @@
           "path": "content.export_windows_playtest.ps1",
           "title": "",
           "ref": "content.export_windows_playtest.ps1",
+          "status": ""
+        },
+        "gamedev_quality_helpers.py": {
+          "path": "content.gamedev_quality_helpers.py",
+          "title": "",
+          "ref": "content.gamedev_quality_helpers.py",
           "status": ""
         },
         "gdscript_outline.py": {

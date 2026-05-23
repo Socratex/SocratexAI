@@ -96,13 +96,14 @@
         "bootstrap_godot_console.ps1",
         "archive_logs_for_run.py",
         "build_and_run.ps1",
-        "changed_quality_gate.ps1",
+        "changed_quality_gate.py",
         "check_csharp.ps1",
         "clear_logs.bat",
         "console_summary.py",
         "export-playtest.bat",
         "export-playtest.ps1",
         "export_windows_playtest.ps1",
+        "gamedev_quality_helpers.py",
         "gdscript_outline.py",
         "generate_embedded_config_payload.py",
         "godot_capture.py",
@@ -681,10 +682,17 @@
                 "default": "Prepares operator traversal flags unless -EconomyProgressionTest is set."
             }
         },
-        "changed_quality_gate.ps1": {
+        "changed_quality_gate.py": {
+            "path": "Tools/gamedev/changed_quality_gate.py",
             "category": "Gamedev",
             "description": "uruchamia gate dopasowany do zmienionych plików.",
-            "benefit": "weryfikacja jest szybsza niż pełny przebieg."
+            "benefit": "weryfikacja jest szybsza niż pełny przebieg.",
+            "input": {
+                "optional": [
+                    "--fix",
+                    "--full"
+                ]
+            }
         },
         "check_csharp.ps1": {
             "category": "Gamedev",
@@ -710,6 +718,12 @@
             "category": "Gamedev",
             "description": "przygotowuje playtestowy eksport Windows.",
             "benefit": "łatwiej dostarczyć build do uruchomienia poza edytorem."
+        },
+        "gamedev_quality_helpers.py": {
+            "path": "Tools/gamedev/gamedev_quality_helpers.py",
+            "category": "Gamedev",
+            "description": "wspólne helpery dla Pythonowych gate'ów jakości gamedev.",
+            "benefit": "changed gate i pełny quality fixer używają tej samej logiki wykrywania narzędzi, plików i smoke testów."
         },
         "gdscript_outline.py": {
             "path": "Tools/gamedev/gdscript_outline.py",
@@ -1889,13 +1903,14 @@
                 "bootstrap_dotnet_sdk.ps1",
                 "bootstrap_godot_console.ps1",
                 "build_and_run.ps1",
-                "changed_quality_gate.ps1",
+                "changed_quality_gate.py",
                 "check_csharp.ps1",
                 "clear_logs.bat",
                 "console_summary.py",
                 "export-playtest.bat",
                 "export-playtest.ps1",
                 "export_windows_playtest.ps1",
+                "gamedev_quality_helpers.py",
                 "gdscript_outline.py",
                 "generate_embedded_config_payload.py",
                 "godot_capture.py",
