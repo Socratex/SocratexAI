@@ -29,6 +29,7 @@
         "configure_powershell_utf8.ps1",
         "console_summary.ps1",
         "context_tags.ps1",
+        "context_tags.py",
         "detect_project_stack.ps1",
         "build_document_cache.ps1",
         "build_document_cache.py",
@@ -100,6 +101,7 @@
         "knowledge_query.ps1",
         "knowledge_rename.ps1",
         "knowledge_select.ps1",
+        "knowledge_select.py",
         "knowledge_upsert.ps1",
         "learn_pipeline_features.ps1",
         "log_summary.ps1",
@@ -3220,6 +3222,53 @@
                 "success": "Confirms the gate file exists, matches current HEAD, and covers the changed code paths.",
                 "failure": "Throws when the gate is missing, stale relative to HEAD or MaxAgeMinutes, or does not cover the declared design-context reads."
             }
+        },
+        "context_tags.py": {
+            "path": "tools/knowledge/context_tags.py",
+            "category": "knowledge",
+            "description": "Extract normalized context tags from task text for knowledge selection and routing without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "text...",
+                    "--repo-root",
+                    "--no-defaults",
+                    "--json",
+                    "--as-knowledge-select-args"
+                ],
+                "rule": "Run from the repository root before substantive answers or command execution when routing through compiled knowledge context."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_select.py": {
+            "path": "tools/knowledge/knowledge_select.py",
+            "category": "knowledge",
+            "description": "Select formatted knowledge context from compiled SQLite knowledge or file fallback without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--tags",
+                    "--match",
+                    "--type",
+                    "--view",
+                    "--load-at-start",
+                    "--context-tier",
+                    "--max-context-tier",
+                    "--source-path",
+                    "--document-path",
+                    "--name",
+                    "--file-fallback",
+                    "--format"
+                ],
+                "rule": "Run from the repository root when a named view, tag query, type filter, source document, or startup flag can answer the task."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         }
     },
     "metadata": {
@@ -3266,6 +3315,7 @@
             ],
             "knowledge": [
                 "context_tags.ps1",
+                "context_tags.py",
                 "knowledge_check.ps1",
                 "knowledge_code_context.ps1",
                 "knowledge_code_context.py",
@@ -3284,6 +3334,7 @@
                 "knowledge_query.ps1",
                 "knowledge_rename.ps1",
                 "knowledge_select.ps1",
+                "knowledge_select.py",
                 "knowledge_upsert.ps1"
             ],
             "repo": [

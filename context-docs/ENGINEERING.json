@@ -50,7 +50,7 @@
                     "subtype": "workflow_rule",
                     "title": "Query Context Through Named Views",
                     "summary": "Use named knowledge views for common context lanes before broader document reads.",
-                    "rule": "Prefer `tools/knowledge/knowledge_select.ps1 -View <view_id>` for prepared context lanes such as `session_start`, `debugging`, `performance`, and `docs_workflow`; use tag/type/source queries when the task needs a narrower slice.",
+                    "rule": "Prefer `tools/knowledge/knowledge_select.py --view <view_id>` for prepared context lanes such as `session_start`, `debugging`, `performance`, and `docs_workflow`; use tag/type/source queries when the task needs a narrower slice.",
                     "rationale": "Named views reduce context cost and make repeated agent startup/query behavior consistent across projects.",
                     "priority": "should",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -76,7 +76,7 @@
                     "subtype": "workflow_rule",
                     "title": "Context Tags Before Response",
                     "summary": "Commands and substantive questions should route through main workflow context, prompt-derived tags, and compiled notes before answer or execution.",
-                    "rule": "For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text with `tools/knowledge/context_tags.ps1` when available, then query compiled notes with `tools/knowledge/knowledge_select.ps1 -Tags <tags> -Match any` before answering or executing. Use tag-selected notes as routing and risk context; read exact source documents before edits, high-stakes claims, or ambiguity resolution.",
+                    "rule": "For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text with `tools/knowledge/context_tags.py` when available, then query compiled notes with `tools/knowledge/knowledge_select.py --tags <tags> --match any` before answering or executing. Use tag-selected notes as routing and risk context; read exact source documents before edits, high-stakes claims, or ambiguity resolution.",
                     "rationale": "Prompt-derived tags make compiled knowledge useful beyond broad startup slices and reduce missed workflow, architecture, diagnostic, or documentation constraints.",
                     "priority": "must",
                     "source_of_truth": "context-docs/ENGINEERING.json",
@@ -103,7 +103,7 @@
                             "note": "Code workflow defines the executable context-tag pass."
                         },
                         {
-                            "path": "tools/knowledge/context_tags.ps1",
+                            "path": "tools/knowledge/context_tags.py",
                             "selector": "script",
                             "is_duplicate": true,
                             "note": "Source pipeline helper for deriving context tags from user text."

@@ -8,7 +8,7 @@ It also installs a reusable project workflow layer: `WORKFLOW.json` for owner-wr
 
 For agent runtime, SocratexPipeline keeps a generated `AI-compiled/` layer. Source documents remain human-editable and authoritative; `AI-compiled/` is compact, English, read-optimized context for agents such as Codex.
 
-SocratexPipeline also compiles tagged project knowledge into `AI-compiled/project/knowledge.sqlite`. Agents can query it with `tools/knowledge/knowledge_select.ps1` by named view, tags, type, source document, or startup flag, while source JSON/Markdown documents remain the only editable source of truth.
+SocratexPipeline also compiles tagged project knowledge into `AI-compiled/project/knowledge.sqlite`. Agents can query it with `tools/knowledge/knowledge_select.py` by named view, tags, type, source document, or startup flag, while source JSON/Markdown documents remain the only editable source of truth.
 
 When SQLite is unavailable, SocratexPipeline writes a file fallback under `AI-compiled/project/knowledge-files/`. It mirrors the database tables as JSON files, except named views are intentionally unavailable; agents query it with `tools/knowledge/knowledge_file_select.ps1`.
 
@@ -191,8 +191,8 @@ For direct knowledge-layer work:
 ```bash
 python3 -B tools/knowledge/knowledge_code_context.py
 python3 -B tools/knowledge/knowledge_code_context.py --views architecture performance
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -View session_start
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -Tags engineering,workflow
+python3 -B tools/knowledge/knowledge_select.py --view session_start
+python3 -B tools/knowledge/knowledge_select.py --tags engineering workflow
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_check.ps1
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_file_select.ps1 -Tags engineering,workflow
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_file_check.ps1

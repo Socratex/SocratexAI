@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-952ea4ee4c27
+Generated: source-82d5fd628571
 
 ## Source of Truth
 
@@ -2791,12 +2791,15 @@ Draft placeholder:
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -2810,6 +2813,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "compile_pipeline_context.py",
                     "rebuild_ai_compiled_context.ps1",
                     "rebuild_ai_compiled_context.py",
@@ -2822,6 +2826,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -2835,6 +2840,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "compile_pipeline_context.py",
                         "rebuild_ai_compiled_context.ps1",
                         "rebuild_ai_compiled_context.py",
@@ -3105,12 +3111,15 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3124,6 +3133,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1"
@@ -3133,6 +3143,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3146,6 +3157,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1"
@@ -3186,7 +3198,9 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "build_document_cache.ps1",
@@ -3207,6 +3221,7 @@ Draft placeholder:
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3220,6 +3235,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1"
                 ],
@@ -3243,6 +3259,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3256,6 +3273,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1"
                     ]
@@ -3291,12 +3309,15 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3310,6 +3331,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1"
@@ -3319,6 +3341,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3332,6 +3355,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1"
@@ -3368,7 +3392,9 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "normalize_text_files.ps1",
@@ -3381,6 +3407,7 @@ Draft placeholder:
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3394,6 +3421,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1"
@@ -3410,6 +3438,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3423,6 +3452,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1"
@@ -3459,7 +3489,9 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "normalize_text_files.ps1",
@@ -3472,6 +3504,7 @@ Draft placeholder:
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3485,6 +3518,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1"
@@ -3501,6 +3535,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3514,6 +3549,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1"
@@ -3547,12 +3583,15 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3566,6 +3605,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1"
@@ -3575,6 +3615,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3588,6 +3629,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1"
@@ -3621,12 +3663,15 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3640,6 +3685,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1"
@@ -3649,6 +3695,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3662,6 +3709,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1"
@@ -3695,12 +3743,15 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3714,6 +3765,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1"
@@ -3723,6 +3775,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3736,6 +3789,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1"
@@ -3769,12 +3823,15 @@ Draft placeholder:
                     "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/check_ai_compiled_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3788,6 +3845,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1"
@@ -3797,6 +3855,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3810,6 +3869,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1"
@@ -3889,7 +3949,9 @@ Draft placeholder:
                     "tools/quality/check_evals.ps1",
                     "QUALITY-GATE.json",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_code_context.ps1",
@@ -3898,6 +3960,7 @@ Draft placeholder:
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -3911,6 +3974,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "check_evals.ps1",
@@ -3924,6 +3988,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -3937,6 +4002,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "check_evals.ps1",
@@ -3982,7 +4048,9 @@ Draft placeholder:
                     "tools/quality/check_evals.ps1",
                     "QUALITY-GATE.json",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "normalize_text_files.ps1",
@@ -3995,6 +4063,7 @@ Draft placeholder:
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -4008,6 +4077,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "check_evals.ps1",
@@ -4025,6 +4095,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -4038,6 +4109,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "check_evals.ps1",
@@ -4160,12 +4232,15 @@ Draft placeholder:
                     "tools/documents/audit_docs.ps1",
                     "tools/knowledge/knowledge_index.py",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/knowledge/context_tags.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.ps1",
                     "knowledge_check.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "knowledge_delete.ps1",
                     "knowledge_rename.ps1",
@@ -4179,6 +4254,7 @@ Draft placeholder:
                     "knowledge_file_query.ps1",
                     "knowledge_index.py",
                     "context_tags.ps1",
+                    "context_tags.py",
                     "rebuild_ai_compiled_context.ps1",
                     "check_ai_compiled_context.ps1",
                     "audit_docs.ps1",
@@ -4189,6 +4265,7 @@ Draft placeholder:
                         "knowledge_compile.ps1",
                         "knowledge_check.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "knowledge_delete.ps1",
                         "knowledge_rename.ps1",
@@ -4202,6 +4279,7 @@ Draft placeholder:
                         "knowledge_file_query.ps1",
                         "knowledge_index.py",
                         "context_tags.ps1",
+                        "context_tags.py",
                         "rebuild_ai_compiled_context.ps1",
                         "check_ai_compiled_context.ps1",
                         "audit_docs.ps1",
@@ -6166,7 +6244,8 @@ Draft placeholder:
                     "tools/knowledge",
                     "tools/text/normalize_json_files.ps1",
                     "tools/pipeline/python_runtime.py",
-                    "tools/quality/check_runtime.py"
+                    "tools/quality/check_runtime.py",
+                    "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "resolve_tool_runtime.ps1",
@@ -6207,6 +6286,7 @@ Draft placeholder:
                     "knowledge_query.ps1",
                     "knowledge_rename.ps1",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.ps1",
                     "normalize_json_files.ps1",
                     "python_runtime.py",
@@ -6252,6 +6332,7 @@ Draft placeholder:
                         "knowledge_query.ps1",
                         "knowledge_rename.ps1",
                         "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.ps1",
                         "normalize_json_files.ps1",
                         "python_runtime.py",
@@ -6900,6 +6981,7 @@ Draft placeholder:
                     "templates/docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge/knowledge_index.py",
                     "tools/knowledge/knowledge_select.ps1",
+                    "tools/knowledge/knowledge_select.py",
                     "tools/knowledge/knowledge_file_select.ps1",
                     "tools/knowledge/knowledge_query.ps1",
                     "tools/knowledge/knowledge_tier_report.py",
@@ -6912,6 +6994,7 @@ Draft placeholder:
                 "required_scripts": [
                     "knowledge_index.py",
                     "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_file_select.ps1",
                     "knowledge_query.ps1",
                     "knowledge_tier_report.py",
@@ -6936,6 +7019,9 @@ Draft placeholder:
                         "knowledge_tier_check.ps1",
                         "knowledge_file_query.ps1",
                         "knowledge_tier_check.py"
+                    ],
+                    "SCRIPTS": [
+                        "knowledge_select.py"
                     ]
                 },
                 "required_docs": [

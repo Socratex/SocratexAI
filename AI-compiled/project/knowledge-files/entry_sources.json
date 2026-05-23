@@ -508,7 +508,7 @@
     "entry_name": "engineering.workflow.context_tags_before_response",
     "is_duplicate": true,
     "note": "Source pipeline helper for deriving context tags from user text.",
-    "path": "tools/knowledge/context_tags.ps1",
+    "path": "tools/knowledge/context_tags.py",
     "selector": "script"
   },
   {

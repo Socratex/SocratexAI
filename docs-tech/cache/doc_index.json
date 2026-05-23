@@ -542,6 +542,7 @@
         "configure_powershell_utf8.ps1",
         "console_summary.ps1",
         "context_tags.ps1",
+        "context_tags.py",
         "detect_project_stack.ps1",
         "build_document_cache.ps1",
         "build_document_cache.py",
@@ -613,6 +614,7 @@
         "knowledge_query.ps1",
         "knowledge_rename.ps1",
         "knowledge_select.ps1",
+        "knowledge_select.py",
         "knowledge_upsert.ps1",
         "learn_pipeline_features.ps1",
         "log_summary.ps1",
@@ -1568,6 +1570,18 @@
           "path": "content.check_project_design_context_gate.ps1",
           "title": "",
           "ref": "content.check_project_design_context_gate.ps1",
+          "status": ""
+        },
+        "context_tags.py": {
+          "path": "content.context_tags.py",
+          "title": "",
+          "ref": "content.context_tags.py",
+          "status": ""
+        },
+        "knowledge_select.py": {
+          "path": "content.knowledge_select.py",
+          "title": "",
+          "ref": "content.knowledge_select.py",
           "status": ""
         }
       }

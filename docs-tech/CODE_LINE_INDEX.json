@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-23T19:27:28+02:00",
+    "generatedAt": "2026-05-23T19:37:53+02:00",
     "threshold": 300,
     "files": [
         {
@@ -387,6 +387,12 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/context_tags.py",
+            "lines": 100,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/pipeline/generate_embedded_config_payload.py",
             "lines": 100,
             "extension": ".py",
@@ -462,6 +468,12 @@
             "path": "tools/pipeline/init_branch_memory.ps1",
             "lines": 80,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_select.py",
+            "lines": 77,
+            "extension": ".py",
             "large": false
         },
         {
