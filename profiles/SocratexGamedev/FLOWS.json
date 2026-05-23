@@ -201,7 +201,7 @@
             "when": "Standalone CONSOLE command or Codex Run console error work.",
             "then": [
                 "Stop if CONSOLE-LOG is missing or empty, and report that no Codex Run console output is available.",
-                "Run Tools/gamedev/console_summary.ps1.",
+                "Run Tools/gamedev/console_summary.py.",
                 "Read CONSOLE-LOG-SUMMARY first.",
                 "Read raw CONSOLE-LOG only when summary details are insufficient.",
                 "Extract current Godot errors, warnings, and GDScript backtraces from the latest Codex Run action.",
@@ -217,7 +217,7 @@
             "then": [
                 "Require a non-empty diagnostic description from \"LOG <description>\" or following lines.",
                 "Stop without inspecting or modifying files if the description is missing.",
-                "Run Tools/gamedev/log_summary.ps1 -Description <description>.",
+                "Run Tools/gamedev/log_summary.py --description <description>.",
                 "Select the newest manual F4 dump whose filename best matches the description.",
                 "Inspect every similar manual F4 dump not more than one hour older than the newest matching dump.",
                 "State the selected newest-match timestamp and packet window.",

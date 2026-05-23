@@ -48,14 +48,14 @@
         "CONSOLE": [
             "Uses current Codex Run console output when available.",
             "Stops if no console output exists.",
-            "Summarizes current Godot errors, warnings, and GDScript backtraces with Tools/gamedev/console_summary.ps1.",
+            "Summarizes current Godot errors, warnings, and GDScript backtraces with Tools/gamedev/console_summary.py.",
             "Fixes the highest-leverage source-owned runtime error.",
             "Reports observed facts, likely cause, verification result, and remaining errors after finalizing through Tools/repo/done.ps1."
         ],
         "LOG <description>": [
             "Requires a non-empty diagnostic description.",
             "Stops without inspecting or modifying files if the description is missing.",
-            "Finds the newest matching manual F4 dump and nearby similar captures from the same one-hour packet with Tools/gamedev/log_summary.ps1.",
+            "Finds the newest matching manual F4 dump and nearby similar captures from the same one-hour packet with Tools/gamedev/log_summary.py.",
             "Uses paired screenshots and sidecar diagnostic tails when useful.",
             "Applies the smallest source-owned fix for the described issue.",
             "After explicit user confirmation, clears generated manual captures with top-level clear_logs.bat while preserving directory structure."

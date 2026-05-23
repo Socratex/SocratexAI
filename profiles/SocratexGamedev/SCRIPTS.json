@@ -94,19 +94,19 @@
         "update_code_line_index.ps1",
         "bootstrap_dotnet_sdk.ps1",
         "bootstrap_godot_console.ps1",
-        "archive_logs_for_run.ps1",
+        "archive_logs_for_run.py",
         "build_and_run.ps1",
         "changed_quality_gate.ps1",
         "check_csharp.ps1",
         "clear_logs.bat",
-        "console_summary.ps1",
+        "console_summary.py",
         "export-playtest.bat",
         "export-playtest.ps1",
         "export_windows_playtest.ps1",
         "gdscript_outline.ps1",
         "generate_embedded_config_payload.py",
         "godot_capture.ps1",
-        "log_summary.ps1",
+        "log_summary.py",
         "operator_mission.ps1",
         "performance_benchmark_report.ps1",
         "prepare_operator_test_config.ps1",
@@ -665,11 +665,6 @@
             "description": "przygotowuje uruchamianie Godota z konsoli.",
             "benefit": "testy runtime startują spójnie."
         },
-        "archive_logs_for_run.ps1": {
-            "category": "Gamedev",
-            "description": "przenosi poprzednie logi gry do `_archive` przed świeżym uruchomieniem.",
-            "benefit": "każdy retest ma czyste katalogi aktywnych logów bez utraty starszych danych."
-        },
         "build_and_run.ps1": {
             "category": "Gamedev",
             "description": "buduje i uruchamia projekt gry.",
@@ -696,11 +691,6 @@
             "category": "Gamedev",
             "description": "top-level batch czyszczący lokalne logi gry.",
             "benefit": "następna diagnoza zaczyna się od czystych danych, a narzędzie jest dostępne bez wchodzenia w Tools/."
-        },
-        "console_summary.ps1": {
-            "category": "Gamedev",
-            "description": "streszcza log konsoli.",
-            "benefit": "szybciej widzisz aktualne błędy i ostrzeżenia."
         },
         "export-playtest.bat": {
             "category": "Gamedev",
@@ -749,11 +739,6 @@
             "category": "Gamedev",
             "description": "uruchamia Godota i zbiera wynik diagnostyczny.",
             "benefit": "runtime można sprawdzać bez ręcznego przeklejania logów."
-        },
-        "log_summary.ps1": {
-            "category": "Gamedev",
-            "description": "streszcza logi diagnostyczne.",
-            "benefit": "łatwiej znaleźć najważniejszy sygnał w dumpach."
         },
         "operator_mission.ps1": {
             "category": "Gamedev",
@@ -1555,6 +1540,58 @@
                 "success": "Prints the requested JSON output or OK status after the document operation.",
                 "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
             }
+        },
+        "archive_logs_for_run.py": {
+            "category": "Gamedev",
+            "description": "przenosi poprzednie logi gry do `_archive` przed świeżym uruchomieniem.",
+            "benefit": "każdy retest ma czyste katalogi aktywnych logów bez utraty starszych danych.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--root-path"
+                ],
+                "rule": "Uruchamiaj z root repo albo podaj --root-path, gdy archiwizujesz inną kopię projektu."
+            },
+            "output": {
+                "success": "Wypisuje liczbę zarchiwizowanych elementów logów.",
+                "failure": "Exit non-zero przy błędzie dostępu do katalogów lub przenoszenia plików."
+            }
+        },
+        "console_summary.py": {
+            "category": "Gamedev",
+            "description": "streszcza log konsoli.",
+            "benefit": "szybciej widzisz aktualne błędy, ostrzeżenia i ostatni backtrace bez PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--console-log-path",
+                    "--output-path"
+                ],
+                "rule": "Domyślnie czyta CONSOLE-LOG i zapisuje CONSOLE-LOG-SUMMARY w root repo."
+            },
+            "output": {
+                "success": "Zapisuje Markdown summary z liczbą błędów, ostrzeżeń i ostatnim backtrace.",
+                "failure": "Exit non-zero przy błędzie zapisu summary."
+            }
+        },
+        "log_summary.py": {
+            "category": "Gamedev",
+            "description": "streszcza logi diagnostyczne.",
+            "benefit": "łatwiej znaleźć najważniejszy sygnał w dumpach bez PowerShell.",
+            "input": {
+                "required": [
+                    "--description"
+                ],
+                "optional": [
+                    "--latest",
+                    "--max-items"
+                ],
+                "rule": "Opis jest wymagany; bez --latest dumpy są sortowane najpierw po dopasowaniu tokenów opisu."
+            },
+            "output": {
+                "success": "Wypisuje debug dumps, session debug dumps i logs-diagnostics.",
+                "failure": "Exit non-zero przy pustym opisie albo błędzie argumentów."
+            }
         }
     },
     "metadata": {
@@ -1661,14 +1698,14 @@
                 "changed_quality_gate.ps1",
                 "check_csharp.ps1",
                 "clear_logs.bat",
-                "console_summary.ps1",
+                "console_summary.py",
                 "export-playtest.bat",
                 "export-playtest.ps1",
                 "export_windows_playtest.ps1",
                 "gdscript_outline.ps1",
                 "generate_embedded_config_payload.py",
                 "godot_capture.ps1",
-                "log_summary.ps1",
+                "log_summary.py",
                 "operator_mission.ps1",
                 "performance_benchmark_report.ps1",
                 "prepare_operator_test_config.ps1",
@@ -1680,7 +1717,8 @@
                 "run_smoke_diagnostics.ps1",
                 "run_terrain_diagnostics.ps1",
                 "set_game_version.ps1",
-                "worker_lifecycle_report.ps1"
+                "worker_lifecycle_report.ps1",
+                "archive_logs_for_run.py"
             ],
             "Pipeline": [
                 "check_project_context.ps1",
