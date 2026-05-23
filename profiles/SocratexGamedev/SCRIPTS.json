@@ -124,7 +124,7 @@
         "run_smoke_diagnostics.py",
         "run_terrain_diagnostics.py",
         "set_game_version.py",
-        "worker_lifecycle_report.ps1",
+        "worker_lifecycle_report.py",
         "check_project_context.ps1",
         "compile.ps1",
         "compile_project_context.ps1",
@@ -146,7 +146,8 @@
         "utf8_file_helpers.py",
         "json_node_edit.py",
         "gdscript_comment_contract_check.py",
-        "check_godot_scripts.py"
+        "check_godot_scripts.py",
+        "gamedev_report_helpers.py"
     ],
     "content": {
         "audit_docs.ps1": {
@@ -826,11 +827,6 @@
             "category": "Gamedev",
             "description": "uruchamia pełny gate jakości gry.",
             "benefit": "masz jedno miejsce do potwierdzenia, że projekt nadal działa."
-        },
-        "worker_lifecycle_report.ps1": {
-            "category": "Gamedev",
-            "description": "raportuje cykl życia workerów.",
-            "benefit": "łatwiej diagnozować problemy z pracą w tle."
         },
         "check_project_context.ps1": {
             "category": "Pipeline",
@@ -1741,6 +1737,40 @@
                 "success": "Exit 0 i zaktualizowane Game/build_version.cfg, Game/project.godot oraz Game/export_presets.cfg.",
                 "failure": "Exit non-zero przy złym formacie wersji albo brakującym prefiksie linii w plikach konfiguracyjnych."
             }
+        },
+        "gamedev_report_helpers.py": {
+            "path": "Tools/gamedev/gamedev_report_helpers.py",
+            "category": "Gamedev",
+            "description": "Wspólne helpery Python dla gamedev report scripts: log discovery, JSONL parsing, bounded lists, timestamps i JSON report writing.",
+            "benefit": "Raporty diagnostyczne nie kopiują resolverów, parserów i zapisu JSON między skryptami.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Moduł pomocniczy importowany przez skrypty; nie jest samodzielnym command entrypointem."
+            },
+            "output": {
+                "success": "Shared Python helpers available for report scripts.",
+                "failure": "Import/runtime error in caller script."
+            }
+        },
+        "worker_lifecycle_report.py": {
+            "path": "Tools/gamedev/worker_lifecycle_report.py",
+            "category": "Gamedev",
+            "description": "Raportuje cykl życia workerów z runtime JSONL logów bez PowerShell.",
+            "benefit": "Łatwiej diagnozować thread lifecycle, join mode, queue depth i worker ownership na danych z logów.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--log-path/-LogPath",
+                    "--output-path/-OutputPath",
+                    "--max-lifecycle-events/-MaxLifecycleEvents"
+                ],
+                "rule": "Bez --log-path wybiera najnowszy *_runtime.log albo runtime_*.log z logs-performance."
+            },
+            "output": {
+                "success": "Exit 0 i JSON report z by_worker, events, parse_error_count oraz lifecycle_event_count.",
+                "failure": "Exit non-zero przy braku logu, błędnym wejściu albo błędzie zapisu raportu."
+            }
         }
     },
     "metadata": {
@@ -1867,7 +1897,7 @@
                 "run_smoke_diagnostics.py",
                 "run_terrain_diagnostics.py",
                 "set_game_version.py",
-                "worker_lifecycle_report.ps1",
+                "worker_lifecycle_report.py",
                 "archive_logs_for_run.py",
                 "wait_operator_event.py",
                 "run_map_performance_smoke.py",
