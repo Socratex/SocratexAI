@@ -131,6 +131,7 @@
         "task_snapshot.ps1",
         "task_snapshot.py",
         "task_flow_audit.ps1",
+        "task_flow_audit.py",
         "update_code_line_index.ps1",
         "update_code_line_index.py",
         "update_pipeline_from_link.ps1",
@@ -2789,6 +2790,28 @@
                 "failure": "Throws when git or changelog parsing fails, required evidence is missing, or evidence lacks required closure fields."
             }
         },
+        "task_flow_audit.py": {
+            "path": "tools/repo/task_flow_audit.py",
+            "category": "repo",
+            "description": "Python-first task-flow closure checklist and conditional complex-task adversarial review prompt.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--paths",
+                    "--project-root",
+                    "--changelog-path",
+                    "--complex",
+                    "--no-changelog",
+                    "--require-closure-evidence",
+                    "--closure-evidence-path"
+                ],
+                "rule": "Use during Pass 0S as the Python replacement for task_flow_audit.ps1; pass --project-root when invoking a managed package copy from a child project."
+            },
+            "output": {
+                "success": "Prints required closure artifacts, latest changelog evidence when present, complex-task adversarial review prompts when applicable, and validates closure evidence when required.",
+                "failure": "Exits nonzero when git or changelog parsing fails, required evidence is missing, or evidence lacks required closure fields."
+            }
+        },
         "update_code_line_index.ps1": {
             "path": "tools/codebase/update_code_line_index.ps1",
             "category": "codebase",
@@ -3191,6 +3214,7 @@
                 "task_snapshot.ps1",
                 "task_snapshot.py",
                 "task_flow_audit.ps1",
+                "task_flow_audit.py",
                 "learn_pipeline_features.ps1",
                 "open_pipeline_learning_issue.ps1",
                 "report_pipeline_learning.ps1",

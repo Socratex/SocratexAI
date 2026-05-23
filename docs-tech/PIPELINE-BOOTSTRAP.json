@@ -202,6 +202,7 @@
             "task_snapshot.ps1",
             "task_snapshot.py",
             "task_flow_audit.ps1",
+            "task_flow_audit.py",
             "update_code_line_index.ps1",
             "update_code_line_index.py",
             "update_pipeline_from_link.ps1",

@@ -16,6 +16,13 @@ def repo_root(start: Path) -> Path:
     return start.resolve()
 
 
+def engine_path(root: Path) -> Path:
+    colocated = Path(__file__).resolve().with_name("document_read_cache_engine.py")
+    if colocated.is_file():
+        return colocated
+    return root / "tools" / "documents" / "document_read_cache_engine.py"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build the SocratexPipeline document read cache.")
     parser.add_argument("paths", nargs="*", default=["__ALL_JSON__"], help="JSON document paths or glob patterns.")
@@ -28,7 +35,7 @@ def main() -> int:
     if not output_dir.is_absolute():
         output_dir = root / output_dir
 
-    engine = root / "tools" / "documents" / "document_read_cache_engine.py"
+    engine = engine_path(root)
     command = [
         sys.executable,
         "-B",

@@ -14,6 +14,18 @@ def run(command: list[str], cwd: Path) -> int:
     return completed.returncode
 
 
+def audit_json_path(root: Path) -> Path:
+    tools_dir = Path(__file__).resolve().parents[1]
+    for candidate in (
+        tools_dir / "json" / "audit_json_docs.py",
+        root / "tools" / "json" / "audit_json_docs.py",
+        root / "Tools" / "json" / "audit_json_docs.py",
+    ):
+        if candidate.is_file():
+            return candidate
+    return tools_dir / "json" / "audit_json_docs.py"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Audit SocratexPipeline JSON document contracts.")
     parser.add_argument("--repo-root", default=".", help="Repository root.")
@@ -22,7 +34,7 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(args.repo_root).resolve()
-    audit_json = root / "tools" / "json" / "audit_json_docs.py"
+    audit_json = audit_json_path(root)
     if not audit_json.is_file():
         print(f"ERROR: missing JSON audit engine: {audit_json}", file=sys.stderr)
         return 1

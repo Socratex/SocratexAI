@@ -537,12 +537,14 @@
         "check_utf8_writes.ps1",
         "legacy_commit_task_compatibility_wrapper.ps1",
         "compile_pipeline_context.ps1",
+        "compile_pipeline_context.py",
         "generate_installed_agent_instructions.ps1",
         "configure_powershell_utf8.ps1",
         "console_summary.ps1",
         "context_tags.ps1",
         "detect_project_stack.ps1",
         "build_document_cache.ps1",
+        "build_document_cache.py",
         "document_item_edit_engine.py",
         "bulk_insert_document_items.ps1",
         "insert_document_item.ps1",
@@ -578,7 +580,9 @@
         "check_toolchain_health.ps1",
         "finalize_task_check_commit_push.ps1",
         "end_prompt_snapshot.ps1",
+        "end_prompt_snapshot.py",
         "finalize_changed_files_commit_push.ps1",
+        "finalize_changed_files_commit_push.py",
         "run_final_task_checks.ps1",
         "run_final_task_checks.py",
         "generate_embedded_config_payload.py",
@@ -624,6 +628,7 @@
         "resolve_tool_runtime.ps1",
         "resolve_workspace_root.ps1",
         "rebuild_ai_compiled_context.ps1",
+        "rebuild_ai_compiled_context.py",
         "reinitialize_pipeline.ps1",
         "remove_pipeline.ps1",
         "repair_mojibake.ps1",
@@ -637,8 +642,11 @@
         "sync_pipeline_featurelist.ps1",
         "sync_pipeline_featurelist.py",
         "task_snapshot.ps1",
+        "task_snapshot.py",
         "task_flow_audit.ps1",
+        "task_flow_audit.py",
         "update_code_line_index.ps1",
+        "update_code_line_index.py",
         "update_pipeline_from_link.ps1",
         "update_pipeline_from_link.py",
         "upgrade_from_reference_project.ps1",
@@ -803,6 +811,12 @@
           "ref": "content.compile_pipeline_context.ps1",
           "status": ""
         },
+        "compile_pipeline_context.py": {
+          "path": "content.compile_pipeline_context.py",
+          "title": "",
+          "ref": "content.compile_pipeline_context.py",
+          "status": ""
+        },
         "generate_installed_agent_instructions.ps1": {
           "path": "content.generate_installed_agent_instructions.ps1",
           "title": "",
@@ -837,6 +851,12 @@
           "path": "content.build_document_cache.ps1",
           "title": "",
           "ref": "content.build_document_cache.ps1",
+          "status": ""
+        },
+        "build_document_cache.py": {
+          "path": "content.build_document_cache.py",
+          "title": "",
+          "ref": "content.build_document_cache.py",
           "status": ""
         },
         "document_item_edit_engine.py": {
@@ -1049,10 +1069,22 @@
           "ref": "content.end_prompt_snapshot.ps1",
           "status": ""
         },
+        "end_prompt_snapshot.py": {
+          "path": "content.end_prompt_snapshot.py",
+          "title": "",
+          "ref": "content.end_prompt_snapshot.py",
+          "status": ""
+        },
         "finalize_changed_files_commit_push.ps1": {
           "path": "content.finalize_changed_files_commit_push.ps1",
           "title": "",
           "ref": "content.finalize_changed_files_commit_push.ps1",
+          "status": ""
+        },
+        "finalize_changed_files_commit_push.py": {
+          "path": "content.finalize_changed_files_commit_push.py",
+          "title": "",
+          "ref": "content.finalize_changed_files_commit_push.py",
           "status": ""
         },
         "run_final_task_checks.ps1": {
@@ -1325,6 +1357,12 @@
           "ref": "content.rebuild_ai_compiled_context.ps1",
           "status": ""
         },
+        "rebuild_ai_compiled_context.py": {
+          "path": "content.rebuild_ai_compiled_context.py",
+          "title": "",
+          "ref": "content.rebuild_ai_compiled_context.py",
+          "status": ""
+        },
         "reinitialize_pipeline.ps1": {
           "path": "content.reinitialize_pipeline.ps1",
           "title": "",
@@ -1403,16 +1441,34 @@
           "ref": "content.task_snapshot.ps1",
           "status": ""
         },
+        "task_snapshot.py": {
+          "path": "content.task_snapshot.py",
+          "title": "",
+          "ref": "content.task_snapshot.py",
+          "status": ""
+        },
         "task_flow_audit.ps1": {
           "path": "content.task_flow_audit.ps1",
           "title": "",
           "ref": "content.task_flow_audit.ps1",
           "status": ""
         },
+        "task_flow_audit.py": {
+          "path": "content.task_flow_audit.py",
+          "title": "",
+          "ref": "content.task_flow_audit.py",
+          "status": ""
+        },
         "update_code_line_index.ps1": {
           "path": "content.update_code_line_index.ps1",
           "title": "",
           "ref": "content.update_code_line_index.ps1",
+          "status": ""
+        },
+        "update_code_line_index.py": {
+          "path": "content.update_code_line_index.py",
+          "title": "",
+          "ref": "content.update_code_line_index.py",
           "status": ""
         },
         "update_pipeline_from_link.ps1": {

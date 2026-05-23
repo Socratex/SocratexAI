@@ -9,6 +9,9 @@ REQUIRED_LEGACY_DOCUMENT_KEYS = {"id", "key", "title", "type", "version", "owner
 EXCLUDED_PARTS = {".git", "Tools/Python312", "Tools/python-installer", "Tools/tmp", "ignored"}
 EXCLUDED_PATH_PREFIXES = {
     "AI-compiled/",
+    "SocratexAI/AI-compiled/",
+    "SocratexAI/docs-tech/cache/",
+    "SocratexAI/ignored/",
     "docs-tech/cache/",
 }
 EXCLUDED_PATHS = {
@@ -192,9 +195,11 @@ def validate_cache(repo_root: Path, json_paths: list[Path]) -> list[str]:
         return [f"docs-tech/cache/doc_index.json: JSON parse failed: {exc}"]
 
     cached_paths = {
-        str(item.get("path", "")).replace("\\", "/")
+        cached_path
         for item in cache.get("documents", [])
         if isinstance(item, dict)
+        for cached_path in [str(item.get("path", "")).replace("\\", "/")]
+        if cached_path and not is_excluded(repo_root / cached_path, repo_root)
     }
     expected_paths = {repo_path(path, repo_root) for path in json_paths}
     missing = sorted(expected_paths - cached_paths)
@@ -211,6 +216,8 @@ def validate_pipeline_config_schema(repo_root: Path) -> list[str]:
     path = repo_root / "templates" / "code" / "PIPELINE-CONFIG.json"
     relative = repo_path(path, repo_root)
     if not path.exists():
+        if not (repo_root / "tools").is_dir():
+            return []
         return [f"{relative}: missing pipeline config template."]
     try:
         data = load_json(path)

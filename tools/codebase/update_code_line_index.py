@@ -135,7 +135,7 @@ def build_index_payload(records: dict[str, dict[str, Any]], threshold: int, gene
 
 
 def json_text(value: Any) -> str:
-    return json.dumps(value, ensure_ascii=False, indent=2) + "\n"
+    return json.dumps(value, ensure_ascii=False, indent=4) + "\n"
 
 
 def large_note(path: str) -> str:
