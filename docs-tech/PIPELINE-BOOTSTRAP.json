@@ -101,6 +101,7 @@
             "context_tags.ps1",
             "detect_project_stack.ps1",
             "build_document_cache.ps1",
+            "build_document_cache.py",
             "document_item_edit_engine.py",
             "bulk_insert_document_items.ps1",
             "insert_document_item.ps1",

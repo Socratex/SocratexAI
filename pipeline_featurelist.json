@@ -455,6 +455,7 @@
                     "tools/documents",
                     "tools/text/normalize_json_files.ps1",
                     "tools/text/normalize_json_files.py",
+                    "tools/documents/build_document_cache.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
@@ -624,6 +625,7 @@
                 ],
                 "required_scripts": [
                     "build_document_cache.ps1",
+                    "build_document_cache.py",
                     "audit_docs.ps1",
                     "json_list_doc.py",
                     "json_read.ps1",
@@ -642,6 +644,7 @@
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "build_document_cache.ps1",
+                        "build_document_cache.py",
                         "audit_docs.ps1",
                         "json_list_doc.py",
                         "json_read.ps1",
@@ -667,10 +670,14 @@
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Prefer build_document_cache.py for Python-first document cache refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/documents/build_document_cache.py tools/documents/document_read_cache_engine.py",
+                    "python3 -B tools/documents/build_document_cache.py --output-dir /tmp/socratex-doc-cache-smoke",
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/documents/build_document_cache.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],

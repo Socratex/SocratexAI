@@ -30,6 +30,7 @@
         "context_tags.ps1",
         "detect_project_stack.ps1",
         "build_document_cache.ps1",
+        "build_document_cache.py",
         "document_item_edit_engine.py",
         "bulk_insert_document_items.ps1",
         "insert_document_item.ps1",
@@ -674,6 +675,24 @@
             "output": {
                 "success": "Completes the document operation or check and prints the requested result or OK status.",
                 "failure": "Throws or exits nonzero when paths, selectors, duplicate policy, schema rules, normalization, or post-edit checks fail."
+            }
+        },
+        "build_document_cache.py": {
+            "path": "tools/documents/build_document_cache.py",
+            "category": "documents",
+            "description": "Build the structured document read cache through Python without a PowerShell wrapper.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--output-dir",
+                    "paths"
+                ],
+                "rule": "Use during Pass 0S as the Python replacement for document cache refresh."
+            },
+            "output": {
+                "success": "Writes docs-tech/cache/doc_index.json or the configured output and prints the output path.",
+                "failure": "Exits nonzero when document cache generation fails."
             }
         },
         "document_item_edit_engine.py": {
@@ -3047,6 +3066,7 @@
                 "audit_docs.ps1",
                 "audit_docs.py",
                 "build_document_cache.ps1",
+                "build_document_cache.py",
                 "document_item_edit_engine.py",
                 "bulk_insert_document_items.ps1",
                 "insert_document_item.ps1",
