@@ -21,6 +21,10 @@ def repo_relative(root: Path, path: Path) -> str:
     return path.relative_to(root).as_posix()
 
 
+def is_installed_package_root(root: Path) -> bool:
+    return root.name == "SocratexAI" and (root.parent / "SOCRATEX.md").is_file()
+
+
 def skipped(relative: str) -> bool:
     parts = relative.split("/")
     return (
@@ -55,6 +59,9 @@ def main() -> int:
     violations: list[tuple[str, int, str, str]] = []
     print("==> sensitive reference leak smoke test")
     print(f"Root: {root}")
+    if is_installed_package_root(root):
+        print("SKIP: source-pipeline sensitive leak smoke is not valid for an installed child-project package.")
+        return 0
 
     for path in sorted(item for item in root.rglob("*") if item.is_file()):
         relative = repo_relative(root, path)

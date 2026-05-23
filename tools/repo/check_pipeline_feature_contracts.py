@@ -38,6 +38,25 @@ def repo_root(start: Path) -> Path:
     raise SystemExit("Could not resolve repository root from current path.")
 
 
+def script_package_root() -> Path:
+    return Path(__file__).resolve().parents[2]
+
+
+def resolve_contract_root(requested_root: str) -> Path:
+    root = repo_root(Path(requested_root))
+    package_root = repo_root(script_package_root())
+    try:
+        package_inside_requested = package_root.is_relative_to(root)
+    except ValueError:
+        package_inside_requested = False
+
+    if root != package_root and package_inside_requested and is_installed_package_root(package_root):
+        print(f"INFO: using installed SocratexAI package root for feature contracts: {package_root}")
+        print(f"INFO: child project root is not a source pipeline contract root: {root}")
+        return package_root
+    return root
+
+
 def read_json(path: Path) -> dict[str, Any]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
@@ -142,7 +161,7 @@ def main() -> int:
     parser.add_argument("--paths", nargs="*", default=[], help="Changed paths, comma-separated or repeated.")
     args = parser.parse_args()
 
-    root = repo_root(Path(args.repo_root))
+    root = resolve_contract_root(args.repo_root)
     errors: list[str] = []
     feature_list = read_json(root / "pipeline_featurelist.json")
     scripts = read_json(root / "SCRIPTS.json")
