@@ -4182,8 +4182,8 @@
         "run-game.bat",
         "run_biome_distribution_diagnostics.py",
         "run_biome_walk_benchmark.py",
-        "run_quality_fix.ps1",
-        "run_quality_gate.ps1",
+        "run_quality_fix.py",
+        "run_gamedev_quality_gate.py",
         "run_smoke_diagnostics.py",
         "run_terrain_diagnostics.py",
         "set_game_version.py",
@@ -4752,16 +4752,16 @@
           "ref": "content.run-game.bat",
           "status": ""
         },
-        "run_quality_fix.ps1": {
-          "path": "content.run_quality_fix.ps1",
+        "run_quality_fix.py": {
+          "path": "content.run_quality_fix.py",
           "title": "",
-          "ref": "content.run_quality_fix.ps1",
+          "ref": "content.run_quality_fix.py",
           "status": ""
         },
-        "run_quality_gate.ps1": {
-          "path": "content.run_quality_gate.ps1",
+        "run_gamedev_quality_gate.py": {
+          "path": "content.run_gamedev_quality_gate.py",
           "title": "",
-          "ref": "content.run_quality_gate.ps1",
+          "ref": "content.run_gamedev_quality_gate.py",
           "status": ""
         },
         "check_project_context.ps1": {

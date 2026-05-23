@@ -120,8 +120,8 @@
         "run-game.bat",
         "run_biome_distribution_diagnostics.py",
         "run_biome_walk_benchmark.py",
-        "run_quality_fix.ps1",
-        "run_quality_gate.ps1",
+        "run_quality_fix.py",
+        "run_gamedev_quality_gate.py",
         "run_smoke_diagnostics.py",
         "run_terrain_diagnostics.py",
         "set_game_version.py",
@@ -828,15 +828,35 @@
             "description": "top-level batch uruchamiający grę.",
             "benefit": "masz szybki skrót do lokalnego startu bez wchodzenia w Tools/."
         },
-        "run_quality_fix.ps1": {
+        "run_quality_fix.py": {
+            "path": "Tools/gamedev/run_quality_fix.py",
             "category": "Gamedev",
-            "description": "wykonuje automatyczne poprawki jakościowe.",
-            "benefit": "proste problemy formatu i jakości są naprawiane przed gate."
+            "description": "Pythonowy quality fix/gate dla Rifta: gdformat, gdlint, gdformat --check, C# smoke i Godot headless.",
+            "benefit": "root finalizer może przejść pełny gamedev quality path bez PowerShell runtime.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Uruchamiaj z root repo przez python3 -B Tools/gamedev/run_quality_fix.py; finalizer `done.py` odpala go automatycznie."
+            },
+            "output": {
+                "success": "Exit 0 po formacie, lintach, C# smoke i czystym Godot headless startup.",
+                "failure": "Exit non-zero przy braku narzędzi, błędach gdtoolkit, C# smoke, Godot exit code albo ERROR/WARNING w logu headless."
+            }
         },
-        "run_quality_gate.ps1": {
+        "run_gamedev_quality_gate.py": {
+            "path": "Tools/gamedev/run_gamedev_quality_gate.py",
             "category": "Gamedev",
-            "description": "uruchamia pełny gate jakości gry.",
-            "benefit": "masz jedno miejsce do potwierdzenia, że projekt nadal działa."
+            "description": "Pythonowy pełny gate jakości gry bez automatycznego formatowania.",
+            "benefit": "masz jedno miejsce do potwierdzenia, że projekt nadal działa bez PowerShell runtime.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Uruchamiaj z root repo przez python3 -B Tools/gamedev/run_gamedev_quality_gate.py; użyj run_quality_fix.py, gdy ma też wykonać gdformat."
+            },
+            "output": {
+                "success": "Exit 0 po lintach, format checku, C# smoke i czystym Godot headless startup.",
+                "failure": "Exit non-zero przy braku narzędzi, błędach gdtoolkit, C# smoke, Godot exit code albo ERROR/WARNING w logu headless."
+            }
         },
         "check_project_context.ps1": {
             "category": "Pipeline",
@@ -1922,8 +1942,8 @@
                 "route_retest_report.ps1",
                 "run-game.bat",
                 "run_biome_distribution_diagnostics.py",
-                "run_quality_fix.ps1",
-                "run_quality_gate.ps1",
+                "run_quality_fix.py",
+                "run_gamedev_quality_gate.py",
                 "run_smoke_diagnostics.py",
                 "run_terrain_diagnostics.py",
                 "set_game_version.py",
