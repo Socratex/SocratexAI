@@ -1148,12 +1148,14 @@
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
                     "Refresh the installed SocratexAI document cache after managed package sync and before full verification so child audits validate current package files instead of stale cache entries.",
-                    "Prefer tools/pipeline/check_ai_compiled_context.py from audit_docs.ps1 when present so installed child packages use the Python-first compiled-context smoke before falling back to the legacy PowerShell checker."
+                    "Prefer tools/pipeline/check_ai_compiled_context.py from audit_docs.ps1 when present so installed child packages use the Python-first compiled-context smoke before falling back to the legacy PowerShell checker.",
+                    "Do not claim removed or replaced PowerShell pipeline tooling is migrated unless each affected .ps1 path has a Python successor, compatibility wrapper, or explicit legacy/deferred reason, and the successor path has been exercised by source and child-project smoke/update verification."
                 ],
                 "verification_commands": [
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "python tools/pipeline/update_pipeline_from_link.py --source . --source-mode LocalPath --target-path <child> --full-verify"
+                    "python tools/pipeline/update_pipeline_from_link.py --source . --source-mode LocalPath --target-path <child> --full-verify",
+                    "python tools/pipeline/pipeline_sweep.py --project source:SocratexAI=. --smoke --execute --stop-on-failure --json"
                 ],
                 "known_failure_if_missing": "If 'pipeline_update_and_removal_protocols' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, import document cache, or imported knowledge freshness is absent."
             },
@@ -5781,13 +5783,15 @@
                     "Keep Python-backed PowerShell wrappers dot-sourcing resolve_tool_runtime.ps1 instead of hardcoding Tools/Python312/python.exe.",
                     "Prefer SOCRATEX_PYTHON and SOCRATEX_PWSH overrides before bundled or PATH-based runtimes.",
                     "Keep Windows-only bundled Python paths as fallback candidates, not as mandatory Linux/Steam Deck dependencies.",
-                    "Run representative document, knowledge, bootstrap, and feature-contract checks on a Linux shell before promoting to child projects."
+                    "Run representative document, knowledge, bootstrap, and feature-contract checks on a Linux shell before promoting to child projects.",
+                    "For PowerShell-to-Python migration claims, verify behavior by executing the replacement Python commands and update/smoke flows; reference-count reduction alone is not sufficient evidence."
                 ],
                 "verification_commands": [
                     "powershell -NoLogo -NoProfile -File tools/pipeline/pipeline_bootstrap_index.ps1 -Check",
                     "powershell -NoLogo -NoProfile -File tools/documents/build_document_cache.ps1",
                     "powershell -NoLogo -NoProfile -File tools/knowledge/knowledge_check.ps1",
-                    "powershell -NoLogo -NoProfile -File tools/repo/check_pipeline_feature_contracts.ps1"
+                    "powershell -NoLogo -NoProfile -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "python3 tools/quality/check_runtime.py --root-key runtime_status --strict"
                 ],
                 "known_failure_if_missing": "Linux and Steam Deck installs fall back to empty HUD-like pipeline state or failed bootstrap/document/knowledge tools because wrappers try to execute a Windows-only bundled Python path."
             },
