@@ -12,7 +12,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Sequence
 
 
 MIN_PYTHON = (3, 10)
@@ -36,10 +36,12 @@ def repo_root(start: Path | None = None) -> Path:
     return Path.cwd().resolve()
 
 
-def _candidate_paths(search_root: Path) -> Iterable[tuple[str, str]]:
-    env_python = os.environ.get("SOCRATEX_PYTHON", "").strip()
-    if env_python:
-        yield env_python, "SOCRATEX_PYTHON"
+def _candidate_paths(search_root: Path, env_vars: Sequence[str] = ("SOCRATEX_PYTHON",)) -> Iterable[tuple[str, str]]:
+    for env_var in env_vars:
+        env_python = os.environ.get(env_var, "").strip()
+        if env_python:
+            yield env_python, env_var
+            break
 
     yield sys.executable, "current_process"
 
@@ -72,11 +74,11 @@ def _probe(command: str, source: str) -> PythonRuntime | None:
     return PythonRuntime(command, version_text, source, True, "OK")
 
 
-def resolve_python(search_root: Path | None = None) -> PythonRuntime:
+def resolve_python(search_root: Path | None = None, env_vars: Sequence[str] = ("SOCRATEX_PYTHON",)) -> PythonRuntime:
     root = (search_root or repo_root()).resolve()
     seen: set[str] = set()
     best_failure: PythonRuntime | None = None
-    for command, source in _candidate_paths(root):
+    for command, source in _candidate_paths(root, env_vars):
         key = f"{source}:{command}"
         if key in seen:
             continue
@@ -87,22 +89,22 @@ def resolve_python(search_root: Path | None = None) -> PythonRuntime:
         if runtime.ok:
             return runtime
         best_failure = runtime
-    return best_failure or PythonRuntime("", "", "unresolved", False, python_install_hint())
+    return best_failure or PythonRuntime("", "", "unresolved", False, python_install_hint(env_vars[0] if env_vars else "SOCRATEX_PYTHON"))
 
 
-def python_install_hint() -> str:
+def python_install_hint(env_var: str = "SOCRATEX_PYTHON") -> str:
     system = platform.system().lower()
     if system == "linux":
         return "Install Python 3.10+ with your distro package manager, pyenv, or the project-approved toolchain."
     if system == "darwin":
         return "Install Python 3.10+ with python.org, Homebrew, or pyenv."
     if system == "windows":
-        return "Install Python 3.10+ with winget, python.org, or the Windows Store, then set SOCRATEX_PYTHON if needed."
-    return "Install Python 3.10+ and set SOCRATEX_PYTHON to the executable path if automatic discovery fails."
+        return f"Install Python 3.10+ with winget, python.org, or the Windows Store, then set {env_var} if needed."
+    return f"Install Python 3.10+ and set {env_var} to the executable path if automatic discovery fails."
 
 
-def runtime_report(search_root: Path | None = None) -> dict[str, object]:
-    runtime = resolve_python(search_root)
+def runtime_report(search_root: Path | None = None, env_vars: Sequence[str] = ("SOCRATEX_PYTHON",)) -> dict[str, object]:
+    runtime = resolve_python(search_root, env_vars)
     return {
         "python3": {
             "ok": runtime.ok,
@@ -111,7 +113,7 @@ def runtime_report(search_root: Path | None = None) -> dict[str, object]:
             "source": runtime.source,
             "minimum_version": f"{MIN_PYTHON[0]}.{MIN_PYTHON[1]}",
             "recommended_version": f"{RECOMMENDED_PYTHON[0]}.{RECOMMENDED_PYTHON[1]}",
-            "install_hint": None if runtime.ok else python_install_hint(),
+            "install_hint": None if runtime.ok else python_install_hint(env_vars[0] if env_vars else "SOCRATEX_PYTHON"),
             "message": runtime.message,
         }
     }

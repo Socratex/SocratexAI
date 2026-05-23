@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T01:12:58+02:00",
+    "generatedAt": "2026-05-24T01:54:29+02:00",
     "threshold": 300,
     "files": [
         {
@@ -214,7 +214,7 @@
         },
         {
             "path": "tools/pipeline/python_runtime.py",
-            "lines": 106,
+            "lines": 108,
             "extension": ".py",
             "large": false
         },

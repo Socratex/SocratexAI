@@ -6576,7 +6576,7 @@
                 "known_failure_if_missing": "Projects may duplicate boundary behavior across callers instead of using a helper or API that supports the architecture and makes the intended contract easy to use and easy to audit."
             },
             "cross_platform_tool_runtime_resolution": {
-                "summary": "Python wrappers resolve the project Python runtime through a shared runtime helper so source and installed pipeline tools run on Windows, Linux, and Steam Deck/Linux without hardcoded Windows-only Python paths.",
+                "summary": "Python wrappers resolve the project Python runtime through a parameterized shared runtime helper so source and installed pipeline tools run on Windows, Linux, and Steam Deck/Linux without hardcoded Windows-only Python paths.",
                 "required_paths": [
                     "SCRIPTS.json",
                     "pipeline_featurelist.json",
@@ -6727,7 +6727,7 @@
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Keep Python-backed wrapper replacements dot-sourcing resolve_tool_runtime.py instead of hardcoding Tools/Python312/python.exe.",
-                    "Prefer SOCRATEX_PYTHON and SOCRATEX_PWSH overrides before bundled or PATH-based runtimes.",
+                    "Prefer project-specific Python environment overrides before SOCRATEX_PYTHON, bundled, or PATH-based runtimes when a child project reuses python_runtime.py.",
                     "Keep Windows-only bundled Python paths as fallback candidates, not as mandatory Linux/Steam Deck dependencies.",
                     "Run representative document, knowledge, bootstrap, and feature-contract checks on a Linux shell before promoting to child projects.",
                     "For legacy-shell-to-Python migration claims, verify behavior by executing the replacement Python commands and update/smoke flows; reference-count reduction alone is not sufficient evidence."
