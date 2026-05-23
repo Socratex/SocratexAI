@@ -24,7 +24,7 @@ def resolved_repo_root(value: str) -> Path:
 
 
 def add_repo_root(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("--repo-root", default="")
+    parser.add_argument("--repo-root", "-RepoRoot", default="")
 
 
 def collect_paths(args: argparse.Namespace) -> list[str]:

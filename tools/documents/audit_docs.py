@@ -29,8 +29,9 @@ def audit_json_path(root: Path) -> Path:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Audit SocratexPipeline JSON document contracts.")
     parser.add_argument("--repo-root", default=".", help="Repository root.")
-    parser.add_argument("--strict", action="store_true", help="Reserved for parity with the legacy audit command.")
-    parser.add_argument("--initialized", action="store_true", help="Reserved for parity with the legacy audit command.")
+    parser.add_argument("--state-soft-limit", "-StateSoftLimit", type=int, default=250, help="Accepted for legacy CLI parity.")
+    parser.add_argument("--strict", "-Strict", action="store_true", help="Reserved for parity with the legacy audit command.")
+    parser.add_argument("--initialized", "-Initialized", action="store_true", help="Reserved for parity with the legacy audit command.")
     args = parser.parse_args()
 
     root = Path(args.repo_root).resolve()

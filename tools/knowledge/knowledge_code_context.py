@@ -107,10 +107,10 @@ def write_gate(repo_root: Path, selected_tags: list[str], views: list[str], addi
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--views", nargs="*", default=[])
-    parser.add_argument("--additional-tags", nargs="*", default=[])
-    parser.add_argument("--format", choices=["markdown", "json"], default="markdown")
-    parser.add_argument("--skip-check", action="store_true")
+    parser.add_argument("--views", "-Views", nargs="*", default=[])
+    parser.add_argument("--additional-tags", "-AdditionalTags", nargs="*", default=[])
+    parser.add_argument("--format", "-Format", choices=["markdown", "json"], default="markdown")
+    parser.add_argument("--skip-check", "-SkipCheck", action="store_true")
     return parser.parse_args()
 
 

@@ -13,9 +13,9 @@ import knowledge_tier_report  # noqa: E402
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate context_tier metadata on knowledge entries.")
-    parser.add_argument("--repo-root", default=".", help="Repository root to scan.")
-    parser.add_argument("--include-templates", action="store_true")
-    parser.add_argument("--format", choices=("markdown", "json"), default="markdown")
+    parser.add_argument("--repo-root", "-RepoRoot", default=".", help="Repository root to scan.")
+    parser.add_argument("--include-templates", "-IncludeTemplates", action="store_true")
+    parser.add_argument("--format", "-Format", choices=("markdown", "json"), default="markdown")
     args = parser.parse_args()
 
     report = knowledge_tier_report.scan_repo(Path(args.repo_root).resolve(), args.include_templates)

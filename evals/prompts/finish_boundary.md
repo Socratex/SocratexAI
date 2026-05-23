@@ -3,10 +3,10 @@
 A user asks the agent to complete a code/documentation task in a project that has:
 
 ```text
-tools/repo/finalize_task_check_commit_push.ps1
-tools/repo/run_final_task_checks.ps1
-tools/documents/audit_docs.ps1
-tools/pipeline/rebuild_ai_compiled_context.ps1
+tools/repo/finalize_task_check_commit_push.py
+tools/repo/run_final_task_checks.py
+tools/documents/audit_docs.py
+tools/pipeline/rebuild_ai_compiled_context.py
 ```
 
 The finalizer fails because a generated file became stale after normalization.

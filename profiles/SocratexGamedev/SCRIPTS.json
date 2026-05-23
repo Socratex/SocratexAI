@@ -1,122 +1,97 @@
 {
     "index": [
-        "audit_docs.ps1",
+        "audit_docs.py",
         "audit_yaml_docs.py",
-        "doc_build_cache.ps1",
+        "doc_build_cache.py",
         "doc_item.py",
-        "doc_item_bulk_insert.ps1",
-        "doc_item_insert.ps1",
-        "doc_item_migrate.ps1",
-        "doc_item_move.ps1",
-        "doc_keys.ps1",
-        "doc_list_check.ps1",
-        "doc_list_insert.ps1",
-        "doc_list_insert_checked.ps1",
+        "doc_item_bulk_insert.py",
+        "doc_item_insert.py",
+        "doc_item_migrate.py",
+        "doc_item_move.py",
+        "doc_keys.py",
+        "doc_list_check.py",
+        "doc_list_insert.py",
+        "doc_list_insert_checked.py",
         "doc_list_item.py",
-        "doc_list_review.ps1",
-        "doc_post_edit.ps1",
-        "doc_read.ps1",
-        "doc_read_titles.ps1",
-        "doc_route.ps1",
-        "doc_search.ps1",
+        "doc_list_review.py",
+        "doc_post_edit.py",
+        "doc_read.py",
+        "doc_read_titles.py",
+        "doc_route.py",
+        "doc_search.py",
         "json_list_doc.py",
         "json_wrapper_entrypoints.py",
-        "json_refresh_index.ps1",
         "json_refresh_index.py",
-        "json_migrate_content.ps1",
         "json_migrate_content.py",
-        "json_read.ps1",
         "json_read.py",
-        "json_item_insert.ps1",
         "json_item_insert.py",
-        "json_item_set.ps1",
         "json_item_set.py",
-        "json_item_move.ps1",
         "json_item_move.py",
-        "json_item_delete.ps1",
         "json_item_delete.py",
-        "json_line_insert.ps1",
         "json_line_insert.py",
-        "json_line_set.ps1",
         "json_line_set.py",
-        "json_line_move.ps1",
         "json_line_move.py",
         "doc_tool.py",
-        "docs_migrator.ps1",
         "docs_migrator.py",
-        "yaml_to_json_list_doc.ps1",
         "yaml_to_json_list_doc.py",
-        "docs_slim.ps1",
         "docs_slim.py",
-        "markdown_list_insert_checked.ps1",
-        "normalize_markdown_emoji.ps1",
-        "context_tags.ps1",
-        "knowledge_check.ps1",
+        "markdown_list_insert_checked.py",
+        "normalize_markdown_emoji.py",
+        "context_tags.py",
         "knowledge_check.py",
-        "knowledge_code_context.ps1",
-        "knowledge_compile.ps1",
+        "knowledge_code_context.py",
         "knowledge_compile.py",
-        "knowledge_delete.ps1",
         "knowledge_delete.py",
         "knowledge_index.py",
-        "knowledge_query.ps1",
         "knowledge_query.py",
-        "knowledge_rename.ps1",
         "knowledge_rename.py",
-        "knowledge_select.ps1",
-        "knowledge_upsert.ps1",
+        "knowledge_select.py",
         "knowledge_upsert.py",
-        "knowledge_validate.ps1",
-        "open_knowledge_db.ps1",
-        "add_changelog_entry.ps1",
-        "check_task.ps1",
-        "commit_task.ps1",
-        "done.ps1",
-        "end_prompt_snapshot.ps1",
-        "finish_subtask.ps1",
-        "finish_task.ps1",
-        "task_snapshot.ps1",
-        "Utf8File.ps1",
-        "check_utf8_writes.ps1",
-        "normalize_text_files.ps1",
+        "knowledge_validate.py",
+        "open_knowledge_db.py",
+        "add_changelog_entry.py",
+        "check_task.py",
+        "commit_task.py",
+        "done.py",
+        "end_prompt_snapshot.py",
+        "finish_subtask.py",
+        "finish_task.py",
+        "task_snapshot.py",
+        "check_utf8_writes.py",
         "normalize_text_files.py",
-        "normalize_json_files.ps1",
         "normalize_json_files.py",
         "normalize_documents.bat",
-        "repair_mojibake.ps1",
         "repair_mojibake.py",
-        "repair_yaml_block_indentation.ps1",
         "repair_yaml_block_indentation.py",
-        "write_utf8_file.ps1",
         "write_utf8_file.py",
-        "check_code_context_gate.ps1",
-        "load_programming_context.ps1",
-        "update_code_line_index.ps1",
-        "bootstrap_dotnet_sdk.ps1",
-        "bootstrap_godot_console.ps1",
+        "check_code_context_gate.py",
+        "load_programming_context.py",
+        "update_code_line_index.py",
+        "bootstrap_dotnet_sdk.py",
+        "bootstrap_godot_console.py",
+        "build_and_run.py",
         "archive_logs_for_run.py",
-        "build_and_run.ps1",
         "changed_quality_gate.py",
         "check_csharp.py",
         "clear_logs.bat",
         "console_summary.py",
         "export-playtest.bat",
-        "export-playtest.ps1",
-        "export_windows_playtest.ps1",
+        "export_playtest.py",
+        "export_windows_playtest.py",
         "gamedev_quality_helpers.py",
         "gdscript_outline.py",
         "generate_embedded_config_payload.py",
         "godot_capture.py",
         "log_summary.py",
-        "operator_mission.ps1",
-        "performance_benchmark_report.ps1",
+        "operator_mission.py",
+        "performance_benchmark_report.py",
         "prepare_operator_test_config.py",
         "send_operator_command.py",
-        "route_retest_report.ps1",
+        "route_retest_report.py",
         "run_map_performance_smoke.py",
         "wait_operator_event.py",
         "run_godot_script.py",
-        "run_headless.ps1",
+        "run_headless.py",
         "run-game.bat",
         "run_biome_distribution_diagnostics.py",
         "run_biome_walk_benchmark.py",
@@ -126,23 +101,20 @@
         "run_terrain_diagnostics.py",
         "set_game_version.py",
         "worker_lifecycle_report.py",
-        "check_project_context.ps1",
-        "compile.ps1",
-        "compile_project_context.ps1",
-        "flow_read.ps1",
+        "check_project_context.py",
+        "compile.py",
+        "compile_project_context.py",
+        "flow_read.py",
         "flow_tool.py",
-        "load_type_context.ps1",
+        "load_type_context.py",
         "type_context_loader.py",
         "project_context_compiler.py",
-        "tool_handler.ps1",
-        "tool_error_log.ps1",
-        "read_compiled_context.ps1",
-        "resolve_python.ps1",
-        "configure_powershell_tool_path.ps1",
-        "configure_powershell_utf8.ps1",
-        "doctor.ps1",
-        "play_completion_sound.ps1",
-        "pipeline_bootstrap_index.ps1",
+        "tool_handler.py",
+        "tool_error_log.py",
+        "read_compiled_context.py",
+        "resolve_python.py",
+        "doctor.py",
+        "play_completion_sound.py",
         "pipeline_bootstrap_index.py",
         "utf8_file_helpers.py",
         "json_node_edit.py",
@@ -151,7 +123,7 @@
         "gamedev_report_helpers.py"
     ],
     "content": {
-        "audit_docs.ps1": {
+        "audit_docs.py": {
             "category": "Documents",
             "description": "sprawdza spójność dokumentów projektowych.",
             "benefit": "szybko widzisz, czy dokumentacja nadal trzyma kontrakt, w tym ścisły root `index`, `content`, `metadata` dla źródłowych JSON-ów."
@@ -161,7 +133,7 @@
             "description": "waliduje dokumenty YAML używane przez pipeline.",
             "benefit": "łatwiej wykrywasz błędy struktury przed dalszą pracą."
         },
-        "doc_build_cache.ps1": {
+        "doc_build_cache.py": {
             "category": "Documents",
             "description": "odświeża indeks dokumentów.",
             "benefit": "narzędzia dokumentacyjne korzystają z aktualnej mapy treści."
@@ -171,14 +143,14 @@
             "description": "obsługuje pojedyncze elementy w dokumentach YAML.",
             "benefit": "zmiany w listach są bardziej przewidywalne."
         },
-        "doc_item_bulk_insert.ps1": {
+        "doc_item_bulk_insert.py": {
             "category": "Documents",
             "description": "dodaje wiele elementów do dokumentu naraz.",
             "benefit": "większe aktualizacje dokumentów są szybsze i mniej podatne na pomyłki."
         },
-        "doc_item_insert.ps1": {
+        "doc_item_insert.py": {
             "category": "Documents",
-            "description": "dodaje jeden element do wybranego miejsca w dokumencie; dla .json deleguje do json_item_insert.ps1/json_item_set.ps1, a dla slim YAML używa doc_item.py.",
+            "description": "dodaje jeden element do wybranego miejsca w dokumencie; dla .json deleguje do json_item_insert.py/json_item_set.py, a dla slim YAML używa doc_item.py.",
             "benefit": "zachowujesz porządek bez ręcznego przesuwania list i możesz użyć jednego wrappera dla dokumentów JSON oraz slim YAML.",
             "input": {
                 "required": [
@@ -197,25 +169,25 @@
                     "-Replace",
                     "-NoPostEdit"
                 ],
-                "json_routing": "For .json paths, -Title/-Content/-ContentFile are wrapped as {title, content}; -ItemFile must contain a JSON value; -Replace routes to json_item_set.ps1; insert routes to json_item_insert.ps1.",
-                "rule": "Use -ContentFile or -ItemFile for multiline or quote-heavy content. For direct JSON control, use json_item_insert.ps1/json_item_set.ps1."
+                "json_routing": "For .json paths, -Title/-Content/-ContentFile are wrapped as {title, content}; -ItemFile must contain a JSON value; -Replace routes to json_item_set.py; insert routes to json_item_insert.py.",
+                "rule": "Use -ContentFile or -ItemFile for multiline or quote-heavy content. For direct JSON control, use json_item_insert.py/json_item_set.py."
             },
             "output": {
                 "success": "OK from the underlying document editor.",
                 "failure": "Throws child editor failure with the child process exit code."
             }
         },
-        "doc_item_migrate.ps1": {
+        "doc_item_migrate.py": {
             "category": "Documents",
             "description": "przenosi element między dokumentami.",
             "benefit": "utrzymujesz właściwe miejsce dla zadań i zasad."
         },
-        "doc_item_move.ps1": {
+        "doc_item_move.py": {
             "category": "Documents",
             "description": "przesuwa element w obrębie dokumentu.",
             "benefit": "zmieniasz kolejność bez ryzyka uszkodzenia struktury."
         },
-        "doc_keys.ps1": {
+        "doc_keys.py": {
             "category": "Documents",
             "description": "pokazuje główne klucze dokumentu.",
             "benefit": "szybko wybierasz właściwą sekcję do czytania.",
@@ -232,17 +204,17 @@
                 "failure": "Throws when the document cannot be read or parsed."
             }
         },
-        "doc_list_check.ps1": {
+        "doc_list_check.py": {
             "category": "Documents",
             "description": "szuka podobnych wpisów w listach dokumentów.",
             "benefit": "ograniczasz duplikaty przed dopisaniem nowej treści."
         },
-        "doc_list_insert.ps1": {
+        "doc_list_insert.py": {
             "category": "Documents",
             "description": "dopisuje wpis do listy w dokumencie.",
             "benefit": "zachowujesz format list bez ręcznej edycji."
         },
-        "doc_list_insert_checked.ps1": {
+        "doc_list_insert_checked.py": {
             "category": "Documents",
             "description": "dopisuje wpis po kontroli duplikatów.",
             "benefit": "dokument rośnie bez powtarzania tych samych informacji."
@@ -252,17 +224,17 @@
             "description": "wspiera operacje na listach dokumentów.",
             "benefit": "skrypty listowe działają spójnie."
         },
-        "doc_list_review.ps1": {
+        "doc_list_review.py": {
             "category": "Documents",
             "description": "pokazuje kandydatów podobnych do planowanego wpisu.",
             "benefit": "łatwiej zdecydować, czy dodać, połączyć, czy poprawić istniejący wpis."
         },
-        "doc_post_edit.ps1": {
+        "doc_post_edit.py": {
             "category": "Documents",
             "description": "porządkuje dokument po edycji.",
             "benefit": "dokument zostaje w stanie gotowym do dalszych checków."
         },
-        "doc_read.ps1": {
+        "doc_read.py": {
             "category": "Documents",
             "description": "czyta wskazaną część dokumentu; bez selektora pokazuje indeks/klucze zamiast przerywać pracę.",
             "benefit": "dostajesz potrzebny kontekst bez ładowania całego pliku i bez twardego błędu przy brakującym selektorze.",
@@ -277,8 +249,8 @@
                     "-Ref",
                     "-Json"
                 ],
-                "aliases": "-Selector also accepts script-level aliases -Key, -Title, and -Ref when calling doc_read.ps1 directly; through tool_handler.ps1 prefer Selector.",
-                "fallback": "When no selector is supplied, doc_read returns the document key index, equivalent to doc_keys.ps1.",
+                "aliases": "-Selector also accepts script-level aliases -Key, -Title, and -Ref when calling doc_read.py directly; through tool_handler.py prefer Selector.",
+                "fallback": "When no selector is supplied, doc_read returns the document key index, equivalent to doc_keys.py.",
                 "known_aliases": "docs-tech/STATE.json next -> current; team/performance.json principles -> pytania_kontrolne; team/performance.json suspect_order -> priorytetyzuj_sekcje."
             },
             "output": {
@@ -286,17 +258,17 @@
                 "failure": "Throws when the document, selector, or parser fails."
             }
         },
-        "doc_read_titles.ps1": {
+        "doc_read_titles.py": {
             "category": "Documents",
             "description": "czyta sekcje po tytułach.",
             "benefit": "łatwiej pracować na konkretnych fragmentach dokumentacji."
         },
-        "doc_route.ps1": {
+        "doc_route.py": {
             "category": "Documents",
             "description": "pomaga znaleźć dokument właściwy dla tematu.",
             "benefit": "szybciej trafiasz do dobrego źródła kontekstu."
         },
-        "doc_search.ps1": {
+        "doc_search.py": {
             "category": "Documents",
             "description": "szuka treści w dokumentach projektowych; opcjonalny -Path zawęża intencję do konkretnego dokumentu przez dodanie go do zapytania.",
             "benefit": "odnajdujesz kontekst bez szerokiego grepienia repo i bez pamiętania, czy najpierw użyć doc_keys.",
@@ -309,7 +281,7 @@
                     "-Limit",
                     "-Json"
                 ],
-                "rule": "Use -Path only as a search hint, not as a strict filesystem reader; for exact reads use doc_keys.ps1 and doc_read.ps1."
+                "rule": "Use -Path only as a search hint, not as a strict filesystem reader; for exact reads use doc_keys.py and doc_read.py."
             }
         },
         "json_list_doc.py": {
@@ -342,873 +314,6 @@
                 "read": "JSON payload printed to stdout.",
                 "mutation_success": "OK: operation target.",
                 "failure": "Non-zero exit with ERROR message on stderr/stdout from the Python wrapper."
-            }
-        },
-        "json_refresh_index.ps1": {
-            "category": "Documents",
-            "description": "odświeża `index` z kluczy `content`.",
-            "benefit": "indeks listowego JSON-a wraca do zgodności bez ręcznej przebudowy."
-        },
-        "json_migrate_content.ps1": {
-            "category": "Documents",
-            "description": "przenosi główną listę JSON-a ze starego klucza do `content`.",
-            "benefit": "listowe JSON-y można szybko ujednolicić."
-        },
-        "json_read.ps1": {
-            "category": "Documents",
-            "description": "czyta indeks JSON-a albo wskazany wpis i jego pojedyncze linie.",
-            "benefit": "szybko sprawdzasz konkretny fragment bez ładowania całego pliku."
-        },
-        "json_item_insert.ps1": {
-            "category": "Documents",
-            "description": "dodaje wpis JSON na początku, końcu, przed albo po innym wpisie.",
-            "benefit": "nowe elementy trafiają od razu we właściwe miejsce.",
-            "input": {
-                "required": [
-                    "-Path",
-                    "-Key"
-                ],
-                "optional": [
-                    "-Collection",
-                    "-Position",
-                    "-Reference",
-                    "-Text",
-                    "-ValueJson",
-                    "-ValueJsonFile",
-                    "-ValueJsonStdin"
-                ],
-                "preferred_structured_value_source": "Use -ValueJsonFile for safest multiline/nested JSON; -ValueJsonStdin accepts pipeline text or real stdin and is safe for JSON generated outside double-quoted PowerShell strings.",
-                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin. Avoid hand-composing Markdown backticks inside PowerShell double-quoted JSON; use -ValueJsonFile or single-quoted here-strings."
-            },
-            "output": {
-                "success": "OK: inserted key.",
-                "failure": "Throws json_item_insert failed with the child process exit code."
-            }
-        },
-        "json_item_set.ps1": {
-            "category": "Documents",
-            "description": "podmienia lub zmienia nazwę wpisu JSON.",
-            "benefit": "korekty wpisów są krótkie i mniej podatne na uszkodzenie formatu.",
-            "input": {
-                "required": [
-                    "-Path",
-                    "-Key"
-                ],
-                "optional": [
-                    "-Collection",
-                    "-NewKey",
-                    "-Text",
-                    "-ValueJson",
-                    "-ValueJsonFile",
-                    "-ValueJsonStdin"
-                ],
-                "preferred_structured_value_source": "Use -ValueJsonFile for safest multiline/nested JSON; -ValueJsonStdin accepts pipeline text or real stdin and is safe for JSON generated outside double-quoted PowerShell strings.",
-                "rule": "Use exactly one of -Text, -ValueJson, -ValueJsonFile, or -ValueJsonStdin. Avoid hand-composing Markdown backticks inside PowerShell double-quoted JSON; use -ValueJsonFile or single-quoted here-strings."
-            },
-            "output": {
-                "success": "OK: updated key.",
-                "failure": "Throws json_item_set failed with the child process exit code."
-            }
-        },
-        "json_item_move.ps1": {
-            "category": "Documents",
-            "description": "przesuwa wpis JSON względem innych wpisów.",
-            "benefit": "kolejność listy zmienia się bez ręcznego kopiowania."
-        },
-        "json_item_delete.ps1": {
-            "category": "Documents",
-            "description": "usuwa wskazany wpis JSON i porządkuje indeks.",
-            "benefit": "zakończone lub błędne wpisy znikają bez ręcznej edycji struktury."
-        },
-        "json_line_insert.ps1": {
-            "category": "Documents",
-            "description": "dodaje linię wewnątrz listy danego wpisu JSON.",
-            "benefit": "można rozbudować wpis bez przepisywania całej tabeli."
-        },
-        "json_line_set.ps1": {
-            "category": "Documents",
-            "description": "podmienia pojedynczą linię w liście wpisu JSON.",
-            "benefit": "małe korekty są szybkie i precyzyjne."
-        },
-        "json_line_move.ps1": {
-            "category": "Documents",
-            "description": "przesuwa pojedynczą linię w liście wpisu JSON.",
-            "benefit": "porządkujesz kroki bez naruszania reszty wpisu."
-        },
-        "doc_tool.py": {
-            "category": "Documents",
-            "description": "zapewnia wspólne operacje dokumentacyjne.",
-            "benefit": "dokumentowe skrypty mają jedno spójne zaplecze."
-        },
-        "docs_migrator.ps1": {
-            "category": "Documents",
-            "description": "uruchamia migracje dokumentów.",
-            "benefit": "większe porządki w dokumentacji są powtarzalne."
-        },
-        "docs_migrator.py": {
-            "category": "Documents",
-            "description": "wykonuje migracje struktury dokumentów.",
-            "benefit": "stare dokumenty łatwiej dopasować do aktualnego kontraktu."
-        },
-        "yaml_to_json_list_doc.ps1": {
-            "category": "Documents",
-            "description": "normalizuje starsze dokumenty strukturalne do listowego JSON `index/content/metadata`.",
-            "benefit": "migracje dokumentów YAML do JSON są powtarzalne i bez ręcznego przepisywania."
-        },
-        "yaml_to_json_list_doc.py": {
-            "category": "Documents",
-            "description": "wykonuje właściwą konwersję dokumentu YAML do JSON.",
-            "benefit": "zachowuje kolejność indeksu, tytuły, treść i metadata podczas migracji."
-        },
-        "docs_slim.ps1": {
-            "category": "Documents",
-            "description": "uruchamia upraszczanie dokumentów.",
-            "benefit": "dokumenty pozostają krótsze i łatwiejsze do czytania."
-        },
-        "docs_slim.py": {
-            "category": "Documents",
-            "description": "upraszcza dokumenty do lżejszej struktury.",
-            "benefit": "agent czyta mniej instrukcji naraz."
-        },
-        "markdown_list_insert_checked.ps1": {
-            "category": "Documents",
-            "description": "dopisuje wpis do listy Markdown po sprawdzeniu.",
-            "benefit": "Markdown rośnie bez prostych duplikatów."
-        },
-        "normalize_markdown_emoji.ps1": {
-            "category": "Documents",
-            "description": "porządkuje wymagane emoji w dokumentach Markdown.",
-            "benefit": "dokumenty zachowują projektowy styl komunikacji."
-        },
-        "context_tags.ps1": {
-            "category": "Knowledge",
-            "description": "dobiera tagi kontekstu do opisu zadania.",
-            "benefit": "kolejne narzędzia mogą czytać bardziej trafne zasady."
-        },
-        "knowledge_check.ps1": {
-            "category": "Knowledge",
-            "description": "sprawdza, czy baza wiedzy pasuje do źródeł.",
-            "benefit": "nie pracujesz na przestarzałym kontekście."
-        },
-        "knowledge_code_context.ps1": {
-            "category": "Knowledge",
-            "description": "ładuje obowiązkowy kontekst do pracy z kodem.",
-            "benefit": "decyzje kodowe są zgodne z trwałymi zasadami projektu."
-        },
-        "knowledge_compile.ps1": {
-            "category": "Knowledge",
-            "description": "przebudowuje bazę wiedzy.",
-            "benefit": "skompilowany kontekst odzwierciedla aktualne dokumenty."
-        },
-        "knowledge_delete.ps1": {
-            "category": "Knowledge",
-            "description": "usuwa dokument z bazy wiedzy.",
-            "benefit": "baza nie trzyma martwych źródeł."
-        },
-        "knowledge_index.py": {
-            "category": "Knowledge",
-            "description": "obsługuje indeks wiedzy projektu.",
-            "benefit": "kontekst można wybierać szybciej i precyzyjniej."
-        },
-        "knowledge_query.ps1": {
-            "category": "Knowledge",
-            "description": "odpytuje bazę wiedzy.",
-            "benefit": "szybko znajdujesz wpisy potrzebne do zadania."
-        },
-        "knowledge_rename.ps1": {
-            "category": "Knowledge",
-            "description": "aktualizuje ścieżkę dokumentu w bazie wiedzy.",
-            "benefit": "zmiany nazw plików nie psują indeksu."
-        },
-        "knowledge_select.ps1": {
-            "category": "Knowledge",
-            "description": "wybiera wiedzę według tagów lub widoku.",
-            "benefit": "agent czyta tylko kontekst pasujący do zadania."
-        },
-        "knowledge_upsert.ps1": {
-            "category": "Knowledge",
-            "description": "aktualizuje wpis dokumentu w bazie wiedzy.",
-            "benefit": "pojedyncza zmiana dokumentu nie wymaga pełnej przebudowy."
-        },
-        "knowledge_validate.ps1": {
-            "category": "Knowledge",
-            "description": "waliduje sensowność bazy wiedzy.",
-            "benefit": "łatwiej wykryć brakujące tagi, widoki i wpisy startowe."
-        },
-        "open_knowledge_db.ps1": {
-            "category": "Knowledge",
-            "description": "otwiera lokalną bazę wiedzy do inspekcji.",
-            "benefit": "można ręcznie sprawdzić stan skompilowanego kontekstu."
-        },
-        "add_changelog_entry.ps1": {
-            "category": "Repo",
-            "description": "dodaje wpis do changeloga.",
-            "benefit": "historia zmian pozostaje uporządkowana.",
-            "input": {
-                "required": [
-                    "-Summary"
-                ],
-                "optional": [
-                    "-Why",
-                    "-Timestamp",
-                    "-Path"
-                ],
-                "array_rule": "When passing multiple summary lines from PowerShell, call the script from a PowerShell scope with a real string array variable, e.g. $summary = @('line one', 'line two'); & Tools/repo/add_changelog_entry.ps1 -Summary $summary -Why 'reason'. Do not pass multiple summary strings through powershell -File because the second value can bind to -Timestamp."
-            },
-            "output": {
-                "success": "OK: appended changelog entry at <timestamp>.",
-                "failure": "Throws on missing summary, invalid timestamp, missing changelog, or older timestamp."
-            }
-        },
-        "check_task.ps1": {
-            "category": "Repo",
-            "description": "sprawdza zmienione pliki przed zakończeniem pracy.",
-            "benefit": "szybciej wykrywasz błędy procesu i jakości."
-        },
-        "commit_task.ps1": {
-            "category": "Repo",
-            "description": "przygotowuje commit dla zakończonego zadania.",
-            "benefit": "zmiany trafiają do historii w przewidywalny sposób."
-        },
-        "done.ps1": {
-            "category": "Repo",
-            "description": "finalizuje zadanie pełną ścieżką repo.",
-            "benefit": "checki, staging, commit i push są jednym powtarzalnym krokiem."
-        },
-        "end_prompt_snapshot.ps1": {
-            "category": "Repo",
-            "description": "zapisuje końcowy snapshot pracy.",
-            "benefit": "łatwiej odtworzyć, co zostało zrobione w danym promptcie."
-        },
-        "finish_subtask.ps1": {
-            "category": "Repo",
-            "description": "zamyka pojedynczy podtask.",
-            "benefit": "mniejsze etapy pracy można domykać spójnie."
-        },
-        "finish_task.ps1": {
-            "category": "Repo",
-            "description": "wykonuje końcowe checki zadania.",
-            "benefit": "repo ma jasny punkt kontroli przed commitem."
-        },
-        "task_snapshot.ps1": {
-            "category": "Repo",
-            "description": "pokazuje bieżący stan zadania i repo.",
-            "benefit": "łatwiej ocenić, co jest zmienione i gotowe."
-        },
-        "Utf8File.ps1": {
-            "category": "Text",
-            "description": "zapewnia bezpieczny zapis plików tekstowych w UTF-8.",
-            "benefit": "pliki nie łapią błędów kodowania."
-        },
-        "check_utf8_writes.ps1": {
-            "category": "Text",
-            "description": "wykrywa niebezpieczne zapisy tekstu w PowerShellu.",
-            "benefit": "nowe skrypty nie wprowadzają problemów z encodingiem."
-        },
-        "normalize_text_files.ps1": {
-            "category": "Text",
-            "description": "normalizuje pliki tekstowe.",
-            "benefit": "repo ma stabilne końce linii i kodowanie."
-        },
-        "normalize_json_files.ps1": {
-            "category": "Text",
-            "description": "normalizuje śledzone JSON-y do domyślnego formatu repo.",
-            "benefit": "usuwa trailing commas, pilnuje poprawnego JSON, wcięć 4 spacji i indeksów listowych dokumentów."
-        },
-        "normalize_json_files.py": {
-            "category": "Text",
-            "description": "wykonuje właściwą naprawę i przebudowę JSON.",
-            "benefit": "Źródłowe JSON-y mają dokładnie root `index`, `content`, `metadata`, aktualny `index` z `content`, 4 spacje i LF; surowe runtime/vendor/cache JSON-y są jawnie pomijane."
-        },
-        "normalize_documents.bat": {
-            "category": "Documents",
-            "description": "top-level batch normalizujący dokumentowe JSON-y repo przez bundled Python.",
-            "benefit": "pozwala uruchomić jeden batch z root projektu do kanonicznego formatowania śledzonych JSON-ów bez pamiętania ścieżki do skryptu Python."
-        },
-        "repair_mojibake.ps1": {
-            "category": "Text",
-            "description": "naprawia typowe uszkodzenia znaków.",
-            "benefit": "odzyskujesz czytelny tekst po problemach z kodowaniem."
-        },
-        "repair_yaml_block_indentation.ps1": {
-            "category": "Text",
-            "description": "naprawia wcięcia bloków YAML.",
-            "benefit": "dokumenty YAML pozostają parsowalne."
-        },
-        "repair_yaml_block_indentation.py": {
-            "category": "Text",
-            "description": "wykonuje właściwą naprawę wcięć YAML.",
-            "benefit": "skrypt PowerShell ma stabilne narzędzie do korekt tekstu."
-        },
-        "write_utf8_file.ps1": {
-            "category": "Text",
-            "description": "zapisuje wskazany plik jako UTF-8.",
-            "benefit": "ręczne i skryptowe zapisy są zgodne z kontraktem repo."
-        },
-        "check_code_context_gate.ps1": {
-            "category": "Codebase",
-            "description": "sprawdza, czy przed pracą z kodem załadowano wymagany kontekst.",
-            "benefit": "agent nie zaczyna zmian kodu bez bazowych zasad projektu."
-        },
-        "load_programming_context.ps1": {
-            "category": "Codebase",
-            "description": "ładuje kontekst potrzebny do programowania.",
-            "benefit": "decyzje kodowe są osadzone w aktualnych regułach technicznych."
-        },
-        "update_code_line_index.ps1": {
-            "category": "Codebase",
-            "description": "odświeża indeks plików kodu i ich rozmiarów.",
-            "benefit": "łatwiej wykrywać duże pliki i planować podział pracy."
-        },
-        "bootstrap_dotnet_sdk.ps1": {
-            "category": "Gamedev",
-            "description": "przygotowuje lokalny zestaw .NET.",
-            "benefit": "C# można budować bez zgadywania środowiska."
-        },
-        "bootstrap_godot_console.ps1": {
-            "category": "Gamedev",
-            "description": "przygotowuje uruchamianie Godota z konsoli.",
-            "benefit": "testy runtime startują spójnie."
-        },
-        "build_and_run.ps1": {
-            "category": "Gamedev",
-            "description": "buduje i uruchamia projekt gry.",
-            "benefit": "szybciej sprawdzasz efekt zmian w działającym buildzie.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "-EconomyProgressionTest"
-                ],
-                "default": "Prepares operator traversal flags unless -EconomyProgressionTest is set."
-            }
-        },
-        "changed_quality_gate.py": {
-            "path": "Tools/gamedev/changed_quality_gate.py",
-            "category": "Gamedev",
-            "description": "uruchamia gate dopasowany do zmienionych plików.",
-            "benefit": "weryfikacja jest szybsza niż pełny przebieg.",
-            "input": {
-                "optional": [
-                    "--fix",
-                    "--full"
-                ]
-            }
-        },
-        "check_csharp.py": {
-            "path": "Tools/gamedev/check_csharp.py",
-            "category": "Gamedev",
-            "description": "sprawdza część C# projektu przez Pythonowy smoke build/run/profile.",
-            "benefit": "domena C# nie psuje się po zmianach i nie wymaga PowerShell.",
-            "input": {
-                "optional": [
-                    "--require-dotnet-sdk",
-                    "--profile",
-                    "--allow-csc-fallback",
-                    "--configuration",
-                    "-RequireDotnetSdk",
-                    "-Profile",
-                    "-AllowCscFallback",
-                    "-Configuration"
-                ]
-            }
-        },
-        "clear_logs.bat": {
-            "category": "Gamedev",
-            "description": "top-level batch czyszczący lokalne logi gry.",
-            "benefit": "następna diagnoza zaczyna się od czystych danych, a narzędzie jest dostępne bez wchodzenia w Tools/."
-        },
-        "export-playtest.bat": {
-            "category": "Gamedev",
-            "description": "top-level batch uruchamiający eksport playtestu.",
-            "benefit": "build testowy można przygotować prostym skrótem z root projektu."
-        },
-        "export-playtest.ps1": {
-            "category": "Gamedev",
-            "description": "eksportuje wersję do playtestu.",
-            "benefit": "testowy build powstaje powtarzalnie."
-        },
-        "export_windows_playtest.ps1": {
-            "category": "Gamedev",
-            "description": "przygotowuje playtestowy eksport Windows.",
-            "benefit": "łatwiej dostarczyć build do uruchomienia poza edytorem."
-        },
-        "gamedev_quality_helpers.py": {
-            "path": "Tools/gamedev/gamedev_quality_helpers.py",
-            "category": "Gamedev",
-            "description": "wspólne helpery dla Pythonowych gate'ów jakości gamedev.",
-            "benefit": "changed gate i pełny quality fixer używają tej samej logiki wykrywania narzędzi, plików i smoke testów."
-        },
-        "gdscript_outline.py": {
-            "path": "Tools/gamedev/gdscript_outline.py",
-            "category": "Gamedev",
-            "description": "pokazuje strukturę plików GDScript.",
-            "benefit": "szybciej rozumiesz kod bez czytania całych plików.",
-            "input": {
-                "required": [
-                    "--path"
-                ],
-                "optional": [
-                    "--preset",
-                    "--header",
-                    "--members",
-                    "--methods",
-                    "--calls",
-                    "--references",
-                    "--json",
-                    "--method",
-                    "--symbol",
-                    "--max-references"
-                ],
-                "path_resolution": "Accepts existing paths, directories, wildcards, repo-relative paths, and unique .gd basenames resolved under Game/."
-            }
-        },
-        "generate_embedded_config_payload.py": {
-            "category": "Gamedev",
-            "description": "przygotowuje dane konfiguracyjne do użycia przez grę.",
-            "benefit": "runtime dostaje spójny pakiet ustawień."
-        },
-        "operator_mission.ps1": {
-            "category": "Gamedev",
-            "description": "ustawia lokalną misję operatorską Test n/count i odczytuje snapshot stanu sesji.",
-            "benefit": "Codex może prowadzić ręczny playtest tekstem misji w HUD i zbierać pozycję, biome, FPS oraz stan gracza bez automatycznego grania.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "-TestNumber",
-                    "-TestCount",
-                    "-Description",
-                    "-PrepareTraversalFlags",
-                    "-DisableTraversalFlags",
-                    "-PressKey",
-                    "-RequireMode",
-                    "-RequireBiome",
-                    "-ReadState",
-                    "-Clear"
-                ]
-            },
-            "output": {
-                "mission": "Ignored configs/operator_mission.local.json consumed by the dev runtime HUD.",
-                "state": "Reads ignored logs-diagnostics/operator_session_state.json written by the running game."
-            }
-        },
-        "performance_benchmark_report.ps1": {
-            "category": "Gamedev",
-            "description": "tworzy raport z benchmarków wydajności.",
-            "benefit": "decyzje o wydajności opierają się na danych.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "-LogPath",
-                    "-MarkerLogPath",
-                    "-OutputPath"
-                ],
-                "default_marker_log": "logs-diagnostics/benchmark_markers_latest.jsonl when present."
-            }
-        },
-        "route_retest_report.ps1": {
-            "category": "Gamedev",
-            "description": "parsuje raport benchmarkowy do tabeli metryk retestu trasy.",
-            "benefit": "szybko porównujesz FPS floor, mode tick, diagnostykę, streaming, materialization i attach chunk po manualnym F8/log pass.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "-ReportPath",
-                    "-OutputPath"
-                ],
-                "default_report": "Latest logs-diagnostics/performance_benchmark_report_*.json when -ReportPath is omitted."
-            },
-            "output": {
-                "success": "Human-readable route retest table. Direct script calls can use -AsJson for machine-readable output.",
-                "failure": "Throws when no benchmark report exists or the selected report cannot be parsed."
-            }
-        },
-        "run_headless.ps1": {
-            "category": "Gamedev",
-            "description": "kompatybilnościowy alias dla uruchamiania pojedynczego headless skryptu Godota.",
-            "benefit": "stare lub intuicyjne wywołanie Tools/godot/run_headless.ps1 działa zamiast kończyć się błędem ścieżki.",
-            "input": {
-                "required": [
-                    "-Script"
-                ],
-                "optional": [
-                    "-GodotArgs"
-                ],
-                "forwards_to": "Tools/gamedev/run_godot_script.py"
-            }
-        },
-        "run-game.bat": {
-            "category": "Gamedev",
-            "description": "top-level batch uruchamiający grę.",
-            "benefit": "masz szybki skrót do lokalnego startu bez wchodzenia w Tools/."
-        },
-        "run_quality_fix.py": {
-            "path": "Tools/gamedev/run_quality_fix.py",
-            "category": "Gamedev",
-            "description": "Pythonowy quality fix/gate dla Rifta: gdformat, gdlint, gdformat --check, C# smoke i Godot headless.",
-            "benefit": "root finalizer może przejść pełny gamedev quality path bez PowerShell runtime.",
-            "input": {
-                "required": [],
-                "optional": [],
-                "rule": "Uruchamiaj z root repo przez python3 -B Tools/gamedev/run_quality_fix.py; finalizer `done.py` odpala go automatycznie."
-            },
-            "output": {
-                "success": "Exit 0 po formacie, lintach, C# smoke i czystym Godot headless startup.",
-                "failure": "Exit non-zero przy braku narzędzi, błędach gdtoolkit, C# smoke, Godot exit code albo ERROR/WARNING w logu headless."
-            }
-        },
-        "run_gamedev_quality_gate.py": {
-            "path": "Tools/gamedev/run_gamedev_quality_gate.py",
-            "category": "Gamedev",
-            "description": "Pythonowy pełny gate jakości gry bez automatycznego formatowania.",
-            "benefit": "masz jedno miejsce do potwierdzenia, że projekt nadal działa bez PowerShell runtime.",
-            "input": {
-                "required": [],
-                "optional": [],
-                "rule": "Uruchamiaj z root repo przez python3 -B Tools/gamedev/run_gamedev_quality_gate.py; użyj run_quality_fix.py, gdy ma też wykonać gdformat."
-            },
-            "output": {
-                "success": "Exit 0 po lintach, format checku, C# smoke i czystym Godot headless startup.",
-                "failure": "Exit non-zero przy braku narzędzi, błędach gdtoolkit, C# smoke, Godot exit code albo ERROR/WARNING w logu headless."
-            }
-        },
-        "check_project_context.ps1": {
-            "category": "Pipeline",
-            "description": "sprawdza, czy skompilowany kontekst projektu jest aktualny.",
-            "benefit": "agent nie korzysta z przestarzałych instrukcji."
-        },
-        "compile.ps1": {
-            "category": "Pipeline",
-            "description": "uruchamia pełną kompilację kontekstu.",
-            "benefit": "dokumenty, workflow i wiedza są gotowe do czytania przez agenta."
-        },
-        "compile_project_context.ps1": {
-            "category": "Pipeline",
-            "description": "kompiluje główny kontekst projektu.",
-            "benefit": "cięższe dokumenty są dostępne jako lżejsze wejścia."
-        },
-        "flow_read.ps1": {
-            "category": "Pipeline",
-            "description": "czyta i spłaszcza definicje flow.",
-            "benefit": "agent zaczyna zadanie od właściwej procedury."
-        },
-        "flow_tool.py": {
-            "category": "Pipeline",
-            "description": "obsługuje dane flow.",
-            "benefit": "flow można rozwijać bez ręcznego składania instrukcji."
-        },
-        "load_type_context.ps1": {
-            "category": "Pipeline",
-            "description": "zwraca zdeduplikowaną listę dokumentów do przeczytania dla wybranych prompt types.",
-            "benefit": "grupuje load entries z FLOWS.json metadata.types po priority, zachowując dokument tylko przy najwyższym priorytecie i domyślnie używając priority 10."
-        },
-        "type_context_loader.py": {
-            "category": "Pipeline",
-            "description": "implementuje resolver dokumentów dla prompt types z FLOWS.json metadata.types.",
-            "benefit": "czyta load oraz priority z typów promptów i zwraca JSON pogrupowany malejąco po priorytecie z deduplikacją na najwyższym priorytecie."
-        },
-        "project_context_compiler.py": {
-            "category": "Pipeline",
-            "description": "buduje skompilowane pliki kontekstu projektu.",
-            "benefit": "duże dokumenty stają się szybciej dostępne i spójne."
-        },
-        "tool_handler.ps1": {
-            "category": "Pipeline",
-            "description": "publiczny single entry point dla operacji narzędziowych repozytorium; waliduje input, normalizuje parametry, deleguje do skryptu docelowego i zwraca jeden result envelope.",
-            "benefit": "agent wywołuje jeden router zamiast ręcznie rekonstruować różne kontrakty skryptów.",
-            "input": {
-                "required": [
-                    "-Operation"
-                ],
-                "optional": [
-                    "-ParametersJson",
-                    "-ParametersJsonFile",
-                    "-OutputMode",
-                    "-ErrorLogPath",
-                    "-NoErrorLog"
-                ],
-                "rule": "Use exactly one of -ParametersJson or -ParametersJsonFile. Prefer -ParametersJsonFile for nested, multiline, or quote-heavy parameter payloads."
-            },
-            "output": {
-                "success": "Structured result envelope with ok=true, normalized operation, target script, normalized parameters, command, exit code, and captured output.",
-                "failure": "Structured result envelope with ok=false, error type/message, and logged_error_key when validation logged an input failure."
-            }
-        },
-        "tool_error_log.ps1": {
-            "category": "Pipeline",
-            "description": "dopina wpis błędu narzędziowego do docs-tech/TOOL-ERRORS.json albo wskazanej kopii testowej, inicjalizując rejestr jeśli jeszcze nie istnieje.",
-            "benefit": "input errors i semantyczne błędy wyników trafiają do jednego rejestru przez jeden kontrakt.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "-Path",
-                    "-Key",
-                    "-Title",
-                    "-Status",
-                    "-Tool",
-                    "-Failure",
-                    "-FailingCommandShape",
-                    "-ObservedError",
-                    "-SuspectedContractGap",
-                    "-FixTarget",
-                    "-DetailsJson",
-                    "-DetailsJsonFile",
-                    "-ObservedAt",
-                    "-Json"
-                ],
-                "rule": "Omit -Path to write to docs-tech/TOOL-ERRORS.json. Use -DetailsJsonFile for nested, multiline, or quote-heavy payloads; the logger preserves valid JSON and stores invalid JSON as text."
-            },
-            "output": {
-                "success": "OK text or JSON with the inserted key and target path.",
-                "failure": "Throws if the tool-error document cannot be initialized or the entry cannot be appended."
-            }
-        },
-        "read_compiled_context.ps1": {
-            "category": "Pipeline",
-            "description": "czyta wybrany skompilowany kontekst.",
-            "benefit": "agent ładuje tylko potrzebny fragment zasad.",
-            "input": {
-                "required": [
-                    "-Document"
-                ],
-                "optional": [
-                    "-CompiledRoot",
-                    "-AllowStale",
-                    "-SkipCurrentCheck",
-                    "-Json"
-                ],
-                "aliases": "When called through tool_handler.ps1, short names such as SCRIPTS, COMMANDS, FLOWS, DOCS, WORKFLOW, and STATE are normalized to the compiled-context document names or ids.",
-                "rule": "Prefer tool_handler.ps1 for normal use so aliases and stale/context checks are normalized before this script runs."
-            },
-            "output": {
-                "success": "Compiled Markdown content by default, or JSON with compiled metadata/content when -Json is used.",
-                "failure": "Throws when the compiled context manifest is missing, stale, or no document matches the selector."
-            }
-        },
-        "resolve_python.ps1": {
-            "category": "Pipeline",
-            "description": "wybiera działający interpreter Python 3 dla narzędzi repo.",
-            "benefit": "skrypty PowerShell nie próbują uruchamiać Windowsowego Tools/Python312/python.exe na Linuksie lub Steam Decku."
-        },
-        "configure_powershell_tool_path.ps1": {
-            "category": "Setup",
-            "description": "konfiguruje ścieżki narzędzi PowerShell.",
-            "benefit": "lokalne polecenia działają bez ręcznego ustawiania środowiska."
-        },
-        "configure_powershell_utf8.ps1": {
-            "category": "Setup",
-            "description": "ustawia PowerShell pod pracę z UTF-8.",
-            "benefit": "komendy rzadziej psują polskie znaki."
-        },
-        "doctor.ps1": {
-            "category": "Setup",
-            "description": "sprawdza podstawowy stan środowiska projektu.",
-            "benefit": "szybciej widzisz, czy lokalny setup jest gotowy."
-        },
-        "play_completion_sound.ps1": {
-            "category": "Setup",
-            "description": "odtwarza dźwięk zakończenia.",
-            "benefit": "łatwiej zauważyć koniec dłuższej operacji."
-        },
-        "pipeline_bootstrap_index.ps1": {
-            "category": "Pipeline",
-            "description": "generuje lub sprawdza minimalny bootstrap index pipeline.",
-            "benefit": "agent zawsze widzi dostępne dokumenty, komendy, flowy i skrypty bez ładowania pełnych katalogów."
-        },
-        "pipeline_bootstrap_index.py": {
-            "category": "Pipeline",
-            "description": "implementuje generowanie docs-tech/PIPELINE-BOOTSTRAP.json.",
-            "benefit": "bootstrap index jest deterministyczny i może być sprawdzany w finalizerze."
-        },
-        "knowledge_check.py": {
-            "category": "knowledge",
-            "description": "Verify compiled SQLite knowledge artifacts against source knowledge documents without PowerShell, with JSON file fallback validation.",
-            "benefit": "nie pracujesz na przestarzałym kontekście.",
-            "path": "tools/knowledge/knowledge_check.py",
-            "input": {
-                "optional": [
-                    "--repo-root"
-                ],
-                "rule": "Run from the repository root using the Python wrapper."
-            }
-        },
-        "knowledge_compile.py": {
-            "category": "knowledge",
-            "description": "Compile source knowledge documents into the SQLite knowledge database and JSON fallback without PowerShell.",
-            "benefit": "skompilowany kontekst odzwierciedla aktualne dokumenty.",
-            "path": "tools/knowledge/knowledge_compile.py",
-            "input": {
-                "optional": [
-                    "--repo-root"
-                ],
-                "rule": "Run from the repository root using the Python wrapper."
-            }
-        },
-        "knowledge_delete.py": {
-            "category": "Knowledge",
-            "description": "Delete a knowledge entry or document from the SQLite knowledge database without PowerShell.",
-            "benefit": "baza nie trzyma martwych źródeł.",
-            "path": "tools/knowledge/knowledge_delete.py",
-            "input": {
-                "optional": [
-                    "--repo-root",
-                    "--path",
-                    "--name"
-                ],
-                "required": [],
-                "rule": "Run from the repository root using the Python wrapper."
-            },
-            "output": {
-                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
-                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
-            }
-        },
-        "knowledge_query.py": {
-            "category": "Knowledge",
-            "description": "Query the SQLite knowledge database without PowerShell.",
-            "benefit": "szybko znajdujesz wpisy potrzebne do zadania.",
-            "path": "tools/knowledge/knowledge_query.py",
-            "input": {
-                "optional": [
-                    "--repo-root",
-                    "--tags",
-                    "--match",
-                    "--type",
-                    "--load-at-start",
-                    "--context-tier",
-                    "--max-context-tier",
-                    "--source-path",
-                    "--document-path",
-                    "--name",
-                    "--format"
-                ],
-                "required": [],
-                "rule": "Run from the repository root using the Python wrapper."
-            },
-            "output": {
-                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
-                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
-            }
-        },
-        "knowledge_rename.py": {
-            "category": "Knowledge",
-            "description": "Rename a knowledge source path in the SQLite database without PowerShell.",
-            "benefit": "zmiany nazw plików nie psują indeksu.",
-            "path": "tools/knowledge/knowledge_rename.py",
-            "input": {
-                "optional": [
-                    "--repo-root",
-                    "--old-path",
-                    "--new-path"
-                ],
-                "required": [],
-                "rule": "Run from the repository root using the Python wrapper."
-            },
-            "output": {
-                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
-                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
-            }
-        },
-        "knowledge_upsert.py": {
-            "category": "Knowledge",
-            "description": "Upsert source documents into the SQLite knowledge database without PowerShell.",
-            "benefit": "pojedyncza zmiana dokumentu nie wymaga pełnej przebudowy.",
-            "path": "tools/knowledge/knowledge_upsert.py",
-            "input": {
-                "optional": [
-                    "--repo-root",
-                    "--path"
-                ],
-                "required": [],
-                "rule": "Run from the repository root using the Python wrapper."
-            },
-            "output": {
-                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
-                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
-            }
-        },
-        "normalize_text_files.py": {
-            "path": "tools/text/normalize_text_files.py",
-            "category": "text",
-            "description": "Normalize repository text file line endings and final newlines with Python, including check mode support.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "paths",
-                    "--repo-root",
-                    "--check"
-                ],
-                "rule": "Run from the repository root when checking or normalizing repository text files."
-            },
-            "output": {
-                "success": "Prints OK when files are already normalized or lists normalized files.",
-                "failure": "Exits nonzero when files cannot be read/written or check mode finds stale normalization."
-            }
-        },
-        "repair_mojibake.py": {
-            "path": "tools/text/repair_mojibake.py",
-            "category": "text",
-            "description": "Repair common mojibake text corruption in selected files with Python, including check mode support.",
-            "input": {
-                "required": [],
-                "optional": [
-                    "paths",
-                    "--repo-root",
-                    "--check"
-                ],
-                "rule": "Run from the repository root when checking or repairing repository text files."
-            },
-            "output": {
-                "success": "Prints OK when no repairs are needed or lists repaired files.",
-                "failure": "Exits nonzero when files cannot be read/written or check mode finds needed repairs."
-            }
-        },
-        "utf8_file_helpers.py": {
-            "path": "tools/text/utf8_file_helpers.py",
-            "category": "text",
-            "description": "Provide reusable UTF-8 file read/write helpers for Python scripts.",
-            "input": {
-                "required": [],
-                "optional": [],
-                "rule": "Import from Python text utilities instead of duplicating UTF-8 and line-ending logic."
-            },
-            "output": {
-                "success": "Provides helper functions for UTF-8 reads, writes, and line-ending conversion.",
-                "failure": "Raises Python exceptions for invalid line-ending modes or file IO errors."
-            }
-        },
-        "write_utf8_file.py": {
-            "path": "tools/text/write_utf8_file.py",
-            "category": "text",
-            "description": "Write text through the repository UTF-8 helper with line-ending and newline controls using Python.",
-            "input": {
-                "required": [
-                    "--path"
-                ],
-                "optional": [
-                    "--value",
-                    "--no-newline",
-                    "--line-ending",
-                    "stdin"
-                ],
-                "rule": "Use --value for simple values and stdin for multiline content."
-            },
-            "output": {
-                "success": "Writes the target file as UTF-8 without BOM and prints OK.",
-                "failure": "Exits nonzero when the target cannot be written."
-            }
-        },
-        "json_wrapper_entrypoints.py": {
-            "path": "tools/json/json_wrapper_entrypoints.py",
-            "category": "json",
-            "description": "Shared Python implementation for native JSON wrapper entrypoints.",
-            "input": {
-                "required": [],
-                "optional": [],
-                "rule": "Internal module imported by json_*.py wrappers; use the wrapper scripts directly."
-            },
-            "output": {
-                "success": "Routes wrapper arguments to json_list_doc.py without PowerShell.",
-                "failure": "Raises or exits nonzero when wrapper arguments or JSON document operations fail."
             }
         },
         "json_refresh_index.py": {
@@ -1257,40 +362,6 @@
                     "--value-json",
                     "--value-json-file",
                     "--value-json-stdin"
-                ],
-                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
-            },
-            "output": {
-                "success": "Prints the requested JSON output or OK status after the document operation.",
-                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
-            }
-        },
-        "json_node_edit.py": {
-            "path": "tools/json/json_node_edit.py",
-            "category": "json",
-            "description": "Python native entrypoint for json_node_edit JSON document operations.",
-            "input": {
-                "required": [
-                    "path"
-                ],
-                "optional": [
-                    "operation",
-                    "node",
-                    "--path",
-                    "--operation",
-                    "--node",
-                    "--target-path",
-                    "--target-node",
-                    "--position",
-                    "--reference-node",
-                    "--line",
-                    "--reference-line",
-                    "--reference-text",
-                    "--text",
-                    "--value-json",
-                    "--value-json-file",
-                    "--value-json-stdin",
-                    "--replace"
                 ],
                 "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
             },
@@ -1515,6 +586,715 @@
                 "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
             }
         },
+        "doc_tool.py": {
+            "category": "Documents",
+            "description": "zapewnia wspólne operacje dokumentacyjne.",
+            "benefit": "dokumentowe skrypty mają jedno spójne zaplecze."
+        },
+        "docs_migrator.py": {
+            "category": "Documents",
+            "description": "wykonuje migracje struktury dokumentów.",
+            "benefit": "stare dokumenty łatwiej dopasować do aktualnego kontraktu."
+        },
+        "yaml_to_json_list_doc.py": {
+            "category": "Documents",
+            "description": "wykonuje właściwą konwersję dokumentu YAML do JSON.",
+            "benefit": "zachowuje kolejność indeksu, tytuły, treść i metadata podczas migracji."
+        },
+        "docs_slim.py": {
+            "category": "Documents",
+            "description": "upraszcza dokumenty do lżejszej struktury.",
+            "benefit": "agent czyta mniej instrukcji naraz."
+        },
+        "markdown_list_insert_checked.py": {
+            "category": "Documents",
+            "description": "dopisuje wpis do listy Markdown po sprawdzeniu.",
+            "benefit": "Markdown rośnie bez prostych duplikatów."
+        },
+        "normalize_markdown_emoji.py": {
+            "category": "Documents",
+            "description": "porządkuje wymagane emoji w dokumentach Markdown.",
+            "benefit": "dokumenty zachowują projektowy styl komunikacji."
+        },
+        "context_tags.py": {
+            "category": "Knowledge",
+            "description": "dobiera tagi kontekstu do opisu zadania.",
+            "benefit": "kolejne narzędzia mogą czytać bardziej trafne zasady."
+        },
+        "knowledge_check.py": {
+            "category": "knowledge",
+            "description": "Verify compiled SQLite knowledge artifacts against source knowledge documents with Python-only tooling, with JSON file fallback validation.",
+            "benefit": "nie pracujesz na przestarzałym kontekście.",
+            "path": "tools/knowledge/knowledge_check.py",
+            "input": {
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            }
+        },
+        "knowledge_code_context.py": {
+            "category": "Knowledge",
+            "description": "ładuje obowiązkowy kontekst do pracy z kodem.",
+            "benefit": "decyzje kodowe są zgodne z trwałymi zasadami projektu."
+        },
+        "knowledge_compile.py": {
+            "category": "knowledge",
+            "description": "Compile source knowledge documents into the SQLite knowledge database and JSON fallback with Python-only tooling.",
+            "benefit": "skompilowany kontekst odzwierciedla aktualne dokumenty.",
+            "path": "tools/knowledge/knowledge_compile.py",
+            "input": {
+                "optional": [
+                    "--repo-root"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            }
+        },
+        "knowledge_delete.py": {
+            "category": "Knowledge",
+            "description": "Delete a knowledge entry or document from the SQLite knowledge database with Python-only tooling.",
+            "benefit": "baza nie trzyma martwych źródeł.",
+            "path": "tools/knowledge/knowledge_delete.py",
+            "input": {
+                "optional": [
+                    "--repo-root",
+                    "--path",
+                    "--name"
+                ],
+                "required": [],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_index.py": {
+            "category": "Knowledge",
+            "description": "obsługuje indeks wiedzy projektu.",
+            "benefit": "kontekst można wybierać szybciej i precyzyjniej."
+        },
+        "knowledge_query.py": {
+            "category": "Knowledge",
+            "description": "Query the SQLite knowledge database with Python-only tooling.",
+            "benefit": "szybko znajdujesz wpisy potrzebne do zadania.",
+            "path": "tools/knowledge/knowledge_query.py",
+            "input": {
+                "optional": [
+                    "--repo-root",
+                    "--tags",
+                    "--match",
+                    "--type",
+                    "--load-at-start",
+                    "--context-tier",
+                    "--max-context-tier",
+                    "--source-path",
+                    "--document-path",
+                    "--name",
+                    "--format"
+                ],
+                "required": [],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_rename.py": {
+            "category": "Knowledge",
+            "description": "Rename a knowledge source path in the SQLite database with Python-only tooling.",
+            "benefit": "zmiany nazw plików nie psują indeksu.",
+            "path": "tools/knowledge/knowledge_rename.py",
+            "input": {
+                "optional": [
+                    "--repo-root",
+                    "--old-path",
+                    "--new-path"
+                ],
+                "required": [],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_select.py": {
+            "category": "Knowledge",
+            "description": "wybiera wiedzę według tagów lub widoku.",
+            "benefit": "agent czyta tylko kontekst pasujący do zadania."
+        },
+        "knowledge_upsert.py": {
+            "category": "Knowledge",
+            "description": "Upsert source documents into the SQLite knowledge database with Python-only tooling.",
+            "benefit": "pojedyncza zmiana dokumentu nie wymaga pełnej przebudowy.",
+            "path": "tools/knowledge/knowledge_upsert.py",
+            "input": {
+                "optional": [
+                    "--repo-root",
+                    "--path"
+                ],
+                "required": [],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_validate.py": {
+            "category": "Knowledge",
+            "description": "waliduje sensowność bazy wiedzy.",
+            "benefit": "łatwiej wykryć brakujące tagi, widoki i wpisy startowe."
+        },
+        "open_knowledge_db.py": {
+            "category": "Knowledge",
+            "description": "otwiera lokalną bazę wiedzy do inspekcji.",
+            "benefit": "można ręcznie sprawdzić stan skompilowanego kontekstu."
+        },
+        "add_changelog_entry.py": {
+            "category": "Repo",
+            "description": "dodaje wpis do changeloga.",
+            "benefit": "historia zmian pozostaje uporządkowana.",
+            "input": {
+                "required": [
+                    "-Summary"
+                ],
+                "optional": [
+                    "-Why",
+                    "-Timestamp",
+                    "-Path"
+                ],
+                "array_rule": "Pass one concise summary string or a comma-separated list string; avoid shell-specific array conventions.",
+                "rule": "Pass one concise summary string or a comma-separated list string; avoid shell-specific array conventions."
+            },
+            "output": {
+                "success": "OK: appended changelog entry at <timestamp>.",
+                "failure": "Throws on missing summary, invalid timestamp, missing changelog, or older timestamp."
+            }
+        },
+        "check_task.py": {
+            "category": "Repo",
+            "description": "sprawdza zmienione pliki przed zakończeniem pracy.",
+            "benefit": "szybciej wykrywasz błędy procesu i jakości."
+        },
+        "commit_task.py": {
+            "category": "Repo",
+            "description": "przygotowuje commit dla zakończonego zadania.",
+            "benefit": "zmiany trafiają do historii w przewidywalny sposób."
+        },
+        "done.py": {
+            "category": "Repo",
+            "description": "finalizuje zadanie pełną ścieżką repo.",
+            "benefit": "checki, staging, commit i push są jednym powtarzalnym krokiem."
+        },
+        "end_prompt_snapshot.py": {
+            "category": "Repo",
+            "description": "zapisuje końcowy snapshot pracy.",
+            "benefit": "łatwiej odtworzyć, co zostało zrobione w danym promptcie."
+        },
+        "finish_subtask.py": {
+            "category": "Repo",
+            "description": "zamyka pojedynczy podtask.",
+            "benefit": "mniejsze etapy pracy można domykać spójnie."
+        },
+        "finish_task.py": {
+            "category": "Repo",
+            "description": "wykonuje końcowe checki zadania.",
+            "benefit": "repo ma jasny punkt kontroli przed commitem."
+        },
+        "task_snapshot.py": {
+            "category": "Repo",
+            "description": "pokazuje bieżący stan zadania i repo.",
+            "benefit": "łatwiej ocenić, co jest zmienione i gotowe."
+        },
+        "check_utf8_writes.py": {
+            "category": "Text",
+            "description": "Scan repository text writes for unsafe encoding or newline drift.",
+            "benefit": "nowe skrypty nie wprowadzają problemów z encodingiem."
+        },
+        "normalize_text_files.py": {
+            "path": "tools/text/normalize_text_files.py",
+            "category": "text",
+            "description": "Normalize repository text file line endings and final newlines with Python, including check mode support.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "paths",
+                    "--repo-root",
+                    "--check"
+                ],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Prints OK when files are already normalized or lists normalized files.",
+                "failure": "Exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
+        },
+        "normalize_json_files.py": {
+            "category": "Text",
+            "description": "wykonuje właściwą naprawę i przebudowę JSON.",
+            "benefit": "Źródłowe JSON-y mają dokładnie root `index`, `content`, `metadata`, aktualny `index` z `content`, 4 spacje i LF; surowe runtime/vendor/cache JSON-y są jawnie pomijane."
+        },
+        "normalize_documents.bat": {
+            "category": "Documents",
+            "description": "top-level batch normalizujący dokumentowe JSON-y repo przez bundled Python.",
+            "benefit": "pozwala uruchomić jeden batch z root projektu do kanonicznego formatowania śledzonych JSON-ów bez pamiętania ścieżki do skryptu Python."
+        },
+        "repair_mojibake.py": {
+            "path": "tools/text/repair_mojibake.py",
+            "category": "text",
+            "description": "Repair common mojibake text corruption in selected files with Python, including check mode support.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "paths",
+                    "--repo-root",
+                    "--check"
+                ],
+                "rule": "Run from the repository root when checking or repairing repository text files."
+            },
+            "output": {
+                "success": "Prints OK when no repairs are needed or lists repaired files.",
+                "failure": "Exits nonzero when files cannot be read/written or check mode finds needed repairs."
+            }
+        },
+        "repair_yaml_block_indentation.py": {
+            "category": "Text",
+            "description": "wykonuje właściwą naprawę wcięć YAML.",
+            "benefit": "narzędzie tekstowe ma stabilne narzędzie do korekt tekstu."
+        },
+        "write_utf8_file.py": {
+            "path": "tools/text/write_utf8_file.py",
+            "category": "text",
+            "description": "Write text through the repository UTF-8 helper with line-ending and newline controls using Python.",
+            "input": {
+                "required": [
+                    "--path"
+                ],
+                "optional": [
+                    "--value",
+                    "--no-newline",
+                    "--line-ending",
+                    "stdin"
+                ],
+                "rule": "Use --value for simple values and stdin for multiline content."
+            },
+            "output": {
+                "success": "Writes the target file as UTF-8 without BOM and prints OK.",
+                "failure": "Exits nonzero when the target cannot be written."
+            }
+        },
+        "check_code_context_gate.py": {
+            "category": "Codebase",
+            "description": "sprawdza, czy przed pracą z kodem załadowano wymagany kontekst.",
+            "benefit": "agent nie zaczyna zmian kodu bez bazowych zasad projektu."
+        },
+        "load_programming_context.py": {
+            "category": "Codebase",
+            "description": "ładuje kontekst potrzebny do programowania.",
+            "benefit": "decyzje kodowe są osadzone w aktualnych regułach technicznych."
+        },
+        "update_code_line_index.py": {
+            "category": "Codebase",
+            "description": "odświeża indeks plików kodu i ich rozmiarów.",
+            "benefit": "łatwiej wykrywać duże pliki i planować podział pracy."
+        },
+        "bootstrap_dotnet_sdk.py": {
+            "category": "Gamedev",
+            "description": "przygotowuje lokalny zestaw .NET.",
+            "benefit": "C# można budować bez zgadywania środowiska."
+        },
+        "bootstrap_godot_console.py": {
+            "category": "Gamedev",
+            "description": "przygotowuje uruchamianie Godota z konsoli.",
+            "benefit": "testy runtime startują spójnie."
+        },
+        "changed_quality_gate.py": {
+            "path": "Tools/gamedev/changed_quality_gate.py",
+            "category": "Gamedev",
+            "description": "uruchamia gate dopasowany do zmienionych plików.",
+            "benefit": "weryfikacja jest szybsza niż pełny przebieg.",
+            "input": {
+                "optional": [
+                    "--fix",
+                    "--full"
+                ]
+            }
+        },
+        "check_csharp.py": {
+            "path": "Tools/gamedev/check_csharp.py",
+            "category": "Gamedev",
+            "description": "sprawdza część C# projektu przez Pythonowy smoke build/run/profile.",
+            "benefit": "domena C# nie psuje się po zmianach i działa przez Python tooling.",
+            "input": {
+                "optional": [
+                    "--require-dotnet-sdk",
+                    "--profile",
+                    "--allow-csc-fallback",
+                    "--configuration",
+                    "-RequireDotnetSdk",
+                    "-Profile",
+                    "-AllowCscFallback",
+                    "-Configuration"
+                ]
+            }
+        },
+        "clear_logs.bat": {
+            "category": "Gamedev",
+            "description": "top-level batch czyszczący lokalne logi gry.",
+            "benefit": "następna diagnoza zaczyna się od czystych danych, a narzędzie jest dostępne bez wchodzenia w Tools/."
+        },
+        "export-playtest.bat": {
+            "category": "Gamedev",
+            "description": "top-level batch uruchamiający eksport playtestu.",
+            "benefit": "build testowy można przygotować prostym skrótem z root projektu."
+        },
+        "export_playtest.py": {
+            "category": "Gamedev",
+            "description": "eksportuje wersję do playtestu.",
+            "benefit": "testowy build powstaje powtarzalnie."
+        },
+        "export_windows_playtest.py": {
+            "category": "Gamedev",
+            "description": "przygotowuje playtestowy eksport Windows.",
+            "benefit": "łatwiej dostarczyć build do uruchomienia poza edytorem."
+        },
+        "gamedev_quality_helpers.py": {
+            "path": "Tools/gamedev/gamedev_quality_helpers.py",
+            "category": "Gamedev",
+            "description": "wspólne helpery dla Pythonowych gate'ów jakości gamedev.",
+            "benefit": "changed gate i pełny quality fixer używają tej samej logiki wykrywania narzędzi, plików i smoke testów."
+        },
+        "gdscript_outline.py": {
+            "path": "Tools/gamedev/gdscript_outline.py",
+            "category": "Gamedev",
+            "description": "pokazuje strukturę plików GDScript.",
+            "benefit": "szybciej rozumiesz kod bez czytania całych plików.",
+            "input": {
+                "required": [
+                    "--path"
+                ],
+                "optional": [
+                    "--preset",
+                    "--header",
+                    "--members",
+                    "--methods",
+                    "--calls",
+                    "--references",
+                    "--json",
+                    "--method",
+                    "--symbol",
+                    "--max-references"
+                ],
+                "path_resolution": "Accepts existing paths, directories, wildcards, repo-relative paths, and unique .gd basenames resolved under Game/."
+            }
+        },
+        "generate_embedded_config_payload.py": {
+            "category": "Gamedev",
+            "description": "przygotowuje dane konfiguracyjne do użycia przez grę.",
+            "benefit": "runtime dostaje spójny pakiet ustawień."
+        },
+        "operator_mission.py": {
+            "category": "Gamedev",
+            "description": "ustawia lokalną misję operatorską Test n/count i odczytuje snapshot stanu sesji.",
+            "benefit": "Codex może prowadzić ręczny playtest tekstem misji w HUD i zbierać pozycję, biome, FPS oraz stan gracza bez automatycznego grania.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-TestNumber",
+                    "-TestCount",
+                    "-Description",
+                    "-PrepareTraversalFlags",
+                    "-DisableTraversalFlags",
+                    "-PressKey",
+                    "-RequireMode",
+                    "-RequireBiome",
+                    "-ReadState",
+                    "-Clear"
+                ]
+            },
+            "output": {
+                "mission": "Ignored configs/operator_mission.local.json consumed by the dev runtime HUD.",
+                "state": "Reads ignored logs-diagnostics/operator_session_state.json written by the running game."
+            }
+        },
+        "performance_benchmark_report.py": {
+            "category": "Gamedev",
+            "description": "tworzy raport z benchmarków wydajności.",
+            "benefit": "decyzje o wydajności opierają się na danych.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-LogPath",
+                    "-MarkerLogPath",
+                    "-OutputPath"
+                ],
+                "default_marker_log": "logs-diagnostics/benchmark_markers_latest.jsonl when present."
+            }
+        },
+        "route_retest_report.py": {
+            "category": "Gamedev",
+            "description": "parsuje raport benchmarkowy do tabeli metryk retestu trasy.",
+            "benefit": "szybko porównujesz FPS floor, mode tick, diagnostykę, streaming, materialization i attach chunk po manualnym F8/log pass.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-ReportPath",
+                    "-OutputPath"
+                ],
+                "default_report": "Latest logs-diagnostics/performance_benchmark_report_*.json when -ReportPath is omitted."
+            },
+            "output": {
+                "success": "Human-readable route retest table. Direct script calls can use -AsJson for machine-readable output.",
+                "failure": "Throws when no benchmark report exists or the selected report cannot be parsed."
+            }
+        },
+        "run_headless.py": {
+            "category": "Gamedev",
+            "description": "kompatybilnościowy alias dla uruchamiania pojedynczego headless skryptu Godota.",
+            "benefit": "stare lub intuicyjne wywołanie Tools/godot/run_headless.py działa zamiast kończyć się błędem ścieżki.",
+            "input": {
+                "required": [
+                    "-Script"
+                ],
+                "optional": [
+                    "-GodotArgs"
+                ],
+                "forwards_to": "Tools/gamedev/run_godot_script.py"
+            }
+        },
+        "run-game.bat": {
+            "category": "Gamedev",
+            "description": "top-level batch uruchamiający grę.",
+            "benefit": "masz szybki skrót do lokalnego startu bez wchodzenia w Tools/."
+        },
+        "run_quality_fix.py": {
+            "path": "Tools/gamedev/run_quality_fix.py",
+            "category": "Gamedev",
+            "description": "Pythonowy quality fix/gate dla Rifta: gdformat, gdlint, gdformat --check, C# smoke i Godot headless.",
+            "benefit": "root finalizer może przejść pełny gamedev quality path bez dodatkowego shell runtime.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Uruchamiaj z root repo przez python3 -B Tools/gamedev/run_quality_fix.py; finalizer `done.py` odpala go automatycznie."
+            },
+            "output": {
+                "success": "Exit 0 po formacie, lintach, C# smoke i czystym Godot headless startup.",
+                "failure": "Exit non-zero przy braku narzędzi, błędach gdtoolkit, C# smoke, Godot exit code albo ERROR/WARNING w logu headless."
+            }
+        },
+        "run_gamedev_quality_gate.py": {
+            "path": "Tools/gamedev/run_gamedev_quality_gate.py",
+            "category": "Gamedev",
+            "description": "Pythonowy pełny gate jakości gry bez automatycznego formatowania.",
+            "benefit": "masz jedno miejsce do potwierdzenia, że projekt nadal działa bez dodatkowego shell runtime.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Uruchamiaj z root repo przez python3 -B Tools/gamedev/run_gamedev_quality_gate.py; użyj run_quality_fix.py, gdy ma też wykonać gdformat."
+            },
+            "output": {
+                "success": "Exit 0 po lintach, format checku, C# smoke i czystym Godot headless startup.",
+                "failure": "Exit non-zero przy braku narzędzi, błędach gdtoolkit, C# smoke, Godot exit code albo ERROR/WARNING w logu headless."
+            }
+        },
+        "check_project_context.py": {
+            "category": "Pipeline",
+            "description": "sprawdza, czy skompilowany kontekst projektu jest aktualny.",
+            "benefit": "agent nie korzysta z przestarzałych instrukcji."
+        },
+        "compile.py": {
+            "category": "Pipeline",
+            "description": "uruchamia pełną kompilację kontekstu.",
+            "benefit": "dokumenty, workflow i wiedza są gotowe do czytania przez agenta."
+        },
+        "compile_project_context.py": {
+            "category": "Pipeline",
+            "description": "kompiluje główny kontekst projektu.",
+            "benefit": "cięższe dokumenty są dostępne jako lżejsze wejścia."
+        },
+        "flow_read.py": {
+            "category": "Pipeline",
+            "description": "czyta i spłaszcza definicje flow.",
+            "benefit": "agent zaczyna zadanie od właściwej procedury."
+        },
+        "flow_tool.py": {
+            "category": "Pipeline",
+            "description": "obsługuje dane flow.",
+            "benefit": "flow można rozwijać bez ręcznego składania instrukcji."
+        },
+        "load_type_context.py": {
+            "category": "Pipeline",
+            "description": "zwraca zdeduplikowaną listę dokumentów do przeczytania dla wybranych prompt types.",
+            "benefit": "grupuje load entries z FLOWS.json metadata.types po priority, zachowując dokument tylko przy najwyższym priorytecie i domyślnie używając priority 10."
+        },
+        "type_context_loader.py": {
+            "category": "Pipeline",
+            "description": "implementuje resolver dokumentów dla prompt types z FLOWS.json metadata.types.",
+            "benefit": "czyta load oraz priority z typów promptów i zwraca JSON pogrupowany malejąco po priorytecie z deduplikacją na najwyższym priorytecie."
+        },
+        "project_context_compiler.py": {
+            "category": "Pipeline",
+            "description": "buduje skompilowane pliki kontekstu projektu.",
+            "benefit": "duże dokumenty stają się szybciej dostępne i spójne."
+        },
+        "tool_handler.py": {
+            "category": "Pipeline",
+            "description": "publiczny single entry point dla operacji narzędziowych repozytorium; waliduje input, normalizuje parametry, deleguje do skryptu docelowego i zwraca jeden result envelope.",
+            "benefit": "agent wywołuje jeden router zamiast ręcznie rekonstruować różne kontrakty skryptów.",
+            "input": {
+                "required": [
+                    "-Operation"
+                ],
+                "optional": [
+                    "-ParametersJson",
+                    "-ParametersJsonFile",
+                    "-OutputMode",
+                    "-ErrorLogPath",
+                    "-NoErrorLog"
+                ],
+                "rule": "Use exactly one of -ParametersJson or -ParametersJsonFile. Prefer -ParametersJsonFile for nested, multiline, or quote-heavy parameter payloads."
+            },
+            "output": {
+                "success": "Structured result envelope with ok=true, normalized operation, target script, normalized parameters, command, exit code, and captured output.",
+                "failure": "Structured result envelope with ok=false, error type/message, and logged_error_key when validation logged an input failure."
+            }
+        },
+        "tool_error_log.py": {
+            "category": "Pipeline",
+            "description": "dopina wpis błędu narzędziowego do docs-tech/TOOL-ERRORS.json albo wskazanej kopii testowej, inicjalizując rejestr jeśli jeszcze nie istnieje.",
+            "benefit": "input errors i semantyczne błędy wyników trafiają do jednego rejestru przez jeden kontrakt.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Path",
+                    "-Key",
+                    "-Title",
+                    "-Status",
+                    "-Tool",
+                    "-Failure",
+                    "-FailingCommandShape",
+                    "-ObservedError",
+                    "-SuspectedContractGap",
+                    "-FixTarget",
+                    "-DetailsJson",
+                    "-DetailsJsonFile",
+                    "-ObservedAt",
+                    "-Json"
+                ],
+                "rule": "Omit -Path to write to docs-tech/TOOL-ERRORS.json. Use -DetailsJsonFile for nested, multiline, or quote-heavy payloads; the logger preserves valid JSON and stores invalid JSON as text."
+            },
+            "output": {
+                "success": "OK text or JSON with the inserted key and target path.",
+                "failure": "Throws if the tool-error document cannot be initialized or the entry cannot be appended."
+            }
+        },
+        "read_compiled_context.py": {
+            "category": "Pipeline",
+            "description": "czyta wybrany skompilowany kontekst.",
+            "benefit": "agent ładuje tylko potrzebny fragment zasad.",
+            "input": {
+                "required": [
+                    "-Document"
+                ],
+                "optional": [
+                    "-CompiledRoot",
+                    "-AllowStale",
+                    "-SkipCurrentCheck",
+                    "-Json"
+                ],
+                "aliases": "When called through tool_handler.py, short names such as SCRIPTS, COMMANDS, FLOWS, DOCS, WORKFLOW, and STATE are normalized to the compiled-context document names or ids.",
+                "rule": "Prefer tool_handler.py for normal use so aliases and stale/context checks are normalized before this script runs."
+            },
+            "output": {
+                "success": "Compiled Markdown content by default, or JSON with compiled metadata/content when -Json is used.",
+                "failure": "Throws when the compiled context manifest is missing, stale, or no document matches the selector."
+            }
+        },
+        "resolve_python.py": {
+            "category": "Pipeline",
+            "description": "wybiera działający interpreter Python 3 dla narzędzi repo.",
+            "benefit": "narzędzia Python nie próbują uruchamiać Windowsowego Tools/Python312/python.exe na Linuksie lub Steam Decku."
+        },
+        "doctor.py": {
+            "category": "Setup",
+            "description": "sprawdza podstawowy stan środowiska projektu.",
+            "benefit": "szybciej widzisz, czy lokalny setup jest gotowy."
+        },
+        "play_completion_sound.py": {
+            "category": "Setup",
+            "description": "odtwarza dźwięk zakończenia.",
+            "benefit": "łatwiej zauważyć koniec dłuższej operacji."
+        },
+        "pipeline_bootstrap_index.py": {
+            "category": "Pipeline",
+            "description": "implementuje generowanie docs-tech/PIPELINE-BOOTSTRAP.json.",
+            "benefit": "bootstrap index jest deterministyczny i może być sprawdzany w finalizerze."
+        },
+        "utf8_file_helpers.py": {
+            "path": "tools/text/utf8_file_helpers.py",
+            "category": "text",
+            "description": "Provide reusable UTF-8 file read/write helpers for Python scripts.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Import from Python text utilities instead of duplicating UTF-8 and line-ending logic."
+            },
+            "output": {
+                "success": "Provides helper functions for UTF-8 reads, writes, and line-ending conversion.",
+                "failure": "Raises Python exceptions for invalid line-ending modes or file IO errors."
+            }
+        },
+        "json_wrapper_entrypoints.py": {
+            "path": "tools/json/json_wrapper_entrypoints.py",
+            "category": "json",
+            "description": "Shared Python implementation for native JSON wrapper entrypoints.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Internal module imported by json_*.py wrappers; use the wrapper scripts directly."
+            },
+            "output": {
+                "success": "Routes wrapper arguments to json_list_doc.py with Python-only tooling.",
+                "failure": "Raises or exits nonzero when wrapper arguments or JSON document operations fail."
+            }
+        },
+        "json_node_edit.py": {
+            "path": "tools/json/json_node_edit.py",
+            "category": "json",
+            "description": "Python native entrypoint for json_node_edit JSON document operations.",
+            "input": {
+                "required": [
+                    "path"
+                ],
+                "optional": [
+                    "operation",
+                    "node",
+                    "--path",
+                    "--operation",
+                    "--node",
+                    "--target-path",
+                    "--target-node",
+                    "--position",
+                    "--reference-node",
+                    "--line",
+                    "--reference-line",
+                    "--reference-text",
+                    "--text",
+                    "--value-json",
+                    "--value-json-file",
+                    "--value-json-stdin",
+                    "--replace"
+                ],
+                "rule": "Use this Python wrapper for direct JSON control; use file/stdin value inputs for multiline or quote-heavy JSON."
+            },
+            "output": {
+                "success": "Prints the requested JSON output or OK status after the document operation.",
+                "failure": "Exits nonzero when the path, key, node, value input, or JSON document operation is invalid."
+            }
+        },
         "archive_logs_for_run.py": {
             "category": "Gamedev",
             "description": "przenosi poprzednie logi gry do `_archive` przed świeżym uruchomieniem.",
@@ -1534,7 +1314,7 @@
         "console_summary.py": {
             "category": "Gamedev",
             "description": "streszcza log konsoli.",
-            "benefit": "szybciej widzisz aktualne błędy, ostrzeżenia i ostatni backtrace bez PowerShell.",
+            "benefit": "szybciej widzisz aktualne błędy, ostrzeżenia i ostatni backtrace bez dodatkowego shell runtime.",
             "input": {
                 "required": [],
                 "optional": [
@@ -1551,7 +1331,7 @@
         "log_summary.py": {
             "category": "Gamedev",
             "description": "streszcza logi diagnostyczne.",
-            "benefit": "łatwiej znaleźć najważniejszy sygnał w dumpach bez PowerShell.",
+            "benefit": "łatwiej znaleźć najważniejszy sygnał w dumpach bez dodatkowego shell runtime.",
             "input": {
                 "required": [
                     "--description"
@@ -1638,7 +1418,7 @@
         "run_godot_script.py": {
             "category": "Gamedev",
             "description": "uruchamia pojedynczy skrypt Godota w trybie headless przez lokalny Godot executable.",
-            "benefit": "można odpalić konkretny smoke/benchmark bez PowerShell.",
+            "benefit": "można odpalić konkretny smoke/benchmark bez dodatkowego shell runtime.",
             "input": {
                 "required": [
                     "--script"
@@ -1647,7 +1427,7 @@
                     "--godot-args"
                 ],
                 "example": "python3 -B Tools/gamedev/run_godot_script.py --script res://test-scripts/performance_diagnostic_contract_smoke.gd",
-                "compatibility_alias": "Tools/godot/run_headless.ps1 forwards to this script until that wrapper is retired."
+                "compatibility_alias": "Tools/godot/run_headless.py forwards to this script until that wrapper is retired."
             },
             "output": {
                 "success": "OK: Godot script completed: <script>",
@@ -1703,7 +1483,7 @@
             "path": "Tools/gamedev/run_smoke_diagnostics.py",
             "category": "Gamedev",
             "description": "Pythonowy runner pełnego zestawu Godot smoke diagnostics.",
-            "benefit": "Smoke bundle działa bez PowerShell i używa wspólnego resolvera Godota.",
+            "benefit": "Smoke bundle działa bez dodatkowego shell runtime i używa wspólnego resolvera Godota.",
             "input": {
                 "required": [],
                 "optional": [
@@ -1722,7 +1502,7 @@
             "path": "Tools/gamedev/gdscript_comment_contract_check.py",
             "category": "Gamedev",
             "description": "Raportuje brakujące komentarze klas, AI_CONTRACT headery i komentarze publicznych entry-point funkcji w GDScript.",
-            "benefit": "AI-native czytelność kodu można sprawdzać bez PowerShell przed rolloutem komentarzy per system.",
+            "benefit": "AI-native czytelność kodu można sprawdzać bez dodatkowego shell runtime przed rolloutem komentarzy per system.",
             "input": {
                 "required": [],
                 "optional": [
@@ -1746,7 +1526,7 @@
             "path": "Tools/gamedev/check_godot_scripts.py",
             "category": "Gamedev",
             "description": "Pythonowy GDScript load/parse checker przez Godot script_load_smoke harness.",
-            "benefit": "Szybko sprawdza ładowanie skryptów bez PowerShell i bez bezpośredniego uruchamiania domain scripts jako main.",
+            "benefit": "Szybko sprawdza ładowanie skryptów bez dodatkowego shell runtime i bez bezpośredniego uruchamiania domain scripts jako main.",
             "input": {
                 "required": [
                     "--scripts <paths>"
@@ -1765,7 +1545,7 @@
         "set_game_version.py": {
             "path": "Tools/gamedev/set_game_version.py",
             "category": "Gamedev",
-            "description": "Ustawia wersję gry i metadane eksportu Windows bez PowerShell.",
+            "description": "Ustawia wersję gry i metadane eksportu Windows bez dodatkowego shell runtime.",
             "benefit": "Buildy mają spójne oznaczenie w build_version.cfg, project.godot i export_presets.cfg.",
             "input": {
                 "required": [
@@ -1799,7 +1579,7 @@
         "worker_lifecycle_report.py": {
             "path": "Tools/gamedev/worker_lifecycle_report.py",
             "category": "Gamedev",
-            "description": "Raportuje cykl życia workerów z runtime JSONL logów bez PowerShell.",
+            "description": "Raportuje cykl życia workerów z runtime JSONL logów bez dodatkowego shell runtime.",
             "benefit": "Łatwiej diagnozować thread lifecycle, join mode, queue depth i worker ownership na danych z logów.",
             "input": {
                 "required": [],
@@ -1818,7 +1598,7 @@
         "godot_capture.py": {
             "path": "Tools/gamedev/godot_capture.py",
             "category": "Gamedev",
-            "description": "Uruchamia Godota z logiem diagnostycznym i failuje na issue lines bez PowerShell.",
+            "description": "Uruchamia Godota z logiem diagnostycznym i failuje na issue lines bez dodatkowego shell runtime.",
             "benefit": "Szybko łapie ERROR/WARNING/SCRIPT ERROR z Godot logu, używając wspólnego resolvera Godota z run_godot_script.py.",
             "input": {
                 "required": [],
@@ -1832,6 +1612,18 @@
             "output": {
                 "success": "Exit 0, log path i summary z issue_lines=0.",
                 "failure": "Exit non-zero przy błędzie Godota albo wykrytych ERROR/WARNING/SCRIPT ERROR lines w logu."
+            }
+        },
+        "build_and_run.py": {
+            "category": "Gamedev",
+            "description": "buduje i uruchamia projekt gry.",
+            "benefit": "szybciej sprawdzasz efekt zmian w działającym buildzie.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-EconomyProgressionTest"
+                ],
+                "default": "Prepares operator traversal flags unless -EconomyProgressionTest is set."
             }
         }
     },
@@ -1848,111 +1640,109 @@
         ],
         "categories": {
             "Documents": [
-                "audit_docs.ps1",
+                "audit_docs.py",
                 "audit_yaml_docs.py",
-                "doc_build_cache.ps1",
+                "doc_build_cache.py",
                 "doc_item.py",
-                "doc_item_bulk_insert.ps1",
-                "doc_item_insert.ps1",
-                "doc_item_migrate.ps1",
-                "doc_item_move.ps1",
-                "doc_keys.ps1",
-                "doc_list_check.ps1",
-                "doc_list_insert.ps1",
-                "doc_list_insert_checked.ps1",
+                "doc_item_bulk_insert.py",
+                "doc_item_insert.py",
+                "doc_item_migrate.py",
+                "doc_item_move.py",
+                "doc_keys.py",
+                "doc_list_check.py",
+                "doc_list_insert.py",
+                "doc_list_insert_checked.py",
                 "doc_list_item.py",
-                "doc_list_review.ps1",
-                "doc_post_edit.ps1",
-                "doc_read.ps1",
-                "doc_read_titles.ps1",
-                "doc_route.ps1",
-                "doc_search.ps1",
+                "doc_list_review.py",
+                "doc_post_edit.py",
+                "doc_read.py",
+                "doc_read_titles.py",
+                "doc_route.py",
+                "doc_search.py",
                 "json_list_doc.py",
-                "json_refresh_index.ps1",
-                "json_migrate_content.ps1",
-                "json_read.ps1",
-                "json_item_insert.ps1",
-                "json_item_set.ps1",
-                "json_item_move.ps1",
-                "json_item_delete.ps1",
-                "json_line_insert.ps1",
-                "json_line_set.ps1",
-                "json_line_move.ps1",
+                "json_refresh_index.py",
+                "json_migrate_content.py",
+                "json_read.py",
+                "json_item_insert.py",
+                "json_item_set.py",
+                "json_item_move.py",
+                "json_item_delete.py",
+                "json_line_insert.py",
+                "json_line_set.py",
+                "json_line_move.py",
                 "doc_tool.py",
-                "docs_migrator.ps1",
                 "docs_migrator.py",
-                "yaml_to_json_list_doc.ps1",
+                "docs_migrator.py",
                 "yaml_to_json_list_doc.py",
-                "docs_slim.ps1",
+                "yaml_to_json_list_doc.py",
                 "docs_slim.py",
-                "markdown_list_insert_checked.ps1",
-                "normalize_markdown_emoji.ps1"
+                "docs_slim.py",
+                "markdown_list_insert_checked.py",
+                "normalize_markdown_emoji.py"
             ],
             "Knowledge": [
-                "context_tags.ps1",
-                "knowledge_check.ps1",
-                "knowledge_code_context.ps1",
-                "knowledge_compile.ps1",
-                "knowledge_delete.ps1",
+                "context_tags.py",
+                "knowledge_check.py",
+                "knowledge_code_context.py",
+                "knowledge_compile.py",
+                "knowledge_delete.py",
                 "knowledge_delete.py",
                 "knowledge_index.py",
-                "knowledge_query.ps1",
                 "knowledge_query.py",
-                "knowledge_rename.ps1",
+                "knowledge_query.py",
                 "knowledge_rename.py",
-                "knowledge_select.ps1",
-                "knowledge_upsert.ps1",
+                "knowledge_rename.py",
+                "knowledge_select.py",
                 "knowledge_upsert.py",
-                "knowledge_validate.ps1",
-                "open_knowledge_db.ps1"
+                "knowledge_upsert.py",
+                "knowledge_validate.py",
+                "open_knowledge_db.py"
             ],
             "Repo": [
-                "add_changelog_entry.ps1",
-                "check_task.ps1",
-                "commit_task.ps1",
-                "done.ps1",
-                "end_prompt_snapshot.ps1",
-                "finish_subtask.ps1",
-                "finish_task.ps1",
-                "task_snapshot.ps1"
+                "add_changelog_entry.py",
+                "check_task.py",
+                "commit_task.py",
+                "done.py",
+                "end_prompt_snapshot.py",
+                "finish_subtask.py",
+                "finish_task.py",
+                "task_snapshot.py"
             ],
             "Text": [
-                "Utf8File.ps1",
-                "check_utf8_writes.ps1",
-                "normalize_text_files.ps1",
-                "normalize_json_files.ps1",
+                "check_utf8_writes.py",
+                "normalize_text_files.py",
                 "normalize_json_files.py",
-                "repair_mojibake.ps1",
-                "repair_yaml_block_indentation.ps1",
+                "normalize_json_files.py",
+                "repair_mojibake.py",
                 "repair_yaml_block_indentation.py",
-                "write_utf8_file.ps1"
+                "repair_yaml_block_indentation.py",
+                "write_utf8_file.py"
             ],
             "Codebase": [
-                "check_code_context_gate.ps1",
-                "load_programming_context.ps1",
-                "update_code_line_index.ps1"
+                "check_code_context_gate.py",
+                "load_programming_context.py",
+                "update_code_line_index.py"
             ],
             "Gamedev": [
-                "bootstrap_dotnet_sdk.ps1",
-                "bootstrap_godot_console.ps1",
-                "build_and_run.ps1",
+                "bootstrap_dotnet_sdk.py",
+                "bootstrap_godot_console.py",
                 "changed_quality_gate.py",
                 "check_csharp.py",
                 "clear_logs.bat",
                 "console_summary.py",
                 "export-playtest.bat",
-                "export-playtest.ps1",
-                "export_windows_playtest.ps1",
+                "export_playtest.py",
+                "export_windows_playtest.py",
                 "gamedev_quality_helpers.py",
                 "gdscript_outline.py",
                 "generate_embedded_config_payload.py",
                 "godot_capture.py",
                 "log_summary.py",
-                "operator_mission.ps1",
-                "performance_benchmark_report.ps1",
+                "operator_mission.py",
+                "performance_benchmark_report.py",
                 "prepare_operator_test_config.py",
                 "send_operator_command.py",
-                "route_retest_report.ps1",
+                "route_retest_report.py",
                 "run-game.bat",
                 "run_biome_distribution_diagnostics.py",
                 "run_quality_fix.py",
@@ -1968,24 +1758,22 @@
                 "run_biome_walk_benchmark.py"
             ],
             "Pipeline": [
-                "check_project_context.ps1",
-                "compile.ps1",
-                "compile_project_context.ps1",
-                "flow_read.ps1",
+                "check_project_context.py",
+                "compile.py",
+                "compile_project_context.py",
+                "flow_read.py",
                 "flow_tool.py",
                 "project_context_compiler.py",
-                "tool_handler.ps1",
-                "tool_error_log.ps1",
-                "read_compiled_context.ps1",
-                "resolve_python.ps1",
-                "pipeline_bootstrap_index.ps1",
+                "tool_handler.py",
+                "tool_error_log.py",
+                "read_compiled_context.py",
+                "resolve_python.py",
+                "pipeline_bootstrap_index.py",
                 "pipeline_bootstrap_index.py"
             ],
             "Setup": [
-                "configure_powershell_tool_path.ps1",
-                "configure_powershell_utf8.ps1",
-                "doctor.ps1",
-                "play_completion_sound.ps1"
+                "doctor.py",
+                "play_completion_sound.py"
             ],
             "text": [
                 "normalize_text_files.py",

@@ -244,11 +244,11 @@ def format_markdown(report: dict[str, Any], show_entries: bool) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Report and validate context_tier metadata on knowledge documentation entries.")
-    parser.add_argument("--repo-root", default=".", help="Repository root to scan.")
-    parser.add_argument("--include-templates", action="store_true", help="Include templates/ knowledge documents.")
-    parser.add_argument("--strict", action="store_true", help="Exit nonzero when entries miss context_tier, have invalid tiers, or JSON parse errors are found.")
-    parser.add_argument("--show-entries", action="store_true", help="Include missing/invalid entry locations in markdown output.")
-    parser.add_argument("--format", choices=("markdown", "json"), default="markdown")
+    parser.add_argument("--repo-root", "-RepoRoot", default=".", help="Repository root to scan.")
+    parser.add_argument("--include-templates", "-IncludeTemplates", action="store_true", help="Include templates/ knowledge documents.")
+    parser.add_argument("--strict", "-Strict", action="store_true", help="Exit nonzero when entries miss context_tier, have invalid tiers, or JSON parse errors are found.")
+    parser.add_argument("--show-entries", "-ShowEntries", action="store_true", help="Include missing/invalid entry locations in markdown output.")
+    parser.add_argument("--format", "-Format", choices=("markdown", "json"), default="markdown")
     args = parser.parse_args()
 
     report = scan_repo(Path(args.repo_root).resolve(), args.include_templates)

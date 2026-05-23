@@ -31,6 +31,6 @@
         },
         "schema": "socratex-json-list-document/v1",
         "workspace_marker": "workspace.json",
-        "resolver": "tools/pipeline/resolve_workspace_root.ps1"
+        "resolver": "tools/pipeline/resolve_workspace_root.py"
     }
 }

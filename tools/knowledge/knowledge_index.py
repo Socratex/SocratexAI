@@ -541,7 +541,7 @@ def reset_database(db_path: Path) -> None:
         except PermissionError as error:
             raise PermissionError(
                 f"Cannot rebuild knowledge DB because it is locked: {normalize_path(str(db_path))}. "
-                "Close any SQLite viewer, then rerun tools/knowledge/knowledge_compile.ps1."
+                "Close any SQLite viewer, then rerun tools/knowledge/knowledge_compile.py."
             ) from error
 
 
@@ -791,7 +791,7 @@ def write_manifest(db_path: Path, manifest_path: Path) -> None:
 def check_database(repo_root: Path, db_path: Path) -> int:
     if not db_path.exists():
         print(f"Knowledge DB missing: {normalize_path(str(db_path))}")
-        print("Run: tools/knowledge/knowledge_compile.ps1")
+        print("Run: tools/knowledge/knowledge_compile.py")
         return 1
     connection = connect(db_path)
     problems: list[str] = []
@@ -828,9 +828,9 @@ def check_database(repo_root: Path, db_path: Path) -> int:
             print(f"- {problem}")
         print("")
         print("Recommended repair:")
-        print("- Run `tools/knowledge/knowledge_upsert.ps1 -Path <document>` for stale tracked documents.")
-        print("- Run `tools/knowledge/knowledge_compile.ps1` for a full rebuild.")
-        print("- Run `tools/knowledge/knowledge_delete.ps1 -Path <document>` for intentionally removed documents.")
+        print("- Run `tools/knowledge/knowledge_upsert.py --path <document>` for stale tracked documents.")
+        print("- Run `tools/knowledge/knowledge_compile.py` for a full rebuild.")
+        print("- Run `tools/knowledge/knowledge_delete.py --path <document>` for intentionally removed documents.")
         return 1
     print("OK: knowledge DB document hashes match source files.")
     return 0
@@ -1009,7 +1009,7 @@ def check_file_store(repo_root: Path, file_dir: Path) -> int:
     ]
     if missing_tables:
         print(f"Knowledge file fallback missing table(s): {', '.join(missing_tables)}")
-        print("Run: tools/knowledge/knowledge_file_compile.ps1")
+        print("Run: tools/knowledge/knowledge_file_compile.py")
         return 1
     store = read_file_store(file_dir)
     problems: list[str] = []
@@ -1042,9 +1042,9 @@ def check_file_store(repo_root: Path, file_dir: Path) -> int:
             print(f"- {problem}")
         print("")
         print("Recommended repair:")
-        print("- Run `tools/knowledge/knowledge_file_upsert.ps1 -Path <document>` for stale tracked documents.")
-        print("- Run `tools/knowledge/knowledge_file_compile.ps1` for a full rebuild.")
-        print("- Run `tools/knowledge/knowledge_file_delete.ps1 -Path <document>` for intentionally removed documents.")
+        print("- Run `tools/knowledge/knowledge_file_upsert.py --path <document>` for stale tracked documents.")
+        print("- Run `tools/knowledge/knowledge_file_compile.py` for a full rebuild.")
+        print("- Run `tools/knowledge/knowledge_file_delete.py --path <document>` for intentionally removed documents.")
         return 1
     print("OK: knowledge file fallback document hashes match source files.")
     return 0

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh or check code line indexes without PowerShell."""
+"""Refresh or check code line indexes for active source files."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 
-CODE_EXTENSIONS = {".gd", ".ps1", ".py", ".bat", ".cmd", ".sh", ".cs", ".js", ".ts"}
+CODE_EXTENSIONS = {".gd", ".py", ".bat", ".cmd", ".sh", ".cs", ".js", ".ts"}
 EXCLUDED_PREFIXES = ("Tools/Python", "Tools/python-installer", "Tools/tmp/", ".venv/", "build/")
 
 LARGE_FILE_NOTES = {
@@ -144,8 +144,6 @@ def large_note(path: str) -> str:
     extension = Path(path).suffix
     if extension == ".gd":
         return "Runtime script above the size threshold. Keep it documented here until the ownership boundary is clear enough to split without hiding flow."
-    if extension == ".ps1":
-        return "Repository automation script above the size threshold. Keep it documented here because it encodes workflow behavior used by Codex or local tooling."
     if extension == ".py":
         return "Repository helper script above the size threshold. Keep it documented here because it performs non-trivial tooling logic."
     return "Code file above the size threshold. Keep it documented here until it can be reduced or split cleanly."
@@ -173,7 +171,7 @@ def build_large_files_document(large_records: list[dict[str, Any]], threshold: i
             },
             "summary": {
                 "title": "📌 Summary",
-                "content": f"📌 Generated index of code files above the large-file threshold.\n\n📌 This document is generated from `docs-tech/CODE_LINE_INDEX.json` by `Tools/update_code_line_index.ps1`. It tracks code files above {threshold} non-empty lines so large files have an explicit reason to stay large or a visible reason to split later.",
+                "content": f"📌 Generated index of code files above the large-file threshold.\n\n📌 This document is generated from `docs-tech/CODE_LINE_INDEX.json` by `tools/codebase/update_code_line_index.py`. It tracks code files above {threshold} non-empty lines so large files have an explicit reason to stay large or a visible reason to split later.",
             },
             "large_file_index": {
                 "title": "📊 Large File Index",
@@ -181,7 +179,7 @@ def build_large_files_document(large_records: list[dict[str, Any]], threshold: i
             },
             "maintenance": {
                 "title": "🛠 Maintenance",
-                "content": "🛠 Update this document through the line-index script instead of editing the table manually.\n\n🛠 Use `Tools/update_code_line_index.ps1` for a full refresh. Use `Tools/update_code_line_index.ps1 -ChangedOnly` when only changed files need to update their index records from the current git diff.",
+                "content": "🛠 Update this document through the line-index script instead of editing the table manually.\n\n🛠 Use `python3 -B tools/codebase/update_code_line_index.py` for a full refresh. Use `python3 -B tools/codebase/update_code_line_index.py --changed-only` when only changed files need to update their index records from the current git diff.",
             },
         },
         "meta": {
@@ -206,16 +204,16 @@ def build_large_files_document(large_records: list[dict[str, Any]], threshold: i
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Refresh or check CODE_LINE_INDEX and LARGE_FILES.")
-    parser.add_argument("--index-path", default="docs-tech/CODE_LINE_INDEX.json")
-    parser.add_argument("--large-files-path", default="docs-tech/LARGE_FILES.json")
-    parser.add_argument("--large-file-threshold", type=int, default=300)
-    parser.add_argument("--paths", nargs="*", default=[])
-    parser.add_argument("--root", default="")
-    parser.add_argument("--changed-only", action="store_true")
-    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--index-path", "-IndexPath", default="docs-tech/CODE_LINE_INDEX.json")
+    parser.add_argument("--large-files-path", "-LargeFilesPath", default="docs-tech/LARGE_FILES.json")
+    parser.add_argument("--large-file-threshold", "-LargeFileThreshold", type=int, default=300)
+    parser.add_argument("--paths", "-Paths", nargs="*", default=[])
+    parser.add_argument("--root", "-Root", default="")
+    parser.add_argument("--changed-only", "-ChangedOnly", action="store_true")
+    parser.add_argument("--check", "-Check", action="store_true")
     args = parser.parse_args()
 
-    root = repo_root(Path(args.root) if args.root else Path.cwd())
+    root = repo_root(Path(args.root) if args.root else Path(__file__).resolve().parents[2])
     if args.paths:
         target_paths = explicit_code_paths(root, args.paths)
     elif args.changed_only:

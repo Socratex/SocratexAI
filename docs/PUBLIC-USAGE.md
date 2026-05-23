@@ -26,7 +26,7 @@ The AI should:
 4. Ask context questions.
 5. If programming, run the Project Profile Interview.
 6. Run the runtime check when tools are available.
-7. If PowerShell 7 is missing, run the install helper, ask before applying the install command, and rerun the runtime check after installation.
+7. Python is the required automation runtime; if runtime discovery fails, set the documented Python override or repair the local Python setup before rerunning checks.
 7. Ask programming-specific questions, including branch workflow mode.
 8. Install, merge, or migrate according to the user's answers.
 9. Run audit if tools are available.
@@ -43,11 +43,11 @@ After the first user prompt handled under the installed pipeline, the agent shou
 
 Users can update from a link with:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/update_pipeline_from_link.ps1 -Source "<zip-or-local-source>" -Packs code
+```bash
+python3 -B tools/pipeline/update_pipeline_from_link.py -Source "<zip-or-local-source>" -Packs code
 ```
 
-In an installed project, run the updater from `SocratexAI/tools/pipeline/update_pipeline_from_link.ps1`.
+In an installed project, run the updater from `SocratexAI/tools/pipeline/update_pipeline_from_link.py`.
 
 Use `-ReinitializeNew` when updating from a newer pipeline release so newly introduced initialized artifacts are created without overwriting existing project memory.
 
@@ -59,8 +59,8 @@ If no source is configured, the agent should ask for the update URL or local sou
 
 Users can remove an installed pipeline with:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/pipeline/remove_pipeline.ps1 -TargetPath .
+```bash
+python3 -B SocratexAI/tools/pipeline/remove_pipeline.py -TargetPath .
 ```
 
 When a user asks an agent to remove the pipeline, the agent should read `SocratexAI/core/REMOVAL-PROTOCOL.json` and use the remover script instead of manually deleting files.
@@ -69,16 +69,16 @@ When a user asks an agent to remove the pipeline, the agent should read `Socrate
 
 The maintainer can pull improvements from the active reference pipeline with:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/upgrade_from_reference_project.ps1
+```bash
+python3 -B tools/pipeline/upgrade_from_reference_project.py
 ```
 
 ## Migration
 
 Users can migrate another AI pipeline with:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/migrate_ai_pipeline.ps1 -Packs code -DirectiveMode merge -CreateProjectFiles
+```bash
+python3 -B tools/pipeline/migrate_ai_pipeline.py -Packs code -DirectiveMode merge -CreateProjectFiles
 ```
 
 `merge` appends a short instruction to existing directive files telling the AI to prioritize `SOCRATEX.md`.

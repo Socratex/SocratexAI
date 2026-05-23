@@ -122,6 +122,10 @@ def final_checks_command(root: Path, args: argparse.Namespace) -> list[str]:
         command.append("--strict-audit")
     if args.no_audit:
         command.append("--no-audit")
+    if args.require_task_flow_evidence:
+        command.append("--require-task-flow-evidence")
+        if args.task_flow_evidence_path:
+            command.extend(["--task-flow-evidence-path", args.task_flow_evidence_path])
     return command
 
 
@@ -144,6 +148,8 @@ def main() -> int:
     parser.add_argument("--quality-command-names", nargs="*", default=[], help="QUALITY-GATE command names for run_quality_gate.py.")
     parser.add_argument("--strict-audit", action="store_true", help="Pass strict audit mode to final checks.")
     parser.add_argument("--no-audit", action="store_true", help="Skip document audit inside final checks.")
+    parser.add_argument("--require-task-flow-evidence", action="store_true", help="Validate closure evidence JSON inside final checks.")
+    parser.add_argument("--task-flow-evidence-path", default="", help="Closure evidence JSON path.")
     parser.add_argument("--allow-pre-staged", action="store_true", help="Allow already staged changes.")
     args = parser.parse_args()
 

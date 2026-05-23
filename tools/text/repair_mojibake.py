@@ -61,7 +61,7 @@ def relative_to_root(path: Path, root: Path) -> str:
 
 def default_targets(root: Path) -> list[Path]:
     result = subprocess.run(
-        ["git", "-C", str(root), "ls-files", "*.md", "*.json", "*.json", "*.ps1"],
+        ["git", "-C", str(root), "ls-files", "*.md", "*.json", "*.json"],
         check=True,
         text=True,
         capture_output=True,

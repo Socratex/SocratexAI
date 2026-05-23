@@ -95,7 +95,7 @@ For programming context, ask these questions before programming operation questi
    - `shipping`
    - `maintenance`
 9. Highest current pain: free text.
-10. Stack tags: auto-suggest using `tools/setup/detect_project_stack.ps1` when possible, then ask the user to verify or edit the list.
+10. Stack tags: auto-suggest using `tools/setup/detect_project_stack.py` when possible, then ask the user to verify or edit the list.
 
 Store answers in `PIPELINE-CONFIG.json` under `project_profile`.
 
@@ -190,7 +190,7 @@ Canonical JSON list documents must use exactly this root order:
 
 Treat plans, state, queues, feature lists, command catalogs, workflow catalogs, and context capsules as structured operational data, not narrative documents.
 
-After changing structured files, run the pipeline scripts that match the change. At minimum, use `SocratexAI/tools/documents/audit_docs.ps1` when available. For pipeline-owned artifacts or feature manifests, also run `SocratexAI/tools/repo/check_pipeline_feature_contracts.ps1`. Use the JSON document wrappers or `SocratexAI/tools/text/normalize_json_files.ps1` instead of hand-shaping JSON when the tools are available.
+After changing structured files, run the pipeline scripts that match the change. At minimum, use `SocratexAI/tools/documents/audit_docs.py` when available. For pipeline-owned artifacts or feature manifests, also run `SocratexAI/tools/repo/check_pipeline_feature_contracts.py`. Use the JSON document wrappers or `SocratexAI/tools/text/normalize_json_files.py` instead of hand-shaping JSON when the tools are available.
 
 If a required script cannot run, report that as a blocker or degraded mode. Do not claim the upgrade is complete until the relevant scripts pass or the user explicitly accepts manual mode.
 
@@ -237,7 +237,7 @@ For programming projects:
 
 Installed projects also receive `WORKFLOW.json` and `team/*.json` role lenses. These are not default context for every prompt. Use `WORKFLOW.json` when priority steering or broad project-risk judgment matters, and load a `team/` role only when the user asks for that lens or workflow routes the task to it.
 
-Source pipeline repositories may include `AI-compiled/`, a generated agent-readable instruction cache. Treat it as read-only generated context. If source instructions change, run `tools/pipeline/rebuild_ai_compiled_context.ps1`.
+Source pipeline repositories may include `AI-compiled/`, a generated agent-readable instruction cache. Treat it as read-only generated context. If source instructions change, run `tools/pipeline/rebuild_ai_compiled_context.py`.
 13. End with first useful work pass recommendations and ROI Picks.
 
 For non-programming projects:
@@ -273,10 +273,10 @@ Report this handoff explicitly:
 
 Use these tools when available:
 
-- `tools/pipeline/update_pipeline_from_link.ps1`: update a user's project from the latest public pipeline source.
-- `tools/pipeline/reinitialize_pipeline.ps1`: add newly introduced initialized artifacts without overwriting existing project memory.
-- `tools/pipeline/upgrade_from_reference_project.ps1`: maintainer-only upgrade from the active reference source pipeline.
-- `tools/pipeline/migrate_ai_pipeline.ps1`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
+- `tools/pipeline/update_pipeline_from_link.py`: update a user's project from the latest public pipeline source.
+- `tools/pipeline/reinitialize_pipeline.py`: add newly introduced initialized artifacts without overwriting existing project memory.
+- `tools/pipeline/upgrade_from_reference_project.py`: maintainer-only upgrade from the active reference source pipeline.
+- `tools/pipeline/migrate_ai_pipeline.py`: migrate an existing non-Socratex AI pipeline into SocratexPipeline.
 
 When the user asks to update an installed pipeline, follow `core/UPDATE-PROTOCOL.json`.
 
@@ -298,10 +298,10 @@ Use `-ReinitializeNew` only when the update explicitly introduces newly initiali
 
 The agent should resolve the update source from `pipeline.update_source` or `pipeline.public_bootstrap_url` in config before asking the user. If `pipeline.public_bootstrap_url` points to this raw bootstrap file, prefer the Git repository source above for the actual update package.
 
-When a project belongs to a local workspace containing `workspace.json` next to a sibling `SocratexAI/`, use `SocratexAI/tools/pipeline/resolve_workspace_root.ps1` to resolve that workspace before using a local source such as `../SocratexAI`. The local marker is the source of truth for work/projects-style path moves.
+When a project belongs to a local workspace containing `workspace.json` next to a sibling `SocratexAI/`, use `SocratexAI/tools/pipeline/resolve_workspace_root.py` to resolve that workspace before using a local source such as `../SocratexAI`. The local marker is the source of truth for work/projects-style path moves.
 
-If the updated pipeline includes initializer artifacts missing from the installed project, run `tools/pipeline/reinitialize_pipeline.ps1` in missing-only mode after update.
+If the updated pipeline includes initializer artifacts missing from the installed project, run `tools/pipeline/reinitialize_pipeline.py` in missing-only mode after update.
 
 If no source is configured, ask for the URL or local source path before changing files.
 
-When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.json` and run `tools/pipeline/remove_pipeline.ps1` from the installed `SocratexAI/tools/` directory.
+When the user asks to remove an installed pipeline, follow `core/REMOVAL-PROTOCOL.json` and run `tools/pipeline/remove_pipeline.py` from the installed `SocratexAI/tools/` directory.

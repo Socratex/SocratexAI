@@ -59,7 +59,7 @@ def build_index(repo_root: Path, documents: list[str]) -> dict[str, Any]:
                 "Use COMMANDS.json when a prompt matches a command keyword, SCRIPTS.json when choosing tools, and DOCS.json when document ownership or routing matters.",
                 "If a needed command, flow, script, workflow rule, or document route is missing, report the missing contract before executing the prompt.",
             ],
-            "generated_by": "tools/pipeline/pipeline_bootstrap_index.ps1",
+            "generated_by": "tools/pipeline/pipeline_bootstrap_index.py",
         },
     }
 

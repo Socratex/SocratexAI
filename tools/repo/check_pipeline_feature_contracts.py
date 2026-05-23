@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate SocratexPipeline feature contracts without requiring PowerShell."""
+"""Validate SocratexPipeline feature contracts with Python-only tooling."""
 
 from __future__ import annotations
 

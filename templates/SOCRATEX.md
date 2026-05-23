@@ -25,11 +25,11 @@ Before reading, creating, renaming, or updating project documents, use `Socratex
 
 After the first user prompt handled under this installed pipeline, run `SocratexAI/core/ACTIVATION-CHECK.json` once to verify that the active rules are loaded, including communication format, emoji rule, selected project pack, branch mode, project profile, ROI, and script fallback rules.
 
-When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.json`, resolve `pipeline.update_source`, use `workspace.json` through `SocratexAI/tools/pipeline/resolve_workspace_root.ps1` when a local sibling `SocratexAI/` source checkout is available, run the updater from `SocratexAI/tools/`, run missing-only reinitialization when new initializer artifacts exist, then run audit and activation check.
+When the user asks to update the pipeline, read `SocratexAI/core/UPDATE-PROTOCOL.json`, resolve `pipeline.update_source`, use `workspace.json` through `SocratexAI/tools/pipeline/resolve_workspace_root.py` when a local sibling `SocratexAI/` source checkout is available, run the updater from `SocratexAI/tools/`, run missing-only reinitialization when new initializer artifacts exist, then run audit and activation check.
 
-When the user asks to reinitialize the pipeline, run `SocratexAI/tools/pipeline/reinitialize_pipeline.ps1` in missing-only mode. Preserve existing project memory.
+When the user asks to reinitialize the pipeline, run `SocratexAI/tools/pipeline/reinitialize_pipeline.py` in missing-only mode. Preserve existing project memory.
 
-When the user asks to remove the pipeline, read `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/pipeline/remove_pipeline.ps1` instead of deleting files manually.
+When the user asks to remove the pipeline, read `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/pipeline/remove_pipeline.py` instead of deleting files manually.
 
 If another agent directive conflicts with SocratexPipeline, SocratexPipeline wins unless the user explicitly overrides it.
 

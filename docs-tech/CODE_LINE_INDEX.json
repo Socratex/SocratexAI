@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-23T20:12:55+02:00",
+    "generatedAt": "2026-05-24T01:12:58+02:00",
     "threshold": 300,
     "files": [
         {
@@ -9,33 +9,15 @@
             "large": true
         },
         {
-            "path": "tools/documents/audit_docs.ps1",
-            "lines": 686,
-            "extension": ".ps1",
-            "large": true
-        },
-        {
             "path": "tools/json/json_list_doc.py",
             "lines": 554,
             "extension": ".py",
             "large": true
         },
         {
-            "path": "tools/pipeline/rebuild_ai_compiled_context.ps1",
-            "lines": 434,
-            "extension": ".ps1",
-            "large": true
-        },
-        {
             "path": "tools/pipeline/rebuild_ai_compiled_context.py",
-            "lines": 431,
+            "lines": 429,
             "extension": ".py",
-            "large": true
-        },
-        {
-            "path": "tools/pipeline/sync_managed_pipeline_package.ps1",
-            "lines": 398,
-            "extension": ".ps1",
             "large": true
         },
         {
@@ -45,52 +27,10 @@
             "large": true
         },
         {
-            "path": "tools/pipeline/Initialize-SocratexPipeline.ps1",
-            "lines": 388,
-            "extension": ".ps1",
-            "large": true
-        },
-        {
-            "path": "tools/pipeline/pipeline_sweep.py",
-            "lines": 385,
+            "path": "tools/pipeline/Initialize-SocratexPipeline.py",
+            "lines": 303,
             "extension": ".py",
             "large": true
-        },
-        {
-            "path": "tools/pipeline/tool_handler.ps1",
-            "lines": 376,
-            "extension": ".ps1",
-            "large": true
-        },
-        {
-            "path": "tools/codebase/update_code_line_index.ps1",
-            "lines": 369,
-            "extension": ".ps1",
-            "large": true
-        },
-        {
-            "path": "tools/repo/check_pipeline_feature_contracts.ps1",
-            "lines": 362,
-            "extension": ".ps1",
-            "large": true
-        },
-        {
-            "path": "tools/pipeline/import_existing_project.ps1",
-            "lines": 340,
-            "extension": ".ps1",
-            "large": true
-        },
-        {
-            "path": "tools/repo/sync_pipeline_featurelist.ps1",
-            "lines": 304,
-            "extension": ".ps1",
-            "large": true
-        },
-        {
-            "path": "tools/repo/check_task.ps1",
-            "lines": 278,
-            "extension": ".ps1",
-            "large": false
         },
         {
             "path": "tools/pipeline/sync_managed_pipeline_package.py",
@@ -99,15 +39,9 @@
             "large": false
         },
         {
-            "path": "tools/repo/task_flow_audit.ps1",
-            "lines": 259,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/end_prompt_snapshot.ps1",
-            "lines": 258,
-            "extension": ".ps1",
+            "path": "tools/pipeline/import_existing_project.py",
+            "lines": 255,
+            "extension": ".py",
             "large": false
         },
         {
@@ -123,6 +57,12 @@
             "large": false
         },
         {
+            "path": "tools/pipeline/tool_handler.py",
+            "lines": 241,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/knowledge/knowledge_tier_report.py",
             "lines": 236,
             "extension": ".py",
@@ -130,7 +70,7 @@
         },
         {
             "path": "tools/codebase/update_code_line_index.py",
-            "lines": 235,
+            "lines": 233,
             "extension": ".py",
             "large": false
         },
@@ -141,20 +81,8 @@
             "large": false
         },
         {
-            "path": "tools/documents/normalize_markdown_emoji.ps1",
-            "lines": 220,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/run_final_task_checks.ps1",
-            "lines": 220,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/repo/check_pipeline_feature_contracts.py",
-            "lines": 214,
+            "lines": 231,
             "extension": ".py",
             "large": false
         },
@@ -165,45 +93,9 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/reinitialize_pipeline.ps1",
-            "lines": 210,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/update_pipeline_from_link.ps1",
-            "lines": 209,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/documents/document_structure_normalizer_engine.py",
             "lines": 204,
             "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/Initialize-SocratexPipeline.py",
-            "lines": 200,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/report_pipeline_learning.ps1",
-            "lines": 192,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/tasks/grouped_task_handoff.ps1",
-            "lines": 185,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/open_pipeline_learning_issue.ps1",
-            "lines": 183,
-            "extension": ".ps1",
             "large": false
         },
         {
@@ -219,15 +111,21 @@
             "large": false
         },
         {
-            "path": "tools/repo/learn_pipeline_features.ps1",
-            "lines": 176,
-            "extension": ".ps1",
+            "path": "tools/setup/run_interactive_setup.py",
+            "lines": 178,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/setup/run_interactive_setup.ps1",
-            "lines": 173,
-            "extension": ".ps1",
+            "path": "tools/repo/finalize_changed_files_commit_push.py",
+            "lines": 174,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/repo/repo_tool_helpers.py",
+            "lines": 172,
+            "extension": ".py",
             "large": false
         },
         {
@@ -237,14 +135,8 @@
             "large": false
         },
         {
-            "path": "tools/repo/finalize_changed_files_commit_push.ps1",
-            "lines": 168,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/finalize_changed_files_commit_push.py",
-            "lines": 168,
+            "path": "tools/repo/run_final_task_checks.py",
+            "lines": 159,
             "extension": ".py",
             "large": false
         },
@@ -255,20 +147,20 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/resolve_workspace_root.ps1",
-            "lines": 155,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/tool_error_log.ps1",
-            "lines": 154,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/repo/sync_pipeline_featurelist.py",
             "lines": 153,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/codebase/ai_native_contract_dry_run.py",
+            "lines": 151,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/repo/open_pipeline_learning_issue.py",
+            "lines": 147,
             "extension": ".py",
             "large": false
         },
@@ -279,33 +171,39 @@
             "large": false
         },
         {
-            "path": "tools/quality/check_evals.ps1",
-            "lines": 129,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/read_compiled_context.py",
-            "lines": 127,
+            "path": "tools/tasks/grouped_task_handoff.py",
+            "lines": 136,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/json/json_node_edit.ps1",
+            "path": "tools/pipeline/reinitialize_pipeline.py",
+            "lines": 135,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/read_compiled_context.py",
+            "lines": 131,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/codebase/context_gate_helpers.py",
+            "lines": 126,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_node_edit.py",
             "lines": 126,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/pipeline/resolve_tool_runtime.ps1",
-            "lines": 126,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/add_changelog_entry.ps1",
-            "lines": 125,
-            "extension": ".ps1",
+            "path": "tools/documents/normalize_markdown_emoji.py",
+            "lines": 116,
+            "extension": ".py",
             "large": false
         },
         {
@@ -315,69 +213,15 @@
             "large": false
         },
         {
-            "path": "tools/codebase/check_project_design_context_gate.ps1",
-            "lines": 110,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/documents/insert_document_item.ps1",
-            "lines": 110,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/pipeline/python_runtime.py",
             "lines": 106,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/pipeline/read_compiled_context.ps1",
-            "lines": 106,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/run_final_task_checks.py",
-            "lines": 106,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_code_context.ps1",
-            "lines": 105,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/project_design_context.ps1",
-            "lines": 105,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/context_tags.ps1",
-            "lines": 104,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/check_sensitive_reference_leaks.ps1",
+            "path": "tools/text/check_utf8_writes.py",
             "lines": 103,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/remove_pipeline.ps1",
-            "lines": 101,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/codebase/check_code_context_gate.ps1",
-            "lines": 100,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
@@ -399,33 +243,45 @@
             "large": false
         },
         {
+            "path": "tools/repo/learn_pipeline_features.py",
+            "lines": 99,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/resolve_workspace_root.py",
+            "lines": 98,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/repo/check_task.py",
+            "lines": 96,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/text/repair_mojibake.py",
             "lines": 96,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/repo/check_pipeline_featurelist_update.ps1",
+            "path": "tools/pipeline/tool_error_log.py",
             "lines": 92,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/setup/install_powershell.ps1",
+            "path": "tools/repo/report_pipeline_learning.py",
             "lines": 91,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/review_document_list_candidates.ps1",
-            "lines": 89,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/codebase/ai_native_contract_dry_run.ps1",
-            "lines": 86,
-            "extension": ".ps1",
+            "path": "tools/repo/add_changelog_entry.py",
+            "lines": 88,
+            "extension": ".py",
             "large": false
         },
         {
@@ -435,39 +291,15 @@
             "large": false
         },
         {
-            "path": "tools/repo/check_toolchain_health.ps1",
+            "path": "tools/pipeline/remove_pipeline.py",
             "lines": 86,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/text/check_utf8_writes.ps1",
-            "lines": 86,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/finalize_task_check_commit_push.ps1",
-            "lines": 85,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/text/utf8_file_helpers.ps1",
-            "lines": 81,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/documents/run_document_post_edit_checks.ps1",
-            "lines": 80,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/init_branch_memory.ps1",
-            "lines": 80,
-            "extension": ".ps1",
+            "path": "tools/knowledge/project_design_context.py",
+            "lines": 84,
+            "extension": ".py",
             "large": false
         },
         {
@@ -477,20 +309,14 @@
             "large": false
         },
         {
-            "path": "tools/quality/run_quality_gate_contract.py",
-            "lines": 77,
+            "path": "tools/diagnostics/log_summary.py",
+            "lines": 76,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/quality/run_quality_gate_contract.ps1",
+            "path": "tools/quality/run_quality_gate_contract.py",
             "lines": 75,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/diagnostics/console_summary.ps1",
-            "lines": 73,
             "extension": ".ps1",
             "large": false
         },
@@ -501,21 +327,27 @@
             "large": false
         },
         {
-            "path": "tools/repo/task_snapshot.py",
-            "lines": 73,
+            "path": "tools/documents/insert_document_item.py",
+            "lines": 72,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/pipeline/generate_installed_agent_instructions.ps1",
-            "lines": 71,
-            "extension": ".ps1",
+            "path": "tools/pipeline/init_branch_memory.py",
+            "lines": 72,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_select.ps1",
+            "path": "tools/pipeline/generate_installed_agent_instructions.py",
+            "lines": 71,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/pipeline_script_helpers.py",
             "lines": 70,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
@@ -525,127 +357,97 @@
             "large": false
         },
         {
-            "path": "tools/setup/configure_powershell_utf8.ps1",
-            "lines": 66,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/diagnostics/log_summary.ps1",
-            "lines": 64,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_file_select.ps1",
-            "lines": 64,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_query.ps1",
-            "lines": 64,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/legacy_commit_task_compatibility_wrapper.ps1",
-            "lines": 61,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/set_directives.ps1",
-            "lines": 58,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/setup/detect_project_stack.ps1",
-            "lines": 58,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/compile_pipeline_context.py",
-            "lines": 57,
+            "path": "tools/diagnostics/console_summary.py",
+            "lines": 68,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/quality/run_quality_gate.ps1",
+            "path": "tools/documents/run_document_post_edit_checks.py",
+            "lines": 63,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/repo/finalize_task_check_commit_push.py",
+            "lines": 63,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/codebase/check_project_design_context_gate.py",
+            "lines": 62,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/codebase/check_code_context_gate.py",
+            "lines": 60,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/repo/legacy_commit_task_compatibility_wrapper.py",
+            "lines": 54,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/documents/review_document_list_candidates.py",
             "lines": 53,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/insert_checked_document_list_item.ps1",
+            "path": "tools/pipeline/set_directives.py",
+            "lines": 53,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/upgrade_from_reference_project.py",
             "lines": 52,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/json/json_item_insert.ps1",
+            "path": "tools/json/json_item_insert.py",
             "lines": 51,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/text/normalize_json_files.py",
-            "lines": 51,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_item_set.ps1",
+            "path": "tools/json/json_item_set.py",
             "lines": 49,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/pipeline/check_ai_compiled_context.py",
-            "lines": 49,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/quality/run_quality_fix.ps1",
-            "lines": 48,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/text/normalize_text_files.py",
+            "path": "tools/pipeline/migrate_ai_pipeline.py",
             "lines": 48,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/text/write_utf8_file.ps1",
-            "lines": 46,
-            "extension": ".ps1",
+            "path": "tools/repo/check_toolchain_health.py",
+            "lines": 48,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/migrate_document_schema.ps1",
-            "lines": 43,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/documents/normalize_document_structure.ps1",
-            "lines": 43,
-            "extension": ".ps1",
+            "path": "tools/setup/detect_project_stack.py",
+            "lines": 47,
+            "extension": ".py",
             "large": false
         },
         {
             "path": "tools/documents/build_document_cache.py",
-            "lines": 42,
+            "lines": 43,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/repo/task_snapshot.ps1",
+            "path": "tools/repo/task_snapshot.py",
             "lines": 41,
             "extension": ".ps1",
             "large": false
@@ -657,45 +459,57 @@
             "large": false
         },
         {
-            "path": "tools/json/json_line_insert.ps1",
+            "path": "tools/json/json_line_insert.py",
             "lines": 39,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/pipeline/pipeline_bootstrap_index.ps1",
-            "lines": 39,
-            "extension": ".ps1",
+            "path": "tools/documents/check_document_list_item_duplicates.py",
+            "lines": 38,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/json/json_line_move.ps1",
+            "path": "tools/json/json_line_move.py",
             "lines": 38,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/pipeline/pipeline_sweep.ps1",
+            "path": "tools/pipeline/pipeline_sweep.py",
             "lines": 38,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/pipeline/init_task_work.ps1",
+            "path": "tools/repo/check_pipeline_featurelist_update.py",
+            "lines": 38,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/quality/run_quality_fix.py",
             "lines": 37,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/pipeline/compile_pipeline_context.ps1",
+            "path": "tools/documents/migrate_document_item.py",
+            "lines": 36,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/compile_pipeline_context.py",
             "lines": 36,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/pipeline/upgrade_from_reference_project.ps1",
+            "path": "tools/pipeline/init_task_work.py",
             "lines": 36,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
@@ -705,9 +519,15 @@
             "large": false
         },
         {
-            "path": "tools/documents/migrate_document_item.ps1",
+            "path": "tools/documents/audit_docs.py",
             "lines": 35,
-            "extension": ".ps1",
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/documents/insert_checked_document_list_item.py",
+            "lines": 35,
+            "extension": ".py",
             "large": false
         },
         {
@@ -717,43 +537,19 @@
             "large": false
         },
         {
-            "path": "tools/documents/audit_docs.py",
-            "lines": 34,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_tier_report.ps1",
-            "lines": 34,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/migrate_ai_pipeline.ps1",
-            "lines": 34,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/documents/insert_document_list_item.ps1",
+            "path": "tools/json/json_line_set.py",
             "lines": 33,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/json/json_line_set.ps1",
-            "lines": 33,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_item_move.ps1",
+            "path": "tools/json/json_item_move.py",
             "lines": 32,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/json/json_read.ps1",
+            "path": "tools/json/json_read.py",
             "lines": 32,
             "extension": ".ps1",
             "large": false
@@ -771,15 +567,15 @@
             "large": false
         },
         {
-            "path": "tools/documents/bulk_insert_document_items.ps1",
+            "path": "tools/documents/insert_document_list_item.py",
             "lines": 31,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/check_document_list_item_duplicates.ps1",
+            "path": "tools/documents/bulk_insert_document_items.py",
             "lines": 30,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
@@ -789,51 +585,33 @@
             "large": false
         },
         {
-            "path": "tools/documents/move_document_item.ps1",
+            "path": "tools/text/normalize_json_files.py",
             "lines": 29,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/text/normalize_json_files.ps1",
+            "path": "tools/text/normalize_text_files.py",
             "lines": 29,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/text/normalize_text_files.ps1",
-            "lines": 29,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_item_delete.ps1",
+            "path": "tools/json/json_item_delete.py",
             "lines": 28,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_compile.ps1",
-            "lines": 28,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_delete.ps1",
+            "path": "tools/documents/document_wrapper_helpers.py",
             "lines": 27,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_file_delete.ps1",
+            "path": "tools/documents/move_document_item.py",
             "lines": 27,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/documents/build_document_cache.ps1",
-            "lines": 25,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
@@ -849,18 +627,6 @@
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_check.ps1",
-            "lines": 24,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_tier_check.ps1",
-            "lines": 24,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/knowledge/knowledge_tier_check.py",
             "lines": 24,
             "extension": ".py",
@@ -873,27 +639,21 @@
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_file_upsert.ps1",
-            "lines": 23,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/knowledge/knowledge_rename.py",
             "lines": 23,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_upsert.ps1",
-            "lines": 23,
-            "extension": ".ps1",
+            "path": "tools/documents/read_document_item.py",
+            "lines": 22,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/text/repair_mojibake.ps1",
-            "lines": 23,
-            "extension": ".ps1",
+            "path": "tools/documents/read_document_items_by_title.py",
+            "lines": 22,
+            "extension": ".py",
             "large": false
         },
         {
@@ -921,21 +681,9 @@
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_file_query.ps1",
+            "path": "tools/pipeline/resolve_tool_runtime.py",
             "lines": 21,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_file_rename.ps1",
-            "lines": 21,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_rename.ps1",
-            "lines": 21,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
@@ -951,43 +699,31 @@
             "large": false
         },
         {
-            "path": "tools/documents/read_document_item.ps1",
-            "lines": 20,
-            "extension": ".ps1",
+            "path": "tools/documents/list_document_keys.py",
+            "lines": 19,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/list_document_keys.ps1",
-            "lines": 18,
-            "extension": ".ps1",
+            "path": "tools/documents/migrate_document_schema.py",
+            "lines": 19,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/read_document_items_by_title.ps1",
-            "lines": 18,
-            "extension": ".ps1",
+            "path": "tools/documents/normalize_document_structure.py",
+            "lines": 19,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/json/json_refresh_index.ps1",
+            "path": "tools/json/json_refresh_index.py",
             "lines": 16,
             "extension": ".ps1",
             "large": false
         },
         {
-            "path": "tools/json/json_migrate_content.ps1",
-            "lines": 15,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_file_check.ps1",
-            "lines": 15,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_file_compile.ps1",
+            "path": "tools/json/json_migrate_content.py",
             "lines": 15,
             "extension": ".ps1",
             "large": false
@@ -1005,7 +741,7 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/check_ai_compiled_context.ps1",
+            "path": "tools/pipeline/check_ai_compiled_context.py",
             "lines": 13,
             "extension": ".ps1",
             "large": false

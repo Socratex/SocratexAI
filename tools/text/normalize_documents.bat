@@ -1,4 +1,4 @@
 @echo off
 setlocal
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0normalize_json_files.ps1" %*
+python -B "%~dp0normalize_json_files.py" %*
 exit /b %ERRORLEVEL%

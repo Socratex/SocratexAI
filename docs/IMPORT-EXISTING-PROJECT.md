@@ -2,22 +2,22 @@
 
 ## Summary
 
-Use `tools/pipeline/import_existing_project.ps1` to install SocratexPipeline into an existing repository or project folder.
+Use `tools/pipeline/import_existing_project.py` to install SocratexPipeline into an existing repository or project folder.
 
 ## Dry Run
 
 Always start with a dry run:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/import_existing_project.ps1 -TargetPath "C:\Path\To\Project" -Packs code -CreateProjectFiles -DryRun
+```bash
+python3 -B tools/pipeline/import_existing_project.py -TargetPath "C:\Path\To\Project" -Packs code -CreateProjectFiles -DryRun
 ```
 
 ## Import
 
 Then run:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/import_existing_project.ps1 -TargetPath "C:\Path\To\Project" -Packs code -CreateProjectFiles
+```bash
+python3 -B tools/pipeline/import_existing_project.py -TargetPath "C:\Path\To\Project" -Packs code -CreateProjectFiles
 ```
 
 ## Safety
@@ -32,8 +32,8 @@ For code imports, standardized project memory is created as JSON and generated d
 
 After code import, review `SOCRATEX.md`, `SocratexAI/PIPELINE-CONFIG.json`, and run:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File SocratexAI/tools/documents/audit_docs.ps1 -Initialized
+```bash
+python3 -B SocratexAI/tools/documents/audit_docs.py -Initialized
 ```
 
 For non-code imports, review `SocratexAI/PIPELINE-CONFIG.json` instead.

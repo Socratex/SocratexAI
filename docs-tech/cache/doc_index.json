@@ -513,187 +513,185 @@
       },
       "routing": {},
       "toc": [
-        "add_changelog_entry.ps1",
-        "audit_docs.ps1",
+        "add_changelog_entry.py",
+        "audit_docs.py",
         "audit_docs.py",
         "audit_json_docs.py",
-        "check_code_context_gate.ps1",
-        "check_ai_compiled_context.ps1",
+        "check_code_context_gate.py",
         "check_ai_compiled_context.py",
-        "check_evals.ps1",
+        "check_ai_compiled_context.py",
         "check_evals.py",
-        "check_pipeline_featurelist_update.ps1",
-        "check_pipeline_feature_contracts.ps1",
+        "check_evals.py",
+        "check_pipeline_featurelist_update.py",
         "check_pipeline_feature_contracts.py",
-        "check_sensitive_reference_leaks.ps1",
+        "check_pipeline_feature_contracts.py",
+        "check_sensitive_reference_leaks.py",
         "check_sensitive_reference_leaks.py",
         "check_python_syntax.py",
         "check_runtime.py",
         "script_runtime_gate.py",
         "python_runtime.py",
         "pipeline_package.py",
-        "ai_native_contract_dry_run.ps1",
-        "check_task.ps1",
-        "check_utf8_writes.ps1",
-        "legacy_commit_task_compatibility_wrapper.ps1",
-        "compile_pipeline_context.ps1",
+        "ai_native_contract_dry_run.py",
+        "check_task.py",
+        "check_utf8_writes.py",
+        "legacy_commit_task_compatibility_wrapper.py",
         "compile_pipeline_context.py",
-        "generate_installed_agent_instructions.ps1",
-        "configure_powershell_utf8.ps1",
-        "console_summary.ps1",
-        "context_tags.ps1",
+        "compile_pipeline_context.py",
+        "generate_installed_agent_instructions.py",
+        "console_summary.py",
         "context_tags.py",
-        "detect_project_stack.ps1",
-        "build_document_cache.ps1",
+        "context_tags.py",
+        "detect_project_stack.py",
+        "build_document_cache.py",
         "build_document_cache.py",
         "document_item_edit_engine.py",
-        "bulk_insert_document_items.ps1",
-        "insert_document_item.ps1",
-        "migrate_document_item.ps1",
-        "move_document_item.ps1",
-        "list_document_keys.ps1",
-        "check_document_list_item_duplicates.ps1",
-        "insert_document_list_item.ps1",
-        "insert_checked_document_list_item.ps1",
+        "bulk_insert_document_items.py",
+        "insert_document_item.py",
+        "migrate_document_item.py",
+        "move_document_item.py",
+        "list_document_keys.py",
+        "check_document_list_item_duplicates.py",
+        "insert_document_list_item.py",
+        "insert_checked_document_list_item.py",
         "document_list_item_edit_engine.py",
-        "review_document_list_candidates.ps1",
+        "review_document_list_candidates.py",
         "json_list_doc.py",
         "json_wrapper_entrypoints.py",
         "smoke_json_tools.py",
-        "json_refresh_index.ps1",
         "json_refresh_index.py",
-        "json_migrate_content.ps1",
+        "json_refresh_index.py",
         "json_migrate_content.py",
-        "json_node_edit.ps1",
+        "json_migrate_content.py",
         "json_node_edit.py",
-        "json_read.ps1",
+        "json_node_edit.py",
         "json_read.py",
-        "json_item_insert.ps1",
+        "json_read.py",
         "json_item_insert.py",
-        "json_item_set.ps1",
+        "json_item_insert.py",
         "json_item_set.py",
-        "json_item_move.ps1",
+        "json_item_set.py",
         "json_item_move.py",
-        "json_item_delete.ps1",
+        "json_item_move.py",
         "json_item_delete.py",
-        "json_line_insert.ps1",
+        "json_item_delete.py",
         "json_line_insert.py",
-        "json_line_set.ps1",
+        "json_line_insert.py",
         "json_line_set.py",
-        "json_line_move.ps1",
+        "json_line_set.py",
         "json_line_move.py",
-        "run_document_post_edit_checks.ps1",
-        "read_document_item.ps1",
-        "read_document_items_by_title.ps1",
+        "json_line_move.py",
+        "run_document_post_edit_checks.py",
+        "read_document_item.py",
+        "read_document_items_by_title.py",
         "document_read_cache_engine.py",
-        "migrate_document_schema.ps1",
+        "migrate_document_schema.py",
         "document_schema_migration_engine.py",
-        "normalize_document_structure.ps1",
+        "normalize_document_structure.py",
         "document_structure_normalizer_engine.py",
-        "check_toolchain_health.ps1",
-        "finalize_task_check_commit_push.ps1",
-        "end_prompt_snapshot.ps1",
+        "check_toolchain_health.py",
+        "finalize_task_check_commit_push.py",
         "end_prompt_snapshot.py",
-        "finalize_changed_files_commit_push.ps1",
+        "end_prompt_snapshot.py",
         "finalize_changed_files_commit_push.py",
-        "run_final_task_checks.ps1",
+        "finalize_changed_files_commit_push.py",
+        "run_final_task_checks.py",
         "run_final_task_checks.py",
         "generate_embedded_config_payload.py",
-        "import_existing_project.ps1",
-        "init_branch_memory.ps1",
-        "init_task_work.ps1",
-        "grouped_task_handoff.ps1",
-        "Initialize-SocratexPipeline.ps1",
+        "import_existing_project.py",
+        "init_branch_memory.py",
+        "init_task_work.py",
+        "grouped_task_handoff.py",
         "Initialize-SocratexPipeline.py",
-        "install_powershell.ps1",
-        "knowledge_check.ps1",
+        "Initialize-SocratexPipeline.py",
         "knowledge_check.py",
-        "knowledge_code_context.ps1",
+        "knowledge_check.py",
         "knowledge_code_context.py",
-        "knowledge_compile.ps1",
+        "knowledge_code_context.py",
         "knowledge_compile.py",
-        "knowledge_delete.ps1",
+        "knowledge_compile.py",
         "knowledge_delete.py",
-        "knowledge_file_check.ps1",
+        "knowledge_delete.py",
         "knowledge_file_check.py",
-        "knowledge_file_compile.ps1",
+        "knowledge_file_check.py",
         "knowledge_file_compile.py",
-        "knowledge_file_delete.ps1",
+        "knowledge_file_compile.py",
         "knowledge_file_delete.py",
-        "knowledge_file_query.ps1",
+        "knowledge_file_delete.py",
         "knowledge_file_query.py",
-        "knowledge_file_rename.ps1",
+        "knowledge_file_query.py",
         "knowledge_file_rename.py",
-        "knowledge_file_select.ps1",
+        "knowledge_file_rename.py",
         "knowledge_file_select.py",
-        "knowledge_file_upsert.ps1",
+        "knowledge_file_select.py",
+        "knowledge_file_upsert.py",
         "knowledge_file_upsert.py",
         "knowledge_index.py",
         "knowledge_tier_report.py",
-        "knowledge_tier_report.ps1",
-        "knowledge_tier_check.ps1",
+        "knowledge_tier_report.py",
         "knowledge_tier_check.py",
-        "knowledge_query.ps1",
+        "knowledge_tier_check.py",
         "knowledge_query.py",
-        "knowledge_rename.ps1",
+        "knowledge_query.py",
         "knowledge_rename.py",
-        "knowledge_select.ps1",
+        "knowledge_rename.py",
         "knowledge_select.py",
-        "knowledge_upsert.ps1",
+        "knowledge_select.py",
         "knowledge_upsert.py",
-        "learn_pipeline_features.ps1",
-        "log_summary.ps1",
-        "migrate_ai_pipeline.ps1",
+        "knowledge_upsert.py",
+        "learn_pipeline_features.py",
+        "log_summary.py",
+        "migrate_ai_pipeline.py",
         "normalize_documents.bat",
-        "normalize_json_files.ps1",
         "normalize_json_files.py",
-        "normalize_markdown_emoji.ps1",
-        "normalize_text_files.ps1",
+        "normalize_json_files.py",
+        "normalize_markdown_emoji.py",
         "normalize_text_files.py",
-        "open_pipeline_learning_issue.ps1",
-        "pipeline_bootstrap_index.ps1",
+        "normalize_text_files.py",
+        "open_pipeline_learning_issue.py",
+        "pipeline_bootstrap_index.py",
         "pipeline_bootstrap_index.py",
         "pipeline_sweep.py",
-        "pipeline_sweep.ps1",
-        "resolve_tool_runtime.ps1",
-        "resolve_workspace_root.ps1",
-        "rebuild_ai_compiled_context.ps1",
+        "pipeline_sweep.py",
+        "resolve_tool_runtime.py",
+        "resolve_workspace_root.py",
         "rebuild_ai_compiled_context.py",
-        "reinitialize_pipeline.ps1",
-        "remove_pipeline.ps1",
-        "repair_mojibake.ps1",
+        "rebuild_ai_compiled_context.py",
+        "reinitialize_pipeline.py",
+        "remove_pipeline.py",
         "repair_mojibake.py",
-        "report_pipeline_learning.ps1",
-        "run_quality_fix.ps1",
-        "run_quality_gate.ps1",
+        "repair_mojibake.py",
+        "report_pipeline_learning.py",
+        "run_quality_fix.py",
         "run_quality_gate.py",
-        "run_quality_gate_contract.ps1",
+        "run_quality_gate.py",
         "run_quality_gate_contract.py",
-        "set_directives.ps1",
-        "sync_pipeline_featurelist.ps1",
+        "run_quality_gate_contract.py",
+        "set_directives.py",
         "sync_pipeline_featurelist.py",
-        "task_snapshot.ps1",
+        "sync_pipeline_featurelist.py",
         "task_snapshot.py",
-        "task_flow_audit.ps1",
+        "task_snapshot.py",
         "task_flow_audit.py",
-        "update_code_line_index.ps1",
+        "task_flow_audit.py",
         "update_code_line_index.py",
-        "update_pipeline_from_link.ps1",
+        "update_code_line_index.py",
         "update_pipeline_from_link.py",
-        "upgrade_from_reference_project.ps1",
-        "utf8_file_helpers.ps1",
+        "update_pipeline_from_link.py",
+        "upgrade_from_reference_project.py",
         "utf8_file_helpers.py",
-        "run_interactive_setup.ps1",
-        "write_utf8_file.ps1",
+        "utf8_file_helpers.py",
+        "run_interactive_setup.py",
         "write_utf8_file.py",
-        "sync_managed_pipeline_package.ps1",
+        "write_utf8_file.py",
         "sync_managed_pipeline_package.py",
-        "read_compiled_context.ps1",
+        "sync_managed_pipeline_package.py",
         "read_compiled_context.py",
-        "tool_error_log.ps1",
-        "tool_handler.ps1",
-        "project_design_context.ps1",
-        "check_project_design_context_gate.ps1"
+        "read_compiled_context.py",
+        "tool_error_log.py",
+        "tool_handler.py",
+        "project_design_context.py",
+        "check_project_design_context_gate.py"
       ],
       "top_level_keys": [
         "index",
@@ -701,16 +699,10 @@
         "metadata"
       ],
       "keys": {
-        "add_changelog_entry.ps1": {
-          "path": "content.add_changelog_entry.ps1",
+        "add_changelog_entry.py": {
+          "path": "content.add_changelog_entry.py",
           "title": "",
-          "ref": "content.add_changelog_entry.ps1",
-          "status": ""
-        },
-        "audit_docs.ps1": {
-          "path": "content.audit_docs.ps1",
-          "title": "",
-          "ref": "content.audit_docs.ps1",
+          "ref": "content.add_changelog_entry.py",
           "status": ""
         },
         "audit_docs.py": {
@@ -725,16 +717,10 @@
           "ref": "content.audit_json_docs.py",
           "status": ""
         },
-        "check_code_context_gate.ps1": {
-          "path": "content.check_code_context_gate.ps1",
+        "check_code_context_gate.py": {
+          "path": "content.check_code_context_gate.py",
           "title": "",
-          "ref": "content.check_code_context_gate.ps1",
-          "status": ""
-        },
-        "check_ai_compiled_context.ps1": {
-          "path": "content.check_ai_compiled_context.ps1",
-          "title": "",
-          "ref": "content.check_ai_compiled_context.ps1",
+          "ref": "content.check_code_context_gate.py",
           "status": ""
         },
         "check_ai_compiled_context.py": {
@@ -743,40 +729,22 @@
           "ref": "content.check_ai_compiled_context.py",
           "status": ""
         },
-        "check_evals.ps1": {
-          "path": "content.check_evals.ps1",
-          "title": "",
-          "ref": "content.check_evals.ps1",
-          "status": ""
-        },
         "check_evals.py": {
           "path": "content.check_evals.py",
           "title": "",
           "ref": "content.check_evals.py",
           "status": ""
         },
-        "check_pipeline_featurelist_update.ps1": {
-          "path": "content.check_pipeline_featurelist_update.ps1",
+        "check_pipeline_featurelist_update.py": {
+          "path": "content.check_pipeline_featurelist_update.py",
           "title": "",
-          "ref": "content.check_pipeline_featurelist_update.ps1",
-          "status": ""
-        },
-        "check_pipeline_feature_contracts.ps1": {
-          "path": "content.check_pipeline_feature_contracts.ps1",
-          "title": "",
-          "ref": "content.check_pipeline_feature_contracts.ps1",
+          "ref": "content.check_pipeline_featurelist_update.py",
           "status": ""
         },
         "check_pipeline_feature_contracts.py": {
           "path": "content.check_pipeline_feature_contracts.py",
           "title": "",
           "ref": "content.check_pipeline_feature_contracts.py",
-          "status": ""
-        },
-        "check_sensitive_reference_leaks.ps1": {
-          "path": "content.check_sensitive_reference_leaks.ps1",
-          "title": "",
-          "ref": "content.check_sensitive_reference_leaks.ps1",
           "status": ""
         },
         "check_sensitive_reference_leaks.py": {
@@ -815,34 +783,28 @@
           "ref": "content.pipeline_package.py",
           "status": ""
         },
-        "ai_native_contract_dry_run.ps1": {
-          "path": "content.ai_native_contract_dry_run.ps1",
+        "ai_native_contract_dry_run.py": {
+          "path": "content.ai_native_contract_dry_run.py",
           "title": "",
-          "ref": "content.ai_native_contract_dry_run.ps1",
+          "ref": "content.ai_native_contract_dry_run.py",
           "status": ""
         },
-        "check_task.ps1": {
-          "path": "content.check_task.ps1",
+        "check_task.py": {
+          "path": "content.check_task.py",
           "title": "",
-          "ref": "content.check_task.ps1",
+          "ref": "content.check_task.py",
           "status": ""
         },
-        "check_utf8_writes.ps1": {
-          "path": "content.check_utf8_writes.ps1",
+        "check_utf8_writes.py": {
+          "path": "content.check_utf8_writes.py",
           "title": "",
-          "ref": "content.check_utf8_writes.ps1",
+          "ref": "content.check_utf8_writes.py",
           "status": ""
         },
-        "legacy_commit_task_compatibility_wrapper.ps1": {
-          "path": "content.legacy_commit_task_compatibility_wrapper.ps1",
+        "legacy_commit_task_compatibility_wrapper.py": {
+          "path": "content.legacy_commit_task_compatibility_wrapper.py",
           "title": "",
-          "ref": "content.legacy_commit_task_compatibility_wrapper.ps1",
-          "status": ""
-        },
-        "compile_pipeline_context.ps1": {
-          "path": "content.compile_pipeline_context.ps1",
-          "title": "",
-          "ref": "content.compile_pipeline_context.ps1",
+          "ref": "content.legacy_commit_task_compatibility_wrapper.py",
           "status": ""
         },
         "compile_pipeline_context.py": {
@@ -851,40 +813,28 @@
           "ref": "content.compile_pipeline_context.py",
           "status": ""
         },
-        "generate_installed_agent_instructions.ps1": {
-          "path": "content.generate_installed_agent_instructions.ps1",
+        "generate_installed_agent_instructions.py": {
+          "path": "content.generate_installed_agent_instructions.py",
           "title": "",
-          "ref": "content.generate_installed_agent_instructions.ps1",
+          "ref": "content.generate_installed_agent_instructions.py",
           "status": ""
         },
-        "configure_powershell_utf8.ps1": {
-          "path": "content.configure_powershell_utf8.ps1",
+        "console_summary.py": {
+          "path": "content.console_summary.py",
           "title": "",
-          "ref": "content.configure_powershell_utf8.ps1",
+          "ref": "content.console_summary.py",
           "status": ""
         },
-        "console_summary.ps1": {
-          "path": "content.console_summary.ps1",
+        "context_tags.py": {
+          "path": "content.context_tags.py",
           "title": "",
-          "ref": "content.console_summary.ps1",
+          "ref": "content.context_tags.py",
           "status": ""
         },
-        "context_tags.ps1": {
-          "path": "content.context_tags.ps1",
+        "detect_project_stack.py": {
+          "path": "content.detect_project_stack.py",
           "title": "",
-          "ref": "content.context_tags.ps1",
-          "status": ""
-        },
-        "detect_project_stack.ps1": {
-          "path": "content.detect_project_stack.ps1",
-          "title": "",
-          "ref": "content.detect_project_stack.ps1",
-          "status": ""
-        },
-        "build_document_cache.ps1": {
-          "path": "content.build_document_cache.ps1",
-          "title": "",
-          "ref": "content.build_document_cache.ps1",
+          "ref": "content.detect_project_stack.py",
           "status": ""
         },
         "build_document_cache.py": {
@@ -899,52 +849,52 @@
           "ref": "content.document_item_edit_engine.py",
           "status": ""
         },
-        "bulk_insert_document_items.ps1": {
-          "path": "content.bulk_insert_document_items.ps1",
+        "bulk_insert_document_items.py": {
+          "path": "content.bulk_insert_document_items.py",
           "title": "",
-          "ref": "content.bulk_insert_document_items.ps1",
+          "ref": "content.bulk_insert_document_items.py",
           "status": ""
         },
-        "insert_document_item.ps1": {
-          "path": "content.insert_document_item.ps1",
+        "insert_document_item.py": {
+          "path": "content.insert_document_item.py",
           "title": "",
-          "ref": "content.insert_document_item.ps1",
+          "ref": "content.insert_document_item.py",
           "status": ""
         },
-        "migrate_document_item.ps1": {
-          "path": "content.migrate_document_item.ps1",
+        "migrate_document_item.py": {
+          "path": "content.migrate_document_item.py",
           "title": "",
-          "ref": "content.migrate_document_item.ps1",
+          "ref": "content.migrate_document_item.py",
           "status": ""
         },
-        "move_document_item.ps1": {
-          "path": "content.move_document_item.ps1",
+        "move_document_item.py": {
+          "path": "content.move_document_item.py",
           "title": "",
-          "ref": "content.move_document_item.ps1",
+          "ref": "content.move_document_item.py",
           "status": ""
         },
-        "list_document_keys.ps1": {
-          "path": "content.list_document_keys.ps1",
+        "list_document_keys.py": {
+          "path": "content.list_document_keys.py",
           "title": "",
-          "ref": "content.list_document_keys.ps1",
+          "ref": "content.list_document_keys.py",
           "status": ""
         },
-        "check_document_list_item_duplicates.ps1": {
-          "path": "content.check_document_list_item_duplicates.ps1",
+        "check_document_list_item_duplicates.py": {
+          "path": "content.check_document_list_item_duplicates.py",
           "title": "",
-          "ref": "content.check_document_list_item_duplicates.ps1",
+          "ref": "content.check_document_list_item_duplicates.py",
           "status": ""
         },
-        "insert_document_list_item.ps1": {
-          "path": "content.insert_document_list_item.ps1",
+        "insert_document_list_item.py": {
+          "path": "content.insert_document_list_item.py",
           "title": "",
-          "ref": "content.insert_document_list_item.ps1",
+          "ref": "content.insert_document_list_item.py",
           "status": ""
         },
-        "insert_checked_document_list_item.ps1": {
-          "path": "content.insert_checked_document_list_item.ps1",
+        "insert_checked_document_list_item.py": {
+          "path": "content.insert_checked_document_list_item.py",
           "title": "",
-          "ref": "content.insert_checked_document_list_item.ps1",
+          "ref": "content.insert_checked_document_list_item.py",
           "status": ""
         },
         "document_list_item_edit_engine.py": {
@@ -953,10 +903,10 @@
           "ref": "content.document_list_item_edit_engine.py",
           "status": ""
         },
-        "review_document_list_candidates.ps1": {
-          "path": "content.review_document_list_candidates.ps1",
+        "review_document_list_candidates.py": {
+          "path": "content.review_document_list_candidates.py",
           "title": "",
-          "ref": "content.review_document_list_candidates.ps1",
+          "ref": "content.review_document_list_candidates.py",
           "status": ""
         },
         "json_list_doc.py": {
@@ -969,756 +919,6 @@
           "path": "content.smoke_json_tools.py",
           "title": "",
           "ref": "content.smoke_json_tools.py",
-          "status": ""
-        },
-        "json_refresh_index.ps1": {
-          "path": "content.json_refresh_index.ps1",
-          "title": "",
-          "ref": "content.json_refresh_index.ps1",
-          "status": ""
-        },
-        "json_migrate_content.ps1": {
-          "path": "content.json_migrate_content.ps1",
-          "title": "",
-          "ref": "content.json_migrate_content.ps1",
-          "status": ""
-        },
-        "json_node_edit.ps1": {
-          "path": "content.json_node_edit.ps1",
-          "title": "",
-          "ref": "content.json_node_edit.ps1",
-          "status": ""
-        },
-        "json_read.ps1": {
-          "path": "content.json_read.ps1",
-          "title": "",
-          "ref": "content.json_read.ps1",
-          "status": ""
-        },
-        "json_item_insert.ps1": {
-          "path": "content.json_item_insert.ps1",
-          "title": "",
-          "ref": "content.json_item_insert.ps1",
-          "status": ""
-        },
-        "json_item_set.ps1": {
-          "path": "content.json_item_set.ps1",
-          "title": "",
-          "ref": "content.json_item_set.ps1",
-          "status": ""
-        },
-        "json_item_move.ps1": {
-          "path": "content.json_item_move.ps1",
-          "title": "",
-          "ref": "content.json_item_move.ps1",
-          "status": ""
-        },
-        "json_item_delete.ps1": {
-          "path": "content.json_item_delete.ps1",
-          "title": "",
-          "ref": "content.json_item_delete.ps1",
-          "status": ""
-        },
-        "json_line_insert.ps1": {
-          "path": "content.json_line_insert.ps1",
-          "title": "",
-          "ref": "content.json_line_insert.ps1",
-          "status": ""
-        },
-        "json_line_set.ps1": {
-          "path": "content.json_line_set.ps1",
-          "title": "",
-          "ref": "content.json_line_set.ps1",
-          "status": ""
-        },
-        "json_line_move.ps1": {
-          "path": "content.json_line_move.ps1",
-          "title": "",
-          "ref": "content.json_line_move.ps1",
-          "status": ""
-        },
-        "run_document_post_edit_checks.ps1": {
-          "path": "content.run_document_post_edit_checks.ps1",
-          "title": "",
-          "ref": "content.run_document_post_edit_checks.ps1",
-          "status": ""
-        },
-        "read_document_item.ps1": {
-          "path": "content.read_document_item.ps1",
-          "title": "",
-          "ref": "content.read_document_item.ps1",
-          "status": ""
-        },
-        "read_document_items_by_title.ps1": {
-          "path": "content.read_document_items_by_title.ps1",
-          "title": "",
-          "ref": "content.read_document_items_by_title.ps1",
-          "status": ""
-        },
-        "document_read_cache_engine.py": {
-          "path": "content.document_read_cache_engine.py",
-          "title": "",
-          "ref": "content.document_read_cache_engine.py",
-          "status": ""
-        },
-        "migrate_document_schema.ps1": {
-          "path": "content.migrate_document_schema.ps1",
-          "title": "",
-          "ref": "content.migrate_document_schema.ps1",
-          "status": ""
-        },
-        "document_schema_migration_engine.py": {
-          "path": "content.document_schema_migration_engine.py",
-          "title": "",
-          "ref": "content.document_schema_migration_engine.py",
-          "status": ""
-        },
-        "normalize_document_structure.ps1": {
-          "path": "content.normalize_document_structure.ps1",
-          "title": "",
-          "ref": "content.normalize_document_structure.ps1",
-          "status": ""
-        },
-        "document_structure_normalizer_engine.py": {
-          "path": "content.document_structure_normalizer_engine.py",
-          "title": "",
-          "ref": "content.document_structure_normalizer_engine.py",
-          "status": ""
-        },
-        "check_toolchain_health.ps1": {
-          "path": "content.check_toolchain_health.ps1",
-          "title": "",
-          "ref": "content.check_toolchain_health.ps1",
-          "status": ""
-        },
-        "finalize_task_check_commit_push.ps1": {
-          "path": "content.finalize_task_check_commit_push.ps1",
-          "title": "",
-          "ref": "content.finalize_task_check_commit_push.ps1",
-          "status": ""
-        },
-        "end_prompt_snapshot.ps1": {
-          "path": "content.end_prompt_snapshot.ps1",
-          "title": "",
-          "ref": "content.end_prompt_snapshot.ps1",
-          "status": ""
-        },
-        "end_prompt_snapshot.py": {
-          "path": "content.end_prompt_snapshot.py",
-          "title": "",
-          "ref": "content.end_prompt_snapshot.py",
-          "status": ""
-        },
-        "finalize_changed_files_commit_push.ps1": {
-          "path": "content.finalize_changed_files_commit_push.ps1",
-          "title": "",
-          "ref": "content.finalize_changed_files_commit_push.ps1",
-          "status": ""
-        },
-        "finalize_changed_files_commit_push.py": {
-          "path": "content.finalize_changed_files_commit_push.py",
-          "title": "",
-          "ref": "content.finalize_changed_files_commit_push.py",
-          "status": ""
-        },
-        "run_final_task_checks.ps1": {
-          "path": "content.run_final_task_checks.ps1",
-          "title": "",
-          "ref": "content.run_final_task_checks.ps1",
-          "status": ""
-        },
-        "run_final_task_checks.py": {
-          "path": "content.run_final_task_checks.py",
-          "title": "",
-          "ref": "content.run_final_task_checks.py",
-          "status": ""
-        },
-        "generate_embedded_config_payload.py": {
-          "path": "content.generate_embedded_config_payload.py",
-          "title": "",
-          "ref": "content.generate_embedded_config_payload.py",
-          "status": ""
-        },
-        "import_existing_project.ps1": {
-          "path": "content.import_existing_project.ps1",
-          "title": "",
-          "ref": "content.import_existing_project.ps1",
-          "status": ""
-        },
-        "init_branch_memory.ps1": {
-          "path": "content.init_branch_memory.ps1",
-          "title": "",
-          "ref": "content.init_branch_memory.ps1",
-          "status": ""
-        },
-        "init_task_work.ps1": {
-          "path": "content.init_task_work.ps1",
-          "title": "",
-          "ref": "content.init_task_work.ps1",
-          "status": ""
-        },
-        "grouped_task_handoff.ps1": {
-          "path": "content.grouped_task_handoff.ps1",
-          "title": "",
-          "ref": "content.grouped_task_handoff.ps1",
-          "status": ""
-        },
-        "Initialize-SocratexPipeline.ps1": {
-          "path": "content.Initialize-SocratexPipeline.ps1",
-          "title": "",
-          "ref": "content.Initialize-SocratexPipeline.ps1",
-          "status": ""
-        },
-        "Initialize-SocratexPipeline.py": {
-          "path": "content.Initialize-SocratexPipeline.py",
-          "title": "",
-          "ref": "content.Initialize-SocratexPipeline.py",
-          "status": ""
-        },
-        "install_powershell.ps1": {
-          "path": "content.install_powershell.ps1",
-          "title": "",
-          "ref": "content.install_powershell.ps1",
-          "status": ""
-        },
-        "knowledge_check.ps1": {
-          "path": "content.knowledge_check.ps1",
-          "title": "",
-          "ref": "content.knowledge_check.ps1",
-          "status": ""
-        },
-        "knowledge_code_context.ps1": {
-          "path": "content.knowledge_code_context.ps1",
-          "title": "",
-          "ref": "content.knowledge_code_context.ps1",
-          "status": ""
-        },
-        "knowledge_code_context.py": {
-          "path": "content.knowledge_code_context.py",
-          "title": "",
-          "ref": "content.knowledge_code_context.py",
-          "status": ""
-        },
-        "knowledge_compile.ps1": {
-          "path": "content.knowledge_compile.ps1",
-          "title": "",
-          "ref": "content.knowledge_compile.ps1",
-          "status": ""
-        },
-        "knowledge_delete.ps1": {
-          "path": "content.knowledge_delete.ps1",
-          "title": "",
-          "ref": "content.knowledge_delete.ps1",
-          "status": ""
-        },
-        "knowledge_file_check.ps1": {
-          "path": "content.knowledge_file_check.ps1",
-          "title": "",
-          "ref": "content.knowledge_file_check.ps1",
-          "status": ""
-        },
-        "knowledge_file_compile.ps1": {
-          "path": "content.knowledge_file_compile.ps1",
-          "title": "",
-          "ref": "content.knowledge_file_compile.ps1",
-          "status": ""
-        },
-        "knowledge_file_delete.ps1": {
-          "path": "content.knowledge_file_delete.ps1",
-          "title": "",
-          "ref": "content.knowledge_file_delete.ps1",
-          "status": ""
-        },
-        "knowledge_file_query.ps1": {
-          "path": "content.knowledge_file_query.ps1",
-          "title": "",
-          "ref": "content.knowledge_file_query.ps1",
-          "status": ""
-        },
-        "knowledge_file_rename.ps1": {
-          "path": "content.knowledge_file_rename.ps1",
-          "title": "",
-          "ref": "content.knowledge_file_rename.ps1",
-          "status": ""
-        },
-        "knowledge_file_select.ps1": {
-          "path": "content.knowledge_file_select.ps1",
-          "title": "",
-          "ref": "content.knowledge_file_select.ps1",
-          "status": ""
-        },
-        "knowledge_file_upsert.ps1": {
-          "path": "content.knowledge_file_upsert.ps1",
-          "title": "",
-          "ref": "content.knowledge_file_upsert.ps1",
-          "status": ""
-        },
-        "knowledge_index.py": {
-          "path": "content.knowledge_index.py",
-          "title": "",
-          "ref": "content.knowledge_index.py",
-          "status": ""
-        },
-        "knowledge_tier_report.py": {
-          "path": "content.knowledge_tier_report.py",
-          "title": "",
-          "ref": "content.knowledge_tier_report.py",
-          "status": ""
-        },
-        "knowledge_tier_report.ps1": {
-          "path": "content.knowledge_tier_report.ps1",
-          "title": "",
-          "ref": "content.knowledge_tier_report.ps1",
-          "status": ""
-        },
-        "knowledge_tier_check.ps1": {
-          "path": "content.knowledge_tier_check.ps1",
-          "title": "",
-          "ref": "content.knowledge_tier_check.ps1",
-          "status": ""
-        },
-        "knowledge_tier_check.py": {
-          "path": "content.knowledge_tier_check.py",
-          "title": "",
-          "ref": "content.knowledge_tier_check.py",
-          "status": ""
-        },
-        "knowledge_query.ps1": {
-          "path": "content.knowledge_query.ps1",
-          "title": "",
-          "ref": "content.knowledge_query.ps1",
-          "status": ""
-        },
-        "knowledge_rename.ps1": {
-          "path": "content.knowledge_rename.ps1",
-          "title": "",
-          "ref": "content.knowledge_rename.ps1",
-          "status": ""
-        },
-        "knowledge_select.ps1": {
-          "path": "content.knowledge_select.ps1",
-          "title": "",
-          "ref": "content.knowledge_select.ps1",
-          "status": ""
-        },
-        "knowledge_upsert.ps1": {
-          "path": "content.knowledge_upsert.ps1",
-          "title": "",
-          "ref": "content.knowledge_upsert.ps1",
-          "status": ""
-        },
-        "learn_pipeline_features.ps1": {
-          "path": "content.learn_pipeline_features.ps1",
-          "title": "",
-          "ref": "content.learn_pipeline_features.ps1",
-          "status": ""
-        },
-        "log_summary.ps1": {
-          "path": "content.log_summary.ps1",
-          "title": "",
-          "ref": "content.log_summary.ps1",
-          "status": ""
-        },
-        "migrate_ai_pipeline.ps1": {
-          "path": "content.migrate_ai_pipeline.ps1",
-          "title": "",
-          "ref": "content.migrate_ai_pipeline.ps1",
-          "status": ""
-        },
-        "normalize_documents.bat": {
-          "path": "content.normalize_documents.bat",
-          "title": "",
-          "ref": "content.normalize_documents.bat",
-          "status": ""
-        },
-        "normalize_json_files.ps1": {
-          "path": "content.normalize_json_files.ps1",
-          "title": "",
-          "ref": "content.normalize_json_files.ps1",
-          "status": ""
-        },
-        "normalize_json_files.py": {
-          "path": "content.normalize_json_files.py",
-          "title": "",
-          "ref": "content.normalize_json_files.py",
-          "status": ""
-        },
-        "normalize_markdown_emoji.ps1": {
-          "path": "content.normalize_markdown_emoji.ps1",
-          "title": "",
-          "ref": "content.normalize_markdown_emoji.ps1",
-          "status": ""
-        },
-        "normalize_text_files.ps1": {
-          "path": "content.normalize_text_files.ps1",
-          "title": "",
-          "ref": "content.normalize_text_files.ps1",
-          "status": ""
-        },
-        "open_pipeline_learning_issue.ps1": {
-          "path": "content.open_pipeline_learning_issue.ps1",
-          "title": "",
-          "ref": "content.open_pipeline_learning_issue.ps1",
-          "status": ""
-        },
-        "pipeline_bootstrap_index.ps1": {
-          "path": "content.pipeline_bootstrap_index.ps1",
-          "title": "",
-          "ref": "content.pipeline_bootstrap_index.ps1",
-          "status": ""
-        },
-        "pipeline_bootstrap_index.py": {
-          "path": "content.pipeline_bootstrap_index.py",
-          "title": "",
-          "ref": "content.pipeline_bootstrap_index.py",
-          "status": ""
-        },
-        "pipeline_sweep.py": {
-          "path": "content.pipeline_sweep.py",
-          "title": "",
-          "ref": "content.pipeline_sweep.py",
-          "status": ""
-        },
-        "pipeline_sweep.ps1": {
-          "path": "content.pipeline_sweep.ps1",
-          "title": "",
-          "ref": "content.pipeline_sweep.ps1",
-          "status": ""
-        },
-        "resolve_tool_runtime.ps1": {
-          "path": "content.resolve_tool_runtime.ps1",
-          "title": "",
-          "ref": "content.resolve_tool_runtime.ps1",
-          "status": ""
-        },
-        "resolve_workspace_root.ps1": {
-          "path": "content.resolve_workspace_root.ps1",
-          "title": "",
-          "ref": "content.resolve_workspace_root.ps1",
-          "status": ""
-        },
-        "rebuild_ai_compiled_context.ps1": {
-          "path": "content.rebuild_ai_compiled_context.ps1",
-          "title": "",
-          "ref": "content.rebuild_ai_compiled_context.ps1",
-          "status": ""
-        },
-        "rebuild_ai_compiled_context.py": {
-          "path": "content.rebuild_ai_compiled_context.py",
-          "title": "",
-          "ref": "content.rebuild_ai_compiled_context.py",
-          "status": ""
-        },
-        "reinitialize_pipeline.ps1": {
-          "path": "content.reinitialize_pipeline.ps1",
-          "title": "",
-          "ref": "content.reinitialize_pipeline.ps1",
-          "status": ""
-        },
-        "remove_pipeline.ps1": {
-          "path": "content.remove_pipeline.ps1",
-          "title": "",
-          "ref": "content.remove_pipeline.ps1",
-          "status": ""
-        },
-        "repair_mojibake.ps1": {
-          "path": "content.repair_mojibake.ps1",
-          "title": "",
-          "ref": "content.repair_mojibake.ps1",
-          "status": ""
-        },
-        "report_pipeline_learning.ps1": {
-          "path": "content.report_pipeline_learning.ps1",
-          "title": "",
-          "ref": "content.report_pipeline_learning.ps1",
-          "status": ""
-        },
-        "run_quality_fix.ps1": {
-          "path": "content.run_quality_fix.ps1",
-          "title": "",
-          "ref": "content.run_quality_fix.ps1",
-          "status": ""
-        },
-        "run_quality_gate.ps1": {
-          "path": "content.run_quality_gate.ps1",
-          "title": "",
-          "ref": "content.run_quality_gate.ps1",
-          "status": ""
-        },
-        "run_quality_gate.py": {
-          "path": "content.run_quality_gate.py",
-          "title": "",
-          "ref": "content.run_quality_gate.py",
-          "status": ""
-        },
-        "run_quality_gate_contract.ps1": {
-          "path": "content.run_quality_gate_contract.ps1",
-          "title": "",
-          "ref": "content.run_quality_gate_contract.ps1",
-          "status": ""
-        },
-        "run_quality_gate_contract.py": {
-          "path": "content.run_quality_gate_contract.py",
-          "title": "",
-          "ref": "content.run_quality_gate_contract.py",
-          "status": ""
-        },
-        "set_directives.ps1": {
-          "path": "content.set_directives.ps1",
-          "title": "",
-          "ref": "content.set_directives.ps1",
-          "status": ""
-        },
-        "sync_pipeline_featurelist.ps1": {
-          "path": "content.sync_pipeline_featurelist.ps1",
-          "title": "",
-          "ref": "content.sync_pipeline_featurelist.ps1",
-          "status": ""
-        },
-        "sync_pipeline_featurelist.py": {
-          "path": "content.sync_pipeline_featurelist.py",
-          "title": "",
-          "ref": "content.sync_pipeline_featurelist.py",
-          "status": ""
-        },
-        "task_snapshot.ps1": {
-          "path": "content.task_snapshot.ps1",
-          "title": "",
-          "ref": "content.task_snapshot.ps1",
-          "status": ""
-        },
-        "task_snapshot.py": {
-          "path": "content.task_snapshot.py",
-          "title": "",
-          "ref": "content.task_snapshot.py",
-          "status": ""
-        },
-        "task_flow_audit.ps1": {
-          "path": "content.task_flow_audit.ps1",
-          "title": "",
-          "ref": "content.task_flow_audit.ps1",
-          "status": ""
-        },
-        "task_flow_audit.py": {
-          "path": "content.task_flow_audit.py",
-          "title": "",
-          "ref": "content.task_flow_audit.py",
-          "status": ""
-        },
-        "update_code_line_index.ps1": {
-          "path": "content.update_code_line_index.ps1",
-          "title": "",
-          "ref": "content.update_code_line_index.ps1",
-          "status": ""
-        },
-        "update_code_line_index.py": {
-          "path": "content.update_code_line_index.py",
-          "title": "",
-          "ref": "content.update_code_line_index.py",
-          "status": ""
-        },
-        "update_pipeline_from_link.ps1": {
-          "path": "content.update_pipeline_from_link.ps1",
-          "title": "",
-          "ref": "content.update_pipeline_from_link.ps1",
-          "status": ""
-        },
-        "update_pipeline_from_link.py": {
-          "path": "content.update_pipeline_from_link.py",
-          "title": "",
-          "ref": "content.update_pipeline_from_link.py",
-          "status": ""
-        },
-        "upgrade_from_reference_project.ps1": {
-          "path": "content.upgrade_from_reference_project.ps1",
-          "title": "",
-          "ref": "content.upgrade_from_reference_project.ps1",
-          "status": ""
-        },
-        "utf8_file_helpers.ps1": {
-          "path": "content.utf8_file_helpers.ps1",
-          "title": "",
-          "ref": "content.utf8_file_helpers.ps1",
-          "status": ""
-        },
-        "run_interactive_setup.ps1": {
-          "path": "content.run_interactive_setup.ps1",
-          "title": "",
-          "ref": "content.run_interactive_setup.ps1",
-          "status": ""
-        },
-        "write_utf8_file.ps1": {
-          "path": "content.write_utf8_file.ps1",
-          "title": "",
-          "ref": "content.write_utf8_file.ps1",
-          "status": ""
-        },
-        "sync_managed_pipeline_package.ps1": {
-          "path": "content.sync_managed_pipeline_package.ps1",
-          "title": "",
-          "ref": "content.sync_managed_pipeline_package.ps1",
-          "status": ""
-        },
-        "sync_managed_pipeline_package.py": {
-          "path": "content.sync_managed_pipeline_package.py",
-          "title": "",
-          "ref": "content.sync_managed_pipeline_package.py",
-          "status": ""
-        },
-        "read_compiled_context.ps1": {
-          "path": "content.read_compiled_context.ps1",
-          "title": "",
-          "ref": "content.read_compiled_context.ps1",
-          "status": ""
-        },
-        "read_compiled_context.py": {
-          "path": "content.read_compiled_context.py",
-          "title": "",
-          "ref": "content.read_compiled_context.py",
-          "status": ""
-        },
-        "tool_error_log.ps1": {
-          "path": "content.tool_error_log.ps1",
-          "title": "",
-          "ref": "content.tool_error_log.ps1",
-          "status": ""
-        },
-        "tool_handler.ps1": {
-          "path": "content.tool_handler.ps1",
-          "title": "",
-          "ref": "content.tool_handler.ps1",
-          "status": ""
-        },
-        "project_design_context.ps1": {
-          "path": "content.project_design_context.ps1",
-          "title": "",
-          "ref": "content.project_design_context.ps1",
-          "status": ""
-        },
-        "check_project_design_context_gate.ps1": {
-          "path": "content.check_project_design_context_gate.ps1",
-          "title": "",
-          "ref": "content.check_project_design_context_gate.ps1",
-          "status": ""
-        },
-        "context_tags.py": {
-          "path": "content.context_tags.py",
-          "title": "",
-          "ref": "content.context_tags.py",
-          "status": ""
-        },
-        "knowledge_select.py": {
-          "path": "content.knowledge_select.py",
-          "title": "",
-          "ref": "content.knowledge_select.py",
-          "status": ""
-        },
-        "knowledge_check.py": {
-          "path": "content.knowledge_check.py",
-          "title": "",
-          "ref": "content.knowledge_check.py",
-          "status": ""
-        },
-        "knowledge_compile.py": {
-          "path": "content.knowledge_compile.py",
-          "title": "",
-          "ref": "content.knowledge_compile.py",
-          "status": ""
-        },
-        "knowledge_file_check.py": {
-          "path": "content.knowledge_file_check.py",
-          "title": "",
-          "ref": "content.knowledge_file_check.py",
-          "status": ""
-        },
-        "knowledge_file_compile.py": {
-          "path": "content.knowledge_file_compile.py",
-          "title": "",
-          "ref": "content.knowledge_file_compile.py",
-          "status": ""
-        },
-        "knowledge_file_select.py": {
-          "path": "content.knowledge_file_select.py",
-          "title": "",
-          "ref": "content.knowledge_file_select.py",
-          "status": ""
-        },
-        "knowledge_delete.py": {
-          "path": "content.knowledge_delete.py",
-          "title": "",
-          "ref": "content.knowledge_delete.py",
-          "status": ""
-        },
-        "knowledge_query.py": {
-          "path": "content.knowledge_query.py",
-          "title": "",
-          "ref": "content.knowledge_query.py",
-          "status": ""
-        },
-        "knowledge_rename.py": {
-          "path": "content.knowledge_rename.py",
-          "title": "",
-          "ref": "content.knowledge_rename.py",
-          "status": ""
-        },
-        "knowledge_upsert.py": {
-          "path": "content.knowledge_upsert.py",
-          "title": "",
-          "ref": "content.knowledge_upsert.py",
-          "status": ""
-        },
-        "knowledge_file_delete.py": {
-          "path": "content.knowledge_file_delete.py",
-          "title": "",
-          "ref": "content.knowledge_file_delete.py",
-          "status": ""
-        },
-        "knowledge_file_query.py": {
-          "path": "content.knowledge_file_query.py",
-          "title": "",
-          "ref": "content.knowledge_file_query.py",
-          "status": ""
-        },
-        "knowledge_file_rename.py": {
-          "path": "content.knowledge_file_rename.py",
-          "title": "",
-          "ref": "content.knowledge_file_rename.py",
-          "status": ""
-        },
-        "knowledge_file_upsert.py": {
-          "path": "content.knowledge_file_upsert.py",
-          "title": "",
-          "ref": "content.knowledge_file_upsert.py",
-          "status": ""
-        },
-        "normalize_text_files.py": {
-          "path": "content.normalize_text_files.py",
-          "title": "",
-          "ref": "content.normalize_text_files.py",
-          "status": ""
-        },
-        "repair_mojibake.py": {
-          "path": "content.repair_mojibake.py",
-          "title": "",
-          "ref": "content.repair_mojibake.py",
-          "status": ""
-        },
-        "utf8_file_helpers.py": {
-          "path": "content.utf8_file_helpers.py",
-          "title": "",
-          "ref": "content.utf8_file_helpers.py",
-          "status": ""
-        },
-        "write_utf8_file.py": {
-          "path": "content.write_utf8_file.py",
-          "title": "",
-          "ref": "content.write_utf8_file.py",
-          "status": ""
-        },
-        "json_wrapper_entrypoints.py": {
-          "path": "content.json_wrapper_entrypoints.py",
-          "title": "",
-          "ref": "content.json_wrapper_entrypoints.py",
           "status": ""
         },
         "json_refresh_index.py": {
@@ -1785,6 +985,450 @@
           "path": "content.json_line_move.py",
           "title": "",
           "ref": "content.json_line_move.py",
+          "status": ""
+        },
+        "run_document_post_edit_checks.py": {
+          "path": "content.run_document_post_edit_checks.py",
+          "title": "",
+          "ref": "content.run_document_post_edit_checks.py",
+          "status": ""
+        },
+        "read_document_item.py": {
+          "path": "content.read_document_item.py",
+          "title": "",
+          "ref": "content.read_document_item.py",
+          "status": ""
+        },
+        "read_document_items_by_title.py": {
+          "path": "content.read_document_items_by_title.py",
+          "title": "",
+          "ref": "content.read_document_items_by_title.py",
+          "status": ""
+        },
+        "document_read_cache_engine.py": {
+          "path": "content.document_read_cache_engine.py",
+          "title": "",
+          "ref": "content.document_read_cache_engine.py",
+          "status": ""
+        },
+        "migrate_document_schema.py": {
+          "path": "content.migrate_document_schema.py",
+          "title": "",
+          "ref": "content.migrate_document_schema.py",
+          "status": ""
+        },
+        "document_schema_migration_engine.py": {
+          "path": "content.document_schema_migration_engine.py",
+          "title": "",
+          "ref": "content.document_schema_migration_engine.py",
+          "status": ""
+        },
+        "normalize_document_structure.py": {
+          "path": "content.normalize_document_structure.py",
+          "title": "",
+          "ref": "content.normalize_document_structure.py",
+          "status": ""
+        },
+        "document_structure_normalizer_engine.py": {
+          "path": "content.document_structure_normalizer_engine.py",
+          "title": "",
+          "ref": "content.document_structure_normalizer_engine.py",
+          "status": ""
+        },
+        "check_toolchain_health.py": {
+          "path": "content.check_toolchain_health.py",
+          "title": "",
+          "ref": "content.check_toolchain_health.py",
+          "status": ""
+        },
+        "finalize_task_check_commit_push.py": {
+          "path": "content.finalize_task_check_commit_push.py",
+          "title": "",
+          "ref": "content.finalize_task_check_commit_push.py",
+          "status": ""
+        },
+        "end_prompt_snapshot.py": {
+          "path": "content.end_prompt_snapshot.py",
+          "title": "",
+          "ref": "content.end_prompt_snapshot.py",
+          "status": ""
+        },
+        "finalize_changed_files_commit_push.py": {
+          "path": "content.finalize_changed_files_commit_push.py",
+          "title": "",
+          "ref": "content.finalize_changed_files_commit_push.py",
+          "status": ""
+        },
+        "run_final_task_checks.py": {
+          "path": "content.run_final_task_checks.py",
+          "title": "",
+          "ref": "content.run_final_task_checks.py",
+          "status": ""
+        },
+        "generate_embedded_config_payload.py": {
+          "path": "content.generate_embedded_config_payload.py",
+          "title": "",
+          "ref": "content.generate_embedded_config_payload.py",
+          "status": ""
+        },
+        "import_existing_project.py": {
+          "path": "content.import_existing_project.py",
+          "title": "",
+          "ref": "content.import_existing_project.py",
+          "status": ""
+        },
+        "init_branch_memory.py": {
+          "path": "content.init_branch_memory.py",
+          "title": "",
+          "ref": "content.init_branch_memory.py",
+          "status": ""
+        },
+        "init_task_work.py": {
+          "path": "content.init_task_work.py",
+          "title": "",
+          "ref": "content.init_task_work.py",
+          "status": ""
+        },
+        "grouped_task_handoff.py": {
+          "path": "content.grouped_task_handoff.py",
+          "title": "",
+          "ref": "content.grouped_task_handoff.py",
+          "status": ""
+        },
+        "Initialize-SocratexPipeline.py": {
+          "path": "content.Initialize-SocratexPipeline.py",
+          "title": "",
+          "ref": "content.Initialize-SocratexPipeline.py",
+          "status": ""
+        },
+        "knowledge_check.py": {
+          "path": "content.knowledge_check.py",
+          "title": "",
+          "ref": "content.knowledge_check.py",
+          "status": ""
+        },
+        "knowledge_code_context.py": {
+          "path": "content.knowledge_code_context.py",
+          "title": "",
+          "ref": "content.knowledge_code_context.py",
+          "status": ""
+        },
+        "knowledge_compile.py": {
+          "path": "content.knowledge_compile.py",
+          "title": "",
+          "ref": "content.knowledge_compile.py",
+          "status": ""
+        },
+        "knowledge_delete.py": {
+          "path": "content.knowledge_delete.py",
+          "title": "",
+          "ref": "content.knowledge_delete.py",
+          "status": ""
+        },
+        "knowledge_file_check.py": {
+          "path": "content.knowledge_file_check.py",
+          "title": "",
+          "ref": "content.knowledge_file_check.py",
+          "status": ""
+        },
+        "knowledge_file_compile.py": {
+          "path": "content.knowledge_file_compile.py",
+          "title": "",
+          "ref": "content.knowledge_file_compile.py",
+          "status": ""
+        },
+        "knowledge_file_delete.py": {
+          "path": "content.knowledge_file_delete.py",
+          "title": "",
+          "ref": "content.knowledge_file_delete.py",
+          "status": ""
+        },
+        "knowledge_file_query.py": {
+          "path": "content.knowledge_file_query.py",
+          "title": "",
+          "ref": "content.knowledge_file_query.py",
+          "status": ""
+        },
+        "knowledge_file_rename.py": {
+          "path": "content.knowledge_file_rename.py",
+          "title": "",
+          "ref": "content.knowledge_file_rename.py",
+          "status": ""
+        },
+        "knowledge_file_select.py": {
+          "path": "content.knowledge_file_select.py",
+          "title": "",
+          "ref": "content.knowledge_file_select.py",
+          "status": ""
+        },
+        "knowledge_file_upsert.py": {
+          "path": "content.knowledge_file_upsert.py",
+          "title": "",
+          "ref": "content.knowledge_file_upsert.py",
+          "status": ""
+        },
+        "knowledge_index.py": {
+          "path": "content.knowledge_index.py",
+          "title": "",
+          "ref": "content.knowledge_index.py",
+          "status": ""
+        },
+        "knowledge_tier_report.py": {
+          "path": "content.knowledge_tier_report.py",
+          "title": "",
+          "ref": "content.knowledge_tier_report.py",
+          "status": ""
+        },
+        "knowledge_tier_check.py": {
+          "path": "content.knowledge_tier_check.py",
+          "title": "",
+          "ref": "content.knowledge_tier_check.py",
+          "status": ""
+        },
+        "knowledge_query.py": {
+          "path": "content.knowledge_query.py",
+          "title": "",
+          "ref": "content.knowledge_query.py",
+          "status": ""
+        },
+        "knowledge_rename.py": {
+          "path": "content.knowledge_rename.py",
+          "title": "",
+          "ref": "content.knowledge_rename.py",
+          "status": ""
+        },
+        "knowledge_select.py": {
+          "path": "content.knowledge_select.py",
+          "title": "",
+          "ref": "content.knowledge_select.py",
+          "status": ""
+        },
+        "knowledge_upsert.py": {
+          "path": "content.knowledge_upsert.py",
+          "title": "",
+          "ref": "content.knowledge_upsert.py",
+          "status": ""
+        },
+        "learn_pipeline_features.py": {
+          "path": "content.learn_pipeline_features.py",
+          "title": "",
+          "ref": "content.learn_pipeline_features.py",
+          "status": ""
+        },
+        "log_summary.py": {
+          "path": "content.log_summary.py",
+          "title": "",
+          "ref": "content.log_summary.py",
+          "status": ""
+        },
+        "migrate_ai_pipeline.py": {
+          "path": "content.migrate_ai_pipeline.py",
+          "title": "",
+          "ref": "content.migrate_ai_pipeline.py",
+          "status": ""
+        },
+        "normalize_documents.bat": {
+          "path": "content.normalize_documents.bat",
+          "title": "",
+          "ref": "content.normalize_documents.bat",
+          "status": ""
+        },
+        "normalize_json_files.py": {
+          "path": "content.normalize_json_files.py",
+          "title": "",
+          "ref": "content.normalize_json_files.py",
+          "status": ""
+        },
+        "normalize_markdown_emoji.py": {
+          "path": "content.normalize_markdown_emoji.py",
+          "title": "",
+          "ref": "content.normalize_markdown_emoji.py",
+          "status": ""
+        },
+        "normalize_text_files.py": {
+          "path": "content.normalize_text_files.py",
+          "title": "",
+          "ref": "content.normalize_text_files.py",
+          "status": ""
+        },
+        "open_pipeline_learning_issue.py": {
+          "path": "content.open_pipeline_learning_issue.py",
+          "title": "",
+          "ref": "content.open_pipeline_learning_issue.py",
+          "status": ""
+        },
+        "pipeline_bootstrap_index.py": {
+          "path": "content.pipeline_bootstrap_index.py",
+          "title": "",
+          "ref": "content.pipeline_bootstrap_index.py",
+          "status": ""
+        },
+        "pipeline_sweep.py": {
+          "path": "content.pipeline_sweep.py",
+          "title": "",
+          "ref": "content.pipeline_sweep.py",
+          "status": ""
+        },
+        "resolve_tool_runtime.py": {
+          "path": "content.resolve_tool_runtime.py",
+          "title": "",
+          "ref": "content.resolve_tool_runtime.py",
+          "status": ""
+        },
+        "resolve_workspace_root.py": {
+          "path": "content.resolve_workspace_root.py",
+          "title": "",
+          "ref": "content.resolve_workspace_root.py",
+          "status": ""
+        },
+        "rebuild_ai_compiled_context.py": {
+          "path": "content.rebuild_ai_compiled_context.py",
+          "title": "",
+          "ref": "content.rebuild_ai_compiled_context.py",
+          "status": ""
+        },
+        "reinitialize_pipeline.py": {
+          "path": "content.reinitialize_pipeline.py",
+          "title": "",
+          "ref": "content.reinitialize_pipeline.py",
+          "status": ""
+        },
+        "remove_pipeline.py": {
+          "path": "content.remove_pipeline.py",
+          "title": "",
+          "ref": "content.remove_pipeline.py",
+          "status": ""
+        },
+        "repair_mojibake.py": {
+          "path": "content.repair_mojibake.py",
+          "title": "",
+          "ref": "content.repair_mojibake.py",
+          "status": ""
+        },
+        "report_pipeline_learning.py": {
+          "path": "content.report_pipeline_learning.py",
+          "title": "",
+          "ref": "content.report_pipeline_learning.py",
+          "status": ""
+        },
+        "run_quality_fix.py": {
+          "path": "content.run_quality_fix.py",
+          "title": "",
+          "ref": "content.run_quality_fix.py",
+          "status": ""
+        },
+        "run_quality_gate.py": {
+          "path": "content.run_quality_gate.py",
+          "title": "",
+          "ref": "content.run_quality_gate.py",
+          "status": ""
+        },
+        "run_quality_gate_contract.py": {
+          "path": "content.run_quality_gate_contract.py",
+          "title": "",
+          "ref": "content.run_quality_gate_contract.py",
+          "status": ""
+        },
+        "set_directives.py": {
+          "path": "content.set_directives.py",
+          "title": "",
+          "ref": "content.set_directives.py",
+          "status": ""
+        },
+        "sync_pipeline_featurelist.py": {
+          "path": "content.sync_pipeline_featurelist.py",
+          "title": "",
+          "ref": "content.sync_pipeline_featurelist.py",
+          "status": ""
+        },
+        "task_snapshot.py": {
+          "path": "content.task_snapshot.py",
+          "title": "",
+          "ref": "content.task_snapshot.py",
+          "status": ""
+        },
+        "task_flow_audit.py": {
+          "path": "content.task_flow_audit.py",
+          "title": "",
+          "ref": "content.task_flow_audit.py",
+          "status": ""
+        },
+        "update_code_line_index.py": {
+          "path": "content.update_code_line_index.py",
+          "title": "",
+          "ref": "content.update_code_line_index.py",
+          "status": ""
+        },
+        "update_pipeline_from_link.py": {
+          "path": "content.update_pipeline_from_link.py",
+          "title": "",
+          "ref": "content.update_pipeline_from_link.py",
+          "status": ""
+        },
+        "upgrade_from_reference_project.py": {
+          "path": "content.upgrade_from_reference_project.py",
+          "title": "",
+          "ref": "content.upgrade_from_reference_project.py",
+          "status": ""
+        },
+        "utf8_file_helpers.py": {
+          "path": "content.utf8_file_helpers.py",
+          "title": "",
+          "ref": "content.utf8_file_helpers.py",
+          "status": ""
+        },
+        "run_interactive_setup.py": {
+          "path": "content.run_interactive_setup.py",
+          "title": "",
+          "ref": "content.run_interactive_setup.py",
+          "status": ""
+        },
+        "write_utf8_file.py": {
+          "path": "content.write_utf8_file.py",
+          "title": "",
+          "ref": "content.write_utf8_file.py",
+          "status": ""
+        },
+        "sync_managed_pipeline_package.py": {
+          "path": "content.sync_managed_pipeline_package.py",
+          "title": "",
+          "ref": "content.sync_managed_pipeline_package.py",
+          "status": ""
+        },
+        "read_compiled_context.py": {
+          "path": "content.read_compiled_context.py",
+          "title": "",
+          "ref": "content.read_compiled_context.py",
+          "status": ""
+        },
+        "tool_error_log.py": {
+          "path": "content.tool_error_log.py",
+          "title": "",
+          "ref": "content.tool_error_log.py",
+          "status": ""
+        },
+        "tool_handler.py": {
+          "path": "content.tool_handler.py",
+          "title": "",
+          "ref": "content.tool_handler.py",
+          "status": ""
+        },
+        "project_design_context.py": {
+          "path": "content.project_design_context.py",
+          "title": "",
+          "ref": "content.project_design_context.py",
+          "status": ""
+        },
+        "check_project_design_context_gate.py": {
+          "path": "content.check_project_design_context_gate.py",
+          "title": "",
+          "ref": "content.check_project_design_context_gate.py",
+          "status": ""
+        },
+        "json_wrapper_entrypoints.py": {
+          "path": "content.json_wrapper_entrypoints.py",
+          "title": "",
+          "ref": "content.json_wrapper_entrypoints.py",
           "status": ""
         }
       }
@@ -4062,123 +3706,98 @@
       },
       "routing": {},
       "toc": [
-        "audit_docs.ps1",
+        "audit_docs.py",
         "audit_yaml_docs.py",
-        "doc_build_cache.ps1",
+        "doc_build_cache.py",
         "doc_item.py",
-        "doc_item_bulk_insert.ps1",
-        "doc_item_insert.ps1",
-        "doc_item_migrate.ps1",
-        "doc_item_move.ps1",
-        "doc_keys.ps1",
-        "doc_list_check.ps1",
-        "doc_list_insert.ps1",
-        "doc_list_insert_checked.ps1",
+        "doc_item_bulk_insert.py",
+        "doc_item_insert.py",
+        "doc_item_migrate.py",
+        "doc_item_move.py",
+        "doc_keys.py",
+        "doc_list_check.py",
+        "doc_list_insert.py",
+        "doc_list_insert_checked.py",
         "doc_list_item.py",
-        "doc_list_review.ps1",
-        "doc_post_edit.ps1",
-        "doc_read.ps1",
-        "doc_read_titles.ps1",
-        "doc_route.ps1",
-        "doc_search.ps1",
+        "doc_list_review.py",
+        "doc_post_edit.py",
+        "doc_read.py",
+        "doc_read_titles.py",
+        "doc_route.py",
+        "doc_search.py",
         "json_list_doc.py",
         "json_wrapper_entrypoints.py",
-        "json_refresh_index.ps1",
         "json_refresh_index.py",
-        "json_migrate_content.ps1",
         "json_migrate_content.py",
-        "json_read.ps1",
         "json_read.py",
-        "json_item_insert.ps1",
         "json_item_insert.py",
-        "json_item_set.ps1",
         "json_item_set.py",
-        "json_item_move.ps1",
         "json_item_move.py",
-        "json_item_delete.ps1",
         "json_item_delete.py",
-        "json_line_insert.ps1",
         "json_line_insert.py",
-        "json_line_set.ps1",
         "json_line_set.py",
-        "json_line_move.ps1",
         "json_line_move.py",
         "doc_tool.py",
-        "docs_migrator.ps1",
         "docs_migrator.py",
-        "yaml_to_json_list_doc.ps1",
         "yaml_to_json_list_doc.py",
-        "docs_slim.ps1",
         "docs_slim.py",
-        "markdown_list_insert_checked.ps1",
-        "normalize_markdown_emoji.ps1",
-        "context_tags.ps1",
-        "knowledge_check.ps1",
+        "markdown_list_insert_checked.py",
+        "normalize_markdown_emoji.py",
+        "context_tags.py",
         "knowledge_check.py",
-        "knowledge_code_context.ps1",
-        "knowledge_compile.ps1",
+        "knowledge_code_context.py",
         "knowledge_compile.py",
-        "knowledge_delete.ps1",
         "knowledge_delete.py",
         "knowledge_index.py",
-        "knowledge_query.ps1",
         "knowledge_query.py",
-        "knowledge_rename.ps1",
         "knowledge_rename.py",
-        "knowledge_select.ps1",
-        "knowledge_upsert.ps1",
+        "knowledge_select.py",
         "knowledge_upsert.py",
-        "knowledge_validate.ps1",
-        "open_knowledge_db.ps1",
-        "add_changelog_entry.ps1",
-        "check_task.ps1",
-        "commit_task.ps1",
-        "done.ps1",
-        "end_prompt_snapshot.ps1",
-        "finish_subtask.ps1",
-        "finish_task.ps1",
-        "task_snapshot.ps1",
-        "Utf8File.ps1",
-        "check_utf8_writes.ps1",
-        "normalize_text_files.ps1",
+        "knowledge_validate.py",
+        "open_knowledge_db.py",
+        "add_changelog_entry.py",
+        "check_task.py",
+        "commit_task.py",
+        "done.py",
+        "end_prompt_snapshot.py",
+        "finish_subtask.py",
+        "finish_task.py",
+        "task_snapshot.py",
+        "check_utf8_writes.py",
         "normalize_text_files.py",
-        "normalize_json_files.ps1",
         "normalize_json_files.py",
         "normalize_documents.bat",
-        "repair_mojibake.ps1",
         "repair_mojibake.py",
-        "repair_yaml_block_indentation.ps1",
         "repair_yaml_block_indentation.py",
-        "write_utf8_file.ps1",
         "write_utf8_file.py",
-        "check_code_context_gate.ps1",
-        "load_programming_context.ps1",
-        "update_code_line_index.ps1",
-        "bootstrap_dotnet_sdk.ps1",
-        "bootstrap_godot_console.ps1",
+        "check_code_context_gate.py",
+        "load_programming_context.py",
+        "update_code_line_index.py",
+        "bootstrap_dotnet_sdk.py",
+        "bootstrap_godot_console.py",
+        "build_and_run.py",
         "archive_logs_for_run.py",
-        "build_and_run.ps1",
         "changed_quality_gate.py",
         "check_csharp.py",
         "clear_logs.bat",
         "console_summary.py",
         "export-playtest.bat",
-        "export-playtest.ps1",
-        "export_windows_playtest.ps1",
+        "export_playtest.py",
+        "export_windows_playtest.py",
         "gamedev_quality_helpers.py",
         "gdscript_outline.py",
         "generate_embedded_config_payload.py",
         "godot_capture.py",
         "log_summary.py",
-        "operator_mission.ps1",
-        "performance_benchmark_report.ps1",
+        "operator_mission.py",
+        "performance_benchmark_report.py",
         "prepare_operator_test_config.py",
         "send_operator_command.py",
-        "route_retest_report.ps1",
+        "route_retest_report.py",
         "run_map_performance_smoke.py",
         "wait_operator_event.py",
         "run_godot_script.py",
-        "run_headless.ps1",
+        "run_headless.py",
         "run-game.bat",
         "run_biome_distribution_diagnostics.py",
         "run_biome_walk_benchmark.py",
@@ -4188,23 +3807,20 @@
         "run_terrain_diagnostics.py",
         "set_game_version.py",
         "worker_lifecycle_report.py",
-        "check_project_context.ps1",
-        "compile.ps1",
-        "compile_project_context.ps1",
-        "flow_read.ps1",
+        "check_project_context.py",
+        "compile.py",
+        "compile_project_context.py",
+        "flow_read.py",
         "flow_tool.py",
-        "load_type_context.ps1",
+        "load_type_context.py",
         "type_context_loader.py",
         "project_context_compiler.py",
-        "tool_handler.ps1",
-        "tool_error_log.ps1",
-        "read_compiled_context.ps1",
-        "resolve_python.ps1",
-        "configure_powershell_tool_path.ps1",
-        "configure_powershell_utf8.ps1",
-        "doctor.ps1",
-        "play_completion_sound.ps1",
-        "pipeline_bootstrap_index.ps1",
+        "tool_handler.py",
+        "tool_error_log.py",
+        "read_compiled_context.py",
+        "resolve_python.py",
+        "doctor.py",
+        "play_completion_sound.py",
         "pipeline_bootstrap_index.py",
         "utf8_file_helpers.py",
         "json_node_edit.py",
@@ -4218,10 +3834,10 @@
         "metadata"
       ],
       "keys": {
-        "audit_docs.ps1": {
-          "path": "content.audit_docs.ps1",
+        "audit_docs.py": {
+          "path": "content.audit_docs.py",
           "title": "",
-          "ref": "content.audit_docs.ps1",
+          "ref": "content.audit_docs.py",
           "status": ""
         },
         "audit_yaml_docs.py": {
@@ -4230,10 +3846,10 @@
           "ref": "content.audit_yaml_docs.py",
           "status": ""
         },
-        "doc_build_cache.ps1": {
-          "path": "content.doc_build_cache.ps1",
+        "doc_build_cache.py": {
+          "path": "content.doc_build_cache.py",
           "title": "",
-          "ref": "content.doc_build_cache.ps1",
+          "ref": "content.doc_build_cache.py",
           "status": ""
         },
         "doc_item.py": {
@@ -4242,52 +3858,52 @@
           "ref": "content.doc_item.py",
           "status": ""
         },
-        "doc_item_bulk_insert.ps1": {
-          "path": "content.doc_item_bulk_insert.ps1",
+        "doc_item_bulk_insert.py": {
+          "path": "content.doc_item_bulk_insert.py",
           "title": "",
-          "ref": "content.doc_item_bulk_insert.ps1",
+          "ref": "content.doc_item_bulk_insert.py",
           "status": ""
         },
-        "doc_item_insert.ps1": {
-          "path": "content.doc_item_insert.ps1",
+        "doc_item_insert.py": {
+          "path": "content.doc_item_insert.py",
           "title": "",
-          "ref": "content.doc_item_insert.ps1",
+          "ref": "content.doc_item_insert.py",
           "status": ""
         },
-        "doc_item_migrate.ps1": {
-          "path": "content.doc_item_migrate.ps1",
+        "doc_item_migrate.py": {
+          "path": "content.doc_item_migrate.py",
           "title": "",
-          "ref": "content.doc_item_migrate.ps1",
+          "ref": "content.doc_item_migrate.py",
           "status": ""
         },
-        "doc_item_move.ps1": {
-          "path": "content.doc_item_move.ps1",
+        "doc_item_move.py": {
+          "path": "content.doc_item_move.py",
           "title": "",
-          "ref": "content.doc_item_move.ps1",
+          "ref": "content.doc_item_move.py",
           "status": ""
         },
-        "doc_keys.ps1": {
-          "path": "content.doc_keys.ps1",
+        "doc_keys.py": {
+          "path": "content.doc_keys.py",
           "title": "",
-          "ref": "content.doc_keys.ps1",
+          "ref": "content.doc_keys.py",
           "status": ""
         },
-        "doc_list_check.ps1": {
-          "path": "content.doc_list_check.ps1",
+        "doc_list_check.py": {
+          "path": "content.doc_list_check.py",
           "title": "",
-          "ref": "content.doc_list_check.ps1",
+          "ref": "content.doc_list_check.py",
           "status": ""
         },
-        "doc_list_insert.ps1": {
-          "path": "content.doc_list_insert.ps1",
+        "doc_list_insert.py": {
+          "path": "content.doc_list_insert.py",
           "title": "",
-          "ref": "content.doc_list_insert.ps1",
+          "ref": "content.doc_list_insert.py",
           "status": ""
         },
-        "doc_list_insert_checked.ps1": {
-          "path": "content.doc_list_insert_checked.ps1",
+        "doc_list_insert_checked.py": {
+          "path": "content.doc_list_insert_checked.py",
           "title": "",
-          "ref": "content.doc_list_insert_checked.ps1",
+          "ref": "content.doc_list_insert_checked.py",
           "status": ""
         },
         "doc_list_item.py": {
@@ -4296,646 +3912,46 @@
           "ref": "content.doc_list_item.py",
           "status": ""
         },
-        "doc_list_review.ps1": {
-          "path": "content.doc_list_review.ps1",
+        "doc_list_review.py": {
+          "path": "content.doc_list_review.py",
           "title": "",
-          "ref": "content.doc_list_review.ps1",
+          "ref": "content.doc_list_review.py",
           "status": ""
         },
-        "doc_post_edit.ps1": {
-          "path": "content.doc_post_edit.ps1",
+        "doc_post_edit.py": {
+          "path": "content.doc_post_edit.py",
           "title": "",
-          "ref": "content.doc_post_edit.ps1",
+          "ref": "content.doc_post_edit.py",
           "status": ""
         },
-        "doc_read.ps1": {
-          "path": "content.doc_read.ps1",
+        "doc_read.py": {
+          "path": "content.doc_read.py",
           "title": "",
-          "ref": "content.doc_read.ps1",
+          "ref": "content.doc_read.py",
           "status": ""
         },
-        "doc_read_titles.ps1": {
-          "path": "content.doc_read_titles.ps1",
+        "doc_read_titles.py": {
+          "path": "content.doc_read_titles.py",
           "title": "",
-          "ref": "content.doc_read_titles.ps1",
+          "ref": "content.doc_read_titles.py",
           "status": ""
         },
-        "doc_route.ps1": {
-          "path": "content.doc_route.ps1",
+        "doc_route.py": {
+          "path": "content.doc_route.py",
           "title": "",
-          "ref": "content.doc_route.ps1",
+          "ref": "content.doc_route.py",
           "status": ""
         },
-        "doc_search.ps1": {
-          "path": "content.doc_search.ps1",
+        "doc_search.py": {
+          "path": "content.doc_search.py",
           "title": "",
-          "ref": "content.doc_search.ps1",
+          "ref": "content.doc_search.py",
           "status": ""
         },
         "json_list_doc.py": {
           "path": "content.json_list_doc.py",
           "title": "",
           "ref": "content.json_list_doc.py",
-          "status": ""
-        },
-        "json_refresh_index.ps1": {
-          "path": "content.json_refresh_index.ps1",
-          "title": "",
-          "ref": "content.json_refresh_index.ps1",
-          "status": ""
-        },
-        "json_migrate_content.ps1": {
-          "path": "content.json_migrate_content.ps1",
-          "title": "",
-          "ref": "content.json_migrate_content.ps1",
-          "status": ""
-        },
-        "json_read.ps1": {
-          "path": "content.json_read.ps1",
-          "title": "",
-          "ref": "content.json_read.ps1",
-          "status": ""
-        },
-        "json_item_insert.ps1": {
-          "path": "content.json_item_insert.ps1",
-          "title": "",
-          "ref": "content.json_item_insert.ps1",
-          "status": ""
-        },
-        "json_item_set.ps1": {
-          "path": "content.json_item_set.ps1",
-          "title": "",
-          "ref": "content.json_item_set.ps1",
-          "status": ""
-        },
-        "json_item_move.ps1": {
-          "path": "content.json_item_move.ps1",
-          "title": "",
-          "ref": "content.json_item_move.ps1",
-          "status": ""
-        },
-        "json_item_delete.ps1": {
-          "path": "content.json_item_delete.ps1",
-          "title": "",
-          "ref": "content.json_item_delete.ps1",
-          "status": ""
-        },
-        "json_line_insert.ps1": {
-          "path": "content.json_line_insert.ps1",
-          "title": "",
-          "ref": "content.json_line_insert.ps1",
-          "status": ""
-        },
-        "json_line_set.ps1": {
-          "path": "content.json_line_set.ps1",
-          "title": "",
-          "ref": "content.json_line_set.ps1",
-          "status": ""
-        },
-        "json_line_move.ps1": {
-          "path": "content.json_line_move.ps1",
-          "title": "",
-          "ref": "content.json_line_move.ps1",
-          "status": ""
-        },
-        "doc_tool.py": {
-          "path": "content.doc_tool.py",
-          "title": "",
-          "ref": "content.doc_tool.py",
-          "status": ""
-        },
-        "docs_migrator.ps1": {
-          "path": "content.docs_migrator.ps1",
-          "title": "",
-          "ref": "content.docs_migrator.ps1",
-          "status": ""
-        },
-        "docs_migrator.py": {
-          "path": "content.docs_migrator.py",
-          "title": "",
-          "ref": "content.docs_migrator.py",
-          "status": ""
-        },
-        "yaml_to_json_list_doc.ps1": {
-          "path": "content.yaml_to_json_list_doc.ps1",
-          "title": "",
-          "ref": "content.yaml_to_json_list_doc.ps1",
-          "status": ""
-        },
-        "yaml_to_json_list_doc.py": {
-          "path": "content.yaml_to_json_list_doc.py",
-          "title": "",
-          "ref": "content.yaml_to_json_list_doc.py",
-          "status": ""
-        },
-        "docs_slim.ps1": {
-          "path": "content.docs_slim.ps1",
-          "title": "",
-          "ref": "content.docs_slim.ps1",
-          "status": ""
-        },
-        "docs_slim.py": {
-          "path": "content.docs_slim.py",
-          "title": "",
-          "ref": "content.docs_slim.py",
-          "status": ""
-        },
-        "markdown_list_insert_checked.ps1": {
-          "path": "content.markdown_list_insert_checked.ps1",
-          "title": "",
-          "ref": "content.markdown_list_insert_checked.ps1",
-          "status": ""
-        },
-        "normalize_markdown_emoji.ps1": {
-          "path": "content.normalize_markdown_emoji.ps1",
-          "title": "",
-          "ref": "content.normalize_markdown_emoji.ps1",
-          "status": ""
-        },
-        "context_tags.ps1": {
-          "path": "content.context_tags.ps1",
-          "title": "",
-          "ref": "content.context_tags.ps1",
-          "status": ""
-        },
-        "knowledge_check.ps1": {
-          "path": "content.knowledge_check.ps1",
-          "title": "",
-          "ref": "content.knowledge_check.ps1",
-          "status": ""
-        },
-        "knowledge_code_context.ps1": {
-          "path": "content.knowledge_code_context.ps1",
-          "title": "",
-          "ref": "content.knowledge_code_context.ps1",
-          "status": ""
-        },
-        "knowledge_compile.ps1": {
-          "path": "content.knowledge_compile.ps1",
-          "title": "",
-          "ref": "content.knowledge_compile.ps1",
-          "status": ""
-        },
-        "knowledge_delete.ps1": {
-          "path": "content.knowledge_delete.ps1",
-          "title": "",
-          "ref": "content.knowledge_delete.ps1",
-          "status": ""
-        },
-        "knowledge_index.py": {
-          "path": "content.knowledge_index.py",
-          "title": "",
-          "ref": "content.knowledge_index.py",
-          "status": ""
-        },
-        "knowledge_query.ps1": {
-          "path": "content.knowledge_query.ps1",
-          "title": "",
-          "ref": "content.knowledge_query.ps1",
-          "status": ""
-        },
-        "knowledge_rename.ps1": {
-          "path": "content.knowledge_rename.ps1",
-          "title": "",
-          "ref": "content.knowledge_rename.ps1",
-          "status": ""
-        },
-        "knowledge_select.ps1": {
-          "path": "content.knowledge_select.ps1",
-          "title": "",
-          "ref": "content.knowledge_select.ps1",
-          "status": ""
-        },
-        "knowledge_upsert.ps1": {
-          "path": "content.knowledge_upsert.ps1",
-          "title": "",
-          "ref": "content.knowledge_upsert.ps1",
-          "status": ""
-        },
-        "knowledge_validate.ps1": {
-          "path": "content.knowledge_validate.ps1",
-          "title": "",
-          "ref": "content.knowledge_validate.ps1",
-          "status": ""
-        },
-        "open_knowledge_db.ps1": {
-          "path": "content.open_knowledge_db.ps1",
-          "title": "",
-          "ref": "content.open_knowledge_db.ps1",
-          "status": ""
-        },
-        "add_changelog_entry.ps1": {
-          "path": "content.add_changelog_entry.ps1",
-          "title": "",
-          "ref": "content.add_changelog_entry.ps1",
-          "status": ""
-        },
-        "check_task.ps1": {
-          "path": "content.check_task.ps1",
-          "title": "",
-          "ref": "content.check_task.ps1",
-          "status": ""
-        },
-        "commit_task.ps1": {
-          "path": "content.commit_task.ps1",
-          "title": "",
-          "ref": "content.commit_task.ps1",
-          "status": ""
-        },
-        "done.ps1": {
-          "path": "content.done.ps1",
-          "title": "",
-          "ref": "content.done.ps1",
-          "status": ""
-        },
-        "end_prompt_snapshot.ps1": {
-          "path": "content.end_prompt_snapshot.ps1",
-          "title": "",
-          "ref": "content.end_prompt_snapshot.ps1",
-          "status": ""
-        },
-        "finish_subtask.ps1": {
-          "path": "content.finish_subtask.ps1",
-          "title": "",
-          "ref": "content.finish_subtask.ps1",
-          "status": ""
-        },
-        "finish_task.ps1": {
-          "path": "content.finish_task.ps1",
-          "title": "",
-          "ref": "content.finish_task.ps1",
-          "status": ""
-        },
-        "task_snapshot.ps1": {
-          "path": "content.task_snapshot.ps1",
-          "title": "",
-          "ref": "content.task_snapshot.ps1",
-          "status": ""
-        },
-        "Utf8File.ps1": {
-          "path": "content.Utf8File.ps1",
-          "title": "",
-          "ref": "content.Utf8File.ps1",
-          "status": ""
-        },
-        "check_utf8_writes.ps1": {
-          "path": "content.check_utf8_writes.ps1",
-          "title": "",
-          "ref": "content.check_utf8_writes.ps1",
-          "status": ""
-        },
-        "normalize_text_files.ps1": {
-          "path": "content.normalize_text_files.ps1",
-          "title": "",
-          "ref": "content.normalize_text_files.ps1",
-          "status": ""
-        },
-        "normalize_json_files.ps1": {
-          "path": "content.normalize_json_files.ps1",
-          "title": "",
-          "ref": "content.normalize_json_files.ps1",
-          "status": ""
-        },
-        "normalize_json_files.py": {
-          "path": "content.normalize_json_files.py",
-          "title": "",
-          "ref": "content.normalize_json_files.py",
-          "status": ""
-        },
-        "normalize_documents.bat": {
-          "path": "content.normalize_documents.bat",
-          "title": "",
-          "ref": "content.normalize_documents.bat",
-          "status": ""
-        },
-        "repair_mojibake.ps1": {
-          "path": "content.repair_mojibake.ps1",
-          "title": "",
-          "ref": "content.repair_mojibake.ps1",
-          "status": ""
-        },
-        "repair_yaml_block_indentation.ps1": {
-          "path": "content.repair_yaml_block_indentation.ps1",
-          "title": "",
-          "ref": "content.repair_yaml_block_indentation.ps1",
-          "status": ""
-        },
-        "repair_yaml_block_indentation.py": {
-          "path": "content.repair_yaml_block_indentation.py",
-          "title": "",
-          "ref": "content.repair_yaml_block_indentation.py",
-          "status": ""
-        },
-        "write_utf8_file.ps1": {
-          "path": "content.write_utf8_file.ps1",
-          "title": "",
-          "ref": "content.write_utf8_file.ps1",
-          "status": ""
-        },
-        "check_code_context_gate.ps1": {
-          "path": "content.check_code_context_gate.ps1",
-          "title": "",
-          "ref": "content.check_code_context_gate.ps1",
-          "status": ""
-        },
-        "load_programming_context.ps1": {
-          "path": "content.load_programming_context.ps1",
-          "title": "",
-          "ref": "content.load_programming_context.ps1",
-          "status": ""
-        },
-        "update_code_line_index.ps1": {
-          "path": "content.update_code_line_index.ps1",
-          "title": "",
-          "ref": "content.update_code_line_index.ps1",
-          "status": ""
-        },
-        "bootstrap_dotnet_sdk.ps1": {
-          "path": "content.bootstrap_dotnet_sdk.ps1",
-          "title": "",
-          "ref": "content.bootstrap_dotnet_sdk.ps1",
-          "status": ""
-        },
-        "bootstrap_godot_console.ps1": {
-          "path": "content.bootstrap_godot_console.ps1",
-          "title": "",
-          "ref": "content.bootstrap_godot_console.ps1",
-          "status": ""
-        },
-        "build_and_run.ps1": {
-          "path": "content.build_and_run.ps1",
-          "title": "",
-          "ref": "content.build_and_run.ps1",
-          "status": ""
-        },
-        "changed_quality_gate.py": {
-          "path": "content.changed_quality_gate.py",
-          "title": "",
-          "ref": "content.changed_quality_gate.py",
-          "status": ""
-        },
-        "check_csharp.py": {
-          "path": "content.check_csharp.py",
-          "title": "",
-          "ref": "content.check_csharp.py",
-          "status": ""
-        },
-        "clear_logs.bat": {
-          "path": "content.clear_logs.bat",
-          "title": "",
-          "ref": "content.clear_logs.bat",
-          "status": ""
-        },
-        "export-playtest.bat": {
-          "path": "content.export-playtest.bat",
-          "title": "",
-          "ref": "content.export-playtest.bat",
-          "status": ""
-        },
-        "export-playtest.ps1": {
-          "path": "content.export-playtest.ps1",
-          "title": "",
-          "ref": "content.export-playtest.ps1",
-          "status": ""
-        },
-        "export_windows_playtest.ps1": {
-          "path": "content.export_windows_playtest.ps1",
-          "title": "",
-          "ref": "content.export_windows_playtest.ps1",
-          "status": ""
-        },
-        "gamedev_quality_helpers.py": {
-          "path": "content.gamedev_quality_helpers.py",
-          "title": "",
-          "ref": "content.gamedev_quality_helpers.py",
-          "status": ""
-        },
-        "gdscript_outline.py": {
-          "path": "content.gdscript_outline.py",
-          "title": "",
-          "ref": "content.gdscript_outline.py",
-          "status": ""
-        },
-        "generate_embedded_config_payload.py": {
-          "path": "content.generate_embedded_config_payload.py",
-          "title": "",
-          "ref": "content.generate_embedded_config_payload.py",
-          "status": ""
-        },
-        "operator_mission.ps1": {
-          "path": "content.operator_mission.ps1",
-          "title": "",
-          "ref": "content.operator_mission.ps1",
-          "status": ""
-        },
-        "performance_benchmark_report.ps1": {
-          "path": "content.performance_benchmark_report.ps1",
-          "title": "",
-          "ref": "content.performance_benchmark_report.ps1",
-          "status": ""
-        },
-        "route_retest_report.ps1": {
-          "path": "content.route_retest_report.ps1",
-          "title": "",
-          "ref": "content.route_retest_report.ps1",
-          "status": ""
-        },
-        "run_headless.ps1": {
-          "path": "content.run_headless.ps1",
-          "title": "",
-          "ref": "content.run_headless.ps1",
-          "status": ""
-        },
-        "run-game.bat": {
-          "path": "content.run-game.bat",
-          "title": "",
-          "ref": "content.run-game.bat",
-          "status": ""
-        },
-        "run_quality_fix.py": {
-          "path": "content.run_quality_fix.py",
-          "title": "",
-          "ref": "content.run_quality_fix.py",
-          "status": ""
-        },
-        "run_gamedev_quality_gate.py": {
-          "path": "content.run_gamedev_quality_gate.py",
-          "title": "",
-          "ref": "content.run_gamedev_quality_gate.py",
-          "status": ""
-        },
-        "check_project_context.ps1": {
-          "path": "content.check_project_context.ps1",
-          "title": "",
-          "ref": "content.check_project_context.ps1",
-          "status": ""
-        },
-        "compile.ps1": {
-          "path": "content.compile.ps1",
-          "title": "",
-          "ref": "content.compile.ps1",
-          "status": ""
-        },
-        "compile_project_context.ps1": {
-          "path": "content.compile_project_context.ps1",
-          "title": "",
-          "ref": "content.compile_project_context.ps1",
-          "status": ""
-        },
-        "flow_read.ps1": {
-          "path": "content.flow_read.ps1",
-          "title": "",
-          "ref": "content.flow_read.ps1",
-          "status": ""
-        },
-        "flow_tool.py": {
-          "path": "content.flow_tool.py",
-          "title": "",
-          "ref": "content.flow_tool.py",
-          "status": ""
-        },
-        "load_type_context.ps1": {
-          "path": "content.load_type_context.ps1",
-          "title": "",
-          "ref": "content.load_type_context.ps1",
-          "status": ""
-        },
-        "type_context_loader.py": {
-          "path": "content.type_context_loader.py",
-          "title": "",
-          "ref": "content.type_context_loader.py",
-          "status": ""
-        },
-        "project_context_compiler.py": {
-          "path": "content.project_context_compiler.py",
-          "title": "",
-          "ref": "content.project_context_compiler.py",
-          "status": ""
-        },
-        "tool_handler.ps1": {
-          "path": "content.tool_handler.ps1",
-          "title": "",
-          "ref": "content.tool_handler.ps1",
-          "status": ""
-        },
-        "tool_error_log.ps1": {
-          "path": "content.tool_error_log.ps1",
-          "title": "",
-          "ref": "content.tool_error_log.ps1",
-          "status": ""
-        },
-        "read_compiled_context.ps1": {
-          "path": "content.read_compiled_context.ps1",
-          "title": "",
-          "ref": "content.read_compiled_context.ps1",
-          "status": ""
-        },
-        "resolve_python.ps1": {
-          "path": "content.resolve_python.ps1",
-          "title": "",
-          "ref": "content.resolve_python.ps1",
-          "status": ""
-        },
-        "configure_powershell_tool_path.ps1": {
-          "path": "content.configure_powershell_tool_path.ps1",
-          "title": "",
-          "ref": "content.configure_powershell_tool_path.ps1",
-          "status": ""
-        },
-        "configure_powershell_utf8.ps1": {
-          "path": "content.configure_powershell_utf8.ps1",
-          "title": "",
-          "ref": "content.configure_powershell_utf8.ps1",
-          "status": ""
-        },
-        "doctor.ps1": {
-          "path": "content.doctor.ps1",
-          "title": "",
-          "ref": "content.doctor.ps1",
-          "status": ""
-        },
-        "play_completion_sound.ps1": {
-          "path": "content.play_completion_sound.ps1",
-          "title": "",
-          "ref": "content.play_completion_sound.ps1",
-          "status": ""
-        },
-        "pipeline_bootstrap_index.ps1": {
-          "path": "content.pipeline_bootstrap_index.ps1",
-          "title": "",
-          "ref": "content.pipeline_bootstrap_index.ps1",
-          "status": ""
-        },
-        "pipeline_bootstrap_index.py": {
-          "path": "content.pipeline_bootstrap_index.py",
-          "title": "",
-          "ref": "content.pipeline_bootstrap_index.py",
-          "status": ""
-        },
-        "knowledge_check.py": {
-          "path": "content.knowledge_check.py",
-          "title": "",
-          "ref": "content.knowledge_check.py",
-          "status": ""
-        },
-        "knowledge_compile.py": {
-          "path": "content.knowledge_compile.py",
-          "title": "",
-          "ref": "content.knowledge_compile.py",
-          "status": ""
-        },
-        "knowledge_delete.py": {
-          "path": "content.knowledge_delete.py",
-          "title": "",
-          "ref": "content.knowledge_delete.py",
-          "status": ""
-        },
-        "knowledge_query.py": {
-          "path": "content.knowledge_query.py",
-          "title": "",
-          "ref": "content.knowledge_query.py",
-          "status": ""
-        },
-        "knowledge_rename.py": {
-          "path": "content.knowledge_rename.py",
-          "title": "",
-          "ref": "content.knowledge_rename.py",
-          "status": ""
-        },
-        "knowledge_upsert.py": {
-          "path": "content.knowledge_upsert.py",
-          "title": "",
-          "ref": "content.knowledge_upsert.py",
-          "status": ""
-        },
-        "normalize_text_files.py": {
-          "path": "content.normalize_text_files.py",
-          "title": "",
-          "ref": "content.normalize_text_files.py",
-          "status": ""
-        },
-        "repair_mojibake.py": {
-          "path": "content.repair_mojibake.py",
-          "title": "",
-          "ref": "content.repair_mojibake.py",
-          "status": ""
-        },
-        "utf8_file_helpers.py": {
-          "path": "content.utf8_file_helpers.py",
-          "title": "",
-          "ref": "content.utf8_file_helpers.py",
-          "status": ""
-        },
-        "write_utf8_file.py": {
-          "path": "content.write_utf8_file.py",
-          "title": "",
-          "ref": "content.write_utf8_file.py",
-          "status": ""
-        },
-        "json_wrapper_entrypoints.py": {
-          "path": "content.json_wrapper_entrypoints.py",
-          "title": "",
-          "ref": "content.json_wrapper_entrypoints.py",
           "status": ""
         },
         "json_refresh_index.py": {
@@ -4948,12 +3964,6 @@
           "path": "content.json_migrate_content.py",
           "title": "",
           "ref": "content.json_migrate_content.py",
-          "status": ""
-        },
-        "json_node_edit.py": {
-          "path": "content.json_node_edit.py",
-          "title": "",
-          "ref": "content.json_node_edit.py",
           "status": ""
         },
         "json_read.py": {
@@ -5002,6 +4012,438 @@
           "path": "content.json_line_move.py",
           "title": "",
           "ref": "content.json_line_move.py",
+          "status": ""
+        },
+        "doc_tool.py": {
+          "path": "content.doc_tool.py",
+          "title": "",
+          "ref": "content.doc_tool.py",
+          "status": ""
+        },
+        "docs_migrator.py": {
+          "path": "content.docs_migrator.py",
+          "title": "",
+          "ref": "content.docs_migrator.py",
+          "status": ""
+        },
+        "yaml_to_json_list_doc.py": {
+          "path": "content.yaml_to_json_list_doc.py",
+          "title": "",
+          "ref": "content.yaml_to_json_list_doc.py",
+          "status": ""
+        },
+        "docs_slim.py": {
+          "path": "content.docs_slim.py",
+          "title": "",
+          "ref": "content.docs_slim.py",
+          "status": ""
+        },
+        "markdown_list_insert_checked.py": {
+          "path": "content.markdown_list_insert_checked.py",
+          "title": "",
+          "ref": "content.markdown_list_insert_checked.py",
+          "status": ""
+        },
+        "normalize_markdown_emoji.py": {
+          "path": "content.normalize_markdown_emoji.py",
+          "title": "",
+          "ref": "content.normalize_markdown_emoji.py",
+          "status": ""
+        },
+        "context_tags.py": {
+          "path": "content.context_tags.py",
+          "title": "",
+          "ref": "content.context_tags.py",
+          "status": ""
+        },
+        "knowledge_check.py": {
+          "path": "content.knowledge_check.py",
+          "title": "",
+          "ref": "content.knowledge_check.py",
+          "status": ""
+        },
+        "knowledge_code_context.py": {
+          "path": "content.knowledge_code_context.py",
+          "title": "",
+          "ref": "content.knowledge_code_context.py",
+          "status": ""
+        },
+        "knowledge_compile.py": {
+          "path": "content.knowledge_compile.py",
+          "title": "",
+          "ref": "content.knowledge_compile.py",
+          "status": ""
+        },
+        "knowledge_delete.py": {
+          "path": "content.knowledge_delete.py",
+          "title": "",
+          "ref": "content.knowledge_delete.py",
+          "status": ""
+        },
+        "knowledge_index.py": {
+          "path": "content.knowledge_index.py",
+          "title": "",
+          "ref": "content.knowledge_index.py",
+          "status": ""
+        },
+        "knowledge_query.py": {
+          "path": "content.knowledge_query.py",
+          "title": "",
+          "ref": "content.knowledge_query.py",
+          "status": ""
+        },
+        "knowledge_rename.py": {
+          "path": "content.knowledge_rename.py",
+          "title": "",
+          "ref": "content.knowledge_rename.py",
+          "status": ""
+        },
+        "knowledge_select.py": {
+          "path": "content.knowledge_select.py",
+          "title": "",
+          "ref": "content.knowledge_select.py",
+          "status": ""
+        },
+        "knowledge_upsert.py": {
+          "path": "content.knowledge_upsert.py",
+          "title": "",
+          "ref": "content.knowledge_upsert.py",
+          "status": ""
+        },
+        "knowledge_validate.py": {
+          "path": "content.knowledge_validate.py",
+          "title": "",
+          "ref": "content.knowledge_validate.py",
+          "status": ""
+        },
+        "open_knowledge_db.py": {
+          "path": "content.open_knowledge_db.py",
+          "title": "",
+          "ref": "content.open_knowledge_db.py",
+          "status": ""
+        },
+        "add_changelog_entry.py": {
+          "path": "content.add_changelog_entry.py",
+          "title": "",
+          "ref": "content.add_changelog_entry.py",
+          "status": ""
+        },
+        "check_task.py": {
+          "path": "content.check_task.py",
+          "title": "",
+          "ref": "content.check_task.py",
+          "status": ""
+        },
+        "commit_task.py": {
+          "path": "content.commit_task.py",
+          "title": "",
+          "ref": "content.commit_task.py",
+          "status": ""
+        },
+        "done.py": {
+          "path": "content.done.py",
+          "title": "",
+          "ref": "content.done.py",
+          "status": ""
+        },
+        "end_prompt_snapshot.py": {
+          "path": "content.end_prompt_snapshot.py",
+          "title": "",
+          "ref": "content.end_prompt_snapshot.py",
+          "status": ""
+        },
+        "finish_subtask.py": {
+          "path": "content.finish_subtask.py",
+          "title": "",
+          "ref": "content.finish_subtask.py",
+          "status": ""
+        },
+        "finish_task.py": {
+          "path": "content.finish_task.py",
+          "title": "",
+          "ref": "content.finish_task.py",
+          "status": ""
+        },
+        "task_snapshot.py": {
+          "path": "content.task_snapshot.py",
+          "title": "",
+          "ref": "content.task_snapshot.py",
+          "status": ""
+        },
+        "check_utf8_writes.py": {
+          "path": "content.check_utf8_writes.py",
+          "title": "",
+          "ref": "content.check_utf8_writes.py",
+          "status": ""
+        },
+        "normalize_text_files.py": {
+          "path": "content.normalize_text_files.py",
+          "title": "",
+          "ref": "content.normalize_text_files.py",
+          "status": ""
+        },
+        "normalize_json_files.py": {
+          "path": "content.normalize_json_files.py",
+          "title": "",
+          "ref": "content.normalize_json_files.py",
+          "status": ""
+        },
+        "normalize_documents.bat": {
+          "path": "content.normalize_documents.bat",
+          "title": "",
+          "ref": "content.normalize_documents.bat",
+          "status": ""
+        },
+        "repair_mojibake.py": {
+          "path": "content.repair_mojibake.py",
+          "title": "",
+          "ref": "content.repair_mojibake.py",
+          "status": ""
+        },
+        "repair_yaml_block_indentation.py": {
+          "path": "content.repair_yaml_block_indentation.py",
+          "title": "",
+          "ref": "content.repair_yaml_block_indentation.py",
+          "status": ""
+        },
+        "write_utf8_file.py": {
+          "path": "content.write_utf8_file.py",
+          "title": "",
+          "ref": "content.write_utf8_file.py",
+          "status": ""
+        },
+        "check_code_context_gate.py": {
+          "path": "content.check_code_context_gate.py",
+          "title": "",
+          "ref": "content.check_code_context_gate.py",
+          "status": ""
+        },
+        "load_programming_context.py": {
+          "path": "content.load_programming_context.py",
+          "title": "",
+          "ref": "content.load_programming_context.py",
+          "status": ""
+        },
+        "update_code_line_index.py": {
+          "path": "content.update_code_line_index.py",
+          "title": "",
+          "ref": "content.update_code_line_index.py",
+          "status": ""
+        },
+        "bootstrap_dotnet_sdk.py": {
+          "path": "content.bootstrap_dotnet_sdk.py",
+          "title": "",
+          "ref": "content.bootstrap_dotnet_sdk.py",
+          "status": ""
+        },
+        "bootstrap_godot_console.py": {
+          "path": "content.bootstrap_godot_console.py",
+          "title": "",
+          "ref": "content.bootstrap_godot_console.py",
+          "status": ""
+        },
+        "changed_quality_gate.py": {
+          "path": "content.changed_quality_gate.py",
+          "title": "",
+          "ref": "content.changed_quality_gate.py",
+          "status": ""
+        },
+        "check_csharp.py": {
+          "path": "content.check_csharp.py",
+          "title": "",
+          "ref": "content.check_csharp.py",
+          "status": ""
+        },
+        "clear_logs.bat": {
+          "path": "content.clear_logs.bat",
+          "title": "",
+          "ref": "content.clear_logs.bat",
+          "status": ""
+        },
+        "export-playtest.bat": {
+          "path": "content.export-playtest.bat",
+          "title": "",
+          "ref": "content.export-playtest.bat",
+          "status": ""
+        },
+        "export_playtest.py": {
+          "path": "content.export_playtest.py",
+          "title": "",
+          "ref": "content.export_playtest.py",
+          "status": ""
+        },
+        "export_windows_playtest.py": {
+          "path": "content.export_windows_playtest.py",
+          "title": "",
+          "ref": "content.export_windows_playtest.py",
+          "status": ""
+        },
+        "gamedev_quality_helpers.py": {
+          "path": "content.gamedev_quality_helpers.py",
+          "title": "",
+          "ref": "content.gamedev_quality_helpers.py",
+          "status": ""
+        },
+        "gdscript_outline.py": {
+          "path": "content.gdscript_outline.py",
+          "title": "",
+          "ref": "content.gdscript_outline.py",
+          "status": ""
+        },
+        "generate_embedded_config_payload.py": {
+          "path": "content.generate_embedded_config_payload.py",
+          "title": "",
+          "ref": "content.generate_embedded_config_payload.py",
+          "status": ""
+        },
+        "operator_mission.py": {
+          "path": "content.operator_mission.py",
+          "title": "",
+          "ref": "content.operator_mission.py",
+          "status": ""
+        },
+        "performance_benchmark_report.py": {
+          "path": "content.performance_benchmark_report.py",
+          "title": "",
+          "ref": "content.performance_benchmark_report.py",
+          "status": ""
+        },
+        "route_retest_report.py": {
+          "path": "content.route_retest_report.py",
+          "title": "",
+          "ref": "content.route_retest_report.py",
+          "status": ""
+        },
+        "run_headless.py": {
+          "path": "content.run_headless.py",
+          "title": "",
+          "ref": "content.run_headless.py",
+          "status": ""
+        },
+        "run-game.bat": {
+          "path": "content.run-game.bat",
+          "title": "",
+          "ref": "content.run-game.bat",
+          "status": ""
+        },
+        "run_quality_fix.py": {
+          "path": "content.run_quality_fix.py",
+          "title": "",
+          "ref": "content.run_quality_fix.py",
+          "status": ""
+        },
+        "run_gamedev_quality_gate.py": {
+          "path": "content.run_gamedev_quality_gate.py",
+          "title": "",
+          "ref": "content.run_gamedev_quality_gate.py",
+          "status": ""
+        },
+        "check_project_context.py": {
+          "path": "content.check_project_context.py",
+          "title": "",
+          "ref": "content.check_project_context.py",
+          "status": ""
+        },
+        "compile.py": {
+          "path": "content.compile.py",
+          "title": "",
+          "ref": "content.compile.py",
+          "status": ""
+        },
+        "compile_project_context.py": {
+          "path": "content.compile_project_context.py",
+          "title": "",
+          "ref": "content.compile_project_context.py",
+          "status": ""
+        },
+        "flow_read.py": {
+          "path": "content.flow_read.py",
+          "title": "",
+          "ref": "content.flow_read.py",
+          "status": ""
+        },
+        "flow_tool.py": {
+          "path": "content.flow_tool.py",
+          "title": "",
+          "ref": "content.flow_tool.py",
+          "status": ""
+        },
+        "load_type_context.py": {
+          "path": "content.load_type_context.py",
+          "title": "",
+          "ref": "content.load_type_context.py",
+          "status": ""
+        },
+        "type_context_loader.py": {
+          "path": "content.type_context_loader.py",
+          "title": "",
+          "ref": "content.type_context_loader.py",
+          "status": ""
+        },
+        "project_context_compiler.py": {
+          "path": "content.project_context_compiler.py",
+          "title": "",
+          "ref": "content.project_context_compiler.py",
+          "status": ""
+        },
+        "tool_handler.py": {
+          "path": "content.tool_handler.py",
+          "title": "",
+          "ref": "content.tool_handler.py",
+          "status": ""
+        },
+        "tool_error_log.py": {
+          "path": "content.tool_error_log.py",
+          "title": "",
+          "ref": "content.tool_error_log.py",
+          "status": ""
+        },
+        "read_compiled_context.py": {
+          "path": "content.read_compiled_context.py",
+          "title": "",
+          "ref": "content.read_compiled_context.py",
+          "status": ""
+        },
+        "resolve_python.py": {
+          "path": "content.resolve_python.py",
+          "title": "",
+          "ref": "content.resolve_python.py",
+          "status": ""
+        },
+        "doctor.py": {
+          "path": "content.doctor.py",
+          "title": "",
+          "ref": "content.doctor.py",
+          "status": ""
+        },
+        "play_completion_sound.py": {
+          "path": "content.play_completion_sound.py",
+          "title": "",
+          "ref": "content.play_completion_sound.py",
+          "status": ""
+        },
+        "pipeline_bootstrap_index.py": {
+          "path": "content.pipeline_bootstrap_index.py",
+          "title": "",
+          "ref": "content.pipeline_bootstrap_index.py",
+          "status": ""
+        },
+        "utf8_file_helpers.py": {
+          "path": "content.utf8_file_helpers.py",
+          "title": "",
+          "ref": "content.utf8_file_helpers.py",
+          "status": ""
+        },
+        "json_wrapper_entrypoints.py": {
+          "path": "content.json_wrapper_entrypoints.py",
+          "title": "",
+          "ref": "content.json_wrapper_entrypoints.py",
+          "status": ""
+        },
+        "json_node_edit.py": {
+          "path": "content.json_node_edit.py",
+          "title": "",
+          "ref": "content.json_node_edit.py",
           "status": ""
         },
         "archive_logs_for_run.py": {
@@ -5110,6 +4552,12 @@
           "path": "content.godot_capture.py",
           "title": "",
           "ref": "content.godot_capture.py",
+          "status": ""
+        },
+        "build_and_run.py": {
+          "path": "content.build_and_run.py",
+          "title": "",
+          "ref": "content.build_and_run.py",
           "status": ""
         }
       }

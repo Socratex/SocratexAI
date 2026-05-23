@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write an end-of-task OUTPUT snapshot without PowerShell."""
+"""Write an end-of-task OUTPUT snapshot with Python-only tooling."""
 
 from __future__ import annotations
 

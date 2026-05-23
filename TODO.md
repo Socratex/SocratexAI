@@ -5,8 +5,8 @@
 1. Sweep upgrade tool.
    Automate the manual cross-project upgrade/smoke sweep used for Riftbound, SocratexPipeline, Socratex-Business-Dogfood, and future child projects. Target a Python-first orchestration tool with OS-agnostic path handling, explicit project list/config input, per-project update/smoke phases, clean status checks, and a concise summary of pass/fail/drift. Value: high on every pipeline update; cost target: one focused evening.
 
-2. Python parity for `audit_docs.ps1` and `check_pipeline_feature_contracts.ps1`.
-   Port or wrap the two highest-use pipeline smoke scripts with Python implementations so the core audit/feature-contract checks work without PowerShell as the primary runtime. Keep PowerShell wrappers as compatibility entrypoints, but make the portable implementation OS-agnostic and reusable by CI, child projects, and non-Windows/non-pwsh hosts.
+2. Python parity for `audit_docs.py` and `check_pipeline_feature_contracts.py`.
+   Port or wrap the two highest-use pipeline smoke scripts with Python implementations so the core audit/feature-contract checks work with Python-only tooling as the primary runtime. Remove legacy shell wrappers and keep the portable Python implementation OS-agnostic and reusable by CI, child projects, and non-Windows hosts.
 
 3. Document-native tier checker backend.
    Make `knowledge_tier_check` and related tier tooling work from source documents directly, without requiring compiled SQLite. Treat document files plus `DOCS.json` as the source of truth; allow tier metadata in document metadata or an explicit `DOCS.json` override. Add backend selection such as `documents`, `knowledge_files`, `sqlite`, and `auto`, where `auto` uses SQLite only when it is current and declared, falls back to `knowledge_files` when appropriate, and otherwise scans documents directly. In `SCRIPTS.json`, make this explicit as a runtime contract: tier checks require compiled knowledge only when the SQLite backend is selected; document-native checks should remain available in projects without compiled SQLite.

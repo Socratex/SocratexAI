@@ -1,11 +1,20 @@
 #!/usr/bin/env python3
-"""Dry-run SocratexPipeline project initialization without PowerShell."""
+"""Initialize a SocratexPipeline project with Python-only tooling."""
 
 from __future__ import annotations
 
 import argparse
+import json
+import re
+import shutil
+import subprocess
 import sys
+from collections import OrderedDict
 from pathlib import Path
+from typing import Any
+
+from pipeline_script_helpers import configure_stdio, split_values, write_json, write_text
+from python_runtime import runtime_report
 
 
 AI_MODES = {"Lite", "Standard", "Enterprise"}
@@ -14,30 +23,9 @@ DIRECTIVE_MODES = {"snapshot", "merge", "replace"}
 YES_NO_TBD = {"yes", "no", "TBD"}
 
 
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
-
-
-def repo_root() -> Path:
-    return Path(__file__).resolve().parents[2]
-
-
-def split_values(values: list[str]) -> list[str]:
-    result: list[str] = []
-    for value in values:
-        for part in value.split(","):
-            item = part.strip()
-            if item and item not in result:
-                result.append(item)
-    return result
-
-
 def validate_choice(name: str, value: str, allowed: set[str]) -> None:
     if value not in allowed:
-        options = ", ".join(sorted(allowed))
-        raise ValueError(f"{name} must be one of: {options}")
+        raise ValueError(f"{name} must be one of: {', '.join(sorted(allowed))}")
 
 
 def resolve_communication_profile(root: Path, profile: str) -> str:
@@ -51,92 +39,142 @@ def resolve_communication_profile(root: Path, profile: str) -> str:
     return normalized
 
 
-def known_packs(root: Path) -> set[str]:
-    project_dir = root / "project"
-    return {path.name.lower() for path in project_dir.iterdir() if path.is_dir()}
+def copy_template(root: Path, install_root: Path, template_name: str, destination: str, dry_run: bool) -> None:
+    source = root / "templates" / template_name
+    target = install_root / destination
+    if dry_run:
+        print(f"Would copy template: {source} -> {target}")
+        return
+    if not target.exists():
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
 
 
-def template_copy_lines(root: Path, install_root: Path, keep: set[str], ai_mode: str, use_changelog: str) -> list[str]:
-    template_dir = root / "templates"
-
-    def copy(template_name: str, destination: str) -> str:
-        return f"Would copy template: {template_dir / template_name} -> {install_root / destination}"
-
-    def copy_code(template_name: str, destination: str) -> str:
-        return copy(str(Path("code") / template_name), destination)
-
-    lines: list[str] = [
-        f"Would copy root controller: {template_dir / 'SOCRATEX.md'} -> {root / 'SOCRATEX.md'}",
-    ]
-    if "code" in keep:
-        lines.extend(
-            [
-                copy_code("DOCS.json", "DOCS.json"),
-                copy_code("STATE.json", "STATE.json"),
-                copy_code("_PLAN.json", "_PLAN.json"),
-                copy_code("DECISIONS.json", "DECISIONS.json"),
-                copy_code("PIPELINE-CONFIG.json", "PIPELINE-CONFIG.json"),
-            ]
-        )
-    else:
-        lines.extend(
-            [
-                copy("DOCS.json", "DOCS.json"),
-                copy("STATE.md", "STATE.md"),
-                copy("_PLAN.md", "_PLAN.md"),
-                copy("DECISIONS.md", "DECISIONS.md"),
-                copy("JOURNAL.md", "JOURNAL.md"),
-                copy("REVIEW.md", "REVIEW.md"),
-                copy("PIPELINE-CONFIG.json", "PIPELINE-CONFIG.json"),
-            ]
-        )
-
-    lines.extend(
-        [
-            copy("WORKFLOW.json", "WORKFLOW.json"),
-            copy(str(Path("team") / "product.json"), str(Path("team") / "product.json")),
-            copy(str(Path("team") / "technical.json"), str(Path("team") / "technical.json")),
-            copy(str(Path("team") / "performance.json"), str(Path("team") / "performance.json")),
-            copy(str(Path("team") / "experience.json"), str(Path("team") / "experience.json")),
-            copy(str(Path("team") / "pipeline.json"), str(Path("team") / "pipeline.json")),
-            copy(str(Path("docs-tech") / "KNOWLEDGE-VIEWS.json"), str(Path("docs-tech") / "KNOWLEDGE-VIEWS.json")),
-        ]
+def canonical_document(content: OrderedDict[str, Any], title: str, role: str) -> OrderedDict[str, Any]:
+    return OrderedDict(
+        index=list(content.keys()),
+        content=content,
+        metadata=OrderedDict(schema="socratex-data-document/v1", title=title, role=role),
     )
 
+
+def ensure_gitignore(root: Path, dry_run: bool) -> None:
+    gitignore = root / ".gitignore"
+    comment = "# AI working files in user's prompt language - local-only, not for review"
+    ignored = "/ignored"
+    if dry_run:
+        print("Would ensure .gitignore contains branch-scoped AI working files ignore rule.")
+        return
+    content = gitignore.read_text(encoding="utf-8") if gitignore.is_file() else ""
+    lines = content.splitlines()
+    changed = False
+    if comment not in lines:
+        lines.append(comment)
+        changed = True
+    if not any(line.rstrip("/") == ignored for line in lines):
+        lines.append(ignored)
+        changed = True
+    if changed:
+        write_text(gitignore, "\n".join(lines).rstrip() + "\n")
+
+
+def initialize_assistant_layout(root: Path, install_root: Path, project_name: str, dry_run: bool) -> None:
+    assistant_root = root / ".aiassistant" / "socratex"
+    if dry_run:
+        print(f"Would create branch-scoped committed directives under: {assistant_root}")
+        return
+    assistant_root.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(root / "AGENTS.md", assistant_root / "AGENTS.md")
+    write_text(
+        assistant_root / "DOCS.md",
+        """# SocratexAI Documents
+
+## Summary
+
+Committed SocratexAI project directives live here.
+
+Local branch working memory lives under `ignored/ai-socratex/` when branch-scoped mode is active.
+""",
+    )
+    config_path = install_root / "PIPELINE-CONFIG.json"
+    if config_path.is_file():
+        shutil.copy2(config_path, assistant_root / "PIPELINE-CONFIG.json")
+    project_file = re.sub(r'[\\/:*?"<>|]', "-", project_name).strip() or "PROJECT"
+    write_text(
+        root / ".aiassistant" / f"{project_file}.md",
+        """# Project Rules
+
+## Summary
+
+Project-specific code generation rules belong here when they are durable and review-facing.
+""",
+    )
+
+
+def copy_project_files(root: Path, install_root: Path, keep: set[str], ai_mode: str, use_changelog: str, dry_run: bool) -> None:
+    if dry_run:
+        print(f"Would copy root controller: {root / 'templates' / 'SOCRATEX.md'} -> {root / 'SOCRATEX.md'}")
+    else:
+        shutil.copy2(root / "templates" / "SOCRATEX.md", root / "SOCRATEX.md")
+    if "code" in keep:
+        for template in ["DOCS.json", "STATE.json", "_PLAN.json", "DECISIONS.json", "PIPELINE-CONFIG.json"]:
+            copy_template(root, install_root, f"code/{template}", template, dry_run)
+    else:
+        for template in ["DOCS.json", "STATE.md", "_PLAN.md", "DECISIONS.md", "JOURNAL.md", "REVIEW.md", "PIPELINE-CONFIG.json"]:
+            copy_template(root, install_root, template, template, dry_run)
+    for template in [
+        "WORKFLOW.json",
+        "team/product.json",
+        "team/technical.json",
+        "team/performance.json",
+        "team/experience.json",
+        "team/pipeline.json",
+        "docs-tech/KNOWLEDGE-VIEWS.json",
+    ]:
+        copy_template(root, install_root, template, template, dry_run)
     if "code" in keep and ai_mode != "Lite":
-        lines.extend(
-            [
-                copy("_PROMPTS.md", "_PROMPTS.md"),
-                copy_code("_PROMPT-QUEUE.json", "_PROMPT-QUEUE.json"),
-                copy("_INSTRUCTIONS.md", "_INSTRUCTIONS.md"),
-                copy_code("_INSTRUCTION-QUEUE.json", "_INSTRUCTION-QUEUE.json"),
-                copy_code("TODO.json", "TODO.json"),
-                copy_code("BUGS.json", "BUGS.json"),
-                copy_code("BUGS-SOLVED.json", "BUGS-SOLVED.json"),
-            ]
-        )
+        for template, destination in [
+            ("_PROMPTS.md", "_PROMPTS.md"),
+            ("code/_PROMPT-QUEUE.json", "_PROMPT-QUEUE.json"),
+            ("_INSTRUCTIONS.md", "_INSTRUCTIONS.md"),
+            ("code/_INSTRUCTION-QUEUE.json", "_INSTRUCTION-QUEUE.json"),
+            ("code/TODO.json", "TODO.json"),
+            ("code/BUGS.json", "BUGS.json"),
+            ("code/BUGS-SOLVED.json", "BUGS-SOLVED.json"),
+            ("code/context-docs/ENGINEERING.json", "context-docs/ENGINEERING.json"),
+            ("code/context-docs/TECHNICAL.json", "context-docs/TECHNICAL.json"),
+            ("code/context-docs/FROZEN_LAYERS.json", "context-docs/FROZEN_LAYERS.json"),
+            ("logs-.gitkeep", "logs/.gitkeep"),
+        ]:
+            copy_template(root, install_root, template, destination, dry_run)
         if use_changelog != "no":
-            lines.append(copy_code("CHANGELOG.json", "CHANGELOG.json"))
-        lines.extend(
-            [
-                copy_code(str(Path("context-docs") / "ENGINEERING.json"), str(Path("context-docs") / "ENGINEERING.json")),
-                copy_code(str(Path("context-docs") / "TECHNICAL.json"), str(Path("context-docs") / "TECHNICAL.json")),
-                copy_code(str(Path("context-docs") / "FROZEN_LAYERS.json"), str(Path("context-docs") / "FROZEN_LAYERS.json")),
-                copy("logs-.gitkeep", str(Path("logs") / ".gitkeep")),
-            ]
-        )
+            copy_template(root, install_root, "code/CHANGELOG.json", "CHANGELOG.json", dry_run)
     elif "code" in keep:
-        lines.append(copy_code("TODO.json", "TODO.json"))
+        copy_template(root, install_root, "code/TODO.json", "TODO.json", dry_run)
         if use_changelog != "no":
-            lines.append(copy_code("CHANGELOG.json", "CHANGELOG.json"))
-
+            copy_template(root, install_root, "code/CHANGELOG.json", "CHANGELOG.json", dry_run)
     if keep & {"generic", "personal", "creative"}:
-        lines.extend([copy("BACKLOG.md", "BACKLOG.md"), copy("ISSUES.md", "ISSUES.md")])
-    return lines
+        copy_template(root, install_root, "BACKLOG.md", "BACKLOG.md", dry_run)
+        copy_template(root, install_root, "ISSUES.md", "ISSUES.md", dry_run)
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Dry-run SocratexPipeline project initialization.")
+def run_python(script: Path, args: list[str], dry_run: bool) -> None:
+    if dry_run:
+        print(f"Would run: {sys.executable} {script} {' '.join(args)}")
+        return
+    completed = subprocess.run([sys.executable, str(script), *args], check=False)
+    if completed.returncode != 0:
+        raise SystemExit(f"{script.name} failed with exit code {completed.returncode}")
+
+
+def maybe_run(script: Path, args: list[str], dry_run: bool) -> None:
+    if script.is_file():
+        run_python(script, args, dry_run)
+
+
+def main() -> int:
+    configure_stdio()
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project-name", "-ProjectName", default="Initialized SocratexPipeline Project")
     parser.add_argument("--language", "-Language", default="English")
     parser.add_argument("--ai-mode", "-AiMode", default="Standard")
@@ -170,13 +208,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--compile-agent", "-CompileAgent", action="store_true")
     parser.add_argument("--run-audit", "-RunAudit", action="store_true")
     parser.add_argument("--dry-run", "-DryRun", action="store_true")
-    return parser.parse_args()
+    args = parser.parse_args()
 
-
-def main() -> int:
-    configure_stdio()
-    args = parse_args()
-    root = repo_root()
+    root = Path(__file__).resolve().parents[2]
     try:
         validate_choice("AiMode", args.ai_mode, AI_MODES)
         validate_choice("UseChangelog", args.use_changelog, YES_NO_TBD)
@@ -184,12 +218,10 @@ def main() -> int:
         validate_choice("DirectiveMode", args.directive_mode, DIRECTIVE_MODES)
         communication_profile = resolve_communication_profile(root, args.communication_profile)
         packs = split_values(args.keep_packs)
-        known = known_packs(root)
+        known = {path.name.lower() for path in (root / "project").iterdir() if path.is_dir()}
         for pack in packs:
             if pack.lower() not in known:
                 raise ValueError(f"Unknown project pack: {pack}")
-        if not args.dry_run:
-            raise ValueError("Python initializer currently supports --dry-run only; use the legacy initializer for writes until the full port lands.")
     except ValueError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
@@ -198,33 +230,109 @@ def main() -> int:
     trash_project_dir = root / "temp" / "trash" / "project"
     trash_initializer_dir = root / "temp" / "trash" / "initializer"
     keep = {pack.lower() for pack in packs}
-
-    print("==> SocratexPipeline initialization dry run")
-    print(f"Project root: {root}")
-    print(f"Project name: {args.project_name}")
-    print(f"Language: {args.language}")
-    print(f"AI mode: {args.ai_mode}")
-    print(f"Communication profile: {communication_profile}")
-    print(f"Keep packs: {', '.join(packs)}")
-    print(f"Directive mode: {args.directive_mode}")
+    all_packs = [path for path in (root / "project").iterdir() if path.is_dir()]
 
     if args.create_files:
-        for line in template_copy_lines(root, install_root, keep, args.ai_mode, args.use_changelog):
-            print(line)
+        copy_project_files(root, install_root, keep, args.ai_mode, args.use_changelog, args.dry_run)
+        config_path = install_root / "PIPELINE-CONFIG.json"
+        if not args.dry_run and config_path.is_file():
+            runtime_status = runtime_report(root)
+            config_content: OrderedDict[str, Any] = OrderedDict(
+                summary="Initialized project configuration for SocratexPipeline.",
+                language=args.language,
+                active_project_packs=packs,
+                ai_operating_mode=args.ai_mode,
+                git=args.use_git,
+                ai_may_commit=args.ai_may_commit,
+                ai_may_push=args.ai_may_push,
+                branch_workflow=args.branch_mode,
+                external_changes_possible=args.external_changes_possible,
+                force_ddd_adiv=args.force_ddd_adiv,
+                import_pipeline_package=args.import_pipeline_package,
+                package_manager_detection=args.package_manager_detection,
+                directive_mode=args.directive_mode,
+                first_target=args.first_target,
+                first_session_success_criteria=args.first_session_success,
+                communication=OrderedDict(profile=communication_profile),
+                changelog=OrderedDict(enabled=args.use_changelog),
+                pipeline=OrderedDict(
+                    version="0.2.0-alpha",
+                    update_source="TBD",
+                    public_bootstrap_url="TBD",
+                    update_command=f'python SocratexAI/tools/pipeline/update_pipeline_from_link.py --source "<source>" --packs {",".join(packs)} --reinitialize-new',
+                    remove_command="python SocratexAI/tools/pipeline/remove_pipeline.py --target-path .",
+                    reinitialize_command="python SocratexAI/tools/pipeline/reinitialize_pipeline.py --target-path .",
+                ),
+                workflow=OrderedDict(
+                    branch_mode=args.branch_mode,
+                    branch_files_dir="ignored/ai-socratex",
+                    branch_state_file="ignored/ai-socratex/<branch>-STATE.md",
+                    branch_plan_file="ignored/ai-socratex/<branch>-PLAN.md",
+                    branch_files_language=args.branch_files_language,
+                ),
+                project_profile=OrderedDict(
+                    lifecycle=args.project_lifecycle,
+                    test_coverage=args.test_coverage,
+                    framework=args.framework,
+                    framework_kind=args.framework_kind,
+                    linter=args.linter,
+                    ci=args.ci,
+                    docs=args.docs,
+                    team_size=args.team_size,
+                    velocity=args.velocity,
+                    highest_pain=args.highest_pain,
+                    stack=split_values(args.stack_tags),
+                ),
+                runtime_status=runtime_status,
+            )
+            write_json(config_path, canonical_document(config_content, "Pipeline Config", "Initialized project configuration for SocratexPipeline."))
+        if not args.dry_run and (root / "pipeline_featurelist.json").is_file():
+            install_root.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(root / "pipeline_featurelist.json", install_root / "pipeline_featurelist.json")
+            maybe_run(root / "tools" / "repo" / "sync_pipeline_featurelist.py", ["--target-path", str(root)], args.dry_run)
+            maybe_run(root / "tools" / "knowledge" / "knowledge_compile.py", [], args.dry_run)
         if "code" in keep and args.branch_mode == "branch_scoped":
-            print("Would initialize root ignored/ai-socratex branch memory.")
-            print(f"Would create branch-scoped committed directives under: {root / '.aiassistant' / 'socratex'}")
+            if args.dry_run:
+                print("Would initialize root ignored/ai-socratex branch memory.")
+            else:
+                run_python(root / "tools" / "pipeline" / "init_branch_memory.py", ["--branch-files-dir", "ignored/ai-socratex", "--ensure-gitignore"], False)
+            initialize_assistant_layout(root, install_root, args.project_name, args.dry_run)
 
-    print(f"Would set project name in README.md to: {args.project_name}")
-    for pack_dir in sorted((root / "project").iterdir()):
-        if pack_dir.is_dir() and pack_dir.name.lower() not in keep:
-            print(f"Would move project pack: {pack_dir} -> {trash_project_dir / pack_dir.name}")
-    if (root / "initializer").is_dir():
-        print(f"Would move initializer: {root / 'initializer'} -> {trash_initializer_dir}")
+    readme_path = root / "README.md"
+    if args.dry_run:
+        print(f"Would set project name in README.md to: {args.project_name}")
+    elif readme_path.is_file():
+        write_text(readme_path, readme_path.read_text(encoding="utf-8").replace("# SocratexPipeline", f"# {args.project_name}"))
+
+    for pack_dir in all_packs:
+        if pack_dir.name.lower() not in keep:
+            target = trash_project_dir / pack_dir.name
+            if args.dry_run:
+                print(f"Would move project pack: {pack_dir} -> {target}")
+            else:
+                if target.exists():
+                    shutil.rmtree(target)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(pack_dir), str(target))
+
+    initializer = root / "initializer"
+    if initializer.exists():
+        if args.dry_run:
+            print(f"Would move initializer: {initializer} -> {trash_initializer_dir}")
+        else:
+            if trash_initializer_dir.exists():
+                shutil.rmtree(trash_initializer_dir)
+            trash_initializer_dir.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(initializer), str(trash_initializer_dir))
+
     if args.compile_agent:
-        print(f"Would compile AGENTS.md for packs: {', '.join(packs)}")
+        run_python(root / "tools" / "pipeline" / "generate_installed_agent_instructions.py", ["--packs", *packs, "--output-path", "AGENTS.md"], args.dry_run)
     if args.run_audit and "code" in keep:
-        print("Would run initialized code audit.")
+        audit_py = root / "tools" / "documents" / "audit_docs.py"
+        if audit_py.is_file():
+            run_python(audit_py, ["--initialized"], args.dry_run)
+        else:
+            print("Audit requested, but no Python audit_docs.py entrypoint is available; skipped instead of invoking legacy shell tooling.")
 
     print("Initialization cleanup complete.")
     print("Recommended next improvements: configure quality gate command, Git convention, CI integration, frozen layer candidates, and domain-specific context capsules.")

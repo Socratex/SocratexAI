@@ -113,7 +113,8 @@ def check_stale(compiled_root: Path, target_path: Path, compiled_relative_path: 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("document")
+    parser.add_argument("document", nargs="?")
+    parser.add_argument("--document", "-Document", dest="document_option", default="")
     parser.add_argument("--compiled-root", default="")
     parser.add_argument("--allow-stale", action="store_true")
     parser.add_argument("--json", action="store_true")
@@ -128,7 +129,10 @@ def main() -> int:
     if not compiled_root.is_dir():
         raise FileNotFoundError(f"Compiled root does not exist: {compiled_root}")
 
-    target_path, compiled_relative_path = resolve_target(repo_root, compiled_root.resolve(), args.document)
+    document = args.document_option or args.document
+    if not document:
+        raise SystemExit("--document or positional document is required.")
+    target_path, compiled_relative_path = resolve_target(repo_root, compiled_root.resolve(), document)
     if not args.allow_stale:
         check_stale(compiled_root.resolve(), target_path, compiled_relative_path)
 
@@ -137,7 +141,7 @@ def main() -> int:
         print(
             json.dumps(
                 {
-                    "document": args.document,
+                    "document": document,
                     "path": str(target_path),
                     "compiled_path": compiled_relative_path,
                     "content": content,

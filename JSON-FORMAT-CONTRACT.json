@@ -30,7 +30,7 @@
                 "evals/personas.json": "Eval protocol consumed by check_evals; keep direct schema until eval tooling is canonical-aware.",
                 "evals/results/baseline.json": "Eval result protocol; keep direct schema for score comparison.",
                 "evals/results/with-pipeline.json": "Eval result protocol; keep direct schema for score comparison.",
-                "PIPELINE-PACKAGE.json": "Generated managed package manifest written by sync_managed_pipeline_package.ps1; operational direct schema records package hashes, local overrides, generated paths, and protected paths."
+                "PIPELINE-PACKAGE.json": "Generated managed package manifest written by sync_managed_pipeline_package.py; operational direct schema records package hashes, local overrides, generated paths, and protected paths."
             }
         },
         "migration_followups": {

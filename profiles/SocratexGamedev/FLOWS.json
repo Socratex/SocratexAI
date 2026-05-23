@@ -27,7 +27,7 @@
             "then": [
                 "Identify every separable task in the prompt before editing files.",
                 "Merge duplicate or overlapping tasks from input into one scope instead of creating parallel duplicates.",
-                "Check _PLAN.json with Tools/json/json_read.ps1 to find other duplicates - if found - append input tasks to existing PLAN entries with JSON document scripts instead of adding new tasks to PLAN",
+                "Check _PLAN.json with Tools/json/json_read.py to find other duplicates - if found - append input tasks to existing PLAN entries with JSON document scripts instead of adding new tasks to PLAN",
                 "Add remaining tasks to PLAN with JSON document scripts to proper places among existing PLAN steps - by prerequisite cost: first tasks that unlocks or optimizes later work, then diagnostics or bugfixes, then implementation features.",
                 "Execute only the first approved/current task unless the user clearly asks for more in one run.",
                 "Treat each resulting task independently through the most specific matching flow.",
@@ -141,8 +141,8 @@
             "when": "Standalone CONTEXT command.",
             "then": [
                 "subroutine:load_context",
-                "Run Tools/knowledge/context_tags.ps1 with the user text, or with \"context\" for a standalone CONTEXT command.",
-                "Run Tools/knowledge/knowledge_select.ps1 -Tags <tags> -Match any.",
+                "Run Tools/knowledge/context_tags.py with the user text, or with \"context\" for a standalone CONTEXT command.",
+                "Run Tools/knowledge/knowledge_select.py -Tags <tags> -Match any.",
                 "Read _PLAN.json, docs/TODO.json, or focused context-docs files only when the paired task requires them.",
                 "Do not edit files for standalone CONTEXT.",
                 "Report loaded context and the next executable step."
@@ -152,7 +152,7 @@
             "when": "Standalone CONTINUE command or explicit pass execution from _PLAN.json.",
             "then": [
                 "subroutine:load_context",
-                "Read _PLAN.json through Tools/json/json_read.ps1.",
+                "Read _PLAN.json through Tools/json/json_read.py.",
                 "Before executing the resolved pass or proposed target, decide whether you need user clarification, missing information, product direction, or a choice between meaningful implementation variants.",
                 "If clarification is needed, ask the user and wait instead of guessing; if everything is clear, proceed with the selected pass.",
                 "During execution, stop and ask the user when new ambiguity, missing information, product direction, or material risk appears.",
@@ -186,7 +186,7 @@
         "bug_command": {
             "when": "Standalone BUG command or active bug-registry work.",
             "then": [
-                "Read docs-tech/BUGS.json through Tools/json/json_read.ps1.",
+                "Read docs-tech/BUGS.json through Tools/json/json_read.py.",
                 "subroutine:load_context",
                 "Select the next active bug by current focus, diagnostic readiness, reproduction likelihood, and future-change cost.",
                 "Execute the smallest useful diagnostic step or source-owned fix.",
@@ -233,13 +233,13 @@
         "audit_command": {
             "when": "Standalone AUDIT command.",
             "then": [
-                "Run Tools/documents/audit_docs.ps1.",
+                "Run Tools/documents/audit_docs.py.",
                 "Inspect reported errors and warnings.",
                 "Fix hard process or document contract errors immediately when the correction is local and unambiguous.",
                 "Report soft warnings as recommendations unless the user asks to clean them up.",
                 "Use affected documents or scripts only; do not broaden cleanup.",
-                "Run Tools/repo/finish_task.ps1 after audit-driven edits when no commit finalizer is required.",
-                "Run Tools/repo/done.ps1 -Message \"<message>\" if source, tooling, config, or durable docs changed.",
+                "Run Tools/repo/finish_task.py after audit-driven edits when no commit finalizer is required.",
+                "Run Tools/repo/done.py -Message \"<message>\" if source, tooling, config, or durable docs changed.",
                 "Report audit result, fixes applied, verification result, and remaining warnings."
             ]
         },
@@ -247,10 +247,10 @@
             "when": "Standalone COMPILE command.",
             "then": [
                 "subroutine:load_context",
-                "Run Tools/pipeline/compile.ps1.",
+                "Run Tools/pipeline/compile.py.",
                 "Inspect refreshed, stale, missing, or changed compiled files.",
                 "Stop if compile produced no committed-file changes.",
-                "If compile changed committed files, run Tools/repo/done.ps1 -Message \"<message>\".",
+                "If compile changed committed files, run Tools/repo/done.py -Message \"<message>\".",
                 "Report compile result, changed files, finalizer result, and stale-source warnings."
             ]
         },
@@ -365,8 +365,8 @@
                     "context-docs/PERFORMANCE.json for runtime, frame pacing, memory, diagnostics, or performance questions",
                     "team/gameplay_feel.json for player-facing feel, readability, camera, UI, or combat feel questions while team files still exist",
                     "team/performance.json for budget or frame-time judgment while team files still exist",
-                    "Tools/knowledge/context_tags.ps1 with the user request when available",
-                    "Tools/knowledge/knowledge_select.ps1 with selected tags when available"
+                    "Tools/knowledge/context_tags.py with the user request when available",
+                    "Tools/knowledge/knowledge_select.py with selected tags when available"
                 ]
             },
             "documentation": {
@@ -403,7 +403,7 @@
             ],
             "load_documents": [
                 "Use metadata.types as the only source of truth for type-specific document loading.",
-                "Resolve selected prompt types with Tools/pipeline/load_type_context.ps1 and required compiled context documents with Tools/pipeline/read_compiled_context.ps1.",
+                "Resolve selected prompt types with Tools/pipeline/load_type_context.py and required compiled context documents with Tools/pipeline/read_compiled_context.py.",
                 "For each selected prompt type, read its load list and priority from metadata.types; use priority 10 when priority is omitted.",
                 "Return a deduplicated load list grouped by descending priority, keeping each document only in its highest-priority group.",
                 "When selected types conflict, explicit load wins over conditional avoid, and higher priority wins for duplicate load entries.",
@@ -411,9 +411,9 @@
                 "Do not add flow-local document loading rules; add or update metadata.types instead."
             ],
             "get_type_tags": [
-                "Use selected metadata.types keys as knowledge tags when calling Tools/knowledge/context_tags.ps1 or Tools/knowledge/knowledge_select.ps1.",
+                "Use selected metadata.types keys as knowledge tags when calling Tools/knowledge/context_tags.py or Tools/knowledge/knowledge_select.py.",
                 "Treat tag-selected notes as routing context, not as a substitute for exact source reads.",
-                "Append context found by Tools/knowledge/context_tags.ps1 and Tools/knowledge/knowledge_select.ps1."
+                "Append context found by Tools/knowledge/context_tags.py and Tools/knowledge/knowledge_select.py."
             ],
             "check_potential_suggestions": [
                 "Analise prompt against found type documents and your knowledge",
@@ -422,9 +422,9 @@
                 "if better approach found, ask user how to proceed - if user asks to proceed with original prompt, do not check potential suggestions again"
             ],
             "inspect_structured_document": [
-                "Inspect keys with Tools/documents/doc_keys.ps1 before reading structured YAML or JSON content.",
-                "Read only selected sections with Tools/documents/doc_read.ps1 or Tools/json/json_read.ps1 unless full-file structure is necessary.",
-                "Use Tools/documents/doc_route.ps1 or Tools/documents/doc_search.ps1 when the relevant item is unknown; use Tools/json/json_refresh_index.ps1 when a list-style JSON index must be regenerated from content."
+                "Inspect keys with Tools/documents/doc_keys.py before reading structured YAML or JSON content.",
+                "Read only selected sections with Tools/documents/doc_read.py or Tools/json/json_read.py unless full-file structure is necessary.",
+                "Use Tools/documents/doc_route.py or Tools/documents/doc_search.py when the relevant item is unknown; use Tools/json/json_refresh_index.py when a list-style JSON index must be regenerated from content."
             ],
             "inspect_gdscript": [
                 "Use python3 -B Tools/gamedev/gdscript_outline.py before full GDScript reads when applicable.",
@@ -432,12 +432,12 @@
             ],
             "check_potential_duplicates": [
                 "For normal documentation additions outside context-docs and technical capsules, derive likely duplicate terms.",
-                "Run Tools/documents/doc_list_review.ps1 -Terms <terms> when available.",
-                "If unavailable, run Tools/documents/doc_list_check.ps1 -Terms <terms> and inspect candidates with Tools/documents/doc_read_titles.ps1."
+                "Run Tools/documents/doc_list_review.py -Terms <terms> when available.",
+                "If unavailable, run Tools/documents/doc_list_check.py -Terms <terms> and inspect candidates with Tools/documents/doc_read_titles.py."
             ],
             "edit_safely": [
                 "Make the smallest safe edit at the owning boundary.",
-                "Preserve unresolved tasks and future scope by moving, merging, splitting, or renaming instead of deleting with Tools/json/json_item_insert.ps1, json_item_set.ps1, json_item_move.ps1, json_item_delete.ps1, json_line_insert.ps1, json_line_set.ps1, or json_line_move.ps1 for supported JSON edits.",
+                "Preserve unresolved tasks and future scope by moving, merging, splitting, or renaming instead of deleting with Tools/json/json_item_insert.py, json_item_set.py, json_item_move.py, json_item_delete.py, json_line_insert.py, json_line_set.py, or json_line_move.py for supported JSON edits.",
                 "Use repository scripts for structured, repeated, or contract-managed edits when available."
             ],
             "update_triggered_docs": [
@@ -449,9 +449,9 @@
             "finish": [
                 "Answer in prompt language.",
                 "Use concise emoji-prefixed chat sections for project status, findings, plans, and execution reports.",
-                "Distinguish if present: observed facts, inference, speculation, and value judgment when relevant; if only a focused check is needed before finalization, use Tools/repo/check_task.ps1 -Paths <changed paths>.",
+                "Distinguish if present: observed facts, inference, speculation, and value judgment when relevant; if only a focused check is needed before finalization, use Tools/repo/check_task.py -Paths <changed paths>.",
                 "subroutine:task_flow_audit",
-                "if files changed: Run Tools/repo/done.ps1 -Message \"<message>\" for source, tooling, config, generated context, or durable documentation changes.",
+                "if files changed: Run Tools/repo/done.py -Message \"<message>\" for source, tooling, config, generated context, or durable documentation changes.",
                 "if files changed: Inspect the finalizer output.",
                 "if files changed: changed files, verification result, commit or push status, and remaining risk."
             ],
@@ -464,7 +464,7 @@
                 "Always state whether any tool failed mechanically; when it did, fix the owning tool or input contract/spec before preserving a manual workaround.",
                 "Always state which repo tools/scripts were used and which edits were manual.",
                 "For complex or high-risk tasks, run a short adversarial review from the changelog append: ask what the changelog says changed, then check whether the diff really implements that claim and whether verification, plan/state, tool usage, or future-debt risk is missing.",
-                "Use Tools/repo/task_flow_audit.ps1 when available to print the checklist and changelog-based complex review prompt."
+                "Use Tools/repo/task_flow_audit.py when available to print the checklist and changelog-based complex review prompt."
             ],
             "diagnostic_report": [
                 "Report observed diagnostic facts in human-readable units.",

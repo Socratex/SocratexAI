@@ -90,10 +90,10 @@ def derive_tags(text: str, include_defaults: bool, allowed_tags: Iterable[str]) 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("text", nargs="*", help="Text to classify. Remaining arguments are joined with spaces.")
-    parser.add_argument("--repo-root", default="")
-    parser.add_argument("--no-defaults", action="store_true")
-    parser.add_argument("--json", action="store_true")
-    parser.add_argument("--as-knowledge-select-args", action="store_true")
+    parser.add_argument("--repo-root", "-RepoRoot", default="")
+    parser.add_argument("--no-defaults", "-NoDefaults", action="store_true")
+    parser.add_argument("--json", "-Json", action="store_true")
+    parser.add_argument("--as-knowledge-select-args", "-AsKnowledgeSelectArgs", action="store_true")
     return parser.parse_args()
 
 

@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-6f416d75c886
+Generated: source-6315e3f89464
 
 ## Source of Truth
 
@@ -272,7 +272,7 @@ Draft placeholder:
 {
     "title": "Tool-First JSON",
     "format": "markdown-section",
-    "body": "## Tool-First JSON\nUse SocratexAI tools for structured JSON documents in every project type, including generic, personal, and creative projects.\nIn non-code projects, this applies primarily to agent-only JSON files. User-facing Markdown memory can be edited as prose unless a dedicated Markdown tool exists.\nDefault tool discipline:\n- Use `tools/documents/list_document_keys.ps1` and `tools/documents/read_document_item.ps1` for selective reads when a JSON document is structured.\n- Use `tools/documents/insert_document_item.ps1` for controlled single-item insertion.\n- Use `tools/documents/bulk_insert_document_items.ps1` for controlled multi-item insertion into one document.\n- Use `tools/documents/move_document_item.ps1` for moving items inside one JSON document.\n- Use `tools/documents/migrate_document_item.ps1` for moving or copying items between JSON documents.\n- Use `tools/json/json_node_edit.ps1` when the full JSON node path is known, including nested list nodes and keys with dots through slash-separated paths.\n- For JSON operations that only change structure or order, such as move, reorder, delete, insert before/after, or migrate, use document/JSON scripts instead of manual JSON editing.\n- If one task requires both structural/order changes and content edits, perform the scripted structural operation first, then set or patch the content.\n- Treat document edit tools as transaction wrappers: the tool should own its write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.\n- Do not compose manual read/edit/normalize/cache/check/read command queues after a successful transactional document edit tool.\n- Use full `tools/documents/audit_docs.ps1` at the final verification boundary, not after every item edit; use `tools/pipeline/reinitialize_pipeline.ps1` when newly introduced initialized artifacts need to be added without overwriting existing memory.\n- Run status, audit, quality, line-index, and finish scripts at verification boundaries instead of after every micro-edit; for normal code-project work, complete the current edit scope, then run `tools/repo/finalize_task_check_commit_push.ps1 -Message \"<message>\"` when available.\n- `tools/repo/finalize_task_check_commit_push.ps1` is the preferred code-project closure command: it should discover changed files, normalize text, rebuild cache, refresh indexes, run audit/quality, stage intentional files, commit, push, and report final repository state.\n- If `tools/repo/finalize_task_check_commit_push.ps1` or an owned finalizer fails on a repeatable mechanical issue, improve the script before rerunning instead of preserving manual recovery steps.\n- Use `pipeline_featurelist.json` as the compact source/instance comparison layer; `tools/repo/open_pipeline_learning_issue.ps1` is the only public network intake path for pipeline improvement reports, while `tools/repo/learn_pipeline_features.ps1` is the maintainer-side promotion tool for reviewed reusable feature IDs.\n- Use `tools/knowledge/knowledge_select.ps1` to load compiled SQLite knowledge by named view, tag, type, source path, document path, entry name, or startup flag before expanding into heavier source documents.\n- Treat `AI-compiled/project/knowledge.sqlite` as generated output, not source of truth; edit sources first, refresh with `tools/knowledge/knowledge_compile.ps1` or targeted upserts, check with `tools/knowledge/knowledge_check.ps1`, and use `AI-compiled/project/knowledge-files/` plus `knowledge_file_*` scripts when SQLite is unavailable.\nFor structured JSON documents, full-text grep tools such as `Select-String`, `grep`, or `rg` are fallback tools, not the default read path. Use `tools/documents/read_document_item.ps1` when the stable key is known, `tools/documents/list_document_keys.ps1` when the local key list is needed, and `tools/documents/review_document_list_candidates.ps1` or `tools/documents/check_document_list_item_duplicates.ps1` when searching by intent or phrase. Use text grep on JSON only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.\nManual JSON edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.json`.\nNever silently bypass a relevant tool in a non-code project just because the project is not programming-related.\n- Use `tools/documents/insert_document_list_item.ps1` for simple reference, inspiration, source, URL, or one-line list additions inside an existing structured JSON item; it should replace chained key/read/search/manual-edit/check queues for that case.\n- Use `tools/documents/check_document_list_item_duplicates.ps1` before list insertion only when the user asks for a duplicate report or possible matches must be reviewed before choosing the target item.\n- For documentation updates outside context capsules and strictly technical agent memory, use the candidate-title flow by default: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>`, read only candidate sections with `tools/documents/read_document_items_by_title.ps1 -Titles <titles>`, then apply the update with one transactional insert or item script.\n- `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>` returns candidate titles, keys, matched terms, and excerpts so the agent can avoid broad reads before deciding whether an update is a duplicate.\n- `tools/documents/read_document_items_by_title.ps1 -Titles <titles>` reads only selected candidate sections by title or key after duplicate discovery.\n- Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title workflow: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.ps1 -Terms <words>`, read only candidates with `tools/documents/read_document_items_by_title.ps1 -Titles <titles>`, then write once through a transactional document script."
+    "body": "## Tool-First JSON\nUse SocratexAI tools for structured JSON documents in every project type, including generic, personal, and creative projects.\nIn non-code projects, this applies primarily to agent-only JSON files. User-facing Markdown memory can be edited as prose unless a dedicated Markdown tool exists.\nDefault tool discipline:\n- Use `tools/documents/list_document_keys.py` and `tools/documents/read_document_item.py` for selective reads when a JSON document is structured.\n- Use `tools/documents/insert_document_item.py` for controlled single-item insertion.\n- Use `tools/documents/bulk_insert_document_items.py` for controlled multi-item insertion into one document.\n- Use `tools/documents/move_document_item.py` for moving items inside one JSON document.\n- Use `tools/documents/migrate_document_item.py` for moving or copying items between JSON documents.\n- Use `tools/json/json_node_edit.py` when the full JSON node path is known, including nested list nodes and keys with dots through slash-separated paths.\n- For JSON operations that only change structure or order, such as move, reorder, delete, insert before/after, or migrate, use document/JSON scripts instead of manual JSON editing.\n- If one task requires both structural/order changes and content edits, perform the scripted structural operation first, then set or patch the content.\n- Treat document edit tools as transaction wrappers: the tool should own its write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output.\n- Do not compose manual read/edit/normalize/cache/check/read command queues after a successful transactional document edit tool.\n- Use full `tools/documents/audit_docs.py` at the final verification boundary, not after every item edit; use `tools/pipeline/reinitialize_pipeline.py` when newly introduced initialized artifacts need to be added without overwriting existing memory.\n- Run status, audit, quality, line-index, and finish scripts at verification boundaries instead of after every micro-edit; for normal code-project work, complete the current edit scope, then run `tools/repo/finalize_task_check_commit_push.py -Message \"<message>\"` when available.\n- `tools/repo/finalize_task_check_commit_push.py` is the preferred code-project closure command: it should discover changed files, normalize text, rebuild cache, refresh indexes, run audit/quality, stage intentional files, commit, push, and report final repository state.\n- If `tools/repo/finalize_task_check_commit_push.py` or an owned finalizer fails on a repeatable mechanical issue, improve the script before rerunning instead of preserving manual recovery steps.\n- Use `pipeline_featurelist.json` as the compact source/instance comparison layer; `tools/repo/open_pipeline_learning_issue.py` is the only public network intake path for pipeline improvement reports, while `tools/repo/learn_pipeline_features.py` is the maintainer-side promotion tool for reviewed reusable feature IDs.\n- Use `tools/knowledge/knowledge_select.py` to load compiled SQLite knowledge by named view, tag, type, source path, document path, entry name, or startup flag before expanding into heavier source documents.\n- Treat `AI-compiled/project/knowledge.sqlite` as generated output, not source of truth; edit sources first, refresh with `tools/knowledge/knowledge_compile.py` or targeted upserts, check with `tools/knowledge/knowledge_check.py`, and use `AI-compiled/project/knowledge-files/` plus `knowledge_file_*` scripts when SQLite is unavailable.\nFor structured JSON documents, full-text grep tools such as `Select-String`, `grep`, or `rg` are fallback tools, not the default read path. Use `tools/documents/read_document_item.py` when the stable key is known, `tools/documents/list_document_keys.py` when the local key list is needed, and `tools/documents/review_document_list_candidates.py` or `tools/documents/check_document_list_item_duplicates.py` when searching by intent or phrase. Use text grep on JSON only for raw formatting/encoding checks, parser or cache debugging, unknown references after document tools miss, or source-code searches.\nManual JSON edits are acceptable for schema changes, parser/tool fixes, very small local text corrections, or when the relevant script cannot run after following `core/SCRIPT-FALLBACK.json`.\nNever silently bypass a relevant tool in a non-code project just because the project is not programming-related.\n- Use `tools/documents/insert_document_list_item.py` for simple reference, inspiration, source, URL, or one-line list additions inside an existing structured JSON item; it should replace chained key/read/search/manual-edit/check queues for that case.\n- Use `tools/documents/check_document_list_item_duplicates.py` before list insertion only when the user asks for a duplicate report or possible matches must be reviewed before choosing the target item.\n- For documentation updates outside context capsules and strictly technical agent memory, use the candidate-title flow by default: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.py -Terms <words>`, read only candidate sections with `tools/documents/read_document_items_by_title.py -Titles <titles>`, then apply the update with one transactional insert or item script.\n- `tools/documents/check_document_list_item_duplicates.py -Terms <words>` returns candidate titles, keys, matched terms, and excerpts so the agent can avoid broad reads before deciding whether an update is a duplicate.\n- `tools/documents/read_document_items_by_title.py -Titles <titles>` reads only selected candidate sections by title or key after duplicate discovery.\n- Hard rule: documentation reads/writes outside context capsules and strictly technical agent memory must use the candidate-title workflow: derive likely duplicate words, run `tools/documents/check_document_list_item_duplicates.py -Terms <words>`, read only candidates with `tools/documents/read_document_items_by_title.py -Titles <titles>`, then write once through a transactional document script."
 }
 
 
@@ -416,15 +416,15 @@ Draft placeholder:
                     "project/personal",
                     "project/creative",
                     "templates/code",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -443,8 +443,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'adapter_pack_bootstrap' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -460,18 +460,18 @@ Draft placeholder:
                     "project/code/PACK.json",
                     "project/code/WORKFLOW.json",
                     "project/code/DDD-ADIV.json",
-                    "tools/codebase/check_code_context_gate.ps1",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/codebase/check_code_context_gate.py",
+                    "tools/knowledge/knowledge_code_context.py",
                     "tools/knowledge/knowledge_index.py",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -486,8 +486,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'agent_contract_and_core_protocols' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -501,15 +501,15 @@ Draft placeholder:
                     "core/SCRIPT-FALLBACK.json",
                     "project/code/PACK.json",
                     "project/code/DDD-ADIV.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -524,8 +524,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'future_first_implementation_steering' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -539,15 +539,15 @@ Draft placeholder:
                     "core/SCRIPT-FALLBACK.json",
                     "project/code/PACK.json",
                     "project/code/DDD-ADIV.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -562,8 +562,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'ddd_adiv_design_default' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -577,15 +577,15 @@ Draft placeholder:
                     "core/SCRIPT-FALLBACK.json",
                     "project/code/PACK.json",
                     "project/code/DDD-ADIV.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -600,8 +600,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'borrowed_before_invented' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -615,15 +615,15 @@ Draft placeholder:
                     "core/SCRIPT-FALLBACK.json",
                     "project/code/PACK.json",
                     "project/code/DDD-ADIV.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -638,8 +638,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'script_first_execution' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -653,15 +653,15 @@ Draft placeholder:
                     "core/SCRIPT-FALLBACK.json",
                     "project/code/PACK.json",
                     "project/code/DDD-ADIV.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -676,8 +676,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'repair_automation_before_manual_recovery' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -691,15 +691,15 @@ Draft placeholder:
                     "core/SCRIPT-FALLBACK.json",
                     "project/code/PACK.json",
                     "project/code/DDD-ADIV.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -714,8 +714,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'evidence_driven_debugging' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -729,80 +729,80 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
                     "DOCS.json",
                     "tools/documents",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "tools/documents/build_document_cache.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "pipeline_bootstrap_index.py",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "normalize_json_files.ps1",
+                    "json_migrate_content.py",
+                    "normalize_json_files.py",
                     "normalize_json_files.py",
                     "json_node_edit.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "pipeline_bootstrap_index.py",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "normalize_json_files.ps1",
+                        "json_migrate_content.py",
+                        "normalize_json_files.py",
                         "normalize_json_files.py",
                         "json_node_edit.py"
                     ]
@@ -824,8 +824,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'json_workflow_router' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -839,79 +839,79 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
                     "DOCS.json",
                     "tools/documents",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "pipeline_bootstrap_index.py",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "normalize_json_files.ps1",
+                    "json_migrate_content.py",
+                    "normalize_json_files.py",
                     "normalize_json_files.py",
                     "json_node_edit.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "pipeline_bootstrap_index.py",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "normalize_json_files.ps1",
+                        "json_migrate_content.py",
+                        "normalize_json_files.py",
                         "normalize_json_files.py",
                         "json_node_edit.py"
                     ]
@@ -933,8 +933,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'tool_first_json_document_workflow' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -944,72 +944,72 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "DOCS.json",
                     "tools/documents",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "build_document_cache.ps1",
                     "build_document_cache.py",
-                    "audit_docs.ps1",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "normalize_json_files.ps1",
+                    "json_migrate_content.py",
+                    "normalize_json_files.py",
                     "normalize_json_files.py",
                     "json_node_edit.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "build_document_cache.ps1",
                         "build_document_cache.py",
-                        "audit_docs.ps1",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "normalize_json_files.ps1",
+                        "json_migrate_content.py",
+                        "normalize_json_files.py",
                         "normalize_json_files.py",
                         "json_node_edit.py"
                     ]
@@ -1023,7 +1023,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
-                    "Prefer build_document_cache.py for Python-first document cache refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
+                    "Prefer build_document_cache.py for Python-first document cache refresh and keep the legacy wrapper only until the final Python-only deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -1031,8 +1031,8 @@ Draft placeholder:
                     "python3 -B tools/quality/check_python_syntax.py tools/documents/build_document_cache.py tools/documents/document_read_cache_engine.py",
                     "python3 -B tools/documents/build_document_cache.py --output-dir /tmp/socratex-doc-cache-smoke",
                     "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/documents/build_document_cache.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'document_cache_and_audit' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1041,39 +1041,39 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
                     "utf8_file_helpers.py",
-                    "audit_docs.ps1"
+                    "utf8_file_helpers.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
                         "utf8_file_helpers.py",
-                        "audit_docs.ps1"
+                        "utf8_file_helpers.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [],
@@ -1085,8 +1085,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'utf8_and_text_normalization' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1096,31 +1096,31 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "tools/knowledge/knowledge_code_context.py",
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
                     "tools/codebase/update_code_line_index.py",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "knowledge_code_context.ps1",
                     "knowledge_code_context.py",
-                    "check_code_context_gate.ps1",
-                    "update_code_line_index.ps1",
+                    "knowledge_code_context.py",
+                    "check_code_context_gate.py",
                     "update_code_line_index.py",
-                    "audit_docs.ps1"
+                    "update_code_line_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "knowledge_code_context.ps1",
                         "knowledge_code_context.py",
-                        "check_code_context_gate.ps1",
-                        "update_code_line_index.ps1",
+                        "knowledge_code_context.py",
+                        "check_code_context_gate.py",
                         "update_code_line_index.py",
-                        "audit_docs.ps1"
+                        "update_code_line_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -1132,7 +1132,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
-                    "Prefer update_code_line_index.py for Python-first line-index refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
+                    "Prefer update_code_line_index.py for Python-first line-index refresh and keep the legacy wrapper only until the final Python-only deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -1140,8 +1140,8 @@ Draft placeholder:
                     "python3 -B tools/quality/check_python_syntax.py tools/codebase/update_code_line_index.py",
                     "python3 -B tools/codebase/update_code_line_index.py --check",
                     "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/codebase/update_code_line_index.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'code_line_index' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1154,36 +1154,36 @@ Draft placeholder:
                     "QUALITY-GATE.json",
                     "project/code/GIT.json",
                     "tools/repo/finalize_changed_files_commit_push.py",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "finalize_task_check_commit_push.ps1",
-                    "finalize_changed_files_commit_push.ps1",
+                    "finalize_task_check_commit_push.py",
                     "finalize_changed_files_commit_push.py",
-                    "run_final_task_checks.ps1",
-                    "check_task.ps1",
-                    "check_toolchain_health.ps1",
-                    "check_sensitive_reference_leaks.ps1",
-                    "run_quality_gate.ps1",
-                    "run_quality_gate_contract.ps1",
-                    "run_quality_fix.ps1",
+                    "finalize_changed_files_commit_push.py",
+                    "run_final_task_checks.py",
+                    "check_task.py",
+                    "check_toolchain_health.py",
+                    "check_sensitive_reference_leaks.py",
+                    "run_quality_gate.py",
+                    "run_quality_gate_contract.py",
+                    "run_quality_fix.py",
                     "check_runtime.py",
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "finalize_task_check_commit_push.ps1",
-                        "finalize_changed_files_commit_push.ps1",
-                        "run_final_task_checks.ps1",
-                        "check_task.ps1",
-                        "check_toolchain_health.ps1",
-                        "check_sensitive_reference_leaks.ps1",
-                        "run_quality_gate.ps1",
-                        "run_quality_gate_contract.ps1",
-                        "run_quality_fix.ps1",
+                        "finalize_task_check_commit_push.py",
+                        "finalize_changed_files_commit_push.py",
+                        "run_final_task_checks.py",
+                        "check_task.py",
+                        "check_toolchain_health.py",
+                        "check_sensitive_reference_leaks.py",
+                        "run_quality_gate.py",
+                        "run_quality_gate_contract.py",
+                        "run_quality_fix.py",
                         "check_runtime.py",
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -1198,10 +1198,10 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_sensitive_reference_leaks.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/repo/check_sensitive_reference_leaks.py",
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/quality/run_quality_gate.py"
                 ],
                 "known_failure_if_missing": "If 'batch_task_checks' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1213,36 +1213,36 @@ Draft placeholder:
                     "tools/quality",
                     "QUALITY-GATE.json",
                     "project/code/GIT.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "finalize_task_check_commit_push.ps1",
-                    "finalize_changed_files_commit_push.ps1",
+                    "finalize_task_check_commit_push.py",
                     "finalize_changed_files_commit_push.py",
-                    "run_final_task_checks.ps1",
-                    "check_task.ps1",
-                    "check_toolchain_health.ps1",
-                    "run_quality_gate.ps1",
+                    "finalize_changed_files_commit_push.py",
+                    "run_final_task_checks.py",
+                    "check_task.py",
+                    "check_toolchain_health.py",
                     "run_quality_gate.py",
-                    "run_quality_gate_contract.ps1",
-                    "run_quality_fix.ps1",
+                    "run_quality_gate.py",
+                    "run_quality_gate_contract.py",
+                    "run_quality_fix.py",
                     "check_runtime.py",
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "finalize_task_check_commit_push.ps1",
-                        "finalize_changed_files_commit_push.ps1",
-                        "run_final_task_checks.ps1",
-                        "check_task.ps1",
-                        "check_toolchain_health.ps1",
-                        "run_quality_gate.ps1",
+                        "finalize_task_check_commit_push.py",
+                        "finalize_changed_files_commit_push.py",
+                        "run_final_task_checks.py",
+                        "check_task.py",
+                        "check_toolchain_health.py",
                         "run_quality_gate.py",
-                        "run_quality_gate_contract.ps1",
-                        "run_quality_fix.ps1",
+                        "run_quality_gate.py",
+                        "run_quality_gate_contract.py",
+                        "run_quality_fix.py",
                         "check_runtime.py",
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -1259,8 +1259,8 @@ Draft placeholder:
                 "verification_commands": [
                     "python3 -B tools/quality/check_python_syntax.py tools/repo/finalize_changed_files_commit_push.py tools/repo/run_final_task_checks.py",
                     "python3 -B tools/repo/finalize_changed_files_commit_push.py --help",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'git_batch_finishers' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, or installed child-project root handling is absent."
             },
@@ -1272,33 +1272,33 @@ Draft placeholder:
                     "tools/quality",
                     "QUALITY-GATE.json",
                     "project/code/GIT.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "finalize_task_check_commit_push.ps1",
-                    "finalize_changed_files_commit_push.ps1",
-                    "run_final_task_checks.ps1",
-                    "check_task.ps1",
-                    "check_toolchain_health.ps1",
-                    "run_quality_gate.ps1",
-                    "run_quality_gate_contract.ps1",
-                    "run_quality_fix.ps1",
+                    "finalize_task_check_commit_push.py",
+                    "finalize_changed_files_commit_push.py",
+                    "run_final_task_checks.py",
+                    "check_task.py",
+                    "check_toolchain_health.py",
+                    "run_quality_gate.py",
+                    "run_quality_gate_contract.py",
+                    "run_quality_fix.py",
                     "check_runtime.py",
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "finalize_task_check_commit_push.ps1",
-                        "finalize_changed_files_commit_push.ps1",
-                        "run_final_task_checks.ps1",
-                        "check_task.ps1",
-                        "check_toolchain_health.ps1",
-                        "run_quality_gate.ps1",
-                        "run_quality_gate_contract.ps1",
-                        "run_quality_fix.ps1",
+                        "finalize_task_check_commit_push.py",
+                        "finalize_changed_files_commit_push.py",
+                        "run_final_task_checks.py",
+                        "check_task.py",
+                        "check_toolchain_health.py",
+                        "run_quality_gate.py",
+                        "run_quality_gate_contract.py",
+                        "run_quality_fix.py",
                         "check_runtime.py",
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -1314,8 +1314,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'canonical_done_finalizer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, or installed child-project root handling is absent."
             },
@@ -1327,35 +1327,35 @@ Draft placeholder:
                     "tools/quality",
                     "QUALITY-GATE.json",
                     "project/code/GIT.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "finalize_task_check_commit_push.ps1",
-                    "finalize_changed_files_commit_push.ps1",
-                    "run_final_task_checks.ps1",
-                    "check_task.ps1",
-                    "check_toolchain_health.ps1",
-                    "run_quality_gate.ps1",
-                    "run_quality_gate_contract.ps1",
-                    "run_quality_fix.ps1",
+                    "finalize_task_check_commit_push.py",
+                    "finalize_changed_files_commit_push.py",
+                    "run_final_task_checks.py",
+                    "check_task.py",
+                    "check_toolchain_health.py",
+                    "run_quality_gate.py",
+                    "run_quality_gate_contract.py",
+                    "run_quality_fix.py",
                     "check_runtime.py",
-                    "audit_docs.ps1",
+                    "audit_docs.py",
                     "audit_docs.py",
                     "check_pipeline_feature_contracts.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "finalize_task_check_commit_push.ps1",
-                        "finalize_changed_files_commit_push.ps1",
-                        "run_final_task_checks.ps1",
-                        "check_task.ps1",
-                        "check_toolchain_health.ps1",
-                        "run_quality_gate.ps1",
-                        "run_quality_gate_contract.ps1",
-                        "run_quality_fix.ps1",
+                        "finalize_task_check_commit_push.py",
+                        "finalize_changed_files_commit_push.py",
+                        "run_final_task_checks.py",
+                        "check_task.py",
+                        "check_toolchain_health.py",
+                        "run_quality_gate.py",
+                        "run_quality_gate_contract.py",
+                        "run_quality_fix.py",
                         "check_runtime.py",
-                        "audit_docs.ps1",
+                        "audit_docs.py",
                         "audit_docs.py",
                         "check_pipeline_feature_contracts.py"
                     ]
@@ -1372,8 +1372,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'toolchain_doctor' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1391,33 +1391,33 @@ Draft placeholder:
                     "project/personal",
                     "project/creative",
                     "templates/code",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "finalize_task_check_commit_push.ps1",
-                    "finalize_changed_files_commit_push.ps1",
-                    "run_final_task_checks.ps1",
-                    "check_task.ps1",
-                    "check_toolchain_health.ps1",
-                    "run_quality_gate.ps1",
-                    "run_quality_gate_contract.ps1",
-                    "run_quality_fix.ps1",
+                    "finalize_task_check_commit_push.py",
+                    "finalize_changed_files_commit_push.py",
+                    "run_final_task_checks.py",
+                    "check_task.py",
+                    "check_toolchain_health.py",
+                    "run_quality_gate.py",
+                    "run_quality_gate_contract.py",
+                    "run_quality_fix.py",
                     "check_runtime.py",
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "finalize_task_check_commit_push.ps1",
-                        "finalize_changed_files_commit_push.ps1",
-                        "run_final_task_checks.ps1",
-                        "check_task.ps1",
-                        "check_toolchain_health.ps1",
-                        "run_quality_gate.ps1",
-                        "run_quality_gate_contract.ps1",
-                        "run_quality_fix.ps1",
+                        "finalize_task_check_commit_push.py",
+                        "finalize_changed_files_commit_push.py",
+                        "run_final_task_checks.py",
+                        "check_task.py",
+                        "check_toolchain_health.py",
+                        "run_quality_gate.py",
+                        "run_quality_gate_contract.py",
+                        "run_quality_fix.py",
                         "check_runtime.py",
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -1435,8 +1435,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'generic_multi_stack_quality_gate' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1452,7 +1452,7 @@ Draft placeholder:
                     "tools/quality/check_python_syntax.py",
                     "tools/repo/run_final_task_checks.py",
                     "tools/repo/finalize_changed_files_commit_push.py",
-                    "tools/repo/run_final_task_checks.ps1",
+                    "tools/repo/run_final_task_checks.py",
                     "tools/repo/check_sensitive_reference_leaks.py"
                 ],
                 "required_scripts": [
@@ -1496,7 +1496,7 @@ Draft placeholder:
                     "python3 -B tools/repo/run_final_task_checks.py --quality --quality-command-names python_compile,eval_framework,sensitive_reference_smoke,transactional_doc_tools",
                     "python3 -B tools/quality/run_quality_gate.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
                     "python3 -B tools/quality/run_quality_gate_contract.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
-                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py tools/repo/finalize_changed_files_commit_push.py tools/repo/run_final_task_checks.ps1 QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py tools/repo/finalize_changed_files_commit_push.py tools/repo/run_final_task_checks.py QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
                 ],
                 "known_failure_if_missing": "QUALITY-GATE.json remains dependent on the retired command runtime even when individual Python checks exist, so Pass 0S cannot close without preserving source and child smoke coverage."
             },
@@ -1507,18 +1507,18 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1",
-                    "tools/documents/build_document_cache.ps1",
-                    "tools/pipeline/update_pipeline_from_link.ps1",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1",
+                    "tools/documents/audit_docs.py",
+                    "tools/documents/build_document_cache.py",
+                    "tools/pipeline/update_pipeline_from_link.py",
+                    "tools/pipeline/sync_managed_pipeline_package.py",
                     "tools/pipeline/update_pipeline_from_link.py",
                     "tools/pipeline/sync_managed_pipeline_package.py",
                     "tools/pipeline/pipeline_package.py",
@@ -1527,26 +1527,26 @@ Draft placeholder:
                     "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
                     "Initialize-SocratexPipeline.py",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "sync_managed_pipeline_package.py",
                     "update_pipeline_from_link.py",
                     "sync_pipeline_featurelist.py",
@@ -1556,26 +1556,26 @@ Draft placeholder:
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
                         "Initialize-SocratexPipeline.py",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "sync_managed_pipeline_package.py",
                         "update_pipeline_from_link.py",
                         "sync_pipeline_featurelist.py",
@@ -1598,12 +1598,12 @@ Draft placeholder:
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
                     "Refresh the installed SocratexAI document cache after managed package sync and before full verification so child audits validate current package files instead of stale cache entries.",
-                    "Prefer tools/pipeline/check_ai_compiled_context.py from audit_docs.ps1 when present so installed child packages use the Python-first compiled-context smoke before falling back to the legacy PowerShell checker.",
-                    "Do not claim removed or replaced PowerShell pipeline tooling is migrated unless each affected .ps1 path has a Python successor, compatibility wrapper, or explicit legacy/deferred reason, and the successor path has been exercised by source and child-project smoke/update verification."
+                    "Prefer tools/pipeline/check_ai_compiled_context.py from audit_docs.py when present so installed child packages use the Python-first compiled-context smoke before falling back to the legacy checker.",
+                    "Do not claim removed or replaced legacy pipeline tooling is migrated unless each affected retired entrypoint has a Python successor or explicit deletion reason, and the successor path has been exercised by source and child-project smoke/update verification."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
                     "python tools/pipeline/update_pipeline_from_link.py --source . --source-mode LocalPath --target-path <child> --full-verify",
                     "python tools/pipeline/pipeline_sweep.py --project source:SocratexAI=. --smoke --execute --stop-on-failure --json"
                 ],
@@ -1616,58 +1616,58 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1",
-                    "tools/pipeline/update_pipeline_from_link.ps1",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1"
+                    "tools/documents/audit_docs.py",
+                    "tools/pipeline/update_pipeline_from_link.py",
+                    "tools/pipeline/sync_managed_pipeline_package.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -1695,39 +1695,39 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
                     "utf8_file_helpers.py",
-                    "audit_docs.ps1"
+                    "utf8_file_helpers.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
                         "utf8_file_helpers.py",
-                        "audit_docs.ps1"
+                        "utf8_file_helpers.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [],
@@ -1739,8 +1739,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'pipeline_source_text_normalization' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1749,39 +1749,39 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
                     "utf8_file_helpers.py",
-                    "audit_docs.ps1"
+                    "utf8_file_helpers.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
                         "utf8_file_helpers.py",
-                        "audit_docs.ps1"
+                        "utf8_file_helpers.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [],
@@ -1793,8 +1793,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'pipeline_template_eof_normalization' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1803,39 +1803,39 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
                     "utf8_file_helpers.py",
-                    "audit_docs.ps1"
+                    "utf8_file_helpers.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
                         "utf8_file_helpers.py",
-                        "audit_docs.ps1"
+                        "utf8_file_helpers.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [],
@@ -1847,8 +1847,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'utf8_write_check_diff_line_guard' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1859,56 +1859,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -1925,8 +1925,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'initializer_and_reinitializer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -1943,56 +1943,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2011,8 +2011,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'branch_memory_initialization' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2023,56 +2023,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2089,8 +2089,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'directive_compiler_and_setter' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2102,19 +2102,19 @@ Draft placeholder:
                     "project/code/PACK.json",
                     "tools/repo/task_snapshot.py",
                     "tools/repo/end_prompt_snapshot.py",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
                     "task_snapshot.py",
                     "end_prompt_snapshot.py",
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "task_snapshot.py",
                         "end_prompt_snapshot.py",
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2133,8 +2133,8 @@ Draft placeholder:
                     "python3 -B tools/repo/task_snapshot.py --max-lines 20",
                     "python3 -B tools/repo/end_prompt_snapshot.py --output-path /tmp/socratex-output-snapshot-smoke --no-sound",
                     "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/repo/task_snapshot.py tools/repo/end_prompt_snapshot.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'prompt_and_output_snapshots' is listed without these artifacts, finalizers keep depending on legacy snapshot helpers even after the Python commit path exists."
             },
@@ -2144,15 +2144,15 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2166,8 +2166,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'changelog_entry_helper' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2178,56 +2178,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2244,8 +2244,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'pipeline_featurelist_manifest' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2256,56 +2256,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2323,8 +2323,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'pipeline_featurelist_instance_generation' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2335,56 +2335,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2401,8 +2401,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'pipeline_feature_learning_loop' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2413,56 +2413,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2479,8 +2479,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'pipeline_learning_reports' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2495,72 +2495,72 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "finalize_task_check_commit_push.ps1",
-                    "finalize_changed_files_commit_push.ps1",
-                    "run_final_task_checks.ps1",
-                    "check_task.ps1",
-                    "check_toolchain_health.ps1",
-                    "run_quality_gate.ps1",
-                    "run_quality_fix.ps1",
+                    "finalize_task_check_commit_push.py",
+                    "finalize_changed_files_commit_push.py",
+                    "run_final_task_checks.py",
+                    "check_task.py",
+                    "check_toolchain_health.py",
+                    "run_quality_gate.py",
+                    "run_quality_fix.py",
                     "check_runtime.py",
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "finalize_task_check_commit_push.ps1",
-                        "finalize_changed_files_commit_push.ps1",
-                        "run_final_task_checks.ps1",
-                        "check_task.ps1",
-                        "check_toolchain_health.ps1",
-                        "run_quality_gate.ps1",
-                        "run_quality_fix.ps1",
+                        "finalize_task_check_commit_push.py",
+                        "finalize_changed_files_commit_push.py",
+                        "run_final_task_checks.py",
+                        "check_task.py",
+                        "check_toolchain_health.py",
+                        "run_quality_gate.py",
+                        "run_quality_fix.py",
                         "check_runtime.py",
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2579,8 +2579,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'prefilled_github_issue_learning_inbox' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2591,56 +2591,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2657,8 +2657,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'self_describing_learning_issues' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2669,56 +2669,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2735,8 +2735,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'pipeline_featurelist_update_guard' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, generated-cache exemption, or review workflow is absent."
             },
@@ -2750,22 +2750,22 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "audit_docs.ps1"
+                    "pipeline_bootstrap_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "audit_docs.ps1"
+                        "pipeline_bootstrap_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2782,8 +2782,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'priority_workflow_layer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2803,22 +2803,22 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "audit_docs.ps1"
+                    "pipeline_bootstrap_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "audit_docs.ps1"
+                        "pipeline_bootstrap_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2837,8 +2837,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'workflow_unknown_task_routing' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2849,15 +2849,15 @@ Draft placeholder:
                     "templates/team",
                     "WORKFLOW.json",
                     "core/AGENT-CONTRACT.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2876,8 +2876,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'on_demand_team_role_lenses' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2890,83 +2890,83 @@ Draft placeholder:
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
                     "tools/pipeline/compile_pipeline_context.py",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
                     "tools/pipeline/rebuild_ai_compiled_context.py",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
                     "tools/pipeline/check_ai_compiled_context.py",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
+                    "context_tags.py",
                     "context_tags.py",
                     "compile_pipeline_context.py",
-                    "rebuild_ai_compiled_context.ps1",
                     "rebuild_ai_compiled_context.py",
-                    "check_ai_compiled_context.ps1",
+                    "rebuild_ai_compiled_context.py",
                     "check_ai_compiled_context.py",
-                    "audit_docs.ps1"
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
+                        "context_tags.py",
                         "context_tags.py",
                         "compile_pipeline_context.py",
-                        "rebuild_ai_compiled_context.ps1",
                         "rebuild_ai_compiled_context.py",
-                        "check_ai_compiled_context.ps1",
+                        "rebuild_ai_compiled_context.py",
                         "check_ai_compiled_context.py",
-                        "audit_docs.ps1"
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -2977,7 +2977,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
-                    "Prefer rebuild_ai_compiled_context.py for Python-first compiled context refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
+                    "Prefer rebuild_ai_compiled_context.py for Python-first compiled context refresh and keep the legacy wrapper only until the final Python-only deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -2986,7 +2986,7 @@ Draft placeholder:
                     "python3 -B tools/pipeline/rebuild_ai_compiled_context.py --check",
                     "python3 -B tools/pipeline/check_ai_compiled_context.py --repo-root .",
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py --paths tools/pipeline/compile_pipeline_context.py tools/pipeline/rebuild_ai_compiled_context.py tools/pipeline/check_ai_compiled_context.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'compiled_agent_instruction_layer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -2996,25 +2996,25 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "knowledge_code_context.ps1",
-                    "check_code_context_gate.ps1",
-                    "update_code_line_index.ps1",
-                    "audit_docs.ps1"
+                    "knowledge_code_context.py",
+                    "check_code_context_gate.py",
+                    "update_code_line_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "knowledge_code_context.ps1",
-                        "check_code_context_gate.ps1",
-                        "update_code_line_index.ps1",
-                        "audit_docs.ps1"
+                        "knowledge_code_context.py",
+                        "check_code_context_gate.py",
+                        "update_code_line_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3030,8 +3030,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'code_task_engineering_standards_preload' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3040,51 +3040,51 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
                     "utf8_file_helpers.py",
-                    "knowledge_code_context.ps1",
-                    "check_code_context_gate.ps1",
-                    "update_code_line_index.ps1",
-                    "audit_docs.ps1"
+                    "utf8_file_helpers.py",
+                    "knowledge_code_context.py",
+                    "check_code_context_gate.py",
+                    "update_code_line_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
                         "utf8_file_helpers.py",
-                        "knowledge_code_context.ps1",
-                        "check_code_context_gate.ps1",
-                        "update_code_line_index.ps1",
-                        "audit_docs.ps1"
+                        "utf8_file_helpers.py",
+                        "knowledge_code_context.py",
+                        "check_code_context_gate.py",
+                        "update_code_line_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3100,8 +3100,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'code_task_engineering_context_loader' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3110,51 +3110,51 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
                     "utf8_file_helpers.py",
-                    "knowledge_code_context.ps1",
-                    "check_code_context_gate.ps1",
-                    "update_code_line_index.ps1",
-                    "audit_docs.ps1"
+                    "utf8_file_helpers.py",
+                    "knowledge_code_context.py",
+                    "check_code_context_gate.py",
+                    "update_code_line_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
                         "utf8_file_helpers.py",
-                        "knowledge_code_context.ps1",
-                        "check_code_context_gate.ps1",
-                        "update_code_line_index.ps1",
-                        "audit_docs.ps1"
+                        "utf8_file_helpers.py",
+                        "knowledge_code_context.py",
+                        "check_code_context_gate.py",
+                        "update_code_line_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3170,8 +3170,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'full_code_guidance_context_gate' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3185,33 +3185,33 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "knowledge_code_context.ps1",
-                    "check_code_context_gate.ps1",
-                    "update_code_line_index.ps1",
-                    "audit_docs.ps1"
+                    "pipeline_bootstrap_index.py",
+                    "knowledge_code_context.py",
+                    "check_code_context_gate.py",
+                    "update_code_line_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "knowledge_code_context.ps1",
-                        "check_code_context_gate.ps1",
-                        "update_code_line_index.ps1",
-                        "audit_docs.ps1"
+                        "pipeline_bootstrap_index.py",
+                        "knowledge_code_context.py",
+                        "check_code_context_gate.py",
+                        "update_code_line_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3231,8 +3231,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'code_task_type_router' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3244,75 +3244,75 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3327,8 +3327,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'compiled_sqlite_knowledge_index' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3338,7 +3338,7 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "DOCS.json",
                     "tools/documents",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
@@ -3347,126 +3347,126 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "normalize_json_files.ps1",
+                    "json_migrate_content.py",
+                    "normalize_json_files.py",
                     "normalize_json_files.py",
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
                     "json_node_edit.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "normalize_json_files.ps1",
+                        "json_migrate_content.py",
+                        "normalize_json_files.py",
                         "normalize_json_files.py",
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
                         "json_node_edit.py"
                     ]
                 },
@@ -3485,8 +3485,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'knowledge_document_hash_gate' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3498,75 +3498,75 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3581,8 +3581,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'knowledge_entry_tag_queries' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3591,103 +3591,103 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
                     "AI-compiled",
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
+                    "utf8_file_helpers.py",
                     "utf8_file_helpers.py",
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
+                        "utf8_file_helpers.py",
                         "utf8_file_helpers.py",
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3702,8 +3702,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'knowledge_context_views' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3712,103 +3712,103 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
                     "AI-compiled",
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
+                    "utf8_file_helpers.py",
                     "utf8_file_helpers.py",
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
+                        "utf8_file_helpers.py",
                         "utf8_file_helpers.py",
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3823,8 +3823,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'context_tagged_knowledge_prelude' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3836,75 +3836,75 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -3919,8 +3919,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'knowledge_entry_type_taxonomy' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -3932,75 +3932,75 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4015,8 +4015,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'knowledge_upsert_delete_rename_scripts' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4028,75 +4028,75 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4111,8 +4111,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'knowledge_file_fallback_tables' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4124,75 +4124,75 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4207,8 +4207,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'normalized_compiled_content_hashes' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4217,19 +4217,19 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "evals",
-                    "tools/quality/check_evals.ps1",
+                    "tools/quality/check_evals.py",
                     "QUALITY-GATE.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "check_evals.ps1",
-                    "audit_docs.ps1"
+                    "check_evals.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_evals.ps1",
-                        "audit_docs.ps1"
+                        "check_evals.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4245,8 +4245,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'manual_codex_workspace_eval_framework' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4256,93 +4256,93 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
                     "AI-compiled",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
                     "evals",
-                    "tools/quality/check_evals.ps1",
+                    "tools/quality/check_evals.py",
                     "QUALITY-GATE.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
-                    "knowledge_code_context.ps1",
-                    "check_code_context_gate.ps1",
-                    "update_code_line_index.ps1",
+                    "knowledge_code_context.py",
+                    "check_code_context_gate.py",
+                    "update_code_line_index.py",
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "check_evals.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "check_evals.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "knowledge_code_context.ps1",
-                        "check_code_context_gate.ps1",
-                        "update_code_line_index.ps1",
+                        "knowledge_code_context.py",
+                        "check_code_context_gate.py",
+                        "update_code_line_index.py",
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "check_evals.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "check_evals.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4362,8 +4362,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'knowledge_and_engineering_eval_coverage' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4372,108 +4372,108 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
                     "AI-compiled",
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
                     "evals",
-                    "tools/quality/check_evals.ps1",
+                    "tools/quality/check_evals.py",
                     "QUALITY-GATE.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
-                    "normalize_text_files.ps1",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
+                    "utf8_file_helpers.py",
                     "utf8_file_helpers.py",
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "check_evals.ps1",
-                    "audit_docs.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "check_evals.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "normalize_text_files.ps1",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
+                        "utf8_file_helpers.py",
                         "utf8_file_helpers.py",
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "check_evals.ps1",
-                        "audit_docs.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "check_evals.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4491,8 +4491,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'context_tagged_prelude_eval_coverage' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4501,19 +4501,19 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "evals",
-                    "tools/quality/check_evals.ps1",
+                    "tools/quality/check_evals.py",
                     "QUALITY-GATE.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "check_evals.ps1",
-                    "audit_docs.ps1"
+                    "check_evals.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_evals.ps1",
-                        "audit_docs.ps1"
+                        "check_evals.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4529,8 +4529,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'routing_eval_coverage' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4539,19 +4539,19 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "evals",
-                    "tools/quality/check_evals.ps1",
+                    "tools/quality/check_evals.py",
                     "QUALITY-GATE.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "check_evals.ps1",
-                    "audit_docs.ps1"
+                    "check_evals.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_evals.ps1",
-                        "audit_docs.ps1"
+                        "check_evals.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4567,8 +4567,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'eval_freeze_and_real_usage_failure_taxonomy' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4586,80 +4586,80 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
-                    "tools/pipeline/check_ai_compiled_context.ps1",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/pipeline/check_ai_compiled_context.py",
                     ".gitignore",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/knowledge_index.py",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "tools/knowledge/context_tags.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
                     "knowledge_check.py",
-                    "knowledge_select.ps1",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_upsert.py",
                     "knowledge_delete.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_delete.py",
                     "knowledge_rename.py",
-                    "knowledge_query.ps1",
+                    "knowledge_rename.py",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_file_compile.py",
                     "knowledge_file_check.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_file_delete.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
                     "knowledge_file_rename.py",
-                    "knowledge_file_query.ps1",
+                    "knowledge_file_rename.py",
+                    "knowledge_file_query.py",
                     "knowledge_file_query.py",
                     "knowledge_index.py",
-                    "context_tags.ps1",
                     "context_tags.py",
-                    "rebuild_ai_compiled_context.ps1",
-                    "check_ai_compiled_context.ps1",
-                    "audit_docs.ps1",
-                    "build_document_cache.ps1"
+                    "context_tags.py",
+                    "rebuild_ai_compiled_context.py",
+                    "check_ai_compiled_context.py",
+                    "audit_docs.py",
+                    "build_document_cache.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_compile.py",
                         "knowledge_check.py",
-                        "knowledge_select.ps1",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_upsert.py",
                         "knowledge_delete.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_delete.py",
                         "knowledge_rename.py",
-                        "knowledge_query.ps1",
+                        "knowledge_rename.py",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_file_compile.py",
                         "knowledge_file_check.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_file_delete.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
                         "knowledge_file_rename.py",
-                        "knowledge_file_query.ps1",
+                        "knowledge_file_rename.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_index.py",
-                        "context_tags.ps1",
                         "context_tags.py",
-                        "rebuild_ai_compiled_context.ps1",
-                        "check_ai_compiled_context.ps1",
-                        "audit_docs.ps1",
-                        "build_document_cache.ps1"
+                        "context_tags.py",
+                        "rebuild_ai_compiled_context.py",
+                        "check_ai_compiled_context.py",
+                        "audit_docs.py",
+                        "build_document_cache.py"
                     ]
                 },
                 "required_docs": [
@@ -4677,8 +4677,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'private_working_memory_knowledge_boundary' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4694,73 +4694,73 @@ Draft placeholder:
                     "project/code/DDD-ADIV.json",
                     "DOCS.json",
                     "tools/documents",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
                     ".gitignore",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/knowledge_index.py",
-                    "tools/repo/check_pipeline_feature_contracts.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py"
                 ],
                 "required_scripts": [
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "normalize_json_files.ps1",
+                    "json_migrate_content.py",
+                    "normalize_json_files.py",
                     "normalize_json_files.py",
                     "knowledge_index.py",
                     "json_node_edit.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "normalize_json_files.ps1",
+                        "json_migrate_content.py",
+                        "normalize_json_files.py",
                         "normalize_json_files.py",
                         "knowledge_index.py",
                         "json_node_edit.py"
@@ -4782,8 +4782,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'private_working_memory_cache_boundary' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4793,13 +4793,13 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "DOCS.json",
                     "tools/documents",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "JSON-FORMAT-CONTRACT.json",
                     "tools/documents/document_structure_normalizer_engine.py",
                     "tools/documents/document_schema_migration_engine.py",
@@ -4807,68 +4807,68 @@ Draft placeholder:
                     "tools/documents/document_list_item_edit_engine.py"
                 ],
                 "required_scripts": [
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "normalize_json_files.ps1",
+                    "json_migrate_content.py",
                     "normalize_json_files.py",
-                    "normalize_document_structure.ps1",
-                    "migrate_document_schema.ps1",
+                    "normalize_json_files.py",
+                    "normalize_document_structure.py",
+                    "migrate_document_schema.py",
                     "document_item_edit_engine.py",
                     "document_list_item_edit_engine.py",
                     "json_node_edit.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "normalize_json_files.ps1",
+                        "json_migrate_content.py",
                         "normalize_json_files.py",
-                        "normalize_document_structure.ps1",
-                        "migrate_document_schema.ps1",
+                        "normalize_json_files.py",
+                        "normalize_document_structure.py",
+                        "migrate_document_schema.py",
                         "document_item_edit_engine.py",
                         "document_list_item_edit_engine.py",
                         "json_node_edit.py"
@@ -4888,10 +4888,10 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/normalize_document_structure.ps1 -Check",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/migrate_document_schema.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/documents/normalize_document_structure.py -Check",
+                    "python3 -B tools/documents/migrate_document_schema.py -Check"
                 ],
                 "known_failure_if_missing": "If 'json_contract_source_pipeline' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4901,15 +4901,15 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4923,8 +4923,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'source_pipeline_bootstrap_index' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -4938,47 +4938,47 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
                     "tools/text",
-                    "tools/repo/check_task.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_task.py",
+                    "tools/repo/run_final_task_checks.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "normalize_text_files.ps1",
+                    "pipeline_bootstrap_index.py",
                     "normalize_text_files.py",
-                    "normalize_json_files.ps1",
+                    "normalize_text_files.py",
                     "normalize_json_files.py",
-                    "check_utf8_writes.ps1",
-                    "repair_mojibake.ps1",
+                    "normalize_json_files.py",
+                    "check_utf8_writes.py",
                     "repair_mojibake.py",
-                    "write_utf8_file.ps1",
+                    "repair_mojibake.py",
                     "write_utf8_file.py",
-                    "utf8_file_helpers.ps1",
+                    "write_utf8_file.py",
                     "utf8_file_helpers.py",
-                    "audit_docs.ps1"
+                    "utf8_file_helpers.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "normalize_text_files.ps1",
+                        "pipeline_bootstrap_index.py",
                         "normalize_text_files.py",
-                        "normalize_json_files.ps1",
+                        "normalize_text_files.py",
                         "normalize_json_files.py",
-                        "check_utf8_writes.ps1",
-                        "repair_mojibake.ps1",
+                        "normalize_json_files.py",
+                        "check_utf8_writes.py",
                         "repair_mojibake.py",
-                        "write_utf8_file.ps1",
+                        "repair_mojibake.py",
                         "write_utf8_file.py",
-                        "utf8_file_helpers.ps1",
+                        "write_utf8_file.py",
                         "utf8_file_helpers.py",
-                        "audit_docs.ps1"
+                        "utf8_file_helpers.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -4995,8 +4995,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'index_only_command_script_context' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5010,22 +5010,22 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "audit_docs.ps1"
+                    "pipeline_bootstrap_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "audit_docs.ps1"
+                        "pipeline_bootstrap_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5042,8 +5042,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'root_command_flow_script_catalogs' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5053,15 +5053,15 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5075,8 +5075,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'self_describing_script_name_catalog' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5090,22 +5090,22 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "audit_docs.ps1"
+                    "pipeline_bootstrap_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "audit_docs.ps1"
+                        "pipeline_bootstrap_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5122,8 +5122,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'script_named_flow_steps' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5137,22 +5137,22 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "audit_docs.ps1"
+                    "pipeline_bootstrap_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "audit_docs.ps1"
+                        "pipeline_bootstrap_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5169,8 +5169,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'command_script_named_execution' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5184,22 +5184,22 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "project/code/WORKFLOW.json",
                     "project/code/COMMANDS.json",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/pipeline/pipeline_bootstrap_index.py",
                     "docs-tech/PIPELINE-BOOTSTRAP.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "pipeline_bootstrap_index.ps1",
                     "pipeline_bootstrap_index.py",
-                    "audit_docs.ps1"
+                    "pipeline_bootstrap_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "pipeline_bootstrap_index.ps1",
                         "pipeline_bootstrap_index.py",
-                        "audit_docs.ps1"
+                        "pipeline_bootstrap_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5216,8 +5216,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'workflow_current_rule_contract_cleanup' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5227,7 +5227,7 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
@@ -5237,21 +5237,21 @@ Draft placeholder:
                     "project/personal",
                     "project/creative",
                     "templates/code",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "knowledge_code_context.ps1",
-                    "check_code_context_gate.ps1",
-                    "update_code_line_index.ps1",
-                    "audit_docs.ps1"
+                    "knowledge_code_context.py",
+                    "check_code_context_gate.py",
+                    "update_code_line_index.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "knowledge_code_context.ps1",
-                        "check_code_context_gate.ps1",
-                        "update_code_line_index.ps1",
-                        "audit_docs.ps1"
+                        "knowledge_code_context.py",
+                        "check_code_context_gate.py",
+                        "update_code_line_index.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5269,8 +5269,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'generic_programming_default_pack' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5284,15 +5284,15 @@ Draft placeholder:
                     "project/personal",
                     "project/creative",
                     "templates/code",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5308,8 +5308,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'explicit_gamedev_project_pack' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5319,13 +5319,13 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "DOCS.json",
                     "tools/documents",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py",
                     "JSON-FORMAT-CONTRACT.json",
                     "tools/documents/document_structure_normalizer_engine.py",
                     "tools/documents/document_schema_migration_engine.py",
@@ -5333,68 +5333,68 @@ Draft placeholder:
                     "tools/documents/document_list_item_edit_engine.py"
                 ],
                 "required_scripts": [
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "normalize_json_files.ps1",
+                    "json_migrate_content.py",
                     "normalize_json_files.py",
-                    "normalize_document_structure.ps1",
-                    "migrate_document_schema.ps1",
+                    "normalize_json_files.py",
+                    "normalize_document_structure.py",
+                    "migrate_document_schema.py",
                     "document_item_edit_engine.py",
                     "document_list_item_edit_engine.py",
                     "json_node_edit.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "normalize_json_files.ps1",
+                        "json_migrate_content.py",
                         "normalize_json_files.py",
-                        "normalize_document_structure.ps1",
-                        "migrate_document_schema.ps1",
+                        "normalize_json_files.py",
+                        "normalize_document_structure.py",
+                        "migrate_document_schema.py",
                         "document_item_edit_engine.py",
                         "document_list_item_edit_engine.py",
                         "json_node_edit.py"
@@ -5414,10 +5414,10 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/normalize_document_structure.ps1 -Check",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/migrate_document_schema.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/documents/normalize_document_structure.py -Check",
+                    "python3 -B tools/documents/migrate_document_schema.py -Check"
                 ],
                 "known_failure_if_missing": "If 'json_document_normalizer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5430,75 +5430,75 @@ Draft placeholder:
                     "tools/documents",
                     "tools/json",
                     "tools/json/README.md",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
                     "smoke_json_tools.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "json_node_edit.ps1",
+                    "json_migrate_content.py",
                     "json_node_edit.py",
-                    "normalize_json_files.ps1",
+                    "json_node_edit.py",
+                    "normalize_json_files.py",
                     "normalize_json_files.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
                         "smoke_json_tools.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "json_node_edit.ps1",
+                        "json_migrate_content.py",
                         "json_node_edit.py",
-                        "normalize_json_files.ps1",
+                        "json_node_edit.py",
+                        "normalize_json_files.py",
                         "normalize_json_files.py"
                     ]
                 },
@@ -5511,13 +5511,13 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
-                    "Use json_node_edit.ps1 for full-node-path JSON operations, nested list edits, and structural/order-only JSON changes.",
+                    "Use json_node_edit.py for full-node-path JSON operations, nested list edits, and structural/order-only JSON changes.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
                     "python3 tools/json/smoke_json_tools.py"
                 ],
                 "known_failure_if_missing": "If 'json_list_document_tools' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
@@ -5525,7 +5525,7 @@ Draft placeholder:
             "json_node_edit_tools": {
                 "summary": "Pipeline JSON manipulation scripts are active only when full-node-path tools, nested-list support, wrapper help, SCRIPTS metadata, and agent directives all require script-first structural/order-only JSON edits.",
                 "required_paths": [
-                    "tools/json/json_node_edit.ps1",
+                    "tools/json/json_node_edit.py",
                     "tools/json/json_list_doc.py",
                     "SCRIPTS.json",
                     "core/AGENT-CONTRACT.json",
@@ -5534,17 +5534,17 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "json_node_edit.ps1",
+                    "json_node_edit.py",
                     "json_node_edit.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_line_insert.ps1",
+                    "json_read.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
+                    "json_line_move.py",
                     "json_line_move.py",
                     "json_refresh_index.py",
                     "json_migrate_content.py",
@@ -5555,17 +5555,17 @@ Draft placeholder:
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "json_node_edit.ps1",
+                        "json_node_edit.py",
                         "json_node_edit.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_line_insert.ps1",
+                        "json_read.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
+                        "json_line_move.py",
                         "json_line_move.py",
                         "json_refresh_index.py",
                         "json_migrate_content.py",
@@ -5585,15 +5585,15 @@ Draft placeholder:
                     "Verify nested list edits, dot-containing keys through slash paths, and legacy -FieldPath wrappers."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
                     "python3 tools/json/smoke_json_tools.py"
                 ],
                 "known_failure_if_missing": "Agents fall back to manual JSON ordering patches or cannot target nested lists and keys containing dots safely.",
                 "usage_directives": [
-                    "For JSON edits that only change structure or order, such as move, reorder, delete, insert before/after, or migrate, use json_node_edit.ps1 or the narrow JSON wrappers instead of manual patching.",
+                    "For JSON edits that only change structure or order, such as move, reorder, delete, insert before/after, or migrate, use json_node_edit.py or the narrow JSON wrappers instead of manual patching.",
                     "When one task needs both structural/order changes and content edits, run the scripted structural operation first, then set or patch the content.",
-                    "Use json_node_edit.ps1 when the full JSON node path is known; use slash-separated node paths when a segment contains dots.",
+                    "Use json_node_edit.py when the full JSON node path is known; use slash-separated node paths when a segment contains dots.",
                     "Keep SCRIPTS.json input/output/help metadata current for JSON wrapper parameters, value-source rules, nested selectors, and failure behavior."
                 ]
             },
@@ -5603,17 +5603,17 @@ Draft placeholder:
                     "tools/json",
                     "tools/json/README.md",
                     "tools/json/json_list_doc.py",
-                    "tools/json/json_node_edit.ps1",
-                    "tools/json/json_read.ps1",
-                    "tools/json/json_item_insert.ps1",
-                    "tools/json/json_item_set.ps1",
-                    "tools/json/json_item_move.ps1",
-                    "tools/json/json_item_delete.ps1",
-                    "tools/json/json_line_insert.ps1",
-                    "tools/json/json_line_set.ps1",
-                    "tools/json/json_line_move.ps1",
-                    "tools/json/json_refresh_index.ps1",
-                    "tools/json/json_migrate_content.ps1",
+                    "tools/json/json_node_edit.py",
+                    "tools/json/json_read.py",
+                    "tools/json/json_item_insert.py",
+                    "tools/json/json_item_set.py",
+                    "tools/json/json_item_move.py",
+                    "tools/json/json_item_delete.py",
+                    "tools/json/json_line_insert.py",
+                    "tools/json/json_line_set.py",
+                    "tools/json/json_line_move.py",
+                    "tools/json/json_refresh_index.py",
+                    "tools/json/json_migrate_content.py",
                     "tools/json/audit_json_docs.py",
                     "tools/json/smoke_json_tools.py",
                     "SCRIPTS.json",
@@ -5622,27 +5622,27 @@ Draft placeholder:
                 "required_scripts": [
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_node_edit.ps1",
                     "json_node_edit.py",
-                    "json_read.ps1",
+                    "json_node_edit.py",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
+                    "json_migrate_content.py",
                     "json_migrate_content.py",
                     "audit_json_docs.py",
                     "smoke_json_tools.py"
@@ -5651,27 +5651,27 @@ Draft placeholder:
                     "SCRIPTS": [
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_node_edit.ps1",
                         "json_node_edit.py",
-                        "json_read.ps1",
+                        "json_node_edit.py",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
+                        "json_migrate_content.py",
                         "json_migrate_content.py",
                         "audit_json_docs.py",
                         "smoke_json_tools.py"
@@ -5704,70 +5704,70 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "DOCS.json",
                     "tools/documents",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/text/normalize_json_files.py",
                     "templates/DOCS.json",
                     "templates/code/DOCS.json",
                     "docs-tech/cache/doc_index.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "build_document_cache.ps1",
-                    "audit_docs.ps1",
+                    "build_document_cache.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "json_item_insert.ps1",
+                    "json_read.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
                     "json_item_set.py",
-                    "json_item_move.ps1",
+                    "json_item_set.py",
                     "json_item_move.py",
-                    "json_item_delete.ps1",
+                    "json_item_move.py",
                     "json_item_delete.py",
-                    "json_line_insert.ps1",
+                    "json_item_delete.py",
                     "json_line_insert.py",
-                    "json_line_set.ps1",
+                    "json_line_insert.py",
                     "json_line_set.py",
-                    "json_line_move.ps1",
+                    "json_line_set.py",
                     "json_line_move.py",
-                    "json_refresh_index.ps1",
+                    "json_line_move.py",
                     "json_refresh_index.py",
-                    "json_migrate_content.ps1",
+                    "json_refresh_index.py",
                     "json_migrate_content.py",
-                    "normalize_json_files.ps1",
+                    "json_migrate_content.py",
+                    "normalize_json_files.py",
                     "normalize_json_files.py",
                     "json_node_edit.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "build_document_cache.ps1",
-                        "audit_docs.ps1",
+                        "build_document_cache.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "json_item_insert.ps1",
+                        "json_read.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
                         "json_item_set.py",
-                        "json_item_move.ps1",
+                        "json_item_set.py",
                         "json_item_move.py",
-                        "json_item_delete.ps1",
+                        "json_item_move.py",
                         "json_item_delete.py",
-                        "json_line_insert.ps1",
+                        "json_item_delete.py",
                         "json_line_insert.py",
-                        "json_line_set.ps1",
+                        "json_line_insert.py",
                         "json_line_set.py",
-                        "json_line_move.ps1",
+                        "json_line_set.py",
                         "json_line_move.py",
-                        "json_refresh_index.ps1",
+                        "json_line_move.py",
                         "json_refresh_index.py",
-                        "json_migrate_content.ps1",
+                        "json_refresh_index.py",
                         "json_migrate_content.py",
-                        "normalize_json_files.ps1",
+                        "json_migrate_content.py",
+                        "normalize_json_files.py",
                         "normalize_json_files.py",
                         "json_node_edit.py"
                     ]
@@ -5785,8 +5785,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'json_tool_file_stdin_value_inputs' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5797,15 +5797,15 @@ Draft placeholder:
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
                     "SCRIPTS.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5821,8 +5821,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'script_input_output_contracts' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5832,15 +5832,15 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5854,8 +5854,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'default_tool_error_hardening' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5865,15 +5865,15 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "core/AGENT-CONTRACT.json",
                     "project/code/PACK.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1"
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1"
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -5887,8 +5887,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'categorized_tool_scripts' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5899,12 +5899,12 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
                     "project/generic",
@@ -5913,9 +5913,9 @@ Draft placeholder:
                     "project/personal",
                     "project/creative",
                     "templates/code",
-                    "tools/documents/audit_docs.ps1",
-                    "tools/pipeline/update_pipeline_from_link.ps1",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1",
+                    "tools/documents/audit_docs.py",
+                    "tools/pipeline/update_pipeline_from_link.py",
+                    "tools/pipeline/sync_managed_pipeline_package.py",
                     "tools/pipeline/sync_managed_pipeline_package.py",
                     "tools/pipeline/pipeline_package.py",
                     "tools/repo/sync_pipeline_featurelist.py",
@@ -5923,24 +5923,24 @@ Draft placeholder:
                     "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1",
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py",
                     "sync_managed_pipeline_package.py",
                     "sync_pipeline_featurelist.py",
                     "check_pipeline_feature_contracts.py",
@@ -5949,24 +5949,24 @@ Draft placeholder:
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1",
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py",
                         "sync_managed_pipeline_package.py",
                         "sync_pipeline_featurelist.py",
                         "check_pipeline_feature_contracts.py",
@@ -5991,8 +5991,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'managed_pipeline_package_mirror_sync' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -6002,26 +6002,26 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "profiles/SocratexGamedev",
                     "SCRIPTS.json",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1",
-                    "tools/pipeline/update_pipeline_from_link.ps1",
-                    "tools/pipeline/import_existing_project.ps1",
-                    "tools/pipeline/Initialize-SocratexPipeline.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1"
+                    "tools/pipeline/sync_managed_pipeline_package.py",
+                    "tools/pipeline/update_pipeline_from_link.py",
+                    "tools/pipeline/import_existing_project.py",
+                    "tools/pipeline/Initialize-SocratexPipeline.py",
+                    "tools/repo/check_pipeline_feature_contracts.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "check_pipeline_feature_contracts.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "Initialize-SocratexPipeline.py",
+                    "check_pipeline_feature_contracts.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "check_pipeline_feature_contracts.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "Initialize-SocratexPipeline.py",
+                        "check_pipeline_feature_contracts.py"
                     ]
                 },
                 "required_docs": [
@@ -6035,15 +6035,15 @@ Draft placeholder:
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Keep reusable game-project catalogs in profiles/SocratexGamedev instead of copying them independently into each child project.",
-                    "Run sync_managed_pipeline_package.ps1 with -ProjectRoot, -Profile, -ApplyProjectProfile, and -PruneUnmanaged during project update/import.",
+                    "Run sync_managed_pipeline_package.py with -ProjectRoot, -Profile, -ApplyProjectProfile, and -PruneUnmanaged during project update/import.",
                     "Preserve locally changed managed profile files as reported overrides unless -ForceManaged is explicitly used.",
                     "Keep PIPELINE-PACKAGE.json reporting project_profile_files, local_overrides, preserved_unmanaged, and removed_unmanaged after every sync.",
                     "Keep profiles included in managed package sync so profile definitions are present on other machines and child projects after update."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/sync_managed_pipeline_package.ps1 -SourceRoot . -InstallRoot <child>/SocratexAI -ProjectRoot <child> -Profile SocratexGamedev -ApplyProjectProfile -PruneUnmanaged -DryRun"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/pipeline/sync_managed_pipeline_package.py -SourceRoot . -InstallRoot <child>/SocratexAI -ProjectRoot <child> -Profile SocratexGamedev -ApplyProjectProfile -PruneUnmanaged -DryRun"
                 ],
                 "known_failure_if_missing": "Child projects keep forked copies of root command, flow, script, and workflow catalogs, so source updates do not cleanly propagate across projects or machines and local duplicates silently drift."
             },
@@ -6054,56 +6054,56 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1"
+                    "tools/documents/audit_docs.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -6120,8 +6120,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'full_update_artifact_parity_contract' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -6132,58 +6132,58 @@ Draft placeholder:
                     "core/UPDATE-PROTOCOL.json",
                     "core/REMOVAL-PROTOCOL.json",
                     "tools/pipeline",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/open_pipeline_learning_issue.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
-                    "tools/documents/audit_docs.ps1",
-                    "tools/pipeline/update_pipeline_from_link.ps1",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1"
+                    "tools/documents/audit_docs.py",
+                    "tools/pipeline/update_pipeline_from_link.py",
+                    "tools/pipeline/sync_managed_pipeline_package.py"
                 ],
                 "required_scripts": [
-                    "sync_managed_pipeline_package.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "import_existing_project.ps1",
-                    "reinitialize_pipeline.ps1",
-                    "remove_pipeline.ps1",
-                    "upgrade_from_reference_project.ps1",
-                    "migrate_ai_pipeline.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "init_branch_memory.ps1",
-                    "init_task_work.ps1",
-                    "set_directives.ps1",
-                    "rebuild_ai_compiled_context.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "open_pipeline_learning_issue.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "audit_docs.ps1"
+                    "sync_managed_pipeline_package.py",
+                    "update_pipeline_from_link.py",
+                    "import_existing_project.py",
+                    "reinitialize_pipeline.py",
+                    "remove_pipeline.py",
+                    "upgrade_from_reference_project.py",
+                    "migrate_ai_pipeline.py",
+                    "Initialize-SocratexPipeline.py",
+                    "init_branch_memory.py",
+                    "init_task_work.py",
+                    "set_directives.py",
+                    "rebuild_ai_compiled_context.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "open_pipeline_learning_issue.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_managed_pipeline_package.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "import_existing_project.ps1",
-                        "reinitialize_pipeline.ps1",
-                        "remove_pipeline.ps1",
-                        "upgrade_from_reference_project.ps1",
-                        "migrate_ai_pipeline.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "init_branch_memory.ps1",
-                        "init_task_work.ps1",
-                        "set_directives.ps1",
-                        "rebuild_ai_compiled_context.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "open_pipeline_learning_issue.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "audit_docs.ps1"
+                        "sync_managed_pipeline_package.py",
+                        "update_pipeline_from_link.py",
+                        "import_existing_project.py",
+                        "reinitialize_pipeline.py",
+                        "remove_pipeline.py",
+                        "upgrade_from_reference_project.py",
+                        "migrate_ai_pipeline.py",
+                        "Initialize-SocratexPipeline.py",
+                        "init_branch_memory.py",
+                        "init_task_work.py",
+                        "set_directives.py",
+                        "rebuild_ai_compiled_context.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "open_pipeline_learning_issue.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -6200,8 +6200,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'managed_pipeline_root_catalog_sync' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -6209,32 +6209,32 @@ Draft placeholder:
                 "summary": "Feature artifact contracts make feature IDs cheap to compare while requiring every active feature to declare the artifacts, catalogs, update direction, promotion steps, verification, and failure mode that make it real.",
                 "required_paths": [
                     "pipeline_featurelist.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/repo/check_pipeline_featurelist_update.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/documents/audit_docs.py",
                     "core/UPDATE-PROTOCOL.json",
                     "SCRIPTS.json",
                     "CHANGELOG.json"
                 ],
                 "required_scripts": [
-                    "check_pipeline_feature_contracts.ps1",
-                    "check_pipeline_featurelist_update.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "audit_docs.ps1"
+                    "check_pipeline_feature_contracts.py",
+                    "check_pipeline_featurelist_update.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "sync_pipeline_featurelist.py",
+                    "audit_docs.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_pipeline_feature_contracts.ps1",
-                        "check_pipeline_featurelist_update.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "audit_docs.ps1"
+                        "check_pipeline_feature_contracts.py",
+                        "check_pipeline_featurelist_update.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "sync_pipeline_featurelist.py",
+                        "audit_docs.py"
                     ]
                 },
                 "required_docs": [
@@ -6246,13 +6246,13 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Keep the features array as the cheap comparison layer.",
                     "Add or update feature_contracts for every accepted feature.",
-                    "Run check_pipeline_feature_contracts.ps1 with changed paths before promotion.",
+                    "Run check_pipeline_feature_contracts.py with changed paths before promotion.",
                     "When validating an installed child SocratexAI package, skip source_only repo-path/doc existence checks because those artifacts remain source-maintainer owned.",
                     "Do not promote child features upstream unless their contracts list the artifacts to port."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Source and child pipelines can report matching feature IDs while the behavior is absent, stale, only partially copied, or blocked by source_only maintainer artifacts that are intentionally not installed into child packages."
             },
@@ -6260,39 +6260,39 @@ Draft placeholder:
                 "summary": "Installed child pipelines update cheaply by default: shallow Git/local/zip source resolution, managed SocratexAI package mirror, project configuration preservation, compact featurelist refresh, directive refresh, and cheap feature-contract verification; expensive rebuilds are opt-in.",
                 "required_paths": [
                     "pipeline_featurelist.json",
-                    "tools/pipeline/update_pipeline_from_link.ps1",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/pipeline/set_directives.ps1",
+                    "tools/pipeline/update_pipeline_from_link.py",
+                    "tools/pipeline/sync_managed_pipeline_package.py",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/pipeline/set_directives.py",
                     "PUBLIC-BOOTSTRAP.md",
                     "core/FILE-FORMATS.json",
                     "core/UPDATE-PROTOCOL.json",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/documents/audit_docs.py",
                     "tools/json/json_list_doc.py",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "SCRIPTS.json"
                 ],
                 "required_scripts": [
-                    "update_pipeline_from_link.ps1",
-                    "sync_managed_pipeline_package.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "check_pipeline_feature_contracts.ps1",
-                    "set_directives.ps1",
-                    "audit_docs.ps1",
+                    "update_pipeline_from_link.py",
+                    "sync_managed_pipeline_package.py",
+                    "sync_pipeline_featurelist.py",
+                    "check_pipeline_feature_contracts.py",
+                    "set_directives.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
-                    "normalize_json_files.ps1"
+                    "normalize_json_files.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "update_pipeline_from_link.ps1",
-                        "sync_managed_pipeline_package.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "check_pipeline_feature_contracts.ps1",
-                        "set_directives.ps1",
-                        "audit_docs.ps1",
+                        "update_pipeline_from_link.py",
+                        "sync_managed_pipeline_package.py",
+                        "sync_pipeline_featurelist.py",
+                        "check_pipeline_feature_contracts.py",
+                        "set_directives.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
-                        "normalize_json_files.ps1"
+                        "normalize_json_files.py"
                     ]
                 },
                 "required_docs": [
@@ -6311,11 +6311,11 @@ Draft placeholder:
                     "Require upgrade agents to validate current FILE-FORMATS.json and json_list_doc.py contracts before writing structured files.",
                     "Require relevant pipeline scripts to run or be reported as blocked/degraded before claiming upgrade completion.",
                     "Keep pipeline/global structure, response format, and required script usage stronger than local preferences unless the user explicitly overrides them.",
-                    "Verify changed update artifacts with check_pipeline_feature_contracts.ps1."
+                    "Verify changed update artifacts with check_pipeline_feature_contracts.py."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1 -Paths tools/pipeline/update_pipeline_from_link.ps1,tools/pipeline/sync_managed_pipeline_package.ps1,PUBLIC-BOOTSTRAP.md,core/FILE-FORMATS.json,core/UPDATE-PROTOCOL.json,SCRIPTS.json,pipeline_featurelist.json",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py -Paths tools/pipeline/update_pipeline_from_link.py,tools/pipeline/sync_managed_pipeline_package.py,PUBLIC-BOOTSTRAP.md,core/FILE-FORMATS.json,core/UPDATE-PROTOCOL.json,SCRIPTS.json,pipeline_featurelist.json",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Old or low-budget child projects may spend unnecessary AI/tool time on full rebuilds, overwrite project-owned state, copy stale local shapes, skip mandatory validation scripts, or fail to receive structural source changes from Git cheaply."
             },
@@ -6323,7 +6323,7 @@ Draft placeholder:
                 "summary": "Automate repeatable SocratexPipeline source-to-child update and smoke sweeps across explicit project lists, while leaving drift interpretation and repairs to the operator/agent.",
                 "required_paths": [
                     "tools/pipeline/pipeline_sweep.py",
-                    "tools/pipeline/pipeline_sweep.ps1",
+                    "tools/pipeline/pipeline_sweep.py",
                     "templates/pipeline-sweep.projects.json",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json",
@@ -6335,12 +6335,12 @@ Draft placeholder:
                 ],
                 "required_scripts": [
                     "pipeline_sweep.py",
-                    "pipeline_sweep.ps1",
-                    "update_pipeline_from_link.ps1",
-                    "check_pipeline_feature_contracts.ps1",
-                    "audit_docs.ps1",
-                    "knowledge_tier_check.ps1",
-                    "compile_pipeline_context.ps1",
+                    "pipeline_sweep.py",
+                    "update_pipeline_from_link.py",
+                    "check_pipeline_feature_contracts.py",
+                    "audit_docs.py",
+                    "knowledge_tier_check.py",
+                    "compile_pipeline_context.py",
                     "update_pipeline_from_link.py",
                     "check_pipeline_feature_contracts.py",
                     "audit_docs.py",
@@ -6350,12 +6350,12 @@ Draft placeholder:
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "pipeline_sweep.py",
-                        "pipeline_sweep.ps1",
-                        "update_pipeline_from_link.ps1",
-                        "check_pipeline_feature_contracts.ps1",
-                        "audit_docs.ps1",
-                        "knowledge_tier_check.ps1",
-                        "compile_pipeline_context.ps1",
+                        "pipeline_sweep.py",
+                        "update_pipeline_from_link.py",
+                        "check_pipeline_feature_contracts.py",
+                        "audit_docs.py",
+                        "knowledge_tier_check.py",
+                        "compile_pipeline_context.py",
                         "update_pipeline_from_link.py",
                         "check_pipeline_feature_contracts.py",
                         "audit_docs.py",
@@ -6370,7 +6370,7 @@ Draft placeholder:
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
-                    "Keep the sweep runner Python-first and OS-agnostic; PowerShell remains a catalog wrapper, not the core implementation.",
+                    "Keep the sweep runner Python-first and OS-agnostic; legacy shell wrappers are removed from the catalog and are not core implementation.",
                     "Require explicit project config or NAME=PATH arguments so the tool does not depend on agent memory or private hardcoded workspaces.",
                     "Keep dry-run as the default and require --execute/-Execute before update, smoke, or finalizer commands run.",
                     "Model projects through status, update, smoke, optional finalizer, and summary phases instead of one-off manual command sequences.",
@@ -6381,9 +6381,9 @@ Draft placeholder:
                 ],
                 "verification_commands": [
                     "python3 -m py_compile tools/pipeline/pipeline_sweep.py",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/pipeline_sweep.ps1 -Help",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/pipeline/pipeline_sweep.py -Help",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Agents must manually remember every project, update command, smoke command, tier check, and drift summary, so future source-pipeline upgrades become inconsistent as project count grows."
             },
@@ -6391,25 +6391,25 @@ Draft placeholder:
                 "summary": "Cheap update and learning tools can recover older child feature manifests that use project-shaped index/content documents instead of current root features arrays.",
                 "required_paths": [
                     "pipeline_featurelist.json",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
                     "core/UPDATE-PROTOCOL.json",
                     "SCRIPTS.json"
                 ],
                 "required_scripts": [
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "check_pipeline_feature_contracts.ps1"
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "check_pipeline_feature_contracts.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "check_pipeline_feature_contracts.ps1"
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "check_pipeline_feature_contracts.py"
                     ]
                 },
                 "required_docs": [
@@ -6426,9 +6426,9 @@ Draft placeholder:
                     "Preserve or recover project-owned list-document root shape when DOCS.json declares pipeline_featurelist.json as index/content/metadata."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/sync_pipeline_featurelist.ps1 -TargetPath <old-project> -SourceFeatureListPath pipeline_featurelist.json -DryRun",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/report_pipeline_learning.ps1 -ProjectPath <old-project>",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1"
+                    "python3 -B tools/repo/sync_pipeline_featurelist.py -TargetPath <old-project> -SourceFeatureListPath pipeline_featurelist.json -DryRun",
+                    "python3 -B tools/repo/report_pipeline_learning.py -ProjectPath <old-project>",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py"
                 ],
                 "known_failure_if_missing": "Cheap update can fail before normalizing old child manifests, forcing high-AI-limit manual recovery instead of a low-cost update."
             },
@@ -6440,14 +6440,14 @@ Draft placeholder:
                     "PUBLIC-BOOTSTRAP.md",
                     "core/FILE-FORMATS.json",
                     "core/UPDATE-PROTOCOL.json",
-                    "tools/repo/check_pipeline_feature_contracts.ps1",
-                    "tools/repo/sync_pipeline_featurelist.ps1",
-                    "tools/repo/learn_pipeline_features.ps1",
-                    "tools/repo/report_pipeline_learning.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/repo/sync_pipeline_featurelist.py",
+                    "tools/repo/learn_pipeline_features.py",
+                    "tools/repo/report_pipeline_learning.py",
+                    "tools/documents/audit_docs.py",
                     "tools/json/json_list_doc.py",
-                    "tools/json/json_read.ps1",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/json/json_read.py",
+                    "tools/text/normalize_json_files.py",
                     "SCRIPTS.json",
                     "CHANGELOG.json",
                     "JSON-FORMAT-CONTRACT.json",
@@ -6494,18 +6494,18 @@ Draft placeholder:
                     "profiles/SocratexGamedev/SCRIPTS.json"
                 ],
                 "required_scripts": [
-                    "check_pipeline_feature_contracts.ps1",
-                    "sync_pipeline_featurelist.ps1",
-                    "learn_pipeline_features.ps1",
-                    "report_pipeline_learning.ps1",
-                    "audit_docs.ps1",
+                    "check_pipeline_feature_contracts.py",
+                    "sync_pipeline_featurelist.py",
+                    "learn_pipeline_features.py",
+                    "report_pipeline_learning.py",
+                    "audit_docs.py",
                     "json_list_doc.py",
                     "json_wrapper_entrypoints.py",
-                    "json_read.ps1",
                     "json_read.py",
-                    "normalize_json_files.ps1",
-                    "normalize_document_structure.ps1",
-                    "migrate_document_schema.ps1",
+                    "json_read.py",
+                    "normalize_json_files.py",
+                    "normalize_document_structure.py",
+                    "migrate_document_schema.py",
                     "document_item_edit_engine.py",
                     "document_list_item_edit_engine.py",
                     "json_refresh_index.py",
@@ -6521,18 +6521,18 @@ Draft placeholder:
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_pipeline_feature_contracts.ps1",
-                        "sync_pipeline_featurelist.ps1",
-                        "learn_pipeline_features.ps1",
-                        "report_pipeline_learning.ps1",
-                        "audit_docs.ps1",
+                        "check_pipeline_feature_contracts.py",
+                        "sync_pipeline_featurelist.py",
+                        "learn_pipeline_features.py",
+                        "report_pipeline_learning.py",
+                        "audit_docs.py",
                         "json_list_doc.py",
                         "json_wrapper_entrypoints.py",
-                        "json_read.ps1",
                         "json_read.py",
-                        "normalize_json_files.ps1",
-                        "normalize_document_structure.ps1",
-                        "migrate_document_schema.ps1",
+                        "json_read.py",
+                        "normalize_json_files.py",
+                        "normalize_document_structure.py",
+                        "migrate_document_schema.py",
                         "document_item_edit_engine.py",
                         "document_list_item_edit_engine.py",
                         "json_refresh_index.py",
@@ -6575,36 +6575,36 @@ Draft placeholder:
                     "Keep document normalizer and migration tools pointed at index/content/metadata, not legacy index/items/meta."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/sync_pipeline_featurelist.ps1 -TargetPath <project> -SourceFeatureListPath pipeline_featurelist.json -DryRun",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/normalize_document_structure.ps1 -Check",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/migrate_document_schema.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/repo/sync_pipeline_featurelist.py -TargetPath <project> -SourceFeatureListPath pipeline_featurelist.json -DryRun",
+                    "python3 -B tools/documents/normalize_document_structure.py -Check",
+                    "python3 -B tools/documents/migrate_document_schema.py -Check"
                 ],
                 "known_failure_if_missing": "Scripts must special-case every manifest shape, old child updates can overwrite local structured sections, and source/child feature comparison stops being a stable low-cost document operation."
             },
             "single_entry_tool_handler": {
                 "summary": "Public tool routing is active only when the handler script, script contracts, workflow rule, and error logger are present.",
                 "required_paths": [
-                    "tools/pipeline/tool_handler.ps1",
-                    "tools/pipeline/tool_error_log.ps1",
-                    "tools/pipeline/read_compiled_context.ps1",
+                    "tools/pipeline/tool_handler.py",
+                    "tools/pipeline/tool_error_log.py",
+                    "tools/pipeline/read_compiled_context.py",
                     "tools/pipeline/read_compiled_context.py",
                     "SCRIPTS.json",
                     "WORKFLOW.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "tool_handler.ps1",
-                    "tool_error_log.ps1",
-                    "read_compiled_context.ps1",
+                    "tool_handler.py",
+                    "tool_error_log.py",
+                    "read_compiled_context.py",
                     "read_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "tool_handler.ps1",
-                        "tool_error_log.ps1",
-                        "read_compiled_context.ps1",
+                        "tool_handler.py",
+                        "tool_error_log.py",
+                        "read_compiled_context.py",
                         "read_compiled_context.py"
                     ]
                 },
@@ -6620,24 +6620,24 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents keep invoking individual scripts with fragile input shapes, and repeatable input errors are not automatically logged or normalized."
             },
             "tool_error_registry_and_logger": {
                 "summary": "Tool error registry is active only when the logger, registry document, script catalog, and document index are present.",
                 "required_paths": [
-                    "tools/pipeline/tool_error_log.ps1",
+                    "tools/pipeline/tool_error_log.py",
                     "docs-tech/TOOL-ERRORS.json",
-                    "tools/json/json_item_insert.ps1",
+                    "tools/json/json_item_insert.py",
                     "SCRIPTS.json",
                     "DOCS.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "tool_error_log.ps1",
-                    "json_item_insert.ps1",
+                    "tool_error_log.py",
+                    "json_item_insert.py",
                     "json_item_insert.py",
                     "json_refresh_index.py",
                     "json_migrate_content.py",
@@ -6653,8 +6653,8 @@ Draft placeholder:
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "tool_error_log.ps1",
-                        "json_item_insert.ps1",
+                        "tool_error_log.py",
+                        "json_item_insert.py",
                         "json_item_insert.py",
                         "json_refresh_index.py",
                         "json_migrate_content.py",
@@ -6681,25 +6681,25 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Tool failures remain scattered in chat or local memory instead of becoming repairable script-contract debt."
             },
             "json_routed_document_item_wrapper": {
                 "summary": "Document item insertion is JSON-safe only when .json paths route through JSON list-document tools.",
                 "required_paths": [
-                    "tools/documents/insert_document_item.ps1",
-                    "tools/json/json_item_insert.ps1",
-                    "tools/json/json_item_set.ps1",
+                    "tools/documents/insert_document_item.py",
+                    "tools/json/json_item_insert.py",
+                    "tools/json/json_item_set.py",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "insert_document_item.ps1",
-                    "json_item_insert.ps1",
+                    "insert_document_item.py",
                     "json_item_insert.py",
-                    "json_item_set.ps1",
+                    "json_item_insert.py",
+                    "json_item_set.py",
                     "json_item_set.py",
                     "json_refresh_index.py",
                     "json_migrate_content.py",
@@ -6714,10 +6714,10 @@ Draft placeholder:
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "insert_document_item.ps1",
-                        "json_item_insert.ps1",
+                        "insert_document_item.py",
                         "json_item_insert.py",
-                        "json_item_set.ps1",
+                        "json_item_insert.py",
+                        "json_item_set.py",
                         "json_item_set.py",
                         "json_refresh_index.py",
                         "json_migrate_content.py",
@@ -6742,30 +6742,30 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "A generic item wrapper can corrupt JSON or force agents into manual structured-document edits."
             },
             "compiled_context_alias_normalization": {
                 "summary": "Compiled context aliases are active only when the reader and handler normalize common short names against compiled/source context.",
                 "required_paths": [
-                    "tools/pipeline/read_compiled_context.ps1",
                     "tools/pipeline/read_compiled_context.py",
-                    "tools/pipeline/tool_handler.ps1",
+                    "tools/pipeline/read_compiled_context.py",
+                    "tools/pipeline/tool_handler.py",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "read_compiled_context.ps1",
                     "read_compiled_context.py",
-                    "tool_handler.ps1"
+                    "read_compiled_context.py",
+                    "tool_handler.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "read_compiled_context.ps1",
                         "read_compiled_context.py",
-                        "tool_handler.ps1"
+                        "read_compiled_context.py",
+                        "tool_handler.py"
                     ]
                 },
                 "required_docs": [
@@ -6779,8 +6779,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents must remember exact compiled file names instead of using stable short selectors such as scripts, workflow, bootstrap, or engineering."
             },
@@ -6793,12 +6793,12 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "rebuild_ai_compiled_context.ps1",
+                    "rebuild_ai_compiled_context.py",
                     "knowledge_compile.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "rebuild_ai_compiled_context.ps1",
+                        "rebuild_ai_compiled_context.py",
                         "knowledge_compile.py"
                     ]
                 },
@@ -6813,8 +6813,8 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents may add explanatory comments for code that should instead be self-describing through names and ownership boundaries."
             },
@@ -6828,14 +6828,14 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "rebuild_ai_compiled_context.ps1",
-                    "knowledge_code_context.ps1",
+                    "rebuild_ai_compiled_context.py",
+                    "knowledge_code_context.py",
                     "knowledge_compile.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "rebuild_ai_compiled_context.ps1",
-                        "knowledge_code_context.ps1",
+                        "rebuild_ai_compiled_context.py",
+                        "knowledge_code_context.py",
                         "knowledge_compile.py"
                     ]
                 },
@@ -6851,85 +6851,85 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Projects may duplicate boundary behavior across callers instead of using a helper or API that supports the architecture and makes the intended contract easy to use and easy to audit."
             },
             "cross_platform_tool_runtime_resolution": {
-                "summary": "PowerShell wrappers resolve Python and PowerShell through a shared runtime helper so source and installed pipeline tools run on Windows, Linux, and Steam Deck/Linux without hardcoded Windows-only Python paths.",
+                "summary": "Python wrappers resolve the project Python runtime through a shared runtime helper so source and installed pipeline tools run on Windows, Linux, and Steam Deck/Linux without hardcoded Windows-only Python paths.",
                 "required_paths": [
                     "SCRIPTS.json",
                     "pipeline_featurelist.json",
-                    "tools/pipeline/resolve_tool_runtime.ps1",
-                    "tools/pipeline/Initialize-SocratexPipeline.ps1",
-                    "tools/pipeline/pipeline_bootstrap_index.ps1",
+                    "tools/pipeline/resolve_tool_runtime.py",
+                    "tools/pipeline/Initialize-SocratexPipeline.py",
+                    "tools/pipeline/pipeline_bootstrap_index.py",
                     "tools/documents",
                     "tools/knowledge",
-                    "tools/text/normalize_json_files.ps1",
+                    "tools/text/normalize_json_files.py",
                     "tools/pipeline/python_runtime.py",
                     "tools/quality/check_runtime.py",
                     "tools/knowledge/knowledge_select.py"
                 ],
                 "required_scripts": [
-                    "resolve_tool_runtime.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "pipeline_bootstrap_index.ps1",
-                    "build_document_cache.ps1",
-                    "bulk_insert_document_items.ps1",
-                    "check_document_list_item_duplicates.ps1",
-                    "insert_document_item.ps1",
-                    "insert_document_list_item.ps1",
-                    "json_item_delete.ps1",
+                    "resolve_tool_runtime.py",
+                    "Initialize-SocratexPipeline.py",
+                    "pipeline_bootstrap_index.py",
+                    "build_document_cache.py",
+                    "bulk_insert_document_items.py",
+                    "check_document_list_item_duplicates.py",
+                    "insert_document_item.py",
+                    "insert_document_list_item.py",
                     "json_item_delete.py",
-                    "json_item_insert.ps1",
+                    "json_item_delete.py",
                     "json_item_insert.py",
-                    "json_item_move.ps1",
+                    "json_item_insert.py",
                     "json_item_move.py",
-                    "json_item_set.ps1",
+                    "json_item_move.py",
                     "json_item_set.py",
-                    "json_line_insert.ps1",
+                    "json_item_set.py",
                     "json_line_insert.py",
-                    "json_line_move.ps1",
+                    "json_line_insert.py",
                     "json_line_move.py",
-                    "json_line_set.ps1",
+                    "json_line_move.py",
                     "json_line_set.py",
-                    "json_migrate_content.ps1",
+                    "json_line_set.py",
                     "json_migrate_content.py",
-                    "json_read.ps1",
+                    "json_migrate_content.py",
                     "json_read.py",
-                    "json_refresh_index.ps1",
+                    "json_read.py",
                     "json_refresh_index.py",
-                    "list_document_keys.ps1",
-                    "migrate_document_item.ps1",
-                    "migrate_document_schema.ps1",
-                    "move_document_item.ps1",
-                    "normalize_document_structure.ps1",
-                    "read_document_item.ps1",
-                    "read_document_items_by_title.ps1",
-                    "review_document_list_candidates.ps1",
+                    "json_refresh_index.py",
+                    "list_document_keys.py",
+                    "migrate_document_item.py",
+                    "migrate_document_schema.py",
+                    "move_document_item.py",
+                    "normalize_document_structure.py",
+                    "read_document_item.py",
+                    "read_document_items_by_title.py",
+                    "review_document_list_candidates.py",
                     "knowledge_check.py",
                     "knowledge_compile.py",
-                    "knowledge_delete.ps1",
+                    "knowledge_delete.py",
                     "knowledge_delete.py",
                     "knowledge_file_check.py",
                     "knowledge_file_compile.py",
-                    "knowledge_file_delete.ps1",
                     "knowledge_file_delete.py",
-                    "knowledge_file_rename.ps1",
+                    "knowledge_file_delete.py",
+                    "knowledge_file_rename.py",
                     "knowledge_file_rename.py",
                     "knowledge_file_select.py",
-                    "knowledge_file_upsert.ps1",
                     "knowledge_file_upsert.py",
-                    "knowledge_query.ps1",
+                    "knowledge_file_upsert.py",
                     "knowledge_query.py",
-                    "knowledge_rename.ps1",
+                    "knowledge_query.py",
                     "knowledge_rename.py",
-                    "knowledge_select.ps1",
+                    "knowledge_rename.py",
                     "knowledge_select.py",
-                    "knowledge_upsert.ps1",
+                    "knowledge_select.py",
                     "knowledge_upsert.py",
-                    "normalize_json_files.ps1",
+                    "knowledge_upsert.py",
+                    "normalize_json_files.py",
                     "python_runtime.py",
                     "check_runtime.py",
                     "json_node_edit.py",
@@ -6937,64 +6937,64 @@ Draft placeholder:
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "resolve_tool_runtime.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "pipeline_bootstrap_index.ps1",
-                        "build_document_cache.ps1",
-                        "bulk_insert_document_items.ps1",
-                        "check_document_list_item_duplicates.ps1",
-                        "insert_document_item.ps1",
-                        "insert_document_list_item.ps1",
-                        "json_item_delete.ps1",
+                        "resolve_tool_runtime.py",
+                        "Initialize-SocratexPipeline.py",
+                        "pipeline_bootstrap_index.py",
+                        "build_document_cache.py",
+                        "bulk_insert_document_items.py",
+                        "check_document_list_item_duplicates.py",
+                        "insert_document_item.py",
+                        "insert_document_list_item.py",
                         "json_item_delete.py",
-                        "json_item_insert.ps1",
+                        "json_item_delete.py",
                         "json_item_insert.py",
-                        "json_item_move.ps1",
+                        "json_item_insert.py",
                         "json_item_move.py",
-                        "json_item_set.ps1",
+                        "json_item_move.py",
                         "json_item_set.py",
-                        "json_line_insert.ps1",
+                        "json_item_set.py",
                         "json_line_insert.py",
-                        "json_line_move.ps1",
+                        "json_line_insert.py",
                         "json_line_move.py",
-                        "json_line_set.ps1",
+                        "json_line_move.py",
                         "json_line_set.py",
-                        "json_migrate_content.ps1",
+                        "json_line_set.py",
                         "json_migrate_content.py",
-                        "json_read.ps1",
+                        "json_migrate_content.py",
                         "json_read.py",
-                        "json_refresh_index.ps1",
+                        "json_read.py",
                         "json_refresh_index.py",
-                        "list_document_keys.ps1",
-                        "migrate_document_item.ps1",
-                        "migrate_document_schema.ps1",
-                        "move_document_item.ps1",
-                        "normalize_document_structure.ps1",
-                        "read_document_item.ps1",
-                        "read_document_items_by_title.ps1",
-                        "review_document_list_candidates.ps1",
+                        "json_refresh_index.py",
+                        "list_document_keys.py",
+                        "migrate_document_item.py",
+                        "migrate_document_schema.py",
+                        "move_document_item.py",
+                        "normalize_document_structure.py",
+                        "read_document_item.py",
+                        "read_document_items_by_title.py",
+                        "review_document_list_candidates.py",
                         "knowledge_check.py",
                         "knowledge_compile.py",
-                        "knowledge_delete.ps1",
+                        "knowledge_delete.py",
                         "knowledge_delete.py",
                         "knowledge_file_check.py",
                         "knowledge_file_compile.py",
-                        "knowledge_file_delete.ps1",
                         "knowledge_file_delete.py",
-                        "knowledge_file_rename.ps1",
+                        "knowledge_file_delete.py",
+                        "knowledge_file_rename.py",
                         "knowledge_file_rename.py",
                         "knowledge_file_select.py",
-                        "knowledge_file_upsert.ps1",
                         "knowledge_file_upsert.py",
-                        "knowledge_query.ps1",
+                        "knowledge_file_upsert.py",
                         "knowledge_query.py",
-                        "knowledge_rename.ps1",
+                        "knowledge_query.py",
                         "knowledge_rename.py",
-                        "knowledge_select.ps1",
+                        "knowledge_rename.py",
                         "knowledge_select.py",
-                        "knowledge_upsert.ps1",
+                        "knowledge_select.py",
                         "knowledge_upsert.py",
-                        "normalize_json_files.ps1",
+                        "knowledge_upsert.py",
+                        "normalize_json_files.py",
                         "python_runtime.py",
                         "check_runtime.py",
                         "json_node_edit.py",
@@ -7007,17 +7007,17 @@ Draft placeholder:
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
-                    "Keep Python-backed PowerShell wrappers dot-sourcing resolve_tool_runtime.ps1 instead of hardcoding Tools/Python312/python.exe.",
+                    "Keep Python-backed wrapper replacements dot-sourcing resolve_tool_runtime.py instead of hardcoding Tools/Python312/python.exe.",
                     "Prefer SOCRATEX_PYTHON and SOCRATEX_PWSH overrides before bundled or PATH-based runtimes.",
                     "Keep Windows-only bundled Python paths as fallback candidates, not as mandatory Linux/Steam Deck dependencies.",
                     "Run representative document, knowledge, bootstrap, and feature-contract checks on a Linux shell before promoting to child projects.",
-                    "For PowerShell-to-Python migration claims, verify behavior by executing the replacement Python commands and update/smoke flows; reference-count reduction alone is not sufficient evidence."
+                    "For legacy-shell-to-Python migration claims, verify behavior by executing the replacement Python commands and update/smoke flows; reference-count reduction alone is not sufficient evidence."
                 ],
                 "verification_commands": [
-                    "powershell -NoLogo -NoProfile -File tools/pipeline/pipeline_bootstrap_index.ps1 -Check",
-                    "powershell -NoLogo -NoProfile -File tools/documents/build_document_cache.ps1",
+                    "python3 -B tools/pipeline/pipeline_bootstrap_index.py -Check",
+                    "python3 -B tools/documents/build_document_cache.py",
                     "python -B tools/knowledge/knowledge_check.py",
-                    "powershell -NoLogo -NoProfile -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
                     "python3 tools/quality/check_runtime.py --root-key runtime_status --strict"
                 ],
                 "known_failure_if_missing": "Linux and Steam Deck installs fall back to empty HUD-like pipeline state or failed bootstrap/document/knowledge tools because wrappers try to execute a Windows-only bundled Python path."
@@ -7032,16 +7032,16 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "templates/SOCRATEX.md",
                     "templates/workspace.json",
-                    "tools/pipeline/resolve_workspace_root.ps1",
+                    "tools/pipeline/resolve_workspace_root.py",
                     "core/UPDATE-PROTOCOL.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "resolve_workspace_root.ps1"
+                    "resolve_workspace_root.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "resolve_workspace_root.ps1"
+                        "resolve_workspace_root.py"
                     ]
                 },
                 "required_docs": [
@@ -7055,14 +7055,14 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Store workspace.json in the workspace root next to SocratexAI/.",
                     "Keep workspace.json paths relative to its own directory unless the value is an external URI.",
-                    "Use resolve_workspace_root.ps1 for workspace-level imports, archives, exports, and local sibling source checkout discovery.",
+                    "Use resolve_workspace_root.py for workspace-level imports, archives, exports, and local sibling source checkout discovery.",
                     "Keep project-local scripts resolving repo roots relative to script location.",
                     "Do not hardcode /home/<user>/work, /home/<user>/projects, drive-imports, or repos as canonical source paths."
                 ],
                 "verification_commands": [
-                    "powershell -NoLogo -NoProfile -File tools/pipeline/resolve_workspace_root.ps1 -Json",
-                    "powershell -NoLogo -NoProfile -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoLogo -NoProfile -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/pipeline/resolve_workspace_root.py -Json",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Agents and workspace tools may preserve hardcoded local roots, making work/projects renames and multi-machine workspace layouts brittle."
             },
@@ -7072,27 +7072,27 @@ Draft placeholder:
                     "core/communication-profiles",
                     "core/AGENT-CONTRACT.json",
                     "core/ACTIVATION-CHECK.json",
-                    "tools/setup/run_interactive_setup.ps1",
-                    "tools/pipeline/Initialize-SocratexPipeline.ps1",
-                    "tools/pipeline/generate_installed_agent_instructions.ps1",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "tools/setup/run_interactive_setup.py",
+                    "tools/pipeline/Initialize-SocratexPipeline.py",
+                    "tools/pipeline/generate_installed_agent_instructions.py",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
                     "templates/SOCRATEX.md",
                     "PUBLIC-BOOTSTRAP.md",
                     "DOCS.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "run_interactive_setup.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "generate_installed_agent_instructions.ps1",
-                    "rebuild_ai_compiled_context.ps1"
+                    "run_interactive_setup.py",
+                    "Initialize-SocratexPipeline.py",
+                    "generate_installed_agent_instructions.py",
+                    "rebuild_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "run_interactive_setup.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "generate_installed_agent_instructions.ps1",
-                        "rebuild_ai_compiled_context.ps1"
+                        "run_interactive_setup.py",
+                        "Initialize-SocratexPipeline.py",
+                        "generate_installed_agent_instructions.py",
+                        "rebuild_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7109,9 +7109,9 @@ Draft placeholder:
                     "Rebuild compiled instructions so the profile registry is visible to agents."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Communication profile choices drift across prose, setup prompts, config validation, and compiled agent instructions."
             },
@@ -7124,13 +7124,13 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "check_pipeline_feature_contracts.ps1",
-                    "rebuild_ai_compiled_context.ps1"
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_pipeline_feature_contracts.ps1",
-                        "rebuild_ai_compiled_context.ps1"
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7146,9 +7146,9 @@ Draft placeholder:
                     "Rebuild compiled instructions so installed agents can discover the new profile."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/check_ai_compiled_context.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Legacy-business projects may fall back to the generic epistemic profile, losing paste-ready business handoff text, domain-unknown guardrails, and explicit manual test scenarios."
             },
@@ -7162,13 +7162,13 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "check_pipeline_feature_contracts.ps1",
-                    "rebuild_ai_compiled_context.ps1"
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_pipeline_feature_contracts.ps1",
-                        "rebuild_ai_compiled_context.ps1"
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7187,9 +7187,9 @@ Draft placeholder:
                     "Rebuild compiled instructions and run feature-contract checks after workflow/profile changes."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/check_ai_compiled_context.py",
+                    "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Foreign or legacy business work may be routed through the default code or gamedev flow, causing premature coding, hidden domain assumptions, missing manual test scenarios, or agent-owned shared-system lifecycle actions."
             },
@@ -7199,27 +7199,27 @@ Draft placeholder:
                     "FLOWS.json",
                     "context-docs/ENGINEERING.json",
                     "pipeline_featurelist.json",
-                    "tools/codebase/check_project_design_context_gate.ps1",
-                    "tools/documents/audit_docs.ps1",
-                    "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/codebase/check_project_design_context_gate.py",
+                    "tools/documents/audit_docs.py",
                     "tools/knowledge/knowledge_code_context.py",
-                    "tools/knowledge/project_design_context.ps1",
-                    "tools/repo/check_pipeline_feature_contracts.ps1"
+                    "tools/knowledge/knowledge_code_context.py",
+                    "tools/knowledge/project_design_context.py",
+                    "tools/repo/check_pipeline_feature_contracts.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1",
-                    "check_project_design_context_gate.ps1",
-                    "knowledge_code_context.ps1",
+                    "audit_docs.py",
+                    "check_project_design_context_gate.py",
                     "knowledge_code_context.py",
-                    "project_design_context.ps1"
+                    "knowledge_code_context.py",
+                    "project_design_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1",
-                        "check_project_design_context_gate.ps1",
-                        "knowledge_code_context.ps1",
+                        "audit_docs.py",
+                        "check_project_design_context_gate.py",
                         "knowledge_code_context.py",
-                        "project_design_context.ps1"
+                        "knowledge_code_context.py",
+                        "project_design_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7233,26 +7233,26 @@ Draft placeholder:
                 },
                 "implementation_flow_steps": [
                     "load WORKFLOW.json",
-                    "run knowledge_code_context.ps1 — REQUIRED: brings 11 substantive code-design rules (borrowed-before-invented, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
-                    "run project_design_context.ps1 -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads — writes ignored/project_design_context_gate.json",
+                    "run knowledge_code_context.py — REQUIRED: brings 11 substantive code-design rules (borrowed-before-invented, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
+                    "run project_design_context.py -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads — writes ignored/project_design_context_gate.json",
                     "inspect SCRIPTS.json index before manual work",
                     "edit scoped files",
-                    "run check_task.ps1 -ProjectRoot <project> at the final verification boundary — verifies BOTH ignored/code_context_gate.json (workspace, via check_code_context_gate.ps1) and <project>/ignored/project_design_context_gate.json (per-project, via check_project_design_context_gate.ps1) are fresh for current HEAD when changed-code is detected"
+                    "run check_task.py -ProjectRoot <project> at the final verification boundary — verifies BOTH ignored/code_context_gate.json (workspace, via check_code_context_gate.py) and <project>/ignored/project_design_context_gate.json (per-project, via check_project_design_context_gate.py) are fresh for current HEAD when changed-code is detected"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
-                    "Ensure project_design_context.ps1 ships into installed projects (or stays accessible via shared-sibling SocratexAI clone).",
+                    "Ensure project_design_context.py ships into installed projects (or stays accessible via shared-sibling SocratexAI clone).",
                     "Verify each child project declares code_design_required_reads in its PIPELINE-CONFIG.json or accepts the no-op fallback.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/project_design_context.ps1 -ProjectRoot <project> -Quiet",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/codebase/check_project_design_context_gate.ps1 -ProjectRoot <project>"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/knowledge/project_design_context.py -ProjectRoot <project> -Quiet",
+                    "python3 -B tools/codebase/check_project_design_context_gate.py -ProjectRoot <project>"
                 ],
                 "known_failure_if_missing": "If 'project_specific_design_context_gate' is listed without these artifacts, source/child comparison may pass by feature id while implementation flow loses its second gate, and per-project zone/namespace rules become opt-in instead of enforced. Symptoms: agents drag /app patterns into /application files (or vice-versa), miss namespace-zone constraints in projects with dual zones, or apply modern syntax to PHP 5.6 projects."
             },
@@ -7268,15 +7268,15 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "knowledge_code_context.ps1",
+                    "knowledge_code_context.py",
                     "knowledge_compile.py",
-                    "check_pipeline_feature_contracts.ps1"
+                    "check_pipeline_feature_contracts.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "knowledge_code_context.ps1",
+                        "knowledge_code_context.py",
                         "knowledge_compile.py",
-                        "check_pipeline_feature_contracts.ps1"
+                        "check_pipeline_feature_contracts.py"
                     ]
                 },
                 "required_docs": [
@@ -7295,7 +7295,7 @@ Draft placeholder:
                     "Run feature-contract and knowledge checks after promotion."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
                     "python -B tools/knowledge/knowledge_check.py"
                 ],
                 "known_failure_if_missing": "Agents may keep using ORM/engine/framework convenience as the broad storage/index/batch model for predictable scale, then try to micro-optimize symptoms instead of choosing a lightweight architecture early."
@@ -7309,13 +7309,13 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "check_pipeline_feature_contracts.ps1",
-                    "compile_pipeline_context.ps1"
+                    "check_pipeline_feature_contracts.py",
+                    "compile_pipeline_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_pipeline_feature_contracts.ps1",
-                        "compile_pipeline_context.ps1"
+                        "check_pipeline_feature_contracts.py",
+                        "compile_pipeline_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7331,8 +7331,8 @@ Draft placeholder:
                     "Run the feature-contract checker before publishing."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "A pipeline source improvement may pass locally but new child projects initialized from templates miss the rule, causing update/source parity to look correct while starter projects remain stale."
             },
@@ -7351,9 +7351,9 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "knowledge_code_context.ps1",
+                    "knowledge_code_context.py",
                     "knowledge_compile.py",
-                    "check_pipeline_feature_contracts.ps1"
+                    "check_pipeline_feature_contracts.py"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
@@ -7364,15 +7364,15 @@ Draft placeholder:
                     "Keep profile-gating explicit so legacy surgical fixes do not become broad modernization work."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "If this feature exists only as a performance rule, agents will keep treating future-proofing as FPS-only instead of applying it to clean code, DDD/ADIV, security, data ownership, contracts, migrations, and context boundaries.",
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "knowledge_code_context.ps1",
+                        "knowledge_code_context.py",
                         "knowledge_compile.py",
-                        "check_pipeline_feature_contracts.ps1"
+                        "check_pipeline_feature_contracts.py"
                     ]
                 },
                 "required_docs": [
@@ -7394,28 +7394,28 @@ Draft placeholder:
                     "FLOWS.json",
                     "profiles/SocratexGamedev/FLOWS.json",
                     "SCRIPTS.json",
-                    "tools/repo/task_flow_audit.ps1",
-                    "tools/repo/run_final_task_checks.ps1",
-                    "tools/repo/finalize_task_check_commit_push.ps1",
+                    "tools/repo/task_flow_audit.py",
+                    "tools/repo/run_final_task_checks.py",
+                    "tools/repo/finalize_task_check_commit_push.py",
                     "CHANGELOG.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "task_flow_audit.ps1",
-                    "run_final_task_checks.ps1",
-                    "finalize_changed_files_commit_push.ps1",
-                    "finalize_task_check_commit_push.ps1",
-                    "check_pipeline_feature_contracts.ps1",
-                    "rebuild_ai_compiled_context.ps1"
+                    "task_flow_audit.py",
+                    "run_final_task_checks.py",
+                    "finalize_changed_files_commit_push.py",
+                    "finalize_task_check_commit_push.py",
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "task_flow_audit.ps1",
-                        "run_final_task_checks.ps1",
-                        "finalize_changed_files_commit_push.ps1",
-                        "finalize_task_check_commit_push.ps1",
-                        "check_pipeline_feature_contracts.ps1",
-                        "rebuild_ai_compiled_context.ps1"
+                        "task_flow_audit.py",
+                        "run_final_task_checks.py",
+                        "finalize_changed_files_commit_push.py",
+                        "finalize_task_check_commit_push.py",
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7430,7 +7430,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Keep the reusable behavior as one `task_flow_audit` subroutine referenced from flows instead of duplicating checklist steps in every flow.",
                     "Always require closure artifacts for changed-file tasks: loaded route, selected flow execution, concrete closure evidence, changelog truth, tool-failure repair/spec response, and tools-vs-manual discipline.",
-                    "Use `tools/repo/task_flow_audit.ps1` as the lightweight closure prompt/checklist and wire it into the final task checks so the artifact audit appears at the task boundary.",
+                    "Use `tools/repo/task_flow_audit.py` as the lightweight closure prompt/checklist and wire it into the final task checks so the artifact audit appears at the task boundary.",
                     "When an installed child-project wrapper calls the managed package copy, pass `-ProjectRoot` so the audit reads the child repository diff and changelog instead of the embedded SocratexAI package.",
                     "For complex or high-risk work, run the adversarial review from the changelog append: read what the changelog claims changed, then test the diff and verification against that claim.",
                     "Keep tiny obvious fixes lightweight: they still answer the core artifacts, but they do not need the complex adversarial section unless the heuristic or agent flags risk.",
@@ -7438,9 +7438,9 @@ Draft placeholder:
                     "Update source and profile FLOWS through subroutines, then sync managed package children so installed projects inherit the rule."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/task_flow_audit.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/task_flow_audit.py",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents can claim completion from prose while skipping the selected flow, omitting changelog truth, hiding manual tool bypass, or missing an obvious adversarial check on broad diffs."
             },
@@ -7452,13 +7452,13 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "check_pipeline_feature_contracts.ps1",
-                    "rebuild_ai_compiled_context.ps1"
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_pipeline_feature_contracts.ps1",
-                        "rebuild_ai_compiled_context.ps1"
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7475,8 +7475,8 @@ Draft placeholder:
                     "Sync the managed package and child project flow files so source and installed projects share the same CONTINUE behavior."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents may treat CONTINUE as unconditional execution, guess through missing product or implementation information, or keep working after new ambiguity appears instead of pausing for user input.",
                 "behavior_contract": [
@@ -7493,24 +7493,24 @@ Draft placeholder:
                     "templates/code/context-docs/ENGINEERING.json",
                     "profiles/SocratexGamedev/WORKFLOW.json",
                     "SCRIPTS.json",
-                    "tools/codebase/ai_native_contract_dry_run.ps1",
+                    "tools/codebase/ai_native_contract_dry_run.py",
                     "pipeline_featurelist.json",
                     "CHANGELOG.json"
                 ],
                 "required_scripts": [
-                    "ai_native_contract_dry_run.ps1",
-                    "knowledge_code_context.ps1",
+                    "ai_native_contract_dry_run.py",
+                    "knowledge_code_context.py",
                     "knowledge_compile.py",
-                    "check_pipeline_feature_contracts.ps1",
-                    "rebuild_ai_compiled_context.ps1"
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "ai_native_contract_dry_run.ps1",
-                        "knowledge_code_context.ps1",
+                        "ai_native_contract_dry_run.py",
+                        "knowledge_code_context.py",
                         "knowledge_compile.py",
-                        "check_pipeline_feature_contracts.ps1",
-                        "rebuild_ai_compiled_context.ps1"
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7532,9 +7532,9 @@ Draft placeholder:
                     "Sync the managed package so child projects receive the rule, script, script catalog entry, feature contract, and gamedev contextual action."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/codebase/ai_native_contract_dry_run.ps1 -ProjectRoot .",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/codebase/ai_native_contract_dry_run.py -ProjectRoot .",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents may keep relearning source ownership from broad reads, add inconsistent comments, miss diagnostic taxonomy/layer-purity constraints, include vendored/toolchain/test/managed-package files as rollout candidates, or mass-add stale boilerplate without a per-system rollout plan."
             },
@@ -7546,13 +7546,13 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "check_pipeline_feature_contracts.ps1",
-                    "rebuild_ai_compiled_context.ps1"
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "check_pipeline_feature_contracts.ps1",
-                        "rebuild_ai_compiled_context.ps1"
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7573,8 +7573,8 @@ Draft placeholder:
                     "Move promoted maintainer backlog ideas into their own feature contract and remove the active backlog bullet once shipped."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/check_ai_compiled_context.ps1"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/check_ai_compiled_context.py"
                 ],
                 "known_failure_if_missing": "Maintainer cleanup ideas may be added as new global directives or scattered prompts, increasing context bloat and making rule priority loss more random under context pressure."
             },
@@ -7591,15 +7591,15 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "knowledge_code_context.ps1",
+                    "knowledge_code_context.py",
                     "knowledge_compile.py",
-                    "check_pipeline_feature_contracts.ps1"
+                    "check_pipeline_feature_contracts.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "knowledge_code_context.ps1",
+                        "knowledge_code_context.py",
                         "knowledge_compile.py",
-                        "check_pipeline_feature_contracts.ps1"
+                        "check_pipeline_feature_contracts.py"
                     ]
                 },
                 "required_docs": [
@@ -7624,8 +7624,8 @@ Draft placeholder:
                     "Recompile AI-compiled context and run feature-contract checks before committing source-pipeline document changes."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents may either invent invented designs without checking known archetypes, or over-apply local philosophy when gamedev/performance research indicates a different lightweight futureproof mechanism."
             },
@@ -7642,33 +7642,33 @@ Draft placeholder:
                     "docs-tech/KNOWLEDGE-VIEWS.json",
                     "templates/docs-tech/KNOWLEDGE-VIEWS.json",
                     "tools/knowledge/knowledge_index.py",
-                    "tools/knowledge/knowledge_select.ps1",
+                    "tools/knowledge/knowledge_select.py",
                     "tools/knowledge/knowledge_select.py",
                     "tools/knowledge/knowledge_file_select.py",
-                    "tools/knowledge/knowledge_query.ps1",
+                    "tools/knowledge/knowledge_query.py",
                     "tools/knowledge/knowledge_query.py",
                     "tools/knowledge/knowledge_tier_report.py",
-                    "tools/knowledge/knowledge_tier_report.ps1",
-                    "tools/knowledge/knowledge_tier_check.ps1",
-                    "tools/knowledge/knowledge_file_query.ps1",
+                    "tools/knowledge/knowledge_tier_report.py",
+                    "tools/knowledge/knowledge_tier_check.py",
                     "tools/knowledge/knowledge_file_query.py",
-                    "tools/pipeline/rebuild_ai_compiled_context.ps1",
+                    "tools/knowledge/knowledge_file_query.py",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
                     "tools/knowledge/knowledge_tier_check.py"
                 ],
                 "required_scripts": [
                     "knowledge_index.py",
-                    "knowledge_select.ps1",
+                    "knowledge_select.py",
                     "knowledge_select.py",
                     "knowledge_file_select.py",
-                    "knowledge_query.ps1",
+                    "knowledge_query.py",
                     "knowledge_query.py",
                     "knowledge_tier_report.py",
-                    "knowledge_tier_report.ps1",
-                    "knowledge_tier_check.ps1",
-                    "knowledge_file_query.ps1",
+                    "knowledge_tier_report.py",
+                    "knowledge_tier_check.py",
                     "knowledge_file_query.py",
-                    "compile_pipeline_context.ps1",
-                    "check_pipeline_feature_contracts.ps1",
+                    "knowledge_file_query.py",
+                    "compile_pipeline_context.py",
+                    "check_pipeline_feature_contracts.py",
                     "knowledge_tier_check.py"
                 ],
                 "required_catalog_entries": {
@@ -7677,14 +7677,14 @@ Draft placeholder:
                     ],
                     "SCRIPTS.json": [
                         "knowledge_index.py",
-                        "knowledge_select.ps1",
+                        "knowledge_select.py",
                         "knowledge_file_select.py",
-                        "knowledge_query.ps1",
+                        "knowledge_query.py",
                         "knowledge_query.py",
                         "knowledge_tier_report.py",
-                        "knowledge_tier_report.ps1",
-                        "knowledge_tier_check.ps1",
-                        "knowledge_file_query.ps1",
+                        "knowledge_tier_report.py",
+                        "knowledge_tier_check.py",
+                        "knowledge_file_query.py",
                         "knowledge_file_query.py",
                         "knowledge_tier_check.py"
                     ],
@@ -7709,14 +7709,14 @@ Draft placeholder:
                     "Update named knowledge view docs/templates so routed context can bound tiers.",
                     "Keep durable source and starter knowledge entries explicitly tagged with `context_tier` so tier queries do not rely on compiler defaults.",
                     "When one future knowledge entry mixes tiers, split it into focused entries before assigning `context_tier`; do not physically separate files until migration tooling can move entries by metadata.",
-                    "Run `knowledge_tier_check.ps1 -IncludeTemplates` after broad source/template retagging so missing tiers fail mechanically and successful scans print an explicit all-tiered status line.",
+                    "Run `knowledge_tier_check.py -IncludeTemplates` after broad source/template retagging so missing tiers fail mechanically and successful scans print an explicit all-tiered status line.",
                     "Recompile AI-compiled context and knowledge artifacts, then run feature-contract checks before committing."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_select.ps1 -MaxContextTier 2 -Format json",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/knowledge/knowledge_tier_check.ps1 -IncludeTemplates"
+                    "python3 -B tools/pipeline/compile_pipeline_context.py",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/knowledge/knowledge_select.py -MaxContextTier 2 -Format json",
+                    "python3 -B tools/knowledge/knowledge_tier_check.py -IncludeTemplates"
                 ],
                 "known_failure_if_missing": "Pipeline guidance keeps accumulating in always-loaded context, agents lose or ignore clear directives under context pressure, and broad knowledge sweeps pretend to fix bloat without a real tier contract or queryable tier metadata."
             },
@@ -7727,20 +7727,20 @@ Draft placeholder:
                     "FLOWS.json",
                     "project/code/WORKFLOW.json",
                     "profiles/SocratexGamedev/WORKFLOW.json",
-                    "tools/tasks/grouped_task_handoff.ps1",
+                    "tools/tasks/grouped_task_handoff.py",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "grouped_task_handoff.ps1",
-                    "check_pipeline_feature_contracts.ps1",
-                    "rebuild_ai_compiled_context.ps1"
+                    "grouped_task_handoff.py",
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "grouped_task_handoff.ps1",
-                        "check_pipeline_feature_contracts.ps1",
-                        "rebuild_ai_compiled_context.ps1"
+                        "grouped_task_handoff.py",
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
                     ]
                 },
                 "required_docs": [
@@ -7758,9 +7758,9 @@ Draft placeholder:
                     "Sync the managed package so child projects receive TASK-WORK, FLOWS, code/gamedev workflow guidance, helper script, script catalog entry, and feature contract."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/tasks/grouped_task_handoff.ps1 -TaskId demo -GroupId g1 -SubtaskId s1 -ProjectRoot . -Status done -HandoffSummary \"demo\" -NoPrompt",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/tasks/grouped_task_handoff.py -TaskId demo -GroupId g1 -SubtaskId s1 -ProjectRoot . -Status done -HandoffSummary \"demo\" -NoPrompt",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents keep doing broad work in one live context window, wait manually between every small subtask, or lose critical state between fragmented sessions because STATE/PLAN handoff artifacts are absent."
             },
@@ -7774,15 +7774,15 @@ Draft placeholder:
                     "pipeline_featurelist.json"
                 ],
                 "required_scripts": [
-                    "knowledge_code_context.ps1",
+                    "knowledge_code_context.py",
                     "knowledge_compile.py",
-                    "check_pipeline_feature_contracts.ps1"
+                    "check_pipeline_feature_contracts.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "knowledge_code_context.ps1",
+                        "knowledge_code_context.py",
                         "knowledge_compile.py",
-                        "check_pipeline_feature_contracts.ps1"
+                        "check_pipeline_feature_contracts.py"
                     ]
                 },
                 "required_docs": [
@@ -7799,8 +7799,8 @@ Draft placeholder:
                     "Run the feature contract checker and recompile generated context before publishing or syncing to child projects."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1 -Check"
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py -Check"
                 ],
                 "known_failure_if_missing": "Agents may prescribe heroic discipline, checklist-only habits, or DDD-purity migrations in legacy zones instead of making the correct behavior convenient and enforceable through the right contract shape."
             },
@@ -7830,52 +7830,52 @@ Draft placeholder:
                     "templates/team/product.json",
                     "templates/team/technical.json",
                     "templates/workspace.json",
-                    "tools/codebase/check_project_design_context_gate.ps1",
-                    "tools/documents/audit_docs.ps1",
+                    "tools/codebase/check_project_design_context_gate.py",
+                    "tools/documents/audit_docs.py",
                     "tools/json/audit_json_docs.py",
                     "tools/documents/document_read_cache_engine.py",
-                    "tools/knowledge/project_design_context.ps1",
-                    "tools/pipeline/Initialize-SocratexPipeline.ps1",
-                    "tools/pipeline/import_existing_project.ps1",
-                    "tools/pipeline/init_task_work.ps1",
-                    "tools/pipeline/resolve_workspace_root.ps1",
-                    "tools/repo/add_changelog_entry.ps1",
-                    "tools/repo/task_flow_audit.ps1",
-                    "tools/pipeline/sync_managed_pipeline_package.ps1",
-                    "tools/repo/check_pipeline_featurelist_update.ps1"
+                    "tools/knowledge/project_design_context.py",
+                    "tools/pipeline/Initialize-SocratexPipeline.py",
+                    "tools/pipeline/import_existing_project.py",
+                    "tools/pipeline/init_task_work.py",
+                    "tools/pipeline/resolve_workspace_root.py",
+                    "tools/repo/add_changelog_entry.py",
+                    "tools/repo/task_flow_audit.py",
+                    "tools/pipeline/sync_managed_pipeline_package.py",
+                    "tools/repo/check_pipeline_featurelist_update.py"
                 ],
                 "required_scripts": [
-                    "audit_docs.ps1",
+                    "audit_docs.py",
                     "audit_json_docs.py",
-                    "build_document_cache.ps1",
-                    "check_project_design_context_gate.ps1",
-                    "project_design_context.ps1",
-                    "Initialize-SocratexPipeline.ps1",
-                    "import_existing_project.ps1",
-                    "init_task_work.ps1",
-                    "resolve_workspace_root.ps1",
-                    "add_changelog_entry.ps1",
-                    "task_flow_audit.ps1",
-                    "check_pipeline_feature_contracts.ps1",
-                    "sync_managed_pipeline_package.ps1",
-                    "check_pipeline_featurelist_update.ps1"
+                    "build_document_cache.py",
+                    "check_project_design_context_gate.py",
+                    "project_design_context.py",
+                    "Initialize-SocratexPipeline.py",
+                    "import_existing_project.py",
+                    "init_task_work.py",
+                    "resolve_workspace_root.py",
+                    "add_changelog_entry.py",
+                    "task_flow_audit.py",
+                    "check_pipeline_feature_contracts.py",
+                    "sync_managed_pipeline_package.py",
+                    "check_pipeline_featurelist_update.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
-                        "audit_docs.ps1",
+                        "audit_docs.py",
                         "audit_json_docs.py",
-                        "build_document_cache.ps1",
-                        "check_project_design_context_gate.ps1",
-                        "project_design_context.ps1",
-                        "Initialize-SocratexPipeline.ps1",
-                        "import_existing_project.ps1",
-                        "init_task_work.ps1",
-                        "resolve_workspace_root.ps1",
-                        "add_changelog_entry.ps1",
-                        "task_flow_audit.ps1",
-                        "check_pipeline_feature_contracts.ps1",
-                        "sync_managed_pipeline_package.ps1",
-                        "check_pipeline_featurelist_update.ps1"
+                        "build_document_cache.py",
+                        "check_project_design_context_gate.py",
+                        "project_design_context.py",
+                        "Initialize-SocratexPipeline.py",
+                        "import_existing_project.py",
+                        "init_task_work.py",
+                        "resolve_workspace_root.py",
+                        "add_changelog_entry.py",
+                        "task_flow_audit.py",
+                        "check_pipeline_feature_contracts.py",
+                        "sync_managed_pipeline_package.py",
+                        "check_pipeline_featurelist_update.py"
                     ]
                 },
                 "required_docs": [
@@ -7894,16 +7894,16 @@ Draft placeholder:
                     "Keep JSON-FORMAT-CONTRACT.json mirrored into installed SocratexAI packages because source feature contracts validate it inside child pipeline roots.",
                     "Keep setup/import writers canonical-aware so initialized child projects do not downgrade PIPELINE-CONFIG.json back to a direct schema.",
                     "Keep changelog, workspace, task-work, and design-context readers compatible with both canonical and older direct documents during migration.",
-                    "Keep source CHANGELOG.json sorted oldest-first and enforce that convention in audit_docs.ps1 and add_changelog_entry.ps1.",
+                    "Keep source CHANGELOG.json sorted oldest-first and enforce that convention in audit_docs.py and add_changelog_entry.py.",
                     "Keep document cache and JSON audit exclusions aligned with JSON-FORMAT-CONTRACT generated/runtime exclusions.",
                     "Run JSON audit, document audit, check_task -Audit, and quality gate before publishing or syncing to child projects.",
                     "Keep generated package manifests such as PIPELINE-PACKAGE.json listed as explicit direct-schema exceptions instead of forcing operational manifests into prose/document shape."
                 ],
                 "verification_commands": [
                     "python3 tools/json/audit_json_docs.py --repo-root .",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_task.ps1 -Audit",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1"
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/repo/check_task.py -Audit",
+                    "python3 -B tools/quality/run_quality_gate.py"
                 ],
                 "known_failure_if_missing": "Child projects receive direct-schema starter memory/config/team files, setup/import rewrites canonical config back to flat JSON, or source/child comparison misses template data-document parity because only prose docs use canonical wrappers."
             },
@@ -7913,18 +7913,31 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "SCRIPTS.json",
                     "tools/quality/script_runtime_gate.py",
-                    "tools/pipeline/sync_managed_pipeline_package.py"
+                    "tools/pipeline/sync_managed_pipeline_package.py",
+                    "tools/diagnostics",
+                    "tools/setup",
+                    "tools/tasks"
                 ],
                 "required_scripts": [
                     "script_runtime_gate.py",
                     "sync_managed_pipeline_package.py",
-                    "check_pipeline_feature_contracts.py"
+                    "check_pipeline_feature_contracts.py",
+                    "console_summary.py",
+                    "log_summary.py",
+                    "detect_project_stack.py",
+                    "run_interactive_setup.py",
+                    "grouped_task_handoff.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "script_runtime_gate.py",
                         "sync_managed_pipeline_package.py",
-                        "check_pipeline_feature_contracts.py"
+                        "check_pipeline_feature_contracts.py",
+                        "console_summary.py",
+                        "log_summary.py",
+                        "detect_project_stack.py",
+                        "run_interactive_setup.py",
+                        "grouped_task_handoff.py"
                     ]
                 },
                 "required_docs": [

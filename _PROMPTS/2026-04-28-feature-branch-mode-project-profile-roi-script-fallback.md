@@ -101,7 +101,7 @@ Obecny bootstrap pyta o decyzje (commit/push, branches, DDD, merge mode). Brakuj
    - Team size: `solo | small (2-5) | medium (6-20) | large (>20)`
    - Velocity expectation: `experimental | iterating | shipping | maintenance`
    - Highest current pain: free text — co najbardziej boli (open question)
-   - Stack tags: `php-5.6, codeigniter, gearman, docker` etc. — auto-suggest na podstawie `detect_project_stack.ps1`, user weryfikuje
+   - Stack tags: `php-5.6, codeigniter, gearman, docker` etc. — auto-suggest na podstawie `detect_project_stack.py`, user weryfikuje
 
 2. **Zapis profilu w `PIPELINE-CONFIG.yaml`**:
    ```yaml
@@ -201,7 +201,7 @@ Dziś jeśli skrypt z `tools/` nie da się odpalić (np. brak `pwsh`, brak `pyya
 ### Co zmienić w pipeline
 
 1. **Nowy plik `core/SCRIPT-FALLBACK.md`** — protokół:
-   - Krok 0: **prerequisites check** przed odpaleniem skryptu (czy istnieje `pwsh`, `python3`, wymagane biblioteki, uprawnienia). To powinno być w `tools/` jako helper `check_runtime.ps1` / `check_runtime.py`.
+   - Krok 0: **prerequisites check** przed odpaleniem skryptu (czy istnieje `pwsh`, `python3`, wymagane biblioteki, uprawnienia). To powinno być w `tools/` jako helper `check_runtime.py` / `check_runtime.py`.
    - Krok 1: jeśli runtime jest — uruchom skrypt.
    - Krok 2: jeśli brak — **propose system improvement first**: konkretna komenda instalacyjna dla wykrytej platformy (apt/brew/pip/snap), uzasadnienie ("ten skrypt jest używany przez X workflowów, instalacja kosztuje 30s i odblokowuje cały tooling"), prośba o explicitną decyzję user'a.
    - Krok 3: tylko gdy user świadomie odmówi — fallback do `WriteFile` / manual edit, z wyraźnym oznaczeniem w raporcie: "executed manually, script `X` skipped due to missing `Y`, system improvement declined by user".

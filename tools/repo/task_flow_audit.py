@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Print the task-flow closure checklist without a PowerShell runtime."""
+"""Print the task-flow closure checklist without a legacy shell runtime."""
 
 from __future__ import annotations
 

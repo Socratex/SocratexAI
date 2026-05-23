@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the structured document read cache without a PowerShell wrapper."""
+"""Build the structured document read cache with a Python entrypoint."""
 
 from __future__ import annotations
 
@@ -25,9 +25,10 @@ def engine_path(root: Path) -> Path:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build the SocratexPipeline document read cache.")
-    parser.add_argument("paths", nargs="*", default=["__ALL_JSON__"], help="JSON document paths or glob patterns.")
+    parser.add_argument("positional_paths", nargs="*", help="JSON document paths or glob patterns.")
+    parser.add_argument("--paths", "-Paths", nargs="*", default=[], help="JSON document paths or glob patterns.")
     parser.add_argument("--repo-root", default="", help="Repository root. Defaults to nearest SocratexPipeline root.")
-    parser.add_argument("--output-dir", default="docs-tech/cache", help="Output directory for doc_index.json.")
+    parser.add_argument("--output-dir", "-OutputDir", default="docs-tech/cache", help="Output directory for doc_index.json.")
     args = parser.parse_args()
 
     root = Path(args.repo_root).resolve() if args.repo_root else repo_root(Path(__file__).resolve())
@@ -41,7 +42,7 @@ def main() -> int:
         "-B",
         str(engine),
         "build-cache",
-        *args.paths,
+        *(args.paths + args.positional_paths or ["__ALL_JSON__"]),
         "--output-dir",
         str(output_dir),
         "--repo-root",

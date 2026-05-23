@@ -8,8 +8,8 @@ This guide shows how to initialize SocratexPipeline for a new project.
 
 Run the wizard:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/setup/run_interactive_setup.ps1
+```bash
+python3 -B tools/setup/run_interactive_setup.py
 ```
 
 The first question asks for the language used in project conversation and status updates.
@@ -31,15 +31,15 @@ The agent should ask the initialization questions, create the selected artifacts
 
 For a standard code project:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/Initialize-SocratexPipeline.ps1 -ProjectName "My Project" -Language "English" -AiMode Standard -KeepPacks code -CreateFiles -CompileAgent -RunAudit
+```bash
+python3 -B tools/pipeline/Initialize-SocratexPipeline.py -ProjectName "My Project" -Language "English" -AiMode Standard -KeepPacks code -CreateFiles -CompileAgent -RunAudit
 ```
 
 This creates standardized code memory as JSON, with Markdown reserved for scratch intake such as `_INSTRUCTIONS.md`.
 
 For branch-scoped code work, add:
 
-```powershell
+```bash
 -BranchMode branch_scoped
 ```
 
@@ -49,8 +49,8 @@ The project profile and runtime status are stored in `PIPELINE-CONFIG.json`.
 
 For code projects, run:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1 -Initialized
+```bash
+python3 -B tools/documents/audit_docs.py -Initialized
 ```
 
 Then configure the project-specific quality gate.

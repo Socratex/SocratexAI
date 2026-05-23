@@ -56,7 +56,7 @@
         "handoff_schema": {
             "title": "Handoff Schema",
             "format": "markdown-section",
-            "body": "## Handoff Schema\n\nEach fragmented sub-task must write a handoff before the next fragment starts. Use `tools/tasks/grouped_task_handoff.ps1` when available.\n\nRecord at minimum:\n\n- task id, group id, and sub-task id,\n- group goal and sub-task goal,\n- inspected files,\n- changed files,\n- current hypothesis or decision state,\n- unresolved risks, blockers, and assumptions,\n- exact next files or commands,\n- verification already run,\n- whether automatic progression may continue or must stop for the user.\n\nThe next fragment must read this handoff before further source inspection or edits."
+            "body": "## Handoff Schema\n\nEach fragmented sub-task must write a handoff before the next fragment starts. Use `tools/tasks/grouped_task_handoff.py` when available.\n\nRecord at minimum:\n\n- task id, group id, and sub-task id,\n- group goal and sub-task goal,\n- inspected files,\n- changed files,\n- current hypothesis or decision state,\n- unresolved risks, blockers, and assumptions,\n- exact next files or commands,\n- verification already run,\n- whether automatic progression may continue or must stop for the user.\n\nThe next fragment must read this handoff before further source inspection or edits."
         },
         "grouped_fragmentation": {
             "title": "Grouped Fragmentation",
@@ -71,7 +71,7 @@
         "structured_document_edits": {
             "title": "Structured Document Edits",
             "format": "markdown-section",
-            "body": "## Structured Document Edits\n\nFor JSON documents with `index` and `items`, use document item scripts for structural moves:\n\n- `tools/documents/migrate_document_item.ps1` to move or copy an item between documents,\n- `tools/documents/move_document_item.ps1` to move an item inside one document,\n- `tools/documents/insert_document_item.ps1` to add an item at a controlled position,\n- `tools/documents/read_document_item.ps1` and `tools/documents/list_document_keys.ps1` for selective reads before editing.\n\nManual edits are acceptable when:\n\n- changing the document schema itself,\n- fixing the parser or migration tool,\n- the script is unavailable or broken,\n- doing a very small text correction inside one item and no field-level script exists.\n\nIf a script cannot run because a runtime is missing, follow `core/SCRIPT-FALLBACK.json`.\n"
+            "body": "## Structured Document Edits\n\nFor JSON documents with `index` and `items`, use document item scripts for structural moves:\n\n- `tools/documents/migrate_document_item.py` to move or copy an item between documents,\n- `tools/documents/move_document_item.py` to move an item inside one document,\n- `tools/documents/insert_document_item.py` to add an item at a controlled position,\n- `tools/documents/read_document_item.py` and `tools/documents/list_document_keys.py` for selective reads before editing.\n\nManual edits are acceptable when:\n\n- changing the document schema itself,\n- fixing the parser or migration tool,\n- the script is unavailable or broken,\n- doing a very small text correction inside one item and no field-level script exists.\n\nIf a script cannot run because a runtime is missing, follow `core/SCRIPT-FALLBACK.json`.\n"
         }
     },
     "metadata": {

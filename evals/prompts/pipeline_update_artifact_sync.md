@@ -7,7 +7,7 @@ The new source introduced:
 ```text
 AI-compiled/project/knowledge.sqlite
 AI-compiled/project/knowledge-files/
-tools/knowledge/knowledge_code_context.ps1
+tools/knowledge/knowledge_code_context.py
 templates/docs-tech/KNOWLEDGE-VIEWS.json
 templates/code/context-docs/ENGINEERING.json
 ```

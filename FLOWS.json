@@ -18,15 +18,15 @@
                 "split into independent intents",
                 "classify each intent through WORKFLOW.json",
                 "execute in dependency order",
-                "run check_task.ps1 at the final verification boundary when files changed",
+                "run check_task.py at the final verification boundary when files changed",
                 "report one coherent result"
             ]
         },
         "direct_answer": {
             "then": [
                 "load docs-tech/PIPELINE-BOOTSTRAP.json",
-                "run context_tags.ps1 when the prompt needs routed context",
-                "run knowledge_select.ps1 with derived tags when source rules are needed",
+                "run context_tags.py when the prompt needs routed context",
+                "run knowledge_select.py with derived tags when source rules are needed",
                 "answer from loaded context",
                 "state uncertainty or missing contract when relevant"
             ]
@@ -34,24 +34,24 @@
         "documentation_edit": {
             "then": [
                 "load DOCS.json index",
-                "read target owner document with list_document_keys.ps1 or read_document_item.ps1",
-                "edit structured documents with insert_document_item.ps1, move_document_item.ps1, migrate_document_item.ps1, or insert_checked_document_list_item.ps1 when their contract fits",
-                "for JSON structural/order-only edits, use json_node_edit.ps1 or the narrow JSON wrappers before any manual content patch",
-                "run normalize_json_files.ps1 after JSON edits",
+                "read target owner document with list_document_keys.py or read_document_item.py",
+                "edit structured documents with insert_document_item.py, move_document_item.py, migrate_document_item.py, or insert_checked_document_list_item.py when their contract fits",
+                "for JSON structural/order-only edits, use json_node_edit.py or the narrow JSON wrappers before any manual content patch",
+                "run normalize_json_files.py after JSON edits",
                 "subroutine:task_flow_audit",
-                "run check_task.ps1 at the final verification boundary"
+                "run check_task.py at the final verification boundary"
             ]
         },
         "implementation": {
             "then": [
                 "load WORKFLOW.json",
-                "run knowledge_code_context.ps1 before source-code reads or edits — REQUIRED to bring borrowed-before-invented, web-research-spike gate, lightweight-futureproof, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
+                "run knowledge_code_context.py before source-code reads or edits — REQUIRED to bring borrowed-before-invented, web-research-spike gate, lightweight-futureproof, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
                 "subroutine:research_named_mechanism_gate",
-                "run project_design_context.ps1 -ProjectRoot <project> when the project's PIPELINE-CONFIG.json declares code_design_required_reads (zone splits, namespace rules, lifecycle constraints, per-project conventions) — writes ignored/project_design_context_gate.json",
+                "run project_design_context.py -ProjectRoot <project> when the project's PIPELINE-CONFIG.json declares code_design_required_reads (zone splits, namespace rules, lifecycle constraints, per-project conventions) — writes ignored/project_design_context_gate.json",
                 "inspect SCRIPTS.json index before manual work",
                 "edit scoped files",
                 "subroutine:task_flow_audit",
-                "run check_task.ps1 at the final verification boundary — verifies both ignored/code_context_gate.json and ignored/project_design_context_gate.json are fresh for current HEAD when changed-code is detected"
+                "run check_task.py at the final verification boundary — verifies both ignored/code_context_gate.json and ignored/project_design_context_gate.json are fresh for current HEAD when changed-code is detected"
             ]
         },
         "broad_refactor": {
@@ -59,13 +59,13 @@
                 "confirm high-cost scope when not already confirmed",
                 "create passes",
                 "subroutine:grouped_fragmented_task_handoff",
-                "run knowledge_code_context.ps1 before source-code reads or edits",
+                "run knowledge_code_context.py before source-code reads or edits",
                 "subroutine:research_named_mechanism_gate",
                 "edit in coherent slices",
                 "update affected contracts",
                 "subroutine:task_flow_audit",
-                "run check_task.ps1 after each intentional verification boundary",
-                "run finalize_task_check_commit_push.ps1 when commit and push are required"
+                "run check_task.py after each intentional verification boundary",
+                "run finalize_task_check_commit_push.py when commit and push are required"
             ]
         },
         "pipeline_upgrade": {
@@ -76,17 +76,17 @@
                 "port routing/index scripts",
                 "generalize default code behavior",
                 "add explicit project types",
-                "run pipeline_bootstrap_index.ps1 after routing or index changes",
-                "run normalize_json_files.ps1 after JSON contract changes",
-                "run compile_pipeline_context.ps1 after source instruction, template, pack, or compiled-context changes",
+                "run pipeline_bootstrap_index.py after routing or index changes",
+                "run normalize_json_files.py after JSON contract changes",
+                "run compile_pipeline_context.py after source instruction, template, pack, or compiled-context changes",
                 "subroutine:task_flow_audit",
-                "run finalize_task_check_commit_push.ps1"
+                "run finalize_task_check_commit_push.py"
             ]
         },
         "review": {
             "then": [
                 "inspect diff or target files",
-                "use list_document_keys.ps1 or read_document_item.ps1 for structured document reads",
+                "use list_document_keys.py or read_document_item.py for structured document reads",
                 "lead with findings",
                 "include verification gaps",
                 "avoid unrelated rewrites"
@@ -94,8 +94,8 @@
         },
         "quality_diagnostics": {
             "then": [
-                "run check_task.ps1 -Audit for repository quality diagnostics",
-                "run check_ai_compiled_context.ps1 or compile_pipeline_context.ps1 for compiled-context drift",
+                "run check_task.py -Audit for repository quality diagnostics",
+                "run check_ai_compiled_context.py or compile_pipeline_context.py for compiled-context drift",
                 "inspect failures",
                 "fix repeatable tooling failures in the owning tool",
                 "subroutine:task_flow_audit",
@@ -113,7 +113,7 @@
         },
         "compile_command": {
             "then": [
-                "run compile_pipeline_context.ps1",
+                "run compile_pipeline_context.py",
                 "report generated drift"
             ]
         },
@@ -148,7 +148,7 @@
                 "Always state whether any tool failed mechanically; when it did, fix the owning tool or input contract/spec before preserving a manual workaround.",
                 "Always state which repo tools/scripts were used and which edits were manual.",
                 "For complex or high-risk tasks, run a short adversarial review from the changelog append: ask what the changelog says changed, then check whether the diff really implements that claim and whether verification, plan/state, tool usage, or future-debt risk is missing.",
-                "Use tools/repo/task_flow_audit.ps1 when available to print the checklist and changelog-based complex review prompt."
+                "Use tools/repo/task_flow_audit.py when available to print the checklist and changelog-based complex review prompt."
             ],
             "grouped_fragmented_task_handoff": [
                 "Before broad implementation, check whether the task exceeds the fragmentation trigger: roughly >1500 LOC required context, >3 substantial substeps, multiple ownership boundaries, migration scope, performance investigation, or multi-system bug scope.",
@@ -156,7 +156,7 @@
                 "Inside an approved group, split work into bounded sub-tasks with narrow ownership, expected artifact, minimal required context, and verification target.",
                 "Run sub-tasks inside the approved group automatically without waiting for another user continue unless an escalation condition appears.",
                 "Between sub-tasks, minimize live context, reload project context by tier, read the group sub-plan and latest STATE/PLAN handoff, then execute the next sub-task.",
-                "After each sub-task, write the handoff with grouped_task_handoff.ps1 when available: inspected files, changed files, current hypothesis/decision state, unresolved risks, next files/commands, and verification status.",
+                "After each sub-task, write the handoff with grouped_task_handoff.py when available: inspected files, changed files, current hypothesis/decision state, unresolved risks, next files/commands, and verification status.",
                 "Stop and ask the user when scope expands outside the group, product direction is needed, verification changes the plan, a destructive/external/expensive action is needed, or the handoff is incomplete."
             ]
         }

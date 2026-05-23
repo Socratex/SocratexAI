@@ -124,7 +124,7 @@
             "prompt_file": "evals/prompts/code_engineering_context_preload.md",
             "behaviors": [
                 "Recognizes implementation, refactor, bugfix, and code review as code work that needs engineering standards preloaded.",
-                "Uses or recommends the canonical `tools/knowledge/knowledge_code_context.ps1` helper instead of reconstructing a long manual query.",
+                "Uses or recommends the canonical `tools/knowledge/knowledge_code_context.py` helper instead of reconstructing a long manual query.",
                 "Loads engineering, coding, and architecture rule slices before changing code.",
                 "Keeps the preload focused and does not treat it as a broad repo sweep.",
                 "Reports if the knowledge helper cannot run and follows fallback discipline."

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild generated SocratexAI compiled instructions without PowerShell."""
+"""Rebuild generated SocratexAI compiled instructions with Python-only tooling."""
 
 from __future__ import annotations
 
@@ -37,17 +37,15 @@ SOURCE_PATHS = [
     "context-docs/ENGINEERING.json",
     "docs-tech/KNOWLEDGE-VIEWS.json",
     "tools/knowledge/knowledge_index.py",
-    "tools/knowledge/context_tags.ps1",
-    "tools/knowledge/knowledge_select.ps1",
-    "tools/knowledge/knowledge_compile.ps1",
-    "tools/knowledge/knowledge_check.ps1",
-    "tools/knowledge/knowledge_file_compile.ps1",
-    "tools/knowledge/knowledge_file_check.ps1",
-    "tools/knowledge/knowledge_file_select.ps1",
+    "tools/knowledge/context_tags.py",
+    "tools/knowledge/knowledge_select.py",
+    "tools/knowledge/knowledge_compile.py",
+    "tools/knowledge/knowledge_check.py",
+    "tools/knowledge/knowledge_file_compile.py",
+    "tools/knowledge/knowledge_file_check.py",
+    "tools/knowledge/knowledge_file_select.py",
     "tools/pipeline/pipeline_bootstrap_index.py",
-    "tools/pipeline/pipeline_bootstrap_index.ps1",
     "tools/pipeline/compile_pipeline_context.py",
-    "tools/pipeline/compile_pipeline_context.ps1",
     "tools/pipeline/rebuild_ai_compiled_context.py",
     "tools/pipeline/check_ai_compiled_context.py",
     "templates/WORKFLOW.json",

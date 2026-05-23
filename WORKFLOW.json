@@ -60,7 +60,7 @@
         },
         "finish_contract": {
             "title": "Finish Contract",
-            "rule": "Run finalize_task_check_commit_push.ps1 near the end of any changed-file scope that should be committed and pushed. If it fails because tooling assumes legacy formats, fix the owning tool and rerun the finalizer."
+            "rule": "Run finalize_task_check_commit_push.py near the end of any changed-file scope that should be committed and pushed. If it fails because tooling assumes legacy formats, fix the owning tool and rerun the finalizer."
         },
         "tool_error_hardening": {
             "title": "Tool Error Hardening",
@@ -68,11 +68,11 @@
         },
         "json_structural_edit_tooling": {
             "title": "JSON Structural Edit Tooling",
-            "rule": "For JSON edits that only change structure or order, use tools/json/json_node_edit.ps1 or the narrow JSON wrappers instead of manual patching. When one task needs both structural/order changes and content edits, run the scripted structural operation first, then set or patch content. Keep SCRIPTS.json input/output/help metadata current when adding or changing JSON document scripts."
+            "rule": "For JSON edits that only change structure or order, use tools/json/json_node_edit.py or the narrow JSON wrappers instead of manual patching. When one task needs both structural/order changes and content edits, run the scripted structural operation first, then set or patch content. Keep SCRIPTS.json input/output/help metadata current when adding or changing JSON document scripts."
         },
         "single_entry_tool_handler": {
             "title": "Single Entry Tool Handler",
-            "rule": "For repository-owned scripts that have a SCRIPTS.json contract and are exposed to agents as repeatable operations, prefer tools/pipeline/tool_handler.ps1 as the public entry point. The handler should validate required and optional parameters from SCRIPTS.json, normalize common aliases, delegate to the target script, capture a predictable result envelope, and automatically log rejected input through tool_error_log.ps1."
+            "rule": "For repository-owned scripts that have a SCRIPTS.json contract and are exposed to agents as repeatable operations, prefer tools/pipeline/tool_handler.py as the public entry point. The handler should validate required and optional parameters from SCRIPTS.json, normalize common aliases, delegate to the target script, capture a predictable result envelope, and automatically log rejected input through tool_error_log.py."
         }
     },
     "metadata": {

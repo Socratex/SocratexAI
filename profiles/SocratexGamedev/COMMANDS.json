@@ -13,44 +13,44 @@
     "content": {
         "CONTEXT": [
             "Loads the current project context without editing files.",
-            "Reads the active state and workflow context with Tools/pipeline/read_compiled_context.ps1.",
-            "Selects matching knowledge notes with Tools/knowledge/context_tags.ps1 and Tools/knowledge/knowledge_select.ps1.",
-            "Loads programming context with Tools/codebase/load_programming_context.ps1 only when the requested context is code-touching.",
+            "Reads the active state and workflow context with Tools/pipeline/read_compiled_context.py.",
+            "Selects matching knowledge notes with Tools/knowledge/context_tags.py and Tools/knowledge/knowledge_select.py.",
+            "Loads programming context with Tools/codebase/load_programming_context.py only when the requested context is code-touching.",
             "Reports what context is loaded and the next executable step."
         ],
         "CONTINUE": [
-            "Executes the next active pass read from _PLAN.json with Tools/json/json_read.ps1.",
+            "Executes the next active pass read from _PLAN.json with Tools/json/json_read.py.",
             "If no active pass remains, uses docs/TARGET.json as the prioritization lens.",
             "Proposes the next target-aligned item from TODO, vision documents, or ideas instead of adding it without approval.",
-            "For code-touching work, loads programming context with Tools/codebase/load_programming_context.ps1 before source inspection.",
-            "After completing a pass, removes only that completed pass from _PLAN.json with JSON document scripts and finalizes through Tools/repo/done.ps1."
+            "For code-touching work, loads programming context with Tools/codebase/load_programming_context.py before source inspection.",
+            "After completing a pass, removes only that completed pass from _PLAN.json with JSON document scripts and finalizes through Tools/repo/done.py."
         ],
         "DO PASS N": [
-            "Executes the explicitly requested pass read from _PLAN.json with Tools/json/json_read.ps1.",
+            "Executes the explicitly requested pass read from _PLAN.json with Tools/json/json_read.py.",
             "Treats the pass definition as the scope contract.",
             "Refreshes the pass definition first with JSON document scripts if it is stale.",
-            "Preserves every unresolved future pass unless the user explicitly changes the plan, then finalizes through Tools/repo/done.ps1."
+            "Preserves every unresolved future pass unless the user explicitly changes the plan, then finalizes through Tools/repo/done.py."
         ],
         "PROMPT": [
             "Reads _PROMPTS.md before _PROMPT-QUEUE.json.",
             "Executes one actionable prompt immediately.",
             "Defragments multiple prompts into _PROMPT-QUEUE.json with JSON document scripts, merges overlaps, sorts them, and clears _PROMPTS.md.",
-            "If _PROMPTS.md is empty, executes the next actionable queue pass read with Tools/json/json_read.ps1.",
-            "After successful execution, removes only the completed queue scope with JSON document scripts and finalizes through Tools/repo/done.ps1."
+            "If _PROMPTS.md is empty, executes the next actionable queue pass read with Tools/json/json_read.py.",
+            "After successful execution, removes only the completed queue scope with JSON document scripts and finalizes through Tools/repo/done.py."
         ],
         "BUG": [
-            "Reads docs-tech/BUGS.json with Tools/json/json_read.ps1.",
+            "Reads docs-tech/BUGS.json with Tools/json/json_read.py.",
             "Selects the active bug with the best mix of current leverage, diagnostic readiness, reproduction likelihood, and future-change cost.",
             "Applies the smallest useful diagnostic step or source-owned fix.",
             "Asks the user to test before moving the bug to docs-tech/BUGS-SOLVED.json with JSON document scripts.",
-            "Reports the recommended next active bug when any remain and finalizes changed files through Tools/repo/done.ps1."
+            "Reports the recommended next active bug when any remain and finalizes changed files through Tools/repo/done.py."
         ],
         "CONSOLE": [
             "Uses current Codex Run console output when available.",
             "Stops if no console output exists.",
             "Summarizes current Godot errors, warnings, and GDScript backtraces with Tools/gamedev/console_summary.py.",
             "Fixes the highest-leverage source-owned runtime error.",
-            "Reports observed facts, likely cause, verification result, and remaining errors after finalizing through Tools/repo/done.ps1."
+            "Reports observed facts, likely cause, verification result, and remaining errors after finalizing through Tools/repo/done.py."
         ],
         "LOG <description>": [
             "Requires a non-empty diagnostic description.",
@@ -61,16 +61,16 @@
             "After explicit user confirmation, clears generated manual captures with top-level clear_logs.bat while preserving directory structure."
         ],
         "AUDIT": [
-            "Runs the project document and process audit with Tools/documents/audit_docs.ps1.",
+            "Runs the project document and process audit with Tools/documents/audit_docs.py.",
             "Fixes local, unambiguous hard contract errors.",
             "Reports soft warnings as recommendations unless cleanup was requested.",
-            "Keeps audit-driven changes limited to the directly affected documents or scripts and finalizes durable changes through Tools/repo/done.ps1."
+            "Keeps audit-driven changes limited to the directly affected documents or scripts and finalizes durable changes through Tools/repo/done.py."
         ],
         "COMPILE": [
-            "Refreshes compiled SocratexAI instructions, project compiled context, and compiled knowledge outputs with Tools/pipeline/compile.ps1.",
+            "Refreshes compiled SocratexAI instructions, project compiled context, and compiled knowledge outputs with Tools/pipeline/compile.py.",
             "Checks whether compiled outputs are refreshed, stale, missing, or changed.",
             "Stops when no committed source or generated file requires finalization.",
-            "Runs Tools/repo/done.ps1 only when compile changes committed files."
+            "Runs Tools/repo/done.py only when compile changes committed files."
         ]
     },
     "metadata": {

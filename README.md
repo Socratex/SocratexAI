@@ -96,7 +96,7 @@ Example:
 
 Paths inside `workspace.json` should be relative to the file location. Project-local scripts should keep resolving their own repository roots from script location; `workspace.json` is only for workspace-level operations such as sibling source checkout discovery, Drive imports, archives, and exports.
 
-Use `tools/pipeline/resolve_workspace_root.ps1` when a script or agent needs the local workspace root. Do not hardcode user-specific paths such as `/home/<user>/work`, `/home/<user>/projects`, `drive-imports`, or `repos` into source pipeline scripts or project configs.
+Use `tools/pipeline/resolve_workspace_root.py` when a script or agent needs the local workspace root. Do not hardcode user-specific paths such as `/home/<user>/work`, `/home/<user>/projects`, `drive-imports`, or `repos` into source pipeline scripts or project configs.
 
 ## First Run
 
@@ -120,7 +120,7 @@ Code projects can store `project_profile`, `runtime_status`, and `workflow.branc
 
 The agent uses `project_profile` to filter known solutions, `ROI-BIAS.md` to rank recommendations, and `SCRIPT-FALLBACK.md` when tools cannot run.
 
-Python 3.10+ is the required automation runtime. During setup, the agent should run `tools/quality/check_runtime.py --strict`, set `SOCRATEX_PYTHON` when discovery needs help, and ask before any install or repair path. PowerShell scripts are migration debt unless a specific non-pipeline exception is documented.
+Python 3.10+ is the required automation runtime. During setup, the agent should run `tools/quality/check_runtime.py --strict`, set `SOCRATEX_PYTHON` when discovery needs help, and ask before any install or repair path. legacy shell scripts are removed from pipeline automation unless a specific non-pipeline exception is documented.
 
 If the AI environment is limited, read `tools/lite-option/README.md` before selecting artifacts.
 
@@ -156,11 +156,11 @@ Adapters must stay thin. Each adapter points the agent to the common shared cont
 ## Update, Upgrade, Migrate
 
 - `SocratexAI/tools/pipeline/update_pipeline_from_link.py`: public user update from a latest pipeline source.
-- `SocratexAI/tools/pipeline/reinitialize_pipeline.ps1`: missing-only reinitialization after setup or update.
-- `SocratexAI/tools/pipeline/remove_pipeline.ps1`: remove the installed pipeline through a bounded remover.
-- `SocratexAI/tools/pipeline/upgrade_from_reference_project.ps1`: maintainer upgrade from the active reference source pipeline.
-- `SocratexAI/tools/pipeline/migrate_ai_pipeline.ps1`: migrate an existing AI pipeline into SocratexPipeline.
-- `SocratexAI/tools/pipeline/resolve_workspace_root.ps1`: local workspace marker resolver for multi-project workspaces.
+- `SocratexAI/tools/pipeline/reinitialize_pipeline.py`: missing-only reinitialization after setup or update.
+- `SocratexAI/tools/pipeline/remove_pipeline.py`: remove the installed pipeline through a bounded remover.
+- `SocratexAI/tools/pipeline/upgrade_from_reference_project.py`: maintainer upgrade from the active reference source pipeline.
+- `SocratexAI/tools/pipeline/migrate_ai_pipeline.py`: migrate an existing AI pipeline into SocratexPipeline.
+- `SocratexAI/tools/pipeline/resolve_workspace_root.py`: local workspace marker resolver for multi-project workspaces.
 
 Structured JSON tools apply to every project type, including non-code projects, for agent-only structured JSON files. Use `read_document_item`, `list_document_keys`, `insert_document_item`, `bulk_insert_document_items`, `move_document_item`, and `migrate_document_item` whenever practical.
 
@@ -168,16 +168,16 @@ Structured JSON tools apply to every project type, including non-code projects, 
 
 After changing source instructions, templates, core docs, project packs, or adapter rules, run:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/rebuild_ai_compiled_context.ps1
+```bash
+python3 -B tools/pipeline/rebuild_ai_compiled_context.py
 ```
 
 This also refreshes the compiled SQLite knowledge database when `tools/knowledge/knowledge_compile.py` is present.
 
 Equivalent full compile/check wrapper:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/compile_pipeline_context.ps1
+```bash
+python3 -B tools/pipeline/compile_pipeline_context.py
 ```
 
 To check for drift without writing files:
@@ -200,39 +200,39 @@ python3 -B tools/knowledge/knowledge_file_check.py
 
 To check the eval framework structure:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/check_evals.ps1
+```bash
+python3 -B tools/quality/check_evals.py
 ```
 
 Document edit scripts are transactional by default: they should own the write, UTF-8 normalization, cache refresh when applicable, compact local check, and final status output. Agents should not compose manual read/edit/normalize/cache/check queues after a successful document edit tool.
 
 When asking an agent to update an installed pipeline, it should follow `SocratexAI/core/UPDATE-PROTOCOL.json`, resolve `pipeline.update_source`, run the updater, reinitialize newly introduced missing artifacts when needed, then run audit and activation check.
 
-When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/pipeline/remove_pipeline.ps1`.
+When asking an agent to remove an installed pipeline, it should follow `SocratexAI/core/REMOVAL-PROTOCOL.json` and run `SocratexAI/tools/pipeline/remove_pipeline.py`.
 
 ## Code Audit
 
 For code-project document consistency, run:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1
+```bash
+python3 -B tools/documents/audit_docs.py
 ```
 
 After first-run initialization, use:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1 -Initialized
+```bash
+python3 -B tools/documents/audit_docs.py -Initialized
 ```
 
 ## Code Helpers
 
 For programming projects:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/task_snapshot.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/quality/run_quality_gate.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/run_final_task_checks.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/legacy_commit_task_compatibility_wrapper.ps1 -Message "<message>" -Paths <explicit paths>
+```bash
+python3 -B tools/repo/task_snapshot.py
+python3 -B tools/quality/run_quality_gate.py
+python3 -B tools/repo/run_final_task_checks.py
+python3 -B tools/repo/legacy_commit_task_compatibility_wrapper.py -Message "<message>" -Paths <explicit paths>
 ```
 
 ## Version

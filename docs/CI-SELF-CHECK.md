@@ -10,24 +10,24 @@ Use this document as an instruction for AI agents to create a provider-specific 
 
 Every CI provider should run:
 
-1. PowerShell parse check for top-level `tools/*.ps1`.
-2. `tools/documents/audit_docs.ps1`.
+1. Python syntax check for top-level `tools/*.py`.
+2. `tools/documents/audit_docs.py`.
 3. Initialization dry run for at least one code project.
 
 ## Recommended Commands
 
 Read `QUALITY-GATE.json` for the canonical self-check command list.
 
-On Windows PowerShell:
+On Windows shell:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1
+```bash
+python3 -B tools/documents/audit_docs.py
 ```
 
 For a code init dry run:
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File tools/pipeline/Initialize-SocratexPipeline.ps1 -ProjectName "Demo Project" -Language "English" -AiMode Enterprise -KeepPacks code -CreateFiles -CompileAgent -RunAudit -DryRun
+```bash
+python3 -B tools/pipeline/Initialize-SocratexPipeline.py -ProjectName "Demo Project" -Language "English" -AiMode Enterprise -KeepPacks code -CreateFiles -CompileAgent -RunAudit -DryRun
 ```
 
 ## Provider Guidance

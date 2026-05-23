@@ -18,7 +18,7 @@ def configure_stdio() -> None:
 def main() -> int:
     configure_stdio()
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--repo-root", default="")
+    parser.add_argument("--repo-root", "-RepoRoot", default="")
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve() if args.repo_root else Path(__file__).resolve().parents[2]

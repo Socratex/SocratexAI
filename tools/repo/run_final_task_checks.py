@@ -8,6 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from repo_tool_helpers import changed_text_paths
+
 
 def repo_root(start: Path) -> Path:
     for candidate in [start.resolve(), *start.resolve().parents]:
@@ -22,6 +24,26 @@ def run(label: str, command: list[str], cwd: Path) -> int:
     if completed.returncode != 0:
         print(f"ERROR: {label} failed with exit code {completed.returncode}", file=sys.stderr)
     return completed.returncode
+
+
+def normalize_changed_text(root: Path, label: str, skip: bool) -> int:
+    if skip:
+        return 0
+    paths = changed_text_paths(root)
+    if not paths:
+        return 0
+    return run(
+        label,
+        [
+            sys.executable,
+            "-B",
+            str(root / "tools" / "text" / "normalize_text_files.py"),
+            "--repo-root",
+            str(root),
+            *paths,
+        ],
+        root,
+    )
 
 
 def git_changed_paths(root: Path) -> list[str]:
@@ -69,6 +91,13 @@ def main() -> int:
     parser.add_argument("--quality-command-names", nargs="*", default=[], help="QUALITY-GATE.json command names passed to run_quality_gate.py.")
     parser.add_argument("--strict-audit", action="store_true", help="Passed through to Python audit docs for parity.")
     parser.add_argument("--no-audit", action="store_true", help="Skip document audit.")
+    parser.add_argument("--no-line-index", action="store_true", help="Skip code line index refresh/check.")
+    parser.add_argument("--no-normalize", action="store_true", help="Skip changed text normalization.")
+    parser.add_argument("--no-doc-cache", action="store_true", help="Skip document cache refresh.")
+    parser.add_argument("--no-output", action="store_true", help="Skip OUTPUT snapshot.")
+    parser.add_argument("--no-sound", action="store_true", help="Accepted for CLI parity; Python output snapshot is silent.")
+    parser.add_argument("--require-task-flow-evidence", action="store_true", help="Validate closure evidence JSON.")
+    parser.add_argument("--task-flow-evidence-path", default="", help="Closure evidence JSON path.")
     parser.add_argument("--no-compiled-context-check", action="store_true", help="Skip compiled-context anchor check.")
     parser.add_argument("--no-cache-check", action="store_true", help="Skip __pycache__ check.")
     args = parser.parse_args()
@@ -78,15 +107,35 @@ def main() -> int:
     python = sys.executable
 
     print("==> Python final task checks")
-    print_task_snapshot(root)
+    if normalize_changed_text(root, "text normalization refresh", args.no_normalize) != 0:
+        return 1
 
     steps: list[tuple[str, list[str]]] = [
+        ("document cache refresh", [python, "-B", str(tools / "documents" / "build_document_cache.py"), "--repo-root", str(root)]),
+        ("code line index refresh", [python, "-B", str(tools / "codebase" / "update_code_line_index.py"), "--root", str(root), "--changed-only"]),
+        ("compiled AI instructions refresh", [python, "-B", str(tools / "pipeline" / "rebuild_ai_compiled_context.py"), "--repo-root", str(root)]),
+        ("task snapshot", [python, "-B", str(tools / "repo" / "task_snapshot.py"), "--root", str(root)]),
         ("git diff --check", ["git", "diff", "--check"]),
         ("pipeline bootstrap index refresh", [python, "-B", str(tools / "pipeline" / "pipeline_bootstrap_index.py"), "--repo-root", str(root)]),
-        ("pipeline feature contract check", [python, "-B", str(tools / "repo" / "check_pipeline_feature_contracts.py")]),
+        ("task flow audit", [python, "-B", str(tools / "repo" / "task_flow_audit.py"), "--project-root", str(root)]),
+        ("pipeline feature list guard", [python, "-B", str(tools / "repo" / "check_pipeline_featurelist_update.py"), "--repo-root", str(root)]),
     ]
+    if args.no_doc_cache:
+        steps = [(label, command) for label, command in steps if label != "document cache refresh"]
+    if args.no_line_index:
+        steps = [(label, command) for label, command in steps if label != "code line index refresh"]
+    if args.require_task_flow_evidence:
+        for index, (label, command) in enumerate(steps):
+            if label == "task flow audit":
+                command = [*command, "--require-closure-evidence"]
+                if args.task_flow_evidence_path:
+                    command.extend(["--closure-evidence-path", args.task_flow_evidence_path])
+                steps[index] = (label, command)
+                break
     if not args.no_compiled_context_check:
         steps.append(("compiled context check", [python, "-B", str(tools / "pipeline" / "check_ai_compiled_context.py"), "--repo-root", str(root)]))
+    if not args.no_line_index:
+        steps.append(("code line index check", [python, "-B", str(tools / "codebase" / "update_code_line_index.py"), "--root", str(root), "--changed-only", "--check"]))
     if not args.no_audit:
         audit_command = [python, "-B", str(tools / "documents" / "audit_docs.py"), "--repo-root", str(root)]
         if args.strict_audit:
@@ -103,8 +152,15 @@ def main() -> int:
         steps.append(("quality gate", quality_command))
     if not args.no_cache_check:
         steps.append(("Python cache check", []))
+    if not args.no_output:
+        output_command = [python, "-B", str(tools / "repo" / "end_prompt_snapshot.py"), "--root", str(root)]
+        if args.no_sound:
+            output_command.append("--no-sound")
+        steps.append(("OUTPUT snapshot", output_command))
 
     for label, command in steps:
+        if label == "code line index check" and normalize_changed_text(root, "post-generator text normalization refresh", args.no_normalize) != 0:
+            return 1
         if label == "Python cache check":
             code = ensure_no_python_cache(root)
         else:

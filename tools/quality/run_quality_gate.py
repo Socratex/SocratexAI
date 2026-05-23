@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the repository quality gate without requiring PowerShell."""
+"""Run the repository quality gate with Python-only tooling."""
 
 from __future__ import annotations
 

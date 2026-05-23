@@ -41,6 +41,6 @@
         "schema": "socratex-list-document/v1",
         "title": "Quality Gate",
         "role": "Source pipeline smoke and self-check command contract.",
-        "compatibility": "tools/quality/run_quality_gate_contract.py accepts the legacy root commands shape as migration input; the PowerShell runner remains a temporary compatibility wrapper during retirement."
+        "compatibility": "tools/quality/run_quality_gate_contract.py accepts the legacy root commands shape as migration input; the legacy root command shape is accepted only as migration input during retirement."
     }
 }

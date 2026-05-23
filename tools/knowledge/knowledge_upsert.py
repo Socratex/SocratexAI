@@ -15,7 +15,7 @@ def main() -> int:
     configure_stdio()
     parser = argparse.ArgumentParser(description=__doc__)
     add_repo_root(parser)
-    parser.add_argument("--path", action="append", default=[])
+    parser.add_argument("--path", "-Path", action="append", default=[])
     parser.add_argument("paths", nargs="*")
     args = parser.parse_args()
 
