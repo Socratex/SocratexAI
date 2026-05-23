@@ -121,7 +121,7 @@
         "run_biome_walk_benchmark.py",
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
-        "run_smoke_diagnostics.ps1",
+        "run_smoke_diagnostics.py",
         "run_terrain_diagnostics.py",
         "set_game_version.ps1",
         "worker_lifecycle_report.ps1",
@@ -144,7 +144,8 @@
         "pipeline_bootstrap_index.ps1",
         "pipeline_bootstrap_index.py",
         "utf8_file_helpers.py",
-        "json_node_edit.py"
+        "json_node_edit.py",
+        "gdscript_comment_contract_check.py"
     ],
     "content": {
         "audit_docs.ps1": {
@@ -824,11 +825,6 @@
             "category": "Gamedev",
             "description": "uruchamia pełny gate jakości gry.",
             "benefit": "masz jedno miejsce do potwierdzenia, że projekt nadal działa."
-        },
-        "run_smoke_diagnostics.ps1": {
-            "category": "Gamedev",
-            "description": "wykonuje szybkie diagnostyki smoke.",
-            "benefit": "szybko wykrywasz oczywiste regresje runtime."
         },
         "set_game_version.ps1": {
             "category": "Gamedev",
@@ -1667,6 +1663,49 @@
                 "success": "OK: Godot script completed.",
                 "failure": "Exit non-zero when probe fails."
             }
+        },
+        "run_smoke_diagnostics.py": {
+            "path": "Tools/gamedev/run_smoke_diagnostics.py",
+            "category": "Gamedev",
+            "description": "Pythonowy runner pełnego zestawu Godot smoke diagnostics.",
+            "benefit": "Smoke bundle działa bez PowerShell i używa wspólnego resolvera Godota.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--script",
+                    "--limit",
+                    "--godot-args"
+                ],
+                "rule": "Domyślnie uruchamia cały zestaw; do szybkiego retestu użyj --script albo --limit."
+            },
+            "output": {
+                "success": "Exit 0 po przejściu wszystkich wybranych smoke scripts.",
+                "failure": "Exit non-zero z listą smoke scripts, które zwróciły błąd."
+            }
+        },
+        "gdscript_comment_contract_check.py": {
+            "path": "Tools/gamedev/gdscript_comment_contract_check.py",
+            "category": "Gamedev",
+            "description": "Raportuje brakujące komentarze klas, AI_CONTRACT headery i komentarze publicznych entry-point funkcji w GDScript.",
+            "benefit": "AI-native czytelność kodu można sprawdzać bez PowerShell przed rolloutem komentarzy per system.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--path",
+                    "--include-tests",
+                    "--json",
+                    "--strict",
+                    "--strict-ai-contract",
+                    "--audit-output"
+                ],
+                "default_scan": "Game/scripts",
+                "strict_policy": "Bez --strict narzędzie raportuje baseline i nie blokuje prac; --strict blokuje brak komentarzy klas/publicznych funkcji, --strict-ai-contract blokuje brak AI_CONTRACT w major scripts.",
+                "audit_output": "--audit-output <path> zapisuje pełny JSON baseline z grupami rolloutowymi i listami braków."
+            },
+            "output": {
+                "success": "Markdown-like report or JSON with counts, paths, rollout groups, and optional audit file.",
+                "failure": "Non-zero only in strict modes when required comments are missing or input path is invalid."
+            }
         }
     },
     "metadata": {
@@ -1790,7 +1829,7 @@
                 "run_biome_distribution_diagnostics.py",
                 "run_quality_fix.ps1",
                 "run_quality_gate.ps1",
-                "run_smoke_diagnostics.ps1",
+                "run_smoke_diagnostics.py",
                 "run_terrain_diagnostics.py",
                 "set_game_version.ps1",
                 "worker_lifecycle_report.ps1",
