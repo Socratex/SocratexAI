@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-23T17:48:18+02:00",
+    "generatedAt": "2026-05-23T18:32:08+02:00",
     "threshold": 300,
     "files": [
         {
@@ -173,6 +173,12 @@
         {
             "path": "tools/documents/document_structure_normalizer_engine.py",
             "lines": 204,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/Initialize-SocratexPipeline.py",
+            "lines": 200,
             "extension": ".py",
             "large": false
         },

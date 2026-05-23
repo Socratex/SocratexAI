@@ -78,6 +78,7 @@
         "init_task_work.ps1",
         "grouped_task_handoff.ps1",
         "Initialize-SocratexPipeline.ps1",
+        "Initialize-SocratexPipeline.py",
         "install_powershell.ps1",
         "knowledge_check.ps1",
         "knowledge_code_context.ps1",
@@ -1795,6 +1796,55 @@
                 "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
             }
         },
+        "Initialize-SocratexPipeline.py": {
+            "path": "tools/pipeline/Initialize-SocratexPipeline.py",
+            "category": "pipeline",
+            "description": "Python-first dry-run smoke for SocratexPipeline project initialization.",
+            "input": {
+                "required": [
+                    "--dry-run"
+                ],
+                "optional": [
+                    "--project-name",
+                    "--language",
+                    "--ai-mode",
+                    "--first-target",
+                    "--first-session-success",
+                    "--communication-profile",
+                    "--use-changelog",
+                    "--use-git",
+                    "--ai-may-commit",
+                    "--ai-may-push",
+                    "--branch-mode",
+                    "--external-changes-possible",
+                    "--force-ddd-adiv",
+                    "--import-pipeline-package",
+                    "--package-manager-detection",
+                    "--project-lifecycle",
+                    "--test-coverage",
+                    "--framework",
+                    "--framework-kind",
+                    "--linter",
+                    "--ci",
+                    "--docs",
+                    "--team-size",
+                    "--velocity",
+                    "--highest-pain",
+                    "--stack-tags",
+                    "--branch-files-language",
+                    "--directive-mode",
+                    "--keep-packs",
+                    "--create-files",
+                    "--compile-agent",
+                    "--run-audit"
+                ],
+                "rule": "Use during Pass 0S quality gates as the no-PowerShell replacement for initializer dry-run validation; write-mode remains legacy until the full initializer port."
+            },
+            "output": {
+                "success": "Prints the initialization dry-run plan, validates communication profile and pack names, and exits 0 without writing files.",
+                "failure": "Exits nonzero when options are invalid, pack/profile names are unknown, or --dry-run is omitted."
+            }
+        },
         "install_powershell.ps1": {
             "path": "tools/setup/install_powershell.ps1",
             "category": "setup",
@@ -3235,6 +3285,7 @@
                 "init_branch_memory.ps1",
                 "init_task_work.ps1",
                 "Initialize-SocratexPipeline.ps1",
+                "Initialize-SocratexPipeline.py",
                 "migrate_ai_pipeline.ps1",
                 "pipeline_bootstrap_index.ps1",
                 "pipeline_bootstrap_index.py",

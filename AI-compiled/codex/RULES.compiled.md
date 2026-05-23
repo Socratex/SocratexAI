@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-9498b98de676
+Generated: source-17556fbef001
 
 ## Source of Truth
 
@@ -1442,6 +1442,7 @@ Draft placeholder:
                     "upgrade_from_reference_project.ps1",
                     "migrate_ai_pipeline.ps1",
                     "Initialize-SocratexPipeline.ps1",
+                    "Initialize-SocratexPipeline.py",
                     "init_branch_memory.ps1",
                     "init_task_work.ps1",
                     "set_directives.ps1",
@@ -1470,6 +1471,7 @@ Draft placeholder:
                         "upgrade_from_reference_project.ps1",
                         "migrate_ai_pipeline.ps1",
                         "Initialize-SocratexPipeline.ps1",
+                        "Initialize-SocratexPipeline.py",
                         "init_branch_memory.ps1",
                         "init_task_work.ps1",
                         "set_directives.ps1",
@@ -1589,8 +1591,9 @@ Draft placeholder:
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
-                    "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
+                    "python3 -B tools/pipeline/Initialize-SocratexPipeline.py --project-name 'Demo Project' --language English --ai-mode Enterprise --keep-packs code --create-files --compile-agent --run-audit --dry-run",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py --paths tools/pipeline/Initialize-SocratexPipeline.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
+                    "python3 -B tools/documents/audit_docs.py --repo-root ."
                 ],
                 "known_failure_if_missing": "If 'pipeline_update_artifact_sync' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },

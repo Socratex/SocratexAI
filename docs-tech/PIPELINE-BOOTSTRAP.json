@@ -149,6 +149,7 @@
             "init_task_work.ps1",
             "grouped_task_handoff.ps1",
             "Initialize-SocratexPipeline.ps1",
+            "Initialize-SocratexPipeline.py",
             "install_powershell.ps1",
             "knowledge_check.ps1",
             "knowledge_code_context.ps1",

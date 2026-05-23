@@ -591,6 +591,7 @@
         "init_task_work.ps1",
         "grouped_task_handoff.ps1",
         "Initialize-SocratexPipeline.ps1",
+        "Initialize-SocratexPipeline.py",
         "install_powershell.ps1",
         "knowledge_check.ps1",
         "knowledge_code_context.ps1",
@@ -1133,6 +1134,12 @@
           "path": "content.Initialize-SocratexPipeline.ps1",
           "title": "",
           "ref": "content.Initialize-SocratexPipeline.ps1",
+          "status": ""
+        },
+        "Initialize-SocratexPipeline.py": {
+          "path": "content.Initialize-SocratexPipeline.py",
+          "title": "",
+          "ref": "content.Initialize-SocratexPipeline.py",
           "status": ""
         },
         "install_powershell.ps1": {
