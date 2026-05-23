@@ -22,8 +22,9 @@ def load(path: Path) -> dict:
 
 
 def main() -> int:
-    root = Path(__file__).resolve().parents[2]
-    tool = root / "tools" / "json" / "json_list_doc.py"
+    script_dir = Path(__file__).resolve().parent
+    root = script_dir.parents[1]
+    tool = script_dir / "json_list_doc.py"
     with tempfile.TemporaryDirectory(prefix="socratex-json-smoke-") as temp_name:
         temp = Path(temp_name)
         fixture = temp / "list-doc.json"
