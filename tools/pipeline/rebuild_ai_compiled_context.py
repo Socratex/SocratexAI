@@ -475,6 +475,26 @@ def check_compiled_files(output_root: Path, files: list[tuple[str, str]]) -> int
     return 1
 
 
+def clear_generated_instruction_files(output_root: Path) -> None:
+    output_root.mkdir(parents=True, exist_ok=True)
+    for relative_path, _ in generate_static_output_file_list():
+        path = output_root / relative_path
+        if path.is_file():
+            path.unlink()
+    codex_dir = output_root / "codex"
+    if codex_dir.is_dir():
+        shutil.rmtree(codex_dir)
+
+
+def generate_static_output_file_list() -> list[tuple[str, str]]:
+    return [
+        ("README.md", ""),
+        ("INDEX.json", ""),
+        ("checksum.json", ""),
+        ("compile-report.json", ""),
+    ]
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Rebuild generated SocratexAI compiled instructions.")
     parser.add_argument("--repo-root", default="", help="Repository root. Defaults to this script's package root.")
@@ -501,9 +521,7 @@ def main() -> int:
         print("OK: compiled agent instructions are current.")
         return 0
 
-    if output_root.exists():
-        shutil.rmtree(output_root)
-    output_root.mkdir(parents=True, exist_ok=True)
+    clear_generated_instruction_files(output_root)
     for relative_path, content in files:
         write_text(output_root / relative_path, content)
     knowledge_code = compile_knowledge(repo_root)
