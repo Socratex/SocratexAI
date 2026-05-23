@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-23T14:55:10+02:00",
+  "generatedAt": "2026-05-23T15:04:26+02:00",
   "threshold": 300,
   "files": [
     {
@@ -294,6 +294,12 @@
       "path": "tools/pipeline/read_compiled_context.ps1",
       "lines": 106,
       "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/repo/run_final_task_checks.py",
+      "lines": 106,
+      "extension": ".py",
       "large": false
     },
     {

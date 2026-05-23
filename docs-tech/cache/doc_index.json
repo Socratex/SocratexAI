@@ -580,6 +580,7 @@
         "end_prompt_snapshot.ps1",
         "finalize_changed_files_commit_push.ps1",
         "run_final_task_checks.ps1",
+        "run_final_task_checks.py",
         "generate_embedded_config_payload.py",
         "import_existing_project.ps1",
         "init_branch_memory.ps1",
@@ -1058,6 +1059,12 @@
           "path": "content.run_final_task_checks.ps1",
           "title": "",
           "ref": "content.run_final_task_checks.ps1",
+          "status": ""
+        },
+        "run_final_task_checks.py": {
+          "path": "content.run_final_task_checks.py",
+          "title": "",
+          "ref": "content.run_final_task_checks.py",
           "status": ""
         },
         "generate_embedded_config_payload.py": {

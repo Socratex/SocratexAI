@@ -35,7 +35,7 @@ def main() -> int:
     bootstrap = root / "tools" / "pipeline" / "pipeline_bootstrap_index.py"
     if bootstrap.is_file():
         completed = subprocess.run(
-            [sys.executable, str(bootstrap), "--repo-root", str(root), "--check"],
+            [sys.executable, "-B", str(bootstrap), "--repo-root", str(root), "--check"],
             cwd=root,
             check=False,
         )

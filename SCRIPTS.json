@@ -67,6 +67,7 @@
         "end_prompt_snapshot.ps1",
         "finalize_changed_files_commit_push.ps1",
         "run_final_task_checks.ps1",
+        "run_final_task_checks.py",
         "generate_embedded_config_payload.py",
         "import_existing_project.ps1",
         "init_branch_memory.ps1",
@@ -1517,6 +1518,29 @@
             "output": {
                 "success": "Refreshes/checks closure artifacts and exits 0 after OK.",
                 "failure": "Throws when any selected verification step fails."
+            }
+        },
+        "run_final_task_checks.py": {
+            "path": "tools/repo/run_final_task_checks.py",
+            "category": "repo",
+            "description": "Python-first no-commit final verification path for checks that already have Python equivalents.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--quality",
+                    "--quality-command",
+                    "--quality-command-names",
+                    "--strict-audit",
+                    "--no-audit",
+                    "--no-compiled-context-check",
+                    "--no-cache-check"
+                ],
+                "rule": "Use during Pass 0S as the Python closure path for check-only verification. It intentionally does not refresh generated artifacts until Python generators exist for every required refresh."
+            },
+            "output": {
+                "success": "Runs Python-backed closure checks and exits 0 after OK.",
+                "failure": "Exits nonzero when git diff check, feature contracts, compiled-context anchors, docs audit, quality gate, or Python cache check fails."
             }
         },
         "generate_embedded_config_payload.py": {
@@ -3011,6 +3035,7 @@
                 "finalize_task_check_commit_push.ps1",
                 "finalize_changed_files_commit_push.ps1",
                 "run_final_task_checks.ps1",
+                "run_final_task_checks.py",
                 "end_prompt_snapshot.ps1",
                 "task_snapshot.ps1",
                 "task_flow_audit.ps1",
