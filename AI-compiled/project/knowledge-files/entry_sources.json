@@ -25,6 +25,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "is_duplicate": true,
+    "note": "Workflow already requires hardening repeatable script failures.",
+    "path": "WORKFLOW.json",
+    "selector": "script_failure_hardening"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.architecture.helper_enforced_contracts",
     "is_duplicate": false,
     "note": "Reusable source-pipeline rule promoted from child-project logger/session and movement resolver work.",
@@ -93,7 +101,7 @@
     "is_duplicate": false,
     "note": "record source",
     "path": "context-docs/ENGINEERING.json",
-    "selector": "content.tagged_rules.value.27"
+    "selector": "content.tagged_rules.value.29"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -201,11 +209,43 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.obvious_task_gate",
+    "is_duplicate": true,
+    "note": "Shared operating principles carry the same ask-before-guessing rule.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "is_duplicate": true,
+    "note": "Shared operating principles carry the same script-first repair rule.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
     "is_duplicate": false,
     "note": "Shared directive for web-first known-solution checks before non-obvious code writes.",
     "path": "core/AGENT-CONTRACT.json",
     "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.obvious_task_gate",
+    "is_duplicate": false,
+    "note": "Canonical Tier 1 obvious-task gate.",
+    "path": "core/CONTEXT-TIERS.json",
+    "selector": "obvious_task_gate"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "is_duplicate": false,
+    "note": "Canonical Tier 1 script-first repair gate.",
+    "path": "core/CONTEXT-TIERS.json",
+    "selector": "script_first_repair_gate"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",

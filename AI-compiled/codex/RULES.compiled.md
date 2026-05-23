@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-e479f6b62c84
+Generated: source-5782ef58501a
 
 ## Source of Truth
 
@@ -21,7 +21,7 @@ Generated: source-e479f6b62c84
 {
     "title": "Operating Principles",
     "format": "markdown-section",
-    "body": "## Operating Principles\n\n- Prefer epistemic accuracy over agreement, optimism, or style.\n- Separate observed facts, reasoned inference, speculation, and value judgment.\n- Do not mirror the user's belief unless it is independently supported by evidence.\n- Challenge vague, unsupported, contradictory, or likely false assumptions when the correction is useful.\n- State uncertainty explicitly when confidence is limited.\n- Prefer explicit contracts over hidden convention.\n- Preserve momentum when the request is clear.\n- Ask questions only when missing information materially changes the action.\n- Keep project-facing files concise, current, and useful.\n- Read `DOCS.json` before reading, creating, renaming, or updating project documents.\n- Update `DOCS.json` whenever a durable document is added, removed, renamed, or its role changes.\n- Prefer the smallest meaningful ownership slice.\n- Avoid broad sweeps when a narrow contract point solves the problem.\n- Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.\n- Prefer high-ROI improvements over comprehensive but low-impact passes.\n- When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.\n- Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.\n- For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text when a tag extractor is available, then query the compiled knowledge layer by those tags before answering or executing. Treat tag-selected notes as routing context, not a replacement for exact source reads when edits or high-stakes claims depend on source truth.\n- When improving reusable SocratexPipeline behavior, keep source contracts, project packs, templates, feature contracts, and compiled/update surfaces in parity. If the user says to improve the template too, treat template parity as mandatory acceptance criteria, not as a follow-up.\n"
+    "body": "## Operating Principles\n\n- Prefer epistemic accuracy over agreement, optimism, or style.\n- Separate observed facts, reasoned inference, speculation, and value judgment.\n- Do not mirror the user's belief unless it is independently supported by evidence.\n- Challenge vague, unsupported, contradictory, or likely false assumptions when the correction is useful.\n- State uncertainty explicitly when confidence is limited.\n- Prefer explicit contracts over hidden convention.\n- Preserve momentum when the request is clear.\n- Do not execute non-obvious work on a vague task. Before acting, the goal, owner surface, scope boundary, and completion signal must be clear from the user request, active plan, or loaded project state. If not, ask.\n- If new ambiguity appears during execution and it can change scope, behavior, priority, or acceptance, pause and ask instead of guessing through it.\n- Ask questions only when missing information materially changes the action.\n- Keep project-facing files concise, current, and useful.\n- Read `DOCS.json` before reading, creating, renaming, or updating project documents.\n- Update `DOCS.json` whenever a durable document is added, removed, renamed, or its role changes.\n- Prefer the smallest meaningful ownership slice.\n- Avoid broad sweeps when a narrow contract point solves the problem.\n- Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.\n- Prefer high-ROI improvements over comprehensive but low-impact passes.\n- When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.\n- Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.\n- For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text when a tag extractor is available, then query the compiled knowledge layer by those tags before answering or executing. Treat tag-selected notes as routing context, not a replacement for exact source reads when edits or high-stakes claims depend on source truth.\n- Use repository scripts and existing automation wherever they safely reduce manual work, repeated steps, or drift. If an owned script fails because its input contract, validation, docs, platform handling, quoting, paths, encoding, output, or repeatability is weak, fix the script or its documentation/contract before preserving a manual workaround, unless the failure is a true one-off outside the task scope.\n- When improving reusable SocratexPipeline behavior, keep source contracts, project packs, templates, feature contracts, and compiled/update surfaces in parity. If the user says to improve the template too, treat template parity as mandatory acceptance criteria, not as a follow-up.\n"
 }
 
 
@@ -40,6 +40,8 @@ Generated: source-e479f6b62c84
         "quick_index",
         "purpose",
         "tier_model",
+        "obvious_task_gate",
+        "script_first_repair_gate",
         "human_in_loop_research_gate",
         "budget_sequence",
         "knowledge_tiering",
@@ -49,7 +51,7 @@ Generated: source-e479f6b62c84
     "content": {
         "quick_index": {
             "title": "Quick Index",
-            "content": "- Purpose\n- Tier Model\n- Human In Loop Research Gate\n- Budget Sequence\n- Knowledge Tiering\n- Consolidation Trigger\n- Migration Policy\n"
+            "content": "- Purpose\n- Tier Model\n- Obvious Task Gate\n- Script First Repair Gate\n- Human In Loop Research Gate\n- Budget Sequence\n- Knowledge Tiering\n- Consolidation Trigger\n- Migration Policy\n"
         },
         "purpose": {
             "title": "Purpose",
@@ -62,7 +64,7 @@ Generated: source-e479f6b62c84
                     "tier": 1,
                     "name": "Core Directives And Decision Gates",
                     "load_policy": "Always loaded.",
-                    "contents": "Small directive layer: instruction authority, read order, safety, routing entrypoints, finish/finalizer rule, and direction-setting gates that must shape every task before task-specific context is loaded. This includes short reminders for workflow/flows discipline, DDD-ADIV, source-of-truth ownership, research/web-research, borrowed-before-invented, and lightweight-futureproof thinking.",
+                    "contents": "Small directive layer: instruction authority, read order, safety, routing entrypoints, obvious-task gate, script-first repair gate, finish/finalizer rule, and direction-setting gates that must shape every task before task-specific context is loaded. This includes short reminders for workflow/flows discipline, DDD-ADIV, source-of-truth ownership, research/web-research, borrowed-before-invented, and lightweight-futureproof thinking.",
                     "exclude": "Detailed implementation content, domain-specific lenses, long examples, archetype catalogs, backlog, vision, or detailed project-profile doctrine."
                 },
                 {
@@ -94,6 +96,14 @@ Generated: source-e479f6b62c84
                     "exclude": "Active plan, current blockers, or rules required for reliable task execution."
                 }
             ]
+        },
+        "obvious_task_gate": {
+            "title": "Obvious Task Gate",
+            "content": "Tier 1 carries the short gate: before executing, make the task obvious enough to act on. The goal, owner surface, scope boundary, and completion signal must be clear from the user request, active plan, or loaded project state. If they are not clear, ask before starting. If new ambiguity appears while working and it can change scope, behavior, priority, or acceptance, pause and ask instead of guessing through it."
+        },
+        "script_first_repair_gate": {
+            "title": "Script First Repair Gate",
+            "content": "Tier 1 carries the short gate: use repository scripts and existing automation wherever they safely reduce manual work, repeated steps, or drift. If an owned script fails because its input contract, validation, docs, platform handling, quoting, paths, encoding, output, or repeatability is weak, fix the script or its documentation/contract before preserving a manual workaround, unless the failure is a true one-off outside the task scope."
         },
         "human_in_loop_research_gate": {
             "title": "Human In Loop Research Gate",

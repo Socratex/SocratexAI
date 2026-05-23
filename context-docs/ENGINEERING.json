@@ -111,6 +111,80 @@
                     ]
                 },
                 {
+                    "id": "engineering.workflow.obvious_task_gate",
+                    "type": "rule",
+                    "subtype": "workflow_rule",
+                    "title": "Make The Task Obvious Before Acting",
+                    "summary": "Work starts only when the goal, owner surface, scope boundary, and completion signal are clear enough to execute.",
+                    "rule": "Before executing, make the task obvious enough to act on. The goal, owner surface, scope boundary, and completion signal must be clear from the user request, active plan, or loaded project state. If they are not clear, ask before starting. If new ambiguity appears while working and it can change scope, behavior, priority, or acceptance, pause and ask instead of guessing through it.",
+                    "rationale": "Ambiguous execution creates hidden product decisions, wrong priorities, and expensive rework. The gate preserves momentum only when the target is concrete.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "context_tier": 1,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "workflow",
+                        "task-work",
+                        "docs-workflow"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/CONTEXT-TIERS.json",
+                            "selector": "obvious_task_gate",
+                            "note": "Canonical Tier 1 obvious-task gate."
+                        },
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "operating_principles",
+                            "is_duplicate": true,
+                            "note": "Shared operating principles carry the same ask-before-guessing rule."
+                        }
+                    ]
+                },
+                {
+                    "id": "engineering.workflow.script_first_repair_gate",
+                    "type": "rule",
+                    "subtype": "workflow_rule",
+                    "title": "Use Scripts And Repair Repeatable Failures",
+                    "summary": "Use repository automation where it reduces repeated work, and harden owned scripts or docs when failures would recur.",
+                    "rule": "Use repository scripts and existing automation wherever they safely reduce manual work, repeated steps, or drift. If an owned script fails because its input contract, validation, docs, platform handling, quoting, paths, encoding, output, or repeatability is weak, fix the script or its documentation/contract before preserving a manual workaround, unless the failure is a true one-off outside the task scope.",
+                    "rationale": "Manual recovery that is not promoted back into tools becomes repeated context debt; fixing the tool or its contract makes the correct path cheaper next time.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "context_tier": 1,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "workflow",
+                        "tools",
+                        "automation",
+                        "verification",
+                        "docs-workflow"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/CONTEXT-TIERS.json",
+                            "selector": "script_first_repair_gate",
+                            "note": "Canonical Tier 1 script-first repair gate."
+                        },
+                        {
+                            "path": "WORKFLOW.json",
+                            "selector": "script_failure_hardening",
+                            "is_duplicate": true,
+                            "note": "Workflow already requires hardening repeatable script failures."
+                        },
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "operating_principles",
+                            "is_duplicate": true,
+                            "note": "Shared operating principles carry the same script-first repair rule."
+                        }
+                    ]
+                },
+                {
                     "id": "engineering.workflow.knowledge_hash_gate",
                     "type": "rule",
                     "subtype": "verification_rule",

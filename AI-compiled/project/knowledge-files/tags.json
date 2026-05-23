@@ -232,12 +232,20 @@
     "tag": "source-of-truth"
   },
   {
+    "description": "",
+    "tag": "task-work"
+  },
+  {
     "description": "Automated or manual verification rules.",
     "tag": "tests"
   },
   {
     "description": "",
     "tag": "tooling"
+  },
+  {
+    "description": "",
+    "tag": "tools"
   },
   {
     "description": "Top-down source organization.",

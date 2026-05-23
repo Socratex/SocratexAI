@@ -911,6 +911,26 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.obvious_task_gate",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.obvious_task_gate",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.obvious_task_gate",
+    "tag": "task-work"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.obvious_task_gate",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.pair_programming_collaboration",
     "tag": "best-practices"
   },
@@ -922,6 +942,36 @@
   {
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.pair_programming_collaboration",
+    "tag": "workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "tag": "automation"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "tag": "docs-workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "tag": "tools"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
     "tag": "workflow"
   },
   {

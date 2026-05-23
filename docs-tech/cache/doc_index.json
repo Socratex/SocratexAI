@@ -1722,166 +1722,178 @@
           "ref": "content.tagged_rules.value.2",
           "status": ""
         },
-        "engineering.workflow.knowledge_hash_gate": {
+        "engineering.workflow.obvious_task_gate": {
           "path": "content.tagged_rules.value.3",
-          "title": "Validate Source Hashes Before Trusting SQLite",
+          "title": "Make The Task Obvious Before Acting",
           "ref": "content.tagged_rules.value.3",
           "status": ""
         },
-        "engineering.workflow.knowledge_file_fallback": {
+        "engineering.workflow.script_first_repair_gate": {
           "path": "content.tagged_rules.value.4",
-          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
+          "title": "Use Scripts And Repair Repeatable Failures",
           "ref": "content.tagged_rules.value.4",
           "status": ""
         },
-        "engineering.workflow.load_standards_before_code": {
+        "engineering.workflow.knowledge_hash_gate": {
           "path": "content.tagged_rules.value.5",
-          "title": "Load Engineering Standards Before Code Work",
+          "title": "Validate Source Hashes Before Trusting SQLite",
           "ref": "content.tagged_rules.value.5",
           "status": ""
         },
-        "engineering.workflow.normalized_content_hashes": {
+        "engineering.workflow.knowledge_file_fallback": {
           "path": "content.tagged_rules.value.6",
-          "title": "Normalized Content Hashes For Compiled Knowledge",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
           "ref": "content.tagged_rules.value.6",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.load_standards_before_code": {
           "path": "content.tagged_rules.value.7",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Load Engineering Standards Before Code Work",
           "ref": "content.tagged_rules.value.7",
           "status": ""
         },
-        "engineering.architecture.helper_enforced_contracts": {
+        "engineering.workflow.normalized_content_hashes": {
           "path": "content.tagged_rules.value.8",
-          "title": "Helpers Enforce Contracts By Convenience",
+          "title": "Normalized Content Hashes For Compiled Knowledge",
           "ref": "content.tagged_rules.value.8",
           "status": ""
         },
-        "engineering.workflow.convenience_drives_habit": {
+        "engineering.coding.explicit_diagnosable_flow": {
           "path": "content.tagged_rules.value.9",
-          "title": "Convenience Drives Habit",
+          "title": "Explicit Diagnosable Flow",
           "ref": "content.tagged_rules.value.9",
           "status": ""
         },
-        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
+        "engineering.architecture.helper_enforced_contracts": {
           "path": "content.tagged_rules.value.10",
-          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
+          "title": "Helpers Enforce Contracts By Convenience",
           "ref": "content.tagged_rules.value.10",
           "status": ""
         },
-        "engineering.workflow.default_tool_error_hardening": {
+        "engineering.workflow.convenience_drives_habit": {
           "path": "content.tagged_rules.value.11",
-          "title": "Default Tool Error Hardening",
+          "title": "Convenience Drives Habit",
           "ref": "content.tagged_rules.value.11",
           "status": ""
         },
-        "engineering.coding.code_primary_source_of_truth": {
+        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
           "path": "content.tagged_rules.value.12",
-          "title": "Code Is The Primary Source Of Truth",
+          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
           "ref": "content.tagged_rules.value.12",
           "status": ""
         },
-        "engineering.coding.ai_native_code_contract_headers": {
+        "engineering.workflow.default_tool_error_hardening": {
           "path": "content.tagged_rules.value.13",
-          "title": "AI-Native Code Contract Headers",
+          "title": "Default Tool Error Hardening",
           "ref": "content.tagged_rules.value.13",
           "status": ""
         },
-        "engineering.coding.borrowed_before_invented": {
+        "engineering.coding.code_primary_source_of_truth": {
           "path": "content.tagged_rules.value.14",
-          "title": "Borrowed Before Invented",
+          "title": "Code Is The Primary Source Of Truth",
           "ref": "content.tagged_rules.value.14",
           "status": ""
         },
-        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
+        "engineering.coding.ai_native_code_contract_headers": {
           "path": "content.tagged_rules.value.15",
-          "title": "Web Research Spike To Named Implementation Plan Gate",
+          "title": "AI-Native Code Contract Headers",
           "ref": "content.tagged_rules.value.15",
           "status": ""
         },
-        "engineering.architecture.better_version_now_future_proof_by_default": {
+        "engineering.coding.borrowed_before_invented": {
           "path": "content.tagged_rules.value.16",
-          "title": "Better Version Now By Default",
+          "title": "Borrowed Before Invented",
           "ref": "content.tagged_rules.value.16",
           "status": ""
         },
-        "engineering.coding.production_grade_default": {
+        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
           "path": "content.tagged_rules.value.17",
-          "title": "Production-Grade Architectural Default",
+          "title": "Web Research Spike To Named Implementation Plan Gate",
           "ref": "content.tagged_rules.value.17",
           "status": ""
         },
-        "engineering.performance.lightweight_by_default_for_predictable_load": {
+        "engineering.architecture.better_version_now_future_proof_by_default": {
           "path": "content.tagged_rules.value.18",
-          "title": "Lightweight Futureproof For Predictable Load",
+          "title": "Better Version Now By Default",
           "ref": "content.tagged_rules.value.18",
           "status": ""
         },
-        "engineering.coding.ddd_adiv_when_possible": {
+        "engineering.coding.production_grade_default": {
           "path": "content.tagged_rules.value.19",
-          "title": "DDD-ADIV When Possible",
+          "title": "Production-Grade Architectural Default",
           "ref": "content.tagged_rules.value.19",
           "status": ""
         },
-        "engineering.coding.readability_first": {
+        "engineering.performance.lightweight_by_default_for_predictable_load": {
           "path": "content.tagged_rules.value.20",
-          "title": "Readability First",
+          "title": "Lightweight Futureproof For Predictable Load",
           "ref": "content.tagged_rules.value.20",
           "status": ""
         },
-        "engineering.coding.method_and_variable_extraction": {
+        "engineering.coding.ddd_adiv_when_possible": {
           "path": "content.tagged_rules.value.21",
-          "title": "Extract Methods and Intent-Revealing Variables",
+          "title": "DDD-ADIV When Possible",
           "ref": "content.tagged_rules.value.21",
           "status": ""
         },
-        "engineering.coding.codebase_as_contract": {
+        "engineering.coding.readability_first": {
           "path": "content.tagged_rules.value.22",
-          "title": "Codebase Is the Contract — Make It as Strict as Possible",
+          "title": "Readability First",
           "ref": "content.tagged_rules.value.22",
           "status": ""
         },
-        "engineering.coding.legacy_aware_change_split": {
+        "engineering.coding.method_and_variable_extraction": {
           "path": "content.tagged_rules.value.23",
-          "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
+          "title": "Extract Methods and Intent-Revealing Variables",
           "ref": "content.tagged_rules.value.23",
           "status": ""
         },
-        "engineering.coding.minimal_comments": {
+        "engineering.coding.codebase_as_contract": {
           "path": "content.tagged_rules.value.24",
-          "title": "Minimal Comments — Workarounds and Business Intent Only",
+          "title": "Codebase Is the Contract — Make It as Strict as Possible",
           "ref": "content.tagged_rules.value.24",
           "status": ""
         },
-        "engineering.coding.business_naming": {
+        "engineering.coding.legacy_aware_change_split": {
           "path": "content.tagged_rules.value.25",
-          "title": "Business Naming with Technical Suffix",
+          "title": "Legacy-Aware Change Split — Surgical or Extract-to-Clean-File",
           "ref": "content.tagged_rules.value.25",
           "status": ""
         },
-        "engineering.coding.match_surrounding_patterns": {
+        "engineering.coding.minimal_comments": {
           "path": "content.tagged_rules.value.26",
-          "title": "Match Surrounding Patterns Mid-Fix",
+          "title": "Minimal Comments — Workarounds and Business Intent Only",
           "ref": "content.tagged_rules.value.26",
           "status": ""
         },
-        "engineering.workflow.pair_programming_collaboration": {
+        "engineering.coding.business_naming": {
           "path": "content.tagged_rules.value.27",
-          "title": "Pair-Programming Stance",
+          "title": "Business Naming with Technical Suffix",
           "ref": "content.tagged_rules.value.27",
           "status": ""
         },
-        "engineering.workflow.verification_without_tests": {
+        "engineering.coding.match_surrounding_patterns": {
           "path": "content.tagged_rules.value.28",
-          "title": "Verification Discipline Without a Test Suite",
+          "title": "Match Surrounding Patterns Mid-Fix",
           "ref": "content.tagged_rules.value.28",
           "status": ""
         },
-        "engineering.workflow.tiered_context_hierarchy": {
+        "engineering.workflow.pair_programming_collaboration": {
           "path": "content.tagged_rules.value.29",
-          "title": "Tiered Context Hierarchy",
+          "title": "Pair-Programming Stance",
           "ref": "content.tagged_rules.value.29",
+          "status": ""
+        },
+        "engineering.workflow.verification_without_tests": {
+          "path": "content.tagged_rules.value.30",
+          "title": "Verification Discipline Without a Test Suite",
+          "ref": "content.tagged_rules.value.30",
+          "status": ""
+        },
+        "engineering.workflow.tiered_context_hierarchy": {
+          "path": "content.tagged_rules.value.31",
+          "title": "Tiered Context Hierarchy",
+          "ref": "content.tagged_rules.value.31",
           "status": ""
         }
       }
@@ -2234,6 +2246,8 @@
         "quick_index",
         "purpose",
         "tier_model",
+        "obvious_task_gate",
+        "script_first_repair_gate",
         "human_in_loop_research_gate",
         "budget_sequence",
         "knowledge_tiering",
@@ -2262,6 +2276,18 @@
           "path": "content.tier_model",
           "title": "Tier Model",
           "ref": "content.tier_model",
+          "status": ""
+        },
+        "obvious_task_gate": {
+          "path": "content.obvious_task_gate",
+          "title": "Obvious Task Gate",
+          "ref": "content.obvious_task_gate",
+          "status": ""
+        },
+        "script_first_repair_gate": {
+          "path": "content.script_first_repair_gate",
+          "title": "Script First Repair Gate",
+          "ref": "content.script_first_repair_gate",
           "status": ""
         },
         "human_in_loop_research_gate": {
@@ -7015,82 +7041,94 @@
           "ref": "content.tagged_rules.value.2",
           "status": ""
         },
-        "engineering.workflow.knowledge_hash_gate": {
+        "engineering.workflow.obvious_task_gate": {
           "path": "content.tagged_rules.value.3",
-          "title": "Validate Source Hashes Before Trusting SQLite",
+          "title": "Make The Task Obvious Before Acting",
           "ref": "content.tagged_rules.value.3",
           "status": ""
         },
-        "engineering.workflow.knowledge_file_fallback": {
+        "engineering.workflow.script_first_repair_gate": {
           "path": "content.tagged_rules.value.4",
-          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
+          "title": "Use Scripts And Repair Repeatable Failures",
           "ref": "content.tagged_rules.value.4",
           "status": ""
         },
-        "engineering.workflow.load_standards_before_code": {
+        "engineering.workflow.knowledge_hash_gate": {
           "path": "content.tagged_rules.value.5",
-          "title": "Load Engineering Standards Before Code Work",
+          "title": "Validate Source Hashes Before Trusting SQLite",
           "ref": "content.tagged_rules.value.5",
           "status": ""
         },
-        "engineering.workflow.normalized_content_hashes": {
+        "engineering.workflow.knowledge_file_fallback": {
           "path": "content.tagged_rules.value.6",
-          "title": "Normalized Content Hashes For Compiled Knowledge",
+          "title": "Use File Knowledge Fallback When SQLite Is Unavailable",
           "ref": "content.tagged_rules.value.6",
           "status": ""
         },
-        "engineering.coding.explicit_diagnosable_flow": {
+        "engineering.workflow.load_standards_before_code": {
           "path": "content.tagged_rules.value.7",
-          "title": "Explicit Diagnosable Flow",
+          "title": "Load Engineering Standards Before Code Work",
           "ref": "content.tagged_rules.value.7",
           "status": ""
         },
-        "engineering.coding.ai_native_code_contract_headers": {
+        "engineering.workflow.normalized_content_hashes": {
           "path": "content.tagged_rules.value.8",
-          "title": "AI-Native Code Contract Headers",
+          "title": "Normalized Content Hashes For Compiled Knowledge",
           "ref": "content.tagged_rules.value.8",
           "status": ""
         },
-        "engineering.architecture.helper_enforced_contracts": {
+        "engineering.coding.explicit_diagnosable_flow": {
           "path": "content.tagged_rules.value.9",
-          "title": "Helpers Enforce Contracts By Convenience",
+          "title": "Explicit Diagnosable Flow",
           "ref": "content.tagged_rules.value.9",
           "status": ""
         },
-        "engineering.workflow.convenience_drives_habit": {
+        "engineering.coding.ai_native_code_contract_headers": {
           "path": "content.tagged_rules.value.10",
-          "title": "Convenience Drives Habit",
+          "title": "AI-Native Code Contract Headers",
           "ref": "content.tagged_rules.value.10",
           "status": ""
         },
-        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
+        "engineering.architecture.helper_enforced_contracts": {
           "path": "content.tagged_rules.value.11",
-          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
+          "title": "Helpers Enforce Contracts By Convenience",
           "ref": "content.tagged_rules.value.11",
           "status": ""
         },
-        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
+        "engineering.workflow.convenience_drives_habit": {
           "path": "content.tagged_rules.value.12",
-          "title": "Web Research Spike To Named Implementation Plan Gate",
+          "title": "Convenience Drives Habit",
           "ref": "content.tagged_rules.value.12",
           "status": ""
         },
-        "engineering.workflow.tiered_context_hierarchy": {
+        "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv": {
           "path": "content.tagged_rules.value.13",
-          "title": "Tiered Context Hierarchy",
+          "title": "Legacy Uses Helper Contracts, Non-Legacy Uses DDD-ADIV",
           "ref": "content.tagged_rules.value.13",
           "status": ""
         },
-        "engineering.architecture.better_version_now_future_proof_by_default": {
+        "engineering.workflow.web_research_spike_to_named_implementation_plan_gate": {
           "path": "content.tagged_rules.value.14",
-          "title": "Better Version Now By Default",
+          "title": "Web Research Spike To Named Implementation Plan Gate",
           "ref": "content.tagged_rules.value.14",
           "status": ""
         },
-        "engineering.performance.lightweight_by_default_for_predictable_load": {
+        "engineering.workflow.tiered_context_hierarchy": {
           "path": "content.tagged_rules.value.15",
-          "title": "Lightweight Futureproof For Predictable Load",
+          "title": "Tiered Context Hierarchy",
           "ref": "content.tagged_rules.value.15",
+          "status": ""
+        },
+        "engineering.architecture.better_version_now_future_proof_by_default": {
+          "path": "content.tagged_rules.value.16",
+          "title": "Better Version Now By Default",
+          "ref": "content.tagged_rules.value.16",
+          "status": ""
+        },
+        "engineering.performance.lightweight_by_default_for_predictable_load": {
+          "path": "content.tagged_rules.value.17",
+          "title": "Lightweight Futureproof For Predictable Load",
+          "ref": "content.tagged_rules.value.17",
           "status": ""
         }
       }

@@ -3,6 +3,8 @@
         "quick_index",
         "purpose",
         "tier_model",
+        "obvious_task_gate",
+        "script_first_repair_gate",
         "human_in_loop_research_gate",
         "budget_sequence",
         "knowledge_tiering",
@@ -12,7 +14,7 @@
     "content": {
         "quick_index": {
             "title": "Quick Index",
-            "content": "- Purpose\n- Tier Model\n- Human In Loop Research Gate\n- Budget Sequence\n- Knowledge Tiering\n- Consolidation Trigger\n- Migration Policy\n"
+            "content": "- Purpose\n- Tier Model\n- Obvious Task Gate\n- Script First Repair Gate\n- Human In Loop Research Gate\n- Budget Sequence\n- Knowledge Tiering\n- Consolidation Trigger\n- Migration Policy\n"
         },
         "purpose": {
             "title": "Purpose",
@@ -25,7 +27,7 @@
                     "tier": 1,
                     "name": "Core Directives And Decision Gates",
                     "load_policy": "Always loaded.",
-                    "contents": "Small directive layer: instruction authority, read order, safety, routing entrypoints, finish/finalizer rule, and direction-setting gates that must shape every task before task-specific context is loaded. This includes short reminders for workflow/flows discipline, DDD-ADIV, source-of-truth ownership, research/web-research, borrowed-before-invented, and lightweight-futureproof thinking.",
+                    "contents": "Small directive layer: instruction authority, read order, safety, routing entrypoints, obvious-task gate, script-first repair gate, finish/finalizer rule, and direction-setting gates that must shape every task before task-specific context is loaded. This includes short reminders for workflow/flows discipline, DDD-ADIV, source-of-truth ownership, research/web-research, borrowed-before-invented, and lightweight-futureproof thinking.",
                     "exclude": "Detailed implementation content, domain-specific lenses, long examples, archetype catalogs, backlog, vision, or detailed project-profile doctrine."
                 },
                 {
@@ -57,6 +59,14 @@
                     "exclude": "Active plan, current blockers, or rules required for reliable task execution."
                 }
             ]
+        },
+        "obvious_task_gate": {
+            "title": "Obvious Task Gate",
+            "content": "Tier 1 carries the short gate: before executing, make the task obvious enough to act on. The goal, owner surface, scope boundary, and completion signal must be clear from the user request, active plan, or loaded project state. If they are not clear, ask before starting. If new ambiguity appears while working and it can change scope, behavior, priority, or acceptance, pause and ask instead of guessing through it."
+        },
+        "script_first_repair_gate": {
+            "title": "Script First Repair Gate",
+            "content": "Tier 1 carries the short gate: use repository scripts and existing automation wherever they safely reduce manual work, repeated steps, or drift. If an owned script fails because its input contract, validation, docs, platform handling, quoting, paths, encoding, output, or repeatability is weak, fix the script or its documentation/contract before preserving a manual workaround, unless the failure is a true one-off outside the task scope."
         },
         "human_in_loop_research_gate": {
             "title": "Human In Loop Research Gate",
