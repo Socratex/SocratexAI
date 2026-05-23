@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-23T14:35:41+02:00",
+  "generatedAt": "2026-05-23T14:55:10+02:00",
   "threshold": 300,
   "files": [
     {
@@ -129,13 +129,13 @@
       "large": false
     },
     {
-      "path": "tools/repo/run_final_task_checks.ps1",
-      "lines": 223,
+      "path": "tools/documents/normalize_markdown_emoji.ps1",
+      "lines": 220,
       "extension": ".ps1",
       "large": false
     },
     {
-      "path": "tools/documents/normalize_markdown_emoji.ps1",
+      "path": "tools/repo/run_final_task_checks.ps1",
       "lines": 220,
       "extension": ".ps1",
       "large": false
@@ -444,6 +444,12 @@
       "path": "tools/knowledge/knowledge_select.ps1",
       "lines": 70,
       "extension": ".ps1",
+      "large": false
+    },
+    {
+      "path": "tools/quality/run_quality_gate.py",
+      "lines": 70,
+      "extension": ".py",
       "large": false
     },
     {

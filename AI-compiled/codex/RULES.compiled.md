@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-e0d88df56341
+Generated: source-c68d49fae9f7
 
 ## Source of Truth
 
@@ -1110,6 +1110,7 @@ Draft placeholder:
                     "check_task.ps1",
                     "check_toolchain_health.ps1",
                     "run_quality_gate.ps1",
+                    "run_quality_gate.py",
                     "run_quality_gate_contract.ps1",
                     "run_quality_fix.ps1",
                     "check_runtime.py",
@@ -1123,6 +1124,7 @@ Draft placeholder:
                         "check_task.ps1",
                         "check_toolchain_health.ps1",
                         "run_quality_gate.ps1",
+                        "run_quality_gate.py",
                         "run_quality_gate_contract.ps1",
                         "run_quality_fix.ps1",
                         "check_runtime.py",
@@ -1329,12 +1331,15 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "QUALITY-GATE.json",
                     "tools/quality/run_quality_gate_contract.py",
+                    "tools/quality/run_quality_gate.py",
                     "tools/quality/check_evals.py",
                     "tools/quality/check_python_syntax.py",
+                    "tools/repo/run_final_task_checks.ps1",
                     "tools/repo/check_sensitive_reference_leaks.py"
                 ],
                 "required_scripts": [
                     "run_quality_gate_contract.py",
+                    "run_quality_gate.py",
                     "check_evals.py",
                     "check_python_syntax.py",
                     "check_sensitive_reference_leaks.py",
@@ -1343,6 +1348,7 @@ Draft placeholder:
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "run_quality_gate_contract.py",
+                        "run_quality_gate.py",
                         "check_evals.py",
                         "check_python_syntax.py",
                         "check_sensitive_reference_leaks.py",
@@ -1357,14 +1363,16 @@ Draft placeholder:
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Keep QUALITY-GATE.json executable by the Python runner without invoking the retired command runtime for Python-first checks.",
+                    "Keep source finalizer quality execution pointed at run_quality_gate.py while the broader finalizer itself is being ported.",
                     "Keep the eval framework and sensitive-reference smoke checks behaviorally equivalent to their legacy wrappers until the wrappers are deleted.",
                     "Compile and run the Python runner plus focused command subsets before promoting the quality-gate path.",
                     "Sync the managed package so installed child projects receive the Python runner and checker entries."
                 ],
                 "verification_commands": [
-                    "python3 -B tools/quality/check_python_syntax.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py",
+                    "python3 -B tools/quality/check_python_syntax.py tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py",
+                    "python3 -B tools/quality/run_quality_gate.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
                     "python3 -B tools/quality/run_quality_gate_contract.py --command-names python_compile,eval_framework,sensitive_reference_smoke",
-                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/quality/run_quality_gate.py tools/quality/run_quality_gate_contract.py tools/quality/check_evals.py tools/quality/check_python_syntax.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.ps1 QUALITY-GATE.json SCRIPTS.json pipeline_featurelist.json"
                 ],
                 "known_failure_if_missing": "QUALITY-GATE.json remains dependent on the retired command runtime even when individual Python checks exist, so Pass 0S cannot close without preserving source and child smoke coverage."
             },

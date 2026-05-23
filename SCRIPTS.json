@@ -116,6 +116,7 @@
         "report_pipeline_learning.ps1",
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
+        "run_quality_gate.py",
         "run_quality_gate_contract.ps1",
         "run_quality_gate_contract.py",
         "set_directives.ps1",
@@ -2495,6 +2496,25 @@
                 "failure": "Throws when the explicit command exits nonzero or any QUALITY-GATE command fails."
             }
         },
+        "run_quality_gate.py": {
+            "path": "tools/quality/run_quality_gate.py",
+            "category": "quality",
+            "description": "Python-first repository quality gate entrypoint that runs QUALITY-GATE.json, a named command subset, an explicit command, or standard project fallback tests.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--command",
+                    "--command-names",
+                    "--skip"
+                ],
+                "rule": "Use this as the canonical quality gate entrypoint for Python-first finalizers. Prefer --command-names for focused QUALITY-GATE.json subsets and --command only for explicit ad hoc commands."
+            },
+            "output": {
+                "success": "Runs the selected quality command or contract and exits 0 when all selected checks pass.",
+                "failure": "Exits nonzero when the explicit command, QUALITY-GATE command, or detected fallback test command fails."
+            }
+        },
         "run_quality_gate_contract.ps1": {
             "path": "tools/quality/run_quality_gate_contract.ps1",
             "category": "quality",
@@ -3052,6 +3072,7 @@
                 "check_runtime.py",
                 "run_quality_fix.ps1",
                 "run_quality_gate.ps1",
+                "run_quality_gate.py",
                 "run_quality_gate_contract.ps1",
                 "run_quality_gate_contract.py"
             ],

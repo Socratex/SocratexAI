@@ -33,7 +33,7 @@ $auditScript = Join-Path $packageRoot "tools\documents\audit_docs.ps1"
 $lineIndexScript = Join-Path $packageRoot "tools\codebase\update_code_line_index.ps1"
 $textNormalizeScript = Join-Path $packageRoot "tools\text\normalize_text_files.ps1"
 $docCacheScript = Join-Path $packageRoot "tools\documents\build_document_cache.ps1"
-$qualityScript = Join-Path $packageRoot "tools\quality\run_quality_gate.ps1"
+$qualityScript = Join-Path $packageRoot "tools\quality\run_quality_gate.py"
 $outputScript = Join-Path $PSScriptRoot "end_prompt_snapshot.ps1"
 $pipelineFeatureListCheckScript = Join-Path $PSScriptRoot "check_pipeline_featurelist_update.ps1"
 $compiledInstructionsRecompileScript = Join-Path $packageRoot "tools\pipeline\rebuild_ai_compiled_context.ps1"
@@ -206,23 +206,20 @@ try {
 
 	if ($Quality) {
 		$qualityArgs = @(
-			"-NoProfile",
-			"-ExecutionPolicy",
-			"Bypass",
-			"-File",
+			"-B",
 			$qualityScript,
-			"-Root",
+			"--repo-root",
 			$repoRoot
 		)
 		if ($QualityCommand -and $QualityCommand.Count -gt 0) {
-			$qualityArgs += "-Command"
+			$qualityArgs += "--command"
 			$qualityArgs += $QualityCommand
 		}
-		Invoke-RepoCommand -Label "quality gate" -Command "powershell" -Arguments $qualityArgs
+		Invoke-RepoCommand -Label "quality gate" -Command "python" -Arguments $qualityArgs
 	} else {
 		Write-Host ""
 		Write-Host "==> quality gate"
-		Write-Host "skipped; pass -Quality to run tools/quality/run_quality_gate.ps1"
+		Write-Host "skipped; pass -Quality to run tools/quality/run_quality_gate.py"
 	}
 
 	if (-not $NoOutput) {

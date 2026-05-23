@@ -629,6 +629,7 @@
         "report_pipeline_learning.ps1",
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
+        "run_quality_gate.py",
         "run_quality_gate_contract.ps1",
         "run_quality_gate_contract.py",
         "set_directives.ps1",
@@ -1351,6 +1352,12 @@
           "path": "content.run_quality_gate.ps1",
           "title": "",
           "ref": "content.run_quality_gate.ps1",
+          "status": ""
+        },
+        "run_quality_gate.py": {
+          "path": "content.run_quality_gate.py",
+          "title": "",
+          "ref": "content.run_quality_gate.py",
           "status": ""
         },
         "run_quality_gate_contract.ps1": {
