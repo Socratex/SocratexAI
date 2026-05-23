@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-23T19:47:31+02:00",
+    "generatedAt": "2026-05-23T20:01:33+02:00",
     "threshold": 300,
     "files": [
         {
@@ -771,6 +771,12 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_cli.py",
+            "lines": 30,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/move_document_item.ps1",
             "lines": 29,
             "extension": ".ps1",
@@ -813,6 +819,18 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_delete.py",
+            "lines": 25,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_file_delete.py",
+            "lines": 25,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/knowledge/knowledge_check.ps1",
             "lines": 24,
             "extension": ".ps1",
@@ -837,9 +855,21 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_file_rename.py",
+            "lines": 23,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/knowledge/knowledge_file_upsert.ps1",
             "lines": 23,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_rename.py",
+            "lines": 23,
+            "extension": ".py",
             "large": false
         },
         {
@@ -856,6 +886,18 @@
         },
         {
             "path": "tools/knowledge/knowledge_file_compile.py",
+            "lines": 22,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_file_upsert.py",
+            "lines": 22,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_upsert.py",
             "lines": 22,
             "extension": ".py",
             "large": false
@@ -927,6 +969,12 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_file_query.py",
+            "lines": 13,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/knowledge/knowledge_file_select.py",
             "lines": 13,
             "extension": ".py",
@@ -936,6 +984,12 @@
             "path": "tools/pipeline/check_ai_compiled_context.ps1",
             "lines": 13,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_query.py",
+            "lines": 9,
+            "extension": ".py",
             "large": false
         },
         {

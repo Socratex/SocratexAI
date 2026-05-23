@@ -46,11 +46,15 @@
         "knowledge_compile.ps1",
         "knowledge_compile.py",
         "knowledge_delete.ps1",
+        "knowledge_delete.py",
         "knowledge_index.py",
         "knowledge_query.ps1",
+        "knowledge_query.py",
         "knowledge_rename.ps1",
+        "knowledge_rename.py",
         "knowledge_select.ps1",
         "knowledge_upsert.ps1",
+        "knowledge_upsert.py",
         "knowledge_validate.ps1",
         "open_knowledge_db.ps1",
         "add_changelog_entry.ps1",
@@ -1063,6 +1067,89 @@
                 ],
                 "rule": "Run from the repository root using the Python wrapper."
             }
+        },
+        "knowledge_delete.py": {
+            "category": "Knowledge",
+            "description": "Delete a knowledge entry or document from the SQLite knowledge database without PowerShell.",
+            "benefit": "baza nie trzyma martwych źródeł.",
+            "path": "tools/knowledge/knowledge_delete.py",
+            "input": {
+                "optional": [
+                    "--repo-root",
+                    "--path",
+                    "--name"
+                ],
+                "required": [],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_query.py": {
+            "category": "Knowledge",
+            "description": "Query the SQLite knowledge database without PowerShell.",
+            "benefit": "szybko znajdujesz wpisy potrzebne do zadania.",
+            "path": "tools/knowledge/knowledge_query.py",
+            "input": {
+                "optional": [
+                    "--repo-root",
+                    "--tags",
+                    "--match",
+                    "--type",
+                    "--load-at-start",
+                    "--context-tier",
+                    "--max-context-tier",
+                    "--source-path",
+                    "--document-path",
+                    "--name",
+                    "--format"
+                ],
+                "required": [],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_rename.py": {
+            "category": "Knowledge",
+            "description": "Rename a knowledge source path in the SQLite database without PowerShell.",
+            "benefit": "zmiany nazw plików nie psują indeksu.",
+            "path": "tools/knowledge/knowledge_rename.py",
+            "input": {
+                "optional": [
+                    "--repo-root",
+                    "--old-path",
+                    "--new-path"
+                ],
+                "required": [],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_upsert.py": {
+            "category": "Knowledge",
+            "description": "Upsert source documents into the SQLite knowledge database without PowerShell.",
+            "benefit": "pojedyncza zmiana dokumentu nie wymaga pełnej przebudowy.",
+            "path": "tools/knowledge/knowledge_upsert.py",
+            "input": {
+                "optional": [
+                    "--repo-root",
+                    "--path"
+                ],
+                "required": [],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         }
     },
     "metadata": {
@@ -1124,11 +1211,15 @@
                 "knowledge_code_context.ps1",
                 "knowledge_compile.ps1",
                 "knowledge_delete.ps1",
+                "knowledge_delete.py",
                 "knowledge_index.py",
                 "knowledge_query.ps1",
+                "knowledge_query.py",
                 "knowledge_rename.ps1",
+                "knowledge_rename.py",
                 "knowledge_select.ps1",
                 "knowledge_upsert.ps1",
+                "knowledge_upsert.py",
                 "knowledge_validate.ps1",
                 "open_knowledge_db.ps1"
             ],

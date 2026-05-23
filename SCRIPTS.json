@@ -88,26 +88,34 @@
         "knowledge_compile.ps1",
         "knowledge_compile.py",
         "knowledge_delete.ps1",
+        "knowledge_delete.py",
         "knowledge_file_check.ps1",
         "knowledge_file_check.py",
         "knowledge_file_compile.ps1",
         "knowledge_file_compile.py",
         "knowledge_file_delete.ps1",
+        "knowledge_file_delete.py",
         "knowledge_file_query.ps1",
+        "knowledge_file_query.py",
         "knowledge_file_rename.ps1",
+        "knowledge_file_rename.py",
         "knowledge_file_select.ps1",
         "knowledge_file_select.py",
         "knowledge_file_upsert.ps1",
+        "knowledge_file_upsert.py",
         "knowledge_index.py",
         "knowledge_tier_report.py",
         "knowledge_tier_report.ps1",
         "knowledge_tier_check.ps1",
         "knowledge_tier_check.py",
         "knowledge_query.ps1",
+        "knowledge_query.py",
         "knowledge_rename.ps1",
+        "knowledge_rename.py",
         "knowledge_select.ps1",
         "knowledge_select.py",
         "knowledge_upsert.ps1",
+        "knowledge_upsert.py",
         "learn_pipeline_features.ps1",
         "log_summary.ps1",
         "migrate_ai_pipeline.ps1",
@@ -3364,6 +3372,178 @@
                 "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
                 "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
             }
+        },
+        "knowledge_delete.py": {
+            "path": "tools/knowledge/knowledge_delete.py",
+            "category": "knowledge",
+            "description": "Delete a knowledge entry or document from the SQLite knowledge database without PowerShell.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "--repo-root",
+                    "--path",
+                    "--name"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_query.py": {
+            "path": "tools/knowledge/knowledge_query.py",
+            "category": "knowledge",
+            "description": "Query the SQLite knowledge database without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--tags",
+                    "--match",
+                    "--type",
+                    "--load-at-start",
+                    "--context-tier",
+                    "--max-context-tier",
+                    "--source-path",
+                    "--document-path",
+                    "--name",
+                    "--format"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_rename.py": {
+            "path": "tools/knowledge/knowledge_rename.py",
+            "category": "knowledge",
+            "description": "Rename a knowledge source path in the SQLite database without PowerShell.",
+            "input": {
+                "required": [
+                    "-OldPath",
+                    "-NewPath"
+                ],
+                "optional": [
+                    "--repo-root",
+                    "--old-path",
+                    "--new-path"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_upsert.py": {
+            "path": "tools/knowledge/knowledge_upsert.py",
+            "category": "knowledge",
+            "description": "Upsert source documents into the SQLite knowledge database without PowerShell.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "--repo-root",
+                    "--path"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_file_delete.py": {
+            "path": "tools/knowledge/knowledge_file_delete.py",
+            "category": "knowledge",
+            "description": "Delete a knowledge entry or document from JSON file-fallback knowledge tables without PowerShell.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "--repo-root",
+                    "--path",
+                    "--name"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_file_query.py": {
+            "path": "tools/knowledge/knowledge_file_query.py",
+            "category": "knowledge",
+            "description": "Query JSON file-fallback knowledge tables without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--tags",
+                    "--match",
+                    "--type",
+                    "--load-at-start",
+                    "--context-tier",
+                    "--max-context-tier",
+                    "--source-path",
+                    "--document-path",
+                    "--name",
+                    "--format"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_file_rename.py": {
+            "path": "tools/knowledge/knowledge_file_rename.py",
+            "category": "knowledge",
+            "description": "Rename a knowledge source path in JSON file-fallback knowledge tables without PowerShell.",
+            "input": {
+                "required": [
+                    "-OldPath",
+                    "-NewPath"
+                ],
+                "optional": [
+                    "--repo-root",
+                    "--old-path",
+                    "--new-path"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
+        },
+        "knowledge_file_upsert.py": {
+            "path": "tools/knowledge/knowledge_file_upsert.py",
+            "category": "knowledge",
+            "description": "Upsert source documents into JSON file-fallback knowledge tables without PowerShell.",
+            "input": {
+                "required": [
+                    "-Path"
+                ],
+                "optional": [
+                    "--repo-root",
+                    "--path"
+                ],
+                "rule": "Run from the repository root using the Python wrapper."
+            },
+            "output": {
+                "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
+                "failure": "Throws or exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
+            }
         }
     },
     "metadata": {
@@ -3418,24 +3598,32 @@
                 "knowledge_compile.ps1",
                 "knowledge_compile.py",
                 "knowledge_delete.ps1",
+                "knowledge_delete.py",
                 "knowledge_file_check.ps1",
                 "knowledge_file_check.py",
                 "knowledge_file_compile.ps1",
                 "knowledge_file_compile.py",
                 "knowledge_file_delete.ps1",
+                "knowledge_file_delete.py",
                 "knowledge_file_query.ps1",
+                "knowledge_file_query.py",
                 "knowledge_file_rename.ps1",
+                "knowledge_file_rename.py",
                 "knowledge_file_select.ps1",
                 "knowledge_file_select.py",
                 "knowledge_file_upsert.ps1",
+                "knowledge_file_upsert.py",
                 "knowledge_index.py",
                 "knowledge_tier_report.py",
                 "knowledge_tier_check.py",
                 "knowledge_query.ps1",
+                "knowledge_query.py",
                 "knowledge_rename.ps1",
+                "knowledge_rename.py",
                 "knowledge_select.ps1",
                 "knowledge_select.py",
-                "knowledge_upsert.ps1"
+                "knowledge_upsert.ps1",
+                "knowledge_upsert.py"
             ],
             "repo": [
                 "add_changelog_entry.ps1",
