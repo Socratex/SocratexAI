@@ -65,6 +65,7 @@
         "check_toolchain_health.ps1",
         "finalize_task_check_commit_push.ps1",
         "end_prompt_snapshot.ps1",
+        "end_prompt_snapshot.py",
         "finalize_changed_files_commit_push.ps1",
         "finalize_changed_files_commit_push.py",
         "run_final_task_checks.ps1",
@@ -125,6 +126,7 @@
         "sync_pipeline_featurelist.ps1",
         "sync_pipeline_featurelist.py",
         "task_snapshot.ps1",
+        "task_snapshot.py",
         "task_flow_audit.ps1",
         "update_code_line_index.ps1",
         "update_pipeline_from_link.ps1",
@@ -1469,6 +1471,26 @@
                 "failure": "Throws when snapshot generation or output writing fails."
             }
         },
+        "end_prompt_snapshot.py": {
+            "path": "tools/repo/end_prompt_snapshot.py",
+            "category": "repo",
+            "description": "Python-first end-of-task OUTPUT snapshot generator.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--root",
+                    "--output-path",
+                    "--state-tail-lines",
+                    "--max-list-items",
+                    "--no-sound"
+                ],
+                "rule": "Use during Pass 0S as the Python replacement for finalizer OUTPUT snapshot generation."
+            },
+            "output": {
+                "success": "Writes the closure snapshot and reports the output path.",
+                "failure": "Exits nonzero when repository inspection or output writing fails."
+            }
+        },
         "finalize_changed_files_commit_push.ps1": {
             "path": "tools/repo/finalize_changed_files_commit_push.ps1",
             "category": "repo",
@@ -2668,6 +2690,24 @@
                 "failure": "Throws when repository inspection fails."
             }
         },
+        "task_snapshot.py": {
+            "path": "tools/repo/task_snapshot.py",
+            "category": "repo",
+            "description": "Python-first compact task snapshot for repository finalization workflows.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--root",
+                    "--max-lines",
+                    "--no-git"
+                ],
+                "rule": "Use during Pass 0S as the Python replacement for task snapshot reporting."
+            },
+            "output": {
+                "success": "Prints branch, last commit, status, diff summaries, untracked files, and known task document line counts.",
+                "failure": "Exits nonzero when repository inspection fails."
+            }
+        },
         "task_flow_audit.ps1": {
             "path": "tools/repo/task_flow_audit.ps1",
             "category": "repo",
@@ -3065,7 +3105,9 @@
                 "run_final_task_checks.ps1",
                 "run_final_task_checks.py",
                 "end_prompt_snapshot.ps1",
+                "end_prompt_snapshot.py",
                 "task_snapshot.ps1",
+                "task_snapshot.py",
                 "task_flow_audit.ps1",
                 "learn_pipeline_features.ps1",
                 "open_pipeline_learning_issue.ps1",
