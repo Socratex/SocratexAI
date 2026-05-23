@@ -101,7 +101,7 @@
     "is_duplicate": false,
     "note": "record source",
     "path": "context-docs/ENGINEERING.json",
-    "selector": "content.tagged_rules.value.29"
+    "selector": "content.tagged_rules.value.30"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -220,6 +220,14 @@
     "entry_name": "engineering.workflow.script_first_repair_gate",
     "is_duplicate": true,
     "note": "Shared operating principles carry the same script-first repair rule.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.shared_script_base_gate",
+    "is_duplicate": true,
+    "note": "Shared operating principles require avoiding duplicated script logic and source-to-child drift.",
     "path": "core/AGENT-CONTRACT.json",
     "selector": "operating_principles"
   },

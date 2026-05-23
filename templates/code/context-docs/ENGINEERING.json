@@ -185,6 +185,37 @@
                     ]
                 },
                 {
+                    "id": "engineering.workflow.shared_script_base_gate",
+                    "type": "rule",
+                    "subtype": "workflow_rule",
+                    "title": "Prefer Shared Script Bases Over Local Variants",
+                    "summary": "Reusable scripts should share implementation instead of duplicating logic across pipeline installs.",
+                    "rule": "When two repository or pipeline scripts perform the same work, extract the shared behavior into a common helper/module or keep one canonical implementation with thin wrappers. For reusable SocratexPipeline behavior, prefer direct source-owned copy/sync into child projects over local rewrites; child-project scripts that must differ should isolate the project-specific delta and name why it cannot be shared. Add a final deduplication/parity pass after broad script migrations before calling the script layer complete.",
+                    "rationale": "Duplicated script logic creates silent behavioral drift between projects and makes future fixes expensive. A shared script base makes the cheap path the correct path: one bugfix, one contract, one verification surface.",
+                    "priority": "must",
+                    "source_of_truth": "context-docs/ENGINEERING.json",
+                    "load_at_start": true,
+                    "context_tier": 1,
+                    "stability": "durable",
+                    "tags": [
+                        "engineering",
+                        "workflow",
+                        "tools",
+                        "automation",
+                        "scripts",
+                        "reuse",
+                        "docs-workflow"
+                    ],
+                    "source_refs": [
+                        {
+                            "path": "core/AGENT-CONTRACT.json",
+                            "selector": "operating_principles",
+                            "is_duplicate": true,
+                            "note": "Shared operating principles require avoiding duplicated script logic and source-to-child drift."
+                        }
+                    ]
+                },
+                {
                     "id": "engineering.workflow.knowledge_hash_gate",
                     "type": "rule",
                     "subtype": "verification_rule",
