@@ -68,13 +68,16 @@
         "Utf8File.ps1",
         "check_utf8_writes.ps1",
         "normalize_text_files.ps1",
+        "normalize_text_files.py",
         "normalize_json_files.ps1",
         "normalize_json_files.py",
         "normalize_documents.bat",
         "repair_mojibake.ps1",
+        "repair_mojibake.py",
         "repair_yaml_block_indentation.ps1",
         "repair_yaml_block_indentation.py",
         "write_utf8_file.ps1",
+        "write_utf8_file.py",
         "check_code_context_gate.ps1",
         "load_programming_context.ps1",
         "update_code_line_index.ps1",
@@ -127,7 +130,8 @@
         "doctor.ps1",
         "play_completion_sound.ps1",
         "pipeline_bootstrap_index.ps1",
-        "pipeline_bootstrap_index.py"
+        "pipeline_bootstrap_index.py",
+        "utf8_file_helpers.py"
     ],
     "content": {
         "audit_docs.ps1": {
@@ -1150,6 +1154,77 @@
                 "success": "Completes the knowledge operation and prints the selected output, report, or OK status.",
                 "failure": "Exits nonzero when source knowledge, compiled artifacts, filters, tiers, or mutation targets are invalid."
             }
+        },
+        "normalize_text_files.py": {
+            "path": "tools/text/normalize_text_files.py",
+            "category": "text",
+            "description": "Normalize repository text file line endings and final newlines with Python, including check mode support.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "paths",
+                    "--repo-root",
+                    "--check"
+                ],
+                "rule": "Run from the repository root when checking or normalizing repository text files."
+            },
+            "output": {
+                "success": "Prints OK when files are already normalized or lists normalized files.",
+                "failure": "Exits nonzero when files cannot be read/written or check mode finds stale normalization."
+            }
+        },
+        "repair_mojibake.py": {
+            "path": "tools/text/repair_mojibake.py",
+            "category": "text",
+            "description": "Repair common mojibake text corruption in selected files with Python, including check mode support.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "paths",
+                    "--repo-root",
+                    "--check"
+                ],
+                "rule": "Run from the repository root when checking or repairing repository text files."
+            },
+            "output": {
+                "success": "Prints OK when no repairs are needed or lists repaired files.",
+                "failure": "Exits nonzero when files cannot be read/written or check mode finds needed repairs."
+            }
+        },
+        "utf8_file_helpers.py": {
+            "path": "tools/text/utf8_file_helpers.py",
+            "category": "text",
+            "description": "Provide reusable UTF-8 file read/write helpers for Python scripts.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Import from Python text utilities instead of duplicating UTF-8 and line-ending logic."
+            },
+            "output": {
+                "success": "Provides helper functions for UTF-8 reads, writes, and line-ending conversion.",
+                "failure": "Raises Python exceptions for invalid line-ending modes or file IO errors."
+            }
+        },
+        "write_utf8_file.py": {
+            "path": "tools/text/write_utf8_file.py",
+            "category": "text",
+            "description": "Write text through the repository UTF-8 helper with line-ending and newline controls using Python.",
+            "input": {
+                "required": [
+                    "--path"
+                ],
+                "optional": [
+                    "--value",
+                    "--no-newline",
+                    "--line-ending",
+                    "stdin"
+                ],
+                "rule": "Use --value for simple values and stdin for multiline content."
+            },
+            "output": {
+                "success": "Writes the target file as UTF-8 without BOM and prints OK.",
+                "failure": "Exits nonzero when the target cannot be written."
+            }
         }
     },
     "metadata": {
@@ -1296,6 +1371,12 @@
                 "configure_powershell_utf8.ps1",
                 "doctor.ps1",
                 "play_completion_sound.ps1"
+            ],
+            "text": [
+                "normalize_text_files.py",
+                "repair_mojibake.py",
+                "utf8_file_helpers.py",
+                "write_utf8_file.py"
             ]
         },
         "script_io_contract": {

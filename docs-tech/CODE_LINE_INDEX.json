@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-23T20:01:33+02:00",
+    "generatedAt": "2026-05-23T20:12:55+02:00",
     "threshold": 300,
     "files": [
         {
@@ -279,12 +279,6 @@
             "large": false
         },
         {
-            "path": "tools/text/repair_mojibake.ps1",
-            "lines": 139,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/quality/check_evals.ps1",
             "lines": 129,
             "extension": ".ps1",
@@ -405,6 +399,12 @@
             "large": false
         },
         {
+            "path": "tools/text/repair_mojibake.py",
+            "lines": 96,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/check_pipeline_featurelist_update.ps1",
             "lines": 92,
             "extension": ".ps1",
@@ -449,12 +449,6 @@
         {
             "path": "tools/repo/finalize_task_check_commit_push.ps1",
             "lines": 85,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/text/normalize_text_files.ps1",
-            "lines": 81,
             "extension": ".ps1",
             "large": false
         },
@@ -621,6 +615,18 @@
             "large": false
         },
         {
+            "path": "tools/text/normalize_text_files.py",
+            "lines": 48,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/text/write_utf8_file.ps1",
+            "lines": 46,
+            "extension": ".ps1",
+            "large": false
+        },
+        {
             "path": "tools/documents/migrate_document_schema.ps1",
             "lines": 43,
             "extension": ".ps1",
@@ -690,6 +696,12 @@
             "path": "tools/pipeline/upgrade_from_reference_project.ps1",
             "lines": 36,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/text/utf8_file_helpers.py",
+            "lines": 36,
+            "extension": ".py",
             "large": false
         },
         {
@@ -789,6 +801,12 @@
             "large": false
         },
         {
+            "path": "tools/text/normalize_text_files.ps1",
+            "lines": 29,
+            "extension": ".ps1",
+            "large": false
+        },
+        {
             "path": "tools/json/json_item_delete.ps1",
             "lines": 28,
             "extension": ".ps1",
@@ -849,12 +867,6 @@
             "large": false
         },
         {
-            "path": "tools/text/write_utf8_file.ps1",
-            "lines": 24,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/knowledge/knowledge_file_rename.py",
             "lines": 23,
             "extension": ".py",
@@ -874,6 +886,12 @@
         },
         {
             "path": "tools/knowledge/knowledge_upsert.ps1",
+            "lines": 23,
+            "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/text/repair_mojibake.ps1",
             "lines": 23,
             "extension": ".ps1",
             "large": false
@@ -922,6 +940,12 @@
         },
         {
             "path": "tools/quality/check_runtime.py",
+            "lines": 21,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/text/write_utf8_file.py",
             "lines": 21,
             "extension": ".py",
             "large": false

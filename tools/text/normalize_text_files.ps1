@@ -13,83 +13,22 @@ $repoRoot = if ([string]::IsNullOrWhiteSpace($Root)) {
 } else {
 	Resolve-Path -LiteralPath $Root
 }
-$utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
-function Convert-TextToLf {
-	param(
-		[string]$Text
-	)
+. (Join-Path $PSScriptRoot "..\pipeline\resolve_tool_runtime.ps1")
+$python = Resolve-SocratexPython -SearchRoot $PSScriptRoot
 
-	$normalized = $Text -replace "`r`n", "`n"
-	$normalized = $normalized -replace "`r", "`n"
-	return $normalized
+$script = Join-Path $PSScriptRoot "normalize_text_files.py"
+$arguments = @(
+	$script,
+	"--repo-root",
+	$repoRoot
+)
+if ($Check) {
+	$arguments += "--check"
 }
+$arguments += $Paths
 
-function Get-TextFileContent {
-	param(
-		[string]$Path
-	)
-
-	$bytes = [System.IO.File]::ReadAllBytes($Path)
-	return $utf8NoBom.GetString($bytes)
-}
-
-Push-Location -LiteralPath $repoRoot
-try {
-	$changedPaths = New-Object System.Collections.Generic.List[string]
-	$expandedPaths = New-Object System.Collections.Generic.List[string]
-
-	foreach ($path in $Paths) {
-		foreach ($expandedPath in ($path -split ",")) {
-			$trimmedPath = $expandedPath.Trim()
-			if ($trimmedPath.Length -gt 0) {
-				$expandedPaths.Add($trimmedPath)
-			}
-		}
-	}
-
-	foreach ($path in $expandedPaths) {
-		$resolvedPath = Resolve-Path -LiteralPath $path
-		$content = Get-TextFileContent -Path $resolvedPath
-		$normalizedContent = Convert-TextToLf -Text $content
-		$normalizedBytes = $utf8NoBom.GetBytes($normalizedContent)
-		$currentBytes = [System.IO.File]::ReadAllBytes($resolvedPath)
-		$needsWrite = $currentBytes.Length -ne $normalizedBytes.Length
-
-		if (-not $needsWrite) {
-			for ($index = 0; $index -lt $currentBytes.Length; $index++) {
-				if ($currentBytes[$index] -ne $normalizedBytes[$index]) {
-					$needsWrite = $true
-					break
-				}
-			}
-		}
-
-		if ($needsWrite) {
-			$changedPaths.Add($path)
-			if (-not $Check) {
-				[System.IO.File]::WriteAllBytes($resolvedPath, $normalizedBytes)
-			}
-		}
-	}
-
-	if ($changedPaths.Count -eq 0) {
-		Write-Host "OK: text files already normalized"
-		exit 0
-	}
-
-	if ($Check) {
-		Write-Host "ERROR: text files need normalization:"
-		foreach ($path in $changedPaths) {
-			Write-Host " - $path"
-		}
-		exit 1
-	}
-
-	Write-Host "OK: normalized text files:"
-	foreach ($path in $changedPaths) {
-		Write-Host " - $path"
-	}
-} finally {
-	Pop-Location
+& $python -B @arguments
+if ($LASTEXITCODE -ne 0) {
+	throw "normalize_text_files failed with exit code $LASTEXITCODE"
 }

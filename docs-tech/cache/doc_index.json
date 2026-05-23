@@ -637,6 +637,7 @@
         "normalize_json_files.py",
         "normalize_markdown_emoji.ps1",
         "normalize_text_files.ps1",
+        "normalize_text_files.py",
         "open_pipeline_learning_issue.ps1",
         "pipeline_bootstrap_index.ps1",
         "pipeline_bootstrap_index.py",
@@ -649,6 +650,7 @@
         "reinitialize_pipeline.ps1",
         "remove_pipeline.ps1",
         "repair_mojibake.ps1",
+        "repair_mojibake.py",
         "report_pipeline_learning.ps1",
         "run_quality_fix.ps1",
         "run_quality_gate.ps1",
@@ -668,8 +670,10 @@
         "update_pipeline_from_link.py",
         "upgrade_from_reference_project.ps1",
         "utf8_file_helpers.ps1",
+        "utf8_file_helpers.py",
         "run_interactive_setup.ps1",
         "write_utf8_file.ps1",
+        "write_utf8_file.py",
         "sync_managed_pipeline_package.ps1",
         "sync_managed_pipeline_package.py",
         "read_compiled_context.ps1",
@@ -1673,6 +1677,30 @@
           "path": "content.knowledge_file_upsert.py",
           "title": "",
           "ref": "content.knowledge_file_upsert.py",
+          "status": ""
+        },
+        "normalize_text_files.py": {
+          "path": "content.normalize_text_files.py",
+          "title": "",
+          "ref": "content.normalize_text_files.py",
+          "status": ""
+        },
+        "repair_mojibake.py": {
+          "path": "content.repair_mojibake.py",
+          "title": "",
+          "ref": "content.repair_mojibake.py",
+          "status": ""
+        },
+        "utf8_file_helpers.py": {
+          "path": "content.utf8_file_helpers.py",
+          "title": "",
+          "ref": "content.utf8_file_helpers.py",
+          "status": ""
+        },
+        "write_utf8_file.py": {
+          "path": "content.write_utf8_file.py",
+          "title": "",
+          "ref": "content.write_utf8_file.py",
           "status": ""
         }
       }
@@ -4012,13 +4040,16 @@
         "Utf8File.ps1",
         "check_utf8_writes.ps1",
         "normalize_text_files.ps1",
+        "normalize_text_files.py",
         "normalize_json_files.ps1",
         "normalize_json_files.py",
         "normalize_documents.bat",
         "repair_mojibake.ps1",
+        "repair_mojibake.py",
         "repair_yaml_block_indentation.ps1",
         "repair_yaml_block_indentation.py",
         "write_utf8_file.ps1",
+        "write_utf8_file.py",
         "check_code_context_gate.ps1",
         "load_programming_context.ps1",
         "update_code_line_index.ps1",
@@ -4071,7 +4102,8 @@
         "doctor.ps1",
         "play_completion_sound.ps1",
         "pipeline_bootstrap_index.ps1",
-        "pipeline_bootstrap_index.py"
+        "pipeline_bootstrap_index.py",
+        "utf8_file_helpers.py"
       ],
       "top_level_keys": [
         "index",
@@ -4845,6 +4877,30 @@
           "path": "content.knowledge_upsert.py",
           "title": "",
           "ref": "content.knowledge_upsert.py",
+          "status": ""
+        },
+        "normalize_text_files.py": {
+          "path": "content.normalize_text_files.py",
+          "title": "",
+          "ref": "content.normalize_text_files.py",
+          "status": ""
+        },
+        "repair_mojibake.py": {
+          "path": "content.repair_mojibake.py",
+          "title": "",
+          "ref": "content.repair_mojibake.py",
+          "status": ""
+        },
+        "utf8_file_helpers.py": {
+          "path": "content.utf8_file_helpers.py",
+          "title": "",
+          "ref": "content.utf8_file_helpers.py",
+          "status": ""
+        },
+        "write_utf8_file.py": {
+          "path": "content.write_utf8_file.py",
+          "title": "",
+          "ref": "content.write_utf8_file.py",
           "status": ""
         }
       }
