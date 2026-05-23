@@ -183,7 +183,7 @@ def main() -> int:
     parser.add_argument("--no-sound", action="store_true", help="Accepted for CLI parity; Python path does not play a sound.")
     args = parser.parse_args()
 
-    root = repo_root(Path(args.root).resolve() if args.root else Path.cwd())
+    root = Path(args.root).resolve() if args.root else repo_root(Path.cwd())
     output_path = Path(args.output_path).resolve() if args.output_path else root / "OUTPUT"
     now = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
     lines = ["# Prompt Snapshot", f"Generated: {now}", f"Repository: {root}"]

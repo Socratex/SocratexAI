@@ -67,7 +67,7 @@ def main() -> int:
     parser.add_argument("--no-git", action="store_true", help="Skip git state sections.")
     args = parser.parse_args()
 
-    root = repo_root(Path(args.root).resolve() if args.root else Path.cwd())
+    root = Path(args.root).resolve() if args.root else repo_root(Path.cwd())
     now = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
     print("# Task Snapshot")
     print(f"Generated: {now}")
