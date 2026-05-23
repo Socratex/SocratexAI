@@ -739,6 +739,7 @@
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
+                    "tools/codebase/update_code_line_index.py",
                     "tools/repo/check_pipeline_feature_contracts.ps1",
                     "tools/documents/audit_docs.ps1"
                 ],
@@ -746,6 +747,7 @@
                     "knowledge_code_context.ps1",
                     "check_code_context_gate.ps1",
                     "update_code_line_index.ps1",
+                    "update_code_line_index.py",
                     "audit_docs.ps1"
                 ],
                 "required_catalog_entries": {
@@ -753,6 +755,7 @@
                         "knowledge_code_context.ps1",
                         "check_code_context_gate.ps1",
                         "update_code_line_index.ps1",
+                        "update_code_line_index.py",
                         "audit_docs.ps1"
                     ]
                 },
@@ -765,10 +768,14 @@
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Prefer update_code_line_index.py for Python-first line-index refresh and keep the legacy wrapper only until the final no-PowerShell deletion pass.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
                 "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/codebase/update_code_line_index.py",
+                    "python3 -B tools/codebase/update_code_line_index.py --check",
+                    "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/codebase/update_code_line_index.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/repo/check_pipeline_feature_contracts.ps1",
                     "powershell -NoProfile -ExecutionPolicy Bypass -File tools/documents/audit_docs.ps1"
                 ],

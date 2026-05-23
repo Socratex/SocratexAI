@@ -130,6 +130,7 @@
         "task_snapshot.py",
         "task_flow_audit.ps1",
         "update_code_line_index.ps1",
+        "update_code_line_index.py",
         "update_pipeline_from_link.ps1",
         "update_pipeline_from_link.py",
         "upgrade_from_reference_project.ps1",
@@ -2770,6 +2771,28 @@
                 "failure": "Throws when git/path discovery fails or check mode finds stale generated indexes."
             }
         },
+        "update_code_line_index.py": {
+            "path": "tools/codebase/update_code_line_index.py",
+            "category": "codebase",
+            "description": "Refresh or check docs-tech/CODE_LINE_INDEX.json and docs-tech/LARGE_FILES.json through Python.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--index-path",
+                    "--large-files-path",
+                    "--large-file-threshold",
+                    "--paths",
+                    "--root",
+                    "--changed-only",
+                    "--check"
+                ],
+                "rule": "Use during Pass 0S as the Python replacement for code line index refresh. Use --changed-only for normal task closure and --check to fail on stale indexes."
+            },
+            "output": {
+                "success": "Writes or verifies the code line index and generated large-file document, then prints indexed file counts.",
+                "failure": "Exits nonzero when git/path discovery fails or check mode finds stale generated indexes."
+            }
+        },
         "update_pipeline_from_link.ps1": {
             "path": "tools/pipeline/update_pipeline_from_link.ps1",
             "category": "pipeline",
@@ -3197,7 +3220,8 @@
             ],
             "codebase": [
                 "check_code_context_gate.ps1",
-                "update_code_line_index.ps1"
+                "update_code_line_index.ps1",
+                "update_code_line_index.py"
             ],
             "json": [
                 "audit_json_docs.py",
