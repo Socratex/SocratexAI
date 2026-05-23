@@ -227,7 +227,7 @@
     "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.workflow.shared_script_base_gate",
     "is_duplicate": true,
-    "note": "Shared operating principles require avoiding duplicated script logic and source-to-child drift.",
+    "note": "Shared operating principles require avoiding duplicated script/helper logic and source-to-child drift.",
     "path": "core/AGENT-CONTRACT.json",
     "selector": "operating_principles"
   },

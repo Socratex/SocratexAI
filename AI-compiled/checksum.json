@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-4ed40b250b78",
+  "generated_at": "source-6f416d75c886",
   "source_hashes": {
     "AGENTS.md": "8e64c413c16e8f11316683098eba6e21581463ffc6b0b13521fdb1d7f8d6e679",
     "README.md": "1ea97a7013bff39d96092734f15ac5af04102b1b1be969deb33a82584239f7f2",
@@ -11,7 +11,7 @@
     "FLOWS.json": "5cb99a77abd7084209df0fba49059ccbb08f7b5cfcdcf768f2e48a7463eb35f9",
     "SCRIPTS.json": "baf7b387b164a720af2cbeff107cee389907cc53cfa9bd4a49bb8394db67534b",
     "docs-tech/PIPELINE-BOOTSTRAP.json": "42fac7f9d990f35b5a6d084e0ea94fad5d7ce2706ecc46fb032ff5ac53c69bfb",
-    "core/AGENT-CONTRACT.json": "26440b06e0b02582347b9862c26da9cd8617ac90f6a449eb9817ac69bf775c2a",
+    "core/AGENT-CONTRACT.json": "410bec54ddae49689e6a0d56dd731d6d8994e0c65d160d9eca43ab148ebaab95",
     "core/CONTEXT-TIERS.json": "9aade292deca1b20852a093134c1bd99a846c547638c117493042b723c4251e1",
     "core/MEMORY-MODEL.json": "5a989d881ac7f56300a2988b4e4cc71dd113daba895b94a7805eb8a21818bc33",
     "core/PROMOTION-RULES.json": "3a69a0fe1d97bbe2675ee94aa1733a3c635c1278251b538af583a410bb73c5f1",
@@ -19,7 +19,7 @@
     "core/ROI-BIAS.json": "47175df855cc3153181ca03c1c9c4a16a2e1be51d58bfd9d4f73a53407729205",
     "core/TASK-WORK.json": "bc5d77ba63dbe5b1e03f60a264e30dcb6a56b14d0fd7ce924074cfb1c856f572",
     "core/SCRIPT-FALLBACK.json": "9f23457b878f30afdd5998076ccd9c82e01c4444025e18c6552245b8f73428b6",
-    "context-docs/ENGINEERING.json": "56e45cfafbb8c52aa9e3121fa775f14beca17184e8a7d691205065a7d6181783",
+    "context-docs/ENGINEERING.json": "fb6042b62c9ea7017a3f6196491c73a8110c650c664f2b81116abd02afb132b3",
     "docs-tech/KNOWLEDGE-VIEWS.json": "6ab59e0b5de1b08b161c3d2e486fcbe543e8c897a2c3d2c9c90c66c764281cc6",
     "tools/knowledge/knowledge_index.py": "3c91959fba395e7963cf07a5ae8c78ac1b68b4dcaf7e55409f9ff1f485893d3a",
     "tools/knowledge/context_tags.ps1": "2b22b5678cef79565ac224ab2a77de5a711de0b4460dc0eec9bb50bcd2849ac3",
@@ -37,7 +37,7 @@
     "tools/pipeline/check_ai_compiled_context.py": "75fcb01413d36f8e9a334f23295b3204db541e0e199d020442b1030695c503e3",
     "templates/WORKFLOW.json": "3ff145e0fb1907c456978a8c8068d1f16dc68c89bf020e013e1facf1ad641433",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "b0132e2dbc9a6fd1cbd2de297d5699e881ba5c21b73e96593277ed23b5ce8b78",
-    "templates/code/context-docs/ENGINEERING.json": "9d5c259520206a8461c44a4b357f584dca83a3de2bd6593bfc7722fd82881542",
+    "templates/code/context-docs/ENGINEERING.json": "427fe7d0946cb8b82f52873d66f6f0800019cb9f0dd80b6e1e162501d997855d",
     "templates/team/product.json": "723e7097e1861818309b309df7374945dbf1f5134ee0052f1c088dc21f5c93b7",
     "templates/team/technical.json": "2b9c468c279787980673744529c2475277f8410af821297e900ab0ff3c837593",
     "templates/team/performance.json": "ee718e61c41e0a0b20e82bf7992c983c9077edc8a8e0437a75f3ca2282c0e583",
@@ -57,11 +57,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "781f6a0d50bda34bf29109d25fc42592b3b5e721e0f8b285dec9221ceefe3eef",
-    "codex/ENTRYPOINT.md": "df736ce4cabe0632fa3f1898387a260d05d4927b6cddb8d5e140e6951ac7d8e2",
-    "codex/RULES.compiled.md": "c1fa5a40e92286bf73ffe25879d4e9aa0a9896cf885c1ddaed48080fcbb4179f",
-    "codex/WORKFLOW.compiled.md": "e6ba13698cb0f8b622867078165baafa253d36a2d2259ac600a8833e99bec4d9",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "dfdcaaadfe2758ed96fa9f1691433ce2b245b41b128e875b49860de1b9e668f6",
-    "codex/TEAM.compiled.md": "ddc050d8c0dcf44cecd3a7f0482e1b30f1831cfbf8004b9f18c8ebc3061c3a50"
+    "INDEX.json": "e60e0f58f688f0ef34485b06faac3f5de39938dd1781d465aa8cdcdde448c72f",
+    "codex/ENTRYPOINT.md": "5ecccfedd3ba8c8a65ede676086ba9482a4077deeb30535e525cce28bda057b1",
+    "codex/RULES.compiled.md": "b5abd9455be2588267b0957abd2758e3531ee2d6da32a4be24425002b753ea62",
+    "codex/WORKFLOW.compiled.md": "02177fab74193ccf48bbf39a89d6d52b76cc6f8c5f85f0d32846cf20a892b963",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "235f08888709159a91ec3d67763c8b2b3be55a4945067dc60fe018cec07487c1",
+    "codex/TEAM.compiled.md": "2808368a1b78e9e32118bafb7eb8d0060d5a806512f46c36bfc90bf32eec7249"
   }
 }
