@@ -162,6 +162,10 @@ def main() -> int:
     args = parser.parse_args()
 
     root = resolve_contract_root(args.repo_root)
+    if is_installed_package_root(root):
+        print(f"SKIP: source-pipeline feature contract check is not valid for an installed child-project package: {root}")
+        return 0
+
     errors: list[str] = []
     feature_list = read_json(root / "pipeline_featurelist.json")
     scripts = read_json(root / "SCRIPTS.json")
