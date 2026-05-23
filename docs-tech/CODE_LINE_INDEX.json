@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-23T18:55:46+02:00",
+    "generatedAt": "2026-05-23T19:27:28+02:00",
     "threshold": 300,
     "files": [
         {
@@ -263,6 +263,12 @@
         {
             "path": "tools/repo/sync_pipeline_featurelist.py",
             "lines": 153,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_code_context.py",
+            "lines": 143,
             "extension": ".py",
             "large": false
         },

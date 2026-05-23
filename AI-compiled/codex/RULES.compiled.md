@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-5782ef58501a
+Generated: source-77ec5d4b1a8b
 
 ## Source of Truth
 
@@ -1017,6 +1017,7 @@ Draft placeholder:
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
                     "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
@@ -1026,6 +1027,7 @@ Draft placeholder:
                 ],
                 "required_scripts": [
                     "knowledge_code_context.ps1",
+                    "knowledge_code_context.py",
                     "check_code_context_gate.ps1",
                     "update_code_line_index.ps1",
                     "update_code_line_index.py",
@@ -1034,6 +1036,7 @@ Draft placeholder:
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_code_context.ps1",
+                        "knowledge_code_context.py",
                         "check_code_context_gate.ps1",
                         "update_code_line_index.ps1",
                         "update_code_line_index.py",
@@ -6456,6 +6459,7 @@ Draft placeholder:
                     "tools/codebase/check_project_design_context_gate.ps1",
                     "tools/documents/audit_docs.ps1",
                     "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "tools/knowledge/project_design_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1"
                 ],
@@ -6463,6 +6467,7 @@ Draft placeholder:
                     "audit_docs.ps1",
                     "check_project_design_context_gate.ps1",
                     "knowledge_code_context.ps1",
+                    "knowledge_code_context.py",
                     "project_design_context.ps1"
                 ],
                 "required_catalog_entries": {
@@ -6470,6 +6475,7 @@ Draft placeholder:
                         "audit_docs.ps1",
                         "check_project_design_context_gate.ps1",
                         "knowledge_code_context.ps1",
+                        "knowledge_code_context.py",
                         "project_design_context.ps1"
                     ]
                 },

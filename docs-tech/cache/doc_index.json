@@ -595,6 +595,7 @@
         "install_powershell.ps1",
         "knowledge_check.ps1",
         "knowledge_code_context.ps1",
+        "knowledge_code_context.py",
         "knowledge_compile.ps1",
         "knowledge_delete.ps1",
         "knowledge_file_check.ps1",
@@ -1159,6 +1160,12 @@
           "path": "content.knowledge_code_context.ps1",
           "title": "",
           "ref": "content.knowledge_code_context.ps1",
+          "status": ""
+        },
+        "knowledge_code_context.py": {
+          "path": "content.knowledge_code_context.py",
+          "title": "",
+          "ref": "content.knowledge_code_context.py",
           "status": ""
         },
         "knowledge_compile.ps1": {

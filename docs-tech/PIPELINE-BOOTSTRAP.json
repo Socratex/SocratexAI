@@ -153,6 +153,7 @@
             "install_powershell.ps1",
             "knowledge_check.ps1",
             "knowledge_code_context.ps1",
+            "knowledge_code_context.py",
             "knowledge_compile.ps1",
             "knowledge_delete.ps1",
             "knowledge_file_check.ps1",

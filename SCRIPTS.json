@@ -82,6 +82,7 @@
         "install_powershell.ps1",
         "knowledge_check.ps1",
         "knowledge_code_context.ps1",
+        "knowledge_code_context.py",
         "knowledge_compile.ps1",
         "knowledge_delete.ps1",
         "knowledge_file_check.ps1",
@@ -1893,6 +1894,25 @@
                 "failure": "Exits nonzero when compiled knowledge is stale, unavailable, or missing required guidance coverage."
             }
         },
+        "knowledge_code_context.py": {
+            "path": "tools/knowledge/knowledge_code_context.py",
+            "category": "knowledge",
+            "description": "Load the full compiled engineering/code guidance set and write the freshness marker used by code-context gates without PowerShell.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--views",
+                    "--additional-tags",
+                    "--format",
+                    "--skip-check"
+                ],
+                "rule": "Run before code-touching work during the no-PowerShell migration, or when check_code_context_gate.ps1 reports a stale/missing marker."
+            },
+            "output": {
+                "success": "Prints the loaded code-guidance rules and writes ignored/code_context_gate.json for the current HEAD.",
+                "failure": "Exits nonzero when compiled knowledge is stale, unavailable, or missing required guidance coverage."
+            }
+        },
         "knowledge_compile.ps1": {
             "path": "tools/knowledge/knowledge_compile.ps1",
             "category": "knowledge",
@@ -3248,6 +3268,7 @@
                 "context_tags.ps1",
                 "knowledge_check.ps1",
                 "knowledge_code_context.ps1",
+                "knowledge_code_context.py",
                 "knowledge_compile.ps1",
                 "knowledge_delete.ps1",
                 "knowledge_file_check.ps1",

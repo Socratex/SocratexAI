@@ -736,6 +736,7 @@
                     "context-docs/ENGINEERING.json",
                     "tools/codebase",
                     "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "project/code/WORKFLOW.json",
                     "project/code/PACK.json",
                     "docs-tech/CODE_LINE_INDEX.json",
@@ -745,6 +746,7 @@
                 ],
                 "required_scripts": [
                     "knowledge_code_context.ps1",
+                    "knowledge_code_context.py",
                     "check_code_context_gate.ps1",
                     "update_code_line_index.ps1",
                     "update_code_line_index.py",
@@ -753,6 +755,7 @@
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_code_context.ps1",
+                        "knowledge_code_context.py",
                         "check_code_context_gate.ps1",
                         "update_code_line_index.ps1",
                         "update_code_line_index.py",
@@ -6175,6 +6178,7 @@
                     "tools/codebase/check_project_design_context_gate.ps1",
                     "tools/documents/audit_docs.ps1",
                     "tools/knowledge/knowledge_code_context.ps1",
+                    "tools/knowledge/knowledge_code_context.py",
                     "tools/knowledge/project_design_context.ps1",
                     "tools/repo/check_pipeline_feature_contracts.ps1"
                 ],
@@ -6182,6 +6186,7 @@
                     "audit_docs.ps1",
                     "check_project_design_context_gate.ps1",
                     "knowledge_code_context.ps1",
+                    "knowledge_code_context.py",
                     "project_design_context.ps1"
                 ],
                 "required_catalog_entries": {
@@ -6189,6 +6194,7 @@
                         "audit_docs.ps1",
                         "check_project_design_context_gate.ps1",
                         "knowledge_code_context.ps1",
+                        "knowledge_code_context.py",
                         "project_design_context.ps1"
                     ]
                 },
