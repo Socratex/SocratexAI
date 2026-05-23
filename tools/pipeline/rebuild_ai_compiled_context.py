@@ -457,6 +457,10 @@ def check_knowledge(repo_root: Path) -> int:
     return 0 if file_code == 0 else db_code
 
 
+def is_installed_child_package(repo_root: Path) -> bool:
+    return repo_root.name == "SocratexAI" and (repo_root.parent / "Tools").is_dir()
+
+
 def check_compiled_files(output_root: Path, files: list[tuple[str, str]]) -> int:
     drift: list[str] = []
     for relative_path, content in files:
@@ -501,6 +505,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", default="AI-compiled", help="Output directory relative to the repository root.")
     parser.add_argument("--packs", nargs="*", default=DEFAULT_PACKS, help="Project packs to include when present.")
     parser.add_argument("--check", action="store_true", help="Check generated outputs without writing files.")
+    parser.add_argument(
+        "--skip-knowledge",
+        action="store_true",
+        help="Do not compile/check AI-compiled/project knowledge artifacts. Auto-enabled for installed child packages.",
+    )
     return parser.parse_args()
 
 
@@ -509,24 +518,27 @@ def main() -> int:
     args = parse_args()
     repo_root = Path(args.repo_root).resolve() if args.repo_root else Path(__file__).resolve().parents[2]
     output_root = repo_root / args.output_dir
+    skip_knowledge = bool(args.skip_knowledge or is_installed_child_package(repo_root))
     files = generate_compiled_files(repo_root, list(args.packs))
 
     if args.check:
         compiled_code = check_compiled_files(output_root, files)
         if compiled_code != 0:
             return compiled_code
-        knowledge_code = check_knowledge(repo_root)
-        if knowledge_code != 0:
-            return knowledge_code
+        if not skip_knowledge:
+            knowledge_code = check_knowledge(repo_root)
+            if knowledge_code != 0:
+                return knowledge_code
         print("OK: compiled agent instructions are current.")
         return 0
 
     clear_generated_instruction_files(output_root)
     for relative_path, content in files:
         write_text(output_root / relative_path, content)
-    knowledge_code = compile_knowledge(repo_root)
-    if knowledge_code != 0:
-        return knowledge_code
+    if not skip_knowledge:
+        knowledge_code = compile_knowledge(repo_root)
+        if knowledge_code != 0:
+            return knowledge_code
     print(f"OK: recompiled AI instructions into {args.output_dir}")
     return 0
 
