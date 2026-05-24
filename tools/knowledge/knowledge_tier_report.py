@@ -1,5 +1,7 @@
 import argparse
 import json
+import sqlite3
+import subprocess
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -51,6 +53,10 @@ TIER_LABELS = {
     4: "history, vision, and simplified backlog",
     5: "FOMO and inactive inspiration",
 }
+
+DEFAULT_DB_PATH = "AI-compiled/project/knowledge.sqlite"
+DEFAULT_FILE_DIR = "AI-compiled/project/knowledge-files"
+BACKENDS = ("auto", "documents", "knowledge_files", "sqlite")
 
 
 def normalize_path(path: str) -> str:
@@ -113,11 +119,10 @@ def classify_tier(raw: Any) -> tuple[int | None, str | None]:
     return tier, None
 
 
-def scan_repo(repo_root: Path, include_templates: bool) -> dict[str, Any]:
+def scan_document_entries(repo_root: Path, include_templates: bool) -> tuple[list[dict[str, Any]], list[dict[str, str]], int]:
     entries: list[dict[str, Any]] = []
     parse_errors: list[dict[str, str]] = []
     files_scanned = 0
-    files_with_entries: set[str] = set()
 
     for path in sorted(repo_root.rglob("*.json"), key=lambda item: normalize_path(str(item.relative_to(repo_root)))):
         relative = normalize_path(str(path.relative_to(repo_root)))
@@ -132,7 +137,6 @@ def scan_repo(repo_root: Path, include_templates: bool) -> dict[str, Any]:
         for selector, entry in iter_entries(data):
             tier, issue = classify_tier(entry.get("context_tier"))
             tags = normalize_tags(entry.get("tags"))
-            files_with_entries.add(relative)
             entries.append(
                 {
                     "document_path": relative,
@@ -147,6 +151,112 @@ def scan_repo(repo_root: Path, include_templates: bool) -> dict[str, Any]:
                     "tags": tags,
                 }
             )
+    return entries, parse_errors, files_scanned
+
+
+def read_json(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def scan_file_entries(repo_root: Path, file_dir: Path) -> tuple[list[dict[str, Any]], list[dict[str, str]], int]:
+    entries_path = file_dir / "entries.json"
+    tags_path = file_dir / "entry_tags.json"
+    documents_path = file_dir / "documents.json"
+    missing = [path for path in (entries_path, tags_path, documents_path) if not path.is_file()]
+    if missing:
+        raise FileNotFoundError("missing knowledge file table(s): " + ", ".join(str(path.relative_to(repo_root)) for path in missing))
+
+    tag_rows_by_entry: dict[tuple[str, str], list[str]] = defaultdict(list)
+    for row in read_json(tags_path):
+        tag_rows_by_entry[(str(row.get("document_path", "")), str(row.get("entry_name", "")))].append(str(row.get("tag", "")))
+
+    entries: list[dict[str, Any]] = []
+    for row in read_json(entries_path):
+        document_path = str(row.get("document_path", ""))
+        name = str(row.get("name", ""))
+        tier, issue = classify_tier(row.get("context_tier"))
+        entries.append(
+            {
+                "document_path": document_path,
+                "selector": str(row.get("source_selector", "")),
+                "id": name,
+                "title": row.get("title") or name,
+                "type": row.get("type", ""),
+                "subtype": row.get("subtype", ""),
+                "context_tier": tier,
+                "tier_issue": issue,
+                "load_at_start": bool(row.get("load_at_start")),
+                "tags": normalize_tags(tag_rows_by_entry.get((document_path, name), [])),
+            }
+        )
+    return entries, [], len(read_json(documents_path))
+
+
+def scan_sqlite_entries(repo_root: Path, db_path: Path) -> tuple[list[dict[str, Any]], list[dict[str, str]], int]:
+    if not db_path.is_file():
+        raise FileNotFoundError(f"missing knowledge SQLite database: {db_path.relative_to(repo_root)}")
+
+    connection = sqlite3.connect(str(db_path))
+    connection.row_factory = sqlite3.Row
+    try:
+        tag_rows_by_entry: dict[tuple[str, str], list[str]] = defaultdict(list)
+        for row in connection.execute("select document_path, entry_name, tag from entry_tags order by tag"):
+            tag_rows_by_entry[(str(row["document_path"]), str(row["entry_name"]))].append(str(row["tag"]))
+
+        entries: list[dict[str, Any]] = []
+        for row in connection.execute("select * from entries order by document_path, name"):
+            document_path = str(row["document_path"])
+            name = str(row["name"])
+            tier, issue = classify_tier(row["context_tier"])
+            entries.append(
+                {
+                    "document_path": document_path,
+                    "selector": str(row["source_selector"] or ""),
+                    "id": name,
+                    "title": row["title"] or name,
+                    "type": row["type"] or "",
+                    "subtype": row["subtype"] or "",
+                    "context_tier": tier,
+                    "tier_issue": issue,
+                    "load_at_start": bool(row["load_at_start"]),
+                    "tags": normalize_tags(tag_rows_by_entry.get((document_path, name), [])),
+                }
+            )
+        files_scanned = int(connection.execute("select count(*) from documents").fetchone()[0])
+        return entries, [], files_scanned
+    finally:
+        connection.close()
+
+
+def backend_current(repo_root: Path, backend: str, db_path: Path, file_dir: Path) -> bool:
+    script = Path(__file__).resolve().with_name("knowledge_index.py")
+    if backend == "sqlite":
+        command = [sys.executable, "-B", str(script), "check", "--repo-root", str(repo_root), "--db", str(db_path)]
+    elif backend == "knowledge_files":
+        command = [sys.executable, "-B", str(script), "file-check", "--repo-root", str(repo_root), "--file-dir", str(file_dir)]
+    else:
+        return True
+    return subprocess.run(command, cwd=repo_root, check=False, capture_output=True, text=True).returncode == 0
+
+
+def choose_backend(repo_root: Path, db_path: Path, file_dir: Path) -> str:
+    if backend_current(repo_root, "sqlite", db_path, file_dir):
+        return "sqlite"
+    if backend_current(repo_root, "knowledge_files", db_path, file_dir):
+        return "knowledge_files"
+    return "documents"
+
+
+def build_report(
+    repo_root: Path,
+    include_templates: bool,
+    backend: str,
+    backend_source: str,
+    files_scanned: int,
+    entries: list[dict[str, Any]],
+    parse_errors: list[dict[str, str]],
+) -> dict[str, Any]:
+    files_with_entries = {entry["document_path"] for entry in entries}
 
     by_tier: dict[str, Any] = {}
     for tier in range(1, 6):
@@ -172,6 +282,8 @@ def scan_repo(repo_root: Path, include_templates: bool) -> dict[str, Any]:
     strict_ok = tier_coverage_ok and len(parse_errors) == 0
     return {
         "repo_root": str(repo_root),
+        "backend": backend,
+        "backend_source": backend_source,
         "include_templates": include_templates,
         "scope": "knowledge entries with id/type/tags and rule/body/summary",
         "status": {
@@ -199,12 +311,46 @@ def scan_repo(repo_root: Path, include_templates: bool) -> dict[str, Any]:
     }
 
 
+def scan_repo(
+    repo_root: Path,
+    include_templates: bool,
+    backend: str = "documents",
+    db_path: Path | None = None,
+    file_dir: Path | None = None,
+) -> dict[str, Any]:
+    requested_backend = backend
+    resolved_db_path = (repo_root / (db_path or Path(DEFAULT_DB_PATH))).resolve()
+    resolved_file_dir = (repo_root / (file_dir or Path(DEFAULT_FILE_DIR))).resolve()
+    selected_backend = choose_backend(repo_root, resolved_db_path, resolved_file_dir) if requested_backend == "auto" else requested_backend
+
+    if selected_backend == "documents":
+        entries, parse_errors, files_scanned = scan_document_entries(repo_root, include_templates)
+    elif selected_backend == "knowledge_files":
+        entries, parse_errors, files_scanned = scan_file_entries(repo_root, resolved_file_dir)
+    elif selected_backend == "sqlite":
+        entries, parse_errors, files_scanned = scan_sqlite_entries(repo_root, resolved_db_path)
+    else:
+        raise ValueError(f"Unsupported backend: {selected_backend}")
+
+    return build_report(
+        repo_root,
+        include_templates,
+        selected_backend,
+        requested_backend,
+        files_scanned,
+        entries,
+        parse_errors,
+    )
+
+
 def format_markdown(report: dict[str, Any], show_entries: bool) -> str:
     lines: list[str] = []
     summary = report["summary"]
     lines.append(f"# Knowledge Tier Report")
     lines.append("")
     lines.append(f"- repo: `{report['repo_root']}`")
+    lines.append(f"- backend: `{report['backend']}`")
+    lines.append(f"- backend_source: `{report['backend_source']}`")
     lines.append(f"- scope: {report['scope']}")
     lines.append(f"- include_templates: `{str(report['include_templates']).lower()}`")
     lines.append(f"- json_files_scanned: `{summary['json_files_scanned']}`")
@@ -249,9 +395,13 @@ def main() -> int:
     parser.add_argument("--strict", "-Strict", action="store_true", help="Exit nonzero when entries miss context_tier, have invalid tiers, or JSON parse errors are found.")
     parser.add_argument("--show-entries", "-ShowEntries", action="store_true", help="Include missing/invalid entry locations in markdown output.")
     parser.add_argument("--format", "-Format", choices=("markdown", "json"), default="markdown")
+    parser.add_argument("--backend", "-Backend", choices=BACKENDS, default="documents", help="Tier metadata backend. auto prefers current SQLite, then file fallback, then source documents.")
+    parser.add_argument("--db", default=DEFAULT_DB_PATH, help="SQLite knowledge database path relative to repo root.")
+    parser.add_argument("--file-dir", default=DEFAULT_FILE_DIR, help="Knowledge file fallback directory relative to repo root.")
     args = parser.parse_args()
 
-    report = scan_repo(Path(args.repo_root).resolve(), args.include_templates)
+    repo_root = Path(args.repo_root).resolve()
+    report = scan_repo(repo_root, args.include_templates, args.backend, Path(args.db), Path(args.file_dir))
     if args.format == "json":
         print(json.dumps(report, indent=2, ensure_ascii=False))
     else:

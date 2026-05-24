@@ -1943,12 +1943,15 @@
                     "-IncludeTemplates",
                     "-Strict",
                     "-ShowEntries",
-                    "-Format markdown|json"
+                    "-Format markdown|json",
+                    "-Backend auto|documents|knowledge_files|sqlite",
+                    "--db",
+                    "--file-dir"
                 ],
-                "rule": "Use for tier audits and category summaries; add -Strict to turn missing or invalid tiers into a failing check."
+                "rule": "Use for tier audits and category summaries; add -Strict to turn missing or invalid tiers into a failing check. Use -Backend documents for source-document truth, knowledge_files or sqlite for compiled caches, and auto to prefer current SQLite then file fallback then documents."
             },
             "output": {
-                "success": "Prints markdown or JSON summary with counts by tier, category, and explicit tier coverage status.",
+                "success": "Prints markdown or JSON summary with backend, counts by tier, category, and explicit tier coverage status.",
                 "failure": "With -Strict, exits nonzero when missing/invalid context_tier entries or JSON parse errors are found."
             }
         },
@@ -1961,12 +1964,15 @@
                 "optional": [
                     "--repo-root",
                     "--include-templates",
-                    "--format"
+                    "--format",
+                    "--backend auto|documents|knowledge_files|sqlite",
+                    "--db",
+                    "--file-dir"
                 ],
-                "rule": "Run after knowledge tier migrations or before relying on tier-scoped context routing. Include templates when starter/template knowledge docs are in scope."
+                "rule": "Run after knowledge tier migrations or before relying on tier-scoped context routing. Use --backend documents when compiled knowledge should not be required; use --backend auto when current compiled caches are acceptable."
             },
             "output": {
-                "success": "Prints a tier coverage report and exits 0 when every discovered knowledge entry has a valid context_tier.",
+                "success": "Prints a tier coverage report with selected backend and exits 0 when every discovered knowledge entry has a valid context_tier.",
                 "failure": "Exits nonzero and lists missing or invalid context_tier entries or parse errors."
             }
         },

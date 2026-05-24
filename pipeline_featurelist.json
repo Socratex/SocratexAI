@@ -7541,6 +7541,7 @@
                     "tools/knowledge/knowledge_tier_report.py",
                     "tools/knowledge/knowledge_tier_report.py",
                     "tools/knowledge/knowledge_tier_check.py",
+                    "tools/knowledge/knowledge_tier_check.py",
                     "tools/knowledge/knowledge_file_query.py",
                     "tools/knowledge/knowledge_file_query.py",
                     "tools/pipeline/rebuild_ai_compiled_context.py",
@@ -7599,6 +7600,8 @@
                     "Add compiled knowledge support for context_tier plus exact/max tier filtering, with defaults for untagged entries.",
                     "Update named knowledge view docs/templates so routed context can bound tiers.",
                     "Keep durable source and starter knowledge entries explicitly tagged with `context_tier` so tier queries do not rely on compiler defaults.",
+                    "Keep tier reports/checks backend-explicit: `documents` scans source JSON directly, `knowledge_files` and `sqlite` read compiled caches, and `auto` prefers current SQLite then file fallback then source documents.",
+                    "Do not require SQLite just to validate tier coverage in a lightweight installed project.",
                     "When one future knowledge entry mixes tiers, split it into focused entries before assigning `context_tier`; do not physically separate files until migration tooling can move entries by metadata.",
                     "Run `knowledge_tier_check.py -IncludeTemplates` after broad source/template retagging so missing tiers fail mechanically and successful scans print an explicit all-tiered status line.",
                     "Recompile AI-compiled context and knowledge artifacts, then run feature-contract checks before committing."
@@ -7607,7 +7610,8 @@
                     "python3 -B tools/pipeline/compile_pipeline_context.py",
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py",
                     "python3 -B tools/knowledge/knowledge_select.py -MaxContextTier 2 -Format json",
-                    "python3 -B tools/knowledge/knowledge_tier_check.py -IncludeTemplates"
+                    "python3 -B tools/knowledge/knowledge_tier_check.py -IncludeTemplates -Backend documents",
+                    "python3 -B tools/knowledge/knowledge_tier_check.py -Backend auto"
                 ],
                 "known_failure_if_missing": "Pipeline guidance keeps accumulating in always-loaded context, agents lose or ignore clear directives under context pressure, and broad knowledge sweeps pretend to fix bloat without a real tier contract or queryable tier metadata."
             },

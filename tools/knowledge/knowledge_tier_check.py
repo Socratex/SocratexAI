@@ -16,9 +16,13 @@ def main() -> int:
     parser.add_argument("--repo-root", "-RepoRoot", default=".", help="Repository root to scan.")
     parser.add_argument("--include-templates", "-IncludeTemplates", action="store_true")
     parser.add_argument("--format", "-Format", choices=("markdown", "json"), default="markdown")
+    parser.add_argument("--backend", "-Backend", choices=knowledge_tier_report.BACKENDS, default="documents", help="Tier metadata backend.")
+    parser.add_argument("--db", default=knowledge_tier_report.DEFAULT_DB_PATH, help="SQLite knowledge database path relative to repo root.")
+    parser.add_argument("--file-dir", default=knowledge_tier_report.DEFAULT_FILE_DIR, help="Knowledge file fallback directory relative to repo root.")
     args = parser.parse_args()
 
-    report = knowledge_tier_report.scan_repo(Path(args.repo_root).resolve(), args.include_templates)
+    repo_root = Path(args.repo_root).resolve()
+    report = knowledge_tier_report.scan_repo(repo_root, args.include_templates, args.backend, Path(args.db), Path(args.file_dir))
     if args.format == "json":
         import json
 

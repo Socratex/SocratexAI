@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T17:22:35+02:00",
+    "generatedAt": "2026-05-24T18:40:15+02:00",
     "threshold": 300,
     "files": [
         {
@@ -29,6 +29,12 @@
         {
             "path": "tools/documents/document_read_cache_engine.py",
             "lines": 392,
+            "extension": ".py",
+            "large": true
+        },
+        {
+            "path": "tools/knowledge/knowledge_tier_report.py",
+            "lines": 365,
             "extension": ".py",
             "large": true
         },
@@ -77,12 +83,6 @@
         {
             "path": "tools/json/audit_json_docs.py",
             "lines": 244,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_tier_report.py",
-            "lines": 236,
             "extension": ".py",
             "large": false
         },
@@ -633,6 +633,12 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_tier_check.py",
+            "lines": 28,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/document_wrapper_helpers.py",
             "lines": 27,
             "extension": ".py",
@@ -653,12 +659,6 @@
         {
             "path": "tools/knowledge/knowledge_file_delete.py",
             "lines": 25,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_tier_check.py",
-            "lines": 24,
             "extension": ".py",
             "large": false
         },
