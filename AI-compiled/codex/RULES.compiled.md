@@ -1268,6 +1268,7 @@ Draft placeholder:
                     "Installed child-project compiled-context refresh/check paths must execute package-local rebuild, bootstrap, and knowledge tools while passing the child repository root as --repo-root.",
                     "Installed child-project bootstrap index refresh must tolerate optional root DOCS/WORKFLOW/COMMANDS/FLOWS/SCRIPTS documents and index only the documents present in that project.",
                     "Final task checks must refresh the pipeline bootstrap index before rebuilding compiled context because the bootstrap index is a compiled-context source artifact.",
+                    "Final task checks must clean generated Python __pycache__ directories before enforcing the no-bytecode-cache repository invariant.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],

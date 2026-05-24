@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import shutil
 import sys
 from pathlib import Path
 
@@ -53,6 +54,14 @@ def ensure_no_python_cache(root: Path) -> int:
             print(f" - ... {len(caches) - 50} more")
         return 1
     print("OK: no __pycache__ directories found.")
+    return 0
+
+
+def clean_python_cache(root: Path) -> int:
+    caches = sorted(path for path in root.rglob("__pycache__") if path.is_dir())
+    for path in caches:
+        shutil.rmtree(path)
+    print(f"OK: removed {len(caches)} Python bytecode cache directorie(s).")
     return 0
 
 
@@ -124,6 +133,7 @@ def main() -> int:
             quality_command.extend(args.quality_command_names)
         steps.append(("quality gate", quality_command))
     if not args.no_cache_check:
+        steps.append(("Python cache cleanup", []))
         steps.append(("Python cache check", []))
     if not args.no_output:
         output_command = [python, "-B", str(tools / "repo" / "end_prompt_snapshot.py"), "--root", str(root)]
@@ -136,6 +146,8 @@ def main() -> int:
             return 1
         if label == "Python cache check":
             code = ensure_no_python_cache(root)
+        elif label == "Python cache cleanup":
+            code = clean_python_cache(root)
         else:
             code = run(label, command, root)
         if code != 0:

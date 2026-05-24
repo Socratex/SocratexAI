@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T17:15:54+02:00",
+    "generatedAt": "2026-05-24T17:18:44+02:00",
     "threshold": 300,
     "files": [
         {
@@ -171,14 +171,14 @@
             "large": false
         },
         {
-            "path": "tools/repo/open_pipeline_learning_issue.py",
-            "lines": 146,
+            "path": "tools/repo/run_final_task_checks.py",
+            "lines": 148,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/repo/run_final_task_checks.py",
-            "lines": 138,
+            "path": "tools/repo/open_pipeline_learning_issue.py",
+            "lines": 146,
             "extension": ".py",
             "large": false
         },
