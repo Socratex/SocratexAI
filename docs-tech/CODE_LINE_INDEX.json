@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T14:22:11+02:00",
+    "generatedAt": "2026-05-24T14:32:18+02:00",
     "threshold": 300,
     "files": [
         {
@@ -201,14 +201,14 @@
             "large": false
         },
         {
-            "path": "tools/repo/finalize_changed_files_commit_push.py",
-            "lines": 125,
+            "path": "tools/json/smoke_json_tools.py",
+            "lines": 126,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/json/smoke_json_tools.py",
-            "lines": 122,
+            "path": "tools/repo/finalize_changed_files_commit_push.py",
+            "lines": 125,
             "extension": ".py",
             "large": false
         },
@@ -219,14 +219,14 @@
             "large": false
         },
         {
-            "path": "tools/quality/check_evals.py",
-            "lines": 116,
+            "path": "tools/documents/normalize_markdown_emoji.py",
+            "lines": 121,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/normalize_markdown_emoji.py",
-            "lines": 113,
+            "path": "tools/quality/check_evals.py",
+            "lines": 116,
             "extension": ".py",
             "large": false
         },
@@ -238,6 +238,12 @@
         },
         {
             "path": "tools/codebase/context_gate_helpers.py",
+            "lines": 103,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/text/normalize_json_files.py",
             "lines": 103,
             "extension": ".py",
             "large": false
@@ -280,7 +286,7 @@
         },
         {
             "path": "tools/text/repair_mojibake.py",
-            "lines": 94,
+            "lines": 96,
             "extension": ".py",
             "large": false
         },
@@ -454,12 +460,6 @@
         },
         {
             "path": "tools/pipeline/compile_pipeline_context.py",
-            "lines": 51,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/text/normalize_json_files.py",
             "lines": 51,
             "extension": ".py",
             "large": false

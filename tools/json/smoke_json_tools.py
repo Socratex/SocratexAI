@@ -8,7 +8,11 @@ import sys
 import tempfile
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+_EMBEDDED_TOOLS_ROOT = Path(__file__).resolve().parents[2] / "SocratexAI" / "tools"
+for tools_root in (_TOOLS_ROOT, _EMBEDDED_TOOLS_ROOT):
+    if tools_root.is_dir() and str(tools_root) not in sys.path:
+        sys.path.insert(0, str(tools_root))
 
 from shared.repo_helpers import run_step  # noqa: E402
 

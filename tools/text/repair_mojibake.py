@@ -6,8 +6,10 @@ import sys
 from pathlib import Path
 
 _TOOLS_ROOT = Path(__file__).resolve().parents[1]
-if str(_TOOLS_ROOT) not in sys.path:
-    sys.path.insert(0, str(_TOOLS_ROOT))
+_EMBEDDED_TOOLS_ROOT = Path(__file__).resolve().parents[2] / "SocratexAI" / "tools"
+for tools_root in (_TOOLS_ROOT, _EMBEDDED_TOOLS_ROOT):
+    if tools_root.is_dir() and str(tools_root) not in sys.path:
+        sys.path.insert(0, str(tools_root))
 
 from shared.repo_helpers import git_lines  # noqa: E402
 

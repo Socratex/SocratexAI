@@ -2,7 +2,16 @@ from __future__ import annotations
 
 import argparse
 import re
+import sys
 from pathlib import Path
+
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+_DOCUMENTS_ROOT = Path(__file__).resolve().parent
+_EMBEDDED_TOOLS_ROOT = Path(__file__).resolve().parents[2] / "SocratexAI" / "tools"
+_EMBEDDED_DOCUMENTS_ROOT = _EMBEDDED_TOOLS_ROOT / "documents"
+for tools_root in (_TOOLS_ROOT, _DOCUMENTS_ROOT, _EMBEDDED_TOOLS_ROOT, _EMBEDDED_DOCUMENTS_ROOT):
+    if tools_root.is_dir() and str(tools_root) not in sys.path:
+        sys.path.insert(0, str(tools_root))
 
 from document_wrapper_helpers import repo_root, split_values
 from shared.repo_helpers import git_lines
