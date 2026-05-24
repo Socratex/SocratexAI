@@ -1,53 +1,33 @@
 #!/usr/bin/env python3
-"""Single JSON-friendly tool dispatcher for Python SocratexPipeline tools."""
+"""Invoke approved tools through a JSON envelope with Python-only tooling."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 import tempfile
-import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from pipeline_script_helpers import configure_stdio
 
 
+ParameterBuilder = Callable[[Path, str, dict[str, Any]], list[str]]
+
+
 def normalize_name(value: str) -> str:
-    return re.sub(r"[^A-Za-z0-9]+", "_", value.strip().lstrip("-")).strip("_").lower()
+    return re.sub(r"[^a-zA-Z0-9]+", "_", value.strip().lstrip("-")).strip("_").lower()
 
 
-def provided(value: Any) -> bool:
-    if value is None:
-        return False
-    if isinstance(value, str) and not value.strip():
-        return False
-    if isinstance(value, (list, tuple, dict)) and len(value) == 0:
-        return False
-    return True
-
-
-def read_parameters(inline: str, file_path: str) -> dict[str, Any]:
-    if inline and file_path:
-        raise ValueError("Use only one of --parameters-json or --parameters-json-file.")
-    raw = Path(file_path).resolve().read_text(encoding="utf-8") if file_path else inline or "{}"
-    try:
-        value = json.loads(raw)
-    except json.JSONDecodeError as exc:
-        raise ValueError(f"Parameters JSON is invalid: {exc}") from exc
-    if not isinstance(value, dict):
-        raise ValueError("Parameters JSON must be an object.")
-    return value
-
-
-def get_param(parameters: dict[str, Any], name: str) -> Any:
-    normalized = normalize_name(name)
+def get_param(parameters: dict[str, Any], *names: str, default: Any = None) -> Any:
+    wanted = {normalize_name(name) for name in names}
     for key, value in parameters.items():
-        if normalize_name(key) == normalized:
+        if normalize_name(key) in wanted:
             return value
-    return None
+    return default
 
 
 def set_param(parameters: dict[str, Any], name: str, value: Any) -> None:
@@ -59,36 +39,245 @@ def set_param(parameters: dict[str, Any], name: str, value: Any) -> None:
     parameters[name] = value
 
 
-def script_catalog_entry(repo_root: Path, script_name: str) -> dict[str, Any]:
-    catalog_path = repo_root / "SCRIPTS.json"
-    if not catalog_path.is_file():
-        return {}
-    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
-    content = catalog.get("content", {}) if isinstance(catalog, dict) else {}
-    return content.get(script_name, {}) if isinstance(content, dict) else {}
+def provided(value: Any) -> bool:
+    if value is None:
+        return False
+    if isinstance(value, str):
+        return bool(value.strip())
+    if isinstance(value, (list, tuple, set, dict)):
+        return bool(value)
+    return True
 
 
-def argument_list(parameters: dict[str, Any], ordered_names: list[str]) -> list[str]:
-    arguments: list[str] = []
-    used: set[str] = set()
-    names = ordered_names + [key for key in parameters if normalize_name(key) not in {normalize_name(item) for item in ordered_names}]
-    for name in names:
-        value = get_param(parameters, name)
-        normalized = normalize_name(name)
-        if normalized in used or not provided(value):
+def split_values(values: list[Any]) -> list[str]:
+    result: list[str] = []
+    for value in values:
+        for part in str(value).split(","):
+            cleaned = part.strip()
+            if cleaned:
+                result.append(cleaned)
+    return result
+
+
+def flag_args(parameters: dict[str, Any], mapping: dict[str, str]) -> list[str]:
+    args: list[str] = []
+    for source, target in mapping.items():
+        value = get_param(parameters, source)
+        if isinstance(value, bool) and value:
+            args.append(target)
+    return args
+
+
+def option_args(parameters: dict[str, Any], mapping: dict[str, str]) -> list[str]:
+    args: list[str] = []
+    for source, target in mapping.items():
+        value = get_param(parameters, source)
+        if not provided(value):
             continue
-        used.add(normalized)
-        flag = "--" + normalize_name(name).replace("_", "-")
-        if isinstance(value, bool):
-            if value:
-                arguments.append(flag)
-            continue
-        arguments.append(flag)
-        if isinstance(value, (list, tuple)):
-            arguments.extend(str(item) for item in value)
+        if isinstance(value, list):
+            args.append(target)
+            args.extend(str(item) for item in value)
         else:
-            arguments.append(str(value))
-    return arguments
+            args.extend([target, str(value)])
+    return args
+
+
+def tool_path(root: Path, tools_dir: str, relative: str) -> Path:
+    return root / tools_dir / relative
+
+
+def python_tool(root: Path, tools_dir: str, relative: str, *args: str) -> list[str]:
+    return [sys.executable, "-B", str(tool_path(root, tools_dir, relative)), *args]
+
+
+def load_parameters(inline_json: str, json_file: str) -> dict[str, Any]:
+    if inline_json and json_file:
+        raise ValueError("Use only one of --parameters-json or --parameters-json-file.")
+    raw = Path(json_file).resolve().read_text(encoding="utf-8") if json_file else (inline_json or "{}")
+    value = json.loads(raw)
+    if not isinstance(value, dict):
+        raise ValueError("Parameters JSON must be an object.")
+    return value
+
+
+def document_alias(value: str) -> str:
+    aliases = {
+        "scripts": "SCRIPTS.json",
+        "script": "SCRIPTS.json",
+        "script_index": "script_index",
+        "commands": "COMMANDS.json",
+        "command": "COMMANDS.json",
+        "command_index": "command_index",
+        "flows": "FLOWS.json",
+        "flow": "FLOWS.json",
+        "flow_index": "flow_index",
+        "docs": "DOCS.json",
+        "workflow": "WORKFLOW.json",
+        "state": "STATE",
+        "rules": "rules",
+        "entrypoint": "entrypoint",
+        "bootstrap": "bootstrap",
+        "engineering": "engineering",
+    }
+    return aliases.get(value.strip().lower(), value)
+
+
+def read_compiled_context_args(root: Path, tools_dir: str, parameters: dict[str, Any]) -> list[str]:
+    document = get_param(parameters, "document", default="")
+    if not provided(document):
+        raise ValueError("Missing required parameter 'Document'.")
+    args = python_tool(root, tools_dir, "pipeline/read_compiled_context.py", document_alias(str(document)))
+    args.extend(option_args(parameters, {"CompiledRoot": "--compiled-root"}))
+    args.extend(flag_args(parameters, {"AllowStale": "--allow-stale", "SkipCurrentCheck": "--skip-current-check", "Json": "--json"}))
+    return args
+
+
+def doc_keys_args(root: Path, tools_dir: str, parameters: dict[str, Any]) -> list[str]:
+    path = get_param(parameters, "path", default="")
+    if not provided(path):
+        raise ValueError("Missing required parameter 'Path'.")
+    if tool_path(root, tools_dir, "documents/doc_tool.py").is_file():
+        args = python_tool(root, tools_dir, "documents/doc_tool.py", "keys", str(path))
+    else:
+        args = python_tool(root, tools_dir, "documents/list_document_keys.py", str(path))
+    args.extend(flag_args(parameters, {"Json": "--json"}))
+    return args
+
+
+def doc_read_args(root: Path, tools_dir: str, parameters: dict[str, Any]) -> list[str]:
+    path = get_param(parameters, "path", default="")
+    selector = get_param(parameters, "selector", "key", default="")
+    if not provided(path) or not provided(selector):
+        raise ValueError("Missing required parameters 'Path' and 'Selector'.")
+    if tool_path(root, tools_dir, "documents/doc_tool.py").is_file():
+        args = python_tool(root, tools_dir, "documents/doc_tool.py", "read", str(path), str(selector))
+    else:
+        args = python_tool(root, tools_dir, "documents/read_document_item.py", str(path), str(selector))
+    args.extend(flag_args(parameters, {"Json": "--json"}))
+    return args
+
+
+def doc_search_args(root: Path, tools_dir: str, parameters: dict[str, Any]) -> list[str]:
+    query = get_param(parameters, "query", "terms", default=[])
+    terms = split_values(query if isinstance(query, list) else [query])
+    if not terms:
+        raise ValueError("Missing required parameter 'Query'.")
+    doc_tool = tool_path(root, tools_dir, "documents/doc_tool.py")
+    if not doc_tool.is_file():
+        raise ValueError("doc_search requires documents/doc_tool.py in the selected tools directory.")
+    args = python_tool(root, tools_dir, "documents/doc_tool.py", "search", *terms, "--repo-root", str(root))
+    args.extend(option_args(parameters, {"Cache": "--cache", "Limit": "--limit"}))
+    args.extend(flag_args(parameters, {"Json": "--json"}))
+    return args
+
+
+def doc_item_insert_args(root: Path, tools_dir: str, parameters: dict[str, Any]) -> list[str]:
+    path = get_param(parameters, "path", default="")
+    key = get_param(parameters, "key", default="")
+    if not provided(path) or not provided(key):
+        raise ValueError("Missing required parameters 'Path' and 'Key'.")
+    if tool_path(root, tools_dir, "documents/doc_item.py").is_file():
+        args = python_tool(root, tools_dir, "documents/doc_item.py", "insert", str(path), str(key))
+    else:
+        args = python_tool(root, tools_dir, "documents/insert_document_item.py", str(path), str(key))
+    args.extend(option_args(parameters, {"Title": "--title", "Content": "--content", "ContentFile": "--content-file", "ItemFile": "--item-file", "Position": "--position", "Before": "--before", "After": "--after"}))
+    args.extend(flag_args(parameters, {"AllowEmpty": "--allow-empty", "Replace": "--replace"}))
+    return args
+
+
+def json_item_args(script: str) -> ParameterBuilder:
+    def build(root: Path, tools_dir: str, parameters: dict[str, Any]) -> list[str]:
+        path = get_param(parameters, "path", default="")
+        key = get_param(parameters, "key", default="")
+        if not provided(path) or not provided(key):
+            raise ValueError("Missing required parameters 'Path' and 'Key'.")
+        args = python_tool(root, tools_dir, f"json/{script}.py", str(path), str(key))
+        args.extend(option_args(parameters, {"Text": "--text", "ValueJson": "--value-json", "ValueJsonFile": "--value-json-file", "NewKey": "--new-key", "Collection": "--collection", "Position": "--position", "Reference": "--reference"}))
+        args.extend(flag_args(parameters, {"ValueJsonStdin": "--value-json-stdin"}))
+        return args
+    return build
+
+
+def passthrough_python(relative_script: str) -> ParameterBuilder:
+    def build(root: Path, tools_dir: str, parameters: dict[str, Any]) -> list[str]:
+        script_relative = relative_script.replace("Tools/", f"{tools_dir}/").replace("tools/", f"{tools_dir}/")
+        args = [sys.executable, "-B", str(root / script_relative)]
+        for key, value in parameters.items():
+            if not provided(value):
+                continue
+            flag = "--" + normalize_name(key).replace("_", "-")
+            if isinstance(value, bool):
+                if value:
+                    args.append(flag)
+            elif isinstance(value, list):
+                args.append(flag)
+                args.extend(str(item) for item in value)
+            else:
+                args.extend([flag, str(value)])
+        return args
+    return build
+
+
+OPERATIONS: dict[str, tuple[str, ParameterBuilder]] = {
+    "read_compiled_context": ("read_compiled_context.py", read_compiled_context_args),
+    "compiled_context": ("read_compiled_context.py", read_compiled_context_args),
+    "context_read": ("read_compiled_context.py", read_compiled_context_args),
+    "doc_keys": ("document keys", doc_keys_args),
+    "document_keys": ("document keys", doc_keys_args),
+    "doc_read": ("document read", doc_read_args),
+    "document_read": ("document read", doc_read_args),
+    "doc_search": ("doc_tool.py search", doc_search_args),
+    "doc_item_insert": ("document item insert", doc_item_insert_args),
+    "document_item_insert": ("document item insert", doc_item_insert_args),
+    "json_item_insert": ("json_item_insert.py", json_item_args("json_item_insert")),
+    "json_item_set": ("json_item_set.py", json_item_args("json_item_set")),
+    "gdscript_outline": ("gdscript_outline.py", passthrough_python("tools/gamedev/gdscript_outline.py")),
+    "godot_script": ("run_godot_script.py", passthrough_python("tools/gamedev/run_godot_script.py")),
+    "godot_headless": ("run_godot_script.py", passthrough_python("tools/gamedev/run_godot_script.py")),
+    "run_godot_script": ("run_godot_script.py", passthrough_python("tools/gamedev/run_godot_script.py")),
+    "route_retest_report": ("route_retest_report.py", passthrough_python("tools/gamedev/route_retest_report.py")),
+    "tool_error_log": ("tool_error_log.py", passthrough_python("tools/pipeline/tool_error_log.py")),
+}
+
+
+def log_error(root: Path, tools_dir: str, args: argparse.Namespace, title: str, message: str, operation: str, target: str, parameters: dict[str, Any]) -> str:
+    if args.no_error_log:
+        return ""
+    details = {"operation": operation, "target_script": target, "parameters": parameters}
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False) as handle:
+        json.dump(details, handle, ensure_ascii=False, indent=4)
+        details_path = handle.name
+    try:
+        command = python_tool(
+            root,
+            tools_dir,
+            "pipeline/tool_error_log.py",
+            "--title",
+            title,
+            "--status",
+            "open",
+            "--tool",
+            f"{tools_dir}/pipeline/tool_handler.py",
+            "--failure",
+            message,
+            "--observed-error",
+            message,
+            "--suspected-contract-gap",
+            "tool_handler input validation or target execution failed.",
+            "--fix-target",
+            target,
+            "--details-json-file",
+            details_path,
+            "--json",
+        )
+        if args.error_log_path:
+            command.extend(["--path", args.error_log_path])
+        completed = subprocess.run(command, cwd=root, check=False, capture_output=True, text=True)
+        if completed.returncode == 0:
+            return str(json.loads(completed.stdout).get("key", ""))
+    finally:
+        Path(details_path).unlink(missing_ok=True)
+    return ""
 
 
 def write_envelope(envelope: dict[str, Any], output_mode: str) -> None:
@@ -97,59 +286,14 @@ def write_envelope(envelope: dict[str, Any], output_mode: str) -> None:
         return
     if envelope["ok"]:
         print(f"OK: {envelope['operation']} -> {envelope['target_script']}")
-        for line in envelope["output"]:
+        for line in envelope.get("output", []):
             print(line)
         return
     print(f"ERROR: {envelope['operation']}")
-    if envelope["error"]["message"]:
+    if envelope.get("error", {}).get("message"):
         print(envelope["error"]["message"])
-    if envelope["logged_error_key"]:
+    if envelope.get("logged_error_key"):
         print(f"logged_error_key: {envelope['logged_error_key']}")
-
-
-def log_input_error(repo_root: Path, title: str, message: str, operation: str, script_name: str, parameters: dict[str, Any], error_log_path: str, disabled: bool) -> str:
-    if disabled:
-        return ""
-    logger = repo_root / "tools" / "pipeline" / "tool_error_log.py"
-    if not logger.is_file():
-        return ""
-    details = {"operation": operation, "target_script": script_name, "parameters": parameters}
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False) as handle:
-        json.dump(details, handle, ensure_ascii=False, indent=4)
-        details_file = handle.name
-    try:
-        cmd = [
-            sys.executable,
-            str(logger),
-            "--title",
-            title,
-            "--status",
-            "open",
-            "--tool",
-            "tools/pipeline/tool_handler.py",
-            "--failure",
-            message,
-            "--observed-error",
-            message,
-            "--suspected-contract-gap",
-            "tool_handler input validation or alias normalization rejected this invocation before target execution.",
-            "--fix-target",
-            script_name,
-            "--details-json-file",
-            details_file,
-            "--json",
-        ]
-        if error_log_path:
-            cmd.extend(["--path", error_log_path])
-        completed = subprocess.run(cmd, check=False, capture_output=True, text=True)
-        if completed.returncode != 0:
-            return ""
-        payload = json.loads(completed.stdout)
-        return str(payload.get("key", ""))
-    except Exception:
-        return ""
-    finally:
-        Path(details_file).unlink(missing_ok=True)
 
 
 def main() -> int:
@@ -159,31 +303,20 @@ def main() -> int:
     parser.add_argument("--operation", "-Operation", dest="operation_flag")
     parser.add_argument("--parameters-json", "-ParametersJson", default="")
     parser.add_argument("--parameters-json-file", "-ParametersJsonFile", default="")
-    parser.add_argument("--output-mode", "-OutputMode", choices=("json", "text"), default="json")
+    parser.add_argument("--output-mode", "-OutputMode", choices=["json", "text"], default="json")
     parser.add_argument("--error-log-path", "-ErrorLogPath", default="")
     parser.add_argument("--no-error-log", "-NoErrorLog", action="store_true")
+    parser.add_argument("--repo-root", default="")
+    parser.add_argument("--tools-dir", default="tools")
     args = parser.parse_args()
+
+    root = Path(args.repo_root).resolve() if args.repo_root else Path(__file__).resolve().parents[2]
+    tools_dir = args.tools_dir.strip().strip("/\\") or "tools"
     operation = args.operation_flag or args.operation
     if not operation:
         parser.error("operation is required")
-
-    repo_root = Path(__file__).resolve().parents[2]
     operation_key = normalize_name(operation)
-    operation_map = {
-        "read_compiled_context": ("read_compiled_context.py", "read_compiled_context.py", "tools/pipeline/read_compiled_context.py"),
-        "compiled_context": ("read_compiled_context.py", "read_compiled_context.py", "tools/pipeline/read_compiled_context.py"),
-        "context_read": ("read_compiled_context.py", "read_compiled_context.py", "tools/pipeline/read_compiled_context.py"),
-        "doc_keys": ("list_document_keys.py", "list_document_keys.py", "tools/documents/list_document_keys.py"),
-        "document_keys": ("list_document_keys.py", "list_document_keys.py", "tools/documents/list_document_keys.py"),
-        "doc_read": ("read_document_item.py", "read_document_item.py", "tools/documents/read_document_item.py"),
-        "document_read": ("read_document_item.py", "read_document_item.py", "tools/documents/read_document_item.py"),
-        "doc_item_insert": ("insert_document_item.py", "insert_document_item.py", "tools/documents/insert_document_item.py"),
-        "document_item_insert": ("insert_document_item.py", "insert_document_item.py", "tools/documents/insert_document_item.py"),
-        "json_item_insert": ("json_item_insert.py", "json_item_insert.py", "tools/json/json_item_insert.py"),
-        "json_item_set": ("json_item_set.py", "json_item_set.py", "tools/json/json_item_set.py"),
-        "tool_error_log": ("tool_error_log.py", "tool_error_log.py", "tools/pipeline/tool_error_log.py"),
-    }
-    envelope = {
+    envelope: dict[str, Any] = {
         "ok": False,
         "operation": operation,
         "normalized_operation": operation_key,
@@ -196,57 +329,32 @@ def main() -> int:
         "error": {"type": "", "message": ""},
         "logged_error_key": "",
     }
-    parameters: dict[str, Any] = {}
+
     try:
-        parameters = read_parameters(args.parameters_json, args.parameters_json_file)
-        if operation_key not in operation_map:
+        parameters = load_parameters(args.parameters_json, args.parameters_json_file)
+        if operation_key == "read_compiled_context":
+            document = get_param(parameters, "Document")
+            if provided(document):
+                set_param(parameters, "Document", document_alias(str(document)))
+        envelope["normalized_parameters"] = parameters
+        if operation_key not in OPERATIONS:
             message = f"Unknown tool operation '{operation}'."
             envelope["error"] = {"type": "unknown_operation", "message": message}
-            envelope["logged_error_key"] = log_input_error(repo_root, "Tool Handler Unknown Operation", message, operation, "", parameters, args.error_log_path, args.no_error_log)
+            envelope["logged_error_key"] = log_error(root, tools_dir, args, "Tool Handler Unknown Operation", message, operation, "", parameters)
             write_envelope(envelope, args.output_mode)
             return 2
-        catalog_script, target_script, target_relative = operation_map[operation_key]
-        target_path = repo_root / target_relative
-        envelope["target_script"] = target_script
-        envelope["target_path"] = str(target_path)
-        if catalog_script == "read_compiled_context.py":
-            document = get_param(parameters, "Document")
-            aliases = {"scripts": "SCRIPTS.json", "script": "SCRIPTS.json", "commands": "COMMANDS.json", "command": "COMMANDS.json", "flows": "FLOWS.json", "flow": "FLOWS.json", "docs": "DOCS.json", "workflow": "workflow", "rules": "rules", "entrypoint": "entrypoint", "bootstrap": "bootstrap", "engineering": "engineering"}
-            if provided(document) and str(document).strip().lower() in aliases:
-                set_param(parameters, "Document", aliases[str(document).strip().lower()])
-        entry = script_catalog_entry(repo_root, catalog_script)
-        input_spec = entry.get("input", {}) if isinstance(entry, dict) else {}
-        required = list(input_spec.get("required", [])) if isinstance(input_spec, dict) else []
-        optional = list(input_spec.get("optional", [])) if isinstance(input_spec, dict) else []
-        if required or optional:
-            allowed = {normalize_name(item) for item in required + optional}
-            for name in required:
-                if not provided(get_param(parameters, name)):
-                    message = f"Missing required parameter '{name}' for {target_script}."
-                    envelope["normalized_parameters"] = parameters
-                    envelope["error"] = {"type": "input_validation", "message": message}
-                    envelope["logged_error_key"] = log_input_error(repo_root, "Tool Handler Missing Required Parameter", message, operation, target_script, parameters, args.error_log_path, args.no_error_log)
-                    write_envelope(envelope, args.output_mode)
-                    return 2
-            for key in parameters:
-                if normalize_name(key) not in allowed:
-                    message = f"Unknown parameter '{key}' for {target_script}."
-                    envelope["normalized_parameters"] = parameters
-                    envelope["error"] = {"type": "input_validation", "message": message}
-                    envelope["logged_error_key"] = log_input_error(repo_root, "Tool Handler Unknown Parameter", message, operation, target_script, parameters, args.error_log_path, args.no_error_log)
-                    write_envelope(envelope, args.output_mode)
-                    return 2
-        arguments = argument_list(parameters, required + optional)
-        command = [sys.executable, str(target_path), *arguments]
-        envelope["normalized_parameters"] = parameters
+        target_name, builder = OPERATIONS[operation_key]
+        command = builder(root, tools_dir, parameters)
+        envelope["target_script"] = target_name
+        envelope["target_path"] = command[2] if len(command) > 2 else ""
         envelope["command"] = command
-        completed = subprocess.run(command, check=False, capture_output=True, text=True)
-        envelope["exit_code"] = completed.returncode
-        output = []
+        completed = subprocess.run(command, cwd=root, check=False, capture_output=True, text=True)
+        output: list[str] = []
         if completed.stdout:
             output.extend(completed.stdout.splitlines())
         if completed.stderr:
             output.extend(completed.stderr.splitlines())
+        envelope["exit_code"] = completed.returncode
         envelope["output"] = output
         if completed.returncode != 0:
             envelope["error"] = {"type": "target_execution", "message": f"Target script exited with code {completed.returncode}."}
@@ -258,7 +366,7 @@ def main() -> int:
     except Exception as exc:
         message = str(exc)
         envelope["error"] = {"type": "handler_exception", "message": message}
-        envelope["logged_error_key"] = log_input_error(repo_root, "Tool Handler Invocation Error", message, operation, str(envelope["target_script"]), parameters, args.error_log_path, args.no_error_log)
+        envelope["logged_error_key"] = log_error(root, tools_dir, args, "Tool Handler Invocation Error", message, operation, envelope["target_script"], envelope["normalized_parameters"])
         write_envelope(envelope, args.output_mode)
         return 1
 
