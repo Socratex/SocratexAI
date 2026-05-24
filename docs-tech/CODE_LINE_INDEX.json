@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T16:48:47+02:00",
+    "generatedAt": "2026-05-24T16:58:21+02:00",
     "threshold": 300,
     "files": [
         {
@@ -16,7 +16,7 @@
         },
         {
             "path": "tools/pipeline/pipeline_sweep.py",
-            "lines": 482,
+            "lines": 420,
             "extension": ".py",
             "large": true
         },
@@ -135,12 +135,6 @@
             "large": false
         },
         {
-            "path": "tools/chains/chain_runner.py",
-            "lines": 173,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/repo/end_prompt_snapshot.py",
             "lines": 169,
             "extension": ".py",
@@ -189,6 +183,12 @@
             "large": false
         },
         {
+            "path": "tools/chains/chain_runner.py",
+            "lines": 136,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/tasks/grouped_task_handoff.py",
             "lines": 136,
             "extension": ".py",
@@ -197,6 +197,12 @@
         {
             "path": "tools/pipeline/reinitialize_pipeline.py",
             "lines": 135,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/shared/command_result_helpers.py",
+            "lines": 132,
             "extension": ".py",
             "large": false
         },
@@ -436,7 +442,7 @@
         },
         {
             "path": "tools/chains/helper_refactor_smoke.py",
-            "lines": 54,
+            "lines": 55,
             "extension": ".py",
             "large": false
         },

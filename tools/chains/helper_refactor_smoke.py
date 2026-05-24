@@ -13,6 +13,7 @@ from chain_runner import ChainStep, add_chain_arguments, git_root_for, report_pa
 def chain_steps(root: Path) -> list[ChainStep]:
     runtime_root = git_root_for(root)
     python_files = [
+        "tools/shared/command_result_helpers.py",
         "tools/shared/repo_helpers.py",
         "tools/pipeline/pipeline_sweep.py",
         "tools/chains/chain_runner.py",

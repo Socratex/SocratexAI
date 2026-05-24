@@ -1,12 +1,22 @@
 import argparse
 import json
 import os
-import subprocess
 import sys
-import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.command_result_helpers import (
+    CommandResult,
+    CommandStep,
+    command_result_payload,
+    run_command_step,
+    write_json_report,
+)
 
 
 DEFAULT_SMOKE = [
@@ -16,34 +26,6 @@ DEFAULT_SMOKE = [
     "tier_check",
     "git_clean",
 ]
-
-
-@dataclass
-class CommandResult:
-    step_id: str
-    label: str
-    command: list[str]
-    cwd: Path
-    exit_code: int | None
-    required: bool = True
-    elapsed_seconds: float = 0.0
-    skipped: bool = False
-    skip_ok: bool = True
-    reason: str = ""
-    stdout_tail: str = ""
-    stderr_tail: str = ""
-    recovery_hint: str = ""
-    artifact_path: str = ""
-
-    @property
-    def ok(self) -> bool:
-        return (self.skipped and self.skip_ok) or self.exit_code == 0
-
-    @property
-    def status(self) -> str:
-        if self.skipped:
-            return "skipped" if self.skip_ok else "fail"
-        return "pass" if self.exit_code == 0 else "fail"
 
 
 @dataclass
@@ -85,13 +67,6 @@ def normalize_list(value: Any) -> list[str]:
     if isinstance(value, list):
         return [str(item) for item in value if str(item).strip()]
     raise ValueError(f"Expected a string or list, got {type(value).__name__}.")
-
-
-def tail(text: str, limit: int = 1800) -> str:
-    normalized = text.strip()
-    if len(normalized) <= limit:
-        return normalized
-    return normalized[-limit:]
 
 
 def resolve_repo_root(start: Path) -> Path:
@@ -184,38 +159,17 @@ def run_command(
     recovery_hint: str = "",
     env: dict[str, str] | None = None,
 ) -> CommandResult:
-    if not execute:
-        return CommandResult(
+    return run_command_step(
+        CommandStep(
             step_id=step_id,
             label=label,
             command=command,
             cwd=cwd,
-            exit_code=None,
             required=required,
-            skipped=True,
-            reason="dry-run",
             recovery_hint=recovery_hint,
-        )
-    started = time.monotonic()
-    completed = subprocess.run(
-        command,
-        cwd=str(cwd),
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        ),
+        execute=execute,
         env=env,
-    )
-    return CommandResult(
-        step_id=step_id,
-        label=label,
-        command=command,
-        cwd=cwd,
-        exit_code=completed.returncode,
-        required=required,
-        elapsed_seconds=time.monotonic() - started,
-        stdout_tail=tail(completed.stdout),
-        stderr_tail=tail(completed.stderr),
-        recovery_hint=recovery_hint,
     )
 
 
@@ -351,26 +305,7 @@ def project_report(project: Project, results: list[CommandResult]) -> dict[str, 
         "role": project.role,
         "status": "pass" if not failures else "fail",
         "manual_attention": manual_attention,
-        "results": [
-            {
-                "id": result.step_id,
-                "label": result.label,
-                "command": result.command,
-                "cwd": str(result.cwd),
-                "required": result.required,
-                "status": result.status,
-                "exit_code": result.exit_code,
-                "skipped": result.skipped,
-                "skip_ok": result.skip_ok,
-                "reason": result.reason,
-                "elapsed_seconds": round(result.elapsed_seconds, 2),
-                "stdout_tail": result.stdout_tail,
-                "stderr_tail": result.stderr_tail,
-                "recovery_hint": result.recovery_hint,
-                "artifact_path": result.artifact_path,
-            }
-            for result in results
-        ],
+        "results": [command_result_payload(result) for result in results],
     }
 
 
@@ -521,8 +456,7 @@ def main() -> int:
     }
     if args.write_report:
         report_path = Path(args.write_report).expanduser().resolve()
-        report_path.parent.mkdir(parents=True, exist_ok=True)
-        report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+        write_json_report(report_path, summary)
     if args.json:
         print(json.dumps(summary, ensure_ascii=False, indent=2))
     else:

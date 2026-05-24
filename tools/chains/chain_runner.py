@@ -4,34 +4,27 @@
 from __future__ import annotations
 
 import argparse
-import json
-import subprocess
 import sys
-import time
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.command_result_helpers import (
+    CommandStep,
+    command_result_from_step,
+    command_result_payload,
+    command_result_status,
+    output_tail,
+    run_command_step,
+    write_json_report,
+)
+from shared.repo_helpers import repo_root as shared_repo_root
 
 SCHEMA = "socratex-chain-report/v1"
-
-
-@dataclass(frozen=True)
-class ChainStep:
-    step_id: str
-    label: str
-    command: list[str]
-    cwd: Path
-    required: bool = True
-    recovery_hint: str = ""
-    artifact_path: Path | None = None
-
-
-def output_tail(text: str, limit: int = 1800) -> str:
-    stripped = text.strip()
-    if len(stripped) <= limit:
-        return stripped
-    return stripped[-limit:]
+ChainStep = CommandStep
 
 
 def print_step(step: ChainStep, *, dry_run: bool) -> None:
@@ -46,9 +39,7 @@ def print_step(step: ChainStep, *, dry_run: bool) -> None:
 
 
 def result_status(exit_code: int | None, skipped: bool) -> str:
-    if skipped:
-        return "skipped"
-    return "pass" if exit_code == 0 else "fail"
+    return command_result_status(exit_code, skipped)
 
 
 def step_result(
@@ -61,54 +52,31 @@ def step_result(
     stdout: str = "",
     stderr: str = "",
 ) -> dict[str, Any]:
-    return {
-        "id": step.step_id,
-        "label": step.label,
-        "command": step.command,
-        "cwd": str(step.cwd),
-        "required": step.required,
-        "skipped": skipped,
-        "reason": reason,
-        "exit_code": exit_code,
-        "status": result_status(exit_code, skipped),
-        "elapsed_seconds": round(elapsed_seconds, 2),
-        "stdout_tail": output_tail(stdout),
-        "stderr_tail": output_tail(stderr),
-        "recovery_hint": step.recovery_hint,
-        "artifact_path": str(step.artifact_path) if step.artifact_path else "",
-    }
+    return command_result_payload(
+        command_result_from_step(
+            step,
+            exit_code=exit_code,
+            skipped=skipped,
+            reason=reason,
+            elapsed_seconds=elapsed_seconds,
+            stdout=stdout,
+            stderr=stderr,
+        )
+    )
 
 
 def run_step(step: ChainStep, *, dry_run: bool) -> dict[str, Any]:
     print_step(step, dry_run=dry_run)
-    if dry_run:
-        return step_result(step, exit_code=None, skipped=True, reason="dry-run")
-    started = time.monotonic()
-    completed = subprocess.run(
-        step.command,
-        cwd=str(step.cwd),
-        check=False,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    if completed.stdout:
-        print(completed.stdout.rstrip())
-    if completed.stderr:
-        print(completed.stderr.rstrip(), file=sys.stderr)
-    return step_result(
-        step,
-        exit_code=completed.returncode,
-        skipped=False,
-        elapsed_seconds=time.monotonic() - started,
-        stdout=completed.stdout,
-        stderr=completed.stderr,
-    )
+    result = run_command_step(step, execute=not dry_run)
+    if result.stdout_tail:
+        print(result.stdout_tail)
+    if result.stderr_tail:
+        print(result.stderr_tail, file=sys.stderr)
+    return command_result_payload(result)
 
 
 def write_report(path: Path, report: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(report, ensure_ascii=False, indent=4) + "\n", encoding="utf-8", newline="\n")
+    write_json_report(path, report)
 
 
 def run_chain(
@@ -157,15 +125,7 @@ def report_path_from(value: str) -> Path | None:
 
 
 def git_root_for(start: Path) -> Path:
-    completed = subprocess.run(
-        ["git", "-C", str(start), "rev-parse", "--show-toplevel"],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if completed.returncode == 0 and completed.stdout.strip():
-        return Path(completed.stdout.strip()).resolve()
-    return start
+    return shared_repo_root(start, marker_files=(), use_git=True)
 
 
 def self_test_steps() -> list[ChainStep]:

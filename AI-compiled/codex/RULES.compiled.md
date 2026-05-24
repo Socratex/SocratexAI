@@ -6460,6 +6460,7 @@ Draft placeholder:
             "pipeline_chain_error_contract": {
                 "summary": "Chain and sweep tools expose a shared, machine-readable failure contract so repeated pipeline command groups fail with actionable command/cwd/exit/recovery data.",
                 "required_paths": [
+                    "tools/shared/command_result_helpers.py",
                     "tools/chains/chain_runner.py",
                     "tools/chains/helper_refactor_smoke.py",
                     "tools/chains/source_finalization_precheck.py",
@@ -6501,12 +6502,14 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Each chain must print every underlying command before execution.",
                     "Each chain result must include step id, label, command, cwd, required/skipped state, status, exit code, bounded output tails, and recovery hint.",
+                    "Chain and sweep step serialization must use the shared command result helper instead of reimplementing result payloads locally.",
                     "Chains that can run from an embedded SocratexAI package must resolve the nearest Git root for repository-wide gates while keeping package-local scripts as the command source.",
                     "Required chain steps stop the chain on first failure unless --keep-going is explicit.",
                     "Optional JSON reports use the socratex-chain-report/v1 or socratex-pipeline-sweep-report/v1 schema.",
                     "Failures should point to script/document repair work instead of being rediscovered manually on the next run."
                 ],
                 "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py tools/shared/command_result_helpers.py tools/chains/chain_runner.py tools/pipeline/pipeline_sweep.py",
                     "python3 -B tools/chains/helper_refactor_smoke.py --dry-run",
                     "python3 -B tools/chains/chain_runner.py --self-test-failure --expect-failure --report-path /tmp/socratex-chain-self-test.json",
                     "python3 -B tools/pipeline/pipeline_sweep.py --project source:SocratexAI=. --smoke --write-report /tmp/socratex-sweep-self-test.json"
@@ -6953,6 +6956,7 @@ Draft placeholder:
                     "SCRIPTS.json",
                     "pipeline_featurelist.json",
                     "tools/shared/cli_helpers.py",
+                    "tools/shared/command_result_helpers.py",
                     "tools/shared/file_helpers.py",
                     "tools/shared/repo_helpers.py",
                     "tools/codebase/context_gate_helpers.py",
