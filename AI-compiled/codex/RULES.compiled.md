@@ -6828,7 +6828,8 @@ Draft placeholder:
                     "pipeline_featurelist.json",
                     "tools/shared/cli_helpers.py",
                     "tools/shared/file_helpers.py",
-                    "tools/shared/repo_helpers.py"
+                    "tools/shared/repo_helpers.py",
+                    "tools/codebase/context_gate_helpers.py"
                 ],
                 "required_scripts": [
                     "rebuild_ai_compiled_context.py",

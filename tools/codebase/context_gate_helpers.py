@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import json
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,7 +13,13 @@ _TOOLS_ROOT = Path(__file__).resolve().parents[1]
 if str(_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(_TOOLS_ROOT))
 
-from shared.cli_helpers import configure_stdio, split_values as split_cli_values  # noqa: E402
+from shared.cli_helpers import configure_stdio  # noqa: E402
+from shared.repo_helpers import (  # noqa: E402
+    changed_paths as repo_changed_paths,
+    git_lines as repo_git_lines,
+    normalize_repo_path,
+    split_paths,
+)
 
 
 CODE_PATH_SUFFIXES = {
@@ -63,41 +68,19 @@ SKIP_CODE_PREFIXES = (
 
 
 def normalize_path(path: str) -> str:
-    return path.replace("\\", "/").strip()
+    return normalize_repo_path(path)
 
 
 def split_path_values(values: list[str]) -> list[str]:
-    return split_cli_values(values, transform=normalize_path, sort=True)
+    return split_paths(values)
 
 
 def git_lines(root: Path, args: list[str], *, allow_failure: bool = False) -> list[str]:
-    completed = subprocess.run(
-        ["git", "-C", str(root), *args],
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    if completed.returncode != 0:
-        if allow_failure:
-            return []
-        output = "\n".join(part for part in (completed.stdout.strip(), completed.stderr.strip()) if part)
-        raise RuntimeError(f"git {' '.join(args)} failed in {root}: {output}")
-    return [
-        normalize_path(line)
-        for line in completed.stdout.splitlines()
-        if line.strip() and not line.startswith("warning: ")
-    ]
+    return repo_git_lines(root, args, allow_failure=allow_failure)
 
 
 def changed_paths(root: Path, explicit_paths: list[str]) -> list[str]:
-    if explicit_paths:
-        return split_path_values(explicit_paths)
-    paths = [
-        *git_lines(root, ["diff", "--name-only", "--diff-filter=ACMR"]),
-        *git_lines(root, ["diff", "--cached", "--name-only", "--diff-filter=ACMR"]),
-        *git_lines(root, ["ls-files", "--others", "--exclude-standard"]),
-    ]
-    return sorted(set(paths))
+    return repo_changed_paths(root, explicit_paths, diff_filter="ACMR")
 
 
 def is_code_path(path: str) -> bool:
