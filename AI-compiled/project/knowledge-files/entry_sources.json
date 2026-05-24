@@ -1,0 +1,554 @@
+[
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "is_duplicate": true,
+    "note": "Implementation flow names the gate before source edits.",
+    "path": "FLOWS.json",
+    "selector": "implementation"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "is_duplicate": true,
+    "note": "Script catalog can carry exact input/output contracts for fragile invocation shapes.",
+    "path": "SCRIPTS.json",
+    "selector": "metadata.script_io_contract"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.default_tool_error_hardening",
+    "is_duplicate": false,
+    "note": "Source workflow rule makes tool hardening the default response to repeatable tool-result errors.",
+    "path": "WORKFLOW.json",
+    "selector": "tool_error_hardening"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "is_duplicate": true,
+    "note": "Workflow already requires hardening repeatable script failures.",
+    "path": "WORKFLOW.json",
+    "selector": "script_failure_hardening"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.helper_enforced_contracts",
+    "is_duplicate": false,
+    "note": "Reusable source-pipeline rule promoted from child-project logger/session and movement resolver work.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "is_duplicate": false,
+    "note": "Reusable code contract standard for AI-assisted maintenance.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.code_primary_source_of_truth",
+    "is_duplicate": false,
+    "note": "Durable coding discipline promoted from child-project pipeline work.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "is_duplicate": false,
+    "note": "Helper contracts are the legacy-compatible enforcement path.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "engineering.architecture.helper_enforced_contracts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.knowledge_file_fallback",
+    "is_duplicate": false,
+    "note": "Source pipeline file-fallback rule.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.knowledge_hash_gate",
+    "is_duplicate": false,
+    "note": "Source pipeline starter rule.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.knowledge_sqlite_generated_layer",
+    "is_duplicate": false,
+    "note": "Source pipeline starter rule.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.knowledge_views",
+    "is_duplicate": false,
+    "note": "Source pipeline starter rule.",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.pair_programming_collaboration",
+    "is_duplicate": false,
+    "note": "record source",
+    "path": "context-docs/ENGINEERING.json",
+    "selector": "content.tagged_rules.value.30"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "is_duplicate": false,
+    "note": "Shared agent contract defines the global better-version-now and borrowed-before-invented directive.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_invented",
+    "is_duplicate": false,
+    "note": "Source-of-truth for the borrowed-before-invented directive.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_invented",
+    "is_duplicate": true,
+    "note": "Domain-specific expansion of the same directive.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "known_solution_bias"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "is_duplicate": true,
+    "note": "Operating principles include 'prefer explicit contracts over hidden convention'.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "is_duplicate": false,
+    "note": "Shared contract definition of DDD-ADIV bias.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "ddd_adiv_default"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.explicit_diagnosable_flow",
+    "is_duplicate": false,
+    "note": "Consolidated from the shared agent contract.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_aware_change_split",
+    "is_duplicate": true,
+    "note": "Bug-fix directive: prefer fix that removes class of bug or improves diagnosis without over-expanding scope.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.match_surrounding_patterns",
+    "is_duplicate": true,
+    "note": "Operating principles emphasize smallest meaningful ownership slice.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "is_duplicate": false,
+    "note": "Production-grade directive for code feature requests.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.readability_first",
+    "is_duplicate": true,
+    "note": "Operating principles include 'prefer explicit contracts over hidden convention'.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "is_duplicate": false,
+    "note": "Shared programming directive now includes predictable-load checks and heavyweight-model migration bias.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "is_duplicate": false,
+    "note": "Shared contract requires tag-derived context before substantive answers and commands.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "is_duplicate": false,
+    "note": "Shared directive asks agents to prefer durable defaults, helpers, checks, and tooling over willpower-only process.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.obvious_task_gate",
+    "is_duplicate": true,
+    "note": "Shared operating principles carry the same ask-before-guessing rule.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "is_duplicate": true,
+    "note": "Shared operating principles carry the same script-first repair rule.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.shared_script_base_gate",
+    "is_duplicate": true,
+    "note": "Shared operating principles require avoiding duplicated script/helper logic and source-to-child drift.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "operating_principles"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "is_duplicate": false,
+    "note": "Shared directive for web-first known-solution checks before non-obvious code writes.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "primary_known_solutions_directive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.obvious_task_gate",
+    "is_duplicate": false,
+    "note": "Canonical Tier 1 obvious-task gate.",
+    "path": "core/CONTEXT-TIERS.json",
+    "selector": "obvious_task_gate"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.script_first_repair_gate",
+    "is_duplicate": false,
+    "note": "Canonical Tier 1 script-first repair gate.",
+    "path": "core/CONTEXT-TIERS.json",
+    "selector": "script_first_repair_gate"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "is_duplicate": false,
+    "note": "Canonical Tier 1-5 context hierarchy.",
+    "path": "core/CONTEXT-TIERS.json",
+    "selector": "tier_model"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "is_duplicate": true,
+    "note": "Human-in-loop research input gate.",
+    "path": "core/CONTEXT-TIERS.json",
+    "selector": "human_in_loop_research_gate"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "is_duplicate": true,
+    "note": "Project profile gates how strongly better-version-now and DDD-ADIV apply to legacy, greenfield, custom-framework, and no-test contexts.",
+    "path": "core/PROJECT-PROFILE.json",
+    "selector": "behavior_impact"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "is_duplicate": true,
+    "note": "Gamedev profile adds FPS/runtime/diagnostic/layer-purity lens for game-system headers.",
+    "path": "profiles/SocratexGamedev/WORKFLOW.json",
+    "selector": "contextual_actions"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.borrowed_before_invented",
+    "is_duplicate": true,
+    "note": "DDD-ADIV reinforces borrow-vs-invent as a domain-clarifying tool.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "known_solutions_alignment"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.business_naming",
+    "is_duplicate": true,
+    "note": "DDD domain-driven dimension: business-meaningful names over mechanism names, intent-revealing methods.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "domain_driven"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.codebase_as_contract",
+    "is_duplicate": true,
+    "note": "Invariant-visible dimension: validation at boundaries, explicit factories, schema checks.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "invariant_visible"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "is_duplicate": true,
+    "note": "Full code-pack DDD-ADIV definition.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "domain_driven"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "is_duplicate": true,
+    "note": "Architecture-decisive dimension.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "architecture_decisive"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "is_duplicate": true,
+    "note": "Invariant-visible dimension.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "invariant_visible"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ddd_adiv_when_possible",
+    "is_duplicate": true,
+    "note": "Verification-attached dimension.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "verification_attached"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "is_duplicate": true,
+    "note": "Non-legacy default still follows the full DDD-ADIV definition.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "domain_driven"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.verification_without_tests",
+    "is_duplicate": true,
+    "note": "Verification-attached dimension supports manual reproduction steps when other verification is impractical.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "verification_attached"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "is_duplicate": true,
+    "note": "Code pack applies the directive to programming implementation defaults.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
+    "is_duplicate": true,
+    "note": "Profile-aware defaults decide whether the task is legacy/surgical or non-legacy/modernizable.",
+    "path": "project/code/PACK.json",
+    "selector": "profile_aware_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.method_and_variable_extraction",
+    "is_duplicate": true,
+    "note": "Code-pack defaults already mention small functions and intent-revealing helpers.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.minimal_comments",
+    "is_duplicate": true,
+    "note": "Code-pack defaults: 'Comments should explain non-obvious constraints, workarounds, hazards, or tradeoffs; do not restate visible code.'",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.production_grade_default",
+    "is_duplicate": true,
+    "note": "Code-pack technical defaults reinforce the same architectural lens.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.readability_first",
+    "is_duplicate": false,
+    "note": "Code-pack technical defaults already mandate readability - this entry surfaces it as a tagged rule for the knowledge layer.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "is_duplicate": true,
+    "note": "Code pack technical defaults require lightweight-by-default contracts where load is predictable.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.convenience_drives_habit",
+    "is_duplicate": true,
+    "note": "Code pack carries this rule into programming work.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "is_duplicate": true,
+    "note": "Code pack applies the gate to generic programming work.",
+    "path": "project/code/PACK.json",
+    "selector": "known_solution_bias"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
+    "is_duplicate": true,
+    "note": "Code workflow makes the check part of every programming task sequence.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "general_workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.explicit_diagnosable_flow",
+    "is_duplicate": true,
+    "note": "Code-project workflow repeats the same future-fit and diagnostic bias.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "general_workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "is_duplicate": true,
+    "note": "Code workflow applies the check during feature, bug, performance, and architecture work.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "general_workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "is_duplicate": true,
+    "note": "Code workflow defines the executable context-tag pass.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "read_order"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "is_duplicate": false,
+    "note": "Code workflow read-order requirement for programming tasks.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "read_order"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "is_duplicate": true,
+    "note": "Script-first workflow repeats the preferred query command.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "script_first_execution"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.web_research_spike_to_named_implementation_plan_gate",
+    "is_duplicate": true,
+    "note": "Executable code workflow sequence for the research spike and named mechanism.",
+    "path": "project/code/WORKFLOW.json",
+    "selector": "general_workflow"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.performance.lightweight_by_default_for_predictable_load",
+    "is_duplicate": true,
+    "note": "Starter code template carries the rule into new child projects.",
+    "path": "templates/code/context-docs/ENGINEERING.json",
+    "selector": "tagged_rules"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.ai_native_code_contract_headers",
+    "is_duplicate": true,
+    "note": "Dry-run helper that prints the standard and candidate rollout files without editing source.",
+    "path": "tools/codebase/ai_native_contract_dry_run.py",
+    "selector": "script"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "is_duplicate": true,
+    "note": "Verification guard for changed-code tasks.",
+    "path": "tools/codebase/check_code_context_gate.py",
+    "selector": "script"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.context_tags_before_response",
+    "is_duplicate": true,
+    "note": "Source pipeline helper for deriving context tags from user text.",
+    "path": "tools/knowledge/context_tags.py",
+    "selector": "script"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.load_standards_before_code",
+    "is_duplicate": true,
+    "note": "Canonical helper for loading the code-task engineering context slice.",
+    "path": "tools/knowledge/knowledge_code_context.py",
+    "selector": "script"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "is_duplicate": false,
+    "note": "Knowledge SQLite and file fallback source freshness use the normalized hash policy.",
+    "path": "tools/knowledge/knowledge_index.py",
+    "selector": "normalized_hash_text"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.tiered_context_hierarchy",
+    "is_duplicate": true,
+    "note": "Compiled knowledge supports effective context tiers and tier filters.",
+    "path": "tools/knowledge/knowledge_index.py",
+    "selector": "context_tier"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.workflow.normalized_content_hashes",
+    "is_duplicate": true,
+    "note": "Compiled instruction source manifests and checksums use the same normalized hash policy.",
+    "path": "tools/pipeline/rebuild_ai_compiled_context.py",
+    "selector": "ConvertTo-NormalizedHashText"
+  }
+]

@@ -1,0 +1,50 @@
+{
+    "index": [
+        "policy",
+        "generated_exclusions",
+        "direct_schema_exceptions",
+        "migration_followups"
+    ],
+    "content": {
+        "policy": {
+            "title": "Canonical JSON Format Policy",
+            "body": "Repository JSON source documents should use canonical root keys `index`, `content`, and `metadata` when their shape is owned by SocratexPipeline and the file is meant to be human/AI-readable structured documentation. Runtime/game-owned data, generated artifacts, external schemas, eval result protocols, and operational config files may keep their direct schema only when listed here with an explicit reason."
+        },
+        "generated_exclusions": {
+            "title": "Generated Or Runtime Exclusions",
+            "paths": [
+                "AI-compiled/**",
+                "docs-tech/cache/**",
+                "docs-tech/CODE_LINE_INDEX.json",
+                "docs-tech/LARGE_FILES.json",
+                "docs-tech/PIPELINE-BOOTSTRAP.json",
+                "docs-tech/TOOL-ERRORS.json",
+                "ignored/**"
+            ],
+            "rule": "Audit skips these because their shape is generated, local, diagnostic, or runtime-owned rather than source-document-owned."
+        },
+        "direct_schema_exceptions": {
+            "title": "Direct Schema Exceptions",
+            "paths": {
+                "evals/expected-behaviors.json": "Eval protocol consumed by check_evals; keep direct schema until eval tooling is canonical-aware.",
+                "evals/personas.json": "Eval protocol consumed by check_evals; keep direct schema until eval tooling is canonical-aware.",
+                "evals/results/baseline.json": "Eval result protocol; keep direct schema for score comparison.",
+                "evals/results/with-pipeline.json": "Eval result protocol; keep direct schema for score comparison.",
+                "PIPELINE-PACKAGE.json": "Generated managed package manifest written by sync_managed_pipeline_package.py; operational direct schema records package hashes, local overrides, generated paths, and protected paths."
+            }
+        },
+        "migration_followups": {
+            "title": "Migration Followups",
+            "items": [
+                "Decide whether eval protocols should remain direct test fixtures or gain canonical wrappers.",
+                "Keep generated/local/runtime JSON out of canonical source-document enforcement unless ownership moves into SocratexPipeline source documents.",
+                "Keep PIPELINE-PACKAGE.json direct unless package manifest tooling grows a canonical read/write contract."
+            ]
+        }
+    },
+    "metadata": {
+        "schema": "socratex-list-document/v1",
+        "title": "JSON Format Contract",
+        "role": "Audit contract for canonical JSON document shape and explicit non-canonical exceptions."
+    }
+}

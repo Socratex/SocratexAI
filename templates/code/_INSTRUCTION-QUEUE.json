@@ -1,0 +1,15 @@
+{
+    "index": [
+        "summary",
+        "queue"
+    ],
+    "content": {
+        "summary": "Defragmented and sorted instruction queue.",
+        "queue": []
+    },
+    "metadata": {
+        "schema": "socratex-data-document/v1",
+        "title": " Instruction Queue",
+        "role": "Installed instruction capture queue template."
+    }
+}

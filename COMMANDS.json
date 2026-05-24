@@ -1,0 +1,69 @@
+{
+    "index": [
+        "CONTEXT",
+        "CONTINUE",
+        "PLAN",
+        "BUG",
+        "REVIEW",
+        "AUDIT",
+        "FINISH",
+        "COMMIT",
+        "LOG",
+        "DIAGNOSTICS",
+        "PROMPT",
+        "INSTRUCTIONS",
+        "COMPILE"
+    ],
+    "content": {
+        "CONTEXT": {
+            "purpose": "Load docs-tech/PIPELINE-BOOTSTRAP.json, then use context_tags.py and knowledge_select.py when routed context is needed."
+        },
+        "CONTINUE": {
+            "purpose": "Execute the next active pass from the current plan."
+        },
+        "PLAN": {
+            "purpose": "Promote selected backlog or TODO work into explicit passes."
+        },
+        "BUG": {
+            "purpose": "Select and work the best active defect or issue entry."
+        },
+        "REVIEW": {
+            "purpose": "Inspect code, diff, plan, or architecture for risks first."
+        },
+        "AUDIT": {
+            "purpose": "Run audit_docs.py and fix local hard failures."
+        },
+        "FINISH": {
+            "purpose": "Run finalize_task_check_commit_push.py for check, commit, and push."
+        },
+        "COMMIT": {
+            "purpose": "Create a bounded Git commit through finalize_changed_files_commit_push.py or finalize_task_check_commit_push.py."
+        },
+        "LOG": {
+            "purpose": "Inspect supplied diagnostics and apply the smallest source-owned fix or evidence step."
+        },
+        "DIAGNOSTICS": {
+            "purpose": "Summarize diagnostic evidence and choose the next fix or evidence step."
+        },
+        "PROMPT": {
+            "purpose": "Execute or defragment raw prompt intake."
+        },
+        "INSTRUCTIONS": {
+            "purpose": "Defragment raw user instructions and promote them into the correct layer."
+        },
+        "COMPILE": {
+            "purpose": "Run compile_pipeline_context.py to rebuild generated instruction and knowledge caches."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Source Pipeline Commands",
+            "type": "command_index",
+            "language": "en"
+        },
+        "context_loading": {
+            "default": "index_only",
+            "content_read": "only when exact metadata for a matched command is needed"
+        }
+    }
+}

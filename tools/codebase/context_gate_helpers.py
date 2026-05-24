@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+"""Shared helpers for source-code context gate tools."""
+
+from __future__ import annotations
+
+import json
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import configure_stdio  # noqa: E402
+from shared.repo_helpers import (  # noqa: E402
+    changed_paths as repo_changed_paths,
+    git_lines as repo_git_lines,
+    normalize_repo_path,
+    split_paths,
+)
+
+
+CODE_PATH_SUFFIXES = {
+    ".gd",
+    ".cs",
+    ".csproj",
+    ".props",
+    ".targets",
+    ".sln",
+    ".py",
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".mjs",
+    ".cjs",
+    ".sh",
+    ".bash",
+    ".zsh",
+    ".lua",
+    ".rs",
+    ".go",
+    ".java",
+    ".kt",
+    ".kts",
+    ".c",
+    ".cc",
+    ".cpp",
+    ".h",
+    ".hpp",
+    ".php",
+    ".rb",
+    ".swift",
+}
+
+SKIP_CODE_PREFIXES = (
+    "ignored/",
+    "logs/",
+    "logs-diagnostics/",
+    "logs-performance/",
+    "tools/tmp/",
+    "AI-compiled/",
+    "SocratexAI/AI-compiled/",
+    "docs-tech/cache/",
+)
+
+
+def normalize_path(path: str) -> str:
+    return normalize_repo_path(path)
+
+
+def split_path_values(values: list[str]) -> list[str]:
+    return split_paths(values)
+
+
+def git_lines(root: Path, args: list[str], *, allow_failure: bool = False) -> list[str]:
+    return repo_git_lines(root, args, allow_failure=allow_failure)
+
+
+def changed_paths(root: Path, explicit_paths: list[str]) -> list[str]:
+    return repo_changed_paths(root, explicit_paths, diff_filter="ACMR")
+
+
+def is_code_path(path: str) -> bool:
+    normalized = normalize_path(path)
+    if normalized == "OUTPUT":
+        return False
+    if normalized.startswith(SKIP_CODE_PREFIXES):
+        return False
+    return Path(normalized).suffix.lower() in CODE_PATH_SUFFIXES
+
+
+def changed_code_paths(root: Path, explicit_paths: list[str]) -> list[str]:
+    return [path for path in changed_paths(root, explicit_paths) if is_code_path(path)]
+
+
+def load_json(path: Path) -> Any:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def config_content(config: Any) -> Any:
+    if isinstance(config, dict) and config.get("content") is not None:
+        return config["content"]
+    return config
+
+
+def declared_design_reads(project_root: Path) -> list[str] | None:
+    config_path = project_root / ".aiassistant/socratex/PIPELINE-CONFIG.json"
+    if not config_path.is_file():
+        return None
+    content = config_content(load_json(config_path))
+    if isinstance(content, dict):
+        reads = content.get("code_design_required_reads", [])
+        if isinstance(reads, list):
+            return [str(item) for item in reads]
+    return []
+
+
+def git_head(root: Path) -> str | None:
+    lines = git_lines(root, ["rev-parse", "HEAD"], allow_failure=True)
+    return lines[0] if lines else None
+
+
+def parse_utc_datetime(value: str) -> datetime:
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def gate_age_minutes(loaded_at: str) -> float:
+    return (datetime.now(timezone.utc) - parse_utc_datetime(loaded_at)).total_seconds() / 60.0

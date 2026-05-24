@@ -1,0 +1,27 @@
+# Local/generated pipeline artifacts
+SocratexAI/
+pipeline-snapshots/
+/ignored/
+*.old
+*.tmp
+*.bak
+*.log
+
+# Diagnostics/runtime output
+DIAGNOSTICS-SUMMARY.json
+OUTPUT
+CONSOLE-LOG
+CONSOLE-LOG-SUMMARY
+learning/inbox/*.json
+logs/*
+!logs/.gitkeep
+
+# Local maintainer reference copied from private projects
+tools/upstream-riftbound/
+
+# Common tooling noise
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.pytest_cache/

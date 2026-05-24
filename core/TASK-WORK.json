@@ -1,0 +1,81 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "when_to_use",
+        "default_file",
+        "minimal_schema",
+        "workflow",
+        "automation_boundary",
+        "handoff_schema",
+        "grouped_fragmentation",
+        "promotion",
+        "structured_document_edits"
+    ],
+    "content": {
+        "quick_index": {
+            "title": "Quick Index",
+            "content": "- Overview\n- Purpose\n- When To Use\n- Default File\n- Minimal Schema\n- Workflow\n- Automation Boundary\n- Handoff Schema\n- Grouped Fragmentation\n- Promotion\n- Structured Document Edits\n"
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Task Work\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nUse this protocol for broad tasks that are too large to safely track only in live chat.\n\nThe agent should create a temporary JSON micro-task file, execute it step by step, update statuses during work, then clean it up or promote only durable facts.\n"
+        },
+        "when_to_use": {
+            "title": "When To Use",
+            "format": "markdown-section",
+            "body": "## When To Use\n\nUse task work tracking when a request:\n\n- touches multiple files, modules, systems, or documents,\n- has several phases,\n- includes many requirements that are easy to forget,\n- requires document migration,\n- may be interrupted,\n- is expected to take longer than one small focused prompt,\n- has unclear risks, open questions, or verification steps.\n\nDo not use it for small, local, reversible edits where the tracking overhead is larger than the task.\n"
+        },
+        "default_file": {
+            "title": "Default File",
+            "format": "markdown-section",
+            "body": "## Default File\n\nFor code projects, use:\n\n```text\ndocs-tech/cache/current_task.json\n```\n\nIf the project uses another cache directory, use the configured equivalent.\n\nThis file is temporary working memory, not project history.\n\nIt should normally be untracked. Commit it only when the project explicitly treats task work files as reviewable artifacts.\n"
+        },
+        "minimal_schema": {
+            "title": "Minimal Schema",
+            "format": "markdown-section",
+            "body": "## Minimal Schema\n\n```json\ntask:\n  title: TBD\n  status: active\n  source_request: TBD\n  done_criteria: []\nmicro_tasks:\n  - key: inspect_context\n    status: pending\n    result: TBD\n  - key: implement_change\n    status: pending\n    result: TBD\n  - key: verify\n    status: pending\n    result: TBD\nquestions: []\nrisks: []\nnext_suggestions: []\n```\n\nStatuses:\n\n- `pending`\n- `active`\n- `done`\n- `blocked`\n- `skipped`\n"
+        },
+        "workflow": {
+            "title": "Workflow",
+            "format": "markdown-section",
+            "body": "## Workflow\n\n1. Create or refresh the temporary task file before broad implementation.\n2. Split the request into small, ordered micro-tasks.\n3. Mark one micro-task `active` at a time.\n4. Update each micro-task with a short result when completed.\n5. Add risks, questions, and verification gaps as they are discovered.\n6. Before final response, verify every required micro-task is `done`, `skipped`, or intentionally deferred.\n7. Remove the temporary file when it has no future value.\n8. Promote only durable facts to the right memory layer.\n"
+        },
+        "automation_boundary": {
+            "title": "Automation Boundary",
+            "format": "markdown-section",
+            "body": "## Automation Boundary\n\nStop automatic sub-task progression and ask the user before continuing when:\n\n- scope grows outside the approved group,\n- a product/design/business direction decision appears,\n- verification fails in a way that changes the implementation plan,\n- a destructive action, dependency install, credential, external write, or expensive operation is needed,\n- the handoff is incomplete or contradictory,\n- the next sub-task would require a new research direction or new named mechanism not already accepted.\n\nWait for user `continue` before starting the next group. Do not wait between sub-tasks inside the same approved group unless one of these conditions appears."
+        },
+        "handoff_schema": {
+            "title": "Handoff Schema",
+            "format": "markdown-section",
+            "body": "## Handoff Schema\n\nEach fragmented sub-task must write a handoff before the next fragment starts. Use `tools/tasks/grouped_task_handoff.py` when available.\n\nRecord at minimum:\n\n- task id, group id, and sub-task id,\n- group goal and sub-task goal,\n- inspected files,\n- changed files,\n- current hypothesis or decision state,\n- unresolved risks, blockers, and assumptions,\n- exact next files or commands,\n- verification already run,\n- whether automatic progression may continue or must stop for the user.\n\nThe next fragment must read this handoff before further source inspection or edits."
+        },
+        "grouped_fragmentation": {
+            "title": "Grouped Fragmentation",
+            "format": "markdown-section",
+            "body": "## Grouped Fragmentation\n\nFor broad work, split execution into user-approved groups and bounded sub-tasks when required code/context is likely above roughly 1500 LOC, the task has more than 3 substantial substeps, or the work crosses multiple ownership boundaries, migrations, performance investigations, or multi-system bugs.\n\nA group is one user-approved execution unit. Sub-tasks inside the active group may run automatically without waiting for another user `continue`, as long as the next sub-task stays inside the approved group goal and no escalation condition appears.\n\nBetween sub-tasks, minimize live context, reload only the required project context by tier, read the group sub-plan and the latest handoff artifact, then execute the next bounded sub-task. Do not rely on chat memory as the state bridge."
+        },
+        "promotion": {
+            "title": "Promotion",
+            "format": "markdown-section",
+            "body": "## Promotion\n\nAt the end of the task:\n\n- promote durable technical facts to `context-docs/`,\n- promote durable decisions to `DECISIONS.json` in code projects or `DECISIONS.md` in non-code user-facing memory,\n- promote remaining future work to `_PLAN.json` or `TODO.json` in code projects, or `_PLAN.md` / `BACKLOG.md` in non-code user-facing memory,\n- promote shipped behavior or major fixes to `CHANGELOG.json` in code projects when `changelog.enabled` is not `no`, or to a user-facing Markdown changelog when a non-code project uses one,\n- keep only the compact current checkpoint in `STATE.json` for code projects or `STATE.md` for non-code user-facing memory.\n\nDo not copy the full temporary micro-task file into project memory.\n"
+        },
+        "structured_document_edits": {
+            "title": "Structured Document Edits",
+            "format": "markdown-section",
+            "body": "## Structured Document Edits\n\nFor JSON documents with `index` and `items`, use document item scripts for structural moves:\n\n- `tools/documents/migrate_document_item.py` to move or copy an item between documents,\n- `tools/documents/move_document_item.py` to move an item inside one document,\n- `tools/documents/insert_document_item.py` to add an item at a controlled position,\n- `tools/documents/read_document_item.py` and `tools/documents/list_document_keys.py` for selective reads before editing.\n\nManual edits are acceptable when:\n\n- changing the document schema itself,\n- fixing the parser or migration tool,\n- the script is unavailable or broken,\n- doing a very small text correction inside one item and no field-level script exists.\n\nIf a script cannot run because a runtime is missing, follow `core/SCRIPT-FALLBACK.json`.\n"
+        }
+    },
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Task Work"
+    }
+}
