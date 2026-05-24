@@ -14,6 +14,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import repo_root as shared_repo_root  # noqa: E402
+
 
 MIN_PYTHON = (3, 10)
 RECOMMENDED_PYTHON = (3, 12)
@@ -29,11 +35,12 @@ class PythonRuntime:
 
 
 def repo_root(start: Path | None = None) -> Path:
-    current = (start or Path(__file__)).resolve()
-    for candidate in [current, *current.parents]:
-        if (candidate / "SCRIPTS.json").is_file() and (candidate / "tools").is_dir():
-            return candidate
-    return Path.cwd().resolve()
+    return shared_repo_root(
+        (start or Path(__file__)).resolve(),
+        marker_files=("SCRIPTS.json",),
+        marker_dirs=("tools",),
+        use_git=False,
+    )
 
 
 def _candidate_paths(search_root: Path, env_vars: Sequence[str] = ("SOCRATEX_PYTHON",)) -> Iterable[tuple[str, str]]:

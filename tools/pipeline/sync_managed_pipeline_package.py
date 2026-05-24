@@ -18,6 +18,7 @@ if str(_TOOLS_ROOT) not in sys.path:
 
 from pipeline_package import DEFAULT_CHILD_GENERATED_PATHS, DEFAULT_MANAGED_PATHS, DEFAULT_PROTECTED_PATHS
 from shared.file_helpers import sha256_binary_file  # noqa: E402
+from shared.repo_helpers import normalize_repo_path  # noqa: E402
 
 
 GENERATED_CACHE_DIRS = {"__pycache__"}
@@ -25,7 +26,7 @@ GENERATED_CACHE_SUFFIXES = {".pyc", ".pyo"}
 
 
 def normalize_path(value: str) -> str:
-    return value.replace("\\", "/").strip("/")
+    return normalize_repo_path(value).strip("/")
 
 
 def relative_path(root: Path, path: Path) -> str:

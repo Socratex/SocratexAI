@@ -6844,7 +6844,11 @@ Draft placeholder:
                     "tools/documents/audit_docs.py",
                     "tools/documents/run_document_post_edit_checks.py",
                     "tools/pipeline/compile_pipeline_context.py",
-                    "tools/pipeline/update_pipeline_from_link.py"
+                    "tools/pipeline/update_pipeline_from_link.py",
+                    "tools/json/smoke_json_tools.py",
+                    "tools/setup/run_interactive_setup.py",
+                    "tools/pipeline/python_runtime.py",
+                    "tools/pipeline/sync_managed_pipeline_package.py"
                 ],
                 "required_scripts": [
                     "rebuild_ai_compiled_context.py",

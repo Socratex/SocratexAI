@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T03:47:47+02:00",
+    "generatedAt": "2026-05-24T03:56:43+02:00",
     "threshold": 300,
     "files": [
         {
@@ -46,7 +46,7 @@
         },
         {
             "path": "tools/pipeline/sync_managed_pipeline_package.py",
-            "lines": 263,
+            "lines": 264,
             "extension": ".py",
             "large": false
         },
@@ -118,7 +118,7 @@
         },
         {
             "path": "tools/setup/run_interactive_setup.py",
-            "lines": 178,
+            "lines": 181,
             "extension": ".py",
             "large": false
         },
@@ -220,7 +220,7 @@
         },
         {
             "path": "tools/pipeline/python_runtime.py",
-            "lines": 108,
+            "lines": 113,
             "extension": ".py",
             "large": false
         },

@@ -4,17 +4,19 @@
 from __future__ import annotations
 
 import json
-import subprocess
 import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from shared.repo_helpers import run_step  # noqa: E402
+
 
 def run(command: list[str], cwd: Path) -> None:
-    completed = subprocess.run(command, cwd=cwd, check=False, text=True, capture_output=True)
-    if completed.returncode != 0:
-        output = "\n".join(part for part in [completed.stdout, completed.stderr] if part)
-        raise RuntimeError(f"Command failed ({completed.returncode}): {' '.join(command)}\n{output}")
+    exit_code = run_step(" ".join(command), command, cwd)
+    if exit_code != 0:
+        raise RuntimeError(f"Command failed ({exit_code}): {' '.join(command)}")
 
 
 def load(path: Path) -> dict:

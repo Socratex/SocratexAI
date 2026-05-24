@@ -4,9 +4,14 @@
 from __future__ import annotations
 
 import argparse
-import subprocess
 import sys
 from pathlib import Path
+
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import run_step  # noqa: E402
 
 
 def ask_default(prompt: str, default: str) -> str:
@@ -32,9 +37,9 @@ def ask_choice(prompt: str, default: str, choices: list[str]) -> str:
 
 
 def run(script: Path, args: list[str]) -> None:
-    completed = subprocess.run([sys.executable, str(script), *args], check=False)
-    if completed.returncode != 0:
-        raise SystemExit(f"{script.name} failed with exit code {completed.returncode}")
+    exit_code = run_step(script.name, [sys.executable, str(script), *args], script.parents[2])
+    if exit_code != 0:
+        raise SystemExit(f"{script.name} failed with exit code {exit_code}")
 
 
 def main() -> int:
