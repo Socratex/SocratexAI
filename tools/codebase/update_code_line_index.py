@@ -12,7 +12,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from shared.repo_helpers import git_lines  # noqa: E402
+from shared.repo_helpers import git_lines, normalize_repo_path, repo_root as shared_repo_root  # noqa: E402
 
 
 CODE_EXTENSIONS = {".gd", ".py", ".bat", ".cmd", ".sh", ".cs", ".js", ".ts"}
@@ -42,7 +42,7 @@ LARGE_FILE_NOTES = {
 
 
 def repo_root(start: Path) -> Path:
-    return start.resolve()
+    return shared_repo_root(start, marker_files=("SCRIPTS.json",), use_git=True)
 
 
 def code_path(path: str) -> bool:
@@ -78,7 +78,7 @@ def explicit_code_paths(root: Path, raw_paths: list[str]) -> list[str]:
                 full = root_full / full
             resolved = full.resolve()
             try:
-                relative = resolved.relative_to(root_full).as_posix()
+                relative = normalize_repo_path(resolved.relative_to(root_full).as_posix())
             except ValueError as exc:
                 raise ValueError(f"Path is outside repo: {text}") from exc
             if code_path(relative):

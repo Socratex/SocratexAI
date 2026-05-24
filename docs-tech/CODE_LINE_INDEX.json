@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T03:31:23+02:00",
+    "generatedAt": "2026-05-24T03:37:21+02:00",
     "threshold": 300,
     "files": [
         {
@@ -23,6 +23,18 @@
         {
             "path": "tools/documents/document_read_cache_engine.py",
             "lines": 392,
+            "extension": ".py",
+            "large": true
+        },
+        {
+            "path": "tools/pipeline/pipeline_sweep.py",
+            "lines": 385,
+            "extension": ".py",
+            "large": true
+        },
+        {
+            "path": "tools/json/json_wrapper_entrypoints.py",
+            "lines": 303,
             "extension": ".py",
             "large": true
         },
@@ -105,14 +117,14 @@
             "large": false
         },
         {
-            "path": "tools/repo/end_prompt_snapshot.py",
+            "path": "tools/setup/run_interactive_setup.py",
             "lines": 178,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/setup/run_interactive_setup.py",
-            "lines": 178,
+            "path": "tools/repo/end_prompt_snapshot.py",
+            "lines": 169,
             "extension": ".py",
             "large": false
         },
@@ -177,14 +189,14 @@
             "large": false
         },
         {
-            "path": "tools/json/json_node_edit.py",
-            "lines": 126,
-            "extension": ".ps1",
+            "path": "tools/repo/finalize_changed_files_commit_push.py",
+            "lines": 125,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/repo/finalize_changed_files_commit_push.py",
-            "lines": 125,
+            "path": "tools/json/smoke_json_tools.py",
+            "lines": 122,
             "extension": ".py",
             "large": false
         },
@@ -221,12 +233,6 @@
         {
             "path": "tools/text/check_utf8_writes.py",
             "lines": 103,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/json/smoke_json_tools.py",
-            "lines": 100,
             "extension": ".py",
             "large": false
         },
@@ -303,26 +309,26 @@
             "large": false
         },
         {
+            "path": "tools/repo/check_sensitive_reference_leaks.py",
+            "lines": 78,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/shared/repo_helpers.py",
             "lines": 78,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/diagnostics/log_summary.py",
-            "lines": 76,
+            "path": "tools/quality/run_quality_gate_contract.py",
+            "lines": 77,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/quality/run_quality_gate_contract.py",
-            "lines": 75,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/repo/check_sensitive_reference_leaks.py",
-            "lines": 73,
+            "path": "tools/diagnostics/log_summary.py",
+            "lines": 76,
             "extension": ".py",
             "large": false
         },
@@ -359,6 +365,12 @@
         {
             "path": "tools/diagnostics/console_summary.py",
             "lines": 68,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/repo/task_snapshot.py",
+            "lines": 64,
             "extension": ".py",
             "large": false
         },
@@ -423,15 +435,15 @@
             "large": false
         },
         {
-            "path": "tools/json/json_item_insert.py",
+            "path": "tools/text/normalize_json_files.py",
             "lines": 51,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/json/json_item_set.py",
+            "path": "tools/pipeline/check_ai_compiled_context.py",
             "lines": 49,
-            "extension": ".ps1",
+            "extension": ".py",
             "large": false
         },
         {
@@ -442,6 +454,12 @@
         },
         {
             "path": "tools/repo/check_toolchain_health.py",
+            "lines": 48,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/text/normalize_text_files.py",
             "lines": 48,
             "extension": ".py",
             "large": false
@@ -459,21 +477,9 @@
             "large": false
         },
         {
-            "path": "tools/repo/task_snapshot.py",
-            "lines": 41,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/pipeline/pipeline_package.py",
             "lines": 40,
             "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_line_insert.py",
-            "lines": 39,
-            "extension": ".ps1",
             "large": false
         },
         {
@@ -486,18 +492,6 @@
             "path": "tools/documents/check_document_list_item_duplicates.py",
             "lines": 38,
             "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_line_move.py",
-            "lines": 38,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/pipeline_sweep.py",
-            "lines": 38,
-            "extension": ".ps1",
             "large": false
         },
         {
@@ -555,24 +549,6 @@
             "large": false
         },
         {
-            "path": "tools/json/json_line_set.py",
-            "lines": 33,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_item_move.py",
-            "lines": 32,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_read.py",
-            "lines": 32,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/knowledge/knowledge_compile.py",
             "lines": 32,
             "extension": ".py",
@@ -600,24 +576,6 @@
             "path": "tools/knowledge/knowledge_cli.py",
             "lines": 30,
             "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/text/normalize_json_files.py",
-            "lines": 29,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/text/normalize_text_files.py",
-            "lines": 29,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_item_delete.py",
-            "lines": 28,
-            "extension": ".ps1",
             "large": false
         },
         {
@@ -735,18 +693,6 @@
             "large": false
         },
         {
-            "path": "tools/json/json_refresh_index.py",
-            "lines": 16,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
-            "path": "tools/json/json_migrate_content.py",
-            "lines": 15,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/knowledge/knowledge_file_query.py",
             "lines": 13,
             "extension": ".py",
@@ -759,14 +705,74 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/check_ai_compiled_context.py",
-            "lines": 13,
-            "extension": ".ps1",
+            "path": "tools/knowledge/knowledge_query.py",
+            "lines": 9,
+            "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_query.py",
-            "lines": 9,
+            "path": "tools/json/json_item_delete.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_item_insert.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_item_move.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_item_set.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_line_insert.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_line_move.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_line_set.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_migrate_content.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_node_edit.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_read.py",
+            "lines": 4,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/json/json_refresh_index.py",
+            "lines": 4,
             "extension": ".py",
             "large": false
         },

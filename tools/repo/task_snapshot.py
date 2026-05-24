@@ -9,6 +9,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from repo_tool_helpers import repo_root
+
 
 LINE_WARNING = "will be replaced by"
 SNAPSHOT_FILES = (
@@ -22,18 +24,6 @@ SNAPSHOT_FILES = (
     "TODO.md",
     "ISSUES.md",
 )
-
-
-def repo_root(start: Path) -> Path:
-    completed = subprocess.run(
-        ["git", "-C", str(start), "rev-parse", "--show-toplevel"],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if completed.returncode == 0 and completed.stdout.strip():
-        return Path(completed.stdout.strip()).resolve()
-    return start.resolve()
 
 
 def command_lines(command: list[str], cwd: Path, max_lines: int) -> list[str]:
