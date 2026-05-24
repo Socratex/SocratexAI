@@ -406,7 +406,7 @@ Codex starts at `codex/ENTRYPOINT.md`.
 
 
 def run_knowledge_tool(repo_root: Path, mode: str) -> int:
-    tool = repo_root / "tools" / "knowledge" / "knowledge_index.py"
+    tool = _TOOLS_ROOT / "knowledge" / "knowledge_index.py"
     completed = subprocess.run(
         [sys.executable, "-B", str(tool), mode, "--repo-root", str(repo_root)],
         cwd=repo_root,

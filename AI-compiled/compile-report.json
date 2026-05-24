@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-instructions/v1",
-  "generated_at": "source-36a62d090533",
+  "generated_at": "source-64df7bdb0961",
   "role": "generated_agent_cache",
   "source_of_truth": "source instruction files outside AI-compiled",
   "do_not_edit_manually": true,
@@ -53,8 +53,8 @@
     "tools/knowledge/knowledge_file_select.py": "1c5013e68777b651f2ec8066d3898e8ef0679c26ad45ed54443b84528d8bd001",
     "tools/pipeline/pipeline_bootstrap_index.py": "b199a7cba0cebfbb2f2efcb1b68bb660851f7a7179b8f59cf8b71f340ebe6fae",
     "tools/pipeline/compile_pipeline_context.py": "4f0c0841b55f76dfdf2178f582aebada0fcf53050826014316cf05a6d90cc95f",
-    "tools/pipeline/rebuild_ai_compiled_context.py": "5449b8d3e38c3d13a1dd7fc475be9b9301d6fc04d622b0b10cc10da0368051fc",
-    "tools/pipeline/check_ai_compiled_context.py": "75fcb01413d36f8e9a334f23295b3204db541e0e199d020442b1030695c503e3",
+    "tools/pipeline/rebuild_ai_compiled_context.py": "e761841f6076eb423883bbcaa5fcac495c00e3bfe5ab5ef9ebf945fd6fb73df8",
+    "tools/pipeline/check_ai_compiled_context.py": "86421e5a7dacd93cd18d7c2f249bb8a2602562b395606e290af2c6a72a2873b6",
     "templates/WORKFLOW.json": "3ff145e0fb1907c456978a8c8068d1f16dc68c89bf020e013e1facf1ad641433",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "b0132e2dbc9a6fd1cbd2de297d5699e881ba5c21b73e96593277ed23b5ce8b78",
     "templates/code/context-docs/ENGINEERING.json": "a2482c3f0f7429d2d6feccc968bba660bcdf8e8961373114959ceb80fee131b2",

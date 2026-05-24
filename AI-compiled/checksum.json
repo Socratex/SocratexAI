@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-36a62d090533",
+  "generated_at": "source-64df7bdb0961",
   "source_hashes": {
     "AGENTS.md": "47c083c7c04b06f4166c07abc1a6ab72a21666e5d15c7d7738eb48e984d4c5fa",
     "README.md": "fc5e9df9461e710fa8fa1a6eb6e62dfdafceb9fe2c18121a7ae893ae689467ef",
@@ -31,8 +31,8 @@
     "tools/knowledge/knowledge_file_select.py": "1c5013e68777b651f2ec8066d3898e8ef0679c26ad45ed54443b84528d8bd001",
     "tools/pipeline/pipeline_bootstrap_index.py": "b199a7cba0cebfbb2f2efcb1b68bb660851f7a7179b8f59cf8b71f340ebe6fae",
     "tools/pipeline/compile_pipeline_context.py": "4f0c0841b55f76dfdf2178f582aebada0fcf53050826014316cf05a6d90cc95f",
-    "tools/pipeline/rebuild_ai_compiled_context.py": "5449b8d3e38c3d13a1dd7fc475be9b9301d6fc04d622b0b10cc10da0368051fc",
-    "tools/pipeline/check_ai_compiled_context.py": "75fcb01413d36f8e9a334f23295b3204db541e0e199d020442b1030695c503e3",
+    "tools/pipeline/rebuild_ai_compiled_context.py": "e761841f6076eb423883bbcaa5fcac495c00e3bfe5ab5ef9ebf945fd6fb73df8",
+    "tools/pipeline/check_ai_compiled_context.py": "86421e5a7dacd93cd18d7c2f249bb8a2602562b395606e290af2c6a72a2873b6",
     "templates/WORKFLOW.json": "3ff145e0fb1907c456978a8c8068d1f16dc68c89bf020e013e1facf1ad641433",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "b0132e2dbc9a6fd1cbd2de297d5699e881ba5c21b73e96593277ed23b5ce8b78",
     "templates/code/context-docs/ENGINEERING.json": "a2482c3f0f7429d2d6feccc968bba660bcdf8e8961373114959ceb80fee131b2",
@@ -55,11 +55,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "3e982b6c06de18b59f7c37ba2b78114c4be5fb984ec31f5d2155d2041f8e28e4",
-    "codex/ENTRYPOINT.md": "08ef29545472c40b9822eb5b4e63653aa95391e78917229c7fc493c8ea51ca49",
-    "codex/RULES.compiled.md": "4b5d77dd630159165b599a3981a19975bd5897dfc72975abf861731dbd4d8d94",
-    "codex/WORKFLOW.compiled.md": "75883d0d9de4295dc05165e5409a8e3e9e31417a1eb5baefd51d11be8ddb3088",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "98ca642e937b04702f6b6c90284e761c380f1e960b4a0b1a68aa68ba8d71dad2",
-    "codex/TEAM.compiled.md": "e59688ace3134d8a8d0eaa31bd226f242b67a92612e36a159f178d09f0f17ecb"
+    "INDEX.json": "3ce937e7474deff7d049702e948157d5848c2293ae6105f2e7a8c5546d260717",
+    "codex/ENTRYPOINT.md": "f507b84b4b0563367cee51d0021a3b5bb6cf58185609a427092a2e2c461f3ae0",
+    "codex/RULES.compiled.md": "3e24429f6c12d284c410c093140c14c653f3d726b5ccc471f952b0ad3fc5c796",
+    "codex/WORKFLOW.compiled.md": "a53c215d565751210ae0703b30093ee05ca9f62f1052401dde689a6a49663082",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "11d56c9140893ab60746c935409d62414219acc2c96fa84b295144efa1767f07",
+    "codex/TEAM.compiled.md": "c38fc25cc75aa8b2b20f65286264f8a12996b3db273d62dc33ec32215320d47a"
   }
 }

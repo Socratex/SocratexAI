@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T16:58:21+02:00",
+    "generatedAt": "2026-05-24T17:14:42+02:00",
     "threshold": 300,
     "files": [
         {
@@ -447,6 +447,12 @@
             "large": false
         },
         {
+            "path": "tools/pipeline/check_ai_compiled_context.py",
+            "lines": 54,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/legacy_commit_task_compatibility_wrapper.py",
             "lines": 54,
             "extension": ".py",
@@ -479,12 +485,6 @@
         {
             "path": "tools/chains/source_finalization_precheck.py",
             "lines": 50,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/check_ai_compiled_context.py",
-            "lines": 49,
             "extension": ".py",
             "large": false
         },

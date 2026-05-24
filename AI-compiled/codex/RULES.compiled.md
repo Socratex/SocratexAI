@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-36a62d090533
+Generated: source-64df7bdb0961
 
 ## Source of Truth
 
@@ -1265,6 +1265,7 @@ Draft placeholder:
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Installed child-project finalizers and final check runners must execute package-local tools while passing the child repository root as --repo-root.",
+                    "Installed child-project compiled-context refresh/check paths must execute package-local rebuild, bootstrap, and knowledge tools while passing the child repository root as --repo-root.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
