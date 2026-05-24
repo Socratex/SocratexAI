@@ -8,6 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from repo_tool_helpers import changed_paths, git_lines, normalize_path, repo_root, run
+
 
 LOCAL_ARTIFACT_PREFIXES = (
     "logs/",
@@ -25,21 +27,6 @@ LOCAL_ARTIFACT_PATHS = {
 }
 
 
-def repo_root(start: Path) -> Path:
-    completed = subprocess.run(
-        ["git", "-C", str(start), "rev-parse", "--show-toplevel"],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if completed.returncode == 0 and completed.stdout.strip():
-        return Path(completed.stdout.strip()).resolve()
-    for candidate in [start.resolve(), *start.resolve().parents]:
-        if (candidate / "SCRIPTS.json").is_file() and (candidate / "tools").is_dir():
-            return candidate
-    return start.resolve()
-
-
 def run_git(root: Path, args: list[str], *, capture: bool = False) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         ["git", *args],
@@ -50,61 +37,14 @@ def run_git(root: Path, args: list[str], *, capture: bool = False) -> subprocess
     )
 
 
-def git_lines(root: Path, args: list[str]) -> list[str]:
-    completed = run_git(root, args, capture=True)
-    if completed.returncode != 0:
-        output = (completed.stderr or completed.stdout or "").strip()
-        raise RuntimeError(f"git {' '.join(args)} failed: {output}")
-    return [
-        line.strip()
-        for line in completed.stdout.splitlines()
-        if line.strip()
-        and "will be replaced by" not in line
-        and not line.lstrip().startswith("warning:")
-    ]
-
-
-def normalize_path(value: str) -> str:
-    return value.replace("\\", "/").removeprefix("./").strip()
-
-
 def artifact_path(path: str) -> bool:
     normalized = normalize_path(path)
     return normalized in LOCAL_ARTIFACT_PATHS or normalized.startswith(LOCAL_ARTIFACT_PREFIXES)
 
 
-def explicit_paths(raw_paths: list[str]) -> list[str]:
-    paths: list[str] = []
-    for raw_path in raw_paths:
-        for candidate in raw_path.split(","):
-            normalized = normalize_path(candidate)
-            if normalized:
-                paths.append(normalized)
-    return sorted(set(paths))
-
-
-def changed_paths(root: Path) -> list[str]:
-    paths: list[str] = []
-    for args in (
-        ["diff", "--name-only", "--diff-filter=ACMRD"],
-        ["diff", "--cached", "--name-only", "--diff-filter=ACMRD"],
-        ["ls-files", "--others", "--exclude-standard"],
-    ):
-        paths.extend(git_lines(root, args))
-    return sorted(set(normalize_path(path) for path in paths))
-
-
 def commit_candidate_paths(root: Path, raw_paths: list[str]) -> list[str]:
-    candidates = explicit_paths(raw_paths) if raw_paths else changed_paths(root)
+    candidates = changed_paths(root, raw_paths or None)
     return [path for path in candidates if not artifact_path(path)]
-
-
-def run(label: str, command: list[str], cwd: Path) -> int:
-    print(f"\n==> {label}")
-    completed = subprocess.run(command, cwd=cwd, check=False)
-    if completed.returncode != 0:
-        print(f"ERROR: {label} failed with exit code {completed.returncode}", file=sys.stderr)
-    return completed.returncode
 
 
 def final_checks_command(root: Path, args: argparse.Namespace) -> list[str]:

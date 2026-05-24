@@ -6830,7 +6830,8 @@ Draft placeholder:
                     "tools/shared/file_helpers.py",
                     "tools/shared/repo_helpers.py",
                     "tools/codebase/context_gate_helpers.py",
-                    "tools/repo/check_pipeline_feature_contracts.py"
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/repo/finalize_changed_files_commit_push.py"
                 ],
                 "required_scripts": [
                     "rebuild_ai_compiled_context.py",
