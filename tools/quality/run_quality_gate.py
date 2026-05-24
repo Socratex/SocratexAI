@@ -8,6 +8,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import repo_root as shared_repo_root  # noqa: E402
+
 
 FALLBACK_COMMANDS = [
     ("package.json", "npm test"),
@@ -21,10 +27,7 @@ FALLBACK_COMMANDS = [
 
 
 def repo_root(start: Path) -> Path:
-    for candidate in [start.resolve(), *start.resolve().parents]:
-        if (candidate / "SCRIPTS.json").is_file() and (candidate / "tools").is_dir():
-            return candidate
-    return start.resolve()
+    return shared_repo_root(start, marker_files=("SCRIPTS.json",), marker_dirs=("tools",), use_git=False)
 
 
 def run_shell(command: str, cwd: Path) -> int:

@@ -6,10 +6,16 @@ from __future__ import annotations
 import argparse
 import json
 import re
-import subprocess
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
+
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import git_lines as shared_git_lines  # noqa: E402
 
 
 BLOCKED_EXTENSION = "." + "ps1"
@@ -54,11 +60,7 @@ TEXT_SUFFIX_ALLOWLIST = {
 
 
 def git_lines(root: Path, args: list[str]) -> list[str]:
-    completed = subprocess.run(["git", *args], cwd=root, check=False, capture_output=True, text=True)
-    if completed.returncode != 0:
-        detail = (completed.stderr or completed.stdout).strip()
-        raise RuntimeError(f"git {' '.join(args)} failed: {detail}")
-    return [line.strip() for line in completed.stdout.splitlines() if line.strip()]
+    return shared_git_lines(root, args)
 
 
 def tracked_files(root: Path) -> list[str]:

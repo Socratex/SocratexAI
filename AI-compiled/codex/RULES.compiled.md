@@ -6835,7 +6835,10 @@ Draft placeholder:
                     "tools/repo/check_pipeline_feature_contracts.py",
                     "tools/repo/finalize_changed_files_commit_push.py",
                     "tools/repo/task_snapshot.py",
-                    "tools/repo/end_prompt_snapshot.py"
+                    "tools/repo/end_prompt_snapshot.py",
+                    "tools/quality/run_quality_fix.py",
+                    "tools/quality/run_quality_gate.py",
+                    "tools/quality/script_runtime_gate.py"
                 ],
                 "required_scripts": [
                     "rebuild_ai_compiled_context.py",
