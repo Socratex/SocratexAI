@@ -23,7 +23,19 @@ BLOCKED_PATTERN = re.compile(
     + re.escape(BLOCKED_EXTENSION)
     + r")(?![a-z0-9_])"
 )
-DEFAULT_SKIP_PARTS = {".git"}
+DEFAULT_SKIP_PARTS = {
+    ".git",
+    "_PROMPTS",
+    "AI-compiled",
+    "audits",
+    "cache",
+    "CHANGELOG.md",
+    "docs-tech",
+    "Python312",
+    "python-installer",
+    "tmp",
+    "_PLAN.json",
+}
 TEXT_SUFFIX_ALLOWLIST = {
     ".bat",
     ".cfg",
@@ -120,7 +132,11 @@ def summarize_by_top_path(paths: list[str]) -> dict[str, int]:
 
 def build_report(root: Path, max_line_length: int, extra_skip: set[str]) -> dict[str, Any]:
     paths = tracked_files(root)
-    blocked_files = [path for path in paths if path.lower().endswith(BLOCKED_EXTENSION)]
+    blocked_files = [
+        path
+        for path in paths
+        if path.lower().endswith(BLOCKED_EXTENSION) and not is_skipped(path, extra_skip)
+    ]
     reference_hits = find_reference_hits(root, paths, max_line_length, extra_skip)
     return {
         "schema": "socratex-script-runtime-gate/v1",
