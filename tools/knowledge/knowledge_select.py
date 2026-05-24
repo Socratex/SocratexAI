@@ -8,21 +8,15 @@ import subprocess
 import sys
 from pathlib import Path
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
 
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
+from shared.cli_helpers import configure_stdio, split_values as split_cli_values  # noqa: E402
 
 
 def split_tags(values: list[str]) -> list[str]:
-    tags: list[str] = []
-    for value in values:
-        for tag in value.split(","):
-            cleaned = tag.strip()
-            if cleaned:
-                tags.append(cleaned)
-    return tags
+    return split_cli_values(values, unique=False)
 
 
 def parse_args() -> argparse.Namespace:

@@ -10,6 +10,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import configure_stdio, split_values as split_cli_values  # noqa: E402
+
 
 BASE_CODE_GUIDANCE_TAGS = [
     "engineering",
@@ -30,21 +36,8 @@ BASE_CODE_GUIDANCE_TAGS = [
     "readability",
 ]
 
-
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
-
-
 def normalize_values(values: list[str]) -> list[str]:
-    normalized: list[str] = []
-    for value in values:
-        for part in value.split(","):
-            item = part.strip()
-            if item and item not in normalized:
-                normalized.append(item)
-    return sorted(normalized)
+    return split_cli_values(values, sort=True)
 
 
 def run_tool(repo_root: Path, args: list[str], fallback_args: list[str] | None = None) -> None:

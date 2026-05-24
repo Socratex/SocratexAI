@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T01:54:29+02:00",
+    "generatedAt": "2026-05-24T02:47:08+02:00",
     "threshold": 300,
     "files": [
         {
@@ -124,7 +124,7 @@
         },
         {
             "path": "tools/repo/repo_tool_helpers.py",
-            "lines": 172,
+            "lines": 170,
             "extension": ".py",
             "large": false
         },
@@ -166,7 +166,7 @@
         },
         {
             "path": "tools/knowledge/knowledge_code_context.py",
-            "lines": 143,
+            "lines": 137,
             "extension": ".py",
             "large": false
         },
@@ -189,15 +189,15 @@
             "large": false
         },
         {
-            "path": "tools/codebase/context_gate_helpers.py",
-            "lines": 126,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/json/json_node_edit.py",
             "lines": 126,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/codebase/context_gate_helpers.py",
+            "lines": 120,
+            "extension": ".py",
             "large": false
         },
         {
@@ -303,12 +303,6 @@
             "large": false
         },
         {
-            "path": "tools/knowledge/knowledge_select.py",
-            "lines": 77,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/diagnostics/log_summary.py",
             "lines": 76,
             "extension": ".py",
@@ -339,14 +333,14 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/generate_installed_agent_instructions.py",
+            "path": "tools/knowledge/knowledge_select.py",
             "lines": 71,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/pipeline/pipeline_script_helpers.py",
-            "lines": 70,
+            "path": "tools/pipeline/generate_installed_agent_instructions.py",
+            "lines": 71,
             "extension": ".py",
             "large": false
         },
@@ -381,8 +375,20 @@
             "large": false
         },
         {
+            "path": "tools/pipeline/pipeline_script_helpers.py",
+            "lines": 62,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/codebase/check_code_context_gate.py",
             "lines": 60,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/compile_pipeline_context.py",
+            "lines": 57,
             "extension": ".py",
             "large": false
         },
@@ -501,12 +507,6 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/compile_pipeline_context.py",
-            "lines": 36,
-            "extension": ".ps1",
-            "large": false
-        },
-        {
             "path": "tools/pipeline/init_task_work.py",
             "lines": 36,
             "extension": ".py",
@@ -532,6 +532,12 @@
         },
         {
             "path": "tools/knowledge/knowledge_check.py",
+            "lines": 35,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/shared/cli_helpers.py",
             "lines": 35,
             "extension": ".py",
             "large": false
@@ -603,14 +609,14 @@
             "large": false
         },
         {
-            "path": "tools/documents/document_wrapper_helpers.py",
+            "path": "tools/documents/move_document_item.py",
             "lines": 27,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/move_document_item.py",
-            "lines": 27,
+            "path": "tools/documents/document_wrapper_helpers.py",
+            "lines": 25,
             "extension": ".py",
             "large": false
         },

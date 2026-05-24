@@ -9,6 +9,12 @@ import subprocess
 import sys
 from pathlib import Path
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import configure_stdio  # noqa: E402
+
 
 CODE_EXTENSIONS = {".gd", ".cs", ".ts", ".tsx", ".js", ".jsx", ".py", ".java", ".kt", ".go", ".rs", ".php"}
 IMPORTANT_WORDS = (
@@ -40,13 +46,6 @@ IMPORTANT_WORDS = (
 BOUNDARY_PARTS = {"domain", "application", "infrastructure", "system", "systems", "service", "services", "runtime", "diagnostic", "diagnostics"}
 SKIP_PARTS = {".git", "AI-compiled", "SocratexAI", "ignored", "logs", "logs-diagnostics", "logs-performance", "node_modules", "vendor"}
 SKIP_SUFFIXES = (".uid", ".import", ".tres", ".tscn")
-
-
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
-
 
 def normalize(path: str) -> str:
     return path.replace("\\", "/")

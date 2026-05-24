@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-6315e3f89464
+Generated: source-e4c33a941183
 
 ## Source of Truth
 
@@ -6825,7 +6825,8 @@ Draft placeholder:
                     "templates/code/context-docs/ENGINEERING.json",
                     "AI-compiled",
                     "SCRIPTS.json",
-                    "pipeline_featurelist.json"
+                    "pipeline_featurelist.json",
+                    "tools/shared/cli_helpers.py"
                 ],
                 "required_scripts": [
                     "rebuild_ai_compiled_context.py",
@@ -6846,6 +6847,7 @@ Draft placeholder:
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
+                    "Keep helpers domain-local by default; promote a narrow shared helper when the same helper contract is used by two or more tool domains.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."

@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-6315e3f89464",
+  "generated_at": "source-e4c33a941183",
   "source_hashes": {
     "AGENTS.md": "47c083c7c04b06f4166c07abc1a6ab72a21666e5d15c7d7738eb48e984d4c5fa",
     "README.md": "fc5e9df9461e710fa8fa1a6eb6e62dfdafceb9fe2c18121a7ae893ae689467ef",
@@ -22,16 +22,16 @@
     "context-docs/ENGINEERING.json": "8dbd9394ec57ea2ca6de2d173ff9253e76274819ebf6020df0facc573a485ee1",
     "docs-tech/KNOWLEDGE-VIEWS.json": "67043d7b346fbb9448d3846026af7086ac543948d12fde7046abfb5d793d1dbe",
     "tools/knowledge/knowledge_index.py": "5746d606599353231ae6491d01da199ca8a0022600e4f6357cf1d9b67967bff4",
-    "tools/knowledge/context_tags.py": "9a1045e16aee84a9b4c7c76a0fbe7ac961c548107b27adf2a21c7314dc4e9a87",
-    "tools/knowledge/knowledge_select.py": "0448c13b9e9d85e0b49d76f058359477230e13e78a47e6149c609e1d39b2320d",
-    "tools/knowledge/knowledge_compile.py": "d1859a6515e5f643686253b6fcc970ba7372e647317b7abceba199cabfd74b3c",
-    "tools/knowledge/knowledge_check.py": "2832e2629589b55010640c7487862558835203005264b4e6fe36b669b4e1e364",
-    "tools/knowledge/knowledge_file_compile.py": "4714480ca6bdaaf3b8e49fd5c0870e9ea4dc8c4d96ed5197235066be4fef22c4",
-    "tools/knowledge/knowledge_file_check.py": "d70277d5df574e96cb52662fbe633eec4dac8638a73ba56215e06719d0c274f6",
+    "tools/knowledge/context_tags.py": "19ed6a67886b05ebd35c2965a29fb2fb352ae783e657af24b82830e78a2b3286",
+    "tools/knowledge/knowledge_select.py": "bde872e878b7e6c7df134a48c8db363012c11ed7c19d1f5ad460541ff0b33a06",
+    "tools/knowledge/knowledge_compile.py": "e24928f3a370300e279edd70fd6a8cf37ea7b30ac46e60913ac71c12fd4b646f",
+    "tools/knowledge/knowledge_check.py": "0347c703e29e1b51748ad5c138484019195e9f7bfef56b1628c90f276d14d6e3",
+    "tools/knowledge/knowledge_file_compile.py": "a5aa5405445881aa7d5eb8c2ca0323b4adc35777e7ebb3e94927e4e9814b9660",
+    "tools/knowledge/knowledge_file_check.py": "2d44b65025506247eac0e0c4d3c95eb23d890a7684a36ac5a63e922856881a7e",
     "tools/knowledge/knowledge_file_select.py": "1c5013e68777b651f2ec8066d3898e8ef0679c26ad45ed54443b84528d8bd001",
     "tools/pipeline/pipeline_bootstrap_index.py": "11eb17c1e4713c1cd595da75febb5d823ae881d1538eb758241652b3429c2783",
-    "tools/pipeline/compile_pipeline_context.py": "b03f7a55531df3a2c8e3693c8ad76fe975c8054bb2e39d571bb2f82540cf06ab",
-    "tools/pipeline/rebuild_ai_compiled_context.py": "ccb403c7d9a724bcf6e341174d0e743fcd9659bd1aa71986795f2d4fa96deb12",
+    "tools/pipeline/compile_pipeline_context.py": "fb947a38b7f88328d6aed74392a7d2bfa9da6b1747e933c915a399e6ec60e09d",
+    "tools/pipeline/rebuild_ai_compiled_context.py": "062eea587dd48c16bcd949fd123ca2cd20d194b14edfb510c271eab37b80a082",
     "tools/pipeline/check_ai_compiled_context.py": "75fcb01413d36f8e9a334f23295b3204db541e0e199d020442b1030695c503e3",
     "templates/WORKFLOW.json": "3ff145e0fb1907c456978a8c8068d1f16dc68c89bf020e013e1facf1ad641433",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "b0132e2dbc9a6fd1cbd2de297d5699e881ba5c21b73e96593277ed23b5ce8b78",
@@ -55,11 +55,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "9af3a7796bdbce6a8742d1ea3f08d6c3d1e5db359d3cbbf760ea2fc3d6f31c64",
-    "codex/ENTRYPOINT.md": "7e09f3ec7ccb7dff9de0f5dedfa91b16d4c6f3b8e4a93d54afa0cc3ab5e13ea0",
-    "codex/RULES.compiled.md": "c2f449a61c0e89628bafdf9820f98b93fb77189825d6cfbabdac497d33c3703b",
-    "codex/WORKFLOW.compiled.md": "0cf61077880800ee531cf09fae218d0a317ccef77d2bef2cb3a94336ab8d1cc7",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "feb926649aea0be2a5555556b5257042990aab267a31968398c7418902bcb6dd",
-    "codex/TEAM.compiled.md": "77cf42debd3adc30aa124d64bfa86b06b9be5d76ed23120ca24507fe0ee7d8fc"
+    "INDEX.json": "dc72a026255b193205d20a6a96e73ec80ac966de6c6578d459c162b8fe497eb6",
+    "codex/ENTRYPOINT.md": "116a9cc004a22bc09786e7447e2c68bad0e4fda04be4d14461c1f8b4a5265945",
+    "codex/RULES.compiled.md": "354d71443650670075d4e971a2ebe77f7a58ec66f029387c383520905775cad5",
+    "codex/WORKFLOW.compiled.md": "7a9fb6b8edb4c58e5f852cad8e05ea3c1a13413277aee3d146d5fb13264befc8",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "28446b4bbe09b63c1fcd1bd926d6f7928ef22b001b7fa01419c26b652277a2f4",
+    "codex/TEAM.compiled.md": "3094b20cd505b415b4467d53830080dca5f40da8af26e022710e95baefe0fc3f"
   }
 }

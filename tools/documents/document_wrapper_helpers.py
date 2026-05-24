@@ -3,6 +3,12 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import split_values as split_cli_values  # noqa: E402
+
 
 def repo_root(start: Path | None = None) -> Path:
     current = (start or Path(__file__)).resolve()
@@ -23,15 +29,8 @@ def run_module_main(module: object, argv: list[str]) -> int:
 
 
 def split_values(values: list[str]) -> list[str]:
-    result: list[str] = []
-    for value in values:
-        for part in value.split(","):
-            trimmed = part.strip()
-            if trimmed:
-                result.append(trimmed)
-    return result
+    return split_cli_values(values, unique=False)
 
 
 def add_bool_alias(parser, *flags: str, dest: str) -> None:
     parser.add_argument(*flags, action="store_true", dest=dest)
-

@@ -13,6 +13,12 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Any
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import configure_stdio  # noqa: E402
+
 
 DEFAULT_PACKS = ["code", "generic", "personal", "creative", "gamedev"]
 
@@ -57,13 +63,6 @@ SOURCE_PATHS = [
     "templates/team/experience.json",
     "templates/team/pipeline.json",
 ]
-
-
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
-
 
 def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")

@@ -8,18 +8,18 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import python_runtime
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import configure_stdio, split_values  # noqa: E402
+
 
 UTF8_NEWLINE = "\n"
-
-
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
 
 
 def package_root() -> Path:
@@ -44,16 +44,6 @@ def write_text(path: Path, value: str, *, dry_run: bool = False) -> None:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(value, encoding="utf-8", newline=UTF8_NEWLINE)
-
-
-def split_values(values: Iterable[str]) -> list[str]:
-    result: list[str] = []
-    for value in values:
-        for part in str(value).split(","):
-            item = part.strip()
-            if item and item not in result:
-                result.append(item)
-    return result
 
 
 def content_of(document: Any) -> Any:

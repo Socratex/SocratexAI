@@ -11,6 +11,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import split_values as split_cli_values  # noqa: E402
+
 
 GIT_WARNING_FRAGMENT = "will be replaced by"
 PIPELINE_ROOT_FILES = {
@@ -96,13 +102,7 @@ def normalize_path(value: str) -> str:
 
 
 def split_values(values: list[str]) -> list[str]:
-    result: list[str] = []
-    for value in values:
-        for part in str(value).replace(";", ",").split(","):
-            item = normalize_path(part)
-            if item and item not in result:
-                result.append(item)
-    return result
+    return split_cli_values(values, separators=(",", ";"), transform=normalize_path)
 
 
 def run(label: str, command: list[str], cwd: Path) -> int:

@@ -9,6 +9,12 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import configure_stdio  # noqa: E402
+
 
 DEFAULT_TAGS = ["engineering", "workflow", "docs-workflow"]
 
@@ -39,13 +45,6 @@ RULES = {
     "documentation": ["doc", "docs", "document", "markdown", "json", "changelog", "featurelist"],
     "planning": ["plan", "roadmap", "priority", "todo", "pass", "continue"],
 }
-
-
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
-
 
 def normalize_tag(tag: str) -> str:
     return tag.strip().lower()

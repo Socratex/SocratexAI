@@ -10,6 +10,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.cli_helpers import configure_stdio, split_values as split_cli_values  # noqa: E402
+
 
 CODE_PATH_SUFFIXES = {
     ".gd",
@@ -56,24 +62,12 @@ SKIP_CODE_PREFIXES = (
 )
 
 
-def configure_stdio() -> None:
-    for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
-
-
 def normalize_path(path: str) -> str:
     return path.replace("\\", "/").strip()
 
 
 def split_path_values(values: list[str]) -> list[str]:
-    paths: set[str] = set()
-    for value in values:
-        for candidate in value.split(","):
-            cleaned = normalize_path(candidate)
-            if cleaned:
-                paths.add(cleaned)
-    return sorted(paths)
+    return split_cli_values(values, transform=normalize_path, sort=True)
 
 
 def git_lines(root: Path, args: list[str], *, allow_failure: bool = False) -> list[str]:
