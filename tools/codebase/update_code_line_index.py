@@ -5,11 +5,14 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from shared.repo_helpers import git_lines  # noqa: E402
 
 
 CODE_EXTENSIONS = {".gd", ".py", ".bat", ".cmd", ".sh", ".cs", ".js", ".ts"}
@@ -40,13 +43,6 @@ LARGE_FILE_NOTES = {
 
 def repo_root(start: Path) -> Path:
     return start.resolve()
-
-
-def git_lines(root: Path, args: list[str]) -> list[str]:
-    completed = subprocess.run(["git", "-C", str(root), *args], check=False, capture_output=True, text=True)
-    if completed.returncode != 0:
-        raise RuntimeError(f"git {' '.join(args)} failed")
-    return [line.strip().replace("\\", "/") for line in completed.stdout.splitlines() if line.strip()]
 
 
 def code_path(path: str) -> bool:

@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T03:01:41+02:00",
+    "generatedAt": "2026-05-24T03:10:29+02:00",
     "threshold": 300,
     "files": [
         {
@@ -69,12 +69,6 @@
             "large": false
         },
         {
-            "path": "tools/codebase/update_code_line_index.py",
-            "lines": 233,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/documents/document_item_edit_engine.py",
             "lines": 232,
             "extension": ".py",
@@ -87,8 +81,8 @@
             "large": false
         },
         {
-            "path": "tools/repo/task_flow_audit.py",
-            "lines": 212,
+            "path": "tools/codebase/update_code_line_index.py",
+            "lines": 229,
             "extension": ".py",
             "large": false
         },
@@ -129,14 +123,8 @@
             "large": false
         },
         {
-            "path": "tools/repo/repo_tool_helpers.py",
-            "lines": 170,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/run_final_task_checks.py",
-            "lines": 159,
+            "path": "tools/repo/task_flow_audit.py",
+            "lines": 168,
             "extension": ".py",
             "large": false
         },
@@ -165,6 +153,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/run_final_task_checks.py",
+            "lines": 139,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/knowledge/knowledge_code_context.py",
             "lines": 137,
             "extension": ".py",
@@ -179,6 +173,12 @@
         {
             "path": "tools/pipeline/reinitialize_pipeline.py",
             "lines": 135,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/repo/repo_tool_helpers.py",
+            "lines": 130,
             "extension": ".py",
             "large": false
         },
@@ -299,6 +299,12 @@
         {
             "path": "tools/knowledge/project_design_context.py",
             "lines": 84,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/shared/repo_helpers.py",
+            "lines": 78,
             "extension": ".py",
             "large": false
         },

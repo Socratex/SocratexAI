@@ -5,66 +5,14 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
 import sys
 from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-GIT_WARNING_FRAGMENT = "will be replaced by"
-
-
-def repo_root(start: Path) -> Path:
-    completed = subprocess.run(
-        ["git", "-C", str(start), "rev-parse", "--show-toplevel"],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if completed.returncode == 0 and completed.stdout.strip():
-        return Path(completed.stdout.strip()).resolve()
-    for candidate in [start.resolve(), *start.resolve().parents]:
-        if (candidate / "SCRIPTS.json").is_file():
-            return candidate
-    return start.resolve()
-
-
-def git_lines(root: Path, args: list[str]) -> list[str]:
-    completed = subprocess.run(["git", *args], cwd=root, check=False, capture_output=True, text=True)
-    output = (completed.stdout or "") + (completed.stderr or "")
-    if completed.returncode != 0:
-        raise RuntimeError(f"git {' '.join(args)} failed: {output.strip()}")
-    return [
-        line.strip()
-        for line in output.splitlines()
-        if line.strip()
-        and GIT_WARNING_FRAGMENT not in line
-        and not line.lstrip().startswith("warning:")
-    ]
-
-
-def split_paths(paths: list[str]) -> list[str]:
-    result: set[str] = set()
-    for raw_path in paths:
-        for candidate in raw_path.split(","):
-            normalized = candidate.strip().replace("\\", "/").removeprefix("./")
-            if normalized:
-                result.add(normalized)
-    return sorted(result)
-
-
-def changed_paths(root: Path, explicit: list[str]) -> list[str]:
-    if explicit:
-        return split_paths(explicit)
-    paths: set[str] = set()
-    for args in (
-        ["diff", "--name-only", "--diff-filter=ACMRD"],
-        ["diff", "--cached", "--name-only", "--diff-filter=ACMRD"],
-        ["ls-files", "--others", "--exclude-standard"],
-    ):
-        paths.update(path.replace("\\", "/") for path in git_lines(root, args))
-    return sorted(paths)
+from shared.repo_helpers import changed_paths, repo_root  # noqa: E402
 
 
 def first_existing_changelog(root: Path, explicit: str) -> Path | None:

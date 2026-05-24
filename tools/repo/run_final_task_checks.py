@@ -9,21 +9,8 @@ import sys
 from pathlib import Path
 
 from repo_tool_helpers import changed_text_paths
-
-
-def repo_root(start: Path) -> Path:
-    for candidate in [start.resolve(), *start.resolve().parents]:
-        if (candidate / "SCRIPTS.json").is_file() and (candidate / "tools").is_dir():
-            return candidate
-    return start.resolve()
-
-
-def run(label: str, command: list[str], cwd: Path) -> int:
-    print(f"\n==> {label}")
-    completed = subprocess.run(command, cwd=cwd, check=False)
-    if completed.returncode != 0:
-        print(f"ERROR: {label} failed with exit code {completed.returncode}", file=sys.stderr)
-    return completed.returncode
+from shared.repo_helpers import changed_paths as git_changed_paths
+from shared.repo_helpers import repo_root, run_step as run
 
 
 def normalize_changed_text(root: Path, label: str, skip: bool) -> int:
@@ -44,19 +31,6 @@ def normalize_changed_text(root: Path, label: str, skip: bool) -> int:
         ],
         root,
     )
-
-
-def git_changed_paths(root: Path) -> list[str]:
-    paths: set[str] = set()
-    for args in (
-        ["diff", "--name-only", "--diff-filter=ACMRD"],
-        ["diff", "--cached", "--name-only", "--diff-filter=ACMRD"],
-        ["ls-files", "--others", "--exclude-standard"],
-    ):
-        completed = subprocess.run(["git", *args], cwd=root, check=False, capture_output=True, text=True)
-        if completed.returncode == 0:
-            paths.update(line.strip() for line in completed.stdout.splitlines() if line.strip())
-    return sorted(paths)
 
 
 def print_task_snapshot(root: Path) -> int:

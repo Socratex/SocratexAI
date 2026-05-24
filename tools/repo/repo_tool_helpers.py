@@ -16,9 +16,15 @@ if str(_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(_TOOLS_ROOT))
 
 from shared.cli_helpers import split_values as split_cli_values  # noqa: E402
+from shared.repo_helpers import (  # noqa: E402
+    changed_paths,
+    git_lines,
+    normalize_repo_path,
+    repo_root,
+    run_step as run,
+)
 
 
-GIT_WARNING_FRAGMENT = "will be replaced by"
 PIPELINE_ROOT_FILES = {
     "AGENTS.md",
     "PUBLIC-BOOTSTRAP.md",
@@ -78,70 +84,16 @@ IGNORED_CODE_PREFIXES = (
 )
 
 
-def repo_root(start: Path) -> Path:
-    completed = subprocess.run(
-        ["git", "-C", str(start), "rev-parse", "--show-toplevel"],
-        check=False,
-        capture_output=True,
-        text=True,
-    )
-    if completed.returncode == 0 and completed.stdout.strip():
-        return Path(completed.stdout.strip()).resolve()
-    for candidate in [start.resolve(), *start.resolve().parents]:
-        if (candidate / "SCRIPTS.json").is_file() and (candidate / "tools").is_dir():
-            return candidate
-    return start.resolve()
-
-
 def package_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
 def normalize_path(value: str) -> str:
-    return value.replace("\\", "/").removeprefix("./").strip()
+    return normalize_repo_path(value)
 
 
 def split_values(values: list[str]) -> list[str]:
     return split_cli_values(values, separators=(",", ";"), transform=normalize_path)
-
-
-def run(label: str, command: list[str], cwd: Path) -> int:
-    print()
-    print(f"==> {label}")
-    completed = subprocess.run(command, cwd=cwd, check=False)
-    if completed.returncode != 0:
-        print(f"ERROR: {label} failed with exit code {completed.returncode}", file=sys.stderr)
-    return completed.returncode
-
-
-def git_lines(root: Path, args: list[str]) -> list[str]:
-    completed = subprocess.run(["git", *args], cwd=root, check=False, capture_output=True, text=True)
-    output = (completed.stdout or "") + (completed.stderr or "")
-    if completed.returncode != 0:
-        raise RuntimeError(f"git {' '.join(args)} failed: {output.strip()}")
-    return [
-        line.strip()
-        for line in output.splitlines()
-        if line.strip()
-        and GIT_WARNING_FRAGMENT not in line
-        and not line.lstrip().startswith("warning:")
-    ]
-
-
-def changed_paths(root: Path, explicit: list[str] | None = None, *, diff_filter: str = "ACMRD") -> list[str]:
-    explicit_paths = split_values(explicit or [])
-    if explicit_paths:
-        return sorted(set(explicit_paths))
-    if not (root / ".git").exists():
-        return []
-    paths: set[str] = set()
-    for args in (
-        ["diff", "--name-only", f"--diff-filter={diff_filter}"],
-        ["diff", "--cached", "--name-only", f"--diff-filter={diff_filter}"],
-        ["ls-files", "--others", "--exclude-standard"],
-    ):
-        paths.update(normalize_path(path) for path in git_lines(root, args))
-    return sorted(path for path in paths if path)
 
 
 def changed_text_paths(root: Path, explicit: list[str] | None = None) -> list[str]:
