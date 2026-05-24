@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T15:05:28+02:00",
+    "generatedAt": "2026-05-24T15:17:25+02:00",
     "threshold": 300,
     "files": [
         {
@@ -101,6 +101,12 @@
         {
             "path": "tools/repo/check_pipeline_feature_contracts.py",
             "lines": 214,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/diagnostics/log_summary.py",
+            "lines": 213,
             "extension": ".py",
             "large": false
         },
@@ -213,6 +219,12 @@
             "large": false
         },
         {
+            "path": "tools/pipeline/generate_embedded_config_payload.py",
+            "lines": 123,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/pipeline/read_compiled_context.py",
             "lines": 122,
             "extension": ".py",
@@ -256,12 +268,6 @@
         },
         {
             "path": "tools/knowledge/context_tags.py",
-            "lines": 100,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/generate_embedded_config_payload.py",
             "lines": 100,
             "extension": ".py",
             "large": false
@@ -345,7 +351,7 @@
             "large": false
         },
         {
-            "path": "tools/diagnostics/log_summary.py",
+            "path": "tools/diagnostics/console_summary.py",
             "lines": 76,
             "extension": ".py",
             "large": false
@@ -381,12 +387,6 @@
             "large": false
         },
         {
-            "path": "tools/diagnostics/console_summary.py",
-            "lines": 68,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/codebase/check_code_context_gate.py",
             "lines": 67,
             "extension": ".py",
@@ -418,6 +418,12 @@
         },
         {
             "path": "tools/pipeline/pipeline_script_helpers.py",
+            "lines": 62,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/quality/run_quality_fix.py",
             "lines": 62,
             "extension": ".py",
             "large": false
@@ -532,12 +538,6 @@
         },
         {
             "path": "tools/documents/check_document_list_item_duplicates.py",
-            "lines": 38,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/quality/run_quality_fix.py",
             "lines": 38,
             "extension": ".py",
             "large": false

@@ -6722,6 +6722,7 @@
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "Keep helpers domain-local by default; promote a narrow shared helper when the same helper contract is used by two or more tool domains.",
+                    "Keep project-facing diagnostics, embedded-config, and quality-fix tools parameterized for child repo roots, log paths, startup markers, required resource sets, generated output locations, and project-specific quality helper entry points.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."

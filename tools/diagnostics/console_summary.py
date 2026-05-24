@@ -27,15 +27,22 @@ def write_lines(path: Path, lines: list[str]) -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--repo-root", default="")
     parser.add_argument("--console-log-path", "-ConsoleLogPath", default="")
     parser.add_argument("--output-path", "-OutputPath", default="")
+    parser.add_argument(
+        "--startup-pattern",
+        action="append",
+        default=[],
+        help="Regex pattern for startup lines. Repeat to add project-specific patterns.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     configure_stdio()
     args = parse_args()
-    repo_root = Path(__file__).resolve().parents[2]
+    repo_root = Path(args.repo_root).resolve() if args.repo_root else Path(__file__).resolve().parents[2]
     console_log_path = Path(args.console_log_path).resolve() if args.console_log_path else repo_root / "CONSOLE-LOG"
     output_path = Path(args.output_path).resolve() if args.output_path else repo_root / "CONSOLE-LOG-SUMMARY"
 
@@ -54,7 +61,8 @@ def main() -> int:
     problem_re = re.compile(r"ERROR|SCRIPT ERROR|WARNING", re.IGNORECASE)
     error_re = re.compile(r"ERROR|SCRIPT ERROR", re.IGNORECASE)
     warning_re = re.compile(r"WARNING", re.IGNORECASE)
-    startup_re = re.compile(r"engine startup|graphics backend ", re.IGNORECASE)
+    startup_patterns = args.startup_pattern or [r"engine startup", r"graphics backend "]
+    startup_re = re.compile("|".join(f"(?:{pattern})" for pattern in startup_patterns), re.IGNORECASE)
     backtrace_re = re.compile(r"GDScript backtrace", re.IGNORECASE)
 
     error_matches = [line for line in content if error_re.search(line)]
