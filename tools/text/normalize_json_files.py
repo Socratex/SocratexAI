@@ -91,6 +91,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Normalize JSON files as UTF-8, LF, four-space indentation, final newline.")
     parser.add_argument("paths", nargs="*", default=["**/*.json"])
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--path", action="append", default=[])
     parser.add_argument("--exclude-prefix", action="append", default=[])
     parser.add_argument("--exclude-path", action="append", default=[])
     parser.add_argument("--check", action="store_true")
@@ -99,9 +100,10 @@ def main() -> int:
     root = Path(args.repo_root).resolve()
     excluded_prefixes = DEFAULT_EXCLUDED_PREFIXES + split_values(args.exclude_prefix)
     excluded_paths = DEFAULT_EXCLUDED_PATHS + split_values(args.exclude_path)
+    patterns = split_values(args.path) if args.path else args.paths
     changed: list[str] = []
     errors: list[str] = []
-    for path in iter_paths(root, args.paths, excluded_prefixes, excluded_paths):
+    for path in iter_paths(root, patterns, excluded_prefixes, excluded_paths):
         relative = path.relative_to(root).as_posix()
         try:
             if normalize_path(path, args.check):

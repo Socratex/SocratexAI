@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T14:32:18+02:00",
+    "generatedAt": "2026-05-24T14:35:24+02:00",
     "threshold": 300,
     "files": [
         {
@@ -237,13 +237,13 @@
             "large": false
         },
         {
-            "path": "tools/codebase/context_gate_helpers.py",
-            "lines": 103,
+            "path": "tools/text/normalize_json_files.py",
+            "lines": 105,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/text/normalize_json_files.py",
+            "path": "tools/codebase/context_gate_helpers.py",
             "lines": 103,
             "extension": ".py",
             "large": false

@@ -5697,7 +5697,8 @@ Draft placeholder:
                     "Run the portable JSON smoke after moving or editing JSON helpers, then run document audit and feature-contract checks.",
                     "Sync child projects so embedded SocratexAI packages receive the same tools/json layout.",
                     "Keep smoke_json_tools.py resolving json_list_doc.py relative to its own folder so the pack works after copying into either tools/json or Tools/json layouts.",
-                    "Keep portable text/json helpers parameterized for child-project raw JSON exclusions and embedded-package imports so root Tools can delegate instead of reimplementing normalizers and smoke tests."
+                    "Keep portable text/json helpers parameterized for child-project raw JSON exclusions and embedded-package imports so root Tools can delegate instead of reimplementing normalizers and smoke tests.",
+                    "Keep normalize_json_files.py compatible with both positional glob inputs and repeated --path inputs used by task finalizers for scoped normalization."
                 ],
                 "verification_commands": [
                     "python3 tools/json/smoke_json_tools.py",
