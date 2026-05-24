@@ -411,12 +411,16 @@ def connect(db_path: Path) -> sqlite3.Connection:
 
 
 def repo_root_from_db_path(db_path: Path) -> Path:
-    expected_suffix = normalize_path(DEFAULT_DB_PATH)
+    expected_suffixes = [
+        "SocratexAI/AI-compiled/project/knowledge.sqlite",
+        normalize_path(DEFAULT_DB_PATH),
+    ]
     normalized_db = normalize_path(str(db_path))
-    if normalized_db.endswith(expected_suffix):
-        root_text = normalized_db[: -len(expected_suffix)].rstrip("/")
-        if root_text:
-            return Path(root_text)
+    for expected_suffix in expected_suffixes:
+        if normalized_db.endswith(expected_suffix):
+            root_text = normalized_db[: -len(expected_suffix)].rstrip("/")
+            if root_text:
+                return Path(root_text)
     return Path.cwd()
 
 

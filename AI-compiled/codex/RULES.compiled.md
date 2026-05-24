@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-22d1ce6db561
+Generated: source-4bfea6823d3d
 
 ## Source of Truth
 
@@ -524,6 +524,7 @@ Draft placeholder:
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "When running against a child project with an embedded SocratexAI package, skip generated embedded AI-compiled artifacts, vendored runtimes, build outputs, logs, and caches while discovering knowledge source documents.",
+                    "When a child project stores the compiled DB under SocratexAI/AI-compiled, resolve named views and source documents against the child project root, not the embedded package root.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
