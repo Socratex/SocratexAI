@@ -603,6 +603,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Keep check_task.py parameterized for child/root tool directories and optional project-only gates instead of reimplementing the task-check flow in child projects.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],

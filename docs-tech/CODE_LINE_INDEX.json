@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T14:41:15+02:00",
+    "generatedAt": "2026-05-24T14:50:11+02:00",
     "threshold": 300,
     "files": [
         {
@@ -225,6 +225,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/check_task.py",
+            "lines": 121,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/quality/check_evals.py",
             "lines": 116,
             "extension": ".py",
@@ -269,12 +275,6 @@
         {
             "path": "tools/pipeline/resolve_workspace_root.py",
             "lines": 98,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/check_task.py",
-            "lines": 96,
             "extension": ".py",
             "large": false
         },
