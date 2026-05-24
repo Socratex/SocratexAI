@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T15:17:25+02:00",
+    "generatedAt": "2026-05-24T16:48:47+02:00",
     "threshold": 300,
     "files": [
         {
@@ -16,7 +16,7 @@
         },
         {
             "path": "tools/pipeline/pipeline_sweep.py",
-            "lines": 481,
+            "lines": 482,
             "extension": ".py",
             "large": true
         },

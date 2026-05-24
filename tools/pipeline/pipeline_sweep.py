@@ -252,6 +252,7 @@ def git_status(project: Project, execute: bool) -> list[CommandResult]:
 def update_command(project: Project, source_root: Path, python: str) -> list[str]:
     command = [
         python,
+        "-B",
         str(source_root / "tools" / "pipeline" / "update_pipeline_from_link.py"),
         "--source",
         str(source_root),
@@ -317,7 +318,7 @@ def smoke_command(project: Project, smoke: str, python: str) -> tuple[str, list[
     }
     if not script.is_file():
         return smoke, [], root, f"missing script: {script}", hints.get(smoke, "Restore the missing smoke script.")
-    return smoke, [python, str(script), *extra], root, "", hints.get(smoke, "Fix the failing smoke check before declaring the project clean.")
+    return smoke, [python, "-B", str(script), *extra], root, "", hints.get(smoke, "Fix the failing smoke check before declaring the project clean.")
 
 
 def print_result(result: CommandResult, json_mode: bool) -> None:
@@ -463,17 +464,17 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Sweep SocratexPipeline updates and smoke checks across source and child projects."
     )
-    parser.add_argument("--config", help="JSON config with source/defaults/projects.")
-    parser.add_argument("--source", help="SocratexAI source root; defaults to the current tool repository.")
-    parser.add_argument("--project", action="append", default=[], help="Add a project as NAME=PATH.")
-    parser.add_argument("--execute", action="store_true", help="Run commands. Without this, only print the plan.")
-    parser.add_argument("--update", action="store_true", help="Run update phase.")
-    parser.add_argument("--smoke", action="store_true", help="Run smoke phase.")
-    parser.add_argument("--finalize", action="store_true", help="Run configured finalizer commands.")
-    parser.add_argument("--all", action="store_true", help="Run update and smoke phases.")
-    parser.add_argument("--stop-on-failure", action="store_true", help="Stop a project after the first failing phase.")
-    parser.add_argument("--json", action="store_true", help="Print machine-readable JSON summary.")
-    parser.add_argument("--write-report", default="", help="Optional JSON summary report output path.")
+    parser.add_argument("--config", "-Config", help="JSON config with source/defaults/projects.")
+    parser.add_argument("--source", "-Source", help="SocratexAI source root; defaults to the current tool repository.")
+    parser.add_argument("--project", "-Project", action="append", default=[], help="Add a project as NAME=PATH.")
+    parser.add_argument("--execute", "-Execute", action="store_true", help="Run commands. Without this, only print the plan.")
+    parser.add_argument("--update", "-Update", action="store_true", help="Run update phase.")
+    parser.add_argument("--smoke", "-Smoke", action="store_true", help="Run smoke phase.")
+    parser.add_argument("--finalize", "-Finalize", action="store_true", help="Run configured finalizer commands.")
+    parser.add_argument("--all", "-All", action="store_true", help="Run update and smoke phases.")
+    parser.add_argument("--stop-on-failure", "-StopOnFailure", action="store_true", help="Stop a project after the first failing phase.")
+    parser.add_argument("--json", "-Json", action="store_true", help="Print machine-readable JSON summary.")
+    parser.add_argument("--write-report", "-WriteReport", default="", help="Optional JSON summary report output path.")
     args = parser.parse_args()
 
     tool_root = resolve_repo_root(Path(__file__).resolve())

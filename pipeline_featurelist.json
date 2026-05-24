@@ -6157,6 +6157,8 @@
                     "Keep the sweep runner Python-first and OS-agnostic; legacy shell wrappers are removed from the catalog and are not core implementation.",
                     "Require explicit project config or NAME=PATH arguments so the tool does not depend on agent memory or private hardcoded workspaces.",
                     "Keep dry-run as the default and require --execute/-Execute before update, smoke, or finalizer commands run.",
+                    "Keep catalogued CLI aliases such as -Config, -Project, -Execute, -Smoke, and -WriteReport wired to the Python argparse interface.",
+                    "Run Python child commands with -B so sweep and chain tools do not create bytecode cache artifacts outside finalizers.",
                     "Model projects through status, update, smoke, optional finalizer, and summary phases instead of one-off manual command sequences.",
                     "Use named chain tools for repeated command groups so agents can run documented series instead of reconstructing command batches by memory.",
                     "Run or print standard smoke coverage for docs audit, feature contracts, compiled context, tier checks, and git cleanliness where applicable.",
