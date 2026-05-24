@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-fb9005ba27b1
+Generated: source-22d1ce6db561
 
 ## Source of Truth
 
@@ -523,6 +523,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "When running against a child project with an embedded SocratexAI package, skip generated embedded AI-compiled artifacts, vendored runtimes, build outputs, logs, and caches while discovering knowledge source documents.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],

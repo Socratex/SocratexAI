@@ -151,10 +151,20 @@ def should_skip_source(relative_path: str) -> bool:
     path = normalize_path(relative_path)
     return (
         path.startswith("AI-compiled/")
+        or path.startswith("SocratexAI/AI-compiled/")
         or path.startswith("docs-tech/cache/")
+        or "/cache/" in path
         or path.startswith("ignored/")
         or path.startswith("templates/")
         or path.startswith("tools/tmp/")
+        or path.startswith("Tools/Python312/")
+        or path.startswith("Tools/python-installer/")
+        or path.startswith("Tools/tmp/")
+        or "/bin/" in path
+        or "/obj/" in path
+        or path.startswith("logs/")
+        or path.startswith("logs-diagnostics/")
+        or path.startswith("logs-performance/")
         or path.endswith("/manifest.json")
         or path.endswith("/stale-report.json")
         or path

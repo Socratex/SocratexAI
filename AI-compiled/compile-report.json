@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-instructions/v1",
-  "generated_at": "source-fb9005ba27b1",
+  "generated_at": "source-22d1ce6db561",
   "role": "generated_agent_cache",
   "source_of_truth": "source instruction files outside AI-compiled",
   "do_not_edit_manually": true,
@@ -43,7 +43,7 @@
     "core/SCRIPT-FALLBACK.json": "fc11a72486ee3096b1f2e3634251498e4c3c66478ecf7cb2073ec4673bc3af21",
     "context-docs/ENGINEERING.json": "8dbd9394ec57ea2ca6de2d173ff9253e76274819ebf6020df0facc573a485ee1",
     "docs-tech/KNOWLEDGE-VIEWS.json": "67043d7b346fbb9448d3846026af7086ac543948d12fde7046abfb5d793d1dbe",
-    "tools/knowledge/knowledge_index.py": "985cced8dddf17fd68909a2d2121aef033adf1ec8530f1949711ba899c367c33",
+    "tools/knowledge/knowledge_index.py": "6a2eb5b44d2405dce1e83b9f173a53d75a92285ede31703434b2881d29fee225",
     "tools/knowledge/context_tags.py": "19ed6a67886b05ebd35c2965a29fb2fb352ae783e657af24b82830e78a2b3286",
     "tools/knowledge/knowledge_select.py": "bde872e878b7e6c7df134a48c8db363012c11ed7c19d1f5ad460541ff0b33a06",
     "tools/knowledge/knowledge_compile.py": "e24928f3a370300e279edd70fd6a8cf37ea7b30ac46e60913ac71c12fd4b646f",

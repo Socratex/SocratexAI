@@ -1,10 +1,10 @@
 {
-    "generatedAt": "2026-05-24T13:47:51+02:00",
+    "generatedAt": "2026-05-24T14:00:59+02:00",
     "threshold": 300,
     "files": [
         {
             "path": "tools/knowledge/knowledge_index.py",
-            "lines": 1298,
+            "lines": 1308,
             "extension": ".py",
             "large": true
         },
