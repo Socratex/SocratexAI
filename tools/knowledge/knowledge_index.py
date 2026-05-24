@@ -1,11 +1,22 @@
 import argparse
-import hashlib
 import json
 import sqlite3
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.file_helpers import (  # noqa: E402
+    normalized_hash_text,
+    read_text,
+    sha256_optional_text_file,
+    sha256_text,
+    write_text_if_changed,
+)
 
 SCHEMA = "socratex-knowledge-index/v4"
 COMPILER_VERSION = "4"
@@ -53,37 +64,8 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
-def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
-
-
-def write_text_if_changed(path: Path, content: str) -> bool:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    if path.exists() and read_text(path) == content:
-        return False
-    path.write_text(content, encoding="utf-8", newline="\n")
-    return True
-
-
-def normalized_hash_text(text: str) -> str:
-    if text.startswith("\ufeff"):
-        text = text[1:]
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
-    lines = [line.rstrip(" \t") for line in text.split("\n")]
-    normalized = "\n".join(lines).rstrip("\n")
-    if normalized:
-        return normalized + "\n"
-    return ""
-
-
-def sha256_text(text: str) -> str:
-    return hashlib.sha256(normalized_hash_text(text).encode("utf-8")).hexdigest()
-
-
 def sha256_file(path: Path) -> str | None:
-    if not path.exists():
-        return None
-    return sha256_text(read_text(path))
+    return sha256_optional_text_file(path)
 
 
 def utc_now() -> str:

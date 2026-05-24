@@ -1,10 +1,10 @@
 {
-    "generatedAt": "2026-05-24T02:54:43+02:00",
+    "generatedAt": "2026-05-24T03:01:41+02:00",
     "threshold": 300,
     "files": [
         {
             "path": "tools/knowledge/knowledge_index.py",
-            "lines": 1310,
+            "lines": 1298,
             "extension": ".py",
             "large": true
         },
@@ -16,7 +16,7 @@
         },
         {
             "path": "tools/pipeline/rebuild_ai_compiled_context.py",
-            "lines": 429,
+            "lines": 415,
             "extension": ".py",
             "large": true
         },
@@ -34,7 +34,7 @@
         },
         {
             "path": "tools/pipeline/sync_managed_pipeline_package.py",
-            "lines": 265,
+            "lines": 263,
             "extension": ".py",
             "large": false
         },
@@ -183,15 +183,15 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/read_compiled_context.py",
-            "lines": 131,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/json/json_node_edit.py",
             "lines": 126,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/read_compiled_context.py",
+            "lines": 122,
+            "extension": ".py",
             "large": false
         },
         {
@@ -468,6 +468,12 @@
             "path": "tools/json/json_line_insert.py",
             "lines": 39,
             "extension": ".ps1",
+            "large": false
+        },
+        {
+            "path": "tools/shared/file_helpers.py",
+            "lines": 39,
+            "extension": ".py",
             "large": false
         },
         {

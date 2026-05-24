@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-e4c33a941183
+Generated: source-3d24f889b6ec
 
 ## Source of Truth
 
@@ -6826,7 +6826,8 @@ Draft placeholder:
                     "AI-compiled",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json",
-                    "tools/shared/cli_helpers.py"
+                    "tools/shared/cli_helpers.py",
+                    "tools/shared/file_helpers.py"
                 ],
                 "required_scripts": [
                     "rebuild_ai_compiled_context.py",

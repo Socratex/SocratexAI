@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-e4c33a941183",
+  "generated_at": "source-3d24f889b6ec",
   "source_hashes": {
     "AGENTS.md": "47c083c7c04b06f4166c07abc1a6ab72a21666e5d15c7d7738eb48e984d4c5fa",
     "README.md": "fc5e9df9461e710fa8fa1a6eb6e62dfdafceb9fe2c18121a7ae893ae689467ef",
@@ -21,7 +21,7 @@
     "core/SCRIPT-FALLBACK.json": "fc11a72486ee3096b1f2e3634251498e4c3c66478ecf7cb2073ec4673bc3af21",
     "context-docs/ENGINEERING.json": "8dbd9394ec57ea2ca6de2d173ff9253e76274819ebf6020df0facc573a485ee1",
     "docs-tech/KNOWLEDGE-VIEWS.json": "67043d7b346fbb9448d3846026af7086ac543948d12fde7046abfb5d793d1dbe",
-    "tools/knowledge/knowledge_index.py": "5746d606599353231ae6491d01da199ca8a0022600e4f6357cf1d9b67967bff4",
+    "tools/knowledge/knowledge_index.py": "985cced8dddf17fd68909a2d2121aef033adf1ec8530f1949711ba899c367c33",
     "tools/knowledge/context_tags.py": "19ed6a67886b05ebd35c2965a29fb2fb352ae783e657af24b82830e78a2b3286",
     "tools/knowledge/knowledge_select.py": "bde872e878b7e6c7df134a48c8db363012c11ed7c19d1f5ad460541ff0b33a06",
     "tools/knowledge/knowledge_compile.py": "e24928f3a370300e279edd70fd6a8cf37ea7b30ac46e60913ac71c12fd4b646f",
@@ -31,7 +31,7 @@
     "tools/knowledge/knowledge_file_select.py": "1c5013e68777b651f2ec8066d3898e8ef0679c26ad45ed54443b84528d8bd001",
     "tools/pipeline/pipeline_bootstrap_index.py": "11eb17c1e4713c1cd595da75febb5d823ae881d1538eb758241652b3429c2783",
     "tools/pipeline/compile_pipeline_context.py": "fb947a38b7f88328d6aed74392a7d2bfa9da6b1747e933c915a399e6ec60e09d",
-    "tools/pipeline/rebuild_ai_compiled_context.py": "062eea587dd48c16bcd949fd123ca2cd20d194b14edfb510c271eab37b80a082",
+    "tools/pipeline/rebuild_ai_compiled_context.py": "5449b8d3e38c3d13a1dd7fc475be9b9301d6fc04d622b0b10cc10da0368051fc",
     "tools/pipeline/check_ai_compiled_context.py": "75fcb01413d36f8e9a334f23295b3204db541e0e199d020442b1030695c503e3",
     "templates/WORKFLOW.json": "3ff145e0fb1907c456978a8c8068d1f16dc68c89bf020e013e1facf1ad641433",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "b0132e2dbc9a6fd1cbd2de297d5699e881ba5c21b73e96593277ed23b5ce8b78",
@@ -55,11 +55,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "dc72a026255b193205d20a6a96e73ec80ac966de6c6578d459c162b8fe497eb6",
-    "codex/ENTRYPOINT.md": "116a9cc004a22bc09786e7447e2c68bad0e4fda04be4d14461c1f8b4a5265945",
-    "codex/RULES.compiled.md": "bd72f520a75257c9affedb4d862ae679507f9eba551b4bdac2a0d562f2ee56e9",
-    "codex/WORKFLOW.compiled.md": "7a9fb6b8edb4c58e5f852cad8e05ea3c1a13413277aee3d146d5fb13264befc8",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "28446b4bbe09b63c1fcd1bd926d6f7928ef22b001b7fa01419c26b652277a2f4",
-    "codex/TEAM.compiled.md": "3094b20cd505b415b4467d53830080dca5f40da8af26e022710e95baefe0fc3f"
+    "INDEX.json": "f19c85336f2e36de376f215f7a7b5755694acb45ae1e40d6ac02930874630d88",
+    "codex/ENTRYPOINT.md": "9aa3d8bfe1740aa77f0e3372a11cd7c2e101ea27c291805c64030a2cccfb722b",
+    "codex/RULES.compiled.md": "d5a7a97f36193c7b78b5d824c4c45e0a8e840e13288de0dffa09a8260c16af5c",
+    "codex/WORKFLOW.compiled.md": "afd85e9617f2941707de94f15dd7b6470ec01836f60db245f7d4eaf543172275",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "176dac58a7e6048e78ca599509ca1188042fa3e597aca6ca5873215a337fa127",
+    "codex/TEAM.compiled.md": "9e2f9ee24d024466c641c9b53752d14e190cf6b761f8b807dff1ac5aa5632457"
   }
 }

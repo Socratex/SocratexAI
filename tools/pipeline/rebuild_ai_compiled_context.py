@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shutil
 import subprocess
@@ -18,6 +17,7 @@ if str(_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(_TOOLS_ROOT))
 
 from shared.cli_helpers import configure_stdio  # noqa: E402
+from shared.file_helpers import normalized_hash_text, read_text, sha256_text, write_text  # noqa: E402
 
 
 DEFAULT_PACKS = ["code", "generic", "personal", "creative", "gamedev"]
@@ -63,28 +63,6 @@ SOURCE_PATHS = [
     "templates/team/experience.json",
     "templates/team/pipeline.json",
 ]
-
-def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
-
-
-def write_text(path: Path, content: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8", newline="\n")
-
-
-def normalized_hash_text(text: str) -> str:
-    if text.startswith("\ufeff"):
-        text = text[1:]
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
-    lines = [line.rstrip(" \t") for line in text.split("\n")]
-    normalized = "\n".join(lines).rstrip("\n")
-    return normalized + "\n" if normalized else ""
-
-
-def sha256_text(text: str) -> str:
-    return hashlib.sha256(normalized_hash_text(text).encode("utf-8")).hexdigest()
-
 
 def relative_hash(repo_root: Path, relative_path: str) -> str | None:
     path = repo_root / relative_path

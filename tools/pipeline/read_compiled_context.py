@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import sys
 from pathlib import Path
@@ -15,6 +14,7 @@ if str(_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(_TOOLS_ROOT))
 
 from shared.cli_helpers import configure_stdio  # noqa: E402
+from shared.file_helpers import normalized_hash_text, read_text, sha256_text_file  # noqa: E402
 
 
 ALIASES = {
@@ -36,21 +36,8 @@ ALIASES = {
     "agent_contract": "core/AGENT-CONTRACT.json",
 }
 
-def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8")
-
-
-def normalized_hash_text(text: str) -> str:
-    if text.startswith("\ufeff"):
-        text = text[1:]
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
-    lines = [line.rstrip(" \t") for line in text.split("\n")]
-    normalized = "\n".join(lines).rstrip("\n")
-    return normalized + "\n" if normalized else ""
-
-
 def sha256_file(path: Path) -> str:
-    return hashlib.sha256(normalized_hash_text(read_text(path)).encode("utf-8")).hexdigest()
+    return sha256_text_file(path)
 
 
 def relative_to_or_none(path: Path, root: Path) -> str | None:

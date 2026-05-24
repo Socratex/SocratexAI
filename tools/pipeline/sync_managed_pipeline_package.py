@@ -4,15 +4,20 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shutil
+import sys
 from collections import OrderedDict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
 from pipeline_package import DEFAULT_CHILD_GENERATED_PATHS, DEFAULT_MANAGED_PATHS, DEFAULT_PROTECTED_PATHS
+from shared.file_helpers import sha256_binary_file  # noqa: E402
 
 
 GENERATED_CACHE_DIRS = {"__pycache__"}
@@ -37,13 +42,7 @@ def under_any(relative: str, roots: list[str]) -> bool:
 
 
 def sha256_file(path: Path) -> str:
-    if not path.is_file():
-        return ""
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+    return sha256_binary_file(path)
 
 
 def read_manifest(path: Path) -> OrderedDict[str, Any]:
