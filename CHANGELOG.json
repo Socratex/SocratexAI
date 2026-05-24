@@ -533,6 +533,12 @@
                 "date": "2026-05-23",
                 "feature": "portable_json_tooling_pack",
                 "change": "Moved generic JSON manipulation and JSON audit helpers into tools/json as a portable pack with a dedicated README and smoke test, and updated script catalog, feature contracts, workflow guidance, and quality-gate references. Why: JSON tooling should be easy to copy between projects and separate from higher-level document routing/cache workflow."
+            },
+            {
+                "version": "0.2.0-alpha",
+                "date": "2026-05-24",
+                "feature": "license_metadata",
+                "change": "Relicensed SocratexAI source distribution from MIT to Apache License 2.0. Added NOTICE with copyright attribution and MIT history boundary. Included NOTICE in managed package sync and feature contracts so child project updates receive current legal metadata. Why: Apache 2.0 matches the public adoption strategy for corporate users and adds an explicit patent grant while preserving earlier MIT forks under their original terms."
             }
         ]
     },

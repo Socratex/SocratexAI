@@ -25,9 +25,12 @@ PIPELINE_ROOT_FILES = {
     "DOCS.json",
     "FLOWS.json",
     "JSON-FORMAT-CONTRACT.json",
+    "LICENSE",
+    "NOTICE",
     "SCRIPTS.json",
     "WORKFLOW.json",
     "pipeline_featurelist.json",
+    "README.md",
 }
 PIPELINE_ROOT_DIRS = ("tools/", "core/", "project/", "profiles/", "templates/", "adapters/", "evals/")
 ALLOWED_DIRECTIONS = {"source_to_child", "child_to_source", "bidirectional", "source_only"}

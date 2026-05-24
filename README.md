@@ -247,6 +247,6 @@ SocratexDevSolutions.
 
 ## License
 
-MIT. See `LICENSE`.
+Apache License 2.0. See `LICENSE` and `NOTICE`.
 
 Donation placeholder: add your GitHub Sponsors, Ko-fi, Buy Me a Coffee, Liberapay, PayPal, or Polar link here before public launch.

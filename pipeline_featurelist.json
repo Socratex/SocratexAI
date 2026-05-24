@@ -4989,7 +4989,10 @@
                     "tools/documents/audit_docs.py",
                     "tools/pipeline/update_pipeline_from_link.py",
                     "tools/pipeline/sync_managed_pipeline_package.py",
-                    "tools/pipeline/pipeline_package.py"
+                    "tools/pipeline/pipeline_package.py",
+                    "LICENSE",
+                    "NOTICE",
+                    "README.md"
                 ],
                 "required_scripts": [
                     "sync_managed_pipeline_package.py",
@@ -5044,18 +5047,23 @@
                     "SCRIPTS.json",
                     "project/generic/PACK.json",
                     "project/code/PACK.json",
-                    "project/gamedev/PACK.json"
+                    "project/gamedev/PACK.json",
+                    "LICENSE",
+                    "NOTICE",
+                    "README.md"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Run the feature contract checker before promoting or publishing the update.",
-                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
+                    "Keep license, NOTICE, README, public bootstrap, and managed package path lists aligned so child updates receive current legal/distribution metadata."
                 ],
                 "verification_commands": [
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py",
-                    "python3 -B tools/documents/audit_docs.py"
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/pipeline/update_pipeline_from_link.py --source . --source-mode LocalPath --target-path <child-project> --dry-run"
                 ],
                 "known_failure_if_missing": "If 'managed_pipeline_package_mirror_sync' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -5368,7 +5376,10 @@
                     "tools/documents/audit_docs.py",
                     "tools/json/json_list_doc.py",
                     "tools/text/normalize_json_files.py",
-                    "SCRIPTS.json"
+                    "SCRIPTS.json",
+                    "LICENSE",
+                    "NOTICE",
+                    "README.md"
                 ],
                 "required_scripts": [
                     "update_pipeline_from_link.py",
@@ -5397,7 +5408,10 @@
                     "core/FILE-FORMATS.json",
                     "core/UPDATE-PROTOCOL.json",
                     "pipeline_featurelist.json",
-                    "SCRIPTS.json"
+                    "SCRIPTS.json",
+                    "LICENSE",
+                    "NOTICE",
+                    "README.md"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
@@ -5408,11 +5422,13 @@
                     "Require upgrade agents to validate current FILE-FORMATS.json and json_list_doc.py contracts before writing structured files.",
                     "Require relevant pipeline scripts to run or be reported as blocked/degraded before claiming upgrade completion.",
                     "Keep pipeline/global structure, response format, and required script usage stronger than local preferences unless the user explicitly overrides them.",
-                    "Verify changed update artifacts with check_pipeline_feature_contracts.py."
+                    "Verify changed update artifacts with check_pipeline_feature_contracts.py.",
+                    "Keep license, NOTICE, README, public bootstrap, and managed package path lists aligned so cheap Git updates receive current legal/distribution metadata."
                 ],
                 "verification_commands": [
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py -Paths tools/pipeline/update_pipeline_from_link.py,tools/pipeline/sync_managed_pipeline_package.py,PUBLIC-BOOTSTRAP.md,core/FILE-FORMATS.json,core/UPDATE-PROTOCOL.json,SCRIPTS.json,pipeline_featurelist.json",
-                    "python3 -B tools/documents/audit_docs.py"
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/pipeline/update_pipeline_from_link.py --source . --source-mode LocalPath --target-path <child-project> --dry-run"
                 ],
                 "known_failure_if_missing": "Old or low-budget child projects may spend unnecessary AI/tool time on full rebuilds, overwrite project-owned state, copy stale local shapes, skip mandatory validation scripts, or fail to receive structural source changes from Git cheaply."
             },

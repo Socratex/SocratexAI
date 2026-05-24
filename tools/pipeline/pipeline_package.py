@@ -22,6 +22,7 @@ DEFAULT_MANAGED_PATHS = [
     "FLOWS.json",
     "JSON-FORMAT-CONTRACT.json",
     "LICENSE",
+    "NOTICE",
     "PUBLIC-BOOTSTRAP.md",
     "QUALITY-GATE.json",
     "README.md",

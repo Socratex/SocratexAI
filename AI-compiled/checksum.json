@@ -1,9 +1,9 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-80b760d57266",
+  "generated_at": "source-c73220f6d9b9",
   "source_hashes": {
     "AGENTS.md": "47c083c7c04b06f4166c07abc1a6ab72a21666e5d15c7d7738eb48e984d4c5fa",
-    "README.md": "fc5e9df9461e710fa8fa1a6eb6e62dfdafceb9fe2c18121a7ae893ae689467ef",
+    "README.md": "19614c9d743076d1861677548e4ca02a00bb33f26614686eb35dd3e9a4fca896",
     "PUBLIC-BOOTSTRAP.md": "11a965ed15688fb9d714111763fc23f05e300da2abfaff366d20e91711ea1414",
     "DOCS.json": "b31ccc879c58334234b6dd69160d5eeba5cbab3150fd5720450c58640d43832d",
     "WORKFLOW.json": "9e1c11a5fda863e3f4d3b75d0e725524463b80a76b5ff7c2bad47fa3dc78d0cb",
@@ -55,11 +55,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "ff6e12600ed13d073c4ecf2de062ad04507b05b7e96acfb3ae2ef683c27ce33c",
-    "codex/ENTRYPOINT.md": "800285342f9c2173f4ca3d9c833646edeeeb3d10edf78ef496f5d40b1d3f1bd3",
-    "codex/RULES.compiled.md": "ab8b2a00448495df3589e79db81d22960a63b112a9948f916a0429a1e0a99ece",
-    "codex/WORKFLOW.compiled.md": "4a8f469c6fa5124065f0ae54a34a954313dedd44e96f5d4792fcc3ece2987152",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "2bb1ce47b5f8e3fe4e5d6d0449bc368955ca01692b2f340fae3c445df9bb26eb",
-    "codex/TEAM.compiled.md": "54703980092f675239c262ff040e73d8f37c43bf6e2097543f0be226e3ad5100"
+    "INDEX.json": "869752ea5cc525cf6565b036396d4a167160ac1d93a900c6dd4b46622feb66df",
+    "codex/ENTRYPOINT.md": "c6320f874e3646acbdb7bf340c30a6ca8e2337d3b3866c96f275908a7c8c8056",
+    "codex/RULES.compiled.md": "73d024f52a645449b632c75860634ee18ad0887522b74b11475e4277721ceca9",
+    "codex/WORKFLOW.compiled.md": "eb862e63cf59d1fbcacd9e39de57afcafbf7c83c39195ca49c9cdda2adae5bdd",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "4a671c006d4a8469219f2ee340ed3b81eafba68d899cc66b030a65f2f8a7d156",
+    "codex/TEAM.compiled.md": "9c2e33b47d6628ce2a2f4582ae1e09d90fc003416b8fc542d6481814e59094bd"
   }
 }
