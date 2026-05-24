@@ -86,10 +86,10 @@ def main() -> int:
     steps: list[tuple[str, list[str]]] = [
         ("document cache refresh", [python, "-B", str(tools / "documents" / "build_document_cache.py"), "--repo-root", str(root)]),
         ("code line index refresh", [python, "-B", str(tools / "codebase" / "update_code_line_index.py"), "--root", str(root), "--changed-only"]),
+        ("pipeline bootstrap index refresh", [python, "-B", str(tools / "pipeline" / "pipeline_bootstrap_index.py"), "--repo-root", str(root)]),
         ("compiled AI instructions refresh", [python, "-B", str(tools / "pipeline" / "rebuild_ai_compiled_context.py"), "--repo-root", str(root)]),
         ("task snapshot", [python, "-B", str(tools / "repo" / "task_snapshot.py"), "--root", str(root)]),
         ("git diff --check", ["git", "diff", "--check"]),
-        ("pipeline bootstrap index refresh", [python, "-B", str(tools / "pipeline" / "pipeline_bootstrap_index.py"), "--repo-root", str(root)]),
         ("task flow audit", [python, "-B", str(tools / "repo" / "task_flow_audit.py"), "--project-root", str(root)]),
         ("pipeline feature list guard", [python, "-B", str(tools / "repo" / "check_pipeline_featurelist_update.py"), "--repo-root", str(root)]),
     ]
