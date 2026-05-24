@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-4bfea6823d3d",
+  "generated_at": "source-d0873b416f30",
   "source_hashes": {
     "AGENTS.md": "47c083c7c04b06f4166c07abc1a6ab72a21666e5d15c7d7738eb48e984d4c5fa",
     "README.md": "fc5e9df9461e710fa8fa1a6eb6e62dfdafceb9fe2c18121a7ae893ae689467ef",
@@ -21,7 +21,7 @@
     "core/SCRIPT-FALLBACK.json": "fc11a72486ee3096b1f2e3634251498e4c3c66478ecf7cb2073ec4673bc3af21",
     "context-docs/ENGINEERING.json": "8dbd9394ec57ea2ca6de2d173ff9253e76274819ebf6020df0facc573a485ee1",
     "docs-tech/KNOWLEDGE-VIEWS.json": "67043d7b346fbb9448d3846026af7086ac543948d12fde7046abfb5d793d1dbe",
-    "tools/knowledge/knowledge_index.py": "89651974d7a094b3cd44ef6fed013c8f89bbcbf0eb18022e10cc2028786784da",
+    "tools/knowledge/knowledge_index.py": "e3682190eecc3bbebcc12c5f5f3b64a662e237d6631d18abb4a43c4f8f23224d",
     "tools/knowledge/context_tags.py": "19ed6a67886b05ebd35c2965a29fb2fb352ae783e657af24b82830e78a2b3286",
     "tools/knowledge/knowledge_select.py": "bde872e878b7e6c7df134a48c8db363012c11ed7c19d1f5ad460541ff0b33a06",
     "tools/knowledge/knowledge_compile.py": "e24928f3a370300e279edd70fd6a8cf37ea7b30ac46e60913ac71c12fd4b646f",
@@ -55,11 +55,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "61beccdb85283dee3c209524aa330e647ed229b052bd38dd45bdb376e8662676",
-    "codex/ENTRYPOINT.md": "ba22b77c0b8e4db8b5adc4a1b8d8bef38004cd68d496912b4afda2888aa0b9e5",
-    "codex/RULES.compiled.md": "ff30212f4568af10e45e34e29ee133bde3aee5cc98b230bdd531bcf0d84f369c",
-    "codex/WORKFLOW.compiled.md": "545416d6b56864850af7e9a4ea3b07057df03563a459a90fd454d656aa0ad09e",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "54dc49291febfe0b1567a19382833f1b452237c818c4652ba5dcad74c3f37be1",
-    "codex/TEAM.compiled.md": "1a8c7832b7a5f20863378aab87960ee516ac29f0a32b46a16cf74044c3f7481e"
+    "INDEX.json": "753b5ef9bb1dd08913decd280acc5453eab5902946b0b359d19493dd18fcc49d",
+    "codex/ENTRYPOINT.md": "fe2b20666291250fc04c82cf800a56d63f7511d56aec8e394d134d387081a090",
+    "codex/RULES.compiled.md": "f08d1005424e1788a5eb63443a450d955a3e91e285c1227e247910c60ef44dbc",
+    "codex/WORKFLOW.compiled.md": "e40db70cf5673e4607bfd69ffa9652ebd9c202f249377cbfdf3da311a8384dff",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "b34d3685e48e60dfca53465b8bdce3d1dbd12827c01ddca0ba19722f24196ef8",
+    "codex/TEAM.compiled.md": "1309fa98a69d566749698c1498cb6925efdd2a5b8524e49d1a533de6d7bf370e"
   }
 }

@@ -1,10 +1,10 @@
 {
-    "generatedAt": "2026-05-24T14:03:15+02:00",
+    "generatedAt": "2026-05-24T14:22:11+02:00",
     "threshold": 300,
     "files": [
         {
             "path": "tools/knowledge/knowledge_index.py",
-            "lines": 1312,
+            "lines": 1492,
             "extension": ".py",
             "large": true
         },
@@ -153,6 +153,12 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_code_context.py",
+            "lines": 155,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/sync_pipeline_featurelist.py",
             "lines": 153,
             "extension": ".py",
@@ -185,12 +191,6 @@
         {
             "path": "tools/pipeline/reinitialize_pipeline.py",
             "lines": 135,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_code_context.py",
-            "lines": 130,
             "extension": ".py",
             "large": false
         },
@@ -597,6 +597,12 @@
             "large": false
         },
         {
+            "path": "tools/knowledge/knowledge_cli.py",
+            "lines": 32,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/knowledge/knowledge_compile.py",
             "lines": 32,
             "extension": ".py",
@@ -616,12 +622,6 @@
         },
         {
             "path": "tools/documents/bulk_insert_document_items.py",
-            "lines": 30,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_cli.py",
             "lines": 30,
             "extension": ".py",
             "large": false

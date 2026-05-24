@@ -416,11 +416,17 @@ def repo_root_from_db_path(db_path: Path) -> Path:
         normalize_path(DEFAULT_DB_PATH),
     ]
     normalized_db = normalize_path(str(db_path))
+    candidates: list[Path] = []
     for expected_suffix in expected_suffixes:
         if normalized_db.endswith(expected_suffix):
             root_text = normalized_db[: -len(expected_suffix)].rstrip("/")
             if root_text:
-                return Path(root_text)
+                candidates.append(Path(root_text))
+    for candidate in candidates:
+        if (candidate / DEFAULT_VIEWS_PATH).exists():
+            return candidate
+    if candidates:
+        return candidates[0]
     return Path.cwd()
 
 
@@ -830,6 +836,178 @@ def check_database(repo_root: Path, db_path: Path) -> int:
         return 1
     print("OK: knowledge DB document hashes match source files.")
     return 0
+
+
+def source_key(source: dict[str, Any]) -> tuple[str, str, bool, str]:
+    return (
+        normalize_path(str(source.get("path") or "")),
+        str(source.get("selector") or ""),
+        bool(source.get("is_duplicate")),
+        str(source.get("note") or ""),
+    )
+
+
+def validate_document_entries(connection: sqlite3.Connection, repo_root: Path, document_path: str) -> list[str]:
+    relative = normalize_path(document_path)
+    source_path = repo_root / relative
+    if not source_path.exists():
+        return [f"validation source document does not exist: {relative}"]
+
+    document = load_structured(source_path)
+    expected_entries = {
+        entry["name"]: entry
+        for selector, raw in find_tagged_entries(document, "")
+        for entry in [normalize_entry(raw, relative, selector)]
+    }
+    actual_rows = {
+        row["name"]: dict(row)
+        for row in connection.execute(
+            "select * from entries where document_path = ? order by name",
+            (relative,),
+        ).fetchall()
+    }
+    errors: list[str] = []
+    missing = sorted(set(expected_entries) - set(actual_rows))
+    extra = sorted(set(actual_rows) - set(expected_entries))
+    for name in missing:
+        errors.append(f"{relative}: missing SQLite entry `{name}`")
+    for name in extra:
+        errors.append(f"{relative}: extra SQLite entry `{name}`")
+
+    fields = [
+        "type",
+        "subtype",
+        "title",
+        "summary",
+        "compiled_content",
+        "priority",
+        "source_of_truth",
+        "load_at_start",
+        "context_tier",
+        "stability",
+        "source_selector",
+    ]
+    for name in sorted(set(expected_entries) & set(actual_rows)):
+        expected = expected_entries[name]
+        actual = actual_rows[name]
+        actual["load_at_start"] = bool(actual["load_at_start"])
+        actual["context_tier"] = int(actual["context_tier"])
+        for field in fields:
+            if actual[field] != expected[field]:
+                errors.append(
+                    f"{relative}:{name}: field `{field}` mismatch "
+                    f"expected={expected[field]!r} actual={actual[field]!r}"
+                )
+
+        actual_tags = sorted(
+            row["tag"]
+            for row in connection.execute(
+                "select tag from entry_tags where document_path = ? and entry_name = ?",
+                (relative, name),
+            ).fetchall()
+        )
+        expected_tags = sorted(expected["tags"])
+        if actual_tags != expected_tags:
+            errors.append(f"{relative}:{name}: tags mismatch expected={expected_tags!r} actual={actual_tags!r}")
+
+        actual_sources = sorted(
+            source_key(dict(row))
+            for row in connection.execute(
+                "select path, selector, is_duplicate, note from entry_sources where document_path = ? and entry_name = ?",
+                (relative, name),
+            ).fetchall()
+        )
+        expected_sources = sorted(source_key(source) for source in expected["sources"])
+        if actual_sources != expected_sources:
+            errors.append(
+                f"{relative}:{name}: source refs mismatch "
+                f"expected={expected_sources!r} actual={actual_sources!r}"
+            )
+    return errors
+
+
+def validate_database(
+    repo_root: Path,
+    db_path: Path,
+    documents: list[str],
+    required_tags: list[str],
+    required_types: list[str],
+    required_views: list[str],
+    require_load_at_start: bool,
+) -> int:
+    check_result = check_database(repo_root, db_path)
+    if check_result != 0:
+        return check_result
+
+    connection = connect(db_path)
+    try:
+        errors: list[str] = []
+        for document_path in documents:
+            errors.extend(validate_document_entries(connection, repo_root, document_path))
+
+        for tag in normalize_tags(required_tags):
+            count = connection.execute(
+                "select count(distinct e.document_path || char(31) || e.name) "
+                "from entries e "
+                "join entry_tags et on et.document_path = e.document_path and et.entry_name = e.name "
+                "where et.tag = ?",
+                (tag,),
+            ).fetchone()[0]
+            if count <= 0:
+                errors.append(f"required tag `{tag}` returned no entries")
+
+        for entry_type in required_types:
+            normalized_type = normalize_type(entry_type)
+            count = connection.execute("select count(*) from entries where type = ?", (normalized_type,)).fetchone()[0]
+            if count <= 0:
+                errors.append(f"required type `{normalized_type}` returned no entries")
+
+        for view_id in required_views:
+            count = connection.execute("select count(*) from view_entries where view_id = ?", (view_id,)).fetchone()[0]
+            if count <= 0:
+                errors.append(f"required view `{view_id}` returned no entries")
+
+        if require_load_at_start:
+            for document_path in documents:
+                relative = normalize_path(document_path)
+                source_path = repo_root / relative
+                document = load_structured(source_path)
+                expected_count = sum(
+                    1
+                    for selector, raw in find_tagged_entries(document, "")
+                    if normalize_entry(raw, relative, selector)["load_at_start"]
+                )
+                actual_count = connection.execute(
+                    "select count(*) from entries where document_path = ? and load_at_start = 1",
+                    (relative,),
+                ).fetchone()[0]
+                if expected_count != actual_count:
+                    errors.append(
+                        f"{relative}: load_at_start count mismatch "
+                        f"expected={expected_count} actual={actual_count}"
+                    )
+
+        if errors:
+            print("Knowledge validation failed:")
+            for error in errors:
+                print(f"- {error}")
+            return 1
+
+        print("OK: knowledge validation passed.")
+        if documents:
+            for document_path in documents:
+                relative = normalize_path(document_path)
+                count = connection.execute("select count(*) from entries where document_path = ?", (relative,)).fetchone()[0]
+                print(f"- {relative}: {count} entr{'y' if count == 1 else 'ies'}")
+        if required_tags:
+            print(f"- required tags: {', '.join(normalize_tags(required_tags))}")
+        if required_types:
+            print(f"- required types: {', '.join(normalize_type(entry_type) for entry_type in required_types)}")
+        if required_views:
+            print(f"- required views: {', '.join(required_views)}")
+        return 0
+    finally:
+        connection.close()
 
 
 def file_table_paths(file_dir: Path) -> dict[str, Path]:
@@ -1310,6 +1488,7 @@ def main() -> None:
             "compile",
             "rebuild",
             "check",
+            "validate",
             "select",
             "query",
             "upsert",
@@ -1343,6 +1522,11 @@ def main() -> None:
     parser.add_argument("--source-path", default="")
     parser.add_argument("--document-path", default="")
     parser.add_argument("--format", choices=["markdown", "json"], default="markdown")
+    parser.add_argument("--required-tags", nargs="*", default=[])
+    parser.add_argument("--required-types", nargs="*", default=[])
+    parser.add_argument("--required-views", nargs="*", default=[])
+    parser.add_argument("--validate-document", action="append", default=[])
+    parser.add_argument("--require-load-at-start", action="store_true")
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
@@ -1360,6 +1544,19 @@ def main() -> None:
         raise SystemExit(check_database(repo_root, db_path))
     if args.mode == "file-check":
         raise SystemExit(check_file_store(repo_root, file_dir))
+    if args.mode == "validate":
+        documents = args.validate_document or ([args.document_path] if args.document_path else [])
+        raise SystemExit(
+            validate_database(
+                repo_root,
+                db_path,
+                documents,
+                args.required_tags,
+                args.required_types,
+                args.required_views,
+                args.require_load_at_start,
+            )
+        )
     if args.mode in ("select", "query"):
         entries = select_entries(
             db_path,
