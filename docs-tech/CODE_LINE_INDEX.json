@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T03:24:08+02:00",
+    "generatedAt": "2026-05-24T03:27:53+02:00",
     "threshold": 300,
     "files": [
         {
@@ -75,14 +75,14 @@
             "large": false
         },
         {
-            "path": "tools/repo/check_pipeline_feature_contracts.py",
-            "lines": 231,
+            "path": "tools/codebase/update_code_line_index.py",
+            "lines": 229,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/codebase/update_code_line_index.py",
-            "lines": 229,
+            "path": "tools/repo/check_pipeline_feature_contracts.py",
+            "lines": 214,
             "extension": ".py",
             "large": false
         },

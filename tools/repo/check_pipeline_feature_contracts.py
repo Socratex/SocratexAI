@@ -5,13 +5,15 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "pipeline"))
 from pipeline_package import DEFAULT_MANAGED_PATHS  # noqa: E402
+from shared.repo_helpers import changed_paths as repo_changed_paths  # noqa: E402
+from shared.repo_helpers import normalize_repo_path, repo_root as shared_repo_root  # noqa: E402
 
 
 PIPELINE_ROOT_FILES = {
@@ -32,9 +34,9 @@ ALLOWED_DIRECTIONS = {"source_to_child", "child_to_source", "bidirectional", "so
 
 
 def repo_root(start: Path) -> Path:
-    for candidate in [start.resolve(), *start.resolve().parents]:
-        if (candidate / "SCRIPTS.json").is_file() and (candidate / "pipeline_featurelist.json").is_file():
-            return candidate
+    root = shared_repo_root(start, marker_files=("SCRIPTS.json", "pipeline_featurelist.json"), use_git=False)
+    if (root / "SCRIPTS.json").is_file() and (root / "pipeline_featurelist.json").is_file():
+        return root
     raise SystemExit("Could not resolve repository root from current path.")
 
 
@@ -80,7 +82,7 @@ def as_list(value: Any) -> list[str]:
 
 
 def normalize_path(value: str) -> str:
-    return value.replace("\\", "/").removeprefix("./").strip()
+    return normalize_repo_path(value)
 
 
 def content_of(document: dict[str, Any]) -> dict[str, Any]:
@@ -130,29 +132,8 @@ def path_exists(root: Path, relative: str) -> bool:
     return (root / normalized).exists()
 
 
-def git_lines(root: Path, args: list[str]) -> list[str]:
-    completed = subprocess.run(["git", *args], cwd=root, check=False, capture_output=True, text=True)
-    if completed.returncode != 0:
-        raise RuntimeError(f"git {' '.join(args)} failed: {(completed.stderr or completed.stdout).strip()}")
-    return [line.strip() for line in completed.stdout.splitlines() if line.strip()]
-
-
 def changed_paths(root: Path, explicit: list[str]) -> list[str]:
-    if explicit:
-        paths: list[str] = []
-        for value in explicit:
-            paths.extend(normalize_path(part) for part in value.split(",") if part.strip())
-        return sorted(set(paths))
-    if not (root / ".git").exists():
-        return []
-    paths = []
-    for args in (
-        ["diff", "--name-only", "--diff-filter=ACMRD"],
-        ["diff", "--cached", "--name-only", "--diff-filter=ACMRD"],
-        ["ls-files", "--others", "--exclude-standard"],
-    ):
-        paths.extend(git_lines(root, args))
-    return sorted(set(normalize_path(path) for path in paths))
+    return repo_changed_paths(root, explicit, diff_filter="ACMRD")
 
 
 def main() -> int:
