@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T17:14:42+02:00",
+    "generatedAt": "2026-05-24T17:15:54+02:00",
     "threshold": 300,
     "files": [
         {
@@ -303,6 +303,12 @@
             "large": false
         },
         {
+            "path": "tools/pipeline/pipeline_bootstrap_index.py",
+            "lines": 93,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/pipeline/tool_error_log.py",
             "lines": 92,
             "extension": ".py",
@@ -311,12 +317,6 @@
         {
             "path": "tools/repo/report_pipeline_learning.py",
             "lines": 91,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/pipeline/pipeline_bootstrap_index.py",
-            "lines": 90,
             "extension": ".py",
             "large": false
         },

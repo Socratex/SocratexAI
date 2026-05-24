@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-64df7bdb0961
+Generated: source-a590a947b656
 
 ## Source of Truth
 
@@ -1266,6 +1266,7 @@ Draft placeholder:
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Installed child-project finalizers and final check runners must execute package-local tools while passing the child repository root as --repo-root.",
                     "Installed child-project compiled-context refresh/check paths must execute package-local rebuild, bootstrap, and knowledge tools while passing the child repository root as --repo-root.",
+                    "Installed child-project bootstrap index refresh must tolerate optional root DOCS/WORKFLOW/COMMANDS/FLOWS/SCRIPTS documents and index only the documents present in that project.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],

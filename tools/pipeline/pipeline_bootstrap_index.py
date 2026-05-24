@@ -46,9 +46,12 @@ def build_index(repo_root: Path, documents: list[str], contract: list[str], gene
         relative = raw_document.replace("\\", "/").strip()
         if not relative or relative in seen:
             continue
+        path = repo_root / relative
+        if not path.is_file():
+            continue
         seen.add(relative)
         ordered_documents.append(relative)
-        content[relative] = document_index(read_json(repo_root / relative))
+        content[relative] = document_index(read_json(path))
 
     return {
         "index": ordered_documents,
