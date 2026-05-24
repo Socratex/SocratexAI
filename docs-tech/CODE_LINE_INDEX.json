@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T18:40:15+02:00",
+    "generatedAt": "2026-05-24T19:02:19+02:00",
     "threshold": 300,
     "files": [
         {
@@ -81,6 +81,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/check_pipeline_feature_contracts.py",
+            "lines": 247,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/json/audit_json_docs.py",
             "lines": 244,
             "extension": ".py",
@@ -95,12 +101,6 @@
         {
             "path": "tools/documents/document_item_edit_engine.py",
             "lines": 232,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/check_pipeline_feature_contracts.py",
-            "lines": 214,
             "extension": ".py",
             "large": false
         },

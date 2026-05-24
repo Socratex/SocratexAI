@@ -81,6 +81,29 @@ def as_list(value: Any) -> list[str]:
     return result
 
 
+def raw_string_list(value: Any) -> list[str]:
+    if value is None:
+        return []
+    raw = value if isinstance(value, list) else [value]
+    return [text for item in raw if (text := str(item).strip())]
+
+
+def duplicate_items(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    duplicates: list[str] = []
+    for value in values:
+        if value in seen and value not in duplicates:
+            duplicates.append(value)
+        seen.add(value)
+    return duplicates
+
+
+def add_duplicate_list_errors(errors: list[str], owner: str, field: str, value: Any) -> None:
+    duplicates = duplicate_items(raw_string_list(value))
+    for duplicate in duplicates:
+        errors.append(f"{owner} contains duplicate {field} entry: {duplicate}")
+
+
 def normalize_path(value: str) -> str:
     return normalize_repo_path(value)
 
@@ -93,6 +116,11 @@ def content_of(document: dict[str, Any]) -> dict[str, Any]:
 def features_of(feature_list: dict[str, Any]) -> list[str]:
     content = content_of(feature_list)
     return as_list(content.get("features"))
+
+
+def raw_features_of(feature_list: dict[str, Any]) -> list[str]:
+    content = content_of(feature_list)
+    return raw_string_list(content.get("features"))
 
 
 def contracts_of(feature_list: dict[str, Any]) -> dict[str, Any]:
@@ -163,13 +191,12 @@ def main() -> int:
             if key not in content:
                 errors.append(f"pipeline_featurelist.json content is missing '{key}'.")
 
+    raw_features = raw_features_of(feature_list)
     features = features_of(feature_list)
     contracts = contracts_of(feature_list)
-    feature_set = set()
-    for feature in features:
-        if feature in feature_set:
-            errors.append(f"Duplicate feature id in features index: {feature}")
-        feature_set.add(feature)
+    for feature in duplicate_items(raw_features):
+        errors.append(f"Duplicate feature id in features index: {feature}")
+    feature_set = set(features)
     if not features:
         errors.append("pipeline_featurelist.json must contain a non-empty content.features index.")
     if not contracts:
@@ -195,6 +222,14 @@ def main() -> int:
         promotion_checklist = as_list(contract.get("promotion_checklist"))
         verification_commands = as_list(contract.get("verification_commands"))
         sync_direction = str(contract.get("sync_direction", "")).strip()
+        for field_name in (
+            "required_paths",
+            "required_scripts",
+            "required_docs",
+            "promotion_checklist",
+            "verification_commands",
+        ):
+            add_duplicate_list_errors(errors, f"Feature '{feature}'", field_name, contract.get(field_name))
         if not required_paths:
             errors.append(f"Feature '{feature}' must list at least one required_paths entry.")
         if not promotion_checklist:
@@ -231,6 +266,12 @@ def main() -> int:
         catalog_entries = contract.get("required_catalog_entries")
         if isinstance(catalog_entries, dict):
             for catalog_name, entries in catalog_entries.items():
+                add_duplicate_list_errors(
+                    errors,
+                    f"Feature '{feature}'",
+                    f"required_catalog_entries.{catalog_name}",
+                    entries,
+                )
                 catalog_file = catalog_name if str(catalog_name).endswith(".json") else f"{catalog_name}.json"
                 catalog_path = root / catalog_file
                 if not catalog_path.is_file():
