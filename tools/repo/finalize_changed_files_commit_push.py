@@ -71,7 +71,7 @@ def final_checks_command(root: Path, args: argparse.Namespace) -> list[str]:
 
 def stage_paths(root: Path, paths: list[str]) -> int:
     print("\n==> staging git-derived paths")
-    completed = run_git(root, ["add", "--", *paths], capture=True)
+    completed = run_git(root, ["add", "-A", "--", *paths], capture=True)
     if completed.returncode != 0:
         print((completed.stderr or completed.stdout).strip(), file=sys.stderr)
     return completed.returncode
