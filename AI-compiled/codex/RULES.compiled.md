@@ -6152,6 +6152,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Compare project root Tools against embedded SocratexAI/tools before declaring shared-script parity done.",
                     "Fail same-name or same-relative drift unless the project script is a thin adapter that delegates into embedded SocratexAI.",
+                    "Treat project_runtime.run_managed_tool wrappers as thin adapters when they forward to an embedded SocratexAI tool instead of owning behavior locally.",
                     "Allow persistent drift only through an explicit project classification file such as Tools/SHARED-SCRIPT-PARITY.json with a reason for each group.",
                     "Keep project-specific root-only tools visible in the report instead of pretending they are source-managed.",
                     "Skip bundled runtimes, installers, temporary folders, and generated caches by default."

@@ -28,6 +28,10 @@ THIN_ADAPTER_MARKERS = (
     "execv",
     "execve",
 )
+MANAGED_TOOL_ADAPTER_MARKERS = (
+    "project_runtime",
+    "run_managed_tool",
+)
 
 
 def normalize(value: str) -> str:
@@ -84,7 +88,9 @@ def is_thin_adapter(path: Path) -> bool:
         text = path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return False
-    return THIN_ADAPTER_MARKERS[0] in text and any(marker in text for marker in THIN_ADAPTER_MARKERS[1:])
+    if THIN_ADAPTER_MARKERS[0] in text and any(marker in text for marker in THIN_ADAPTER_MARKERS[1:]):
+        return True
+    return all(marker in text for marker in MANAGED_TOOL_ADAPTER_MARKERS)
 
 
 def read_classifications(path: Path) -> dict[str, dict[str, str]]:
