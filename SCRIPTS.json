@@ -138,8 +138,15 @@
         "open_pipeline_learning_issue.py",
         "pipeline_bootstrap_index.py",
         "pipeline_bootstrap_index.py",
+        "chain_runner.py",
+        "child_sync_smoke.py",
+        "context_bootstrap_load.py",
+        "final_runtime_gate.py",
+        "helper_refactor_smoke.py",
+        "no_legacy_shell_verification.py",
         "pipeline_sweep.py",
         "pipeline_sweep.py",
+        "source_finalization_precheck.py",
         "resolve_tool_runtime.py",
         "resolve_workspace_root.py",
         "rebuild_ai_compiled_context.py",
@@ -2198,6 +2205,126 @@
                 "failure": "Throws or exits nonzero when inputs are invalid, target paths are unsafe, generated artifacts are stale, or pipeline checks fail."
             }
         },
+        "chain_runner.py": {
+            "path": "tools/chains/chain_runner.py",
+            "category": "chains",
+            "description": "Shared runner and structured result contract for SocratexPipeline command chains.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--self-test-failure",
+                    "--expect-failure",
+                    "--dry-run",
+                    "--keep-going",
+                    "--report-path"
+                ],
+                "rule": "Use concrete chain entrypoints for normal work; --self-test-failure exists only to verify the structured failure contract."
+            },
+            "output": {
+                "success": "Prints each underlying command and writes an optional socratex-chain-report/v1 JSON report.",
+                "failure": "Returns nonzero when a required chain step fails and reports command, cwd, exit code, and recovery hint."
+            }
+        },
+        "child_sync_smoke.py": {
+            "path": "tools/chains/child_sync_smoke.py",
+            "category": "chains",
+            "description": "Run the child package sync and runtime-gate smoke chain.",
+            "input": {
+                "required": [
+                    "--source-root",
+                    "--project-root"
+                ],
+                "optional": [
+                    "--install-root",
+                    "--profile",
+                    "--apply-sync",
+                    "--dry-run",
+                    "--keep-going",
+                    "--report-path"
+                ],
+                "rule": "Sync dry-runs by default inside the chain unless --apply-sync is passed; --dry-run previews the chain itself."
+            },
+            "output": {
+                "success": "Reports managed package sync and child runtime-gate status.",
+                "failure": "Returns nonzero with a structured step report when sync or runtime verification fails."
+            }
+        },
+        "context_bootstrap_load.py": {
+            "path": "tools/chains/context_bootstrap_load.py",
+            "category": "chains",
+            "description": "Run the compiled-context bootstrap and STATE read chain.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--dry-run",
+                    "--keep-going",
+                    "--report-path"
+                ],
+                "rule": "Use after entering a project that requires compiled context before code work."
+            },
+            "output": {
+                "success": "Reads bootstrap and STATE compiled context entries through the project reader.",
+                "failure": "Returns nonzero with recovery hints for stale or missing compiled context."
+            }
+        },
+        "final_runtime_gate.py": {
+            "path": "tools/chains/final_runtime_gate.py",
+            "category": "chains",
+            "description": "Run the final feature-contract, no-legacy-shell, and git-clean runtime gate chain.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--dry-run",
+                    "--keep-going",
+                    "--report-path"
+                ],
+                "rule": "Use near the end of a pipeline task when final cleanliness and runtime-retirement status need one named command."
+            },
+            "output": {
+                "success": "Reports feature contract, runtime gate, and git diff status.",
+                "failure": "Returns nonzero with a structured failed-step report."
+            }
+        },
+        "helper_refactor_smoke.py": {
+            "path": "tools/chains/helper_refactor_smoke.py",
+            "category": "chains",
+            "description": "Run the standard helper-refactor smoke chain.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--dry-run",
+                    "--keep-going",
+                    "--report-path"
+                ],
+                "rule": "Use after shared helper/script extraction to compile key files and run feature/runtime contracts."
+            },
+            "output": {
+                "success": "Reports syntax, feature contract, and runtime-gate status.",
+                "failure": "Returns nonzero with command, cwd, exit code, and recovery hint for the first required failure."
+            }
+        },
+        "no_legacy_shell_verification.py": {
+            "path": "tools/chains/no_legacy_shell_verification.py",
+            "category": "chains",
+            "description": "Run the no-legacy-shell verification chain.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--dry-run",
+                    "--keep-going",
+                    "--report-path"
+                ],
+                "rule": "Use as a named chain when only the script runtime retirement gate is needed."
+            },
+            "output": {
+                "success": "Reports no-legacy-shell runtime gate status.",
+                "failure": "Returns nonzero with blocked file/reference examples and a recovery hint."
+            }
+        },
         "pipeline_sweep.py": {
             "path": "tools/pipeline/pipeline_sweep.py",
             "category": "pipeline",
@@ -2215,13 +2342,34 @@
                     "-All",
                     "-StopOnFailure",
                     "-Json",
+                    "-WriteReport",
                     "-Help"
                 ],
-                "rule": "Dry-run is default; -Execute is required to run update, smoke, or finalizer commands. -Project accepts NAME=PATH, source:NAME=PATH, or comma-separated specs."
+                "rule": "Dry-run is default; -Execute is required to run update, smoke, or finalizer commands. -Project accepts NAME=PATH or source:NAME=PATH."
             },
             "output": {
-                "success": "Returns the per-project pass/fail/manual-attention summary.",
-                "failure": "Throws when runtime resolution fails, config/project input is invalid, or the Python runner exits nonzero."
+                "success": "Returns the per-project pass/fail/manual-attention summary and optional socratex-pipeline-sweep-report/v1 JSON.",
+                "failure": "Throws when runtime resolution fails, config/project input is invalid, or any required project step fails."
+            }
+        },
+        "source_finalization_precheck.py": {
+            "path": "tools/chains/source_finalization_precheck.py",
+            "category": "chains",
+            "description": "Run source final-task prechecks and runtime gate as one named chain.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--repo-root",
+                    "--quality",
+                    "--dry-run",
+                    "--keep-going",
+                    "--report-path"
+                ],
+                "rule": "Use before source finalization when generated checks and runtime retirement should be verified before committing."
+            },
+            "output": {
+                "success": "Reports final task checks and runtime-gate status.",
+                "failure": "Returns nonzero with a structured failed-step report."
             }
         },
         "resolve_tool_runtime.py": {

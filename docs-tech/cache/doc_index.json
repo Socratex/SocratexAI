@@ -651,8 +651,15 @@
         "open_pipeline_learning_issue.py",
         "pipeline_bootstrap_index.py",
         "pipeline_bootstrap_index.py",
+        "chain_runner.py",
+        "child_sync_smoke.py",
+        "context_bootstrap_load.py",
+        "final_runtime_gate.py",
+        "helper_refactor_smoke.py",
+        "no_legacy_shell_verification.py",
         "pipeline_sweep.py",
         "pipeline_sweep.py",
+        "source_finalization_precheck.py",
         "resolve_tool_runtime.py",
         "resolve_workspace_root.py",
         "rebuild_ai_compiled_context.py",
@@ -1263,10 +1270,52 @@
           "ref": "content.pipeline_bootstrap_index.py",
           "status": ""
         },
+        "chain_runner.py": {
+          "path": "content.chain_runner.py",
+          "title": "",
+          "ref": "content.chain_runner.py",
+          "status": ""
+        },
+        "child_sync_smoke.py": {
+          "path": "content.child_sync_smoke.py",
+          "title": "",
+          "ref": "content.child_sync_smoke.py",
+          "status": ""
+        },
+        "context_bootstrap_load.py": {
+          "path": "content.context_bootstrap_load.py",
+          "title": "",
+          "ref": "content.context_bootstrap_load.py",
+          "status": ""
+        },
+        "final_runtime_gate.py": {
+          "path": "content.final_runtime_gate.py",
+          "title": "",
+          "ref": "content.final_runtime_gate.py",
+          "status": ""
+        },
+        "helper_refactor_smoke.py": {
+          "path": "content.helper_refactor_smoke.py",
+          "title": "",
+          "ref": "content.helper_refactor_smoke.py",
+          "status": ""
+        },
+        "no_legacy_shell_verification.py": {
+          "path": "content.no_legacy_shell_verification.py",
+          "title": "",
+          "ref": "content.no_legacy_shell_verification.py",
+          "status": ""
+        },
         "pipeline_sweep.py": {
           "path": "content.pipeline_sweep.py",
           "title": "",
           "ref": "content.pipeline_sweep.py",
+          "status": ""
+        },
+        "source_finalization_precheck.py": {
+          "path": "content.source_finalization_precheck.py",
+          "title": "",
+          "ref": "content.source_finalization_precheck.py",
           "status": ""
         },
         "resolve_tool_runtime.py": {

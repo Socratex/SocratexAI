@@ -100,6 +100,7 @@
             "feature_artifact_contracts",
             "cheap_idempotent_pipeline_update",
             "pipeline_sweep_upgrade_tool",
+            "pipeline_chain_error_contract",
             "legacy_feature_manifest_update_recovery",
             "canonical_index_content_metadata_document_schema",
             "cross_platform_tool_runtime_resolution",
@@ -6043,7 +6044,13 @@
                 "summary": "Automate repeatable SocratexPipeline source-to-child update and smoke sweeps across explicit project lists, while leaving drift interpretation and repairs to the operator/agent.",
                 "required_paths": [
                     "tools/pipeline/pipeline_sweep.py",
-                    "tools/pipeline/pipeline_sweep.py",
+                    "tools/chains/chain_runner.py",
+                    "tools/chains/helper_refactor_smoke.py",
+                    "tools/chains/source_finalization_precheck.py",
+                    "tools/chains/child_sync_smoke.py",
+                    "tools/chains/context_bootstrap_load.py",
+                    "tools/chains/final_runtime_gate.py",
+                    "tools/chains/no_legacy_shell_verification.py",
                     "templates/pipeline-sweep.projects.json",
                     "SCRIPTS.json",
                     "pipeline_featurelist.json",
@@ -6055,7 +6062,13 @@
                 ],
                 "required_scripts": [
                     "pipeline_sweep.py",
-                    "pipeline_sweep.py",
+                    "chain_runner.py",
+                    "helper_refactor_smoke.py",
+                    "source_finalization_precheck.py",
+                    "child_sync_smoke.py",
+                    "context_bootstrap_load.py",
+                    "final_runtime_gate.py",
+                    "no_legacy_shell_verification.py",
                     "update_pipeline_from_link.py",
                     "check_pipeline_feature_contracts.py",
                     "audit_docs.py",
@@ -6070,7 +6083,13 @@
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "pipeline_sweep.py",
-                        "pipeline_sweep.py",
+                        "chain_runner.py",
+                        "helper_refactor_smoke.py",
+                        "source_finalization_precheck.py",
+                        "child_sync_smoke.py",
+                        "context_bootstrap_load.py",
+                        "final_runtime_gate.py",
+                        "no_legacy_shell_verification.py",
                         "update_pipeline_from_link.py",
                         "check_pipeline_feature_contracts.py",
                         "audit_docs.py",
@@ -6094,6 +6113,7 @@
                     "Require explicit project config or NAME=PATH arguments so the tool does not depend on agent memory or private hardcoded workspaces.",
                     "Keep dry-run as the default and require --execute/-Execute before update, smoke, or finalizer commands run.",
                     "Model projects through status, update, smoke, optional finalizer, and summary phases instead of one-off manual command sequences.",
+                    "Use named chain tools for repeated command groups so agents can run documented series instead of reconstructing command batches by memory.",
                     "Run or print standard smoke coverage for docs audit, feature contracts, compiled context, tier checks, and git cleanliness where applicable.",
                     "Keep destructive cleanup, dependency installation, and project-specific finalizers out of the default path unless they are explicitly configured and operator-approved.",
                     "Use the summary to decide which drift needs AI/operator interpretation instead of treating the script as an autonomous repair agent.",
@@ -6101,11 +6121,68 @@
                 ],
                 "verification_commands": [
                     "python3 -m py_compile tools/pipeline/pipeline_sweep.py",
-                    "python3 -B tools/pipeline/pipeline_sweep.py -Help",
+                    "python3 -B tools/chains/helper_refactor_smoke.py --dry-run",
+                    "python3 -B tools/chains/chain_runner.py --self-test-failure --expect-failure --report-path /tmp/socratex-chain-self-test.json",
+                    "python3 -B tools/pipeline/pipeline_sweep.py --help",
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py",
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Agents must manually remember every project, update command, smoke command, tier check, and drift summary, so future source-pipeline upgrades become inconsistent as project count grows."
+            },
+            "pipeline_chain_error_contract": {
+                "summary": "Chain and sweep tools expose a shared, machine-readable failure contract so repeated pipeline command groups fail with actionable command/cwd/exit/recovery data.",
+                "required_paths": [
+                    "tools/chains/chain_runner.py",
+                    "tools/chains/helper_refactor_smoke.py",
+                    "tools/chains/source_finalization_precheck.py",
+                    "tools/chains/child_sync_smoke.py",
+                    "tools/chains/context_bootstrap_load.py",
+                    "tools/chains/final_runtime_gate.py",
+                    "tools/chains/no_legacy_shell_verification.py",
+                    "tools/pipeline/pipeline_sweep.py",
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "chain_runner.py",
+                    "helper_refactor_smoke.py",
+                    "source_finalization_precheck.py",
+                    "child_sync_smoke.py",
+                    "context_bootstrap_load.py",
+                    "final_runtime_gate.py",
+                    "no_legacy_shell_verification.py",
+                    "pipeline_sweep.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "chain_runner.py",
+                        "helper_refactor_smoke.py",
+                        "source_finalization_precheck.py",
+                        "child_sync_smoke.py",
+                        "context_bootstrap_load.py",
+                        "final_runtime_gate.py",
+                        "no_legacy_shell_verification.py",
+                        "pipeline_sweep.py"
+                    ]
+                },
+                "required_docs": [
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Each chain must print every underlying command before execution.",
+                    "Each chain result must include step id, label, command, cwd, required/skipped state, status, exit code, bounded output tails, and recovery hint.",
+                    "Required chain steps stop the chain on first failure unless --keep-going is explicit.",
+                    "Optional JSON reports use the socratex-chain-report/v1 or socratex-pipeline-sweep-report/v1 schema.",
+                    "Failures should point to script/document repair work instead of being rediscovered manually on the next run."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/chains/helper_refactor_smoke.py --dry-run",
+                    "python3 -B tools/chains/chain_runner.py --self-test-failure --expect-failure --report-path /tmp/socratex-chain-self-test.json",
+                    "python3 -B tools/pipeline/pipeline_sweep.py --project source:SocratexAI=. --smoke --write-report /tmp/socratex-sweep-self-test.json"
+                ],
+                "known_failure_if_missing": "Pipeline failures degrade into ad hoc console traces, so future agents cannot cheaply tell which command failed, where it ran, whether it was required, or what recovery path to take."
             },
             "legacy_feature_manifest_update_recovery": {
                 "summary": "Cheap update and learning tools can recover older child feature manifests that use project-shaped index/content documents instead of current root features arrays.",

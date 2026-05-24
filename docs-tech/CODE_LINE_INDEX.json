@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T04:01:50+02:00",
+    "generatedAt": "2026-05-24T12:24:45+02:00",
     "threshold": 300,
     "files": [
         {
@@ -15,6 +15,12 @@
             "large": true
         },
         {
+            "path": "tools/pipeline/pipeline_sweep.py",
+            "lines": 481,
+            "extension": ".py",
+            "large": true
+        },
+        {
             "path": "tools/pipeline/rebuild_ai_compiled_context.py",
             "lines": 415,
             "extension": ".py",
@@ -23,12 +29,6 @@
         {
             "path": "tools/documents/document_read_cache_engine.py",
             "lines": 392,
-            "extension": ".py",
-            "large": true
-        },
-        {
-            "path": "tools/pipeline/pipeline_sweep.py",
-            "lines": 385,
             "extension": ".py",
             "large": true
         },
@@ -131,6 +131,12 @@
         {
             "path": "tools/repo/task_flow_audit.py",
             "lines": 168,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/chains/chain_runner.py",
+            "lines": 163,
             "extension": ".py",
             "large": false
         },
@@ -381,6 +387,12 @@
             "large": false
         },
         {
+            "path": "tools/chains/child_sync_smoke.py",
+            "lines": 62,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/codebase/check_project_design_context_gate.py",
             "lines": 62,
             "extension": ".py",
@@ -407,6 +419,12 @@
         {
             "path": "tools/repo/legacy_commit_task_compatibility_wrapper.py",
             "lines": 54,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/chains/helper_refactor_smoke.py",
+            "lines": 53,
             "extension": ".py",
             "large": false
         },
@@ -441,6 +459,12 @@
             "large": false
         },
         {
+            "path": "tools/chains/source_finalization_precheck.py",
+            "lines": 50,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/pipeline/check_ai_compiled_context.py",
             "lines": 49,
             "extension": ".py",
@@ -471,6 +495,12 @@
             "large": false
         },
         {
+            "path": "tools/chains/final_runtime_gate.py",
+            "lines": 45,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/build_document_cache.py",
             "lines": 44,
             "extension": ".py",
@@ -479,6 +509,12 @@
         {
             "path": "tools/pipeline/pipeline_package.py",
             "lines": 40,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/chains/context_bootstrap_load.py",
+            "lines": 39,
             "extension": ".py",
             "large": false
         },
@@ -557,6 +593,12 @@
         {
             "path": "tools/quality/check_python_syntax.py",
             "lines": 32,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/chains/no_legacy_shell_verification.py",
+            "lines": 31,
             "extension": ".py",
             "large": false
         },

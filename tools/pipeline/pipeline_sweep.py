@@ -20,19 +20,30 @@ DEFAULT_SMOKE = [
 
 @dataclass
 class CommandResult:
+    step_id: str
     label: str
     command: list[str]
     cwd: Path
     exit_code: int | None
+    required: bool = True
     elapsed_seconds: float = 0.0
     skipped: bool = False
+    skip_ok: bool = True
     reason: str = ""
     stdout_tail: str = ""
     stderr_tail: str = ""
+    recovery_hint: str = ""
+    artifact_path: str = ""
 
     @property
     def ok(self) -> bool:
-        return self.skipped or self.exit_code == 0
+        return (self.skipped and self.skip_ok) or self.exit_code == 0
+
+    @property
+    def status(self) -> str:
+        if self.skipped:
+            return "skipped" if self.skip_ok else "fail"
+        return "pass" if self.exit_code == 0 else "fail"
 
 
 @dataclass
@@ -164,14 +175,27 @@ def normalize_command_list(value: Any) -> list[list[str]]:
 
 
 def run_command(
+    step_id: str,
     label: str,
     command: list[str],
     cwd: Path,
     execute: bool,
+    required: bool = True,
+    recovery_hint: str = "",
     env: dict[str, str] | None = None,
 ) -> CommandResult:
     if not execute:
-        return CommandResult(label=label, command=command, cwd=cwd, exit_code=None, skipped=True, reason="dry-run")
+        return CommandResult(
+            step_id=step_id,
+            label=label,
+            command=command,
+            cwd=cwd,
+            exit_code=None,
+            required=required,
+            skipped=True,
+            reason="dry-run",
+            recovery_hint=recovery_hint,
+        )
     started = time.monotonic()
     completed = subprocess.run(
         command,
@@ -182,21 +206,46 @@ def run_command(
         env=env,
     )
     return CommandResult(
+        step_id=step_id,
         label=label,
         command=command,
         cwd=cwd,
         exit_code=completed.returncode,
+        required=required,
         elapsed_seconds=time.monotonic() - started,
         stdout_tail=tail(completed.stdout),
         stderr_tail=tail(completed.stderr),
+        recovery_hint=recovery_hint,
     )
 
 
 def git_status(project: Project, execute: bool) -> list[CommandResult]:
     return [
-        run_command("git branch", ["git", "branch", "--show-current"], project.path, execute),
-        run_command("git head", ["git", "rev-parse", "--short", "HEAD"], project.path, execute),
-        run_command("git status", ["git", "status", "--short"], project.path, execute),
+        run_command(
+            "git_branch",
+            "git branch",
+            ["git", "branch", "--show-current"],
+            project.path,
+            execute,
+            recovery_hint="Verify this path is a Git checkout before running the sweep.",
+        ),
+        run_command(
+            "git_head",
+            "git head",
+            ["git", "rev-parse", "--short", "HEAD"],
+            project.path,
+            execute,
+            recovery_hint="Verify this path is a Git checkout before comparing commit drift.",
+        ),
+        run_command(
+            "git_status",
+            "git status",
+            ["git", "status", "--short"],
+            project.path,
+            execute,
+            required=False,
+            recovery_hint="Review uncommitted project changes before applying managed updates.",
+        ),
     ]
 
 
@@ -235,7 +284,7 @@ def script_root_for(project: Project) -> Path:
     return project.path
 
 
-def smoke_command(project: Project, smoke: str, python: str) -> tuple[str, list[str], Path, str]:
+def smoke_command(project: Project, smoke: str, python: str) -> tuple[str, list[str], Path, str, str]:
     root = script_root_for(project)
     mapping: dict[str, tuple[Path, list[str]]] = {
         "feature_contracts": (
@@ -256,13 +305,19 @@ def smoke_command(project: Project, smoke: str, python: str) -> tuple[str, list[
         ),
     }
     if smoke == "git_clean":
-        return smoke, ["git", "diff", "--quiet"], project.path, ""
+        return smoke, ["git", "diff", "--quiet"], project.path, "", "Review and commit intended changes, or discard only changes created by this task."
     if smoke not in mapping:
         raise ValueError(f"Unknown smoke check '{smoke}' for {project.name}.")
     script, extra = mapping[smoke]
+    hints = {
+        "feature_contracts": "Update pipeline_featurelist.json or restore missing source-managed artifacts.",
+        "docs_audit": "Fix the reported document contract issue before syncing children.",
+        "compiled_context": "Rebuild compiled context or inspect stale compiled artifacts.",
+        "tier_check": "Repair the reported tier/source contract before finalizing the sweep.",
+    }
     if not script.is_file():
-        return smoke, [], root, f"missing script: {script}"
-    return smoke, [python, str(script), *extra], root, ""
+        return smoke, [], root, f"missing script: {script}", hints.get(smoke, "Restore the missing smoke script.")
+    return smoke, [python, str(script), *extra], root, "", hints.get(smoke, "Fix the failing smoke check before declaring the project clean.")
 
 
 def print_result(result: CommandResult, json_mode: bool) -> None:
@@ -276,6 +331,8 @@ def print_result(result: CommandResult, json_mode: bool) -> None:
     print(f"  cmd: {command_text}")
     if result.reason:
         print(f"  reason: {result.reason}")
+    if result.recovery_hint:
+        print(f"  recovery_hint: {result.recovery_hint}")
     if result.stdout_tail:
         print(f"  stdout: {result.stdout_tail}")
     if result.stderr_tail:
@@ -295,15 +352,21 @@ def project_report(project: Project, results: list[CommandResult]) -> dict[str, 
         "manual_attention": manual_attention,
         "results": [
             {
+                "id": result.step_id,
                 "label": result.label,
                 "command": result.command,
                 "cwd": str(result.cwd),
+                "required": result.required,
+                "status": result.status,
                 "exit_code": result.exit_code,
                 "skipped": result.skipped,
+                "skip_ok": result.skip_ok,
                 "reason": result.reason,
                 "elapsed_seconds": round(result.elapsed_seconds, 2),
                 "stdout_tail": result.stdout_tail,
                 "stderr_tail": result.stderr_tail,
+                "recovery_hint": result.recovery_hint,
+                "artifact_path": result.artifact_path,
             }
             for result in results
         ],
@@ -323,11 +386,14 @@ def run_project(
 ) -> dict[str, Any]:
     if not project.path.is_dir():
         result = CommandResult(
+            step_id="project_exists",
             label="project exists",
             command=[],
             cwd=project.path,
             exit_code=1,
+            required=True,
             reason="project path does not exist",
+            recovery_hint="Fix the project path in the sweep config or remove the project from this run.",
         )
         print_result(result, json_mode)
         return project_report(project, [result])
@@ -338,7 +404,14 @@ def run_project(
         print_result(result, json_mode)
 
     if include_update and project.role != "source" and project.update:
-        result = run_command("pipeline update", update_command(project, source_root, python), project.path, execute)
+        result = run_command(
+            "pipeline_update",
+            "pipeline update",
+            update_command(project, source_root, python),
+            project.path,
+            execute,
+            recovery_hint="Inspect update output for local overrides or missing source paths before rerunning with execute.",
+        )
         results.append(result)
         print_result(result, json_mode)
         if stop_on_failure and not result.ok:
@@ -346,11 +419,22 @@ def run_project(
 
     if include_smoke:
         for smoke in project.smoke:
-            label, command, cwd, skip_reason = smoke_command(project, smoke, python)
+            label, command, cwd, skip_reason, recovery_hint = smoke_command(project, smoke, python)
             result = (
-                CommandResult(label=label, command=command, cwd=cwd, exit_code=None, skipped=True, reason=skip_reason)
+                CommandResult(
+                    step_id=smoke,
+                    label=label,
+                    command=command,
+                    cwd=cwd,
+                    exit_code=None,
+                    required=True,
+                    skipped=True,
+                    skip_ok=False,
+                    reason=skip_reason,
+                    recovery_hint=recovery_hint,
+                )
                 if skip_reason
-                else run_command(label, command, cwd, execute)
+                else run_command(smoke, label, command, cwd, execute, recovery_hint=recovery_hint)
             )
             results.append(result)
             print_result(result, json_mode)
@@ -359,7 +443,14 @@ def run_project(
 
     if include_finalize:
         for index, command in enumerate(project.finalize, start=1):
-            result = run_command(f"finalize {index}", command, project.path, execute)
+            result = run_command(
+                f"finalize_{index}",
+                f"finalize {index}",
+                command,
+                project.path,
+                execute,
+                recovery_hint="Fix the project-specific finalizer failure before relying on this sweep result.",
+            )
             results.append(result)
             print_result(result, json_mode)
             if stop_on_failure and not result.ok:
@@ -382,6 +473,7 @@ def main() -> int:
     parser.add_argument("--all", action="store_true", help="Run update and smoke phases.")
     parser.add_argument("--stop-on-failure", action="store_true", help="Stop a project after the first failing phase.")
     parser.add_argument("--json", action="store_true", help="Print machine-readable JSON summary.")
+    parser.add_argument("--write-report", default="", help="Optional JSON summary report output path.")
     args = parser.parse_args()
 
     tool_root = resolve_repo_root(Path(__file__).resolve())
@@ -420,11 +512,16 @@ def main() -> int:
     ]
 
     summary = {
+        "schema": "socratex-pipeline-sweep-report/v1",
         "mode": "execute" if args.execute else "dry-run",
         "source": str(source_root),
         "projects": reports,
         "status": "pass" if all(report["status"] == "pass" for report in reports) else "fail",
     }
+    if args.write_report:
+        report_path = Path(args.write_report).expanduser().resolve()
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     if args.json:
         print(json.dumps(summary, ensure_ascii=False, indent=2))
     else:
