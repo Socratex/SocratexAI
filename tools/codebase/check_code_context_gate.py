@@ -31,6 +31,10 @@ REQUIRED_TAGS = {
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--paths", "-Paths", nargs="*", default=[])
+    parser.add_argument("--repo-root", default="")
+    parser.add_argument("--required-tag", action="append", default=[])
+    parser.add_argument("--gate-path", default="ignored/code_context_gate.json")
+    parser.add_argument("--knowledge-command-label", default="tools/knowledge/knowledge_code_context.py")
     parser.add_argument("--max-age-minutes", "-MaxAgeMinutes", type=int, default=0)
     return parser.parse_args()
 
@@ -43,33 +47,36 @@ def fail(message: str) -> int:
 def main() -> int:
     configure_stdio()
     args = parse_args()
-    repo_root = Path(__file__).resolve().parents[2]
+    repo_root = Path(args.repo_root).resolve() if args.repo_root else Path(__file__).resolve().parents[2]
+    required_tags = set(args.required_tag or REQUIRED_TAGS)
     code_paths = changed_code_paths(repo_root, args.paths)
     if not code_paths:
         print("OK: no changed code paths require compiled code-guidance context.")
         return 0
 
-    gate_path = repo_root / "ignored/code_context_gate.json"
+    gate_path = Path(args.gate_path)
+    if not gate_path.is_absolute():
+        gate_path = repo_root / gate_path
     if not gate_path.is_file():
-        return fail("Changed code paths require a fresh full compiled code-guidance load. Run tools/knowledge/knowledge_code_context.py before code work.")
+        return fail(f"Changed code paths require a fresh full compiled code-guidance load. Run {args.knowledge_command_label} before code work.")
 
     gate = load_json(gate_path)
     if not gate.get("full_base_loaded"):
-        return fail("Code context gate marker does not confirm a full base code-guidance load. Run tools/knowledge/knowledge_code_context.py.")
+        return fail(f"Code context gate marker does not confirm a full base code-guidance load. Run {args.knowledge_command_label}.")
 
     if args.max_age_minutes > 0:
         age_minutes = gate_age_minutes(str(gate.get("loaded_at", "")))
         if age_minutes > args.max_age_minutes:
-            return fail(f"Code context gate marker is stale ({age_minutes:.1f} minutes old). Run tools/knowledge/knowledge_code_context.py again.")
+            return fail(f"Code context gate marker is stale ({age_minutes:.1f} minutes old). Run {args.knowledge_command_label} again.")
 
     current_head = git_head(repo_root)
     if current_head and str(gate.get("repo_head", "")) != current_head:
         return fail("Code context gate marker was loaded for a different HEAD. Run tools/knowledge/knowledge_code_context.py again.")
 
     selected_tags = {str(tag) for tag in gate.get("selected_tags", [])}
-    missing_tags = sorted(REQUIRED_TAGS - selected_tags)
+    missing_tags = sorted(required_tags - selected_tags)
     if missing_tags:
-        return fail("Code context gate marker is missing required tags: " + ", ".join(missing_tags) + ". Run tools/knowledge/knowledge_code_context.py.")
+        return fail("Code context gate marker is missing required tags: " + ", ".join(missing_tags) + f". Run {args.knowledge_command_label}.")
 
     print("OK: full compiled code-guidance context loaded for changed code paths.")
     return 0

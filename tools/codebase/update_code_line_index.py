@@ -145,7 +145,7 @@ def large_note(path: str) -> str:
     return "Code file above the size threshold. Keep it documented here until it can be reduced or split cleanly."
 
 
-def build_large_files_document(large_records: list[dict[str, Any]], threshold: int) -> dict[str, Any]:
+def build_large_files_document(large_records: list[dict[str, Any]], threshold: int, *, schema: str, tool_display_path: str) -> dict[str, Any]:
     table_lines = [
         f"📊 Current files above {threshold} non-empty code lines.",
         "",
@@ -158,7 +158,7 @@ def build_large_files_document(large_records: list[dict[str, Any]], threshold: i
         for record in large_records:
             path = str(record["path"])
             table_lines.append(f"| {int(record['lines'])} | `{path}` | {large_note(path)} |")
-    return {
+    body = {
         "index": ["quick_index", "summary", "large_file_index", "maintenance"],
         "items": {
             "quick_index": {
@@ -167,7 +167,7 @@ def build_large_files_document(large_records: list[dict[str, Any]], threshold: i
             },
             "summary": {
                 "title": "📌 Summary",
-                "content": f"📌 Generated index of code files above the large-file threshold.\n\n📌 This document is generated from `docs-tech/CODE_LINE_INDEX.json` by `tools/codebase/update_code_line_index.py`. It tracks code files above {threshold} non-empty lines so large files have an explicit reason to stay large or a visible reason to split later.",
+                "content": f"📌 Generated index of code files above the large-file threshold.\n\n📌 This document is generated from `docs-tech/CODE_LINE_INDEX.json` by `{tool_display_path}`. It tracks code files above {threshold} non-empty lines so large files have an explicit reason to stay large or a visible reason to split later.",
             },
             "large_file_index": {
                 "title": "📊 Large File Index",
@@ -175,7 +175,7 @@ def build_large_files_document(large_records: list[dict[str, Any]], threshold: i
             },
             "maintenance": {
                 "title": "🛠 Maintenance",
-                "content": "🛠 Update this document through the line-index script instead of editing the table manually.\n\n🛠 Use `python3 -B tools/codebase/update_code_line_index.py` for a full refresh. Use `python3 -B tools/codebase/update_code_line_index.py --changed-only` when only changed files need to update their index records from the current git diff.",
+                "content": f"🛠 Update this document through the line-index script instead of editing the table manually.\n\n🛠 Use `python3 -B {tool_display_path}` for a full refresh. Use `python3 -B {tool_display_path} --changed-only` when only changed files need to update their index records from the current git diff.",
             },
         },
         "meta": {
@@ -196,6 +196,10 @@ def build_large_files_document(large_records: list[dict[str, Any]], threshold: i
             },
         },
     }
+    if schema == "content_metadata":
+        body["content"] = body.pop("items")
+        body["metadata"] = body.pop("meta")
+    return body
 
 
 def main() -> int:
@@ -203,6 +207,8 @@ def main() -> int:
     parser.add_argument("--index-path", "-IndexPath", default="docs-tech/CODE_LINE_INDEX.json")
     parser.add_argument("--large-files-path", "-LargeFilesPath", default="docs-tech/LARGE_FILES.json")
     parser.add_argument("--large-file-threshold", "-LargeFileThreshold", type=int, default=300)
+    parser.add_argument("--large-files-schema", choices=["items_meta", "content_metadata"], default="items_meta")
+    parser.add_argument("--tool-display-path", default="tools/codebase/update_code_line_index.py")
     parser.add_argument("--paths", "-Paths", nargs="*", default=[])
     parser.add_argument("--root", "-Root", default="")
     parser.add_argument("--changed-only", "-ChangedOnly", action="store_true")
@@ -245,7 +251,7 @@ def main() -> int:
     compare_payload = build_index_payload(records, args.large_file_threshold, str(existing_generated_at) if existing_generated_at else None)
     compare_index_text = json_text(compare_payload)
     large_records = [record for record in compare_payload["files"] if record["large"]]
-    compare_large_text = json_text(build_large_files_document(large_records, args.large_file_threshold))
+    compare_large_text = json_text(build_large_files_document(large_records, args.large_file_threshold, schema=args.large_files_schema, tool_display_path=args.tool_display_path))
     current_index = index_path.read_text(encoding="utf-8").replace("\r\n", "\n") if index_path.is_file() else ""
     current_large = large_path.read_text(encoding="utf-8").replace("\r\n", "\n") if large_path.is_file() else ""
     needs_write = current_index != compare_index_text or current_large != compare_large_text
@@ -260,7 +266,7 @@ def main() -> int:
     payload = compare_payload if current_index == compare_index_text else build_index_payload(records, args.large_file_threshold)
     index_text = json_text(payload)
     large_records = [record for record in payload["files"] if record["large"]]
-    large_text = json_text(build_large_files_document(large_records, args.large_file_threshold))
+    large_text = json_text(build_large_files_document(large_records, args.large_file_threshold, schema=args.large_files_schema, tool_display_path=args.tool_display_path))
     index_path.parent.mkdir(parents=True, exist_ok=True)
     large_path.parent.mkdir(parents=True, exist_ok=True)
     index_path.write_text(index_text, encoding="utf-8", newline="\n")

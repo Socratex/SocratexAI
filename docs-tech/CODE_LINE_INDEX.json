@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T14:57:09+02:00",
+    "generatedAt": "2026-05-24T15:05:28+02:00",
     "threshold": 300,
     "files": [
         {
@@ -87,14 +87,14 @@
             "large": false
         },
         {
-            "path": "tools/documents/document_item_edit_engine.py",
-            "lines": 232,
+            "path": "tools/codebase/update_code_line_index.py",
+            "lines": 235,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/codebase/update_code_line_index.py",
-            "lines": 229,
+            "path": "tools/documents/document_item_edit_engine.py",
+            "lines": 232,
             "extension": ".py",
             "large": false
         },
@@ -387,6 +387,12 @@
             "large": false
         },
         {
+            "path": "tools/codebase/check_code_context_gate.py",
+            "lines": 67,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/task_snapshot.py",
             "lines": 64,
             "extension": ".py",
@@ -413,12 +419,6 @@
         {
             "path": "tools/pipeline/pipeline_script_helpers.py",
             "lines": 62,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/codebase/check_code_context_gate.py",
-            "lines": 60,
             "extension": ".py",
             "large": false
         },
