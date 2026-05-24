@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-d0873b416f30
+Generated: source-36a62d090533
 
 ## Source of Truth
 
@@ -565,7 +565,8 @@ Draft placeholder:
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Run the feature contract checker before promoting or publishing the update.",
-                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
+                    "Keep pipeline_bootstrap_index.py parameterized for child-project contract text and generated_by metadata so installed root tools can delegate instead of forking the index builder."
                 ],
                 "verification_commands": [
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py",
@@ -7162,6 +7163,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Keep Python-backed wrapper replacements dot-sourcing resolve_tool_runtime.py instead of hardcoding Tools/Python312/python.exe.",
                     "Prefer project-specific Python environment overrides before SOCRATEX_PYTHON, bundled, or PATH-based runtimes when a child project reuses python_runtime.py.",
+                    "Keep resolve_tool_runtime.py accepting repeated --env-var options so child projects can prefer project-local runtime variables without reimplementing runtime reporting.",
                     "Keep Windows-only bundled Python paths as fallback candidates, not as mandatory Linux/Steam Deck dependencies.",
                     "Run representative document, knowledge, bootstrap, and feature-contract checks on a Linux shell before promoting to child projects.",
                     "For legacy-shell-to-Python migration claims, verify behavior by executing the replacement Python commands and update/smoke flows; reference-count reduction alone is not sufficient evidence."

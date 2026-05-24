@@ -12,6 +12,13 @@ DEFAULT_DOCUMENTS = [
     "FLOWS.json",
     "SCRIPTS.json",
 ]
+DEFAULT_CONTRACT = [
+    "Load this bootstrap index at the start of every source-pipeline prompt before selecting a command, flow, script, workflow row, or document route.",
+    "COMMANDS.json and SCRIPTS.json are default-context index-only documents: load their names, not their content, unless exact metadata for a specific command or script is needed.",
+    "Use WORKFLOW.json and FLOWS.json for every source-pipeline prompt: WORKFLOW defines classification and guardrails; FLOWS defines ordered execution steps.",
+    "Use COMMANDS.json when a prompt matches a command keyword, SCRIPTS.json when choosing tools, and DOCS.json when document ownership or routing matters.",
+    "If a needed command, flow, script, workflow rule, or document route is missing, report the missing contract before executing the prompt.",
+]
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -31,7 +38,7 @@ def document_index(document: dict[str, Any]) -> list[str]:
     return []
 
 
-def build_index(repo_root: Path, documents: list[str]) -> dict[str, Any]:
+def build_index(repo_root: Path, documents: list[str], contract: list[str], generated_by: str) -> dict[str, Any]:
     content: dict[str, list[str]] = {}
     seen: set[str] = set()
     ordered_documents: list[str] = []
@@ -52,14 +59,8 @@ def build_index(repo_root: Path, documents: list[str]) -> dict[str, Any]:
                 "type": "pipeline_bootstrap_index",
                 "language": "en",
             },
-            "contract": [
-                "Load this bootstrap index at the start of every source-pipeline prompt before selecting a command, flow, script, workflow row, or document route.",
-                "COMMANDS.json and SCRIPTS.json are default-context index-only documents: load their names, not their content, unless exact metadata for a specific command or script is needed.",
-                "Use WORKFLOW.json and FLOWS.json for every source-pipeline prompt: WORKFLOW defines classification and guardrails; FLOWS defines ordered execution steps.",
-                "Use COMMANDS.json when a prompt matches a command keyword, SCRIPTS.json when choosing tools, and DOCS.json when document ownership or routing matters.",
-                "If a needed command, flow, script, workflow rule, or document route is missing, report the missing contract before executing the prompt.",
-            ],
-            "generated_by": "tools/pipeline/pipeline_bootstrap_index.py",
+            "contract": contract,
+            "generated_by": generated_by,
         },
     }
 
@@ -73,12 +74,15 @@ def main() -> int:
     parser.add_argument("--repo-root", default=".", help="Repository root.")
     parser.add_argument("--output", default="docs-tech/PIPELINE-BOOTSTRAP.json", help="Output JSON path.")
     parser.add_argument("--documents", nargs="*", default=DEFAULT_DOCUMENTS, help="Source documents to index.")
+    parser.add_argument("--contract-line", action="append", default=[], help="Override output contract line. Repeat for multiple lines.")
+    parser.add_argument("--generated-by", default="tools/pipeline/pipeline_bootstrap_index.py", help="Value stored in metadata.generated_by.")
     parser.add_argument("--check", action="store_true", help="Fail if output is stale instead of writing it.")
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
     output_path = repo_root / args.output
-    expected = normalized_json(build_index(repo_root, args.documents))
+    contract = args.contract_line or DEFAULT_CONTRACT
+    expected = normalized_json(build_index(repo_root, args.documents, contract, args.generated_by))
 
     if args.check:
         if not output_path.exists():
