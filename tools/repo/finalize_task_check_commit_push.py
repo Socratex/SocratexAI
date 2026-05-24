@@ -8,7 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from repo_tool_helpers import repo_root
+from repo_tool_helpers import package_root, repo_root
 
 
 def main() -> int:
@@ -32,7 +32,7 @@ def main() -> int:
     command = [
         sys.executable,
         "-B",
-        str(root / "tools" / "repo" / "finalize_changed_files_commit_push.py"),
+        str(package_root() / "tools" / "repo" / "finalize_changed_files_commit_push.py"),
         "--repo-root",
         str(root),
         "--message",

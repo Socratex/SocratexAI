@@ -8,7 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from repo_tool_helpers import changed_paths, git_lines, normalize_path, repo_root, run
+from repo_tool_helpers import changed_paths, git_lines, normalize_path, package_root, repo_root, run
 
 
 LOCAL_ARTIFACT_PREFIXES = (
@@ -48,7 +48,7 @@ def commit_candidate_paths(root: Path, raw_paths: list[str]) -> list[str]:
 
 
 def final_checks_command(root: Path, args: argparse.Namespace) -> list[str]:
-    script = root / "tools" / "repo" / "run_final_task_checks.py"
+    script = package_root() / "tools" / "repo" / "run_final_task_checks.py"
     command = [sys.executable, "-B", str(script), "--repo-root", str(root)]
     if not args.no_quality:
         command.append("--quality")
