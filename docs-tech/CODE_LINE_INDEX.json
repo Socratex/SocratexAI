@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T12:24:45+02:00",
+    "generatedAt": "2026-05-24T12:28:17+02:00",
     "threshold": 300,
     "files": [
         {
@@ -123,6 +123,12 @@
             "large": false
         },
         {
+            "path": "tools/chains/chain_runner.py",
+            "lines": 173,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/end_prompt_snapshot.py",
             "lines": 169,
             "extension": ".py",
@@ -131,12 +137,6 @@
         {
             "path": "tools/repo/task_flow_audit.py",
             "lines": 168,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/chains/chain_runner.py",
-            "lines": 163,
             "extension": ".py",
             "large": false
         },
@@ -417,14 +417,14 @@
             "large": false
         },
         {
-            "path": "tools/repo/legacy_commit_task_compatibility_wrapper.py",
+            "path": "tools/chains/helper_refactor_smoke.py",
             "lines": 54,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/chains/helper_refactor_smoke.py",
-            "lines": 53,
+            "path": "tools/repo/legacy_commit_task_compatibility_wrapper.py",
+            "lines": 54,
             "extension": ".py",
             "large": false
         },
@@ -496,7 +496,7 @@
         },
         {
             "path": "tools/chains/final_runtime_gate.py",
-            "lines": 45,
+            "lines": 46,
             "extension": ".py",
             "large": false
         },
@@ -585,6 +585,12 @@
             "large": false
         },
         {
+            "path": "tools/chains/no_legacy_shell_verification.py",
+            "lines": 32,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/knowledge/knowledge_compile.py",
             "lines": 32,
             "extension": ".py",
@@ -593,12 +599,6 @@
         {
             "path": "tools/quality/check_python_syntax.py",
             "lines": 32,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/chains/no_legacy_shell_verification.py",
-            "lines": 31,
             "extension": ".py",
             "large": false
         },

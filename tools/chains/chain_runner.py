@@ -156,6 +156,18 @@ def report_path_from(value: str) -> Path | None:
     return Path(value).expanduser().resolve() if value else None
 
 
+def git_root_for(start: Path) -> Path:
+    completed = subprocess.run(
+        ["git", "-C", str(start), "rev-parse", "--show-toplevel"],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode == 0 and completed.stdout.strip():
+        return Path(completed.stdout.strip()).resolve()
+    return start
+
+
 def self_test_steps() -> list[ChainStep]:
     return [
         ChainStep(

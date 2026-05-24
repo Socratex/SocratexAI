@@ -483,6 +483,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
+                    "Keep source-managed text files free of trailing blank EOF lines so child sync does not introduce git diff --check failures from otherwise unchanged source files.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
@@ -6454,6 +6455,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Each chain must print every underlying command before execution.",
                     "Each chain result must include step id, label, command, cwd, required/skipped state, status, exit code, bounded output tails, and recovery hint.",
+                    "Chains that can run from an embedded SocratexAI package must resolve the nearest Git root for repository-wide gates while keeping package-local scripts as the command source.",
                     "Required chain steps stop the chain on first failure unless --keep-going is explicit.",
                     "Optional JSON reports use the socratex-chain-report/v1 or socratex-pipeline-sweep-report/v1 schema.",
                     "Failures should point to script/document repair work instead of being rediscovered manually on the next run."

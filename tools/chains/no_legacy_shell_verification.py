@@ -7,16 +7,17 @@ import argparse
 import sys
 from pathlib import Path
 
-from chain_runner import ChainStep, add_chain_arguments, report_path_from, run_chain
+from chain_runner import ChainStep, add_chain_arguments, git_root_for, report_path_from, run_chain
 
 
 def chain_steps(root: Path) -> list[ChainStep]:
+    runtime_root = git_root_for(root)
     return [
         ChainStep(
             step_id="runtime_gate",
             label="no legacy shell runtime gate",
-            command=[sys.executable, "-B", str(root / "tools" / "quality" / "script_runtime_gate.py"), "--repo-root", str(root), "--max-examples", "10"],
-            cwd=root,
+            command=[sys.executable, "-B", str(root / "tools" / "quality" / "script_runtime_gate.py"), "--repo-root", str(runtime_root), "--max-examples", "10"],
+            cwd=runtime_root,
             recovery_hint="Remove tracked legacy shell files/references or move historical-only mentions outside executable pipeline surfaces.",
         )
     ]
