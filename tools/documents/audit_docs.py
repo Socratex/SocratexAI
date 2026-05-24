@@ -4,14 +4,17 @@
 from __future__ import annotations
 
 import argparse
-import subprocess
 import sys
 from pathlib import Path
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import run_step  # noqa: E402
 
 def run(command: list[str], cwd: Path) -> int:
-    completed = subprocess.run(command, cwd=cwd, check=False)
-    return completed.returncode
+    return run_step("JSON document audit", command, cwd)
 
 
 def audit_json_path(root: Path) -> Path:

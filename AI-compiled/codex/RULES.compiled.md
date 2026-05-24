@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-3d24f889b6ec
+Generated: source-a73ef0d664e5
 
 ## Source of Truth
 
@@ -6838,7 +6838,13 @@ Draft placeholder:
                     "tools/repo/end_prompt_snapshot.py",
                     "tools/quality/run_quality_fix.py",
                     "tools/quality/run_quality_gate.py",
-                    "tools/quality/script_runtime_gate.py"
+                    "tools/quality/script_runtime_gate.py",
+                    "tools/documents/build_document_cache.py",
+                    "tools/documents/document_wrapper_helpers.py",
+                    "tools/documents/audit_docs.py",
+                    "tools/documents/run_document_post_edit_checks.py",
+                    "tools/pipeline/compile_pipeline_context.py",
+                    "tools/pipeline/update_pipeline_from_link.py"
                 ],
                 "required_scripts": [
                     "rebuild_ai_compiled_context.py",

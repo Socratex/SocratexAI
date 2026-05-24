@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T03:43:52+02:00",
+    "generatedAt": "2026-05-24T03:47:47+02:00",
     "threshold": 300,
     "files": [
         {
@@ -112,7 +112,7 @@
         },
         {
             "path": "tools/pipeline/update_pipeline_from_link.py",
-            "lines": 178,
+            "lines": 181,
             "extension": ".py",
             "large": false
         },
@@ -375,12 +375,6 @@
             "large": false
         },
         {
-            "path": "tools/documents/run_document_post_edit_checks.py",
-            "lines": 63,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/repo/finalize_task_check_commit_push.py",
             "lines": 63,
             "extension": ".py",
@@ -405,8 +399,8 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/compile_pipeline_context.py",
-            "lines": 57,
+            "path": "tools/documents/run_document_post_edit_checks.py",
+            "lines": 60,
             "extension": ".py",
             "large": false
         },
@@ -431,6 +425,12 @@
         {
             "path": "tools/pipeline/upgrade_from_reference_project.py",
             "lines": 52,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/compile_pipeline_context.py",
+            "lines": 51,
             "extension": ".py",
             "large": false
         },
@@ -472,7 +472,7 @@
         },
         {
             "path": "tools/documents/build_document_cache.py",
-            "lines": 43,
+            "lines": 44,
             "extension": ".py",
             "large": false
         },
@@ -507,6 +507,12 @@
             "large": false
         },
         {
+            "path": "tools/documents/audit_docs.py",
+            "lines": 37,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/migrate_document_item.py",
             "lines": 36,
             "extension": ".py",
@@ -521,12 +527,6 @@
         {
             "path": "tools/text/utf8_file_helpers.py",
             "lines": 36,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/documents/audit_docs.py",
-            "lines": 35,
             "extension": ".py",
             "large": false
         },
@@ -579,14 +579,14 @@
             "large": false
         },
         {
-            "path": "tools/documents/move_document_item.py",
+            "path": "tools/documents/document_wrapper_helpers.py",
             "lines": 27,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/documents/document_wrapper_helpers.py",
-            "lines": 25,
+            "path": "tools/documents/move_document_item.py",
+            "lines": 27,
             "extension": ".py",
             "large": false
         },

@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import argparse
-import subprocess
 import sys
 from pathlib import Path
 
 from document_wrapper_helpers import repo_root, split_values
+from shared.repo_helpers import run_step
 
 
 def relative_path(root: Path, value: str) -> str:
@@ -18,10 +18,7 @@ def relative_path(root: Path, value: str) -> str:
 
 
 def run(label: str, command: list[str], cwd: Path) -> int:
-    print()
-    print(f"==> {label}")
-    completed = subprocess.run(command, cwd=cwd, check=False)
-    return completed.returncode
+    return run_step(label, command, cwd)
 
 
 def main() -> int:

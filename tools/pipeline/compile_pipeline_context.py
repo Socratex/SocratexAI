@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import subprocess
 import sys
 from pathlib import Path
 
@@ -13,14 +12,7 @@ if str(_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(_TOOLS_ROOT))
 
 from shared.cli_helpers import configure_stdio  # noqa: E402
-
-
-def run_step(label: str, command: list[str], cwd: Path) -> int:
-    print(f"==> {label}")
-    completed = subprocess.run(command, cwd=cwd, check=False)
-    if completed.returncode != 0:
-        print(f"ERROR: {label} failed with exit code {completed.returncode}", file=sys.stderr)
-    return completed.returncode
+from shared.repo_helpers import run_step  # noqa: E402
 
 
 def parse_args() -> argparse.Namespace:

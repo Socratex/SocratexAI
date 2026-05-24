@@ -8,14 +8,16 @@ if str(_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(_TOOLS_ROOT))
 
 from shared.cli_helpers import split_values as split_cli_values  # noqa: E402
+from shared.repo_helpers import repo_root as shared_repo_root  # noqa: E402
 
 
 def repo_root(start: Path | None = None) -> Path:
-    current = (start or Path(__file__)).resolve()
-    for candidate in [current, *current.parents]:
-        if (candidate / "SCRIPTS.json").is_file() and (candidate / "tools").is_dir():
-            return candidate
-    return Path(__file__).resolve().parents[2]
+    return shared_repo_root(
+        (start or Path(__file__)).resolve(),
+        marker_files=("SCRIPTS.json",),
+        marker_dirs=("tools",),
+        use_git=False,
+    )
 
 
 def run_module_main(module: object, argv: list[str]) -> int:

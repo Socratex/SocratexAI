@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
-import subprocess
 import sys
 import tempfile
 import urllib.request
@@ -14,11 +13,17 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import run_step  # noqa: E402
+
 
 def run(command: list[str], cwd: Path) -> None:
-    completed = subprocess.run(command, cwd=cwd, check=False)
-    if completed.returncode != 0:
-        raise SystemExit(f"{' '.join(command)} failed with exit code {completed.returncode}")
+    exit_code = run_step(" ".join(command), command, cwd)
+    if exit_code != 0:
+        raise SystemExit(f"{' '.join(command)} failed with exit code {exit_code}")
 
 
 def content_of(config: dict[str, Any]) -> dict[str, Any]:
