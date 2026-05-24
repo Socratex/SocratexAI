@@ -2,8 +2,14 @@ from __future__ import annotations
 
 import argparse
 import re
-import subprocess
+import sys
 from pathlib import Path
+
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import git_lines  # noqa: E402
 
 
 MARKERS = {
@@ -60,13 +66,7 @@ def relative_to_root(path: Path, root: Path) -> str:
 
 
 def default_targets(root: Path) -> list[Path]:
-    result = subprocess.run(
-        ["git", "-C", str(root), "ls-files", "*.md", "*.json", "*.json"],
-        check=True,
-        text=True,
-        capture_output=True,
-    )
-    return [(root / line).resolve() for line in result.stdout.splitlines() if line.strip()]
+    return [(root / line).resolve() for line in git_lines(root, ["ls-files", "*.md", "*.json", "*.json"])]
 
 
 def expand_paths(paths: list[str]) -> list[str]:

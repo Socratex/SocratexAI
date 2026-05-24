@@ -6,13 +6,12 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import subprocess
 import sys
 import urllib.parse
 from pathlib import Path
 from typing import Any
 
-from repo_tool_helpers import package_root, split_values
+from repo_tool_helpers import git_lines, package_root, split_values
 
 
 def remote_repository(root: Path) -> tuple[str, str]:
@@ -21,10 +20,10 @@ def remote_repository(root: Path) -> tuple[str, str]:
         owner, repo = env_repo.split("/", 1)
         if owner and repo:
             return owner, repo
-    completed = subprocess.run(["git", "remote", "get-url", "origin"], cwd=root, check=False, capture_output=True, text=True)
-    if completed.returncode != 0:
+    lines = git_lines(root, ["remote", "get-url", "origin"], allow_failure=True)
+    if not lines:
         return "", ""
-    url = completed.stdout.strip()
+    url = lines[0]
     marker = "github.com"
     if marker not in url:
         return "", ""
@@ -161,4 +160,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

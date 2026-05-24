@@ -4,13 +4,12 @@
 from __future__ import annotations
 
 import argparse
-import subprocess
 import sys
 from pathlib import Path
 
 from repo_tool_helpers import changed_text_paths
 from shared.repo_helpers import changed_paths as git_changed_paths
-from shared.repo_helpers import repo_root, run_step as run
+from shared.repo_helpers import git_lines, repo_root, run_step as run
 
 
 def normalize_changed_text(root: Path, label: str, skip: bool) -> int:
@@ -36,12 +35,12 @@ def normalize_changed_text(root: Path, label: str, skip: bool) -> int:
 def print_task_snapshot(root: Path) -> int:
     print("# Task Snapshot")
     print(f"Repository: {root}")
-    branch = subprocess.run(["git", "branch", "--show-current"], cwd=root, check=False, capture_output=True, text=True)
-    print(f"Branch: {(branch.stdout or '').strip() or '(unknown)'}")
-    status = subprocess.run(["git", "status", "--short"], cwd=root, check=False, capture_output=True, text=True)
+    branch = git_lines(root, ["branch", "--show-current"], allow_failure=True)
+    print(f"Branch: {branch[0] if branch else '(unknown)'}")
+    status = git_lines(root, ["status", "--short"], allow_failure=True)
     print("\n## Git Status Short")
-    print((status.stdout or "(clean)").rstrip())
-    return 0 if status.returncode == 0 else status.returncode
+    print("\n".join(status) if status else "(clean)")
+    return 0
 
 
 def ensure_no_python_cache(root: Path) -> int:

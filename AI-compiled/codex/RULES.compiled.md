@@ -6848,7 +6848,17 @@ Draft placeholder:
                     "tools/json/smoke_json_tools.py",
                     "tools/setup/run_interactive_setup.py",
                     "tools/pipeline/python_runtime.py",
-                    "tools/pipeline/sync_managed_pipeline_package.py"
+                    "tools/pipeline/sync_managed_pipeline_package.py",
+                    "tools/text/check_utf8_writes.py",
+                    "tools/text/repair_mojibake.py",
+                    "tools/documents/normalize_markdown_emoji.py",
+                    "tools/knowledge/knowledge_code_context.py",
+                    "tools/codebase/ai_native_contract_dry_run.py",
+                    "tools/pipeline/init_branch_memory.py",
+                    "tools/pipeline/import_existing_project.py",
+                    "tools/repo/open_pipeline_learning_issue.py",
+                    "tools/repo/run_final_task_checks.py",
+                    "tools/repo/check_toolchain_health.py"
                 ],
                 "required_scripts": [
                     "rebuild_ai_compiled_context.py",

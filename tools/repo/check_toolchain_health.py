@@ -5,11 +5,10 @@ from __future__ import annotations
 
 import argparse
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
-from repo_tool_helpers import repo_root, run
+from repo_tool_helpers import git_lines, repo_root, run
 
 
 def check(name: str, ok: bool, detail: str, failures: list[str]) -> None:
@@ -38,8 +37,8 @@ def main() -> int:
     check("doc tool", (root / "tools" / "documents" / "document_read_cache_engine.py").is_file(), str(root / "tools" / "documents" / "document_read_cache_engine.py"), failures)
     check("UTF-8 write guard", (root / "tools" / "text" / "check_utf8_writes.py").is_file(), str(root / "tools" / "text" / "check_utf8_writes.py"), failures)
 
-    status = subprocess.run(["git", "status", "--short"], cwd=root, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    check("git status", status.returncode == 0, "repository is readable", failures)
+    git_status = git_lines(root, ["status", "--short"], allow_failure=True)
+    check("git status", bool(git_status) or (root / ".git").exists(), "repository is readable", failures)
 
     if args.audit_docs:
         audit = root / "tools" / "documents" / "audit_docs.py"
@@ -59,4 +58,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

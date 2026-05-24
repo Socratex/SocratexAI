@@ -15,6 +15,12 @@ from typing import Any
 
 from pipeline_script_helpers import configure_stdio, split_values, write_json, write_text
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import git_lines  # noqa: E402
+
 
 def run_python(script: Path, args: list[str]) -> None:
     completed = subprocess.run([sys.executable, str(script), *args], check=False)
@@ -45,9 +51,9 @@ def copy_item_safe(source: Path, destination: Path, dry_run: bool) -> None:
 
 
 def current_branch(root: Path) -> str:
-    completed = subprocess.run(["git", "branch", "--show-current"], cwd=root, check=False, capture_output=True, text=True)
-    if completed.returncode == 0 and completed.stdout.strip():
-        return re.sub(r'[\\/:*?"<>|]', "-", completed.stdout.strip()) or "unknown-branch"
+    lines = git_lines(root, ["branch", "--show-current"], allow_failure=True)
+    if lines:
+        return re.sub(r'[\\/:*?"<>|]', "-", lines[0]) or "unknown-branch"
     return "unknown-branch"
 
 

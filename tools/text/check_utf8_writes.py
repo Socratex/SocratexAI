@@ -2,9 +2,14 @@ from __future__ import annotations
 
 import argparse
 import re
-import subprocess
 import sys
 from pathlib import Path
+
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import git_lines  # noqa: E402
 
 
 UNSAFE_COMMAND_PATTERN = re.compile(r"\b(Set-Content|Out-File|Add-Content)\b")
@@ -28,19 +33,8 @@ def relative_git_path(path: Path, repo_root: Path) -> str:
         return path.as_posix()
 
 
-def run_git(repo_root: Path, arguments: list[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        ["git", "-C", str(repo_root), *arguments],
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
-        check=False,
-    )
-
-
 def tracked_by_git(repo_root: Path, git_path: str) -> bool:
-    result = run_git(repo_root, ["ls-files", "--error-unmatch", "--", git_path])
-    return result.returncode == 0 and bool(result.stdout.strip())
+    return bool(git_lines(repo_root, ["ls-files", "--error-unmatch", "--", git_path], allow_failure=True))
 
 
 def added_line_numbers(path: Path, repo_root: Path) -> set[int] | None:
@@ -48,11 +42,10 @@ def added_line_numbers(path: Path, repo_root: Path) -> set[int] | None:
     if not tracked_by_git(repo_root, git_path):
         return None
 
-    result = run_git(repo_root, ["diff", "--unified=0", "--", git_path])
     line_numbers: set[int] = set()
     current_new_line = 0
 
-    for diff_line in result.stdout.splitlines():
+    for diff_line in git_lines(repo_root, ["diff", "--unified=0", "--", git_path], allow_failure=True):
         hunk_match = HUNK_PATTERN.match(diff_line)
         if hunk_match:
             current_new_line = int(hunk_match.group(1))

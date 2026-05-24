@@ -15,6 +15,7 @@ if str(_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(_TOOLS_ROOT))
 
 from shared.cli_helpers import configure_stdio, split_values as split_cli_values  # noqa: E402
+from shared.repo_helpers import git_lines  # noqa: E402
 
 
 BASE_CODE_GUIDANCE_TAGS = [
@@ -68,16 +69,8 @@ def run_tool(repo_root: Path, args: list[str], fallback_args: list[str] | None =
 
 
 def git_head(repo_root: Path) -> str:
-    result = subprocess.run(
-        ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
-        text=True,
-        capture_output=True,
-        check=False,
-    )
-    if result.returncode != 0:
-        message = result.stderr.strip() or result.stdout.strip()
-        raise RuntimeError(f"git rev-parse HEAD failed: {message}")
-    return result.stdout.strip()
+    lines = git_lines(repo_root, ["rev-parse", "HEAD"])
+    return lines[0] if lines else ""
 
 
 def write_gate(repo_root: Path, selected_tags: list[str], views: list[str], additional_tags: list[str], output_format: str) -> None:

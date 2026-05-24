@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T03:56:43+02:00",
+    "generatedAt": "2026-05-24T04:01:50+02:00",
     "threshold": 300,
     "files": [
         {
@@ -52,7 +52,7 @@
         },
         {
             "path": "tools/pipeline/import_existing_project.py",
-            "lines": 255,
+            "lines": 259,
             "extension": ".py",
             "large": false
         },
@@ -154,19 +154,13 @@
         },
         {
             "path": "tools/repo/open_pipeline_learning_issue.py",
-            "lines": 147,
+            "lines": 146,
             "extension": ".py",
             "large": false
         },
         {
             "path": "tools/repo/run_final_task_checks.py",
-            "lines": 139,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/knowledge/knowledge_code_context.py",
-            "lines": 137,
+            "lines": 138,
             "extension": ".py",
             "large": false
         },
@@ -179,6 +173,12 @@
         {
             "path": "tools/pipeline/reinitialize_pipeline.py",
             "lines": 135,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/knowledge_code_context.py",
+            "lines": 130,
             "extension": ".py",
             "large": false
         },
@@ -207,14 +207,14 @@
             "large": false
         },
         {
-            "path": "tools/documents/normalize_markdown_emoji.py",
+            "path": "tools/quality/check_evals.py",
             "lines": 116,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/quality/check_evals.py",
-            "lines": 116,
+            "path": "tools/documents/normalize_markdown_emoji.py",
+            "lines": 113,
             "extension": ".py",
             "large": false
         },
@@ -226,12 +226,6 @@
         },
         {
             "path": "tools/codebase/context_gate_helpers.py",
-            "lines": 103,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/text/check_utf8_writes.py",
             "lines": 103,
             "extension": ".py",
             "large": false
@@ -267,8 +261,14 @@
             "large": false
         },
         {
-            "path": "tools/text/repair_mojibake.py",
+            "path": "tools/text/check_utf8_writes.py",
             "lines": 96,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/text/repair_mojibake.py",
+            "lines": 94,
             "extension": ".py",
             "large": false
         },
@@ -333,13 +333,13 @@
             "large": false
         },
         {
-            "path": "tools/documents/insert_document_item.py",
-            "lines": 72,
+            "path": "tools/pipeline/init_branch_memory.py",
+            "lines": 74,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/pipeline/init_branch_memory.py",
+            "path": "tools/documents/insert_document_item.py",
             "lines": 72,
             "extension": ".py",
             "large": false
@@ -453,14 +453,14 @@
             "large": false
         },
         {
-            "path": "tools/repo/check_toolchain_health.py",
+            "path": "tools/text/normalize_text_files.py",
             "lines": 48,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/text/normalize_text_files.py",
-            "lines": 48,
+            "path": "tools/repo/check_toolchain_health.py",
+            "lines": 47,
             "extension": ".py",
             "large": false
         },

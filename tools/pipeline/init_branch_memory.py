@@ -5,17 +5,21 @@ from __future__ import annotations
 
 import argparse
 import re
-import subprocess
+import sys
 from pathlib import Path
 
 from pipeline_script_helpers import configure_stdio, package_root, write_text
 
+_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_ROOT))
+
+from shared.repo_helpers import git_lines  # noqa: E402
+
 
 def current_branch(root: Path) -> str:
-    completed = subprocess.run(["git", "branch", "--show-current"], cwd=root, check=False, capture_output=True, text=True)
-    if completed.returncode == 0 and completed.stdout.strip():
-        return completed.stdout.strip()
-    return "unknown-branch"
+    lines = git_lines(root, ["branch", "--show-current"], allow_failure=True)
+    return lines[0] if lines else "unknown-branch"
 
 
 def safe_branch_name(value: str) -> str:

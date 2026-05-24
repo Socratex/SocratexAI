@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import os
-import subprocess
 import sys
 from pathlib import Path
 
@@ -14,6 +13,7 @@ if str(_TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(_TOOLS_ROOT))
 
 from shared.cli_helpers import configure_stdio  # noqa: E402
+from shared.repo_helpers import git_lines, normalize_repo_path  # noqa: E402
 
 
 CODE_EXTENSIONS = {".gd", ".cs", ".ts", ".tsx", ".js", ".jsx", ".py", ".java", ".kt", ".go", ".rs", ".php"}
@@ -48,13 +48,13 @@ SKIP_PARTS = {".git", "AI-compiled", "SocratexAI", "ignored", "logs", "logs-diag
 SKIP_SUFFIXES = (".uid", ".import", ".tres", ".tscn")
 
 def normalize(path: str) -> str:
-    return path.replace("\\", "/")
+    return normalize_repo_path(path)
 
 
 def git_files(project_root: Path) -> list[str]:
-    completed = subprocess.run(["git", "-C", str(project_root), "ls-files"], text=True, capture_output=True, check=False)
-    if completed.returncode == 0 and completed.stdout.strip():
-        return [normalize(line) for line in completed.stdout.splitlines() if line.strip()]
+    tracked = git_lines(project_root, ["ls-files"], allow_failure=True)
+    if tracked:
+        return [normalize(line) for line in tracked]
     files: list[str] = []
     for root, dirnames, filenames in os.walk(project_root):
         dirnames[:] = [name for name in dirnames if name not in SKIP_PARTS]

@@ -2,18 +2,15 @@ from __future__ import annotations
 
 import argparse
 import re
-import subprocess
 from pathlib import Path
 
 from document_wrapper_helpers import repo_root, split_values
+from shared.repo_helpers import git_lines
 
 
 def project_markdown_paths(root: Path) -> list[str]:
-    completed = subprocess.run(["git", "ls-files", "*.md"], cwd=root, text=True, capture_output=True, check=False)
-    if completed.returncode != 0:
-        raise SystemExit(completed.returncode)
     excluded = ("Tools/Python312/", "Tools/python-installer/", "Tools/tmp/")
-    return [line for line in completed.stdout.splitlines() if line and not any(part in line for part in excluded)]
+    return [line for line in git_lines(root, ["ls-files", "*.md"]) if not any(part in line for part in excluded)]
 
 
 def starts_with_symbol(text: str) -> bool:
