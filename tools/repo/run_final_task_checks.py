@@ -7,12 +7,12 @@ import argparse
 import sys
 from pathlib import Path
 
-from repo_tool_helpers import changed_text_paths
+from repo_tool_helpers import changed_text_paths, package_root
 from shared.repo_helpers import changed_paths as git_changed_paths
 from shared.repo_helpers import git_lines, repo_root, run_step as run
 
 
-def normalize_changed_text(root: Path, label: str, skip: bool) -> int:
+def normalize_changed_text(root: Path, tools: Path, label: str, skip: bool) -> int:
     if skip:
         return 0
     paths = changed_text_paths(root)
@@ -23,7 +23,7 @@ def normalize_changed_text(root: Path, label: str, skip: bool) -> int:
         [
             sys.executable,
             "-B",
-            str(root / "tools" / "text" / "normalize_text_files.py"),
+            str(tools / "text" / "normalize_text_files.py"),
             "--repo-root",
             str(root),
             *paths,
@@ -76,11 +76,11 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(args.repo_root).resolve() if args.repo_root else repo_root(Path(__file__).resolve())
-    tools = root / "tools"
+    tools = package_root() / "tools"
     python = sys.executable
 
     print("==> Python final task checks")
-    if normalize_changed_text(root, "text normalization refresh", args.no_normalize) != 0:
+    if normalize_changed_text(root, tools, "text normalization refresh", args.no_normalize) != 0:
         return 1
 
     steps: list[tuple[str, list[str]]] = [
@@ -132,7 +132,7 @@ def main() -> int:
         steps.append(("OUTPUT snapshot", output_command))
 
     for label, command in steps:
-        if label == "code line index check" and normalize_changed_text(root, "post-generator text normalization refresh", args.no_normalize) != 0:
+        if label == "code line index check" and normalize_changed_text(root, tools, "post-generator text normalization refresh", args.no_normalize) != 0:
             return 1
         if label == "Python cache check":
             code = ensure_no_python_cache(root)

@@ -1264,7 +1264,7 @@ Draft placeholder:
                 "promotion_checklist": [
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
-                    "Installed child-project finalizer wrappers must execute package-local tools while passing the child repository root as --repo-root.",
+                    "Installed child-project finalizers and final check runners must execute package-local tools while passing the child repository root as --repo-root.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
