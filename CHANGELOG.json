@@ -539,6 +539,12 @@
                 "date": "2026-05-24",
                 "feature": "license_metadata",
                 "change": "Relicensed SocratexAI source distribution from MIT to Apache License 2.0. Added NOTICE with copyright attribution and MIT history boundary. Included NOTICE in managed package sync and feature contracts so child project updates receive current legal metadata. Why: Apache 2.0 matches the public adoption strategy for corporate users and adds an explicit patent grant while preserving earlier MIT forks under their original terms."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-05-24",
+                "feature": "public_portfolio_release",
+                "change": "Prepared SocratexPipeline for public portfolio positioning as version 1.1. Updated README positioning around legacy-code AI workflows, source provenance, human-owned lifecycle, feature contracts, managed updates, and the public bootstrap link. Removed the pre-launch donation placeholder from README. Why: The repository is now intended to function as a public project, portfolio artifact, and adoption surface rather than a private internal pipeline snapshot."
             }
         ]
     },

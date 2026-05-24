@@ -256,7 +256,7 @@ def main() -> int:
                 communication=OrderedDict(profile=communication_profile),
                 changelog=OrderedDict(enabled=args.use_changelog),
                 pipeline=OrderedDict(
-                    version="0.2.0-alpha",
+                    version="1.1",
                     update_source="TBD",
                     public_bootstrap_url="TBD",
                     update_command=f'python SocratexAI/tools/pipeline/update_pipeline_from_link.py --source "<source>" --packs {",".join(packs)} --reinitialize-new',

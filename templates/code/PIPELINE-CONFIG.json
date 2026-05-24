@@ -45,7 +45,7 @@
             "profile": "standard"
         },
         "pipeline": {
-            "version": "0.2.0-alpha",
+            "version": "1.1",
             "update_source": "TBD",
             "public_bootstrap_url": "TBD",
             "update_command": [

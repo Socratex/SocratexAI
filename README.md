@@ -1,8 +1,10 @@
 # SocratexPipeline
 
-SocratexPipeline is a modular project runtime for long-running AI-assisted work.
+SocratexPipeline is an agent workflow framework for long-running software work, especially legacy codebases where the AI must not pretend it understands the whole business.
 
-It is not a prompt pack. It gives AI agents a durable operating layer: state, plans, registries, diagnostics, quality gates, update rules, and safe directive routing across long projects.
+It is built around a simple doctrine: the AI is a junior pair programmer, the user remains the senior owner of scope, source truth, lifecycle, and release judgment.
+
+It is not a prompt pack. It gives AI agents a durable operating layer: state, plans, registries, diagnostics, quality gates, update rules, source-provenance discipline, and safe directive routing across long projects.
 
 It also installs a reusable project workflow layer: `WORKFLOW.json` for owner-written active pain points and priority challenge rules, plus on-demand `team/*.json` role lenses for product, technical, performance, experience, and pipeline review.
 
@@ -13,6 +15,18 @@ SocratexPipeline also compiles tagged project knowledge into `AI-compiled/projec
 When SQLite is unavailable, SocratexPipeline writes a file fallback under `AI-compiled/project/knowledge-files/`. It mirrors the database tables as JSON files, except named views are intentionally unavailable; agents query it with `tools/knowledge/knowledge_file_select.py`.
 
 SocratexPipeline also includes a manual `evals/` framework for comparing baseline agent behavior against with-pipeline behavior. The evals focus on priority routing, low-friction adoption, team-role loading, finalization boundaries, document ownership, compiled-instruction handling, and three-tier user fit.
+
+## Who this is for
+
+Use SocratexPipeline when you maintain software that cannot be safely handled by a max-autonomy agent:
+
+- legacy PHP, Java, Ruby, Python, C#, or mixed repositories,
+- business workflows with incomplete local knowledge,
+- projects where hallucinated source facts are worse than a slower answer,
+- teams that want paste-ready handoff text, explicit unknowns, and human-owned Jira/PR/release flow,
+- solo maintainers who need continuity across many AI sessions.
+
+SocratexPipeline is intentionally opinionated against blind autonomy. It asks agents to preserve provenance, use repository tools, challenge missing information, run verification, and leave the project in a clean Git state.
 
 ## Why
 
@@ -26,6 +40,16 @@ Installed projects use this layout:
 - `SocratexAI/` contains pipeline files, tools, packs, state, registries, templates, and docs,
 - branch-scoped code projects may also use `.aiassistant/` for committed project directives and `ignored/ai-socratex/` for local branch memory,
 - existing AI directive files should only point to `SOCRATEX.md`.
+
+## What makes it different
+
+- **Source provenance first:** agents should say when evidence is missing instead of fabricating confidence.
+- **Human-owned lifecycle:** the AI prepares work, notes, checks, and handoff text; the user owns product judgment and external workflow actions.
+- **Feature contracts:** active pipeline features declare required paths, scripts, docs, catalog entries, verification commands, and failure modes.
+- **Managed updates:** installed projects can refresh the embedded `SocratexAI/` package from Git without overwriting project memory.
+- **Tiered context:** always-loaded instructions stay small; deeper rules and knowledge are routed by task.
+- **Tool-first JSON:** project memory stays structured, auditable, and script-editable instead of becoming one drifting prompt file.
+- **Batch finalization:** substantial work should end through repository finalizers that normalize, audit, check, commit, and push.
 
 ## Public Bootstrap
 
@@ -43,10 +67,10 @@ After the first prompt handled under the installed pipeline, the agent should ru
 
 ## Quick Install Prompt
 
-After publishing this repository, use the raw GitHub link:
+Use this raw GitHub link:
 
 ```text
-use this link to setup pipeline https://raw.githubusercontent.com/<user>/<repo>/main/PUBLIC-BOOTSTRAP.md
+use this link to setup pipeline https://raw.githubusercontent.com/Socratex/SocratexAI/main/PUBLIC-BOOTSTRAP.md
 ```
 
 The target project should end up with:
@@ -237,7 +261,7 @@ python3 -B tools/repo/legacy_commit_task_compatibility_wrapper.py -Message "<mes
 
 ## Version
 
-Current version: `0.2.0-alpha`.
+Current version: `1.1`.
 
 See `VERSION` and `QUALITY-GATE.json`.
 
@@ -248,5 +272,3 @@ SocratexDevSolutions.
 ## License
 
 Apache License 2.0. See `LICENSE` and `NOTICE`.
-
-Donation placeholder: add your GitHub Sponsors, Ko-fi, Buy Me a Coffee, Liberapay, PayPal, or Polar link here before public launch.

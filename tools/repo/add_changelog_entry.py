@@ -72,7 +72,7 @@ def main() -> int:
     parser.add_argument("--summary", "-Summary", nargs="*", default=[])
     parser.add_argument("--why", "-Why", default="")
     parser.add_argument("--feature", "-Feature", default="manual_changelog_entry")
-    parser.add_argument("--version", "-Version", default="0.2.0-alpha")
+    parser.add_argument("--version", "-Version", default="1.1")
     parser.add_argument("--timestamp", "-Timestamp", default="")
     parser.add_argument("--path", "-Path", default="CHANGELOG.json")
     parser.add_argument("--repo-root", default="")
