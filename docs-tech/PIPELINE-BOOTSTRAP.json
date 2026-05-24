@@ -155,6 +155,7 @@
             "finalize_changed_files_commit_push.py",
             "run_final_task_checks.py",
             "run_final_task_checks.py",
+            "shared_script_parity.py",
             "generate_embedded_config_payload.py",
             "import_existing_project.py",
             "init_branch_memory.py",

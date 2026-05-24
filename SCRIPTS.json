@@ -84,6 +84,7 @@
         "finalize_changed_files_commit_push.py",
         "run_final_task_checks.py",
         "run_final_task_checks.py",
+        "shared_script_parity.py",
         "generate_embedded_config_payload.py",
         "import_existing_project.py",
         "init_branch_memory.py",
@@ -1494,6 +1495,30 @@
             "output": {
                 "success": "Runs Python-backed closure checks and exits 0 after OK.",
                 "failure": "Exits nonzero when git diff check, feature contracts, compiled-context anchors, docs audit, quality gate, or Python cache check fails."
+            }
+        },
+        "shared_script_parity.py": {
+            "path": "tools/repo/shared_script_parity.py",
+            "category": "repo",
+            "description": "Audit root/project script parity against an embedded SocratexAI tool package.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--project-root",
+                    "--left-root",
+                    "--right-root",
+                    "--classification-file",
+                    "--skip-part",
+                    "--suffix",
+                    "--json",
+                    "--write-report",
+                    "--max-examples"
+                ],
+                "rule": "Defaults compare PROJECT/Tools against PROJECT/SocratexAI/tools, skip bundled runtimes/tmp folders, read PROJECT/Tools/SHARED-SCRIPT-PARITY.json when present, classify exact copies, thin adapters, documented project-specific drift, left-only/right-only files, and fail only on undocumented same-name or same-relative drift."
+            },
+            "output": {
+                "success": "Prints a socratex-shared-script-parity/v1 summary with no drift pairs.",
+                "failure": "Returns nonzero when same-name or same-relative project/pipeline script pairs have divergent implementation and are not thin adapters."
             }
         },
         "generate_embedded_config_payload.py": {

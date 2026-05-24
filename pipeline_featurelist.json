@@ -96,6 +96,7 @@
             "managed_pipeline_package_mirror_sync",
             "project_profile_child_overlay_sync",
             "full_update_artifact_parity_contract",
+            "shared_script_parity_audit",
             "managed_pipeline_root_catalog_sync",
             "feature_artifact_contracts",
             "cheap_idempotent_pipeline_update",
@@ -5846,6 +5847,39 @@
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'full_update_artifact_parity_contract' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+            },
+            "shared_script_parity_audit": {
+                "summary": "Audit project root tools against embedded SocratexAI tools so same-name or same-relative script pairs stay copied, thinly delegated, or explicitly visible as drift.",
+                "required_paths": [
+                    "tools/repo/shared_script_parity.py",
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "shared_script_parity.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "shared_script_parity.py"
+                    ]
+                },
+                "required_docs": [
+                    "SCRIPTS.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Compare project root Tools against embedded SocratexAI/tools before declaring shared-script parity done.",
+                    "Fail same-name or same-relative drift unless the project script is a thin adapter that delegates into embedded SocratexAI.",
+                    "Allow persistent drift only through an explicit project classification file such as Tools/SHARED-SCRIPT-PARITY.json with a reason for each group.",
+                    "Keep project-specific root-only tools visible in the report instead of pretending they are source-managed.",
+                    "Skip bundled runtimes, installers, temporary folders, and generated caches by default."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/shared_script_parity.py --project-root <child-project> --write-report /tmp/socratex-shared-script-parity.json",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py"
+                ],
+                "known_failure_if_missing": "Root project tools and embedded source tools can silently diverge after PowerShell-to-Python migration, recreating duplicated helper/script behavior that later fixes must repair twice."
             },
             "managed_pipeline_root_catalog_sync": {
                 "summary": "Managed Pipeline Root Catalog Sync capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
