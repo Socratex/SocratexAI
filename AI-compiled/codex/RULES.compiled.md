@@ -1133,6 +1133,7 @@ Draft placeholder:
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Prefer update_code_line_index.py for Python-first line-index refresh and keep the legacy wrapper only until the final Python-only deletion pass.",
+                    "Resolve update_code_line_index.py root from package markers so installed child packages do not accidentally index the child project git root.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],

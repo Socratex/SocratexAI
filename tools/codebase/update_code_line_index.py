@@ -42,7 +42,7 @@ LARGE_FILE_NOTES = {
 
 
 def repo_root(start: Path) -> Path:
-    return shared_repo_root(start, marker_files=("SCRIPTS.json",), use_git=True)
+    return shared_repo_root(start, marker_files=("SCRIPTS.json",), use_git=False)
 
 
 def code_path(path: str) -> bool:
