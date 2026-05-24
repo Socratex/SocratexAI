@@ -1270,6 +1270,7 @@ Draft placeholder:
                     "Final task checks must refresh the pipeline bootstrap index before rebuilding compiled context because the bootstrap index is a compiled-context source artifact.",
                     "Final task checks must clean generated Python __pycache__ directories before enforcing the no-bytecode-cache repository invariant.",
                     "Finalizers must stage diff-derived paths with `git add -A -- <paths>` so deleted and renamed files are included during PowerShell-to-Python package syncs.",
+                    "Finalizers must not restage already-staged deletions whose paths no longer exist in the index or worktree.",
                     "Run the feature contract checker before promoting or publishing the update.",
                     "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
                 ],
