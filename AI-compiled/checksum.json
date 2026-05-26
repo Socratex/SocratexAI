@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-abb063c6ad17",
+  "generated_at": "source-b00a5e94776a",
   "source_hashes": {
     "AGENTS.md": "47c083c7c04b06f4166c07abc1a6ab72a21666e5d15c7d7738eb48e984d4c5fa",
     "README.md": "83704bc0eee36bc1415b44bcf23cc7b7dfcf4e69a1810983f30112abaadc607e",
@@ -31,7 +31,7 @@
     "tools/knowledge/knowledge_file_select.py": "1c5013e68777b651f2ec8066d3898e8ef0679c26ad45ed54443b84528d8bd001",
     "tools/pipeline/pipeline_bootstrap_index.py": "da9f4757c5da43a46a6961633afce6ba90c10ea30c61ae2965b54c47df065846",
     "tools/pipeline/compile_pipeline_context.py": "4f0c0841b55f76dfdf2178f582aebada0fcf53050826014316cf05a6d90cc95f",
-    "tools/pipeline/rebuild_ai_compiled_context.py": "e761841f6076eb423883bbcaa5fcac495c00e3bfe5ab5ef9ebf945fd6fb73df8",
+    "tools/pipeline/rebuild_ai_compiled_context.py": "6befdf2b7f0977deacc15660eb2886adb80d0e0843ced11220c9b38632f65b82",
     "tools/pipeline/check_ai_compiled_context.py": "86421e5a7dacd93cd18d7c2f249bb8a2602562b395606e290af2c6a72a2873b6",
     "templates/WORKFLOW.json": "3ff145e0fb1907c456978a8c8068d1f16dc68c89bf020e013e1facf1ad641433",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "b0132e2dbc9a6fd1cbd2de297d5699e881ba5c21b73e96593277ed23b5ce8b78",
@@ -55,11 +55,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "af3eef31f2a25252b15fdf22d7082e8fc6391cd3d98c3eb01147ea4caf1ba63d",
-    "codex/ENTRYPOINT.md": "6b2237512823634eac4899696dc5f5388c3ff8f7c94daa07c7a50965a4b156bd",
-    "codex/RULES.compiled.md": "94656af5345fc6641065db8e6fc4a1dc28d1a01ef5e1c3b226c84ea74716958b",
-    "codex/WORKFLOW.compiled.md": "d40510c68ada16810cb615b92c19c1a7784d245a196a09bd5b2c998460be8ab1",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "016ebf96ee46ca9cde97c62ebbad6dd934ba33302b3462affe729ec4fd857e0f",
-    "codex/TEAM.compiled.md": "b90f6cbfb1714818622d9988e99f04134135a8048600ecc224b25433b916a0e1"
+    "INDEX.json": "1b27ff505efa39e8e2e9fa7b2b2b2aa8726687d205b28c8f192e7b8e5588fcdd",
+    "codex/ENTRYPOINT.md": "c00d8fb2dbe02a09a0da932d95c726ab6811bbb6199871b494d198313578d9de",
+    "codex/RULES.compiled.md": "352cd66a24cd44f9778852ce818263f129951d7590da812ec85bf11935cff432",
+    "codex/WORKFLOW.compiled.md": "da45fc4e3d65e44b3bc039b1e74b1d045b3b3784bcfbc3388aa2a342059c0d6f",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "cbea8bb1aa50b4aeafbb0d0c273fb5d84993e50ce200065164b4528dae44a83e",
+    "codex/TEAM.compiled.md": "3247b8bfc37625c3d3cead30f1d378f99f6428364f2936f9e49b8681e764b6c4"
   }
 }

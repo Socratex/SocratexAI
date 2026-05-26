@@ -9,6 +9,10 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from shared.repo_helpers import git_lines  # noqa: E402
+
 
 @dataclass(frozen=True)
 class Rule:
@@ -33,6 +37,14 @@ def skipped(relative: str) -> bool:
         or "__pycache__" in parts
         or relative.endswith(".pyc")
     )
+
+
+def candidate_files(root: Path) -> list[Path]:
+    if (root / ".git").exists():
+        relatives = git_lines(root, ["ls-files", "--cached", "--others", "--exclude-standard"], allow_failure=True)
+        if relatives:
+            return [root / relative for relative in relatives]
+    return sorted(item for item in root.rglob("*") if item.is_file())
 
 
 def line_number(text: str, index: int) -> int:
@@ -63,7 +75,9 @@ def main() -> int:
         print("SKIP: source-pipeline sensitive leak smoke is not valid for an installed child-project package.")
         return 0
 
-    for path in sorted(item for item in root.rglob("*") if item.is_file()):
+    for path in candidate_files(root):
+        if not path.is_file():
+            continue
         relative = repo_relative(root, path)
         if skipped(relative):
             continue

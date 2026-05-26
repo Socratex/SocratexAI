@@ -7,6 +7,7 @@ import argparse
 import shutil
 import sys
 from pathlib import Path
+from typing import Any
 
 from repo_tool_helpers import changed_text_paths, package_root
 from shared.repo_helpers import changed_paths as git_changed_paths
@@ -60,7 +61,13 @@ def ensure_no_python_cache(root: Path) -> int:
 def clean_python_cache(root: Path) -> int:
     caches = sorted(path for path in root.rglob("__pycache__") if path.is_dir())
     for path in caches:
-        shutil.rmtree(path)
+        def retry_after_chmod(function: Any, retry_path: str, exc_info: Any) -> None:
+            del exc_info
+            target = Path(retry_path)
+            target.chmod(0o700)
+            function(retry_path)
+
+        shutil.rmtree(path, onexc=retry_after_chmod)
     print(f"OK: removed {len(caches)} Python bytecode cache directorie(s).")
     return 0
 

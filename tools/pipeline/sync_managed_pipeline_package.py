@@ -18,7 +18,7 @@ if str(_TOOLS_ROOT) not in sys.path:
 
 from pipeline_package import DEFAULT_CHILD_GENERATED_PATHS, DEFAULT_MANAGED_PATHS, DEFAULT_PROTECTED_PATHS
 from shared.file_helpers import sha256_binary_file  # noqa: E402
-from shared.repo_helpers import normalize_repo_path  # noqa: E402
+from shared.repo_helpers import git_lines, normalize_repo_path  # noqa: E402
 
 
 GENERATED_CACHE_DIRS = {"__pycache__"}
@@ -67,11 +67,24 @@ def write_manifest(path: Path, manifest: OrderedDict[str, Any], dry_run: bool) -
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=4) + "\n", encoding="utf-8", newline="\n")
 
 
-def source_files_for_path(source_root: Path, relative: str, child_generated_paths: list[str]) -> list[Path]:
+def source_package_file_set(source_root: Path) -> set[str]:
+    if not (source_root / ".git").exists():
+        return set()
+    return set(git_lines(source_root, ["ls-files", "--cached", "--others", "--exclude-standard"], allow_failure=True))
+
+
+def source_files_for_path(
+    source_root: Path,
+    relative: str,
+    child_generated_paths: list[str],
+    source_files: set[str],
+) -> list[Path]:
     source_path = source_root / relative
     if not source_path.exists():
         return []
     if source_path.is_file():
+        if source_files and relative not in source_files:
+            return []
         return [source_path]
     files: list[Path] = []
     for path in sorted(source_path.rglob("*")):
@@ -80,6 +93,8 @@ def source_files_for_path(source_root: Path, relative: str, child_generated_path
         if any(part in GENERATED_CACHE_DIRS for part in path.parts) or path.suffix.lower() in GENERATED_CACHE_SUFFIXES:
             continue
         rel = relative_path(source_root, path)
+        if source_files and rel not in source_files:
+            continue
         if rel.startswith((".git/", ".agents/", ".codex/")):
             continue
         if under_any(rel, child_generated_paths):
@@ -186,7 +201,18 @@ def prune_unmanaged(
     if not dry_run:
         for directory in sorted([p for p in install_root.rglob("*") if p.is_dir()], key=lambda p: len(p.parts), reverse=True):
             if not any(directory.iterdir()):
-                directory.rmdir()
+                try:
+                    directory.rmdir()
+                except PermissionError:
+                    try:
+                        directory.chmod(0o700)
+                        directory.rmdir()
+                    except OSError as exc:
+                        rel = relative_path(install_root, directory)
+                        print(f"Warning: could not remove empty package directory: {rel} ({exc})")
+                except OSError as exc:
+                    rel = relative_path(install_root, directory)
+                    print(f"Warning: could not remove empty package directory: {rel} ({exc})")
     for path in sorted(install_root.rglob("*")):
         if not path.is_file():
             continue
@@ -227,11 +253,17 @@ def main() -> int:
     new_managed: OrderedDict[str, Any] = OrderedDict()
     new_profile: OrderedDict[str, Any] = OrderedDict()
     local_overrides: list[str] = []
+    source_files = source_package_file_set(source_root)
 
     for managed_path in args.managed_paths:
         if not str(managed_path).strip():
             continue
-        for source_file in source_files_for_path(source_root, normalize_path(managed_path), args.child_generated_paths):
+        for source_file in source_files_for_path(
+            source_root,
+            normalize_path(managed_path),
+            args.child_generated_paths,
+            source_files,
+        ):
             rel = relative_path(source_root, source_file)
             copy_managed_file(
                 source_root,

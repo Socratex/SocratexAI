@@ -119,7 +119,8 @@
             "source_pipeline_maintainer_backlog",
             "grouped_fragmented_task_state_handoff",
             "canonical_data_document_templates",
-            "public_portfolio_release_metadata"
+            "public_portfolio_release_metadata",
+            "managed_package_source_filter_and_unicode_paths"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -7167,6 +7168,65 @@
                     "python3 -B tools/repo/finalize_task_check_commit_push.py --message \"Prepare public release metadata\""
                 ],
                 "known_failure_if_missing": "A public release can advertise one version or bootstrap path while newly initialized or imported projects receive stale pipeline metadata."
+            },
+            "managed_package_source_filter_and_unicode_paths": {
+                "summary": "Managed package sync copies only source-managed files, excludes gitignored local snapshots, preserves Python-first package runtime, and decodes Git paths as UTF-8 for non-ASCII workspace roots.",
+                "required_paths": [
+                    "pipeline_featurelist.json",
+                    "tools/pipeline/sync_managed_pipeline_package.py",
+                    "tools/shared/repo_helpers.py",
+                    "tools/pipeline/rebuild_ai_compiled_context.py",
+                    "tools/repo/task_flow_audit.py",
+                    "tools/json/audit_json_docs.py",
+                    "tools/repo/check_sensitive_reference_leaks.py",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/quality/script_runtime_gate.py",
+                    "tools/repo/run_final_task_checks.py"
+                ],
+                "required_scripts": [
+                    "sync_managed_pipeline_package.py",
+                    "rebuild_ai_compiled_context.py",
+                    "task_flow_audit.py",
+                    "audit_json_docs.py",
+                    "check_sensitive_reference_leaks.py",
+                    "check_pipeline_feature_contracts.py",
+                    "script_runtime_gate.py",
+                    "run_final_task_checks.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "sync_managed_pipeline_package.py",
+                        "rebuild_ai_compiled_context.py",
+                        "task_flow_audit.py",
+                        "audit_json_docs.py",
+                        "check_sensitive_reference_leaks.py",
+                        "check_pipeline_feature_contracts.py",
+                        "script_runtime_gate.py",
+                        "run_final_task_checks.py"
+                    ]
+                },
+                "required_docs": [
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Use source git-tracked plus untracked-nonignored files as the package file universe so ignored local reference folders are never copied into child SocratexAI installs.",
+                    "Keep obsolete managed package files pruned during child updates, including retired PowerShell snapshots and generated cache files.",
+                    "Decode Git stdout as UTF-8 so repo root discovery works in non-ASCII workspace paths.",
+                    "Keep generated compiled instruction cleanup tolerant of Windows/OneDrive read-only directory attributes.",
+                    "Configure UTF-8 stdio for task-flow audit output so emoji/context headings do not break finalization on legacy consoles.",
+                    "Do not require source-package template checks for child project roots that have project tools but are not SocratexAI package roots.",
+                    "Run feature parity, script runtime gate, sensitive leak check, document audit, compiled context checks, and child sweep after promotion."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py --repo-root . tools/pipeline/sync_managed_pipeline_package.py tools/shared/repo_helpers.py tools/pipeline/rebuild_ai_compiled_context.py tools/repo/task_flow_audit.py tools/json/audit_json_docs.py tools/repo/check_sensitive_reference_leaks.py tools/repo/run_final_task_checks.py",
+                    "python3 -B tools/quality/script_runtime_gate.py --max-examples 20",
+                    "python3 -B tools/repo/check_sensitive_reference_leaks.py",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python3 -B tools/pipeline/pipeline_sweep.py --project \"ChildProject=<path>\" --all --execute --json"
+                ],
+                "known_failure_if_missing": "Child packages can claim feature parity while copying ignored PowerShell snapshots, pruning generated files incorrectly, or failing finalization when workspace paths contain non-ASCII characters."
             }
         }
     },

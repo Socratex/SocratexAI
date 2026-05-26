@@ -216,7 +216,8 @@ def validate_pipeline_config_schema(repo_root: Path) -> list[str]:
     path = repo_root / "templates" / "code" / "PIPELINE-CONFIG.json"
     relative = repo_path(path, repo_root)
     if not path.exists():
-        if not (repo_root / "tools").is_dir():
+        is_pipeline_package_root = (repo_root / "core").is_dir() and (repo_root / "project").is_dir() and (repo_root / "templates").is_dir()
+        if not is_pipeline_package_root:
             return []
         return [f"{relative}: missing pipeline config template."]
     try:

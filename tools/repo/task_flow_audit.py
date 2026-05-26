@@ -12,6 +12,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from shared.cli_helpers import configure_stdio  # noqa: E402
 from shared.repo_helpers import changed_paths, repo_root  # noqa: E402
 
 
@@ -138,6 +139,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> int:
+    configure_stdio()
     args = parse_args()
     root = Path(args.project_root).resolve() if args.project_root else repo_root(Path(__file__).resolve())
     try:

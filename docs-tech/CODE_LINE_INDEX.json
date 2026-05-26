@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-24T20:37:03+02:00",
+    "generatedAt": "2026-05-26T02:23:33+02:00",
     "threshold": 300,
     "files": [
         {
@@ -22,7 +22,7 @@
         },
         {
             "path": "tools/pipeline/rebuild_ai_compiled_context.py",
-            "lines": 415,
+            "lines": 420,
             "extension": ".py",
             "large": true
         },
@@ -58,7 +58,7 @@
         },
         {
             "path": "tools/pipeline/sync_managed_pipeline_package.py",
-            "lines": 264,
+            "lines": 294,
             "extension": ".py",
             "large": false
         },
@@ -88,7 +88,7 @@
         },
         {
             "path": "tools/json/audit_json_docs.py",
-            "lines": 244,
+            "lines": 245,
             "extension": ".py",
             "large": false
         },
@@ -135,14 +135,14 @@
             "large": false
         },
         {
-            "path": "tools/repo/end_prompt_snapshot.py",
-            "lines": 169,
+            "path": "tools/repo/task_flow_audit.py",
+            "lines": 170,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/repo/task_flow_audit.py",
-            "lines": 168,
+            "path": "tools/repo/end_prompt_snapshot.py",
+            "lines": 169,
             "extension": ".py",
             "large": false
         },
@@ -159,6 +159,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/run_final_task_checks.py",
+            "lines": 154,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/sync_pipeline_featurelist.py",
             "lines": 153,
             "extension": ".py",
@@ -167,12 +173,6 @@
         {
             "path": "tools/codebase/ai_native_contract_dry_run.py",
             "lines": 151,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/run_final_task_checks.py",
-            "lines": 148,
             "extension": ".py",
             "large": false
         },
@@ -327,6 +327,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/check_sensitive_reference_leaks.py",
+            "lines": 88,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/pipeline/remove_pipeline.py",
             "lines": 86,
             "extension": ".py",
@@ -339,14 +345,8 @@
             "large": false
         },
         {
-            "path": "tools/repo/check_sensitive_reference_leaks.py",
-            "lines": 78,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/shared/repo_helpers.py",
-            "lines": 78,
+            "lines": 79,
             "extension": ".py",
             "large": false
         },

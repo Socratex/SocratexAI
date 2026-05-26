@@ -32,6 +32,7 @@ def repo_root(
             check=False,
             capture_output=True,
             text=True,
+            encoding="utf-8",
         )
         if completed.returncode == 0 and completed.stdout.strip():
             return Path(completed.stdout.strip()).resolve()
@@ -53,7 +54,7 @@ def run_step(label: str, command: list[str], cwd: Path, *, env: dict[str, str] |
 
 
 def git_lines(root: Path, args: list[str], *, allow_failure: bool = False) -> list[str]:
-    completed = subprocess.run(["git", *args], cwd=root, check=False, capture_output=True, text=True)
+    completed = subprocess.run(["git", *args], cwd=root, check=False, capture_output=True, text=True, encoding="utf-8")
     output = (completed.stdout or "") + (completed.stderr or "")
     if completed.returncode != 0:
         if allow_failure:
