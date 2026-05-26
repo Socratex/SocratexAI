@@ -7211,7 +7211,7 @@
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
                     "Use source git-tracked plus untracked-nonignored files as the package file universe so ignored local reference folders are never copied into child SocratexAI installs.",
-                    "Keep obsolete managed package files pruned during child updates, including retired PowerShell snapshots and generated cache files.",
+                    "Keep obsolete managed package files pruned during child updates, including retired shell-runtime snapshots and generated cache files.",
                     "Decode Git stdout as UTF-8 so repo root discovery works in non-ASCII workspace paths.",
                     "Keep generated compiled instruction cleanup tolerant of Windows/OneDrive read-only directory attributes.",
                     "Configure UTF-8 stdio for task-flow audit output so emoji/context headings do not break finalization on legacy consoles.",
@@ -7226,7 +7226,7 @@
                     "python3 -B tools/documents/audit_docs.py",
                     "python3 -B tools/pipeline/pipeline_sweep.py --project \"ChildProject=<path>\" --all --execute --json"
                 ],
-                "known_failure_if_missing": "Child packages can claim feature parity while copying ignored PowerShell snapshots, pruning generated files incorrectly, or failing finalization when workspace paths contain non-ASCII characters."
+                "known_failure_if_missing": "Child packages can claim feature parity while copying ignored retired shell-runtime snapshots, pruning generated files incorrectly, or failing finalization when workspace paths contain non-ASCII characters."
             }
         }
     },
