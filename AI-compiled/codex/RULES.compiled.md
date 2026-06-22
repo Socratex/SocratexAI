@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-67f44388df66
+Generated: source-652c1006c3a7
 
 ## Source of Truth
 
@@ -254,8 +254,9 @@ Code comment discipline:
 
 Usage / caller search (before editing or deleting):
 - use TEXT search, unrestricted so ignored and hidden files are included (e.g. ripgrep with the unrestricted flag); do NOT use a tracked-files-only search that skips ignored files, and do not rely on semantic "find usages" alone (it is blind to dynamically-built calls)
-- search BOTH call syntaxes: instance "->name(" and static "::name("; assume a static method may also be called dynamically
-- in LEGACY code, if the whole-name search finds nothing, run a token-wildcard fragment pass: split the name into tokens and search a case-insensitive regex with wildcards between the significant tokens, to catch method names assembled from strings; modern static-typed code does not need this
+- search all relevant call syntaxes for the project language and framework; PHP instance "->name(" and static "::name(" calls are examples, not assumptions
+- when the language permits dynamic dispatch, string-built method names, reflection, macros, callbacks, dependency injection, routing tables, templates, or framework magic, search those surfaces too
+- in LEGACY or dynamic code, if the whole-name search finds nothing, run a token-wildcard fragment pass: split the name into tokens and search a case-insensitive regex with wildcards between the significant tokens, to catch names assembled from strings; modern static-typed code may need less of this, but the project language and framework decide
 
 ### friendly
 
@@ -7561,7 +7562,7 @@ Draft placeholder:
                 "known_failure_if_missing": "Agents continue producing high-friction prose artifacts with first-person narration, semicolon-heavy sentences, em-dashes, and dense enumerations despite the legacy communication profile being selected."
             },
             "surgical_scope_clean_island_code": {
-                "summary": "Two-axis code-change discipline: surgical minimal SCOPE (a 3-line change stays 3 lines, no grand rewrites) but clean QUALITY in whatever is written or extracted (top-down, contracts on top, named responsibilities) even inside legacy directories, never mimicking neighbouring ugly code. Comments: what + why-this-way only, no ticket references, no technicalities.",
+                "summary": "Legacy extraction quality rule: when ugly legacy code needs a change, first keep the fix surgical in place if it can remain small. If the change cannot stay clean or understandable in place, extract the changed logic. Extracted files and extracted functions/methods must be clean, intent-named, responsibility-focused, and must not copy the surrounding chaotic style.",
                 "required_paths": [
                     "core/communication-profiles/foreign_legacy_code.txt"
                 ],
@@ -7603,7 +7604,7 @@ Draft placeholder:
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py --repo-root .",
                     "python3 -B tools/repo/check_sensitive_reference_leaks.py --repo-root ."
                 ],
-                "known_failure_if_missing": "Agents miss dynamic or legacy call sites because they rely on tracked-only search or semantic usage lookup instead of unrestricted text search across instance, static, and fragment patterns."
+                "known_failure_if_missing": "Agents miss dynamic or legacy call sites because they copy PHP-specific search syntax into non-PHP projects, rely on tracked-only or semantic usage lookup, or ignore language/framework lookup surfaces such as routing tables, templates, reflection, callbacks, macros, and string-built names."
             }
         }
     },

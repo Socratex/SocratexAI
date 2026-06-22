@@ -79,5 +79,6 @@ Code comment discipline:
 
 Usage / caller search (before editing or deleting):
 - use TEXT search, unrestricted so ignored and hidden files are included (e.g. ripgrep with the unrestricted flag); do NOT use a tracked-files-only search that skips ignored files, and do not rely on semantic "find usages" alone (it is blind to dynamically-built calls)
-- search BOTH call syntaxes: instance "->name(" and static "::name("; assume a static method may also be called dynamically
-- in LEGACY code, if the whole-name search finds nothing, run a token-wildcard fragment pass: split the name into tokens and search a case-insensitive regex with wildcards between the significant tokens, to catch method names assembled from strings; modern static-typed code does not need this
+- search all relevant call syntaxes for the project language and framework; PHP instance "->name(" and static "::name(" calls are examples, not assumptions
+- when the language permits dynamic dispatch, string-built method names, reflection, macros, callbacks, dependency injection, routing tables, templates, or framework magic, search those surfaces too
+- in LEGACY or dynamic code, if the whole-name search finds nothing, run a token-wildcard fragment pass: split the name into tokens and search a case-insensitive regex with wildcards between the significant tokens, to catch names assembled from strings; modern static-typed code may need less of this, but the project language and framework decide

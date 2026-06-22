@@ -7252,7 +7252,7 @@
                 "known_failure_if_missing": "Agents continue producing high-friction prose artifacts with first-person narration, semicolon-heavy sentences, em-dashes, and dense enumerations despite the legacy communication profile being selected."
             },
             "surgical_scope_clean_island_code": {
-                "summary": "Two-axis code-change discipline: surgical minimal SCOPE (a 3-line change stays 3 lines, no grand rewrites) but clean QUALITY in whatever is written or extracted (top-down, contracts on top, named responsibilities) even inside legacy directories, never mimicking neighbouring ugly code. Comments: what + why-this-way only, no ticket references, no technicalities.",
+                "summary": "Legacy extraction quality rule: when ugly legacy code needs a change, first keep the fix surgical in place if it can remain small. If the change cannot stay clean or understandable in place, extract the changed logic. Extracted files and extracted functions/methods must be clean, intent-named, responsibility-focused, and must not copy the surrounding chaotic style.",
                 "required_paths": [
                     "core/communication-profiles/foreign_legacy_code.txt"
                 ],
@@ -7294,7 +7294,7 @@
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py --repo-root .",
                     "python3 -B tools/repo/check_sensitive_reference_leaks.py --repo-root ."
                 ],
-                "known_failure_if_missing": "Agents miss dynamic or legacy call sites because they rely on tracked-only search or semantic usage lookup instead of unrestricted text search across instance, static, and fragment patterns."
+                "known_failure_if_missing": "Agents miss dynamic or legacy call sites because they copy PHP-specific search syntax into non-PHP projects, rely on tracked-only or semantic usage lookup, or ignore language/framework lookup surfaces such as routing tables, templates, reflection, callbacks, macros, and string-built names."
             }
         }
     },
