@@ -137,7 +137,7 @@ def is_canonical_list_document(document: dict[str, Any]) -> bool:
 
 
 def is_installed_package_root(root: Path) -> bool:
-    return root.name == "SocratexAI" and (root.parent / "SOCRATEX.md").is_file()
+    return root.name == "SocratexAI" and not (root / ".git").exists() and (root.parent / "SOCRATEX.md").is_file()
 
 
 def path_under_any(path: str, roots: list[str]) -> bool:

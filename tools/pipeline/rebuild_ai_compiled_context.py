@@ -468,7 +468,10 @@ def clear_generated_instruction_files(output_root: Path) -> None:
             target.chmod(0o700)
             function(path)
 
-        shutil.rmtree(codex_dir, onexc=retry_after_chmod)
+        try:
+            shutil.rmtree(codex_dir, onexc=retry_after_chmod)
+        except TypeError:
+            shutil.rmtree(codex_dir, onerror=retry_after_chmod)
 
 
 def generate_static_output_file_list() -> list[tuple[str, str]]:

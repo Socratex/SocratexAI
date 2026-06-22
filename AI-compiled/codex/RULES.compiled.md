@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-b00a5e94776a
+Generated: source-5d31c5bebdaf
 
 ## Source of Truth
 
@@ -229,6 +229,32 @@ Additions for foreign/legacy business work:
    - expected before/after state
    The user runs the scenario and reports back; agent updates STATE with results.
 
+Refinements (generic — communication + code-writing):
+
+Writing mechanics (all prose and artifacts):
+- impersonal voice; never "I" for the agent's own actions; use agentless/passive phrasing
+- no semicolons; split into separate sentences
+- no em-dashes; use a short hyphen or a line break
+- a line break after every full stop (one sentence per line)
+- a line break before a long enumeration; each item on its own line
+
+Code-writing approach:
+- follow the user's stated guidelines OVER the style of the surrounding code; the codebase may be chaotic
+- keep two axes separate:
+  - SCOPE = surgical and minimal; a 3-line change is 3 lines; do not push grand rewrites
+  - QUALITY = clean in whatever is written or extracted: top-down (general to specific), interfaces/contracts on top with implementation hidden, divided into named responsibilities; apply this EVEN when extracting into legacy directories; do not mimic neighbouring ugly code
+- small scope and high quality are not in tension
+
+Code comment discipline:
+- comment only WHAT it does and WHY it is done this way, and only when non-obvious
+- no ticket references
+- no restating mechanics or technicalities
+
+Usage / caller search (before editing or deleting):
+- use TEXT search, unrestricted so ignored and hidden files are included (e.g. ripgrep with the unrestricted flag); do NOT use a tracked-files-only search that skips ignored files, and do not rely on semantic "find usages" alone (it is blind to dynamically-built calls)
+- search BOTH call syntaxes: instance "->name(" and static "::name("; assume a static method may also be called dynamically
+- in LEGACY code, if the whole-name search finds nothing, run a token-wildcard fragment pass: split the name into tokens and search a case-insensitive regex with wildcards between the significant tokens, to catch method names assembled from strings; modern static-typed code does not need this
+
 ### friendly
 
 # friendly
@@ -401,7 +427,10 @@ Draft placeholder:
             "grouped_fragmented_task_state_handoff",
             "canonical_data_document_templates",
             "public_portfolio_release_metadata",
-            "managed_package_source_filter_and_unicode_paths"
+            "managed_package_source_filter_and_unicode_paths",
+            "minimal_clean_prose_mechanics",
+            "surgical_scope_clean_island_code",
+            "text_first_usage_search_with_legacy_fragment_pass"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -7508,6 +7537,67 @@ Draft placeholder:
                     "python3 -B tools/pipeline/pipeline_sweep.py --project \"ChildProject=<path>\" --all --execute --json"
                 ],
                 "known_failure_if_missing": "Child packages can claim feature parity while copying ignored retired shell-runtime snapshots, pruning generated files incorrectly, or failing finalization when workspace paths contain non-ASCII characters."
+            },
+            "minimal_clean_prose_mechanics": {
+                "summary": "Prose/artifact writing mechanics: impersonal voice (no \"I\" for the agent), no semicolons, no em-dashes, one sentence per line, a line break before long lists. Goal: near-zero reading effort.",
+                "required_paths": [
+                    "core/communication-profiles/foreign_legacy_code.txt"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Profile text states the impersonal/no-semicolon/no-em-dash/line-break rules."
+                ],
+                "required_scripts": [],
+                "required_catalog_entries": {},
+                "required_docs": [
+                    "core/communication-profiles/foreign_legacy_code.txt"
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py --repo-root .",
+                    "python3 -B tools/repo/check_sensitive_reference_leaks.py --repo-root ."
+                ],
+                "known_failure_if_missing": "Agents continue producing high-friction prose artifacts with first-person narration, semicolon-heavy sentences, em-dashes, and dense enumerations despite the legacy communication profile being selected."
+            },
+            "surgical_scope_clean_island_code": {
+                "summary": "Two-axis code-change discipline: surgical minimal SCOPE (a 3-line change stays 3 lines, no grand rewrites) but clean QUALITY in whatever is written or extracted (top-down, contracts on top, named responsibilities) even inside legacy directories, never mimicking neighbouring ugly code. Comments: what + why-this-way only, no ticket references, no technicalities.",
+                "required_paths": [
+                    "core/communication-profiles/foreign_legacy_code.txt"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Profile separates SCOPE (minimal) from QUALITY (clean) and forbids mimicking surrounding code.",
+                    "Comment discipline (what/why, no tickets, no technicalities) stated."
+                ],
+                "required_scripts": [],
+                "required_catalog_entries": {},
+                "required_docs": [
+                    "core/communication-profiles/foreign_legacy_code.txt"
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py --repo-root .",
+                    "python3 -B tools/repo/check_sensitive_reference_leaks.py --repo-root ."
+                ],
+                "known_failure_if_missing": "Legacy code changes drift into either sprawling rewrites or low-quality mimicry of surrounding chaotic code instead of small, clean, reviewable ownership slices."
+            },
+            "text_first_usage_search_with_legacy_fragment_pass": {
+                "summary": "Usage/caller search before editing or deleting: unrestricted TEXT search (includes ignored/hidden files), both instance \"->name(\" and static \"::name(\" syntaxes, static treated as possibly-dynamic; not a tracked-only search and not semantic find-usages alone. In legacy with zero whole-name hits, a token-wildcard fragment pass catches string-assembled method names.",
+                "required_paths": [
+                    "core/communication-profiles/foreign_legacy_code.txt"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Profile states text-first unrestricted search, both call syntaxes, and the legacy token-wildcard fragment pass."
+                ],
+                "required_scripts": [],
+                "required_catalog_entries": {},
+                "required_docs": [
+                    "core/communication-profiles/foreign_legacy_code.txt"
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py --repo-root .",
+                    "python3 -B tools/repo/check_sensitive_reference_leaks.py --repo-root ."
+                ],
+                "known_failure_if_missing": "Agents miss dynamic or legacy call sites because they rely on tracked-only search or semantic usage lookup instead of unrestricted text search across instance, static, and fragment patterns."
             }
         }
     },
@@ -7515,7 +7605,7 @@ Draft placeholder:
         "schema": "socratex-pipeline-featurelist/v4",
         "pipeline_id": "socratex_pipeline",
         "role": "source",
-        "updated_at": "2026-05-24",
+        "updated_at": "2026-06-22",
         "comparison_contract": "Use content.features for cheap source/instance comparison; use content.feature_contracts for artifact-level synchronization and promotion checks. Root index/content/metadata is the canonical JSON list-document shape.",
         "required_root_keys": [
             "index",

@@ -26,7 +26,7 @@ def repo_relative(root: Path, path: Path) -> str:
 
 
 def is_installed_package_root(root: Path) -> bool:
-    return root.name == "SocratexAI" and (root.parent / "SOCRATEX.md").is_file()
+    return root.name == "SocratexAI" and not (root / ".git").exists() and (root.parent / "SOCRATEX.md").is_file()
 
 
 def skipped(relative: str) -> bool:

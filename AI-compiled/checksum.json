@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-b00a5e94776a",
+  "generated_at": "source-5d31c5bebdaf",
   "source_hashes": {
     "AGENTS.md": "47c083c7c04b06f4166c07abc1a6ab72a21666e5d15c7d7738eb48e984d4c5fa",
     "README.md": "83704bc0eee36bc1415b44bcf23cc7b7dfcf4e69a1810983f30112abaadc607e",
@@ -31,7 +31,7 @@
     "tools/knowledge/knowledge_file_select.py": "1c5013e68777b651f2ec8066d3898e8ef0679c26ad45ed54443b84528d8bd001",
     "tools/pipeline/pipeline_bootstrap_index.py": "da9f4757c5da43a46a6961633afce6ba90c10ea30c61ae2965b54c47df065846",
     "tools/pipeline/compile_pipeline_context.py": "4f0c0841b55f76dfdf2178f582aebada0fcf53050826014316cf05a6d90cc95f",
-    "tools/pipeline/rebuild_ai_compiled_context.py": "6befdf2b7f0977deacc15660eb2886adb80d0e0843ced11220c9b38632f65b82",
+    "tools/pipeline/rebuild_ai_compiled_context.py": "ab65c02d61c09f7f280a681a15accb4c347d0fccf9137d40f64fbcd5b9c42068",
     "tools/pipeline/check_ai_compiled_context.py": "86421e5a7dacd93cd18d7c2f249bb8a2602562b395606e290af2c6a72a2873b6",
     "templates/WORKFLOW.json": "3ff145e0fb1907c456978a8c8068d1f16dc68c89bf020e013e1facf1ad641433",
     "templates/docs-tech/KNOWLEDGE-VIEWS.json": "b0132e2dbc9a6fd1cbd2de297d5699e881ba5c21b73e96593277ed23b5ce8b78",
@@ -42,7 +42,7 @@
     "templates/team/experience.json": "86bc4ff9dae3d8ae7d8df06fccab0f34ffdf78286a7d22dc04748abd44fe8c98",
     "templates/team/pipeline.json": "a0471d01a34d43d2bc153d6c98cb18692c605ebe11423d586be885a18a8906ae",
     "core/communication-profiles/epistemic.txt": "5329dc0c82c87001d7799bfc21d34443cab231db9696ab78c31adb9b0c3548dd",
-    "core/communication-profiles/foreign_legacy_code.txt": "614ab11a9e91b1513c47c0a71740b3a0234df2c09b0a447b7c327ccd2454ed9d",
+    "core/communication-profiles/foreign_legacy_code.txt": "e6ef0b91117b47f61bb9295adba96799f484b778c74207379d697c023aa90923",
     "core/communication-profiles/friendly.txt": "8441c79d029d197c02ca42ac327636dac4b5b5e28826dae4d80da90338fd7a44",
     "core/communication-profiles/standard.txt": "01b41af406cd8a24e1c87bc62ee5d13715cd0227811c233f41dcf469ab01adbf",
     "core/communication-profiles/teacher.txt": "e6c80a798f5c13f92af1565f7a464d7fe0da9634a52bfff54da6d3d95dde75ca",
@@ -55,11 +55,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "1b27ff505efa39e8e2e9fa7b2b2b2aa8726687d205b28c8f192e7b8e5588fcdd",
-    "codex/ENTRYPOINT.md": "c00d8fb2dbe02a09a0da932d95c726ab6811bbb6199871b494d198313578d9de",
-    "codex/RULES.compiled.md": "61514e1c6ee9e648b8b646f282bf41b2a3c47e10b357884510d4bf22c475f160",
-    "codex/WORKFLOW.compiled.md": "da45fc4e3d65e44b3bc039b1e74b1d045b3b3784bcfbc3388aa2a342059c0d6f",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "cbea8bb1aa50b4aeafbb0d0c273fb5d84993e50ce200065164b4528dae44a83e",
-    "codex/TEAM.compiled.md": "3247b8bfc37625c3d3cead30f1d378f99f6428364f2936f9e49b8681e764b6c4"
+    "INDEX.json": "1478bc04e913fb4c569bb52ef965ba97c3d871c34f04b9d34bcc181959ad7673",
+    "codex/ENTRYPOINT.md": "3d6cd0e5f243bcfad56b6a4458193e2ce71d7bab6dfef364551a3f0b932d0ff4",
+    "codex/RULES.compiled.md": "d7c919fc3131fc925b7f3dd87eb11bd3991fb89114c8b10d2a619a881a5c8ac3",
+    "codex/WORKFLOW.compiled.md": "97401db46f437c3fc0cd126d81e4eb1510aa375e75eb3ee302e4eaa8d6ebec1c",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "6ca132ce902c7373f0bb5e7efbc626461e0e37a5d851861b3a6ec218b325ad90",
+    "codex/TEAM.compiled.md": "37b00b5505dbe127885d1ca70227c57f95e09786446597dce96a33e898a1d4f3"
   }
 }

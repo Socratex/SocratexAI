@@ -53,3 +53,29 @@ Additions for foreign/legacy business work:
    - what signal indicates failure
    - expected before/after state
    The user runs the scenario and reports back; agent updates STATE with results.
+
+Refinements (generic — communication + code-writing):
+
+Writing mechanics (all prose and artifacts):
+- impersonal voice; never "I" for the agent's own actions; use agentless/passive phrasing
+- no semicolons; split into separate sentences
+- no em-dashes; use a short hyphen or a line break
+- a line break after every full stop (one sentence per line)
+- a line break before a long enumeration; each item on its own line
+
+Code-writing approach:
+- follow the user's stated guidelines OVER the style of the surrounding code; the codebase may be chaotic
+- keep two axes separate:
+  - SCOPE = surgical and minimal; a 3-line change is 3 lines; do not push grand rewrites
+  - QUALITY = clean in whatever is written or extracted: top-down (general to specific), interfaces/contracts on top with implementation hidden, divided into named responsibilities; apply this EVEN when extracting into legacy directories; do not mimic neighbouring ugly code
+- small scope and high quality are not in tension
+
+Code comment discipline:
+- comment only WHAT it does and WHY it is done this way, and only when non-obvious
+- no ticket references
+- no restating mechanics or technicalities
+
+Usage / caller search (before editing or deleting):
+- use TEXT search, unrestricted so ignored and hidden files are included (e.g. ripgrep with the unrestricted flag); do NOT use a tracked-files-only search that skips ignored files, and do not rely on semantic "find usages" alone (it is blind to dynamically-built calls)
+- search BOTH call syntaxes: instance "->name(" and static "::name("; assume a static method may also be called dynamically
+- in LEGACY code, if the whole-name search finds nothing, run a token-wildcard fragment pass: split the name into tokens and search a case-insensitive regex with wildcards between the significant tokens, to catch method names assembled from strings; modern static-typed code does not need this
