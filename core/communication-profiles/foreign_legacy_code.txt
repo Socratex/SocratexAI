@@ -65,10 +65,12 @@ Writing mechanics (all prose and artifacts):
 
 Code-writing approach:
 - follow the user's stated guidelines OVER the style of the surrounding code; the codebase may be chaotic
-- keep two axes separate:
-  - SCOPE = surgical and minimal; a 3-line change is 3 lines; do not push grand rewrites
-  - QUALITY = clean in whatever is written or extracted: top-down (general to specific), interfaces/contracts on top with implementation hidden, divided into named responsibilities; apply this EVEN when extracting into legacy directories; do not mimic neighbouring ugly code
-- small scope and high quality are not in tension
+- when ugly legacy code needs a change, first try a surgical in-place fix; if the change can stay small, keep it small
+- when the change cannot stay clean or understandable in place, extract the changed logic
+- if extracting to a separate file, make that file clean: top-down, named responsibilities, explicit contracts/interfaces first when useful, implementation details hidden below
+- if extracting to a separate function/method, make that function clean: named for intent, one responsibility, readable inputs/outputs, no copied chaos from the caller
+- do not copy the surrounding ugly style into extracted code; legacy context explains placement, not quality
+- small scope and clean extracted quality are not in tension
 
 Code comment discipline:
 - comment only WHAT it does and WHY it is done this way, and only when non-obvious

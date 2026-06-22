@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-5d31c5bebdaf
+Generated: source-67f44388df66
 
 ## Source of Truth
 
@@ -240,10 +240,12 @@ Writing mechanics (all prose and artifacts):
 
 Code-writing approach:
 - follow the user's stated guidelines OVER the style of the surrounding code; the codebase may be chaotic
-- keep two axes separate:
-  - SCOPE = surgical and minimal; a 3-line change is 3 lines; do not push grand rewrites
-  - QUALITY = clean in whatever is written or extracted: top-down (general to specific), interfaces/contracts on top with implementation hidden, divided into named responsibilities; apply this EVEN when extracting into legacy directories; do not mimic neighbouring ugly code
-- small scope and high quality are not in tension
+- when ugly legacy code needs a change, first try a surgical in-place fix; if the change can stay small, keep it small
+- when the change cannot stay clean or understandable in place, extract the changed logic
+- if extracting to a separate file, make that file clean: top-down, named responsibilities, explicit contracts/interfaces first when useful, implementation details hidden below
+- if extracting to a separate function/method, make that function clean: named for intent, one responsibility, readable inputs/outputs, no copied chaos from the caller
+- do not copy the surrounding ugly style into extracted code; legacy context explains placement, not quality
+- small scope and clean extracted quality are not in tension
 
 Code comment discipline:
 - comment only WHAT it does and WHY it is done this way, and only when non-obvious
@@ -7565,7 +7567,11 @@ Draft placeholder:
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
-                    "Profile separates SCOPE (minimal) from QUALITY (clean) and forbids mimicking surrounding code.",
+                    "Profile states the decision order: surgical in-place fix first when the change can stay small.",
+                    "Profile states that when in-place work cannot stay clean or understandable, the changed logic should be extracted.",
+                    "Profile states that extracted files must be clean, top-down when useful, and divided into named responsibilities.",
+                    "Profile states that extracted functions/methods must be intent-named, responsibility-focused, and readable at their inputs/outputs.",
+                    "Profile forbids copying surrounding chaotic legacy style into extracted code.",
                     "Comment discipline (what/why, no tickets, no technicalities) stated."
                 ],
                 "required_scripts": [],
@@ -7577,7 +7583,7 @@ Draft placeholder:
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py --repo-root .",
                     "python3 -B tools/repo/check_sensitive_reference_leaks.py --repo-root ."
                 ],
-                "known_failure_if_missing": "Legacy code changes drift into either sprawling rewrites or low-quality mimicry of surrounding chaotic code instead of small, clean, reviewable ownership slices."
+                "known_failure_if_missing": "Agents either over-expand simple legacy fixes or, when extraction is needed, copy the surrounding chaotic style into the new file or function instead of creating a clean extracted unit."
             },
             "text_first_usage_search_with_legacy_fragment_pass": {
                 "summary": "Usage/caller search before editing or deleting: unrestricted TEXT search (includes ignored/hidden files), both instance \"->name(\" and static \"::name(\" syntaxes, static treated as possibly-dynamic; not a tracked-only search and not semantic find-usages alone. In legacy with zero whole-name hits, a token-wildcard fragment pass catches string-assembled method names.",
@@ -7605,7 +7611,7 @@ Draft placeholder:
         "schema": "socratex-pipeline-featurelist/v4",
         "pipeline_id": "socratex_pipeline",
         "role": "source",
-        "updated_at": "2026-06-22",
+        "updated_at": "2026-06-23",
         "comparison_contract": "Use content.features for cheap source/instance comparison; use content.feature_contracts for artifact-level synchronization and promotion checks. Root index/content/metadata is the canonical JSON list-document shape.",
         "required_root_keys": [
             "index",
