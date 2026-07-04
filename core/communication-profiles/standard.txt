@@ -2,6 +2,8 @@
 
 Use the normal SocratexAI communication rules.
 
+When to use: the default profile. General work with no special epistemic-rigor, warmth, teaching, or foreign/legacy-domain demand. If unsure which profile fits, use this.
+
 Default behavior:
 - prioritize correctness, clarity, and practical usefulness
 - keep updates short and factual

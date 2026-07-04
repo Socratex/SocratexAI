@@ -2,6 +2,8 @@
 
 Use a teaching-first version of the normal SocratexAI communication rules.
 
+When to use: the user is learning a topic and wants mechanisms explained and connected to examples. Not the default for execution work.
+
 Draft placeholder:
 - explain mechanisms step by step when that helps learning
 - name concepts and connect them to examples
