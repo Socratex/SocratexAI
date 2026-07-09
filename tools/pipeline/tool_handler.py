@@ -218,6 +218,28 @@ def passthrough_python(relative_script: str) -> ParameterBuilder:
     return build
 
 
+def gpt_conversation_archive_args(root: Path, tools_dir: str, parameters: dict[str, Any]) -> list[str]:
+    command = get_param(parameters, "command", "subcommand", default="")
+    if not provided(command):
+        raise ValueError("Missing required parameter 'Command' (list, search, read, or index).")
+    args = python_tool(root, tools_dir, "adapters/gpt_conversation_archive.py", str(command))
+    args.extend(option_args(parameters, {
+        "Source": "--source",
+        "Output": "--output",
+        "Query": "--query",
+        "Project": "--project",
+        "Limit": "--limit",
+        "MaxSnippetChars": "--max-snippet-chars",
+        "ConversationId": "--conversation-id",
+        "Position": "--position",
+        "TitleContains": "--title-contains",
+        "Format": "--format",
+        "AssistantMode": "--assistant-mode",
+    }))
+    args.extend(flag_args(parameters, {"AnyTerm": "--any-term", "NoMetadata": "--no-metadata"}))
+    return args
+
+
 OPERATIONS: dict[str, tuple[str, ParameterBuilder]] = {
     "read_compiled_context": ("read_compiled_context.py", read_compiled_context_args),
     "compiled_context": ("read_compiled_context.py", read_compiled_context_args),
@@ -237,6 +259,10 @@ OPERATIONS: dict[str, tuple[str, ParameterBuilder]] = {
     "run_godot_script": ("run_godot_script.py", passthrough_python("tools/gamedev/run_godot_script.py")),
     "route_retest_report": ("route_retest_report.py", passthrough_python("tools/gamedev/route_retest_report.py")),
     "tool_error_log": ("tool_error_log.py", passthrough_python("tools/pipeline/tool_error_log.py")),
+    "gpt_shared_conversation_extract": ("gpt_shared_conversation_extract.py", passthrough_python("tools/adapters/gpt_shared_conversation_extract.py")),
+    "gpt_share_extract": ("gpt_shared_conversation_extract.py", passthrough_python("tools/adapters/gpt_shared_conversation_extract.py")),
+    "gpt_conversation_archive": ("gpt_conversation_archive.py", gpt_conversation_archive_args),
+    "gpt_archive": ("gpt_conversation_archive.py", gpt_conversation_archive_args),
 }
 
 

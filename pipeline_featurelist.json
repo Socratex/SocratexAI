@@ -123,7 +123,8 @@
             "managed_package_source_filter_and_unicode_paths",
             "minimal_clean_prose_mechanics",
             "surgical_scope_clean_island_code",
-            "text_first_usage_search_with_legacy_fragment_pass"
+            "text_first_usage_search_with_legacy_fragment_pass",
+            "gpt_conversation_ingestion_tools"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -7295,6 +7296,47 @@
                     "python3 -B tools/repo/check_sensitive_reference_leaks.py --repo-root ."
                 ],
                 "known_failure_if_missing": "Agents miss dynamic or legacy call sites because they copy PHP-specific search syntax into non-PHP projects, rely on tracked-only or semantic usage lookup, or ignore language/framework lookup surfaces such as routing tables, templates, reflection, callbacks, macros, and string-built names."
+            },
+            "gpt_conversation_ingestion_tools": {
+                "summary": "ChatGPT conversation ingestion tools extract public shared conversations and search/read explicit local private exports or caches before the agent consumes the content.",
+                "required_paths": [
+                    "tools/adapters/gpt_conversation_core.py",
+                    "tools/adapters/gpt_shared_conversation_extract.py",
+                    "tools/adapters/gpt_conversation_archive.py",
+                    "adapters/gpt_shared_conversation_extract.py",
+                    "adapters/gpt_conversation_archive.py",
+                    "tools/pipeline/tool_handler.py",
+                    "SCRIPTS.json",
+                    "WORKFLOW.json"
+                ],
+                "required_scripts": [
+                    "gpt_shared_conversation_extract.py",
+                    "gpt_conversation_archive.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "gpt_shared_conversation_extract.py",
+                        "gpt_conversation_archive.py"
+                    ]
+                },
+                "required_docs": [
+                    "WORKFLOW.json",
+                    "SCRIPTS.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep public share extraction separate from local private export/cache reading.",
+                    "Do not add live private account scraping or session-cookie handling to this feature.",
+                    "Preserve Markdown/emoji/table/code-block text without lossy rewriting.",
+                    "Expose both scripts through SCRIPTS.json and tool_handler aliases.",
+                    "Verify syntax plus a local fixture or public share extraction before promotion."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/quality/check_python_syntax.py --repo-root . tools/adapters/gpt_conversation_core.py tools/adapters/gpt_shared_conversation_extract.py tools/adapters/gpt_conversation_archive.py adapters/gpt_shared_conversation_extract.py adapters/gpt_conversation_archive.py tools/pipeline/tool_handler.py",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py --repo-root .",
+                    "python3 -B tools/documents/audit_docs.py"
+                ],
+                "known_failure_if_missing": "Agents waste context on raw ChatGPT share HTML or whole private exports, or attempt brittle/private live-account scraping instead of extracting a compact conversation artifact first."
             }
         }
     },

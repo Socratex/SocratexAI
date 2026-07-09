@@ -186,7 +186,9 @@
         "tool_error_log.py",
         "tool_handler.py",
         "project_design_context.py",
-        "check_project_design_context_gate.py"
+        "check_project_design_context_gate.py",
+        "gpt_shared_conversation_extract.py",
+        "gpt_conversation_archive.py"
     ],
     "content": {
         "add_changelog_entry.py": {
@@ -2930,6 +2932,58 @@
             "output": {
                 "success": "Routes wrapper arguments to json_list_doc.py with Python-only tooling.",
                 "failure": "Raises or exits nonzero when wrapper arguments or JSON document operations fail."
+            }
+        },
+        "gpt_shared_conversation_extract.py": {
+            "path": "tools/adapters/gpt_shared_conversation_extract.py",
+            "category": "adapters",
+            "description": "Extract visible user/assistant messages from a public ChatGPT shared conversation page into Markdown or JSON while preserving Markdown tables, emoji, lists, and code blocks.",
+            "input": {
+                "required": [
+                    "one of positional URL, --url/-Url, or --input-file/-InputFile"
+                ],
+                "optional": [
+                    "--output/-Output",
+                    "--format/-Format markdown|json",
+                    "--timeout/-Timeout",
+                    "--no-metadata/-NoMetadata",
+                    "--include-technical-user-messages/-IncludeTechnicalUserMessages",
+                    "--assistant-mode/-AssistantMode"
+                ],
+                "rule": "Use when the user provides a public chatgpt.com/share URL or saved share HTML and asks to read, summarize, analyze, or reuse that conversation. Prefer this extractor before feeding page HTML into the model."
+            },
+            "output": {
+                "success": "Writes clean extracted conversation Markdown by default, or JSON with title, source, counts, skipped technical entries, and visible messages.",
+                "failure": "Exits nonzero when the page cannot be fetched, the React Router stream cannot be decoded, or no conversation data is found."
+            }
+        },
+        "gpt_conversation_archive.py": {
+            "path": "tools/adapters/gpt_conversation_archive.py",
+            "category": "adapters",
+            "description": "List, search, normalize, and read local ChatGPT conversation exports or generated conversation archives without requiring private account/session access.",
+            "input": {
+                "required": [
+                    "subcommand: list, search, read, or index",
+                    "--source/-Source"
+                ],
+                "optional": [
+                    "--query/-Query",
+                    "--project/-Project",
+                    "--conversation-id/-ConversationId",
+                    "--position/-Position",
+                    "--title-contains/-TitleContains",
+                    "--limit/-Limit",
+                    "--format/-Format",
+                    "--output/-Output",
+                    "--any-term/-AnyTerm",
+                    "--no-metadata/-NoMetadata",
+                    "--assistant-mode/-AssistantMode"
+                ],
+                "rule": "Use when the user asks to search or read private ChatGPT conversations from a local export/cache. Do not use this as live account scraping; the source must be an explicit local file or directory supplied by the user/workspace."
+            },
+            "output": {
+                "success": "For list/search, prints compact text or JSON candidates. For read, emits one clean conversation in Markdown or JSON. For index, writes reusable normalized archive JSON.",
+                "failure": "Exits nonzero when the source is missing, unsupported, or a selector matches no or multiple conversations."
             }
         }
     },

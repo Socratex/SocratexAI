@@ -10,7 +10,8 @@
         "finish_contract",
         "tool_error_hardening",
         "json_structural_edit_tooling",
-        "single_entry_tool_handler"
+        "single_entry_tool_handler",
+        "gpt_conversation_input_routing"
     ],
     "content": {
         "quick_index": {
@@ -73,6 +74,10 @@
         "single_entry_tool_handler": {
             "title": "Single Entry Tool Handler",
             "rule": "For repository-owned scripts that have a SCRIPTS.json contract and are exposed to agents as repeatable operations, prefer tools/pipeline/tool_handler.py as the public entry point. The handler should validate required and optional parameters from SCRIPTS.json, normalize common aliases, delegate to the target script, capture a predictable result envelope, and automatically log rejected input through tool_error_log.py."
+        },
+        "gpt_conversation_input_routing": {
+            "title": "GPT Conversation Input Routing",
+            "rule": "When the user provides a ChatGPT shared conversation URL, saved share HTML, or local ChatGPT conversation export/cache and asks to read, search, summarize, analyze, or continue from it, use the dedicated GPT conversation tools first. Use gpt_shared_conversation_extract.py for public chatgpt.com/share links. Use gpt_conversation_archive.py for explicit local private exports/caches with list/search/read/index. Feed the model the extracted Markdown/JSON, not the whole HTML page or entire archive, unless the user explicitly asks for raw source inspection. Do not attempt live private account scraping or session-cookie access."
         }
     },
     "metadata": {

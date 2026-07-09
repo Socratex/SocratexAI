@@ -699,7 +699,9 @@
         "tool_error_log.py",
         "tool_handler.py",
         "project_design_context.py",
-        "check_project_design_context_gate.py"
+        "check_project_design_context_gate.py",
+        "gpt_shared_conversation_extract.py",
+        "gpt_conversation_archive.py"
       ],
       "top_level_keys": [
         "index",
@@ -1486,6 +1488,18 @@
           "title": "",
           "ref": "content.json_wrapper_entrypoints.py",
           "status": ""
+        },
+        "gpt_shared_conversation_extract.py": {
+          "path": "content.gpt_shared_conversation_extract.py",
+          "title": "",
+          "ref": "content.gpt_shared_conversation_extract.py",
+          "status": ""
+        },
+        "gpt_conversation_archive.py": {
+          "path": "content.gpt_conversation_archive.py",
+          "title": "",
+          "ref": "content.gpt_conversation_archive.py",
+          "status": ""
         }
       }
     },
@@ -1508,7 +1522,8 @@
         "finish_contract",
         "tool_error_hardening",
         "json_structural_edit_tooling",
-        "single_entry_tool_handler"
+        "single_entry_tool_handler",
+        "gpt_conversation_input_routing"
       ],
       "top_level_keys": [
         "index",
@@ -1580,6 +1595,12 @@
           "path": "content.single_entry_tool_handler",
           "title": "Single Entry Tool Handler",
           "ref": "content.single_entry_tool_handler",
+          "status": ""
+        },
+        "gpt_conversation_input_routing": {
+          "path": "content.gpt_conversation_input_routing",
+          "title": "GPT Conversation Input Routing",
+          "ref": "content.gpt_conversation_input_routing",
           "status": ""
         }
       }

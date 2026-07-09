@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-05-26T02:23:33+02:00",
+    "generatedAt": "2026-07-09T23:30:22+02:00",
     "threshold": 300,
     "files": [
         {
@@ -40,7 +40,7 @@
         },
         {
             "path": "tools/pipeline/tool_handler.py",
-            "lines": 322,
+            "lines": 346,
             "extension": ".py",
             "large": true
         },
@@ -75,6 +75,12 @@
             "large": false
         },
         {
+            "path": "tools/adapters/gpt_conversation_archive.py",
+            "lines": 255,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/document_list_item_edit_engine.py",
             "lines": 254,
             "extension": ".py",
@@ -89,6 +95,12 @@
         {
             "path": "tools/json/audit_json_docs.py",
             "lines": 245,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/adapters/gpt_conversation_core.py",
+            "lines": 240,
             "extension": ".py",
             "large": false
         },
@@ -269,6 +281,12 @@
         {
             "path": "tools/codebase/context_gate_helpers.py",
             "lines": 103,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/adapters/gpt_shared_conversation_extract.py",
+            "lines": 101,
             "extension": ".py",
             "large": false
         },
@@ -761,6 +779,18 @@
         {
             "path": "tools/knowledge/knowledge_query.py",
             "lines": 9,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "adapters/gpt_conversation_archive.py",
+            "lines": 8,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "adapters/gpt_shared_conversation_extract.py",
+            "lines": 8,
             "extension": ".py",
             "large": false
         },

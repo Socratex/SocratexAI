@@ -40,7 +40,8 @@
             "finish_contract",
             "tool_error_hardening",
             "json_structural_edit_tooling",
-            "single_entry_tool_handler"
+            "single_entry_tool_handler",
+            "gpt_conversation_input_routing"
         ],
         "COMMANDS.json": [
             "CONTEXT",
@@ -257,7 +258,9 @@
             "tool_error_log.py",
             "tool_handler.py",
             "project_design_context.py",
-            "check_project_design_context_gate.py"
+            "check_project_design_context_gate.py",
+            "gpt_shared_conversation_extract.py",
+            "gpt_conversation_archive.py"
         ]
     },
     "metadata": {
