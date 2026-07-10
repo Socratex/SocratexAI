@@ -48,6 +48,7 @@
             "communication_profile_text_registry",
             "foreign_legacy_code_communication_profile",
             "foreign_legacy_business_work_model",
+            "socratex_business_dev_work_profile",
             "code_task_engineering_standards_preload",
             "code_task_engineering_context_loader",
             "full_code_guidance_context_gate",
@@ -6374,6 +6375,46 @@
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Foreign or legacy business work may be routed through the default code or gamedev flow, causing premature coding, hidden domain assumptions, missing manual test scenarios, or agent-owned shared-system lifecycle actions."
+            },
+            "socratex_business_dev_work_profile": {
+                "summary": "Adds the `SocratexBusinessDev` work profile: the main company- and language-agnostic 'how to do things' router for business software. A single WORKFLOW.json classifies the task into one of 13 flows (if X, remember Y), then points to shared engineering capsules (coding, comments, testing, workflow/handoff). Communication style and codebase-reality stances come from a communication subprofile (default `foreign_legacy_code`).",
+                "required_paths": [
+                    "profiles/SocratexBusinessDev/WORKFLOW.json",
+                    "profiles/SocratexBusinessDev/PROFILE.json",
+                    "core/communication-profiles/foreign_legacy_code.txt",
+                    "core/AGENT-CONTRACT.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
+                    ]
+                },
+                "required_docs": [
+                    "profiles/SocratexBusinessDev/WORKFLOW.json",
+                    "profiles/SocratexBusinessDev/PROFILE.json",
+                    "core/AGENT-CONTRACT.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the router company- and language-agnostic: no stack, framework, vendor, or version tokens in WORKFLOW.json or PROFILE.json.",
+                    "Keep the router-first shape: task-type router, then flow implementations, then shared eng_* capsules; flows reference the capsules instead of duplicating rules.",
+                    "Keep the work rules (coding, comments, testing, workflow/handoff) in the router and the communication stances in the subprofile; do not let the two duplicate or drift.",
+                    "Keep `foreign_legacy_code` registered as the default communication subprofile in PROFILE.json and AGENT-CONTRACT.json.",
+                    "Rebuild compiled instructions and run feature-contract checks after router or profile changes."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/check_ai_compiled_context.py",
+                    "python3 -B tools/documents/audit_docs.py"
+                ],
+                "known_failure_if_missing": "Business dev work lacks a single how-to-do-things router, so per-task rules (surgical-vs-clean coding, mutation-risk test gating, data-query cost guards, business-storytelling handoff, review reference style) get re-derived per project or scattered across CLAUDE.md, workflow files, and agent memory, and drift between projects."
             },
             "project_specific_design_context_gate": {
                 "summary": "Project-Specific Design Context Gate capability is considered active only when the per-project design context loader, its config field, the implementation flow that requires it, and its verification surface remain present. Tightens the implementation flow so that beyond the workspace-shared engineering rules, project-specific zone splits, namespace rules, and lifecycle constraints from each project's PIPELINE-CONFIG.json are deterministically loaded into context before code edits.",
