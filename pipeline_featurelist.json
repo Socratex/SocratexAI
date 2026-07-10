@@ -5078,6 +5078,7 @@
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "profiles/SocratexGamedev",
+                    "profiles/SocratexBusinessDev",
                     "SCRIPTS.json",
                     "tools/pipeline/sync_managed_pipeline_package.py",
                     "tools/pipeline/update_pipeline_from_link.py",
@@ -5107,6 +5108,8 @@
                     "profiles/SocratexGamedev/FLOWS.json",
                     "profiles/SocratexGamedev/SCRIPTS.json",
                     "profiles/SocratexGamedev/WORKFLOW.json",
+                    "profiles/SocratexBusinessDev/PROFILE.json",
+                    "profiles/SocratexBusinessDev/WORKFLOW.json",
                     "pipeline_featurelist.json"
                 ],
                 "sync_direction": "source_to_child",

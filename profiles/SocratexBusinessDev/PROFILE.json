@@ -1,0 +1,46 @@
+{
+    "index": [
+        "summary",
+        "purpose",
+        "managed_project_files",
+        "subprofiles",
+        "child_override_policy",
+        "project_stack"
+    ],
+    "content": {
+        "summary": {
+            "title": "Summary",
+            "content": "SocratexBusinessDev is the reusable work profile for business software work. It is the main 'how to do things' router for any professional codebase: a single WORKFLOW.json that classifies the task and then gives the rules to remember for that task type. Company-agnostic and language-agnostic. Communication style and legacy-specific stances come from a subprofile (default: foreign_legacy_code)."
+        },
+        "purpose": {
+            "title": "Purpose",
+            "content": "One source of truth for how the agent operates on business dev work, so the same task-type rules do not have to be re-derived per project or scattered across CLAUDE.md, workflow files, and agent memory. WORKFLOW.json is the router; the subprofile supplies communication style plus any codebase-reality extensions (e.g. foreign/legacy). Keep the work model source-owned here instead of forked per child project."
+        },
+        "managed_project_files": {
+            "title": "Managed Project Files",
+            "paths": [
+                "WORKFLOW.json"
+            ]
+        },
+        "subprofiles": {
+            "title": "Subprofiles",
+            "content": "SocratexBusinessDev is the generic work model. A subprofile refines it with a communication style and codebase-reality-specific extensions. It does NOT replace the router; it extends it.\n\nAvailable subprofiles (communication profile ids in core/communication-profiles/):\n\n- foreign_legacy_code (DEFAULT): foreign / legacy business codebase where the agent does not own the domain, the code is messy, and the user is reviewer + tester. Adds: ask-over-guess bias, no-fabrication gap-flagging, unknown-unknown surfacing, plain non-technical explanation layer, business-storytelling reporting.\n\nResolution: the active communication profile is set by communication.profile in PIPELINE-CONFIG.json (falls back to the workspace default, then standard). When SocratexBusinessDev is active and no communication profile is set, use foreign_legacy_code.",
+            "default_subprofile": "foreign_legacy_code"
+        },
+        "child_override_policy": {
+            "title": "Child Override Policy",
+            "content": "Children may add project-specific docs, state, plans, context capsules, tools, configs, and explicit overrides. Updates must preserve locally changed managed profile files and report them as overrides instead of overwriting them silently."
+        },
+        "project_stack": {
+            "title": "Project Stack",
+            "content": "Designed for professional business software of any language or framework: inherited monoliths, customizations of CRM/ERP/billing/business platforms, integration glue, business-rules engines, legacy framework projects, and greenfield modules inside a business product. No engine, gamedev, or simulation assumptions (use SocratexGamedev for those)."
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "SocratexBusinessDev Profile",
+            "type": "pipeline_profile",
+            "language": "en"
+        }
+    }
+}
