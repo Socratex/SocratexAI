@@ -545,6 +545,12 @@
                 "date": "2026-05-24",
                 "feature": "public_portfolio_release",
                 "change": "Prepared SocratexPipeline for public portfolio positioning as version 1.1. Updated README positioning around legacy-code AI workflows, source provenance, human-owned lifecycle, feature contracts, managed updates, and the public bootstrap link. Removed the pre-launch donation placeholder from README. Why: The repository is now intended to function as a public project, portfolio artifact, and adoption surface rather than a private internal pipeline snapshot."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-07-11",
+                "feature": "memory_mode_selection",
+                "change": "Add workflow.memory_mode axis: project_scoped vs task_scoped Why: Ticket-driven deploy-and-forget work has no durable project home; a per-project DECISIONS.json fragments per ticket and dies on archive, so durable knowledge (decisions, rationale, constraints, READ-FIRST gotchas) must fold into the unit STATE. project_scoped keeps the full memory model with a project decision log and end-of-unit promotion. New project/code/MEMORY-MODE.json contract; conditional core/MEMORY-MODEL.json; per-profile defaults (BusinessDev=task_scoped, Gamedev=project_scoped)."
             }
         ]
     },

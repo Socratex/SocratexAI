@@ -1,0 +1,51 @@
+{
+    "index": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "project_scoped",
+        "task_scoped",
+        "choosing_the_mode",
+        "relationship_to_branch_mode"
+    ],
+    "content": {
+        "quick_index": {
+            "title": "Quick Index",
+            "content": "- Overview\n- Purpose\n- Project-Scoped Mode\n- Task-Scoped Mode\n- Choosing the Mode\n- Relationship to Branch Mode\n"
+        },
+        "overview": {
+            "title": "Overview",
+            "format": "markdown-section",
+            "body": "# Memory Mode\n"
+        },
+        "purpose": {
+            "title": "Purpose",
+            "format": "markdown-section",
+            "body": "## Purpose\n\nMemory mode selects whether durable project knowledge has a home that OUTLIVES the unit of work.\n\nIt is set in `PIPELINE-CONFIG.json`:\n\n```json\n{\n    \"workflow\": {\n        \"memory_mode\": \"project_scoped\"\n    }\n}\n```\n\nTwo values: `project_scoped` and `task_scoped`.\n\nThis axis decides which memory artifacts are active. In `project_scoped` mode the full memory model applies, including a project-level decision log and context capsules that accrete across the whole project. In `task_scoped` mode there is no project-owned durable home, so durable knowledge folds into the unit-of-work active state and is archived with that unit.\n\nMemory mode is orthogonal to `branch_mode`: branch mode decides WHERE active working memory physically lives during work, memory mode decides WHETHER there is a durable home that survives the unit of work.\n"
+        },
+        "project_scoped": {
+            "title": "Project-Scoped Mode",
+            "format": "markdown-section",
+            "body": "## Project-Scoped Mode\n\nUse `project_scoped` when the agent owns and continuously evolves the codebase, so durable knowledge accretes and pays off across many units of work.\n\nTypical fit: greenfield, actively developed, or owned projects.\n\nThe full memory model is active:\n\n- durable decisions go to a project-level `DECISIONS.json`,\n- invariants, ownership contracts, known traps, and source-of-truth paths go to context capsules (`context-docs/`),\n- backlog holds valuable work not yet committed to the active sequence,\n- at the end of a branch or work unit, durable findings and decisions are PROMOTED up into those project-level homes.\n\nThe decision log is worthwhile here because future agents keep working the same project and must not silently reverse past choices.\n"
+        },
+        "task_scoped": {
+            "title": "Task-Scoped Mode",
+            "format": "markdown-section",
+            "body": "## Task-Scoped Mode\n\nUse `task_scoped` when work arrives as independent tickets against a codebase the agent does not own, and each ticket ships and is then forgotten (deploy-and-forget).\n\nTypical fit: foreign or legacy business codebases worked ticket by ticket.\n\nThere is no project-owned durable home to promote into, so:\n\n- everything durable folds into the unit-of-work active state (the ticket STATE),\n- durable decisions and their rationale (why-it-is), constraints, and READ-FIRST gotchas live in STATE, not a separate `DECISIONS.json`,\n- the plan stays ephemeral (next steps only, no history); once a step is executed, its reason and resulting state are persisted into STATE,\n- a separate `DECISIONS.json` is NOT used: it would fragment per ticket and die when the ticket is archived,\n- when the ticket closes, its STATE archives with it.\n\nContext capsules and a project decision log are inactive in this mode. Anti-knowledge (dead ends, what NOT to do and why) is recorded, when it occurs, as a constraint inside STATE.\n"
+        },
+        "choosing_the_mode": {
+            "title": "Choosing the Mode",
+            "format": "markdown-section",
+            "body": "## Choosing the Mode\n\nThe active work profile sets the default; the project may override it in `PIPELINE-CONFIG.json`.\n\n- `SocratexBusinessDev` (foreign / ticket-driven work): default `task_scoped`.\n- `SocratexGamedev` (owned game project): default `project_scoped`.\n\nThe default is not a hard rule. A long-lived business product the agent genuinely owns may set `project_scoped`; a game built as throwaway contract work may set `task_scoped`.\n\nDecide by ownership continuity, not by language, framework, or lifecycle stage. A legacy project can still be owned long-term (decisions accrete). A greenfield module can still be throwaway ticket work (decisions die with the ticket).\n"
+        },
+        "relationship_to_branch_mode": {
+            "title": "Relationship to Branch Mode",
+            "format": "markdown-section",
+            "body": "## Relationship to Branch Mode\n\n`branch_mode` and `memory_mode` are independent axes.\n\n- `branch_mode` (`linear` / `branch_scoped`): WHERE active working memory physically lives while work is in progress (committed project memory, or per-branch local files).\n- `memory_mode` (`project_scoped` / `task_scoped`): WHETHER durable knowledge has a home that survives the unit of work, and therefore whether the decision log and context capsules are active and whether promotion happens.\n\nThe `branch_mode` \"Branch End\" promotion step (promote durable findings to `context-docs/` and durable decisions to `DECISIONS.json`) applies only under `project_scoped`. Under `task_scoped` there is no promotion target: durable content stays in the unit STATE and archives with it.\n\nA workspace may relocate the physical store (for example a central, ticket-keyed working-memory directory) without changing this contract; memory mode is about durability topology, not file location.\n"
+        }
+    },
+    "metadata": {
+        "schema": "socratex-document/v1",
+        "title": "Memory Mode"
+    }
+}

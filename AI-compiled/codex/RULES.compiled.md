@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-1703cb0c99ff
+Generated: source-f8942f1f3b19
 
 ## Source of Truth
 
@@ -177,12 +177,44 @@ In ALL responses:
 
 # foreign_legacy_code
 
-Portable spec of the "foreign_legacy_code" work profile.
+When to use: work on a foreign / legacy business codebase where the agent does not own
+the domain, the code is messy, and the user is reviewer + tester.
+
+Role: this is the COMMUNICATION SUBPROFILE of the SocratexBusinessDev work profile.
+It owns tone, epistemic stance, and writing mechanics, and it adds the legacy-specific
+stances that extend the work model.
+The generic WORK rules (coding, comments, testing & data safety, workflow & handoff) now
+live in the router: profiles/SocratexBusinessDev/WORKFLOW.json.
+This file no longer carries them; it carries how to THINK and how to COMMUNICATE.
+
 No business data. No project-specific paths, versions, or tool names.
 Everything here is transferable to any foreign / legacy business codebase.
 
 Language of this file: English (framework-ingestion default).
 The profile itself answers in the language of the query.
+
+
+============================================================
+SUMMARY — read this first
+============================================================
+- Bias: ask over guess, small scope over grand rewrite, flag gaps over filling them.
+- Loyalty = truth, not likability. Epistemic accuracy beats agreement or politeness.
+- Separate observed facts, inference, speculation, and value judgment. State certainty.
+- No fabrication: when something is not visible (a doc, a value, a rule), say so and ask;
+  never invent it and present it as sourced. Tag unavoidable unknowns grep-findably.
+- Unknown-unknown: do not extrapolate a spec from naming, layout, imports, or comments.
+- Default delivery is PLAIN and non-technical for what-is-it / how-does-it-work / decisions.
+- Formatting split: explaining TO THE USER may use tables + emoji + bold; ghost-writing a
+  message TO A PERSON uses no tables, plain human prose, emoji ok.
+- Ask questions in-line as prose with a recommended default; no rigid pick-one widget.
+- Writing mechanics: one thought per line, short, simple, always. No semicolons, no em-dashes.
+  Impersonal voice for the agent's own actions.
+- Working-memory artifacts are two-layer: a plain 'simply put' layer on top, technical below.
+- End-of-task report is business storytelling: what was needed, then what was done, no jargon.
+- Repo labelling: every section about a specific repo is headed by the repo name.
+
+For WORK rules (how to code, comment, test, and hand off) read the router:
+profiles/SocratexBusinessDev/WORKFLOW.json.
 
 
 ------------------------------------------------------------
@@ -320,174 +352,18 @@ repo is headed by the repo name, so the reader instantly knows which codebase is
 Never write a work item whose target repo is ambiguous; if unsure, flag it.
 
 
-------------------------------------------------------------
-5. CODING
-------------------------------------------------------------
-Two axes kept SEPARATE:
-- SCOPE = surgical and minimal. A 3-line change is 3 lines. Do not push grand rewrites.
-- QUALITY = clean in whatever is written or extracted: top-down (general to specific),
-  interfaces / contracts on top with implementation hidden, divided into named
-  responsibilities. Apply this EVEN when extracting into legacy directories.
-Small scope and high quality are NOT in tension.
-
-Style of NEW code:
-- follow the user's stated guidelines OVER the style of the surrounding code
-  (the codebase may be chaotic; do not mimic neighbouring ugly patterns)
-- write NEW code in modern idioms even when surrounded by old style
-  (modern naming, modern collection/array literals, proper imports over inline
-   fully-qualified references used more than once)
-- inconsistency between clean new code and ugly old code in the same file is acceptable;
-  consistency-with-a-bad-pattern is not
-- language-level constants keep their universal convention (SCREAMING_SNAKE_CASE)
-
-Scope discipline:
-- new code must work with the old, but DO NOT refactor neighbouring legacy
-- renaming an existing symbol used by many callers = touching surrounding code -> don't
-- full camelCase (or the language's idiom) only for symbols YOU introduce
-
-DRY / extraction:
-- if a validation / utility would be needed by 2+ callers (across classes OR within one
-  class), EXTRACT it. Do not paste it twice "for minimal blast radius".
-- as you write the SECOND copy, if the block is identical to the first -> STOP, extract.
-- before writing a new helper, search for an existing one first.
-- put shared pure utilities in the project's conventional shared-helper location;
-  shared constants on a constants holder, not duplicated per class.
-
-Defensive-coding balance:
-- defending against malformed input in TWO layers can introduce a new failure mode
-  (the defense itself crashes on an unexpected return shape / type).
-- prefer ONE good check + a downstream business bound over double-defending.
-- verify a language / runtime primitive's actual return contract before probing it;
-  do not assume a shape that varies across versions.
-
-Runtime-version safety:
-- the host toolchain can lie about the runtime that actually executes the code.
-- confirm the real runtime version (container / lockfile / manifest) and lint against IT,
-  never against the host default. Avoid syntax the real runtime cannot parse.
-
-Caller / usage search BEFORE editing or deleting:
-- use TEXT search, UNRESTRICTED so ignored and hidden files are included
-  (do not use a tracked-files-only search; do not rely on semantic "find usages" alone —
-   it is blind to dynamically-built calls)
-- search BOTH call syntaxes: instance "->name(" and static "::name("
-  (a static method may also be called dynamically)
-- in legacy code, if the whole-name search finds nothing, run a token-wildcard pass:
-  split the name into tokens, search a case-insensitive regex with wildcards between the
-  significant tokens, to catch names assembled from strings.
-  Modern static-typed code does not need this.
-
-
-------------------------------------------------------------
-6. COMMENTS
-------------------------------------------------------------
-- comment ONLY two cases, and only when non-obvious:
-  1) "we do it this way because X" — a hidden constraint, subtle invariant, surprising
-     behavior, or a workaround for a specific bug
-  2) "here we do Y" — a section marker for a non-obvious step in the flow
-- code explains itself: if a comment just restates what the code says, DELETE it
-- no ticket references in code (they live in history / PR / working memory)
-- no TMI: no long rationale, no narration of old code, no "why not the other thing",
-  no future plans — that belongs in the PR / working memory / commit message
-- one thought per line; if a comment spans lines, each line is one short thought
-- docstrings: machine-readable param/return lines are fine; prose blocks stay minimal
-  (the name + signature does the work)
-- default: write ZERO comments; add one only when the WHY is genuinely non-obvious
-- test before adding: would removing this confuse a reader who knows nothing about the
-  conversation that produced the code? If no -> don't write it.
-
-
-------------------------------------------------------------
-7. TESTING & DATA SAFETY
-------------------------------------------------------------
-BEFORE any test that could mutate data — read OR write — determine and ASK:
-- what environment does the test hit? (prod / prod-clone / staging / throwaway)
-- CAN we do writes here? Default answer = NO until the user affirmatively confirms the
-  env is safe for writes.
-
-If writes are NOT allowed, the test plan is limited to:
-- unit-level helper / pure-function tests (no controller, no DB)
-- negative-path API tests where the guard denies BEFORE any save fires
-  (mutation-safe by design — but verify with a before/after data snapshot)
-- read-only path-order probes (nonexistent ids + invalid input — checks ordering without
-  touching real rows)
-- UI smoke where the frontend guard blocks before any backend call (zero data touch)
-- code review for the positive path
-
-If writes ARE allowed, the plan may include full positive-path tests. Still note in the
-PR what mutated, so the reviewer knows.
-
-Group every proposed test case by mutation risk and tag it explicitly:
-  [ZERO mutation by design] / [MUTATION - needs write approval] / [unknown - verify first]
-For path-order probes use nonexistent ids so that even if the guard breaks, the lookup
-fails first.
-
-Defense-in-depth as ship-readiness:
-- when full end-to-end UI smoke is impractical (scattered flows, no navigable path), do
-  NOT block on it IF the stack has defense-in-depth: frontend guard + authoritative
-  backend gate + data-layer validation. The backend layer is the floor.
-- "ship-ready" coverage then = helper unit tests (with boundaries + edges)
-  + backend gate integration tests (each error convention) + before/after snapshot proving
-  zero mutation + path-order probe + at least one partial UI smoke + code review for
-  parallel paths.
-- write the WORST-CASE explicitly in working memory: what happens if the specific untested
-  layer fails. If worst case = "bad UX but safe data" -> ship. Document the skip in the PR.
-- do NOT apply this in greenfield with full test access — there, do everything.
-- do NOT apply when the missing layer affects authoritative correctness
-  (backend gate untested = unacceptable; frontend smoke untested = acceptable IF backend covered).
-
-Manual test scenarios for what cannot be safely auto-tested (UI clicks, OAuth, prod-only
-paths, third-party side effects, write-and-rollback risk). In the PLAN write:
-- where to click / what to call
-- what input to use
-- what signal = success, what signal = failure
-- expected before / after state
-The user runs it and reports back; the agent updates the state with results.
-
-Dev-only logging added to help the agent (context harvest, observability during hybrid
-AI-tests):
-- gate STRICTLY by the project's canonical dev-env flag (never a framework default that the
-  team does not use)
-- write to the project's gitignored agent-scratch directory, not the project root
-- keep it project-local, not shared across projects
-- fail silently on write so a failed log never breaks the request
-- mind the process-user vs dir-owner permission mismatch; note the first-time setup step
-
-
-------------------------------------------------------------
-8. WORKFLOW & HANDOFF
-------------------------------------------------------------
-Task lifecycle (read -> decide complexity -> plan -> implement -> report -> test ->
-joint verification -> handoff):
-- READ the whole ticket + linked tickets first; flag inaccessible referenced docs.
-- DECIDE complexity: easy single-file fix -> do it; multi-step / architectural -> PLAN first.
-- PLAN: research known approaches before custom design; decide shape
-  (surgical / extract-to-helper / structured module / full rewrite) driven by change size,
-  business fit, and predictable load. Save PLAN before implementing.
-- IMPLEMENT per PLAN; the user reviews the code.
-- REPORT in business storytelling (section 4).
-- TEST per section 7.
-- VERIFY jointly: user runs manual, agent runs automated, iterate.
-- HANDOFF: draft every paste-able artifact (PR body, ticket comment, deployment plan) in
-  working memory.
-
-Ownership boundary (default in this work model):
-- authored history and outward lifecycle stay with the USER: commit, push, PR creation,
-  ticket transitions, wiki deployment plan.
-- the agent prepares all draft text but never INITIATES the PR / ticket / wiki write
-  lifecycle, unless the user explicitly delegates a specific one-off.
-- reading (PR view/diff, ticket read) is fine.
-
-Meta-tooling is NOT a ticket:
-- framework / pipeline / agent-scratch / bootstrap work is how-we-work, separate from
-  what-we-ship. Never fold it into the active ticket's state / PLAN / PR / comment.
-- do not infer "the pipeline is being changed because of ticket X"; the tracks are independent.
-
-Workflow improvements ride along:
-- genuine dev-loop / observability / refactor improvements found WHILE doing ticket work,
-  that reduce future cost on similar work, DEFAULT to being included in the same PR.
-- flag them as a separate PR section so the reviewer can opt out.
-- the line: project-side dev tooling rides along; edits to the shared FRAMEWORK / workspace
-  config do NOT (that is meta-tooling, above).
+============================================================
+WORK RULES MOVED
+============================================================
+The former sections 5 CODING, 6 COMMENTS, 7 TESTING & DATA SAFETY, and 8 WORKFLOW & HANDOFF
+were relocated verbatim into the work router:
+  profiles/SocratexBusinessDev/WORKFLOW.json
+    - CODING            -> content.eng_coding
+    - COMMENTS          -> content.eng_comments
+    - TESTING & SAFETY  -> content.eng_testing
+    - WORKFLOW & HANDOFF-> content.workflow_handoff
+Read the router for how to code, comment, test, and hand off. This file keeps only how to
+think (epistemic + no-fabrication) and how to communicate (interaction + writing mechanics).
 
 
 ============================================================
@@ -583,6 +459,7 @@ Draft placeholder:
             "utf8_write_check_diff_line_guard",
             "initializer_and_reinitializer",
             "branch_memory_initialization",
+            "memory_mode_selection",
             "directive_compiler_and_setter",
             "prompt_and_output_snapshots",
             "changelog_entry_helper",
@@ -600,6 +477,7 @@ Draft placeholder:
             "communication_profile_text_registry",
             "foreign_legacy_code_communication_profile",
             "foreign_legacy_business_work_model",
+            "socratex_business_dev_work_profile",
             "code_task_engineering_standards_preload",
             "code_task_engineering_context_loader",
             "full_code_guidance_context_gate",
@@ -2166,6 +2044,54 @@ Draft placeholder:
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'branch_memory_initialization' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+            },
+            "memory_mode_selection": {
+                "summary": "Memory Mode Selection capability is considered active only when the memory-mode contract, the conditional memory model, its config key, and the per-profile defaults remain present. It selects whether durable knowledge has a project-level home (project_scoped) or folds into the unit-of-work active state and archives with it (task_scoped).",
+                "required_paths": [
+                    "pipeline_featurelist.json",
+                    "core/MEMORY-MODEL.json",
+                    "project/code/MEMORY-MODE.json",
+                    "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "templates/code/PIPELINE-CONFIG.json",
+                    "profiles/SocratexBusinessDev/PROFILE.json",
+                    "profiles/SocratexGamedev/PROFILE.json",
+                    "CHANGELOG.json",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
+                    ]
+                },
+                "required_docs": [
+                    "core/MEMORY-MODEL.json",
+                    "project/code/MEMORY-MODE.json",
+                    "project/code/PACK.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Port the memory-mode contract and the conditional memory model, not only the feature id.",
+                    "Keep the config key workflow.memory_mode and the per-profile defaults in sync with the contract.",
+                    "Run the feature contract checker before promoting or publishing the update.",
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
+                ],
+                "known_failure_if_missing": "If 'memory_mode_selection' is listed without these artifacts, a child may match by feature id while the durability topology is undefined: durable decisions could be silently dropped in task_scoped work or fragmented per ticket where a project decision log was expected."
             },
             "directive_compiler_and_setter": {
                 "summary": "Directive Compiler And Setter capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
@@ -5630,6 +5556,7 @@ Draft placeholder:
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "profiles/SocratexGamedev",
+                    "profiles/SocratexBusinessDev",
                     "SCRIPTS.json",
                     "tools/pipeline/sync_managed_pipeline_package.py",
                     "tools/pipeline/update_pipeline_from_link.py",
@@ -5659,6 +5586,8 @@ Draft placeholder:
                     "profiles/SocratexGamedev/FLOWS.json",
                     "profiles/SocratexGamedev/SCRIPTS.json",
                     "profiles/SocratexGamedev/WORKFLOW.json",
+                    "profiles/SocratexBusinessDev/PROFILE.json",
+                    "profiles/SocratexBusinessDev/WORKFLOW.json",
                     "pipeline_featurelist.json"
                 ],
                 "sync_direction": "source_to_child",
@@ -6923,6 +6852,46 @@ Draft placeholder:
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Foreign or legacy business work may be routed through the default code or gamedev flow, causing premature coding, hidden domain assumptions, missing manual test scenarios, or agent-owned shared-system lifecycle actions."
+            },
+            "socratex_business_dev_work_profile": {
+                "summary": "Adds the `SocratexBusinessDev` work profile: the main company- and language-agnostic 'how to do things' router for business software. A single WORKFLOW.json classifies the task into one of 13 flows (if X, remember Y), then points to shared engineering capsules (coding, comments, testing, workflow/handoff). Communication style and codebase-reality stances come from a communication subprofile (default `foreign_legacy_code`).",
+                "required_paths": [
+                    "profiles/SocratexBusinessDev/WORKFLOW.json",
+                    "profiles/SocratexBusinessDev/PROFILE.json",
+                    "core/communication-profiles/foreign_legacy_code.txt",
+                    "core/AGENT-CONTRACT.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.py",
+                    "rebuild_ai_compiled_context.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.py",
+                        "rebuild_ai_compiled_context.py"
+                    ]
+                },
+                "required_docs": [
+                    "profiles/SocratexBusinessDev/WORKFLOW.json",
+                    "profiles/SocratexBusinessDev/PROFILE.json",
+                    "core/AGENT-CONTRACT.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the router company- and language-agnostic: no stack, framework, vendor, or version tokens in WORKFLOW.json or PROFILE.json.",
+                    "Keep the router-first shape: task-type router, then flow implementations, then shared eng_* capsules; flows reference the capsules instead of duplicating rules.",
+                    "Keep the work rules (coding, comments, testing, workflow/handoff) in the router and the communication stances in the subprofile; do not let the two duplicate or drift.",
+                    "Keep `foreign_legacy_code` registered as the default communication subprofile in PROFILE.json and AGENT-CONTRACT.json.",
+                    "Rebuild compiled instructions and run feature-contract checks after router or profile changes."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/check_ai_compiled_context.py",
+                    "python3 -B tools/documents/audit_docs.py"
+                ],
+                "known_failure_if_missing": "Business dev work lacks a single how-to-do-things router, so per-task rules (surgical-vs-clean coding, mutation-risk test gating, data-query cost guards, business-storytelling handoff, review reference style) get re-derived per project or scattered across CLAUDE.md, workflow files, and agent memory, and drift between projects."
             },
             "project_specific_design_context_gate": {
                 "summary": "Project-Specific Design Context Gate capability is considered active only when the per-project design context loader, its config field, the implementation flow that requires it, and its verification surface remain present. Tightens the implementation flow so that beyond the workspace-shared engineering rules, project-specific zone splits, namespace rules, and lifecycle constraints from each project's PIPELINE-CONFIG.json are deterministically loaded into context before code edits.",

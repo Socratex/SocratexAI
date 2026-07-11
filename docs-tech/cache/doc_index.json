@@ -2413,6 +2413,7 @@
       "toc": [
         "quick_index",
         "overview",
+        "memory_mode",
         "active_state",
         "branch_scoped_active_state",
         "plan",
@@ -2436,6 +2437,12 @@
           "path": "content.overview",
           "title": "Overview",
           "ref": "content.overview",
+          "status": ""
+        },
+        "memory_mode": {
+          "path": "content.memory_mode",
+          "title": "Memory Mode",
+          "ref": "content.memory_mode",
           "status": ""
         },
         "active_state": {
@@ -3348,6 +3355,254 @@
       }
     },
     {
+      "path": "profiles/SocratexBusinessDev/PROFILE.json",
+      "document": {
+        "title": "SocratexBusinessDev Profile",
+        "type": "pipeline_profile",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "summary",
+        "purpose",
+        "managed_project_files",
+        "subprofiles",
+        "default_memory_mode",
+        "child_override_policy",
+        "project_stack"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "summary": {
+          "path": "content.summary",
+          "title": "Summary",
+          "ref": "content.summary",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "managed_project_files": {
+          "path": "content.managed_project_files",
+          "title": "Managed Project Files",
+          "ref": "content.managed_project_files",
+          "status": ""
+        },
+        "subprofiles": {
+          "path": "content.subprofiles",
+          "title": "Subprofiles",
+          "ref": "content.subprofiles",
+          "status": ""
+        },
+        "default_memory_mode": {
+          "path": "content.default_memory_mode",
+          "title": "Default Memory Mode",
+          "ref": "content.default_memory_mode",
+          "status": ""
+        },
+        "child_override_policy": {
+          "path": "content.child_override_policy",
+          "title": "Child Override Policy",
+          "ref": "content.child_override_policy",
+          "status": ""
+        },
+        "project_stack": {
+          "path": "content.project_stack",
+          "title": "Project Stack",
+          "ref": "content.project_stack",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "profiles/SocratexBusinessDev/WORKFLOW.json",
+      "document": {
+        "title": "SocratexBusinessDev Workflow — how to do things",
+        "type": "work_profile_router",
+        "language": "en"
+      },
+      "routing": {
+        "purpose": "Main 'how to do things' router for business dev work: classify the task, open the matching flow, apply the reminders. Router first, then flow implementations, then shared engineering capsules.",
+        "read_when": [
+          "For every task under the SocratexBusinessDev work profile, as the operating router.",
+          "When PIPELINE-CONFIG.json selects SocratexBusinessDev as the work profile."
+        ],
+        "do_not_read_when": [
+          "When a smaller current-state or subsystem capsule already answers the request."
+        ]
+      },
+      "toc": [
+        "quick_index",
+        "how_to_use",
+        "always",
+        "router",
+        "lifecycle",
+        "flow_direct_answer",
+        "flow_implementation_legacy",
+        "flow_implementation_greenfield",
+        "flow_bug",
+        "flow_data_query_diagnostic",
+        "flow_data_query_prod",
+        "flow_planning",
+        "flow_testing",
+        "flow_dev_logging",
+        "flow_review",
+        "flow_message_to_person",
+        "flow_report_handoff",
+        "flow_meta_tooling",
+        "eng_coding",
+        "eng_comments",
+        "eng_testing",
+        "workflow_handoff"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "how_to_use": {
+          "path": "content.how_to_use",
+          "title": "How To Use",
+          "ref": "content.how_to_use",
+          "status": ""
+        },
+        "always": {
+          "path": "content.always",
+          "title": "🔑 Always — every task",
+          "ref": "content.always",
+          "status": ""
+        },
+        "router": {
+          "path": "content.router",
+          "title": "🧭 Router — if you do X, open flow Y",
+          "ref": "content.router",
+          "status": ""
+        },
+        "lifecycle": {
+          "path": "content.lifecycle",
+          "title": "🔁 Lifecycle — 8 phases for a ticketed task",
+          "ref": "content.lifecycle",
+          "status": ""
+        },
+        "flow_direct_answer": {
+          "path": "content.flow_direct_answer",
+          "title": "💬 Flow — Direct answer",
+          "ref": "content.flow_direct_answer",
+          "status": ""
+        },
+        "flow_implementation_legacy": {
+          "path": "content.flow_implementation_legacy",
+          "title": "🧩 Flow — Implementation (foreign / legacy)",
+          "ref": "content.flow_implementation_legacy",
+          "status": ""
+        },
+        "flow_implementation_greenfield": {
+          "path": "content.flow_implementation_greenfield",
+          "title": "🌱 Flow — Implementation (greenfield / owned)",
+          "ref": "content.flow_implementation_greenfield",
+          "status": ""
+        },
+        "flow_bug": {
+          "path": "content.flow_bug",
+          "title": "🐛 Flow — Bug",
+          "ref": "content.flow_bug",
+          "status": ""
+        },
+        "flow_data_query_diagnostic": {
+          "path": "content.flow_data_query_diagnostic",
+          "title": "🔎 Flow — Data query (diagnostic)",
+          "ref": "content.flow_data_query_diagnostic",
+          "status": ""
+        },
+        "flow_data_query_prod": {
+          "path": "content.flow_data_query_prod",
+          "title": "🚦 Flow — Data query (production cost guard)",
+          "ref": "content.flow_data_query_prod",
+          "status": ""
+        },
+        "flow_planning": {
+          "path": "content.flow_planning",
+          "title": "📐 Flow — Planning",
+          "ref": "content.flow_planning",
+          "status": ""
+        },
+        "flow_testing": {
+          "path": "content.flow_testing",
+          "title": "🧪 Flow — Testing",
+          "ref": "content.flow_testing",
+          "status": ""
+        },
+        "flow_dev_logging": {
+          "path": "content.flow_dev_logging",
+          "title": "📝 Flow — Dev-only logging for the agent",
+          "ref": "content.flow_dev_logging",
+          "status": ""
+        },
+        "flow_review": {
+          "path": "content.flow_review",
+          "title": "🔍 Flow — Review",
+          "ref": "content.flow_review",
+          "status": ""
+        },
+        "flow_message_to_person": {
+          "path": "content.flow_message_to_person",
+          "title": "✉️ Flow — Message to a person",
+          "ref": "content.flow_message_to_person",
+          "status": ""
+        },
+        "flow_report_handoff": {
+          "path": "content.flow_report_handoff",
+          "title": "📤 Flow — Report + handoff",
+          "ref": "content.flow_report_handoff",
+          "status": ""
+        },
+        "flow_meta_tooling": {
+          "path": "content.flow_meta_tooling",
+          "title": "🛠️ Flow — Meta-tooling",
+          "ref": "content.flow_meta_tooling",
+          "status": ""
+        },
+        "eng_coding": {
+          "path": "content.eng_coding",
+          "title": "🧩 Capsule — Coding",
+          "ref": "content.eng_coding",
+          "status": ""
+        },
+        "eng_comments": {
+          "path": "content.eng_comments",
+          "title": "💬 Capsule — Comments",
+          "ref": "content.eng_comments",
+          "status": ""
+        },
+        "eng_testing": {
+          "path": "content.eng_testing",
+          "title": "🧪 Capsule — Testing & data safety",
+          "ref": "content.eng_testing",
+          "status": ""
+        },
+        "workflow_handoff": {
+          "path": "content.workflow_handoff",
+          "title": "📤 Capsule — Workflow & handoff",
+          "ref": "content.workflow_handoff",
+          "status": ""
+        }
+      }
+    },
+    {
       "path": "profiles/SocratexForeignLegacy/WORKFLOW.json",
       "document": {
         "title": "Foreign/Legacy Business Programming Workflow",
@@ -3732,6 +3987,7 @@
       "toc": [
         "summary",
         "purpose",
+        "default_memory_mode",
         "managed_project_files",
         "child_override_policy",
         "project_stack"
@@ -3752,6 +4008,12 @@
           "path": "content.purpose",
           "title": "Purpose",
           "ref": "content.purpose",
+          "status": ""
+        },
+        "default_memory_mode": {
+          "path": "content.default_memory_mode",
+          "title": "Default Memory Mode",
+          "ref": "content.default_memory_mode",
           "status": ""
         },
         "managed_project_files": {
@@ -5402,6 +5664,69 @@
           "path": "content.cleaning_rules",
           "title": "Cleaning Rules",
           "ref": "content.cleaning_rules",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "project/code/MEMORY-MODE.json",
+      "document": {},
+      "routing": {},
+      "toc": [
+        "quick_index",
+        "overview",
+        "purpose",
+        "project_scoped",
+        "task_scoped",
+        "choosing_the_mode",
+        "relationship_to_branch_mode"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "quick_index": {
+          "path": "content.quick_index",
+          "title": "Quick Index",
+          "ref": "content.quick_index",
+          "status": ""
+        },
+        "overview": {
+          "path": "content.overview",
+          "title": "Overview",
+          "ref": "content.overview",
+          "status": ""
+        },
+        "purpose": {
+          "path": "content.purpose",
+          "title": "Purpose",
+          "ref": "content.purpose",
+          "status": ""
+        },
+        "project_scoped": {
+          "path": "content.project_scoped",
+          "title": "Project-Scoped Mode",
+          "ref": "content.project_scoped",
+          "status": ""
+        },
+        "task_scoped": {
+          "path": "content.task_scoped",
+          "title": "Task-Scoped Mode",
+          "ref": "content.task_scoped",
+          "status": ""
+        },
+        "choosing_the_mode": {
+          "path": "content.choosing_the_mode",
+          "title": "Choosing the Mode",
+          "ref": "content.choosing_the_mode",
+          "status": ""
+        },
+        "relationship_to_branch_mode": {
+          "path": "content.relationship_to_branch_mode",
+          "title": "Relationship to Branch Mode",
+          "ref": "content.relationship_to_branch_mode",
           "status": ""
         }
       }

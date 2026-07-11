@@ -2,6 +2,7 @@
     "index": [
         "summary",
         "purpose",
+        "default_memory_mode",
         "managed_project_files",
         "child_override_policy",
         "project_stack"
@@ -14,6 +15,10 @@
         "purpose": {
             "title": "Purpose",
             "content": "Keep game-specific workflow machinery source-owned in SocratexAI instead of copied and forked independently inside every game child project."
+        },
+        "default_memory_mode": {
+            "title": "Default Memory Mode",
+            "content": "Default `workflow.memory_mode` for this profile is `project_scoped`. A game is an owned, continuously evolved project, so durable decisions accrete in a project-level `DECISIONS.json` and context capsules across the whole project, and branch/unit work promotes durable findings up at the end. Full contract: `project/code/MEMORY-MODE.json`."
         },
         "managed_project_files": {
             "title": "Managed Project Files",

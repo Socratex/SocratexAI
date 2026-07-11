@@ -2,6 +2,7 @@
     "index": [
         "quick_index",
         "overview",
+        "memory_mode",
         "active_state",
         "branch_scoped_active_state",
         "plan",
@@ -12,17 +13,22 @@
     "content": {
         "quick_index": {
             "title": "Quick Index",
-            "content": "- Overview\n- Active State\n- Branch-Scoped Active State\n- Plan\n- Backlog\n- Decisions\n- Context Capsules\n"
+            "content": "- Overview\n- Memory Mode\n- Active State\n- Branch-Scoped Active State\n- Plan\n- Backlog\n- Decisions\n- Context Capsules\n"
         },
         "overview": {
             "title": "Overview",
             "format": "markdown-section",
             "body": "# Memory Model\n"
         },
+        "memory_mode": {
+            "title": "Memory Mode",
+            "format": "markdown-section",
+            "body": "## Memory Mode\n\nWhich memory artifacts below are active depends on `workflow.memory_mode`. Full contract: `project/code/MEMORY-MODE.json`.\n\n- `project_scoped`: the agent owns and evolves the project, so durable knowledge has a project-level home. The decision log, context capsules, and backlog are active, and branch/unit work PROMOTES durable findings and decisions up into them at the end.\n- `task_scoped`: work is ticket-driven and deploy-and-forget on a codebase the agent does not own. There is no project-owned durable home, so durable knowledge (decisions, rationale, constraints, READ-FIRST gotchas) folds into the unit active state and is archived with the unit. The decision log and context capsules are NOT used; there is no promotion.\n\nDefault comes from the active work profile and may be overridden per project. Memory mode is orthogonal to `branch_mode`, which only decides where active working memory physically lives.\n"
+        },
         "active_state": {
             "title": "Active State",
             "format": "markdown-section",
-            "body": "## Active State\n\n`DOCS.json` is the document routing map and should be read before reading, creating, renaming, or updating project documents.\n\nThe active state is the first memory file an agent reads after `DOCS.json`.\n\nIt should stay short:\n\n- current objective,\n- current pass,\n- next action,\n- blockers,\n- risks,\n- non-regression reminders.\n"
+            "body": "## Active State\n\n`DOCS.json` is the document routing map and should be read before reading, creating, renaming, or updating project documents.\n\nThe active state is the first memory file an agent reads after `DOCS.json`.\n\nIt should stay short:\n\n- current objective,\n- current pass,\n- next action,\n- blockers,\n- risks,\n- non-regression reminders.\n\nUnder `task_scoped` mode the active state is also the durable home: it additionally holds decisions and their rationale, constraints, and READ-FIRST gotchas that would otherwise live in the decision log or context capsules, because those are inactive in that mode.\n"
         },
         "branch_scoped_active_state": {
             "title": "Branch-Scoped Active State",
@@ -37,17 +43,17 @@
         "backlog": {
             "title": "Backlog",
             "format": "markdown-section",
-            "body": "## Backlog\n\nThe backlog contains valuable work that is not yet committed to the active execution sequence.\n"
+            "body": "## Backlog\n\nThe backlog contains valuable work that is not yet committed to the active execution sequence.\n\nActive under `project_scoped` mode. Under `task_scoped`, uncommitted work stays in the unit plan or the shared cross-ticket backlog, not a project backlog.\n"
         },
         "decisions": {
             "title": "Decisions",
             "format": "markdown-section",
-            "body": "## Decisions\n\nThe decision log records durable choices that future agents should not silently reverse.\n\nRecord:\n\n- decision,\n- context,\n- rationale,\n- consequences,\n- verification or revisit condition.\n"
+            "body": "## Decisions\n\nActive under `project_scoped` mode only. Under `task_scoped`, decisions fold into the unit active state instead (see Memory Mode).\n\nThe decision log records durable choices that future agents should not silently reverse.\n\nRecord:\n\n- decision,\n- context,\n- rationale,\n- consequences,\n- verification or revisit condition.\n"
         },
         "context_capsules": {
             "title": "Context Capsules",
             "format": "markdown-section",
-            "body": "## Context Capsules\n\nContext capsules store compact, current-state knowledge.\n\nUse them for:\n\n- invariants,\n- ownership contracts,\n- known traps,\n- source-of-truth paths,\n- performance or process heuristics.\n\nDo not use them for:\n\n- history,\n- scratch notes,\n- duplicated backlog,\n- speculative future roadmaps.\n"
+            "body": "## Context Capsules\n\nActive under `project_scoped` mode only. Under `task_scoped`, invariants, known traps, and source-of-truth paths fold into the unit active state instead (see Memory Mode).\n\nContext capsules store compact, current-state knowledge.\n\nUse them for:\n\n- invariants,\n- ownership contracts,\n- known traps,\n- source-of-truth paths,\n- performance or process heuristics.\n\nDo not use them for:\n\n- history,\n- scratch notes,\n- duplicated backlog,\n- speculative future roadmaps.\n"
         }
     },
     "metadata": {

@@ -31,6 +31,7 @@
             "utf8_write_check_diff_line_guard",
             "initializer_and_reinitializer",
             "branch_memory_initialization",
+            "memory_mode_selection",
             "directive_compiler_and_setter",
             "prompt_and_output_snapshots",
             "changelog_entry_helper",
@@ -1615,6 +1616,54 @@
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "If 'branch_memory_initialization' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
+            },
+            "memory_mode_selection": {
+                "summary": "Memory Mode Selection capability is considered active only when the memory-mode contract, the conditional memory model, its config key, and the per-profile defaults remain present. It selects whether durable knowledge has a project-level home (project_scoped) or folds into the unit-of-work active state and archives with it (task_scoped).",
+                "required_paths": [
+                    "pipeline_featurelist.json",
+                    "core/MEMORY-MODEL.json",
+                    "project/code/MEMORY-MODE.json",
+                    "project/code/PACK.json",
+                    "project/code/WORKFLOW.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "templates/code/PIPELINE-CONFIG.json",
+                    "profiles/SocratexBusinessDev/PROFILE.json",
+                    "profiles/SocratexGamedev/PROFILE.json",
+                    "CHANGELOG.json",
+                    "tools/repo/check_pipeline_feature_contracts.py",
+                    "tools/documents/audit_docs.py"
+                ],
+                "required_scripts": [
+                    "check_pipeline_feature_contracts.py",
+                    "check_pipeline_featurelist_update.py",
+                    "audit_docs.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "check_pipeline_feature_contracts.py",
+                        "check_pipeline_featurelist_update.py",
+                        "audit_docs.py"
+                    ]
+                },
+                "required_docs": [
+                    "core/MEMORY-MODEL.json",
+                    "project/code/MEMORY-MODE.json",
+                    "project/code/PACK.json",
+                    "core/ACTIVATION-CHECK.json",
+                    "pipeline_featurelist.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Port the memory-mode contract and the conditional memory model, not only the feature id.",
+                    "Keep the config key workflow.memory_mode and the per-profile defaults in sync with the contract.",
+                    "Run the feature contract checker before promoting or publishing the update.",
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/documents/audit_docs.py"
+                ],
+                "known_failure_if_missing": "If 'memory_mode_selection' is listed without these artifacts, a child may match by feature id while the durability topology is undefined: durable decisions could be silently dropped in task_scoped work or fragmented per ticket where a project decision log was expected."
             },
             "directive_compiler_and_setter": {
                 "summary": "Directive Compiler And Setter capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",

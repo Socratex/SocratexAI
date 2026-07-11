@@ -60,6 +60,7 @@
         },
         "workflow": {
             "branch_mode": "linear",
+            "memory_mode": "TBD",
             "branch_files_dir": "ignored/ai-socratex",
             "branch_state_file": "ignored/ai-socratex/<branch>-STATE.md",
             "branch_plan_file": "ignored/ai-socratex/<branch>-PLAN.md",
