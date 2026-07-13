@@ -551,6 +551,12 @@
                 "date": "2026-07-11",
                 "feature": "memory_mode_selection",
                 "change": "Add workflow.memory_mode axis: project_scoped vs task_scoped Why: Ticket-driven deploy-and-forget work has no durable project home; a per-project DECISIONS.json fragments per ticket and dies on archive, so durable knowledge (decisions, rationale, constraints, READ-FIRST gotchas) must fold into the unit STATE. project_scoped keeps the full memory model with a project decision log and end-of-unit promotion. New project/code/MEMORY-MODE.json contract; conditional core/MEMORY-MODEL.json; per-profile defaults (BusinessDev=task_scoped, Gamedev=project_scoped)."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-07-13",
+                "feature": "socratex_business_dev_work_profile",
+                "change": "Add SocratexBusinessDev work profile: the main company- and language-agnostic 'how to do things' router (single WORKFLOW.json — task-type router, per-flow reminders, shared engineering capsules). foreign_legacy_code becomes its communication subprofile. Retire the SocratexForeignLegacy 8-phase work model (removed profiles/SocratexForeignLegacy/ and the foreign_legacy_business_work_model feature contract); its lifecycle and behavioral rules were migrated verbatim into SocratexBusinessDev (content.lifecycle, content.workflow_handoff) and the eng_* capsules, and into foreign_legacy_code.txt. Why: one source of truth for how to work on business dev, instead of rules scattered across CLAUDE.md, workflow files, and agent memory."
             }
         ]
     },

@@ -48,7 +48,6 @@
             "compiled_agent_instruction_layer",
             "communication_profile_text_registry",
             "foreign_legacy_code_communication_profile",
-            "foreign_legacy_business_work_model",
             "socratex_business_dev_work_profile",
             "code_task_engineering_standards_preload",
             "code_task_engineering_context_loader",
@@ -5716,7 +5715,7 @@
                     "core/SCRIPT-FALLBACK.json",
                     "core/TASK-WORK.json",
                     "docs-tech/KNOWLEDGE-VIEWS.json",
-                    "profiles/SocratexForeignLegacy/WORKFLOW.json",
+                    "profiles/SocratexBusinessDev/WORKFLOW.json",
                     "project/code/BRANCH-MODE.json",
                     "project/code/COMMANDS.json",
                     "project/code/DDD-ADIV.json",
@@ -6383,47 +6382,6 @@
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Legacy-business projects may fall back to the generic epistemic profile, losing paste-ready business handoff text, domain-unknown guardrails, and explicit manual test scenarios."
-            },
-            "foreign_legacy_business_work_model": {
-                "summary": "Adds the `SocratexForeignLegacy` workflow profile for foreign or legacy business codebases with incomplete domain knowledge, weak tests, inconsistent conventions, and user-owned review/testing/PR/ticket lifecycle.",
-                "required_paths": [
-                    "profiles/SocratexForeignLegacy/WORKFLOW.json",
-                    "core/communication-profiles/foreign_legacy_code.txt",
-                    "core/AGENT-CONTRACT.json",
-                    "CHANGELOG.json",
-                    "pipeline_featurelist.json"
-                ],
-                "required_scripts": [
-                    "check_pipeline_feature_contracts.py",
-                    "rebuild_ai_compiled_context.py"
-                ],
-                "required_catalog_entries": {
-                    "SCRIPTS": [
-                        "check_pipeline_feature_contracts.py",
-                        "rebuild_ai_compiled_context.py"
-                    ]
-                },
-                "required_docs": [
-                    "profiles/SocratexForeignLegacy/WORKFLOW.json",
-                    "core/communication-profiles/foreign_legacy_code.txt",
-                    "core/AGENT-CONTRACT.json",
-                    "CHANGELOG.json",
-                    "pipeline_featurelist.json"
-                ],
-                "sync_direction": "source_to_child",
-                "promotion_checklist": [
-                    "Keep the workflow language- and company-agnostic so it can apply to inherited business systems beyond one client or stack.",
-                    "Preserve the 8-phase lifecycle: Read, Decide, Plan, Implement, Report, Test, Joint Verification, Handoff.",
-                    "Keep PR, ticket, and deployment lifecycle user-owned while the agent prepares paste-ready handoff text.",
-                    "Keep this profile separate from the default code pack and SocratexGamedev profile.",
-                    "Rebuild compiled instructions and run feature-contract checks after workflow/profile changes."
-                ],
-                "verification_commands": [
-                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
-                    "python3 -B tools/pipeline/check_ai_compiled_context.py",
-                    "python3 -B tools/documents/audit_docs.py"
-                ],
-                "known_failure_if_missing": "Foreign or legacy business work may be routed through the default code or gamedev flow, causing premature coding, hidden domain assumptions, missing manual test scenarios, or agent-owned shared-system lifecycle actions."
             },
             "socratex_business_dev_work_profile": {
                 "summary": "Adds the `SocratexBusinessDev` work profile: the main company- and language-agnostic 'how to do things' router for business software. A single WORKFLOW.json classifies the task into one of 13 flows (if X, remember Y), then points to shared engineering capsules (coding, comments, testing, workflow/handoff). Communication style and codebase-reality stances come from a communication subprofile (default `foreign_legacy_code`).",
