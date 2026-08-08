@@ -4,6 +4,20 @@ import argparse
 from pathlib import Path
 
 
+BINARY_SUFFIXES = {
+    ".db",
+    ".gif",
+    ".ico",
+    ".jpg",
+    ".jpeg",
+    ".pdf",
+    ".png",
+    ".sqlite",
+    ".webp",
+    ".zip",
+}
+
+
 def convert_text_to_lf(text: str) -> str:
     return text.replace("\r\n", "\n").replace("\r", "\n")
 
@@ -19,6 +33,9 @@ def expand_paths(paths: list[str]) -> list[str]:
 
 
 def normalize_path(path: Path, check: bool) -> bool:
+    if path.suffix.lower() in BINARY_SUFFIXES:
+        print(f"skipped binary file: {path}")
+        return False
     content = path.read_text(encoding="utf-8")
     normalized = convert_text_to_lf(content)
     normalized_bytes = normalized.encode("utf-8")

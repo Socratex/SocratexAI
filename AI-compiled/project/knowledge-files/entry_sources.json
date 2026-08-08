@@ -101,7 +101,7 @@
     "is_duplicate": false,
     "note": "record source",
     "path": "context-docs/ENGINEERING.json",
-    "selector": "content.tagged_rules.value.30"
+    "selector": "content.tagged_rules.value.31"
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
@@ -140,6 +140,14 @@
     "entry_name": "engineering.coding.ddd_adiv_when_possible",
     "is_duplicate": false,
     "note": "Shared contract definition of DDD-ADIV bias.",
+    "path": "core/AGENT-CONTRACT.json",
+    "selector": "ddd_adiv_default"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "is_duplicate": true,
+    "note": "Shared contract carries the executable-domain-model and anti-ceremony principle.",
     "path": "core/AGENT-CONTRACT.json",
     "selector": "ddd_adiv_default"
   },
@@ -281,6 +289,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "is_duplicate": true,
+    "note": "Feature contract for source-to-child propagation.",
+    "path": "pipeline_featurelist.json",
+    "selector": "domain_model_executable_contract"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.ai_native_code_contract_headers",
     "is_duplicate": true,
     "note": "Gamedev profile adds FPS/runtime/diagnostic/layer-purity lens for game-system headers.",
@@ -345,6 +361,14 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "is_duplicate": true,
+    "note": "Full framework- and language-agnostic definition.",
+    "path": "project/code/DDD-ADIV.json",
+    "selector": "domain_model_executable_contract"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.legacy_helpers_nonlegacy_ddd_adiv",
     "is_duplicate": true,
     "note": "Non-legacy default still follows the full DDD-ADIV definition.",
@@ -364,6 +388,14 @@
     "entry_name": "engineering.architecture.better_version_now_future_proof_by_default",
     "is_duplicate": true,
     "note": "Code pack applies the directive to programming implementation defaults.",
+    "path": "project/code/PACK.json",
+    "selector": "technical_defaults"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "is_duplicate": true,
+    "note": "Code pack applies the rule as a default for programming work.",
     "path": "project/code/PACK.json",
     "selector": "technical_defaults"
   },

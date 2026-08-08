@@ -356,6 +356,71 @@
   },
   {
     "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "architecture"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "best-practices"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "coding"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "contracts"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "ddd-adiv"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "domain_modeling"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "engineering"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "invariants"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "performance"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "production-grade"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "source-of-truth"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "type-driven-design"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
+    "entry_name": "engineering.coding.executable_domain_model",
+    "tag": "verification"
+  },
+  {
+    "document_path": "context-docs/ENGINEERING.json",
     "entry_name": "engineering.coding.explicit_diagnosable_flow",
     "tag": "architecture"
   },

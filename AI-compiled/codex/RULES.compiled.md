@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-45aacd70c6df
+Generated: source-d4fe18c01ced
 
 ## Source of Truth
 
@@ -538,6 +538,7 @@ Draft placeholder:
             "workspace_root_marker_resolution",
             "better_version_now_future_proof_engineering",
             "predictable_load_lightweight_architecture",
+            "domain_model_executable_contract",
             "template_parity_for_reusable_pipeline_improvements",
             "project_specific_design_context_gate",
             "web_research_spike_to_named_implementation_plan_gate",
@@ -6954,6 +6955,53 @@ Draft placeholder:
                     "python -B tools/knowledge/knowledge_check.py"
                 ],
                 "known_failure_if_missing": "Agents may keep using ORM/engine/framework convenience as the broad storage/index/batch model for predictable scale, then try to micro-optimize symptoms instead of choosing a lightweight architecture early."
+            },
+            "domain_model_executable_contract": {
+                "summary": "Framework- and language-agnostic programming rule: treat the codebase as an executable model of the domain, with explicit contracts, legal state transitions, and lean projections for hot or batch paths.",
+                "required_paths": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "project/code/DDD-ADIV.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json",
+                    "pipeline_featurelist.json"
+                ],
+                "required_scripts": [
+                    "knowledge_code_context.py",
+                    "knowledge_compile.py",
+                    "audit_json_docs.py",
+                    "check_pipeline_feature_contracts.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "knowledge_code_context.py",
+                        "knowledge_compile.py",
+                        "audit_json_docs.py",
+                        "check_pipeline_feature_contracts.py"
+                    ]
+                },
+                "required_docs": [
+                    "core/AGENT-CONTRACT.json",
+                    "project/code/PACK.json",
+                    "project/code/DDD-ADIV.json",
+                    "context-docs/ENGINEERING.json",
+                    "templates/code/context-docs/ENGINEERING.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep the rule framework-agnostic and language-agnostic; avoid examples tied to any specific engine, framework, language, or child project in the reusable source text.",
+                    "State that domain APIs, types, schemas, records, modules, and boundaries should use real domain concepts and terminology.",
+                    "Prefer explicit domain operations, legal state transitions, domain-specific identifiers, boundary validation, and invariants enforced by the strongest mechanism available in the stack.",
+                    "State that hot-path, batch, storage, runtime, or high-volume representations may be lean data structures, caches, indexes, buffers, projections, queries, or generated views, but must not become a second hidden source of domain truth.",
+                    "Keep the anti-ceremony rule explicit: do not turn every noun into a class, every class into an interface, or every state change into an elaborate pattern.",
+                    "Run JSON audit, feature-contract checks, and compiled-context checks after promotion."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/json/audit_json_docs.py --repo-root .",
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py --repo-root .",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py --check"
+                ],
+                "known_failure_if_missing": "Agents may treat DDD, design-by-contract, type/schema-driven design, and rich domain models as framework-specific style advice, or overcorrect into class/interface ceremony instead of preserving executable domain truth with pragmatic runtime projections."
             },
             "template_parity_for_reusable_pipeline_improvements": {
                 "summary": "Reusable source-pipeline behavior changes must update the relevant starter templates and feature contracts when future child projects should inherit the behavior.",

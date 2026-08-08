@@ -5,6 +5,7 @@
         "summary",
         "known_solutions_alignment",
         "domain_driven",
+        "domain_model_executable_contract",
         "architecture_decisive",
         "invariant_visible",
         "verification_attached"
@@ -22,7 +23,7 @@
         "summary": {
             "title": "Summary",
             "format": "markdown-section",
-            "body": "## Summary\n\nDDD-ADIV is the recommended design default for code projects using SocratexPipeline.\n\nDDD-ADIV means Domain-Driven, Architecture-Decisive, Invariant-Visible development.\n"
+            "body": "## Summary\n\nDDD-ADIV is the recommended design default for code projects using SocratexPipeline.\n\nDDD-ADIV means Domain-Driven, Architecture-Decisive, Invariant-Visible development. The practical goal is an executable domain model: code should express real domain concepts, legal state transitions, ownership, and invariants directly, while framework/runtime adapters and lean performance representations remain secondary projections of that domain truth.\n"
         },
         "known_solutions_alignment": {
             "title": "Known-Solutions Alignment",
@@ -33,6 +34,11 @@
             "title": "Domain-Driven",
             "format": "markdown-section",
             "body": "## Domain-Driven\n\nUse project language as the primary naming source.\n\nPrefer:\n\n- business-meaningful names over mechanism names,\n- explicit domain state over incidental data shape,\n- commands and policies that describe intent,\n- domain services only when behavior does not naturally belong to one entity or value object.\n\nAvoid:\n\n- generic managers that own unrelated behavior,\n- anemic data objects plus scattered rules,\n- framework vocabulary leaking into core domain logic,\n- hidden domain meaning encoded only in comments or UI labels.\n"
+        },
+        "domain_model_executable_contract": {
+            "title": "Executable Domain Model",
+            "format": "markdown-section",
+            "body": "## Executable Domain Model\n\nTreat the codebase as an executable model of the domain, not merely as implementation machinery.\n\nApply domain-driven, design-by-contract, type/schema-driven, rich-domain-model, and encapsulation principles where they make the system clearer and safer. Domain APIs, modules, types, records, schemas, states, and data contracts should use real domain concepts and terminology. State should change through explicit domain operations and legal transitions, not arbitrary external mutation. Make illegal states unrepresentable whenever practical; otherwise validate early at boundaries and protect invariants with runtime checks, assertions, tests, schemas, or other mechanisms available in the stack.\n\nPrefer:\n\n- `invoice.MarkPaid(payment)` over `invoice.Status = \"paid\"`,\n- `CustomerId`, `InvoiceId`, `RouteId`, or `JobId` over interchangeable primitive identifiers,\n- explicit transitions such as `Draft -> Submitted -> Approved -> Archived` over independent booleans that can contradict each other.\n\nUse immutable value objects for values. Use mutable encapsulated entities for things with identity that evolve through time. Use pure functions when the domain naturally represents a transformation or calculation, but do not force functional programming or universal immutability onto entities whose domain meaning is persistent identity with controlled state change.\n\nKeep framework, engine, database, transport, UI, and runtime concepts outside the domain core. Adapters translate external observations and commands into explicit domain contracts and translate domain results back out.\n\nPerformance and scale do not conflict with this rule. Hot-path, batch, storage, runtime, or high-volume code may use lean structures such as arrays, structs/records, tables, indexes, caches, buffers, projections, batch queries, generated views, or data-oriented layouts when the platform supports them. Treat those shapes as execution representations of the domain contract, not as a second hidden source of domain truth.\n\nDo not introduce abstractions merely for architectural purity. Every abstraction should represent a real domain concept, enforce a useful contract, isolate an external dependency, or materially reduce future change cost. Do not turn every noun into a class, every class into an interface, or every state change into an elaborate pattern.\n\nCode should be as simple as the domain allows, but not simpler than the domain.\n"
         },
         "architecture_decisive": {
             "title": "Architecture-Decisive",

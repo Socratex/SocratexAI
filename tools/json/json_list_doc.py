@@ -101,25 +101,71 @@ def node_parts(node_path: str) -> list[str]:
     return path_parts(node_path)
 
 
+def list_index(parent: list[Any], key: str, node_path: str) -> int:
+    try:
+        index = int(key)
+    except ValueError as exc:
+        raise TypeError(f"Node path '{node_path}' uses non-integer list segment '{key}'.") from exc
+    if index < 0 or index >= len(parent):
+        raise IndexError(f"Node path '{node_path}' list index {index} is outside 0..{len(parent) - 1}.")
+    return index
+
+
+def get_child(parent: Any, key: str, node_path: str) -> Any:
+    if isinstance(parent, dict):
+        if key not in parent:
+            raise KeyError(f"Node path '{node_path}' was not found.")
+        return parent[key]
+    if isinstance(parent, list):
+        return parent[list_index(parent, key, node_path)]
+    raise TypeError(f"Node path '{node_path}' parent is neither object nor list.")
+
+
+def set_child(parent: Any, key: str, value: Any, node_path: str) -> None:
+    if isinstance(parent, dict):
+        if key not in parent:
+            raise KeyError(f"Node path '{node_path}' was not found.")
+        parent[key] = value
+        return
+    if isinstance(parent, list):
+        parent[list_index(parent, key, node_path)] = value
+        return
+    raise TypeError(f"Node path '{node_path}' parent is neither object nor list.")
+
+
+def delete_child(parent: Any, key: str, node_path: str) -> None:
+    if isinstance(parent, dict):
+        if key not in parent:
+            raise KeyError(f"Node path '{node_path}' was not found.")
+        del parent[key]
+        return
+    if isinstance(parent, list):
+        del parent[list_index(parent, key, node_path)]
+        return
+    raise TypeError(f"Node path '{node_path}' parent is neither object nor list.")
+
+
 def resolve_node_parent(data: dict[str, Any], node_path: str) -> tuple[Any, str, list[str]]:
     parts = node_parts(node_path)
     current: Any = data
     for part in parts[:-1]:
-        if not isinstance(current, dict):
-            raise TypeError(f"Node path '{node_path}' cannot descend through non-object value before '{part}'.")
-        if part not in current:
-            raise KeyError(f"Node path '{node_path}' is missing segment '{part}'.")
-        current = current[part]
-    if not isinstance(current, dict):
-        raise TypeError(f"Node path '{node_path}' parent is not an object.")
+        if isinstance(current, dict):
+            if part not in current:
+                raise KeyError(f"Node path '{node_path}' is missing segment '{part}'.")
+            current = current[part]
+            continue
+        if isinstance(current, list):
+            current = current[list_index(current, part, node_path)]
+            continue
+        raise TypeError(f"Node path '{node_path}' cannot descend through scalar value before '{part}'.")
+    if not isinstance(current, (dict, list)):
+        raise TypeError(f"Node path '{node_path}' parent is neither object nor list.")
     return current, parts[-1], parts[:-1]
 
 
 def resolve_node(data: dict[str, Any], node_path: str) -> Any:
     parent, key, _ = resolve_node_parent(data, node_path)
-    if key not in parent:
-        raise KeyError(f"Node path '{node_path}' was not found.")
-    return parent[key]
+    return get_child(parent, key, node_path)
 
 
 def root_index_collection(parent_parts: list[str]) -> str | None:
@@ -210,9 +256,7 @@ def command_set_node(args: argparse.Namespace) -> None:
     path = Path(args.path)
     data = load_json(path)
     parent, key, _ = resolve_node_parent(data, args.node)
-    if key not in parent:
-        raise KeyError(f"Node path '{args.node}' was not found.")
-    parent[key] = parse_value(args)
+    set_child(parent, key, parse_value(args), args.node)
     write_json(path, data)
     print(f"OK: updated {args.node}")
 
@@ -224,20 +268,18 @@ def command_move_node(args: argparse.Namespace) -> None:
     target_data = source_data if target_path == source_path else load_json(target_path)
 
     source_parent, source_key, source_parent_parts = resolve_node_parent(source_data, args.node)
-    if source_key not in source_parent:
-        raise KeyError(f"Node path '{args.node}' was not found.")
-
     target_node = args.target_node or args.node
     target_parent, target_key, target_parent_parts = resolve_node_parent(target_data, target_node)
     reference_key = reference_key_for_parent(args.reference_node, target_parent_parts)
-    value = source_parent[source_key]
+    value = get_child(source_parent, source_key, args.node)
 
     same_parent = source_data is target_data and source_parent is target_parent
     if not same_parent:
-        del source_parent[source_key]
-        sync_root_index(source_data, source_parent_parts, source_parent)
+        delete_child(source_parent, source_key, args.node)
+        if isinstance(source_parent, dict):
+            sync_root_index(source_data, source_parent_parts, source_parent)
     else:
-        del source_parent[source_key]
+        delete_child(source_parent, source_key, args.node)
 
     insert_mapping_key(target_parent, target_key, value, args.position, reference_key, args.replace or same_parent)
     sync_root_index(target_data, target_parent_parts, target_parent)
@@ -252,10 +294,9 @@ def command_delete_node(args: argparse.Namespace) -> None:
     path = Path(args.path)
     data = load_json(path)
     parent, key, parent_parts = resolve_node_parent(data, args.node)
-    if key not in parent:
-        raise KeyError(f"Node path '{args.node}' was not found.")
-    del parent[key]
-    sync_root_index(data, parent_parts, parent)
+    delete_child(parent, key, args.node)
+    if isinstance(parent, dict):
+        sync_root_index(data, parent_parts, parent)
     write_json(path, data)
     print(f"OK: deleted {args.node}")
 

@@ -67,7 +67,10 @@ def clean_python_cache(root: Path) -> int:
             target.chmod(0o700)
             function(retry_path)
 
-        shutil.rmtree(path, onexc=retry_after_chmod)
+        try:
+            shutil.rmtree(path, onexc=retry_after_chmod)
+        except TypeError:
+            shutil.rmtree(path, onerror=retry_after_chmod)
     print(f"OK: removed {len(caches)} Python bytecode cache directorie(s).")
     return 0
 

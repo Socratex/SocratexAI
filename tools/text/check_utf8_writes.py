@@ -14,6 +14,18 @@ from shared.repo_helpers import git_lines  # noqa: E402
 
 UNSAFE_COMMAND_PATTERN = re.compile(r"\b(Set-Content|Out-File|Add-Content)\b")
 HUNK_PATTERN = re.compile(r"^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@")
+BINARY_SUFFIXES = {
+    ".db",
+    ".gif",
+    ".ico",
+    ".jpg",
+    ".jpeg",
+    ".pdf",
+    ".png",
+    ".sqlite",
+    ".webp",
+    ".zip",
+}
 
 
 def expand_paths(values: list[str]) -> list[str]:
@@ -66,6 +78,8 @@ def added_line_numbers(path: Path, repo_root: Path) -> set[int] | None:
 
 def check_path(path: Path, repo_root: Path) -> list[str]:
     if not path.is_file():
+        return []
+    if path.suffix.lower() in BINARY_SUFFIXES:
         return []
 
     checked_lines = added_line_numbers(path, repo_root)

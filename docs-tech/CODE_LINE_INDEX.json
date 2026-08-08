@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-07-09T23:30:22+02:00",
+    "generatedAt": "2026-08-08T07:29:34+02:00",
     "threshold": 300,
     "files": [
         {
@@ -10,7 +10,7 @@
         },
         {
             "path": "tools/json/json_list_doc.py",
-            "lines": 554,
+            "lines": 588,
             "extension": ".py",
             "large": true
         },
@@ -159,6 +159,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/run_final_task_checks.py",
+            "lines": 157,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/document_schema_migration_engine.py",
             "lines": 156,
             "extension": ".py",
@@ -167,12 +173,6 @@
         {
             "path": "tools/knowledge/knowledge_code_context.py",
             "lines": 155,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/run_final_task_checks.py",
-            "lines": 154,
             "extension": ".py",
             "large": false
         },
@@ -273,6 +273,12 @@
             "large": false
         },
         {
+            "path": "tools/text/check_utf8_writes.py",
+            "lines": 110,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/text/normalize_json_files.py",
             "lines": 105,
             "extension": ".py",
@@ -305,12 +311,6 @@
         {
             "path": "tools/pipeline/resolve_workspace_root.py",
             "lines": 98,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/text/check_utf8_writes.py",
-            "lines": 96,
             "extension": ".py",
             "large": false
         },
@@ -429,6 +429,12 @@
             "large": false
         },
         {
+            "path": "tools/text/normalize_text_files.py",
+            "lines": 63,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/chains/child_sync_smoke.py",
             "lines": 62,
             "extension": ".py",
@@ -508,12 +514,6 @@
         },
         {
             "path": "tools/pipeline/migrate_ai_pipeline.py",
-            "lines": 48,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/text/normalize_text_files.py",
             "lines": 48,
             "extension": ".py",
             "large": false

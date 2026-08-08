@@ -140,6 +140,10 @@
     "tag": "human-ai-hybrid"
   },
   {
+    "description": "",
+    "tag": "invariants"
+  },
+  {
     "description": "Compiled knowledge index, tag query, and note-selection rules.",
     "tag": "knowledge"
   },
@@ -254,6 +258,10 @@
   {
     "description": "Top-down source organization.",
     "tag": "top-down"
+  },
+  {
+    "description": "",
+    "tag": "type-driven-design"
   },
   {
     "description": "",
