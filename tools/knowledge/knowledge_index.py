@@ -346,7 +346,13 @@ def collect_all_entries(repo_root: Path) -> tuple[list[dict[str, Any]], dict[str
     document_hashes: dict[str, str] = {}
     for path in discover_structured_sources(repo_root):
         relative = normalize_path(str(path.relative_to(repo_root)))
-        document_hash, document_entries, source_hashes = collect_document_entries(repo_root, relative)
+        try:
+            document_hash, document_entries, source_hashes = collect_document_entries(repo_root, relative)
+        except FileNotFoundError:
+            if path.exists():
+                raise
+            print(f"WARNING: discovered source disappeared during indexing; skipping: {relative}", file=sys.stderr)
+            continue
         document_hashes[relative] = document_hash
         if document_entries:
             entries.extend(document_entries)

@@ -132,7 +132,8 @@
         "check_project_design_context_gate.py",
         "gpt_shared_conversation_extract.py",
         "gpt_conversation_archive.py",
-        "smoke_scoped_finalizer.py"
+        "smoke_scoped_finalizer.py",
+        "smoke_disappearing_sources.py"
     ],
     "content": {
         "add_changelog_entry.py": {
@@ -1863,7 +1864,7 @@
         "knowledge_index.py": {
             "path": "tools/knowledge/knowledge_index.py",
             "category": "knowledge",
-            "description": "Internal engine for compiling, querying, selecting, renaming, and mutating knowledge indexes.",
+            "description": "Internal engine for compiling, querying, selecting, renaming, and mutating knowledge indexes. Automatically discovered files removed during indexing are skipped with a warning; explicit missing inputs remain errors.",
             "input": {
                 "required": [],
                 "optional": [
@@ -2943,6 +2944,20 @@
             "output": {
                 "success": "Selected/deleted files and generated cache are staged; concurrent source edits and logs are excluded; wrapper forwards --paths.",
                 "failure": "Nonzero on a scope isolation or forwarding regression."
+            }
+        },
+        "smoke_disappearing_sources.py": {
+            "path": "tools/knowledge/smoke_disappearing_sources.py",
+            "category": "knowledge",
+            "description": "Verify discovery handles a deleted file without masking explicit input, dependency or JSON errors.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run python -B tools/knowledge/smoke_disappearing_sources.py; fixtures are isolated in a temporary directory."
+            },
+            "output": {
+                "success": "Exit 0 when vanished discovered inputs warn and skip, while explicit missing sources, dependencies and malformed JSON fail.",
+                "failure": "Nonzero for a discovery race or error-propagation regression."
             }
         }
     },

@@ -1,10 +1,10 @@
 {
-    "generatedAt": "2026-10-15T20:57:48+02:00",
+    "generatedAt": "2026-10-15T22:39:55+02:00",
     "threshold": 300,
     "files": [
         {
             "path": "tools/knowledge/knowledge_index.py",
-            "lines": 1492,
+            "lines": 1498,
             "extension": ".py",
             "large": true
         },
@@ -521,6 +521,12 @@
         {
             "path": "tools/pipeline/migrate_ai_pipeline.py",
             "lines": 48,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/knowledge/smoke_disappearing_sources.py",
+            "lines": 47,
             "extension": ".py",
             "large": false
         },

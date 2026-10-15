@@ -204,7 +204,8 @@
             "check_project_design_context_gate.py",
             "gpt_shared_conversation_extract.py",
             "gpt_conversation_archive.py",
-            "smoke_scoped_finalizer.py"
+            "smoke_scoped_finalizer.py",
+            "smoke_disappearing_sources.py"
         ]
     },
     "metadata": {

@@ -569,6 +569,12 @@
                 "date": "2026-10-15",
                 "feature": "batch_task_checks",
                 "change": "Refresh and verify the complete code-line index after quality commands; regression smoke covers ordering, quality failure, disabled indexing, and checks without quality. Why: Quality commands may format source files after the original index check, allowing stale line counts to be committed."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-10-15",
+                "feature": "compiled_sqlite_knowledge_index",
+                "change": "Skip automatically discovered knowledge files removed concurrently during enumeration/read with an explicit warning. Preserve errors for explicitly requested missing documents, missing dependencies of existing documents, and malformed JSON. Add a deterministic regression smoke to the quality gate. Why: Temporary tool and test outputs can disappear while a project finalizer rebuilds the knowledge index."
             }
         ]
     },

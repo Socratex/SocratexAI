@@ -34,6 +34,10 @@
             "scoped_finalizer": {
                 "description": "Verify explicit commit scope with concurrent source changes and generated outputs.",
                 "command": "python -B tools/repo/smoke_scoped_finalizer.py"
+            },
+            "disappearing_knowledge_sources": {
+                "description": "Verify deleted discovered inputs cannot abort knowledge indexing while invalid explicit sources still fail.",
+                "command": "python -B tools/knowledge/smoke_disappearing_sources.py"
             }
         },
         "notes": [

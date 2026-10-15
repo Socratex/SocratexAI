@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-012e279bd05d
+Generated: source-6ef9fadceb99
 
 ## Source of Truth
 
@@ -3266,7 +3266,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'code_task_type_router' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "compiled_sqlite_knowledge_index": {
-                "summary": "Compiled Sqlite Knowledge Index capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Compiled Sqlite Knowledge Index capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present. Discovery tolerates a file removed concurrently after enumeration, with a warning and preserved strict explicit-input failures.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "AI-compiled",
@@ -3278,7 +3278,8 @@ Draft placeholder:
                     "tools/repo/check_pipeline_feature_contracts.py",
                     "tools/documents/audit_docs.py",
                     "tools/knowledge/context_tags.py",
-                    "tools/knowledge/knowledge_select.py"
+                    "tools/knowledge/knowledge_select.py",
+                    "tools/knowledge/smoke_disappearing_sources.py"
                 ],
                 "required_scripts": [
                     "knowledge_compile.py",
@@ -3299,7 +3300,8 @@ Draft placeholder:
                     "context_tags.py",
                     "rebuild_ai_compiled_context.py",
                     "check_ai_compiled_context.py",
-                    "audit_docs.py"
+                    "audit_docs.py",
+                    "smoke_disappearing_sources.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -3321,7 +3323,8 @@ Draft placeholder:
                         "context_tags.py",
                         "rebuild_ai_compiled_context.py",
                         "check_ai_compiled_context.py",
-                        "audit_docs.py"
+                        "audit_docs.py",
+                        "smoke_disappearing_sources.py"
                     ]
                 },
                 "required_docs": [
@@ -3337,7 +3340,8 @@ Draft placeholder:
                 ],
                 "verification_commands": [
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py",
-                    "python3 -B tools/documents/audit_docs.py"
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python -B tools/knowledge/smoke_disappearing_sources.py"
                 ],
                 "known_failure_if_missing": "If 'compiled_sqlite_knowledge_index' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
@@ -6896,11 +6900,11 @@ Draft placeholder:
                 },
                 "implementation_flow_steps": [
                     "load WORKFLOW.json",
-                    "run knowledge_code_context.py â€” REQUIRED: brings 11 substantive code-design rules (borrowed-before-invented, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
-                    "run project_design_context.py -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads â€” writes ignored/project_design_context_gate.json",
+                    "run knowledge_code_context.py Ă˘â‚¬â€ť REQUIRED: brings 11 substantive code-design rules (borrowed-before-invented, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
+                    "run project_design_context.py -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads Ă˘â‚¬â€ť writes ignored/project_design_context_gate.json",
                     "inspect SCRIPTS.json index before manual work",
                     "edit scoped files",
-                    "run check_task.py -ProjectRoot <project> at the final verification boundary â€” verifies BOTH ignored/code_context_gate.json (workspace, via check_code_context_gate.py) and <project>/ignored/project_design_context_gate.json (per-project, via check_project_design_context_gate.py) are fresh for current HEAD when changed-code is detected"
+                    "run check_task.py -ProjectRoot <project> at the final verification boundary Ă˘â‚¬â€ť verifies BOTH ignored/code_context_gate.json (workspace, via check_code_context_gate.py) and <project>/ignored/project_design_context_gate.json (per-project, via check_project_design_context_gate.py) are fresh for current HEAD when changed-code is detected"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [
