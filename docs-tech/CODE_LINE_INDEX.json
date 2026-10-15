@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-15T14:55:32+02:00",
+    "generatedAt": "2026-10-15T20:57:48+02:00",
     "threshold": 300,
     "files": [
         {
@@ -15,13 +15,13 @@
             "large": true
         },
         {
-            "path": "tools/pipeline/pipeline_sweep.py",
-            "lines": 420,
+            "path": "tools/pipeline/rebuild_ai_compiled_context.py",
+            "lines": 423,
             "extension": ".py",
             "large": true
         },
         {
-            "path": "tools/pipeline/rebuild_ai_compiled_context.py",
+            "path": "tools/pipeline/pipeline_sweep.py",
             "lines": 420,
             "extension": ".py",
             "large": true
@@ -160,7 +160,7 @@
         },
         {
             "path": "tools/repo/run_final_task_checks.py",
-            "lines": 157,
+            "lines": 163,
             "extension": ".py",
             "large": false
         },
@@ -363,6 +363,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/smoke_scoped_finalizer.py",
+            "lines": 84,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/shared/repo_helpers.py",
             "lines": 79,
             "extension": ".py",
@@ -514,12 +520,6 @@
         },
         {
             "path": "tools/pipeline/migrate_ai_pipeline.py",
-            "lines": 48,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/smoke_scoped_finalizer.py",
             "lines": 48,
             "extension": ".py",
             "large": false

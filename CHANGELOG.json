@@ -563,6 +563,12 @@
                 "date": "2026-10-15",
                 "feature": "canonical_done_finalizer",
                 "change": "Expose --paths through the preferred finalizer and restrict scoped commits to selected changed files plus allowlisted generated context, cache and indexes. Add an isolated Git regression smoke and quality-gate coverage. Why: Prevent concurrent unrelated source edits from entering a scoped task commit while keeping generated outputs synchronized."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-10-15",
+                "feature": "batch_task_checks",
+                "change": "Refresh and verify the complete code-line index after quality commands; regression smoke covers ordering, quality failure, disabled indexing, and checks without quality. Why: Quality commands may format source files after the original index check, allowing stale line counts to be committed."
             }
         ]
     },

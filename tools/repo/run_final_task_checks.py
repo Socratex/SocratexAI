@@ -126,8 +126,6 @@ def main() -> int:
                 break
     if not args.no_compiled_context_check:
         steps.append(("compiled context check", [python, "-B", str(tools / "pipeline" / "check_ai_compiled_context.py"), "--repo-root", str(root)]))
-    if not args.no_line_index:
-        steps.append(("code line index check", [python, "-B", str(tools / "codebase" / "update_code_line_index.py"), "--root", str(root), "--changed-only", "--check"]))
     if not args.no_audit:
         audit_command = [python, "-B", str(tools / "documents" / "audit_docs.py"), "--repo-root", str(root)]
         if args.strict_audit:
@@ -142,6 +140,14 @@ def main() -> int:
             quality_command.append("--command-names")
             quality_command.extend(args.quality_command_names)
         steps.append(("quality gate", quality_command))
+    if not args.no_line_index:
+        index_command = [python, "-B", str(tools / "codebase" / "update_code_line_index.py"), "--root", str(root)]
+        if args.quality:
+            # Custom quality commands may format sources after the initial index refresh.
+            steps.append(("post-quality code line index refresh", index_command))
+        else:
+            index_command = [*index_command, "--changed-only"]
+        steps.append(("code line index check", [*index_command, "--check"]))
     if not args.no_cache_check:
         steps.append(("Python cache cleanup", []))
         steps.append(("Python cache check", []))

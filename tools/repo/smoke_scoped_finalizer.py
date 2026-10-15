@@ -11,6 +11,46 @@ from unittest.mock import patch
 
 import finalize_changed_files_commit_push as finisher
 import finalize_task_check_commit_push as wrapper
+import run_final_task_checks as final_checks
+
+
+def check_index_finalization_order() -> None:
+    for quality, no_index, failure in ((True, False, 0), (False, False, 0), (True, True, 0), (True, False, 9)):
+        calls: list[tuple[str, list[str]]] = []
+
+        def record(label: str, command: list[str], root: Path) -> int:
+            calls.append((label, command))
+            return failure if label == "quality gate" else 0
+
+        with tempfile.TemporaryDirectory(prefix="final-index-") as directory:
+            argv = [
+                "final-checks", "--repo-root", directory, "--no-normalize", "--no-doc-cache",
+                "--no-audit", "--no-compiled-context-check", "--no-cache-check", "--no-output",
+            ]
+            if quality:
+                argv.append("--quality")
+            if no_index:
+                argv.append("--no-line-index")
+            with patch.object(sys, "argv", argv), patch.object(final_checks, "run", side_effect=record), patch.object(
+                final_checks, "git_changed_paths", return_value=[]
+            ):
+                assert final_checks.main() == failure
+
+        labels = [label for label, _ in calls]
+        if no_index:
+            assert not any("code line index" in label for label in labels), labels
+        elif failure:
+            assert "code line index check" not in labels, labels
+        elif quality:
+            gate = labels.index("quality gate")
+            refresh = labels.index("post-quality code line index refresh")
+            check = labels.index("code line index check")
+            assert gate < refresh < check, labels
+            assert "--changed-only" not in calls[refresh][1]
+            assert "--changed-only" not in calls[check][1]
+        else:
+            assert "code line index check" in labels, labels
+    print("OK: final index refresh/check follows quality; failure and disabled-index controls pass.")
 
 
 def git(root: Path, *args: str) -> str:
@@ -18,6 +58,7 @@ def git(root: Path, *args: str) -> str:
 
 
 def main() -> int:
+    check_index_finalization_order()
     with tempfile.TemporaryDirectory(prefix="scoped-finalizer-") as directory:
         root = Path(directory)
         git(root, "init", "--quiet")

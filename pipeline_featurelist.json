@@ -840,7 +840,8 @@
                     "Port the reusable source artifacts, not only the feature id.",
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Run the feature contract checker before promoting or publishing the update.",
-                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
+                    "After quality commands, refresh and verify the complete code-line index so formatting cannot leave stale counts, including in previously indexed sources."
                 ],
                 "verification_commands": [
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py",
