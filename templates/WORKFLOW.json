@@ -91,7 +91,8 @@
             ],
             "edit_discipline": [
                 "Preserve owner-written notes unless explicitly asked to update them.",
-                "Do not remove active pain points without owner confirmation."
+                "Do not remove active pain points without owner confirmation.",
+                "For scoped or concurrent tasks, finalize with explicit --paths through tools/repo/finalize_task_check_commit_push.py; only selected changes and allowlisted generated outputs may enter the commit."
             ]
         },
         "team_on_demand": {

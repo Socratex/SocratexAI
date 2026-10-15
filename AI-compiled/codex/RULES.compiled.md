@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-d4fe18c01ced
+Generated: source-012e279bd05d
 
 ## Source of Truth
 
@@ -1342,7 +1342,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'git_batch_finishers' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, or installed child-project root handling is absent."
             },
             "canonical_done_finalizer": {
-                "summary": "Canonical Done Finalizer capability is active only when the preferred finalizer runs audit and quality before commit/push and its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Canonical Done Finalizer capability is active only when the preferred finalizer runs audit and quality before commit/push and its listed source artifacts, catalogs, update path, and verification remain present. Explicit --paths scope is forwarded by the preferred entrypoint and includes only selected changes plus allowlisted generated outputs.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "tools/repo",
@@ -1350,7 +1350,9 @@ Draft placeholder:
                     "QUALITY-GATE.json",
                     "project/code/GIT.json",
                     "tools/repo/check_pipeline_feature_contracts.py",
-                    "tools/documents/audit_docs.py"
+                    "tools/documents/audit_docs.py",
+                    "tools/repo/smoke_scoped_finalizer.py",
+                    "templates/WORKFLOW.json"
                 ],
                 "required_scripts": [
                     "finalize_task_check_commit_push.py",
@@ -1362,7 +1364,8 @@ Draft placeholder:
                     "run_quality_gate_contract.py",
                     "run_quality_fix.py",
                     "check_runtime.py",
-                    "audit_docs.py"
+                    "audit_docs.py",
+                    "smoke_scoped_finalizer.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
@@ -1375,7 +1378,8 @@ Draft placeholder:
                         "run_quality_gate_contract.py",
                         "run_quality_fix.py",
                         "check_runtime.py",
-                        "audit_docs.py"
+                        "audit_docs.py",
+                        "smoke_scoped_finalizer.py"
                     ]
                 },
                 "required_docs": [
@@ -1388,11 +1392,13 @@ Draft placeholder:
                     "List every required script, document, template, catalog entry, and generated-context input in this contract.",
                     "Verify installed finalizers resolve the child project Git root separately from the installed SocratexAI package root before normalizing, indexing, auditing task flow, or running quality commands.",
                     "Run the feature contract checker before promoting or publishing the update.",
-                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
+                    "Verify --paths through the preferred finalizer and keep concurrent unrelated source edits out of the commit; only allowlisted generated outputs may extend scope."
                 ],
                 "verification_commands": [
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py",
-                    "python3 -B tools/documents/audit_docs.py"
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python -B tools/repo/smoke_scoped_finalizer.py"
                 ],
                 "known_failure_if_missing": "If 'canonical_done_finalizer' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, review workflow, or installed child-project root handling is absent."
             },
@@ -6889,11 +6895,11 @@ Draft placeholder:
                 },
                 "implementation_flow_steps": [
                     "load WORKFLOW.json",
-                    "run knowledge_code_context.py — REQUIRED: brings 11 substantive code-design rules (borrowed-before-invented, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
-                    "run project_design_context.py -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads — writes ignored/project_design_context_gate.json",
+                    "run knowledge_code_context.py â€” REQUIRED: brings 11 substantive code-design rules (borrowed-before-invented, production-grade-default, ddd-adiv-when-possible, readability-first, method-and-variable-extraction, codebase-as-contract, legacy-aware-change-split, minimal-comments, business-naming, match-surrounding-patterns, explicit-diagnosable-flow) plus workflow rules (pair-programming-stance, verification-without-tests, etc.) into context",
+                    "run project_design_context.py -ProjectRoot <project> when PIPELINE-CONFIG declares code_design_required_reads â€” writes ignored/project_design_context_gate.json",
                     "inspect SCRIPTS.json index before manual work",
                     "edit scoped files",
-                    "run check_task.py -ProjectRoot <project> at the final verification boundary — verifies BOTH ignored/code_context_gate.json (workspace, via check_code_context_gate.py) and <project>/ignored/project_design_context_gate.json (per-project, via check_project_design_context_gate.py) are fresh for current HEAD when changed-code is detected"
+                    "run check_task.py -ProjectRoot <project> at the final verification boundary â€” verifies BOTH ignored/code_context_gate.json (workspace, via check_code_context_gate.py) and <project>/ignored/project_design_context_gate.json (per-project, via check_project_design_context_gate.py) are fresh for current HEAD when changed-code is detected"
                 ],
                 "sync_direction": "source_to_child",
                 "promotion_checklist": [

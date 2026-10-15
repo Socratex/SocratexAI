@@ -30,6 +30,10 @@
             "init_dry_run": {
                 "description": "Smoke-test code project initialization without writing files.",
                 "command": "python -B tools/pipeline/Initialize-SocratexPipeline.py --project-name \"Demo Project\" --language English --ai-mode Enterprise --keep-packs code --create-files --compile-agent --run-audit --dry-run"
+            },
+            "scoped_finalizer": {
+                "description": "Verify explicit commit scope with concurrent source changes and generated outputs.",
+                "command": "python -B tools/repo/smoke_scoped_finalizer.py"
             }
         },
         "notes": [

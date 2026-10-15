@@ -25,6 +25,16 @@ LOCAL_ARTIFACT_PATHS = {
     "CONSOLE-LOG-SUMMARY",
     "PROMPT-SNAPSHOT",
 }
+FINALIZER_GENERATED_PREFIXES = (
+    "AI-compiled/",
+    "SocratexAI/AI-compiled/",
+    "docs-tech/cache/",
+)
+FINALIZER_GENERATED_PATHS = {
+    "docs-tech/CODE_LINE_INDEX.json",
+    "docs-tech/LARGE_FILES.json",
+    "docs-tech/PIPELINE-BOOTSTRAP.json",
+}
 
 
 def run_git(root: Path, args: list[str], *, capture: bool = False) -> subprocess.CompletedProcess[str]:
@@ -45,6 +55,19 @@ def artifact_path(path: str) -> bool:
 def commit_candidate_paths(root: Path, raw_paths: list[str]) -> list[str]:
     candidates = changed_paths(root, raw_paths or None)
     return [path for path in candidates if not artifact_path(path)]
+
+
+def final_commit_candidate_paths(root: Path, raw_paths: list[str]) -> list[str]:
+    current = commit_candidate_paths(root, [])
+    if not raw_paths:
+        return current
+    selected = set(commit_candidate_paths(root, raw_paths))
+    return sorted(
+        path for path in current
+        if path in selected
+        or path in FINALIZER_GENERATED_PATHS
+        or path.startswith(FINALIZER_GENERATED_PREFIXES)
+    )
 
 
 def final_checks_command(root: Path, args: argparse.Namespace) -> list[str]:
@@ -87,7 +110,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run Python final checks, commit changed paths, and push.")
     parser.add_argument("--repo-root", default="", help="Repository root. Defaults to the current git worktree.")
     parser.add_argument("--message", "-m", required=True, help="Commit message.")
-    parser.add_argument("--paths", nargs="*", default=[], help="Explicit changed paths, comma-separated or repeated.")
+    parser.add_argument("--paths", nargs="*", default=[], help="Explicit changed files plus finalizer-generated indexes/caches; excludes unrelated concurrent source edits.")
     parser.add_argument("--no-push", action="store_true", help="Commit without pushing.")
     parser.add_argument("--no-quality", action="store_true", help="Skip quality gate inside final checks.")
     parser.add_argument("--quality-command", nargs="*", default=[], help="Explicit quality command for run_quality_gate.py.")
@@ -121,7 +144,7 @@ def main() -> int:
     if run("final task checks", final_checks_command(root, args), root) != 0:
         return 1
 
-    paths = commit_candidate_paths(root, args.paths)
+    paths = final_commit_candidate_paths(root, args.paths)
     if not paths:
         print("ERROR: no changed non-local-artifact paths after final checks.", file=sys.stderr)
         return 2

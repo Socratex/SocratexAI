@@ -14,6 +14,7 @@ from repo_tool_helpers import package_root, repo_root
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run full checks, commit, and push.")
     parser.add_argument("--message", "-m", "-Message", required=True, help="Commit message.")
+    parser.add_argument("--paths", "-Paths", nargs="*", default=[], help="Scope commit to these changed files plus finalizer-generated indexes/caches.")
     parser.add_argument("--quality-command", "-QualityCommand", nargs="*", default=[], help="Explicit quality command.")
     parser.add_argument("--strict-audit", "-StrictAudit", action="store_true")
     parser.add_argument("--no-push", "-NoPush", action="store_true")
@@ -38,6 +39,8 @@ def main() -> int:
         "--message",
         args.message,
     ]
+    if args.paths:
+        command.extend(["--paths", *args.paths])
     if args.quality_command:
         command.append("--quality-command")
         command.extend(args.quality_command)

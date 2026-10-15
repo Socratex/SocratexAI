@@ -557,6 +557,12 @@
                 "date": "2026-07-13",
                 "feature": "socratex_business_dev_work_profile",
                 "change": "Add SocratexBusinessDev work profile: the main company- and language-agnostic 'how to do things' router (single WORKFLOW.json — task-type router, per-flow reminders, shared engineering capsules). foreign_legacy_code becomes its communication subprofile. Retire the SocratexForeignLegacy 8-phase work model (removed profiles/SocratexForeignLegacy/ and the foreign_legacy_business_work_model feature contract); its lifecycle and behavioral rules were migrated verbatim into SocratexBusinessDev (content.lifecycle, content.workflow_handoff) and the eng_* capsules, and into foreign_legacy_code.txt. Why: one source of truth for how to work on business dev, instead of rules scattered across CLAUDE.md, workflow files, and agent memory."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-10-15",
+                "feature": "canonical_done_finalizer",
+                "change": "Expose --paths through the preferred finalizer and restrict scoped commits to selected changed files plus allowlisted generated context, cache and indexes. Add an isolated Git regression smoke and quality-gate coverage. Why: Prevent concurrent unrelated source edits from entering a scoped task commit while keeping generated outputs synchronized."
             }
         ]
     },

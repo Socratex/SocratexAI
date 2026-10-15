@@ -2,17 +2,12 @@
     "index": [
         "add_changelog_entry.py",
         "audit_docs.py",
-        "audit_docs.py",
         "audit_json_docs.py",
         "check_code_context_gate.py",
         "check_ai_compiled_context.py",
-        "check_ai_compiled_context.py",
-        "check_evals.py",
         "check_evals.py",
         "check_pipeline_featurelist_update.py",
         "check_pipeline_feature_contracts.py",
-        "check_pipeline_feature_contracts.py",
-        "check_sensitive_reference_leaks.py",
         "check_sensitive_reference_leaks.py",
         "check_python_syntax.py",
         "check_runtime.py",
@@ -24,13 +19,10 @@
         "check_utf8_writes.py",
         "legacy_commit_task_compatibility_wrapper.py",
         "compile_pipeline_context.py",
-        "compile_pipeline_context.py",
         "generate_installed_agent_instructions.py",
         "console_summary.py",
         "context_tags.py",
-        "context_tags.py",
         "detect_project_stack.py",
-        "build_document_cache.py",
         "build_document_cache.py",
         "document_item_edit_engine.py",
         "bulk_insert_document_items.py",
@@ -47,26 +39,15 @@
         "json_wrapper_entrypoints.py",
         "smoke_json_tools.py",
         "json_refresh_index.py",
-        "json_refresh_index.py",
-        "json_migrate_content.py",
         "json_migrate_content.py",
         "json_node_edit.py",
-        "json_node_edit.py",
-        "json_read.py",
         "json_read.py",
         "json_item_insert.py",
-        "json_item_insert.py",
-        "json_item_set.py",
         "json_item_set.py",
         "json_item_move.py",
-        "json_item_move.py",
-        "json_item_delete.py",
         "json_item_delete.py",
         "json_line_insert.py",
-        "json_line_insert.py",
         "json_line_set.py",
-        "json_line_set.py",
-        "json_line_move.py",
         "json_line_move.py",
         "run_document_post_edit_checks.py",
         "read_document_item.py",
@@ -79,10 +60,7 @@
         "check_toolchain_health.py",
         "finalize_task_check_commit_push.py",
         "end_prompt_snapshot.py",
-        "end_prompt_snapshot.py",
         "finalize_changed_files_commit_push.py",
-        "finalize_changed_files_commit_push.py",
-        "run_final_task_checks.py",
         "run_final_task_checks.py",
         "shared_script_parity.py",
         "generate_embedded_config_payload.py",
@@ -91,53 +69,32 @@
         "init_task_work.py",
         "grouped_task_handoff.py",
         "Initialize-SocratexPipeline.py",
-        "Initialize-SocratexPipeline.py",
-        "knowledge_check.py",
         "knowledge_check.py",
         "knowledge_code_context.py",
-        "knowledge_code_context.py",
-        "knowledge_compile.py",
         "knowledge_compile.py",
         "knowledge_delete.py",
-        "knowledge_delete.py",
-        "knowledge_file_check.py",
         "knowledge_file_check.py",
         "knowledge_file_compile.py",
-        "knowledge_file_compile.py",
-        "knowledge_file_delete.py",
         "knowledge_file_delete.py",
         "knowledge_file_query.py",
-        "knowledge_file_query.py",
-        "knowledge_file_rename.py",
         "knowledge_file_rename.py",
         "knowledge_file_select.py",
-        "knowledge_file_select.py",
-        "knowledge_file_upsert.py",
         "knowledge_file_upsert.py",
         "knowledge_index.py",
         "knowledge_tier_report.py",
-        "knowledge_tier_report.py",
-        "knowledge_tier_check.py",
         "knowledge_tier_check.py",
         "knowledge_query.py",
-        "knowledge_query.py",
-        "knowledge_rename.py",
         "knowledge_rename.py",
         "knowledge_select.py",
-        "knowledge_select.py",
-        "knowledge_upsert.py",
         "knowledge_upsert.py",
         "learn_pipeline_features.py",
         "log_summary.py",
         "migrate_ai_pipeline.py",
         "normalize_documents.bat",
         "normalize_json_files.py",
-        "normalize_json_files.py",
         "normalize_markdown_emoji.py",
         "normalize_text_files.py",
-        "normalize_text_files.py",
         "open_pipeline_learning_issue.py",
-        "pipeline_bootstrap_index.py",
         "pipeline_bootstrap_index.py",
         "chain_runner.py",
         "child_sync_smoke.py",
@@ -146,49 +103,36 @@
         "helper_refactor_smoke.py",
         "no_legacy_shell_verification.py",
         "pipeline_sweep.py",
-        "pipeline_sweep.py",
         "source_finalization_precheck.py",
         "resolve_tool_runtime.py",
         "resolve_workspace_root.py",
         "rebuild_ai_compiled_context.py",
-        "rebuild_ai_compiled_context.py",
         "reinitialize_pipeline.py",
         "remove_pipeline.py",
-        "repair_mojibake.py",
         "repair_mojibake.py",
         "report_pipeline_learning.py",
         "run_quality_fix.py",
         "run_quality_gate.py",
-        "run_quality_gate.py",
-        "run_quality_gate_contract.py",
         "run_quality_gate_contract.py",
         "set_directives.py",
         "sync_pipeline_featurelist.py",
-        "sync_pipeline_featurelist.py",
-        "task_snapshot.py",
         "task_snapshot.py",
         "task_flow_audit.py",
-        "task_flow_audit.py",
         "update_code_line_index.py",
-        "update_code_line_index.py",
-        "update_pipeline_from_link.py",
         "update_pipeline_from_link.py",
         "upgrade_from_reference_project.py",
         "utf8_file_helpers.py",
-        "utf8_file_helpers.py",
         "run_interactive_setup.py",
         "write_utf8_file.py",
-        "write_utf8_file.py",
         "sync_managed_pipeline_package.py",
-        "sync_managed_pipeline_package.py",
-        "read_compiled_context.py",
         "read_compiled_context.py",
         "tool_error_log.py",
         "tool_handler.py",
         "project_design_context.py",
         "check_project_design_context_gate.py",
         "gpt_shared_conversation_extract.py",
-        "gpt_conversation_archive.py"
+        "gpt_conversation_archive.py",
+        "smoke_scoped_finalizer.py"
     ],
     "content": {
         "add_changelog_entry.py": {
@@ -926,6 +870,20 @@
                 "json"
             ]
         },
+        "json_wrapper_entrypoints.py": {
+            "path": "tools/json/json_wrapper_entrypoints.py",
+            "category": "json",
+            "description": "Shared Python implementation for native JSON wrapper entrypoints.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Internal module imported by json_*.py wrappers; use the wrapper scripts directly."
+            },
+            "output": {
+                "success": "Routes wrapper arguments to json_list_doc.py with Python-only tooling.",
+                "failure": "Raises or exits nonzero when wrapper arguments or JSON document operations fail."
+            }
+        },
         "smoke_json_tools.py": {
             "path": "tools/json/smoke_json_tools.py",
             "description": "Smoke-test portable JSON tooling operations on temporary fixtures: read-node, set-node, insert-node-line, move-node-line, refresh-index, and migrate-content.",
@@ -1421,9 +1379,10 @@
                     "-NoAudit",
                     "-AllowPreStaged",
                     "-RequireTaskFlowEvidence",
-                    "-TaskFlowEvidencePath"
+                    "-TaskFlowEvidencePath",
+                    "--paths"
                 ],
-                "rule": "Use for normal task closure when changed files should be committed and pushed. It delegates to finalize_changed_files_commit_push.py with quality enabled. Pass -RequireTaskFlowEvidence with -TaskFlowEvidencePath to hard-gate closure on artifact evidence JSON."
+                "rule": "Use for normal task closure when changed files should be committed and pushed. It delegates to finalize_changed_files_commit_push.py with quality enabled. Pass -RequireTaskFlowEvidence with -TaskFlowEvidencePath to hard-gate closure on artifact evidence JSON. Pass --paths with explicit changed file paths for scoped closure. Only selected changed files and allowlisted generated context/cache/index files are staged; unrelated concurrent source edits remain outside the commit. Without --paths the existing whole-worktree behavior is preserved."
             },
             "output": {
                 "success": "Checks pass, intentional paths are committed, push runs unless disabled, and final repository state is reported.",
@@ -1469,7 +1428,7 @@
                     "--no-audit",
                     "--allow-pre-staged"
                 ],
-                "rule": "Use during Pass 0S to close source-pipeline tasks through Python final checks, git staging, commit, and optional push."
+                "rule": "Use during Pass 0S to close source-pipeline tasks through Python final checks, git staging, commit, and optional push. Pass --paths with explicit changed file paths for scoped closure. Only selected changed files and allowlisted generated context/cache/index files are staged; unrelated concurrent source edits remain outside the commit. Without --paths the existing whole-worktree behavior is preserved."
             },
             "output": {
                 "success": "Runs Python-backed final checks, stages git-derived non-local-artifact paths, commits, pushes unless disabled, and reports remaining status.",
@@ -2920,20 +2879,6 @@
                 "failure": "Throws when the gate is missing, stale relative to HEAD or MaxAgeMinutes, or does not cover the declared design-context reads."
             }
         },
-        "json_wrapper_entrypoints.py": {
-            "path": "tools/json/json_wrapper_entrypoints.py",
-            "category": "json",
-            "description": "Shared Python implementation for native JSON wrapper entrypoints.",
-            "input": {
-                "required": [],
-                "optional": [],
-                "rule": "Internal module imported by json_*.py wrappers; use the wrapper scripts directly."
-            },
-            "output": {
-                "success": "Routes wrapper arguments to json_list_doc.py with Python-only tooling.",
-                "failure": "Raises or exits nonzero when wrapper arguments or JSON document operations fail."
-            }
-        },
         "gpt_shared_conversation_extract.py": {
             "path": "tools/adapters/gpt_shared_conversation_extract.py",
             "category": "adapters",
@@ -2984,6 +2929,20 @@
             "output": {
                 "success": "For list/search, prints compact text or JSON candidates. For read, emits one clean conversation in Markdown or JSON. For index, writes reusable normalized archive JSON.",
                 "failure": "Exits nonzero when the source is missing, unsupported, or a selector matches no or multiple conversations."
+            }
+        },
+        "smoke_scoped_finalizer.py": {
+            "path": "tools/repo/smoke_scoped_finalizer.py",
+            "category": "repo",
+            "description": "Verify scoped finalization against concurrent edits in an isolated temporary Git repository.",
+            "input": {
+                "required": [],
+                "optional": [],
+                "rule": "Run python -B tools/repo/smoke_scoped_finalizer.py; never commits or pushes the calling repository."
+            },
+            "output": {
+                "success": "Selected/deleted files and generated cache are staged; concurrent source edits and logs are excluded; wrapper forwards --paths.",
+                "failure": "Nonzero on a scope isolation or forwarding regression."
             }
         }
     },
