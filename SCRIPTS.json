@@ -2643,7 +2643,7 @@
                     "--changed-only",
                     "--check"
                 ],
-                "rule": "Use during Pass 0S as the Python replacement for code line index refresh. Use --changed-only for normal task closure and --check to fail on stale indexes."
+                "rule": "Use during Pass 0S as the Python replacement for code line index refresh. Use --changed-only for normal task closure and --check to fail on stale indexes. Current output is not rewritten; changed output uses the shared UTF-8 writer."
             },
             "output": {
                 "success": "Writes or verifies the code line index and generated large-file document, then prints indexed file counts.",
@@ -2958,6 +2958,20 @@
             "output": {
                 "success": "Exit 0 when vanished discovered inputs warn and skip, while explicit missing sources, dependencies and malformed JSON fail.",
                 "failure": "Nonzero for a discovery race or error-propagation regression."
+            }
+        },
+        "test_code_line_index.py": {
+            "category": "codebase",
+            "description": "Regression tests for no-op and selective code line index writes.",
+            "path": "tools/codebase/test_code_line_index.py",
+            "output": {
+                "failure": "Nonzero on redundant writes or stale changed output.",
+                "success": "Exit 0 when unchanged refresh performs no writes and a source change refreshes only stale output."
+            },
+            "input": {
+                "required": [],
+                "rule": "Run python -B -m unittest discover -s tools/codebase -p test_code_line_index.py; fixtures use temporary directories.",
+                "optional": []
             }
         }
     },

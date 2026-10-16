@@ -5080,6 +5080,12 @@
           "title": "disappearing_knowledge_sources",
           "ref": "commands.disappearing_knowledge_sources",
           "status": ""
+        },
+        "code_line_index_noop": {
+          "path": "commands.code_line_index_noop",
+          "title": "code_line_index_noop",
+          "ref": "commands.code_line_index_noop",
+          "status": ""
         }
       }
     },
@@ -6035,6 +6041,12 @@
           "path": "content.smoke_disappearing_sources.py",
           "title": "",
           "ref": "content.smoke_disappearing_sources.py",
+          "status": ""
+        },
+        "test_code_line_index.py": {
+          "path": "content.test_code_line_index.py",
+          "title": "",
+          "ref": "content.test_code_line_index.py",
           "status": ""
         }
       }

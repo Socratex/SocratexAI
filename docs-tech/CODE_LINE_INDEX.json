@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-15T22:39:55+02:00",
+    "generatedAt": "2026-10-16T23:39:17+02:00",
     "threshold": 300,
     "files": [
         {
@@ -99,14 +99,14 @@
             "large": false
         },
         {
-            "path": "tools/adapters/gpt_conversation_core.py",
-            "lines": 240,
+            "path": "tools/codebase/update_code_line_index.py",
+            "lines": 241,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/codebase/update_code_line_index.py",
-            "lines": 235,
+            "path": "tools/adapters/gpt_conversation_core.py",
+            "lines": 240,
             "extension": ".py",
             "large": false
         },
@@ -689,6 +689,12 @@
         {
             "path": "tools/knowledge/knowledge_file_delete.py",
             "lines": 25,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/codebase/test_code_line_index.py",
+            "lines": 24,
             "extension": ".py",
             "large": false
         },

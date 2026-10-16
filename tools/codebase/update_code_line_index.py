@@ -13,6 +13,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from shared.repo_helpers import git_lines, normalize_repo_path, repo_root as shared_repo_root  # noqa: E402
+from text.utf8_file_helpers import write_utf8_file  # noqa: E402
 
 
 CODE_EXTENSIONS = {".gd", ".py", ".bat", ".cmd", ".sh", ".cs", ".js", ".ts"}
@@ -263,14 +264,20 @@ def main() -> int:
         print("OK: code line index is current.")
         return 0
 
+    if not needs_write:
+        print("OK: code line index is current; no files rewritten.")
+        return 0
+
     payload = compare_payload if current_index == compare_index_text else build_index_payload(records, args.large_file_threshold)
     index_text = json_text(payload)
     large_records = [record for record in payload["files"] if record["large"]]
     large_text = json_text(build_large_files_document(large_records, args.large_file_threshold, schema=args.large_files_schema, tool_display_path=args.tool_display_path))
     index_path.parent.mkdir(parents=True, exist_ok=True)
     large_path.parent.mkdir(parents=True, exist_ok=True)
-    index_path.write_text(index_text, encoding="utf-8", newline="\n")
-    large_path.write_text(large_text, encoding="utf-8", newline="\n")
+    if current_index != index_text:
+        write_utf8_file(index_path, index_text)
+    if current_large != large_text:
+        write_utf8_file(large_path, large_text)
     print(f"OK: indexed {len(payload['files'])} code file(s); {len(large_records)} above {args.large_file_threshold} lines.")
     return 0
 

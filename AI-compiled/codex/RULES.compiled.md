@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-6ef9fadceb99
+Generated: source-389c2590d287
 
 ## Source of Truth
 
@@ -1168,7 +1168,7 @@ Draft placeholder:
                 "known_failure_if_missing": "If 'utf8_and_text_normalization' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },
             "code_line_index": {
-                "summary": "Code Line Index capability is considered active only when its listed source artifacts, catalogs, update path, and verification remain present.",
+                "summary": "Code Line Index refreshes changed output only; an already current index is a successful read-only no-op.",
                 "required_paths": [
                     "pipeline_featurelist.json",
                     "context-docs/ENGINEERING.json",
@@ -1179,20 +1179,23 @@ Draft placeholder:
                     "docs-tech/CODE_LINE_INDEX.json",
                     "tools/codebase/update_code_line_index.py",
                     "tools/repo/check_pipeline_feature_contracts.py",
-                    "tools/documents/audit_docs.py"
+                    "tools/documents/audit_docs.py",
+                    "tools/codebase/test_code_line_index.py"
                 ],
                 "required_scripts": [
                     "knowledge_code_context.py",
                     "check_code_context_gate.py",
                     "update_code_line_index.py",
-                    "audit_docs.py"
+                    "audit_docs.py",
+                    "test_code_line_index.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "knowledge_code_context.py",
                         "check_code_context_gate.py",
                         "update_code_line_index.py",
-                        "audit_docs.py"
+                        "audit_docs.py",
+                        "test_code_line_index.py"
                     ]
                 },
                 "required_docs": [
@@ -1208,14 +1211,16 @@ Draft placeholder:
                     "Resolve update_code_line_index.py root from package markers so installed child packages do not accidentally index the child project git root.",
                     "Keep code context and line-index tools parameterized for child project root paths, required tag sets, generated document schema variants, and displayed wrapper paths instead of copying root-specific implementations.",
                     "Run the feature contract checker before promoting or publishing the update.",
-                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts."
+                    "Run managed package sync or reinitialization so child projects receive source-owned artifacts.",
+                    "Do not rewrite identical generated output; use the shared UTF-8 writer only for files whose contents changed."
                 ],
                 "verification_commands": [
                     "python3 -B tools/quality/check_python_syntax.py tools/codebase/update_code_line_index.py",
                     "python3 -B tools/codebase/update_code_line_index.py --check",
                     "python3 tools/repo/check_pipeline_feature_contracts.py --paths tools/codebase/update_code_line_index.py SCRIPTS.json QUALITY-GATE.json pipeline_featurelist.json",
                     "python3 -B tools/repo/check_pipeline_feature_contracts.py",
-                    "python3 -B tools/documents/audit_docs.py"
+                    "python3 -B tools/documents/audit_docs.py",
+                    "python -B -m unittest discover -s tools/codebase -p test_code_line_index.py"
                 ],
                 "known_failure_if_missing": "If 'code_line_index' is listed without these artifacts, source/child comparison may pass by feature id while the behavior, update path, or review workflow is absent."
             },

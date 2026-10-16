@@ -38,6 +38,10 @@
             "disappearing_knowledge_sources": {
                 "description": "Verify deleted discovered inputs cannot abort knowledge indexing while invalid explicit sources still fail.",
                 "command": "python -B tools/knowledge/smoke_disappearing_sources.py"
+            },
+            "code_line_index_noop": {
+                "description": "Verify code indexes skip unchanged output and still refresh changed source.",
+                "command": "python -B -m unittest discover -s tools/codebase -p test_code_line_index.py"
             }
         },
         "notes": [
