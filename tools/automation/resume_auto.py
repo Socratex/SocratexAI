@@ -79,6 +79,27 @@ def human_report(report: dict) -> str:
     return "\n".join(lines)
 
 
+def check_registered(registry: Registry, *, caller: str | None, endpoint: str | None,
+                     timeout: float, dry_run: bool, repo: str | None, thread_id: str | None) -> list[dict]:
+    with registry.transaction() as data:
+        entries = [dict(row) for row in data["threads"].values()
+                   if (repo is None or row["repo"] == project_path(repo))
+                   and (thread_id is None or row["thread_id"] == thread_id)]
+    results = []
+    for entry in entries:
+        reason = eligibility(entry, time.time())
+        if reason:
+            results.append({"thread_id": entry["thread_id"], "action": "skip", "reason": reason})
+            continue
+        # A standalone CMD has no caller environment. Use this exact registered
+        # grant as tool context; the destination is still checked independently.
+        with DesktopBridge(find_endpoint(endpoint), caller or entry["thread_id"], timeout) as bridge:
+            limits = bridge.call("get_usage_limits", {})
+            results.extend(sweep(registry, bridge, dry_run=dry_run, repo=repo,
+                                 thread_id=entry["thread_id"], account_limits=limits))
+    return results
+
+
 def main(argv: list[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -90,7 +111,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repo", help="Optional exact project filter; default scans all registered AUTO grants")
     parser.add_argument("--thread-id", help="Optional exact target filter; never selected by recency")
     parser.add_argument("--endpoint", help="Local desktop pipe/socket; default detects the running Windows app")
-    parser.add_argument("--caller-thread-id", help="Control chat identity, or saved setup; not the wake destination")
+    parser.add_argument("--caller-thread-id", help="Optional control chat override; defaults to each exact registered AUTO chat")
     parser.add_argument("--configure", action="store_true", help="Save the explicit control chat ID, without sending")
     parser.add_argument("--resolve-delivery", help="Exact pending delivery ID, after manually checking chat history")
     parser.add_argument("--confirmed-consumed-or-not-delivered", action="store_true",
@@ -119,11 +140,9 @@ def main(argv: list[str] | None = None) -> int:
             write_projection(config_path, json.dumps(config, ensure_ascii=False, indent=4) + "\n")
             print(json.dumps({"action": "configured", "path": str(config_path), "dispatch": False}))
             return 0
-        endpoint = find_endpoint(args.endpoint or config.get("endpoint"))
-        with DesktopBridge(endpoint, caller, args.timeout) as bridge:
-            sweep_started = True
-            limits = bridge.call("get_usage_limits", {})
-            results = sweep(registry, bridge, dry_run=args.dry_run, repo=args.repo, thread_id=args.thread_id, account_limits=limits)
+        sweep_started = True
+        results = check_registered(registry, caller=caller, endpoint=args.endpoint or config.get("endpoint"),
+                                   timeout=args.timeout, dry_run=args.dry_run, repo=args.repo, thread_id=args.thread_id)
         report = {"observed_at": time.time(), "dry_run": args.dry_run, "results": results}
         write_projection(registry.home / "last-recovery.json", json.dumps(report, ensure_ascii=False, indent=4) + "\n")
         print(human_report(report) if args.human else json.dumps(report, ensure_ascii=False, indent=4))

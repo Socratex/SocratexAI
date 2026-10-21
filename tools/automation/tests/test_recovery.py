@@ -7,13 +7,16 @@ import struct
 import tempfile
 import unittest
 import sys
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
+from unittest.mock import patch
 
 from tools.automation.controller import Registry, limit_availability
 from tools.automation.desktop_bridge import DesktopBridge
 from tools.automation.native import authorize, scheduler_request
 from tools.automation.recovery import record_delivery, recovery_record, reserve_wake
-from tools.automation.resume_auto import sweep
+from tools.automation.resume_auto import main, sweep
 from tools.text.utf8_file_helpers import write_utf8_file
 
 
@@ -205,6 +208,84 @@ class RecoveryTests(unittest.TestCase):
         entry = self.registry.start("new", str(self.root), "test", ["PLAN.json"], 3, "native")
         self.assertEqual("manual", entry["wake_transport"])
         self.assertEqual("manual_wake_only", scheduler_request(entry)["action"])
+
+    def run_without_caller_setup(self, *arguments, available=True, busy=False):
+        from tools.automation import resume_auto
+
+        callers, sent = [], []
+        observe = self.observe(observed_at=__import__("time").time(),
+                               active_project_threads=["busy"] if busy else [])
+
+        class Bridge:
+            def __init__(self, endpoint, caller, timeout):
+                callers.append(caller)
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *_):
+                pass
+
+            def call(self, tool, args):
+                return {"ordinaryUsageAllowed": available,
+                        "rateLimits": {"primary": {"usedPercent": 10}}}
+
+            def observation(self, entry):
+                if not available:
+                    raise AssertionError("Denied account must not scan projects")
+                return {**observe, "thread_id": entry["thread_id"], "repo": entry["repo"]}
+
+            def send(self, thread):
+                sent.append(thread)
+                return {"threadId": thread}
+
+        self.assertFalse((self.registry.home / "recovery-client.json").exists())
+        with patch.dict(os.environ, {"CODEX_THREAD_ID": ""}), \
+                patch.object(resume_auto, "find_endpoint", return_value="local-test"), \
+                patch.object(resume_auto, "DesktopBridge", Bridge), redirect_stdout(StringIO()) as output:
+            code = main(["--state-dir", str(self.registry.home), *arguments])
+        return code, json.loads(output.getvalue()), callers, sent
+
+    def test_standalone_without_config_or_codex_environment_sends_once_to_registered_id(self):
+        code, report, callers, sent = self.run_without_caller_setup()
+        self.assertEqual(0, code)
+        self.assertEqual(["A"], callers)
+        self.assertEqual(["A"], sent)
+        self.assertEqual("sent", report["results"][0]["action"])
+        _, report, callers, sent = self.run_without_caller_setup()
+        self.assertEqual("delivery_pending", report["results"][0]["reason"])
+        self.assertEqual([], callers)
+        self.assertEqual([], sent)
+
+    def test_standalone_binds_each_registered_target_in_its_own_project(self):
+        folder = self.root / "other"
+        write_utf8_file(folder / "PLAN.json", "{}")
+        self.registry.start("B", str(folder), "test", ["PLAN.json"], 3, "native")
+        _, _, callers, sent = self.run_without_caller_setup()
+        self.assertEqual(["A", "B"], callers)
+        self.assertEqual(["A", "B"], sent)
+
+    def test_standalone_respects_limit_and_project_busy_without_setup(self):
+        for available, busy, reason in ((False, False, "account_limit"), (True, True, "project_busy")):
+            self.change(next_check_at=0)
+            _, report, _, sent = self.run_without_caller_setup(available=available, busy=busy)
+            self.assertEqual(reason, report["results"][0]["reason"])
+            self.assertEqual([], sent)
+
+    def test_standalone_empty_or_stopped_registry_does_not_need_app_or_caller(self):
+        self.registry.stop("A")
+        _, report, callers, sent = self.run_without_caller_setup()
+        self.assertEqual("inactive", report["results"][0]["reason"])
+        self.assertEqual([], callers)
+        self.assertEqual([], sent)
+        _, report, callers, sent = self.run_without_caller_setup("--thread-id", "not-registered")
+        self.assertEqual([], report["results"])
+        self.assertEqual([], callers)
+
+    def test_standalone_explicit_control_override_preserves_exact_wake_destination(self):
+        _, _, callers, sent = self.run_without_caller_setup("--caller-thread-id", "controller")
+        self.assertEqual(["controller"], callers)
+        self.assertEqual(["A"], sent)
 
     def test_stop_between_observation_and_claim_prevents_send(self):
         registry = self.registry

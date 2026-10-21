@@ -103,7 +103,7 @@ class LocalChannel:
 class DesktopBridge:
     def __init__(self, endpoint: str, caller_thread_id: str, timeout: float = 20):
         if not caller_thread_id:
-            raise ValueError("An explicit caller chat ID is required; run --configure from Codex first")
+            raise ValueError("A non-empty registered or explicit caller chat ID is required")
         self.endpoint = endpoint
         self.caller = caller_thread_id
         self.timeout = timeout

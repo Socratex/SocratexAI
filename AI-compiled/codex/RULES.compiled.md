@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-e53b0f525242
+Generated: source-1f4d3e3327f4
 
 ## Source of Truth
 
@@ -7932,7 +7932,8 @@ Draft placeholder:
                 ],
                 "known_failure_if_missing": "External ticks can restart terminal grants, duplicate prompts after crashes or collide with active project work.",
                 "finalizer_boundary": "Directory scopes expand changed descendants before staging; temporary current_task is excluded, while exact tracked-artifact deletion may be explicitly finalized. Regression: smoke_scoped_finalizer.py.",
-                "console_scheduler": "One user-facing AUTO scheduler.bat directly runs the internal Python checker; no AUTO resume.bat wrapper. Foreground CMD owns600s waiting; closing console stops future checks."
+                "console_scheduler": "One user-facing AUTO scheduler.bat directly runs the internal Python checker; no AUTO resume.bat wrapper. Foreground CMD owns600s waiting; closing console stops future checks.",
+                "standalone_identity": "No configure/environment prerequisite. Each eligible registered grant supplies its exact caller context unless explicitly overridden; destination always stays the exact registered target. Regression covers absent setup, multiple projects, limits, project busy and duplicate suppression."
             }
         }
     },

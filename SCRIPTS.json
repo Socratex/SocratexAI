@@ -2984,7 +2984,7 @@
                     "--confirmed-consumed-or-not-delivered",
                     "--human"
                 ],
-                "rule": "Read AUTO-PILOT manual_recovery. Default sends only eligible existing AUTO. --dry-run never reserves/sends. --configure saves explicit control chat identity. Never install a schedule or restart terminal grants. Uncertain deliveries stay blocked until native acknowledgement or explicit operator reconciliation."
+                "rule": "Read AUTO-PILOT manual_recovery. Standalone CMD needs no setup: use each exact registered AUTO ID as caller context unless explicitly overridden. --configure only saves an optional control identity. --dry-run never reserves/sends. Preserve account/project/STOP gates and durable uncertain delivery suppression."
             },
             "output": {
                 "success": "JSON sent/skip/would_send rows and last-recovery.json; exit0.",

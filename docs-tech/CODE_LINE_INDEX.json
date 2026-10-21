@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-21T19:04:47+02:00",
+    "generatedAt": "2026-10-21T19:16:25+02:00",
     "threshold": 300,
     "files": [
         {
@@ -51,6 +51,12 @@
             "large": true
         },
         {
+            "path": "tools/automation/tests/test_recovery.py",
+            "lines": 327,
+            "extension": ".py",
+            "large": true
+        },
+        {
             "path": "tools/pipeline/Initialize-SocratexPipeline.py",
             "lines": 304,
             "extension": ".py",
@@ -65,12 +71,6 @@
         {
             "path": "tools/pipeline/sync_managed_pipeline_package.py",
             "lines": 294,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/tests/test_recovery.py",
-            "lines": 260,
             "extension": ".py",
             "large": false
         },
@@ -231,6 +231,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/resume_auto.py",
+            "lines": 143,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/pipeline/reinitialize_pipeline.py",
             "lines": 137,
             "extension": ".py",
@@ -257,12 +263,6 @@
         {
             "path": "tools/repo/repo_tool_helpers.py",
             "lines": 130,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/resume_auto.py",
-            "lines": 126,
             "extension": ".py",
             "large": false
         },
