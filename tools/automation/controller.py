@@ -413,7 +413,7 @@ def limit_availability(limits: dict | None, now: float) -> tuple[bool, float]:
     if not isinstance(limits, dict):
         raise ValueError("Missing limit information; availability is unknown")
     if limits.get("ordinaryUsageAllowed") is False:
-        return False, now + 300
+        return False, max(now + 300, (limit_reset_at(limits) or 0) + 60)
     buckets = limits.get("rateLimitsByLimitId")
     if buckets is None:
         legacy = limits.get("rateLimits")
@@ -453,6 +453,25 @@ def limit_availability(limits: dict | None, now: float) -> tuple[bool, float]:
     if not exhausted:
         return True, 0
     return False, max([now + (300 if unknown_reset else 60), *resets])
+
+
+def limit_reset_at(limits: dict) -> float | None:
+    buckets = limits.get("rateLimitsByLimitId") or {"legacy": limits.get("rateLimits")}
+    resets = []
+    for bucket in buckets.values() if isinstance(buckets, dict) else []:
+        if not isinstance(bucket, dict):
+            continue
+        for key in ("primary", "secondary"):
+            window = bucket.get(key)
+            if isinstance(window, dict) and window.get("usedPercent") == 100 and window.get("resetsAt") is not None:
+                resets.append(number(window["resetsAt"], "resetsAt"))
+    return max(resets) if resets else None
+
+
+def remember_limit(entry: dict, limits: dict, now: float, retry_at: float) -> dict:
+    waiting = {"active": True, "reset_at": limit_reset_at(limits), "retry_at": retry_at, "observed_at": now}
+    entry.update(state="waiting_limit", next_check_at=min(now + 600, retry_at), limit_wait=waiting)
+    return waiting
 
 
 def validate_needs(needs: object) -> list[dict]:

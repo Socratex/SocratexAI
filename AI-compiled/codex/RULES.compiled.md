@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-1f4d3e3327f4
+Generated: source-01c85de2081a
 
 ## Source of Truth
 
@@ -7902,18 +7902,25 @@ Draft placeholder:
                     "tools/automation/__init__.py",
                     "tools/automation/codex_probe.py",
                     "tools/automation/finalizer.py",
-                    "templates/code/AUTO scheduler.bat"
+                    "templates/code/AUTO scheduler.bat",
+                    "tools/automation/console_scheduler.py",
+                    "tools/automation/watchdog_status.py",
+                    "tools/automation/tests/test_watchdog.py",
+                    "tools/automation/tests/test_native.py",
+                    "tools/automation/tests/test_console_scheduler.py"
                 ],
                 "required_scripts": [
                     "auto.py",
                     "resume_auto.py",
-                    "sync_auto.py"
+                    "sync_auto.py",
+                    "console_scheduler.py"
                 ],
                 "required_catalog_entries": {
                     "SCRIPTS": [
                         "auto.py",
                         "resume_auto.py",
-                        "sync_auto.py"
+                        "sync_auto.py",
+                        "console_scheduler.py"
                     ]
                 },
                 "required_docs": [
@@ -7933,7 +7940,8 @@ Draft placeholder:
                 "known_failure_if_missing": "External ticks can restart terminal grants, duplicate prompts after crashes or collide with active project work.",
                 "finalizer_boundary": "Directory scopes expand changed descendants before staging; temporary current_task is excluded, while exact tracked-artifact deletion may be explicitly finalized. Regression: smoke_scoped_finalizer.py.",
                 "console_scheduler": "One user-facing AUTO scheduler.bat directly runs the internal Python checker; no AUTO resume.bat wrapper. Foreground CMD owns600s waiting; closing console stops future checks.",
-                "standalone_identity": "No configure/environment prerequisite. Each eligible registered grant supplies its exact caller context unless explicitly overridden; destination always stays the exact registered target. Regression covers absent setup, multiple projects, limits, project busy and duplicate suppression."
+                "standalone_identity": "No configure/environment prerequisite. Each eligible registered grant supplies its exact caller context unless explicitly overridden; destination always stays the exact registered target. Regression covers absent setup, multiple projects, limits, project busy and duplicate suppression.",
+                "watchdog_policy": "Manual AUTO self-continues immediately in the current chat/turn after a successful finalizer returns continuation.action=continue_current_turn. Refresh source task projection and authoritative native snapshot, then native-begin for each unit with current turn ID + :auto: + completed. Retry the same unit with the same wake ID. STOP, needs_input, batch/queue completion, account limits and project locks stop chaining. No messages to self and no native heartbeat in manual mode. START opens/reuses one visible CMD watchdog; closing CMD stops future recovery checks only. Foreground CMD checks every300s, or600s while the checker reports an account limit (exit10). Python always performs one sweep and exits. Limit data is queried again at most every600s, even when a later reset is known; the clock alone never authorizes sending. Preserve native project/limit checks and OS-locked outbox. Unknown delivery is never automatically retried. Console prints only changed status/error/reset time or a new successful send. Identical checks, countdown-only changes and initially inactive historical grants stay quiet. watchdog-status.json stores fingerprints, last-recovery.json is an overwritten snapshot. On entering a limit show its known local reset date/time and remaining minutes; unknown reset stays explicit. SOCRATEX_AUTO_TIMEZONE defaults to Europe/Warsaw, with OS local fallback when zone data is unavailable. Ordinary recovery sends exactly CONTINUE-AUTO to the registered ID. After a previously observed limit and a fresh available account snapshot, send exactly CONTINUE-AUTO (limit reached previously, continue). Persist that prompt in the prepared outbox. The suffix is transport metadata, never prompt_context or a scope change, and does not bypass native-begin. Terminal/input-blocked tasks remain asleep."
             }
         }
     },

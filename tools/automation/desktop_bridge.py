@@ -196,5 +196,7 @@ class DesktopBridge:
         limits = self.call("get_usage_limits", {})
         return snapshot(entry, recent, limits, time.time(), 50)
 
-    def send(self, thread_id: str) -> dict:
-        return self.call("send_message_to_thread", {"threadId": thread_id, "hostId": "local", "prompt": "CONTINUE-AUTO"})
+    def send(self, thread_id: str, prompt: str = "CONTINUE-AUTO") -> dict:
+        if prompt not in {"CONTINUE-AUTO", "CONTINUE-AUTO (limit reached previously, continue)"}:
+            raise ValueError("Unsupported AUTO recovery prompt")
+        return self.call("send_message_to_thread", {"threadId": thread_id, "hostId": "local", "prompt": prompt})

@@ -96,7 +96,10 @@ def execute(args: argparse.Namespace) -> object:
     if not args.thread_id or not args.thread_id.strip():
         raise ValueError("--thread-id is required when CODEX_THREAD_ID is unavailable; never use the latest chat")
     if command == "start":
-        return registry.start(args.thread_id, args.repo, args.scope, args.sources, args.batch_size, args.mode, args.prompt_context, args.wake_transport)
+        from automation.console_scheduler import start_for_grant
+        entry = registry.start(args.thread_id, args.repo, args.scope, args.sources, args.batch_size, args.mode, args.prompt_context, args.wake_transport)
+        entry["console_scheduler"] = start_for_grant(entry, registry.home, Path(__file__).resolve().parents[2] / "AUTO scheduler.bat")
+        return entry
     if command == "status":
         return registry.get(args.thread_id)
     if command == "use-manual-transport":

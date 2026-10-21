@@ -13,7 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from automation.controller import Registry, current_run, limit_availability, project_path  # noqa: E402
+from automation.controller import Registry, current_run, limit_availability, limit_reset_at, project_path, remember_limit  # noqa: E402
 from automation.desktop_bridge import DesktopBridge, find_endpoint  # noqa: E402
 from automation.files import write_projection  # noqa: E402
 from automation.recovery import eligibility, record_delivery, reserve_wake, resolve_delivery  # noqa: E402
@@ -36,8 +36,9 @@ def sweep(registry: Registry, bridge, *, dry_run: bool = False, repo: str | None
         if not available:
             if not dry_run:
                 with registry.transaction() as data:
-                    current_run(data, entry["thread_id"], entry["run_id"])["next_check_at"] = retry_at
-            results.append({"thread_id": entry["thread_id"], "action": "skip", "reason": "account_limit", "next_check_at": retry_at})
+                    remember_limit(current_run(data, entry["thread_id"], entry["run_id"]), account_limits, time.time(), retry_at)
+            results.append({"thread_id": entry["thread_id"], "action": "skip", "reason": "account_limit",
+                            "next_check_at": retry_at, "limit_reset_at": limit_reset_at(account_limits)})
             continue
         try:
             observation = bridge.observation(entry)
@@ -46,7 +47,7 @@ def sweep(registry: Registry, bridge, *, dry_run: bool = False, repo: str | None
                 results.append(reservation)
                 continue
             try:
-                response = bridge.send(entry["thread_id"])
+                response = bridge.send(entry["thread_id"], reservation["prompt"])
                 # Tool-level success without the expected recipient is ambiguous.
                 if response.get("threadId") != entry["thread_id"]:
                     raise ValueError("Desktop did not confirm the exact destination threadId")
@@ -89,7 +90,12 @@ def check_registered(registry: Registry, *, caller: str | None, endpoint: str | 
     for entry in entries:
         reason = eligibility(entry, time.time())
         if reason:
-            results.append({"thread_id": entry["thread_id"], "action": "skip", "reason": reason})
+            waiting = entry.get("limit_wait") or {}
+            if reason == "backoff" and (waiting.get("active") or entry["state"] == "waiting_limit"):
+                results.append({"thread_id": entry["thread_id"], "action": "skip", "reason": "account_limit",
+                                "limit_reset_at": waiting.get("reset_at"), "next_check_at": entry["next_check_at"]})
+            else:
+                results.append({"thread_id": entry["thread_id"], "action": "skip", "reason": reason})
             continue
         # A standalone CMD has no caller environment. Use this exact registered
         # grant as tool context; the destination is still checked independently.
@@ -108,6 +114,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--state-dir", type=Path)
     parser.add_argument("--dry-run", action="store_true", help="Observe and report; never reserve or send a prompt")
     parser.add_argument("--human", action="store_true", help="Readable console output instead of JSON")
+    parser.add_argument("--watchdog", action="store_true", help="Print only status changes; exit10 while account limited; still one sweep")
     parser.add_argument("--repo", help="Optional exact project filter; default scans all registered AUTO grants")
     parser.add_argument("--thread-id", help="Optional exact target filter; never selected by recency")
     parser.add_argument("--endpoint", help="Local desktop pipe/socket; default detects the running Windows app")
@@ -119,10 +126,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--timeout", type=float, default=20)
     args = parser.parse_args(argv)
     sweep_started = False
+    registry = Registry(args.state_dir)
     try:
         if not 0 < args.timeout <= 60:
             raise ValueError("--timeout must be in (0, 60] seconds")
-        registry = Registry(args.state_dir)
         if args.resolve_delivery:
             if not args.thread_id or not args.confirmed_consumed_or_not_delivered or args.dry_run or args.configure:
                 raise ValueError("Resolution requires --thread-id and --confirmed-consumed-or-not-delivered, without dry-run/configure")
@@ -145,11 +152,25 @@ def main(argv: list[str] | None = None) -> int:
                                    timeout=args.timeout, dry_run=args.dry_run, repo=args.repo, thread_id=args.thread_id)
         report = {"observed_at": time.time(), "dry_run": args.dry_run, "results": results}
         write_projection(registry.home / "last-recovery.json", json.dumps(report, ensure_ascii=False, indent=4) + "\n")
-        print(human_report(report) if args.human else json.dumps(report, ensure_ascii=False, indent=4))
-        return 2 if any(row["action"] in {"blocked", "delivery_unknown"} for row in results) else 0
+        if args.watchdog:
+            from automation.watchdog_status import print_changes
+            print_changes(registry.home, report)
+        else:
+            print(human_report(report) if args.human else json.dumps(report, ensure_ascii=False, indent=4))
+        if any(row["action"] in {"blocked", "delivery_unknown"} for row in results):
+            return 2
+        return 10 if args.watchdog and any(row.get("reason") == "account_limit" for row in results) else 0
     except (OSError, ValueError, KeyError, RuntimeError, TimeoutError) as exc:
-        print(json.dumps({"ok": False, "dispatch_may_have_occurred": sweep_started and not args.dry_run,
-                          "error": str(exc)}, ensure_ascii=False), file=sys.stderr)
+        error = {"ok": False, "dispatch_may_have_occurred": sweep_started and not args.dry_run, "error": str(exc)}
+        if args.watchdog:
+            from automation.watchdog_status import print_changes
+            try:
+                print_changes(registry.home, {"observed_at": time.time(), "results": [
+                    {"thread_id": "scheduler", "action": "blocked", "error": str(exc)}]})
+            except (OSError, ValueError) as logging_error:
+                print(json.dumps({**error, "status_log_error": str(logging_error)}), file=sys.stderr)
+        else:
+            print(json.dumps(error, ensure_ascii=False), file=sys.stderr)
         return 2
 
 

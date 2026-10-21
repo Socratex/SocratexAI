@@ -197,7 +197,7 @@ class RecoveryTests(unittest.TestCase):
             def observation(self, entry):
                 raise AssertionError("Account denial must be handled before project scans")
 
-            def send(self, thread):
+            def send(self, thread, prompt="CONTINUE-AUTO"):
                 raise AssertionError("Account denial must prevent sending")
 
         result = sweep(self.registry, Bridge(), account_limits={"ordinaryUsageAllowed": False})
@@ -235,7 +235,7 @@ class RecoveryTests(unittest.TestCase):
                     raise AssertionError("Denied account must not scan projects")
                 return {**observe, "thread_id": entry["thread_id"], "repo": entry["repo"]}
 
-            def send(self, thread):
+            def send(self, thread, prompt="CONTINUE-AUTO"):
                 sent.append(thread)
                 return {"threadId": thread}
 
@@ -296,7 +296,7 @@ class RecoveryTests(unittest.TestCase):
                 registry.stop("A")
                 return observation
 
-            def send(self, thread):
+            def send(self, thread, prompt="CONTINUE-AUTO"):
                 raise AssertionError("STOP was ignored")
 
         self.assertEqual("inactive", sweep(self.registry, Bridge())[0]["reason"])
@@ -309,7 +309,7 @@ class RecoveryTests(unittest.TestCase):
             def observation(self, entry):
                 return observation
 
-            def send(self, thread):
+            def send(self, thread, prompt="CONTINUE-AUTO"):
                 sent.append(thread)
                 return {"threadId": thread}
 
@@ -324,7 +324,7 @@ class RecoveryTests(unittest.TestCase):
             def observation(self, entry):
                 return observation
 
-            def send(self, thread):
+            def send(self, thread, prompt="CONTINUE-AUTO"):
                 return {"threadId": "different"}
 
         self.assertEqual("delivery_unknown", sweep(self.registry, Bridge())[0]["action"])
@@ -385,12 +385,15 @@ class ConsoleSchedulerTests(unittest.TestCase):
             result = subprocess.run(f'cmd /d /s /c ""{launcher}" --once"', cwd=root.parent,
                                     capture_output=True, timeout=5, env=environment)
             self.assertEqual(37, result.returncode, (result.stdout, result.stderr))
-            self.assertEqual(["--human"], (root / "count.txt").read_text().splitlines())
+            self.assertEqual(["--watchdog"], (root / "count.txt").read_text().splitlines())
 
     def test_scheduler_uses_foreground_call_and_interruptible_console_wait(self):
         text = (Path(__file__).resolve().parents[3] / "AUTO scheduler.bat").read_text(encoding="utf-8")
-        self.assertIn('"%AUTO_PYTHON%" -B "%AUTO_SCRIPT%" --human', text)
-        self.assertIn('/t 600 /nobreak', text)
+        self.assertIn('"%AUTO_PYTHON%" -B "%AUTO_SCRIPT%" --watchdog', text)
+        self.assertIn('/t %AUTO_WAIT% /nobreak', text)
+        self.assertIn('set "AUTO_WAIT=300"', text)
+        self.assertIn('if "%AUTO_SCHEDULER_RESULT%"=="10" set "AUTO_WAIT=600"', text)
+        self.assertNotIn("Nastepne sprawdzenie", text)
         self.assertNotIn("start ", text.casefold())
         self.assertNotIn("powershell", text.casefold())
         self.assertIn("if errorlevel 1 exit /b 2", text)

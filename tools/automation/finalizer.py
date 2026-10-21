@@ -54,6 +54,12 @@ def handoff_result(registry: Registry, thread_id: str, run_id: str, result: dict
         located = paths(registry.home, thread_id, run_id)
         result.update(files=located, state=entry["state"], completed=entry["completed"],
                       summary_markdown=summary(progress_record(entry)))
+        if (entry["mode"] == "native" and entry.get("wake_transport") == "manual"
+                and entry["enabled"] and entry["state"] == "waiting_turn_end"
+                and result["action"] == "checkpoint_saved"):
+            result["continuation"] = {"action": "continue_current_turn", "thread_id": thread_id,
+                                      "run_id": run_id, "wake_id_suffix": f":auto:{entry['completed']}",
+                                      "requires": "fresh native snapshot, task projection and native-begin"}
         # Desktop tool calls belong to the agent; Python returns the concrete next action.
         if entry["mode"] == "native" and entry.get("scheduler_id") and entry.get("wake_transport") != "manual":
             if not entry["enabled"] or entry["state"] == "waiting_turn_end":

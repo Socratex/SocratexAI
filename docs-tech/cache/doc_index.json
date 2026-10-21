@@ -718,6 +718,30 @@
           "title": "",
           "ref": "content.console_scheduler",
           "status": ""
+        },
+        "self_continuation": {
+          "path": "content.self_continuation",
+          "title": "self_continuation",
+          "ref": "content.self_continuation",
+          "status": ""
+        },
+        "watchdog_cadence": {
+          "path": "content.watchdog_cadence",
+          "title": "watchdog_cadence",
+          "ref": "content.watchdog_cadence",
+          "status": ""
+        },
+        "status_changes": {
+          "path": "content.status_changes",
+          "title": "status_changes",
+          "ref": "content.status_changes",
+          "status": ""
+        },
+        "recovery_prompt": {
+          "path": "content.recovery_prompt",
+          "title": "recovery_prompt",
+          "ref": "content.recovery_prompt",
+          "status": ""
         }
       }
     },
@@ -6240,6 +6264,12 @@
           "path": "content.AUTO scheduler.bat",
           "title": "",
           "ref": "content.AUTO scheduler.bat",
+          "status": ""
+        },
+        "console_scheduler.py": {
+          "path": "content.console_scheduler.py",
+          "title": "",
+          "ref": "content.console_scheduler.py",
           "status": ""
         }
       }

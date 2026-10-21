@@ -9,7 +9,7 @@ from __future__ import annotations
 import time
 import uuid
 
-from .controller import TERMINAL_STATES, current_run, limit_availability, project_path
+from .controller import TERMINAL_STATES, current_run, limit_availability, project_path, remember_limit
 
 RECOVERABLE_STATES = {"registered", "waiting_turn_end", "waiting_limit", "executing"}
 PENDING_DELIVERY = {"prepared", "sent", "unknown"}
@@ -28,6 +28,7 @@ def recovery_record(entry: dict) -> dict:
             "queue_finished": state == "queue_complete", "batch_finished": state == "batch_complete",
             "stopped": state == "stopped", "needs_input": state == "needs_input" or bool(entry.get("needs")),
             "active": entry.get("enabled") is True and state not in TERMINAL_STATES,
+            "limit_wait": entry.get("limit_wait"),
             "work_reserved": bool(entry.get("inflight")), "next_check_at": entry.get("next_check_at", 0),
             "dispatch": entry.get("wake_dispatch")}
 
@@ -51,6 +52,8 @@ def acknowledge(entry: dict, now: float) -> None:
     delivery = entry.get("wake_dispatch")
     if delivery and delivery.get("status") in PENDING_DELIVERY:
         delivery.update(status="acknowledged", acknowledged_at=now)
+        if entry.get("limit_wait"):
+            entry["limit_wait"]["active"] = False
 
 
 def reserve_wake(registry, thread_id: str, run_id: str, observation: dict,
@@ -80,14 +83,17 @@ def reserve_wake(registry, thread_id: str, run_id: str, observation: dict,
         available, retry_at = limit_availability(observation.get("limits"), now)
         if not available:
             if not dry_run:
-                entry.update(state="waiting_limit", next_check_at=retry_at)
-            return {"action": "skip", "reason": "account_limit", "next_check_at": retry_at, "thread_id": thread_id}
+                remember_limit(entry, observation["limits"], now, retry_at)
+            from .controller import limit_reset_at
+            return {"action": "skip", "reason": "account_limit", "next_check_at": retry_at,
+                    "limit_reset_at": limit_reset_at(observation["limits"]), "thread_id": thread_id}
+        after_limit = (entry.get("limit_wait") or {}).get("active") or entry["state"] == "waiting_limit"
         result = {"action": "would_send" if dry_run else "prepared", "thread_id": thread_id,
-                  "run_id": run_id, "prompt": "CONTINUE-AUTO"}
+                  "run_id": run_id, "prompt": "CONTINUE-AUTO (limit reached previously, continue)" if after_limit else "CONTINUE-AUTO"}
         if not dry_run:
             result["delivery_id"] = str(uuid.uuid4())
             entry["wake_dispatch"] = {"id": result["delivery_id"], "run_id": run_id,
-                                      "status": "prepared", "prepared_at": now}
+                                      "status": "prepared", "prepared_at": now, "prompt": result["prompt"]}
         return result
 
 

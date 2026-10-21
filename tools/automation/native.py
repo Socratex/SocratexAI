@@ -97,7 +97,8 @@ def authorize(registry: Registry, thread_id: str, run_id: str, scheduler_id: str
             entry["resume_pending"] = True
         available, retry_at = limit_availability(observation.get("limits"), now)
         if not available:
-            entry.update(state="waiting_limit", next_check_at=retry_at)
+            from .controller import remember_limit
+            remember_limit(entry, observation["limits"], now, retry_at)
             return {"action": "wait", "reason": "account_limit", "next_check_at": retry_at}
         if entry.get("inflight") and not entry["resume_pending"]:
             return {"action": "reconcile", "reason": "unfinished_reserved_work", "work": entry["inflight"]}

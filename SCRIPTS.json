@@ -2982,12 +2982,13 @@
                     "--timeout",
                     "--resolve-delivery",
                     "--confirmed-consumed-or-not-delivered",
-                    "--human"
+                    "--human",
+                    "--watchdog"
                 ],
-                "rule": "Read AUTO-PILOT manual_recovery. Standalone CMD needs no setup: use each exact registered AUTO ID as caller context unless explicitly overridden. --configure only saves an optional control identity. --dry-run never reserves/sends. Preserve account/project/STOP gates and durable uncertain delivery suppression."
+                "rule": "Read AUTO-PILOT manual_recovery. Standalone CMD needs no setup: use each exact registered AUTO ID as caller context unless explicitly overridden. --configure only saves an optional control identity. --dry-run never reserves/sends. Preserve account/project/STOP gates and durable uncertain delivery suppression. Foreground CMD checks every300s, or600s while the checker reports an account limit (exit10). Python always performs one sweep and exits. Limit data is queried again at most every600s, even when a later reset is known; the clock alone never authorizes sending. Preserve native project/limit checks and OS-locked outbox. Unknown delivery is never automatically retried. Console prints only changed status/error/reset time or a new successful send. Identical checks, countdown-only changes and initially inactive historical grants stay quiet. watchdog-status.json stores fingerprints, last-recovery.json is an overwritten snapshot. On entering a limit show its known local reset date/time and remaining minutes; unknown reset stays explicit. SOCRATEX_AUTO_TIMEZONE defaults to Europe/Warsaw, with OS local fallback when zone data is unavailable. Ordinary recovery sends exactly CONTINUE-AUTO to the registered ID. After a previously observed limit and a fresh available account snapshot, send exactly CONTINUE-AUTO (limit reached previously, continue). Persist that prompt in the prepared outbox. The suffix is transport metadata, never prompt_context or a scope change, and does not bypass native-begin. Terminal/input-blocked tasks remain asleep."
             },
             "output": {
-                "success": "JSON sent/skip/would_send rows and last-recovery.json; exit0.",
+                "success": "JSON sent/skip rows; --watchdog prints changes only, exit10 for account wait, otherwise exit0. Snapshot overwritten.",
                 "failure": "Exit2, concrete blocked/delivery_unknown/error; never infer idle or retry uncertain delivery."
             }
         },
@@ -3059,17 +3060,36 @@
         "AUTO scheduler.bat": {
             "path": "AUTO scheduler.bat",
             "category": "automation",
-            "description": "Visible foreground CMD scheduler: one check now, then every600s. Closing its console stops future checks; no detached process or autostart installation.",
+            "description": "Visible single-console AUTO watchdog:300s normally,600s on limit; state-change output only.",
             "input": {
                 "required": [],
                 "optional": [
                     "--once"
                 ],
-                "rule": "Directly invokes internal resume_auto.py --human synchronously. The only user-facing AUTO BAT. --once preserves checker exit code; failed timeout exits instead of looping."
+                "rule": "START native/manual opens/reuses the visible OS-locked console; BAT --loop owns waiting and calls one-shot --watchdog. --once checks once without starting a timer."
             },
             "output": {
-                "success": "Visible readable check results and600s waiting; --once exits after one sweep.",
+                "success": "Only changed status/error/new send; CMD owns300s/600s wait, closing it stops future checks.",
                 "failure": "Checker errors remain visible and retry at next interval; wait failure exits2."
+            }
+        },
+        "console_scheduler.py": {
+            "path": "tools/automation/console_scheduler.py",
+            "category": "Pipeline",
+            "description": "Host widocznego schedulera i idempotentny start z AUTO CLI.",
+            "input": {
+                "required": [
+                    "--launcher"
+                ],
+                "optional": [
+                    "--state-dir",
+                    "--request"
+                ],
+                "rule": "START AUTO (native/manual) automatycznie otwiera widoczny scheduler CMD po zapisaniu grantu. Ponowny START zachowuje run/licznik i wykorzystuje działającą kopię. console_scheduler.py trzyma blokadę OS przez całe życie CMD; po zamknięciu okna blokada znika. Blokada startu i potwierdzenie uruchomienia chronią równoległe START. Jedna konsola na katalog rejestru, także przy ręcznym otwarciu BAT. Błąd startu jest jawny; zapisany grant pozostaje do ponowienia START. Pilot i legacy heartbeat nie otwierają CMD."
+            },
+            "output": {
+                "success": "Jedna konsola na rejestr; startup ACK i blokada OS przez całe życie CMD.",
+                "failure": "Jawny błąd startu; grant zachowany. Brak uruchomienia pilota/heartbeat i instalacji Windows."
             }
         }
     },

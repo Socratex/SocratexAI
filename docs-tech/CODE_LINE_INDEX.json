@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-21T19:16:25+02:00",
+    "generatedAt": "2026-10-21T23:35:20+02:00",
     "threshold": 300,
     "files": [
         {
@@ -16,7 +16,7 @@
         },
         {
             "path": "tools/automation/controller.py",
-            "lines": 469,
+            "lines": 484,
             "extension": ".py",
             "large": true
         },
@@ -52,7 +52,7 @@
         },
         {
             "path": "tools/automation/tests/test_recovery.py",
-            "lines": 327,
+            "lines": 330,
             "extension": ".py",
             "large": true
         },
@@ -71,6 +71,12 @@
         {
             "path": "tools/pipeline/sync_managed_pipeline_package.py",
             "lines": 294,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/tests/test_native.py",
+            "lines": 283,
             "extension": ".py",
             "large": false
         },
@@ -147,6 +153,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/desktop_bridge.py",
+            "lines": 182,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/pipeline/update_pipeline_from_link.py",
             "lines": 181,
             "extension": ".py",
@@ -159,14 +171,8 @@
             "large": false
         },
         {
-            "path": "tools/automation/desktop_bridge.py",
-            "lines": 180,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/automation/auto.py",
-            "lines": 175,
+            "lines": 178,
             "extension": ".py",
             "large": false
         },
@@ -179,6 +185,12 @@
         {
             "path": "tools/repo/end_prompt_snapshot.py",
             "lines": 169,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/resume_auto.py",
+            "lines": 164,
             "extension": ".py",
             "large": false
         },
@@ -219,20 +231,14 @@
             "large": false
         },
         {
-            "path": "tools/repo/open_pipeline_learning_issue.py",
+            "path": "tools/automation/native.py",
             "lines": 146,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/automation/native.py",
-            "lines": 145,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/resume_auto.py",
-            "lines": 143,
+            "path": "tools/repo/open_pipeline_learning_issue.py",
+            "lines": 146,
             "extension": ".py",
             "large": false
         },
@@ -321,6 +327,18 @@
             "large": false
         },
         {
+            "path": "tools/automation/console_scheduler.py",
+            "lines": 103,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/recovery.py",
+            "lines": 103,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/codebase/context_gate_helpers.py",
             "lines": 103,
             "extension": ".py",
@@ -353,12 +371,6 @@
         {
             "path": "tools/pipeline/resolve_workspace_root.py",
             "lines": 98,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/recovery.py",
-            "lines": 97,
             "extension": ".py",
             "large": false
         },
@@ -399,6 +411,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/tests/test_console_scheduler.py",
+            "lines": 88,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/add_changelog_entry.py",
             "lines": 88,
             "extension": ".py",
@@ -419,6 +437,12 @@
         {
             "path": "tools/knowledge/project_design_context.py",
             "lines": 84,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/tests/test_watchdog.py",
+            "lines": 81,
             "extension": ".py",
             "large": false
         },
@@ -531,8 +555,20 @@
             "large": false
         },
         {
+            "path": "tools/automation/finalizer.py",
+            "lines": 57,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/chains/helper_refactor_smoke.py",
             "lines": 55,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/watchdog_status.py",
+            "lines": 54,
             "extension": ".py",
             "large": false
         },
@@ -569,12 +605,6 @@
         {
             "path": "tools/pipeline/upgrade_from_reference_project.py",
             "lines": 52,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/finalizer.py",
-            "lines": 51,
             "extension": ".py",
             "large": false
         },
@@ -729,6 +759,18 @@
             "large": false
         },
         {
+            "path": "AUTO scheduler.bat",
+            "lines": 31,
+            "extension": ".bat",
+            "large": false
+        },
+        {
+            "path": "templates/code/AUTO scheduler.bat",
+            "lines": 31,
+            "extension": ".bat",
+            "large": false
+        },
+        {
             "path": "tools/documents/insert_document_list_item.py",
             "lines": 31,
             "extension": ".py",
@@ -768,18 +810,6 @@
             "path": "tools/knowledge/knowledge_file_delete.py",
             "lines": 25,
             "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "AUTO scheduler.bat",
-            "lines": 24,
-            "extension": ".bat",
-            "large": false
-        },
-        {
-            "path": "templates/code/AUTO scheduler.bat",
-            "lines": 24,
-            "extension": ".bat",
             "large": false
         },
         {
@@ -843,6 +873,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/generic_instructions.py",
+            "lines": 21,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/quality/check_runtime.py",
             "lines": 21,
             "extension": ".py",
@@ -851,12 +887,6 @@
         {
             "path": "tools/text/write_utf8_file.py",
             "lines": 21,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/generic_instructions.py",
-            "lines": 20,
             "extension": ".py",
             "large": false
         },
