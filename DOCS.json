@@ -19,7 +19,8 @@
         "tools/",
         "docs-tech/",
         "docs-tech/TOOL-ERRORS.json",
-        "AI-compiled/"
+        "AI-compiled/",
+        "core/AUTO-PILOT.json"
     ],
     "content": {
         "DOCS.json": {
@@ -46,6 +47,13 @@
             "role": "Canonical source-pipeline smoke and self-check command contract.",
             "read": "when quality diagnostics, CI self-checks, or source-pipeline smoke coverage is in scope"
         },
+        "JSON-FORMAT-CONTRACT.json": {
+            "role": "Canonical JSON format and exception contract.",
+            "audience": "ai",
+            "format": "json",
+            "read_when": "When changing JSON document shape, audit rules, templates, generated artifacts, or project memory formats.",
+            "write_when": "When adding a new JSON format family, migrating direct-schema files, or approving a non-canonical exception."
+        },
         "TODO.md": {
             "role": "Maintainer-side backlog for source-pipeline cleanup, audits, and deferred improvements not yet promoted into plan or feature contracts.",
             "read": "when source-pipeline backlog, directive cleanup, or maintainer-side deferred work is relevant"
@@ -67,6 +75,14 @@
             "role": "Reusable context hierarchy contract for Tier 1-5 loading, budget sequencing, knowledge tier metadata, and consolidation triggers.",
             "read": "when directive hierarchy, context budget, startup context, compiled knowledge routing, or knowledgebase retagging is in scope"
         },
+        "core/communication-profiles/": {
+            "role": "Plain-text communication profile registry. Each .txt filename is a communication.profile id and the file body is the source of truth for that response mode.",
+            "read": "when setup, initialization, communication behavior, or selected profile loading changes"
+        },
+        "profiles/": {
+            "role": "Reusable child-project profiles. Profiles define source-owned project-facing command, flow, script, and workflow artifacts that children consume as managed additions instead of forking ad hoc copies.",
+            "read": "when update, import, initialization, or child override behavior changes"
+        },
         "project/": {
             "role": "Project-type packs.",
             "read": "when pack behavior or project type routing changes"
@@ -83,28 +99,17 @@
             "role": "Source-pipeline technical indexes, caches, and knowledge views.",
             "read": "when compiled context or knowledge routing changes"
         },
-        "AI-compiled/": {
-            "role": "Generated read-optimized instruction and knowledge cache.",
-            "read": "for fast orientation; do not edit by hand"
-        },
         "docs-tech/TOOL-ERRORS.json": {
             "role": "Registry of repeatable tool invocation, input, result, path, quoting, encoding, and contract failures that should harden scripts or script metadata.",
             "read": "when a tool invocation or output failure repeats, or when tool_handler/tool_error_log behavior is being repaired"
         },
-        "core/communication-profiles/": {
-            "role": "Plain-text communication profile registry. Each .txt filename is a communication.profile id and the file body is the source of truth for that response mode.",
-            "read": "when setup, initialization, communication behavior, or selected profile loading changes"
+        "AI-compiled/": {
+            "role": "Generated read-optimized instruction and knowledge cache.",
+            "read": "for fast orientation; do not edit by hand"
         },
-        "profiles/": {
-            "role": "Reusable child-project profiles. Profiles define source-owned project-facing command, flow, script, and workflow artifacts that children consume as managed additions instead of forking ad hoc copies.",
-            "read": "when update, import, initialization, or child override behavior changes"
-        },
-        "JSON-FORMAT-CONTRACT.json": {
-            "role": "Canonical JSON format and exception contract.",
-            "audience": "ai",
-            "format": "json",
-            "read_when": "When changing JSON document shape, audit rules, templates, generated artifacts, or project memory formats.",
-            "write_when": "When adding a new JSON format family, migrating direct-schema files, or approving a non-canonical exception."
+        "core/AUTO-PILOT.json": {
+            "role": "Portable AUTO lifecycle, manual recovery state/outbox and local desktop transport contract.",
+            "read": "before START/STOP/CONTINUE AUTO or manual recovery tooling"
         }
     },
     "metadata": {

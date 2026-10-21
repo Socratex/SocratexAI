@@ -1,6 +1,6 @@
 # Compiled Contextual Workflow Rules
 
-Generated: source-389c2590d287
+Generated: source-67b47e291cd8
 
 `WORKFLOW.json` is opt-in priority context, not default context.
 

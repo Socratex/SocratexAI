@@ -1,0 +1,19 @@
+{
+    "index": [
+        "owner",
+        "commands",
+        "lifecycle"
+    ],
+    "content": {
+        "owner": "Installed shared contract: SocratexAI/core/AUTO-PILOT.json. Source scripts: SocratexAI/tools/automation. Keep project task adapters separate.",
+        "commands": "Explicit START AUTO, STOP AUTO, CONTINUE-AUTO. Manual runner: python -B SocratexAI/tools/automation/resume_auto.py; --dry-run for observation. No scheduler installed.",
+        "lifecycle": "Register approved scope/source/batch, native-begin before work, verified finalizer receipt after project checks/commit/push. Persist progress and recovery completion/blocker fields; never fabricate idle or operator acceptance."
+    },
+    "metadata": {
+        "document": {
+            "title": "AUTO Entry",
+            "type": "technical_contract",
+            "language": "en"
+        }
+    }
+}

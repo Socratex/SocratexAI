@@ -11,7 +11,8 @@
         "tool_error_hardening",
         "json_structural_edit_tooling",
         "single_entry_tool_handler",
-        "gpt_conversation_input_routing"
+        "gpt_conversation_input_routing",
+        "auto_recovery"
     ],
     "content": {
         "quick_index": {
@@ -78,6 +79,10 @@
         "gpt_conversation_input_routing": {
             "title": "GPT Conversation Input Routing",
             "rule": "When the user provides a ChatGPT shared conversation URL, saved share HTML, or local ChatGPT conversation export/cache and asks to read, search, summarize, analyze, or continue from it, use the dedicated GPT conversation tools first. Use gpt_shared_conversation_extract.py for public chatgpt.com/share links. Use gpt_conversation_archive.py for explicit local private exports/caches with list/search/read/index. Feed the model the extracted Markdown/JSON, not the whole HTML page or entire archive, unless the user explicitly asks for raw source inspection. Do not attempt live private account scraping or session-cookie access."
+        },
+        "auto_recovery": {
+            "title": "AUTO Recovery",
+            "rule": "Route explicit AUTO commands and external recovery through FLOWS auto_pilot and core/AUTO-PILOT.json. The shared local registry owns approved grants/progress and durable delivery outbox. A quiet or unloaded chat is not itself a grant. Default portable source AUTO transport is manual; never install cron implicitly."
         }
     },
     "metadata": {

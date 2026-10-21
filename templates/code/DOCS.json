@@ -22,7 +22,8 @@
         "AI-compiled/project/knowledge-files/",
         "context-docs/ENGINEERING.json",
         "context-docs/*.json",
-        "ignored/ai-socratex/*.md"
+        "ignored/ai-socratex/*.md",
+        "AUTO-PILOT.json"
     ],
     "content": {
         "SOCRATEX.md": {
@@ -185,6 +186,11 @@
             "format": "markdown",
             "read_when": "At session start when workflow.branch_mode is branch_scoped.",
             "write_when": "Branch-scoped facts, next steps, or ad-hoc work change."
+        },
+        "AUTO-PILOT.json": {
+            "role": "Local entrypoint to the installed shared AUTO lifecycle/manual recovery contract.",
+            "read_when": "Before explicit START/STOP/CONTINUE AUTO or manual recovery work.",
+            "write_when": "Only for project-specific AUTO adapter boundaries; core remains source-owned."
         }
     },
     "metadata": {

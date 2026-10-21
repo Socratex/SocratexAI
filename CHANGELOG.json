@@ -575,6 +575,12 @@
                 "date": "2026-10-15",
                 "feature": "compiled_sqlite_knowledge_index",
                 "change": "Skip automatically discovered knowledge files removed concurrently during enumeration/read with an explicit warning. Preserve errors for explicitly requested missing documents, missing dependencies of existing documents, and malformed JSON. Add a deterministic regression smoke to the quality gate. Why: Temporary tool and test outputs can disappear while a project finalizer rebuilds the knowledge index."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-10-21",
+                "feature": "manual_auto_recovery",
+                "change": "Added manual Python/BAT AUTO recovery with exact chat targeting, native desktop activity/account checks and a durable outbox; portable lifecycle projects completion and blocker data. Why: Resume only approved unfinished idle AUTO without duplicate prompts, new chats or implicit scheduler installation."
             }
         ]
     },

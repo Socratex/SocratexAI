@@ -126,7 +126,8 @@
             "minimal_clean_prose_mechanics",
             "surgical_scope_clean_island_code",
             "text_first_usage_search_with_legacy_fragment_pass",
-            "gpt_conversation_ingestion_tools"
+            "gpt_conversation_ingestion_tools",
+            "manual_auto_recovery"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -7452,6 +7453,56 @@
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Agents waste context on raw ChatGPT share HTML or whole private exports, or attempt brittle/private live-account scraping instead of extracting a compact conversation artifact first."
+            },
+            "manual_auto_recovery": {
+                "summary": "Portable exact-thread AUTO lifecycle and one-shot Python/BAT recovery with native desktop observation, account gates and durable outbox.",
+                "required_paths": [
+                    "core/AUTO-PILOT.json",
+                    "templates/code/AUTO-PILOT.json",
+                    "templates/code/AUTO resume.bat",
+                    "tools/automation/auto.py",
+                    "tools/automation/resume_auto.py",
+                    "tools/automation/recovery.py",
+                    "tools/automation/desktop_bridge.py",
+                    "tools/automation/controller.py",
+                    "tools/automation/files.py",
+                    "tools/automation/native.py",
+                    "tools/automation/generic_instructions.py",
+                    "tools/automation/selection.py",
+                    "tools/automation/roster.py",
+                    "tools/automation/sync_auto.py",
+                    "tools/automation/tests/test_recovery.py",
+                    "tools/automation/__init__.py",
+                    "tools/automation/codex_probe.py",
+                    "tools/automation/finalizer.py"
+                ],
+                "required_scripts": [
+                    "auto.py",
+                    "resume_auto.py",
+                    "sync_auto.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "auto.py",
+                        "resume_auto.py",
+                        "sync_auto.py"
+                    ]
+                },
+                "required_docs": [
+                    "core/AUTO-PILOT.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Preserve host instructions/projection adapters when syncing portable modules.",
+                    "Never infer desktop status from private App Server or SQLite.",
+                    "Do not claim actual idle-message/restart/hard-limit recovery without a live check.",
+                    "No cron installation is implied; Windows pipe is version-sensitive and Linux needs a compatible Unix socket."
+                ],
+                "verification_commands": [
+                    "python -B -m unittest discover -s tools/automation/tests -q",
+                    "python -B tools/repo/check_pipeline_feature_contracts.py"
+                ],
+                "known_failure_if_missing": "External ticks can restart terminal grants, duplicate prompts after crashes or collide with active project work."
             }
         }
     },

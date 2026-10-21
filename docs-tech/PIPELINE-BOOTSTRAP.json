@@ -27,7 +27,8 @@
             "tools/",
             "docs-tech/",
             "docs-tech/TOOL-ERRORS.json",
-            "AI-compiled/"
+            "AI-compiled/",
+            "core/AUTO-PILOT.json"
         ],
         "WORKFLOW.json": [
             "quick_index",
@@ -41,7 +42,8 @@
             "tool_error_hardening",
             "json_structural_edit_tooling",
             "single_entry_tool_handler",
-            "gpt_conversation_input_routing"
+            "gpt_conversation_input_routing",
+            "auto_recovery"
         ],
         "COMMANDS.json": [
             "CONTEXT",
@@ -56,7 +58,11 @@
             "DIAGNOSTICS",
             "PROMPT",
             "INSTRUCTIONS",
-            "COMPILE"
+            "COMPILE",
+            "START AUTO",
+            "STOP AUTO",
+            "CONTINUE-AUTO",
+            "CONTINUE AUTO"
         ],
         "FLOWS.json": [
             "multi_prompt",
@@ -69,7 +75,8 @@
             "quality_diagnostics",
             "continue_command",
             "compile_command",
-            "manual_mode"
+            "manual_mode",
+            "auto_pilot"
         ],
         "SCRIPTS.json": [
             "add_changelog_entry.py",
@@ -205,7 +212,12 @@
             "gpt_shared_conversation_extract.py",
             "gpt_conversation_archive.py",
             "smoke_scoped_finalizer.py",
-            "smoke_disappearing_sources.py"
+            "smoke_disappearing_sources.py",
+            "resume_auto.py",
+            "test_code_line_index.py",
+            "auto.py",
+            "sync_auto.py",
+            "AUTO resume.bat"
         ]
     },
     "metadata": {

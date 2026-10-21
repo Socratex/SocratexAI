@@ -10,7 +10,8 @@
         "quality_diagnostics",
         "continue_command",
         "compile_command",
-        "manual_mode"
+        "manual_mode",
+        "auto_pilot"
     ],
     "content": {
         "multi_prompt": {
@@ -122,6 +123,16 @@
                 "state why no script applies",
                 "keep edits scoped",
                 "recommend a script if repetition is likely"
+            ]
+        },
+        "auto_pilot": {
+            "when": "START/STOP/CONTINUE AUTO or an existing granted manual wake",
+            "then": [
+                "Read core/AUTO-PILOT.json and generated per-chat files using exact ID; never select by recency.",
+                "Register only user-approved scope/sources/batch; manual transport creates no schedule.",
+                "Observe authoritative desktop project activity and limits; native-begin atomically reserves one source-backed unit and acknowledges pending delivery.",
+                "Follow normal project implementation and verification flow; no synthetic gameplay or inferred acceptance.",
+                "Finalize exact run/wake/receipt after successful checks and commit/push. Persist/report progress and completion/blocker fields. STOP/needs_input/batch/queue completion stay terminal."
             ]
         }
     },

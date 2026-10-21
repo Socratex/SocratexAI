@@ -13,7 +13,8 @@
         "log",
         "diagnostics",
         "prompt",
-        "instructions"
+        "instructions",
+        "auto"
     ],
     "content": {
         "quick_index": {
@@ -84,6 +85,11 @@
             "title": "INSTRUCTIONS",
             "format": "markdown-section",
             "body": "## INSTRUCTIONS\n\nDefragment raw user instruction files.\n\nOrder:\n\n1. Read `core/INSTRUCTION-CAPTURE.json`.\n2. Read `project/code/INSTRUCTION-CAPTURE.json`.\n3. Inspect `_INSTRUCTIONS.md` first.\n4. Merge duplicates and split separable work into `_INSTRUCTION-QUEUE.json`.\n5. Promote executable passes into `_PLAN.json` only when they meet the pass contract.\n6. Move bugs, decisions, diagnostics, and context facts into the correct registry.\n7. Clear `_INSTRUCTIONS.md` after successful defragmentation.\n8. Remove completed entries from `_INSTRUCTION-QUEUE.json` after execution.\n"
+        },
+        "auto": {
+            "title": "AUTO",
+            "format": "markdown-section",
+            "body": "## AUTO\n\nSTART AUTO, STOP AUTO and CONTINUE-AUTO use core/AUTO-PILOT.json. Native manual transport persists approved scope and completion/blocker/outbox data outside Git, checks real desktop activity/limits and reserves one unit before work. CONTINUE-AUTO never creates a new grant or chat. Finalize after project checks and commit/push.\n"
         }
     },
     "metadata": {

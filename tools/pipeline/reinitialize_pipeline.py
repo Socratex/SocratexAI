@@ -117,9 +117,11 @@ def main() -> int:
         ensure_template(template_root, install_root, template, template, args.dry_run)
     for pack in packs:
         if pack == "code":
+            ensure_template(template_root, target_root, "code/AUTO resume.bat", "AUTO resume.bat", args.dry_run)
             for template, destination in [
                 ("code/DOCS.json", "DOCS.json"),
                 ("code/STATE.json", "STATE.json"),
+                ("code/AUTO-PILOT.json", "AUTO-PILOT.json"),
                 ("code/_PLAN.json", "_PLAN.json"),
                 ("code/DECISIONS.json", "DECISIONS.json"),
                 ("code/PIPELINE-CONFIG.json", "PIPELINE-CONFIG.json"),

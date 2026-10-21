@@ -1,0 +1,41 @@
+{
+    "index": [
+        "entrypoints",
+        "state",
+        "selection",
+        "transport",
+        "delivery",
+        "reconcile",
+        "manual_mode",
+        "configuration",
+        "verification",
+        "concurrency",
+        "execution"
+    ],
+    "content": {
+        "entrypoints": [
+            "AUTO resume.bat",
+            "python -B tools/automation/resume_auto.py",
+            "--dry-run observes without sending",
+            "--repo and --thread-id optionally narrow the exact targets",
+            "auto.py start --thread-id ID --repo PATH --scope SCOPE --sources FILE --mode native --wake-transport manual; then follow generated instructions.md"
+        ],
+        "state": "The OS-locked registry remains the sole grant owner. Every transaction derives recovery.run_finished, queue_finished, batch_finished, stopped, needs_input, active, work_reserved, next_check_at and dispatch; thread.json and progress.json expose the same data. An old completed batch is never a new grant.",
+        "selection": "Only enabled native registered/waiting_turn_end/waiting_limit/executing grants below their batch limit, without blocking needs or unacknowledged delivery. Preserve own interrupted inflight reservation for reconciliation. Other project reservations block delivery. Native desktop idle/notLoaded may be woken; active/systemError/unknown, archived or incomplete coverage may not.",
+        "transport": "Version-sensitive Python adapter to the bundled codex-app-tools local pipe (Windows) or explicitly supplied Unix socket. Discover actual tool schemas, call list_threads and get_usage_limits; fill a truncated list using read-only local IDs plus native read_thread status for every missing ID, then refresh recent list. read_thread works outside an active caller turn; native wait_threads is tied to the caller turn and is not used by this external runner. Never use private App Server or SQLite to infer activity. Call send_message_to_thread with the exact registered threadId and literal CONTINUE-AUTO, without model/effort overrides. Missing app/tools/protocol/limits/coverage blocks sending.",
+        "delivery": "Commit a UUID wake_dispatch=prepared before transport. Pending prepared/sent/unknown blocks duplicate delivery and other AUTO reservations for the project. Record sent only for successful exact-recipient acknowledgement; any ambiguous response remains unknown. native-begin acknowledges receipt in its active desktop turn before normal project/limit checks; do not erase old work or count a second step. No timeout discards an uncertain delivery.",
+        "reconcile": "After manually checking history, operator may run resume_auto.py --thread-id ID --resolve-delivery DELIVERY_ID --confirmed-consumed-or-not-delivered. Exact current run/token required; command only resolves delivery and never sends or clears work. Do not use it merely because time elapsed.",
+        "manual_mode": "START may use --mode native --wake-transport manual. native-begin then omits --scheduler-id; scheduler-request returns manual_wake_only, and finalizer does not create/rearm heartbeat. Existing heartbeat grants retain their transport and can also be recovered by the manual runner. This task installs no Windows/Linux schedule.",
+        "configuration": "Run --configure from the authorized control chat once, or provide --caller-thread-id. Saved recovery-client.json contains the control chat identity, not a guessed latest target. Windows discovers the unique live codex-app-tools pipe on every invocation, including after app restart; ambiguous instances require --endpoint. Linux needs an actual compatible desktop Unix socket; cron alone supplies neither the app nor transport. last-recovery.json stores results without private thread messages.",
+        "verification": "Native Windows dry-run checked real project coverage/status/limits and skipped the active AUTO without sending. Automated tests cover terminal states, account controls, duplicate/crash windows, OS locking, STOP, wrong recipient, stale run and manual transport. Actual message delivery to an idle production AUTO and restart/hard-limit recovery remain separate live checks. The app may change its local protocol; fail closed.",
+        "concurrency": "Desktop observation and message enqueue are not one application transaction. If human input or another heartbeat starts in that interval, normal native-begin still blocks a second unit and STOP remains authoritative. The outbox prevents duplicate external sends; it does not claim exactly-once execution by a remote app. Do not override native project checks.",
+        "execution": "START AUTO persists only the explicitly approved scope/source/batch in the shared registry. Agent CONTINUE-AUTO reads generated instructions, prepares a source-hashed task list and fresh native-snapshot, then native-begin before work. Finalize only after project checks/commit/push; auto.py finalize requires exact run/wake/receipt. Only todo/progress execute; needs_input/STOP/batch/queue completion remain terminal. Project-specific task-export adapters are optional and are not assumed by the portable toolkit."
+    },
+    "metadata": {
+        "document": {
+            "title": "AUTO Manual Recovery",
+            "type": "technical_contract",
+            "language": "en"
+        }
+    }
+}

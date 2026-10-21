@@ -42,6 +42,10 @@
             "code_line_index_noop": {
                 "description": "Verify code indexes skip unchanged output and still refresh changed source.",
                 "command": "python -B -m unittest discover -s tools/codebase -p test_code_line_index.py"
+            },
+            "auto_recovery": {
+                "description": "Verify AUTO lifecycle, native recovery, crash and duplicate guards.",
+                "command": "python -B -m unittest discover -s tools/automation/tests -q"
             }
         },
         "notes": [

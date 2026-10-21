@@ -133,7 +133,12 @@
         "gpt_shared_conversation_extract.py",
         "gpt_conversation_archive.py",
         "smoke_scoped_finalizer.py",
-        "smoke_disappearing_sources.py"
+        "smoke_disappearing_sources.py",
+        "resume_auto.py",
+        "test_code_line_index.py",
+        "auto.py",
+        "sync_auto.py",
+        "AUTO resume.bat"
     ],
     "content": {
         "add_changelog_entry.py": {
@@ -2960,6 +2965,31 @@
                 "failure": "Nonzero for a discovery race or error-propagation regression."
             }
         },
+        "resume_auto.py": {
+            "path": "tools/automation/resume_auto.py",
+            "category": "Pipeline",
+            "description": "One manual recovery sweep for existing active unfinished AUTO grants; exact chat ID, limits, complete native project activity and durable duplicate guard.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--state-dir",
+                    "--dry-run",
+                    "--repo",
+                    "--thread-id",
+                    "--endpoint",
+                    "--caller-thread-id",
+                    "--configure",
+                    "--timeout",
+                    "--resolve-delivery",
+                    "--confirmed-consumed-or-not-delivered"
+                ],
+                "rule": "Read AUTO-PILOT manual_recovery. Default sends only eligible existing AUTO. --dry-run never reserves/sends. --configure saves explicit control chat identity. Never install a schedule or restart terminal grants. Uncertain deliveries stay blocked until native acknowledgement or explicit operator reconciliation."
+            },
+            "output": {
+                "success": "JSON sent/skip/would_send rows and last-recovery.json; exit0.",
+                "failure": "Exit2, concrete blocked/delivery_unknown/error; never infer idle or retry uncertain delivery."
+            }
+        },
         "test_code_line_index.py": {
             "category": "codebase",
             "description": "Regression tests for no-op and selective code line index writes.",
@@ -2972,6 +3002,69 @@
                 "required": [],
                 "rule": "Run python -B -m unittest discover -s tools/codebase -p test_code_line_index.py; fixtures use temporary directories.",
                 "optional": []
+            }
+        },
+        "auto.py": {
+            "path": "tools/automation/auto.py",
+            "category": "automation",
+            "description": "Portable AUTO grant/lifecycle, checked native reservations, progress, completion data and manual/heartbeat transport.",
+            "input": {
+                "required": [
+                    "subcommand; see --help",
+                    "--thread-id or CODEX_THREAD_ID"
+                ],
+                "optional": [
+                    "--state-dir",
+                    "--repo",
+                    "--scope",
+                    "--sources",
+                    "--batch-size",
+                    "--mode",
+                    "--wake-transport",
+                    "--run-id",
+                    "--report-file",
+                    "--snapshot-file",
+                    "--tasks-file",
+                    "--scheduler-id",
+                    "--wake-id"
+                ],
+                "rule": "Read core/AUTO-PILOT.json and generated per-chat instructions. Source pipeline START uses --mode native --wake-transport manual unless an existing heartbeat was explicitly selected. Generic task lists must have canonical source hashes; schema2 project/F8 adapters are optional and not bundled. Finalize after normal repository verification and commit/push. Never fabricate operator acceptance."
+            },
+            "output": {
+                "success": "JSON grant/context/authorization/report; only execute grants one unit.",
+                "failure": "Exit2 with a concrete fail-closed error."
+            }
+        },
+        "sync_auto.py": {
+            "path": "tools/automation/sync_auto.py",
+            "category": "automation",
+            "description": "Sync the explicit portable AUTO module allowlist to a project, preserving instructions.py and projection.py adapters.",
+            "input": {
+                "required": [
+                    "--project-root"
+                ],
+                "optional": [
+                    "--tools-dir",
+                    "--check"
+                ],
+                "rule": "Source to child only. --check detects drift without writes; target must stay inside explicit project root."
+            },
+            "output": {
+                "success": "Portable module parity confirmed or refreshed.",
+                "failure": "Exit1 for drift in check mode; invalid path rejected."
+            }
+        },
+        "AUTO resume.bat": {
+            "path": "AUTO resume.bat",
+            "category": "automation",
+            "description": "Windows manual AUTO recovery launcher with argument/exit-code forwarding.",
+            "input": {
+                "required": [],
+                "optional": []
+            },
+            "output": {
+                "success": "Python recovery report.",
+                "failure": "Python exit code."
             }
         }
     },

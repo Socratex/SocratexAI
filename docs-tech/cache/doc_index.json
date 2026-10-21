@@ -50,7 +50,11 @@
         "DIAGNOSTICS",
         "PROMPT",
         "INSTRUCTIONS",
-        "COMPILE"
+        "COMPILE",
+        "START AUTO",
+        "STOP AUTO",
+        "CONTINUE-AUTO",
+        "CONTINUE AUTO"
       ],
       "top_level_keys": [
         "index",
@@ -134,6 +138,30 @@
           "path": "content.COMPILE",
           "title": "",
           "ref": "content.COMPILE",
+          "status": ""
+        },
+        "START AUTO": {
+          "path": "content.START AUTO",
+          "title": "",
+          "ref": "content.START AUTO",
+          "status": ""
+        },
+        "STOP AUTO": {
+          "path": "content.STOP AUTO",
+          "title": "",
+          "ref": "content.STOP AUTO",
+          "status": ""
+        },
+        "CONTINUE-AUTO": {
+          "path": "content.CONTINUE-AUTO",
+          "title": "",
+          "ref": "content.CONTINUE-AUTO",
+          "status": ""
+        },
+        "CONTINUE AUTO": {
+          "path": "content.CONTINUE AUTO",
+          "title": "",
+          "ref": "content.CONTINUE AUTO",
           "status": ""
         }
       }
@@ -478,7 +506,8 @@
         "communication_rules",
         "communication_profiles",
         "safety_rules",
-        "git_completion"
+        "git_completion",
+        "auto_recovery"
       ],
       "top_level_keys": [
         "index",
@@ -580,6 +609,107 @@
           "path": "content.git_completion",
           "title": "Git Completion",
           "ref": "content.git_completion",
+          "status": ""
+        },
+        "auto_recovery": {
+          "path": "content.auto_recovery",
+          "title": "AUTO Recovery",
+          "ref": "content.auto_recovery",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "core/AUTO-PILOT.json",
+      "document": {
+        "title": "AUTO Manual Recovery",
+        "type": "technical_contract",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "entrypoints",
+        "state",
+        "selection",
+        "transport",
+        "delivery",
+        "reconcile",
+        "manual_mode",
+        "configuration",
+        "verification",
+        "concurrency",
+        "execution"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "entrypoints": {
+          "path": "content.entrypoints",
+          "title": "entrypoints",
+          "ref": "content.entrypoints",
+          "status": ""
+        },
+        "state": {
+          "path": "content.state",
+          "title": "state",
+          "ref": "content.state",
+          "status": ""
+        },
+        "selection": {
+          "path": "content.selection",
+          "title": "selection",
+          "ref": "content.selection",
+          "status": ""
+        },
+        "transport": {
+          "path": "content.transport",
+          "title": "transport",
+          "ref": "content.transport",
+          "status": ""
+        },
+        "delivery": {
+          "path": "content.delivery",
+          "title": "delivery",
+          "ref": "content.delivery",
+          "status": ""
+        },
+        "reconcile": {
+          "path": "content.reconcile",
+          "title": "reconcile",
+          "ref": "content.reconcile",
+          "status": ""
+        },
+        "manual_mode": {
+          "path": "content.manual_mode",
+          "title": "manual_mode",
+          "ref": "content.manual_mode",
+          "status": ""
+        },
+        "configuration": {
+          "path": "content.configuration",
+          "title": "configuration",
+          "ref": "content.configuration",
+          "status": ""
+        },
+        "verification": {
+          "path": "content.verification",
+          "title": "verification",
+          "ref": "content.verification",
+          "status": ""
+        },
+        "concurrency": {
+          "path": "content.concurrency",
+          "title": "concurrency",
+          "ref": "content.concurrency",
+          "status": ""
+        },
+        "execution": {
+          "path": "content.execution",
+          "title": "execution",
+          "ref": "content.execution",
           "status": ""
         }
       }
@@ -1703,7 +1833,8 @@
         "tools/",
         "docs-tech/",
         "docs-tech/TOOL-ERRORS.json",
-        "AI-compiled/"
+        "AI-compiled/",
+        "core/AUTO-PILOT.json"
       ],
       "top_level_keys": [
         "index",
@@ -1747,6 +1878,12 @@
           "ref": "content.QUALITY-GATE.json",
           "status": ""
         },
+        "JSON-FORMAT-CONTRACT.json": {
+          "path": "content.JSON-FORMAT-CONTRACT.json",
+          "title": "",
+          "ref": "content.JSON-FORMAT-CONTRACT.json",
+          "status": ""
+        },
         "TODO.md": {
           "path": "content.TODO.md",
           "title": "",
@@ -1777,6 +1914,18 @@
           "ref": "content.core/CONTEXT-TIERS.json",
           "status": ""
         },
+        "core/communication-profiles/": {
+          "path": "content.core/communication-profiles/",
+          "title": "",
+          "ref": "content.core/communication-profiles/",
+          "status": ""
+        },
+        "profiles/": {
+          "path": "content.profiles/",
+          "title": "",
+          "ref": "content.profiles/",
+          "status": ""
+        },
         "project/": {
           "path": "content.project/",
           "title": "",
@@ -1801,34 +1950,22 @@
           "ref": "content.docs-tech/",
           "status": ""
         },
-        "AI-compiled/": {
-          "path": "content.AI-compiled/",
-          "title": "",
-          "ref": "content.AI-compiled/",
-          "status": ""
-        },
         "docs-tech/TOOL-ERRORS.json": {
           "path": "content.docs-tech/TOOL-ERRORS.json",
           "title": "",
           "ref": "content.docs-tech/TOOL-ERRORS.json",
           "status": ""
         },
-        "core/communication-profiles/": {
-          "path": "content.core/communication-profiles/",
+        "AI-compiled/": {
+          "path": "content.AI-compiled/",
           "title": "",
-          "ref": "content.core/communication-profiles/",
+          "ref": "content.AI-compiled/",
           "status": ""
         },
-        "profiles/": {
-          "path": "content.profiles/",
+        "core/AUTO-PILOT.json": {
+          "path": "content.core/AUTO-PILOT.json",
           "title": "",
-          "ref": "content.profiles/",
-          "status": ""
-        },
-        "JSON-FORMAT-CONTRACT.json": {
-          "path": "content.JSON-FORMAT-CONTRACT.json",
-          "title": "",
-          "ref": "content.JSON-FORMAT-CONTRACT.json",
+          "ref": "content.core/AUTO-PILOT.json",
           "status": ""
         }
       }
@@ -2042,7 +2179,8 @@
         "quality_diagnostics",
         "continue_command",
         "compile_command",
-        "manual_mode"
+        "manual_mode",
+        "auto_pilot"
       ],
       "top_level_keys": [
         "index",
@@ -2114,6 +2252,12 @@
           "path": "content.manual_mode",
           "title": "",
           "ref": "content.manual_mode",
+          "status": ""
+        },
+        "auto_pilot": {
+          "path": "content.auto_pilot",
+          "title": "",
+          "ref": "content.auto_pilot",
           "status": ""
         }
       }
@@ -3982,7 +4126,8 @@
         "log",
         "diagnostics",
         "prompt",
-        "instructions"
+        "instructions",
+        "auto"
       ],
       "top_level_keys": [
         "index",
@@ -4072,6 +4217,12 @@
           "path": "content.instructions",
           "title": "INSTRUCTIONS",
           "ref": "content.instructions",
+          "status": ""
+        },
+        "auto": {
+          "path": "content.auto",
+          "title": "AUTO",
+          "ref": "content.auto",
           "status": ""
         }
       }
@@ -5086,6 +5237,12 @@
           "title": "code_line_index_noop",
           "ref": "commands.code_line_index_noop",
           "status": ""
+        },
+        "auto_recovery": {
+          "path": "commands.auto_recovery",
+          "title": "auto_recovery",
+          "ref": "commands.auto_recovery",
+          "status": ""
         }
       }
     },
@@ -5231,7 +5388,12 @@
         "gpt_shared_conversation_extract.py",
         "gpt_conversation_archive.py",
         "smoke_scoped_finalizer.py",
-        "smoke_disappearing_sources.py"
+        "smoke_disappearing_sources.py",
+        "resume_auto.py",
+        "test_code_line_index.py",
+        "auto.py",
+        "sync_auto.py",
+        "AUTO resume.bat"
       ],
       "top_level_keys": [
         "index",
@@ -6043,10 +6205,34 @@
           "ref": "content.smoke_disappearing_sources.py",
           "status": ""
         },
+        "resume_auto.py": {
+          "path": "content.resume_auto.py",
+          "title": "",
+          "ref": "content.resume_auto.py",
+          "status": ""
+        },
         "test_code_line_index.py": {
           "path": "content.test_code_line_index.py",
           "title": "",
           "ref": "content.test_code_line_index.py",
+          "status": ""
+        },
+        "auto.py": {
+          "path": "content.auto.py",
+          "title": "",
+          "ref": "content.auto.py",
+          "status": ""
+        },
+        "sync_auto.py": {
+          "path": "content.sync_auto.py",
+          "title": "",
+          "ref": "content.sync_auto.py",
+          "status": ""
+        },
+        "AUTO resume.bat": {
+          "path": "content.AUTO resume.bat",
+          "title": "",
+          "ref": "content.AUTO resume.bat",
           "status": ""
         }
       }
@@ -6179,6 +6365,45 @@
           "path": "content.summary",
           "title": "summary",
           "ref": "content.summary",
+          "status": ""
+        }
+      }
+    },
+    {
+      "path": "templates/code/AUTO-PILOT.json",
+      "document": {
+        "title": "AUTO Entry",
+        "type": "technical_contract",
+        "language": "en"
+      },
+      "routing": {},
+      "toc": [
+        "owner",
+        "commands",
+        "lifecycle"
+      ],
+      "top_level_keys": [
+        "index",
+        "content",
+        "metadata"
+      ],
+      "keys": {
+        "owner": {
+          "path": "content.owner",
+          "title": "owner",
+          "ref": "content.owner",
+          "status": ""
+        },
+        "commands": {
+          "path": "content.commands",
+          "title": "commands",
+          "ref": "content.commands",
+          "status": ""
+        },
+        "lifecycle": {
+          "path": "content.lifecycle",
+          "title": "lifecycle",
+          "ref": "content.lifecycle",
           "status": ""
         }
       }
@@ -6695,7 +6920,8 @@
         "AI-compiled/project/knowledge-files/",
         "context-docs/ENGINEERING.json",
         "context-docs/*.json",
-        "ignored/ai-socratex/*.md"
+        "ignored/ai-socratex/*.md",
+        "AUTO-PILOT.json"
       ],
       "top_level_keys": [
         "index",
@@ -6839,6 +7065,12 @@
           "path": "content.ignored/ai-socratex/*.md",
           "title": "",
           "ref": "content.ignored/ai-socratex/*.md",
+          "status": ""
+        },
+        "AUTO-PILOT.json": {
+          "path": "content.AUTO-PILOT.json",
+          "title": "",
+          "ref": "content.AUTO-PILOT.json",
           "status": ""
         }
       }
@@ -8001,7 +8233,8 @@
         "tool_error_hardening",
         "json_structural_edit_tooling",
         "single_entry_tool_handler",
-        "gpt_conversation_input_routing"
+        "gpt_conversation_input_routing",
+        "auto_recovery"
       ],
       "top_level_keys": [
         "index",
@@ -8079,6 +8312,12 @@
           "path": "content.gpt_conversation_input_routing",
           "title": "GPT Conversation Input Routing",
           "ref": "content.gpt_conversation_input_routing",
+          "status": ""
+        },
+        "auto_recovery": {
+          "path": "content.auto_recovery",
+          "title": "AUTO Recovery",
+          "ref": "content.auto_recovery",
           "status": ""
         }
       }

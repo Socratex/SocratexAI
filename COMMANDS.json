@@ -12,7 +12,11 @@
         "DIAGNOSTICS",
         "PROMPT",
         "INSTRUCTIONS",
-        "COMPILE"
+        "COMPILE",
+        "START AUTO",
+        "STOP AUTO",
+        "CONTINUE-AUTO",
+        "CONTINUE AUTO"
     ],
     "content": {
         "CONTEXT": {
@@ -53,6 +57,18 @@
         },
         "COMPILE": {
             "purpose": "Run compile_pipeline_context.py to rebuild generated instruction and knowledge caches."
+        },
+        "START AUTO": {
+            "purpose": "Use core/AUTO-PILOT.json and FLOWS auto_pilot; resolve exact current chat and its saved grant. START is explicit approval; STOP wins; continuation never restarts a terminal run."
+        },
+        "STOP AUTO": {
+            "purpose": "Use core/AUTO-PILOT.json and FLOWS auto_pilot; resolve exact current chat and its saved grant. START is explicit approval; STOP wins; continuation never restarts a terminal run."
+        },
+        "CONTINUE-AUTO": {
+            "purpose": "Use core/AUTO-PILOT.json and FLOWS auto_pilot; resolve exact current chat and its saved grant. START is explicit approval; STOP wins; continuation never restarts a terminal run."
+        },
+        "CONTINUE AUTO": {
+            "purpose": "Use core/AUTO-PILOT.json and FLOWS auto_pilot; resolve exact current chat and its saved grant. START is explicit approval; STOP wins; continuation never restarts a terminal run."
         }
     },
     "metadata": {

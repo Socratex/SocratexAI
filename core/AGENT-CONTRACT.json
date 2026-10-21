@@ -15,7 +15,8 @@
         "communication_rules",
         "communication_profiles",
         "safety_rules",
-        "git_completion"
+        "git_completion",
+        "auto_recovery"
     ],
     "content": {
         "quick_index": {
@@ -95,6 +96,11 @@
         "git_completion": {
             "title": "Git Completion",
             "content": "## Git Completion\n\nHard rule: use the project's subtask finish wrapper whenever practical for task closure.\nPrefer `tools/repo/finalize_task_check_commit_push.py -Message \"<message>\"` when available; otherwise use the project's lower-level subtask finish wrapper.\nThe wrapper must discover changed files from git, run the batch finalizer, stage intentional source/assets/docs/config changes, verify staged changes, commit, push unless disabled, and report whether the working tree is clean.\nIf the working tree is not clean after commit/push, the subtask is not closed."
+        },
+        "auto_recovery": {
+            "title": "AUTO Recovery",
+            "format": "markdown-section",
+            "body": "## AUTO Recovery\n\nFor explicit START/STOP/CONTINUE AUTO or recovery work, read core/AUTO-PILOT.json. Use tools/automation/auto.py for exact-thread approved grants, native reservation and verified finalizer receipts. Persist lifecycle state and completion/blocker fields through the CLI, never by editing projections. Manual resume_auto.py only wakes eligible existing AUTO; no cron installation is implied.\n"
         }
     },
     "metadata": {
