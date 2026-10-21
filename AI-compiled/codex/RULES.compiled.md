@@ -7930,7 +7930,8 @@ Draft placeholder:
                     "python -B -m unittest discover -s tools/automation/tests -q",
                     "python -B tools/repo/check_pipeline_feature_contracts.py"
                 ],
-                "known_failure_if_missing": "External ticks can restart terminal grants, duplicate prompts after crashes or collide with active project work."
+                "known_failure_if_missing": "External ticks can restart terminal grants, duplicate prompts after crashes or collide with active project work.",
+                "finalizer_boundary": "Directory scopes expand changed descendants before staging; temporary current_task is excluded, while exact tracked-artifact deletion may be explicitly finalized. Regression: smoke_scoped_finalizer.py."
             }
         }
     },

@@ -73,6 +73,13 @@ def main() -> int:
         generated = root / "docs-tech/cache/doc_index.json"
         generated.parent.mkdir(parents=True)
         generated.write_text("{}\n", encoding="utf-8")
+        task = root / "docs-tech/cache/current_task.json"
+        task.write_text("{}\n", encoding="utf-8")
+        nested = root / "tools/new module/nested.py"
+        nested.parent.mkdir(parents=True)
+        nested.write_text("VALUE = 1\n", encoding="utf-8")
+        sibling = root / "tools/new module-other.py"
+        sibling.write_text("OTHER = 2\n", encoding="utf-8")
         logs = root / "logs/local.json"
         logs.parent.mkdir()
         logs.write_text("{}\n", encoding="utf-8")
@@ -83,6 +90,12 @@ def main() -> int:
         all_paths = finisher.final_commit_candidate_paths(root, [])
         assert "concurrent.txt" in all_paths and "unrelated.txt" in all_paths
         assert "logs/local.json" not in all_paths
+        assert "docs-tech/cache/current_task.json" not in all_paths
+        directory_scope = finisher.final_commit_candidate_paths(root, ["tools/new module"])
+        assert directory_scope == ["docs-tech/cache/doc_index.json", "tools/new module/nested.py"], directory_scope
+        assert finisher.stage_paths(root, directory_scope) == 0
+        staged = git(root, "diff", "--cached", "--name-only").splitlines()
+        assert "tools/new module/nested.py" in staged and "tools/new module-other.py" not in staged, staged
         missing = finisher.final_commit_candidate_paths(root, ["missing.txt"])
         assert missing == ["docs-tech/cache/doc_index.json"]
         with patch.object(sys, "argv", ["finalizer", "--message", "test", "--repo-root", str(root), "--paths", "selected.txt", "--no-push"]):
@@ -90,6 +103,11 @@ def main() -> int:
                 assert wrapper.main() == 0
                 command = execute.call_args.args[0]
                 assert command[command.index("--paths") + 1] == "selected.txt"
+        git(root, "add", "docs-tech/cache/current_task.json")
+        git(root, "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "commit", "--quiet", "-m", "fixture")
+        task.unlink()
+        cleanup = finisher.final_commit_candidate_paths(root, ["docs-tech/cache/current_task.json"])
+        assert cleanup == ["docs-tech/cache/current_task.json"], cleanup
     print("OK: scoped commit stages selected/deleted files and generated cache, excludes concurrent edits/logs, and wrapper forwards --paths.")
     return 0
 

@@ -8,7 +8,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from repo_tool_helpers import changed_paths, git_lines, normalize_path, package_root, repo_root, run
+from repo_tool_helpers import changed_paths, git_lines, normalize_path, package_root, repo_root, run, split_values
 
 
 LOCAL_ARTIFACT_PREFIXES = (
@@ -24,6 +24,8 @@ LOCAL_ARTIFACT_PATHS = {
     "CONSOLE-LOG",
     "CONSOLE-LOG-SUMMARY",
     "PROMPT-SNAPSHOT",
+    "docs-tech/cache/current_task.json",
+    "SocratexAI/docs-tech/cache/current_task.json",
 }
 FINALIZER_GENERATED_PREFIXES = (
     "AI-compiled/",
@@ -53,8 +55,13 @@ def artifact_path(path: str) -> bool:
 
 
 def commit_candidate_paths(root: Path, raw_paths: list[str]) -> list[str]:
-    candidates = changed_paths(root, raw_paths or None)
-    return [path for path in candidates if not artifact_path(path)]
+    candidates = changed_paths(root)
+    scopes = [path.rstrip("/") for path in split_values(raw_paths)]
+    if raw_paths:
+        candidates = [path for path in candidates if any(path == scope or path.startswith(scope + "/") for scope in scopes)]
+    return [path for path in candidates if not artifact_path(path) or (
+        path in scopes and not (root / path).exists()
+        and run_git(root, ["ls-files", "--error-unmatch", "--", path], capture=True).returncode == 0)]
 
 
 def final_commit_candidate_paths(root: Path, raw_paths: list[str]) -> list[str]:
@@ -62,6 +69,7 @@ def final_commit_candidate_paths(root: Path, raw_paths: list[str]) -> list[str]:
     if not raw_paths:
         return current
     selected = set(commit_candidate_paths(root, raw_paths))
+    current = sorted(set(current) | selected)
     return sorted(
         path for path in current
         if path in selected

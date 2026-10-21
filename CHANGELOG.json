@@ -581,6 +581,12 @@
                 "date": "2026-10-21",
                 "feature": "manual_auto_recovery",
                 "change": "Added manual Python/BAT AUTO recovery with exact chat targeting, native desktop activity/account checks and a durable outbox; portable lifecycle projects completion and blocker data. Why: Resume only approved unfinished idle AUTO without duplicate prompts, new chats or implicit scheduler installation."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-10-21",
+                "feature": "manual_auto_recovery",
+                "change": "Fixed scoped finalization of new directories: expand only changed descendants, preserve sibling edits and exclude temporary current-task state. Why: A directory scope must actually commit its new scripts without staging temporary task memory."
             }
         ]
     },

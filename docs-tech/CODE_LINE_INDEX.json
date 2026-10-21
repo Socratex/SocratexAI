@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-21T13:24:07+02:00",
+    "generatedAt": "2026-10-21T13:26:23+02:00",
     "threshold": 300,
     "files": [
         {
@@ -189,6 +189,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/finalize_changed_files_commit_push.py",
+            "lines": 160,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/document_schema_migration_engine.py",
             "lines": 156,
             "extension": ".py",
@@ -203,12 +209,6 @@
         {
             "path": "tools/repo/sync_pipeline_featurelist.py",
             "lines": 153,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/finalize_changed_files_commit_push.py",
-            "lines": 152,
             "extension": ".py",
             "large": false
         },
@@ -321,6 +321,12 @@
             "large": false
         },
         {
+            "path": "tools/repo/smoke_scoped_finalizer.py",
+            "lines": 102,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/adapters/gpt_shared_conversation_extract.py",
             "lines": 101,
             "extension": ".py",
@@ -412,12 +418,6 @@
         },
         {
             "path": "tools/knowledge/project_design_context.py",
-            "lines": 84,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/repo/smoke_scoped_finalizer.py",
             "lines": 84,
             "extension": ".py",
             "large": false
