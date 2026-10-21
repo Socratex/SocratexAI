@@ -1,6 +1,8 @@
 """Recovery safety: lifecycle, crash window, native authority and exact delivery."""
 
 import json
+import os
+import subprocess
 import struct
 import tempfile
 import unittest
@@ -174,6 +176,35 @@ class RecoveryTests(unittest.TestCase):
                            self.observe(status="active", active_project_threads=["A"]), [], now=1000)
         self.assertEqual("queue_complete", result["reason"])
 
+    def test_switching_existing_run_detaches_heartbeat_without_resetting_progress(self):
+        self.change(completed=2, state="waiting_turn_end", checkpoint="keep", inflight=None)
+        before = self.registry.get("A")
+        result = self.registry.use_manual_transport("A", self.entry["run_id"])
+        after = self.registry.get("A")
+        self.assertEqual("heartbeat-A", result["scheduler_id_to_pause"])
+        self.assertEqual("heartbeat-A", after["retired_scheduler_id"])
+        self.assertIsNone(after["scheduler_id"])
+        for key in ("run_id", "completed", "state", "enabled", "checkpoint", "inflight"):
+            self.assertEqual(before[key], after[key])
+        self.assertEqual("manual_wake_only", scheduler_request(after)["action"])
+
+    def test_account_preflight_does_not_observe_project_or_send_while_limited(self):
+        class Bridge:
+            def observation(self, entry):
+                raise AssertionError("Account denial must be handled before project scans")
+
+            def send(self, thread):
+                raise AssertionError("Account denial must prevent sending")
+
+        result = sweep(self.registry, Bridge(), account_limits={"ordinaryUsageAllowed": False})
+        self.assertEqual("account_limit", result[0]["reason"])
+        self.assertIsNone(self.registry.get("A").get("wake_dispatch"))
+
+    def test_new_grants_default_to_external_manual_transport(self):
+        entry = self.registry.start("new", str(self.root), "test", ["PLAN.json"], 3, "native")
+        self.assertEqual("manual", entry["wake_transport"])
+        self.assertEqual("manual_wake_only", scheduler_request(entry)["action"])
+
     def test_stop_between_observation_and_claim_prevents_send(self):
         registry = self.registry
         observation = self.observe(observed_at=__import__("time").time())
@@ -256,6 +287,29 @@ class DesktopProtocolTests(unittest.TestCase):
         bridge.request = request
         bridge.send("A")
         self.assertEqual({"threadId": "A", "hostId": "local", "prompt": "CONTINUE-AUTO"}, captured[0]["arguments"])
+
+
+class ConsoleSchedulerTests(unittest.TestCase):
+    @unittest.skipUnless(os.name == "nt", "Windows CMD launcher")
+    def test_once_runs_exactly_one_checker_in_foreground_and_preserves_exit_code(self):
+        source = Path(__file__).resolve().parents[3] / "AUTO scheduler.bat"
+        with tempfile.TemporaryDirectory(prefix="auto console ") as directory:
+            root = Path(directory)
+            launcher = root / "AUTO scheduler.bat"
+            write_utf8_file(launcher, source.read_text(encoding="utf-8"))
+            write_utf8_file(root / "AUTO resume.bat", '@echo off\necho %*>>"%~dp0count.txt"\nexit /b 37\n')
+            result = subprocess.run(f'cmd /d /s /c ""{launcher}" --once"', cwd=root.parent,
+                                    capture_output=True, timeout=5)
+            self.assertEqual(37, result.returncode, (result.stdout, result.stderr))
+            self.assertEqual(["--human"], (root / "count.txt").read_text().splitlines())
+
+    def test_scheduler_uses_foreground_call_and_interruptible_console_wait(self):
+        text = (Path(__file__).resolve().parents[3] / "AUTO scheduler.bat").read_text(encoding="utf-8")
+        self.assertIn('call "%AUTO_SCHEDULER_ROOT%AUTO resume.bat" --human', text)
+        self.assertIn('/t 600 /nobreak', text)
+        self.assertNotIn("start ", text.casefold())
+        self.assertNotIn("powershell", text.casefold())
+        self.assertIn("if errorlevel 1 exit /b 2", text)
 
 
 if __name__ == "__main__":

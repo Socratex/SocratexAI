@@ -217,7 +217,8 @@
             "test_code_line_index.py",
             "auto.py",
             "sync_auto.py",
-            "AUTO resume.bat"
+            "AUTO resume.bat",
+            "AUTO scheduler.bat"
         ]
     },
     "metadata": {

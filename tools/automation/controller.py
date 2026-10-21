@@ -102,7 +102,7 @@ class Registry:
                     fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
 
     def start(self, thread_id: str, repo: str, scope: str, sources: list[str], batch_size: int = 3,
-              mode: str = "pilot", prompt_context: str = "", wake_transport: str = "heartbeat") -> dict:
+              mode: str = "pilot", prompt_context: str = "", wake_transport: str = "manual") -> dict:
         thread_id = nonempty(thread_id, "thread_id")
         scope = nonempty(scope, "scope")
         if not isinstance(prompt_context, str):
@@ -153,6 +153,16 @@ class Registry:
     def get(self, thread_id: str) -> dict:
         with self.transaction() as data:
             return dict(data["threads"][thread_id])
+
+    def use_manual_transport(self, thread_id: str, run_id: str) -> dict:
+        with self.transaction() as data:
+            entry = current_run(data, thread_id, run_id)
+            previous = entry.get("scheduler_id")
+            if previous:
+                entry["retired_scheduler_id"] = previous
+            entry.update(wake_transport="manual", scheduler_id=None)
+            return {"action": "manual_transport", "thread_id": thread_id, "run_id": run_id,
+                    "scheduler_id_to_pause": previous, "dispatch": False}
 
     def context(self, thread_id: str | None = None, scheduler_id: str | None = None) -> dict:
         with self.transaction() as data:
@@ -211,6 +221,7 @@ class Registry:
             if not entry["enabled"]:
                 raise ValueError("Cannot attach a scheduler to a stopped AUTO run")
             entry["scheduler_id"] = nonempty(scheduler_id, "scheduler_id")
+            entry["wake_transport"] = "heartbeat"
 
     def confirm_wake(self, thread_id: str, run_id: str, scheduler_id: str) -> dict:
         with self.transaction() as data:

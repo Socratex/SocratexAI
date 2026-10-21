@@ -34,12 +34,12 @@ def parser() -> argparse.ArgumentParser:
     start.add_argument("--sources", nargs="+", required=True, help="Approved canonical project-relative source files")
     start.add_argument("--batch-size", type=int, default=3)
     start.add_argument("--mode", choices=("pilot", "native"), default="pilot")
-    start.add_argument("--wake-transport", choices=("heartbeat", "manual"), default="heartbeat")
+    start.add_argument("--wake-transport", choices=("heartbeat", "manual"), default="manual")
     for name in ("start", "stop", "status", "finalize", "tick", "watch", "probe", "attach-scheduler", "confirm-wake", "report",
-                 "native-snapshot", "native-begin", "scheduler-request", "control-handoff", "project-roster", "context", "import-progress", "project-tasks"):
+                 "native-snapshot", "native-begin", "scheduler-request", "control-handoff", "project-roster", "context", "import-progress", "project-tasks", "use-manual-transport"):
         cmd = start if name == "start" else sub.add_parser(name)
         cmd.add_argument("--thread-id", default=os.environ.get("CODEX_THREAD_ID"), help="Required identity; never guessed from recency")
-        if name in {"finalize", "attach-scheduler", "confirm-wake", "native-begin", "control-handoff", "import-progress"}:
+        if name in {"finalize", "attach-scheduler", "confirm-wake", "native-begin", "control-handoff", "import-progress", "use-manual-transport"}:
             cmd.add_argument("--run-id", required=True)
         if name == "finalize":
             cmd.add_argument("--repo", required=True)
@@ -99,6 +99,8 @@ def execute(args: argparse.Namespace) -> object:
         return registry.start(args.thread_id, args.repo, args.scope, args.sources, args.batch_size, args.mode, args.prompt_context, args.wake_transport)
     if command == "status":
         return registry.get(args.thread_id)
+    if command == "use-manual-transport":
+        return registry.use_manual_transport(args.thread_id, args.run_id)
     if command == "stop":
         result = registry.stop(args.thread_id)
         return {"action": "stopped", "scheduler_id_to_pause": result["scheduler_id"], "run_id": result["run_id"]}

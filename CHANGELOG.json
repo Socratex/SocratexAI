@@ -587,6 +587,12 @@
                 "date": "2026-10-21",
                 "feature": "manual_auto_recovery",
                 "change": "Fixed scoped finalization of new directories: expand only changed descendants, preserve sibling edits and exclude temporary current-task state. Why: A directory scope must actually commit its new scripts without staging temporary task memory."
+            },
+            {
+                "version": "1.1",
+                "date": "2026-10-21",
+                "feature": "manual_auto_recovery",
+                "change": "Added a foreground CMD AUTO scheduler every10min; Python remains one-shot with account-limit preflight. New grants default to external/manual transport; existing grants can detach heartbeat without resetting progress. Why: Keep scheduling visible and stop future checks when the console closes, avoiding native scheduled prompts during account denial."
             }
         ]
     },

@@ -82,7 +82,7 @@
         },
         "auto_recovery": {
             "title": "AUTO Recovery",
-            "rule": "Route explicit AUTO commands and external recovery through FLOWS auto_pilot and core/AUTO-PILOT.json. The shared local registry owns approved grants/progress and durable delivery outbox. A quiet or unloaded chat is not itself a grant. Default portable source AUTO transport is manual; never install cron implicitly."
+            "rule": "Use FLOWS auto_pilot and core/AUTO-PILOT.json. New AUTO grants default to manual transport. Visible foreground AUTO scheduler.bat calls the one-shot checker every600s; closing CMD stops future checks. Never recreate native heartbeat after a manual finalizer; respect account denial before scans/sending. No OS autostart is installed implicitly."
         }
     },
     "metadata": {

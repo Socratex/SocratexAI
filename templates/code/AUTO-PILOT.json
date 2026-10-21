@@ -2,12 +2,14 @@
     "index": [
         "owner",
         "commands",
-        "lifecycle"
+        "lifecycle",
+        "scheduler"
     ],
     "content": {
         "owner": "Installed shared contract: SocratexAI/core/AUTO-PILOT.json. Source scripts: SocratexAI/tools/automation. Keep project task adapters separate.",
         "commands": "Explicit START AUTO, STOP AUTO, CONTINUE-AUTO. Manual runner: python -B SocratexAI/tools/automation/resume_auto.py; --dry-run for observation. No scheduler installed.",
-        "lifecycle": "Register approved scope/source/batch, native-begin before work, verified finalizer receipt after project checks/commit/push. Persist progress and recovery completion/blocker fields; never fabricate idle or operator acceptance."
+        "lifecycle": "Register approved scope/source/batch, native-begin before work, verified finalizer receipt after project checks/commit/push. Persist progress and recovery completion/blocker fields; never fabricate idle or operator acceptance.",
+        "scheduler": "Visible AUTO scheduler.bat calls one-shot resume_auto.py every600s. Closing CMD stops future checks. START defaults manual; no native heartbeat or autostart installation. Keep completion/progress/STOP checks."
     },
     "metadata": {
         "document": {

@@ -138,7 +138,8 @@
         "test_code_line_index.py",
         "auto.py",
         "sync_auto.py",
-        "AUTO resume.bat"
+        "AUTO resume.bat",
+        "AUTO scheduler.bat"
     ],
     "content": {
         "add_changelog_entry.py": {
@@ -2968,7 +2969,7 @@
         "resume_auto.py": {
             "path": "tools/automation/resume_auto.py",
             "category": "Pipeline",
-            "description": "One manual recovery sweep for existing active unfinished AUTO grants; exact chat ID, limits, complete native project activity and durable duplicate guard.",
+            "description": "One-shot AUTO check: account limits first, native project activity, exact-ID send and duplicate guard; always exits. --human prints console output.",
             "input": {
                 "required": [],
                 "optional": [
@@ -2981,7 +2982,8 @@
                     "--configure",
                     "--timeout",
                     "--resolve-delivery",
-                    "--confirmed-consumed-or-not-delivered"
+                    "--confirmed-consumed-or-not-delivered",
+                    "--human"
                 ],
                 "rule": "Read AUTO-PILOT manual_recovery. Default sends only eligible existing AUTO. --dry-run never reserves/sends. --configure saves explicit control chat identity. Never install a schedule or restart terminal grants. Uncertain deliveries stay blocked until native acknowledgement or explicit operator reconciliation."
             },
@@ -3026,9 +3028,10 @@
                     "--snapshot-file",
                     "--tasks-file",
                     "--scheduler-id",
-                    "--wake-id"
+                    "--wake-id",
+                    "use-manual-transport --thread-id ID --run-id RUN"
                 ],
-                "rule": "Read core/AUTO-PILOT.json and generated per-chat instructions. Source pipeline START uses --mode native --wake-transport manual unless an existing heartbeat was explicitly selected. Generic task lists must have canonical source hashes; schema2 project/F8 adapters are optional and not bundled. Finalize after normal repository verification and commit/push. Never fabricate operator acceptance."
+                "rule": "Read core/AUTO-PILOT.json and generated per-chat instructions. Source pipeline START uses --mode native --wake-transport manual unless an existing heartbeat was explicitly selected. Generic task lists must have canonical source hashes; schema2 project/F8 adapters are optional and not bundled. Finalize after normal repository verification and commit/push. Never fabricate operator acceptance. New grants default to manual. use-manual-transport detaches the old scheduler preserving progress; pause that exact native automation first. attach-scheduler is explicit heartbeat opt-in only."
             },
             "output": {
                 "success": "JSON grant/context/authorization/report; only execute grants one unit.",
@@ -3065,6 +3068,22 @@
             "output": {
                 "success": "Python recovery report.",
                 "failure": "Python exit code."
+            }
+        },
+        "AUTO scheduler.bat": {
+            "path": "AUTO scheduler.bat",
+            "category": "automation",
+            "description": "Visible foreground CMD scheduler: one check now, then every600s. Closing its console stops future checks; no detached process or autostart installation.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "--once"
+                ],
+                "rule": "Calls AUTO resume.bat --human synchronously. --once preserves checker exit code; failed timeout exits instead of looping."
+            },
+            "output": {
+                "success": "Visible readable check results and600s waiting; --once exits after one sweep.",
+                "failure": "Checker errors remain visible and retry at next interval; wait failure exits2."
             }
         }
     },

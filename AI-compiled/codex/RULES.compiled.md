@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-67b47e291cd8
+Generated: source-9aae96c9cbe0
 
 ## Source of Truth
 
@@ -7902,7 +7902,8 @@ Draft placeholder:
                     "tools/automation/tests/test_recovery.py",
                     "tools/automation/__init__.py",
                     "tools/automation/codex_probe.py",
-                    "tools/automation/finalizer.py"
+                    "tools/automation/finalizer.py",
+                    "templates/code/AUTO scheduler.bat"
                 ],
                 "required_scripts": [
                     "auto.py",
@@ -7931,7 +7932,8 @@ Draft placeholder:
                     "python -B tools/repo/check_pipeline_feature_contracts.py"
                 ],
                 "known_failure_if_missing": "External ticks can restart terminal grants, duplicate prompts after crashes or collide with active project work.",
-                "finalizer_boundary": "Directory scopes expand changed descendants before staging; temporary current_task is excluded, while exact tracked-artifact deletion may be explicitly finalized. Regression: smoke_scoped_finalizer.py."
+                "finalizer_boundary": "Directory scopes expand changed descendants before staging; temporary current_task is excluded, while exact tracked-artifact deletion may be explicitly finalized. Regression: smoke_scoped_finalizer.py.",
+                "console_scheduler": "Visible foreground CMD loop owns timing; checker is one-shot with limit preflight. Defaults manual and migrates old grant transport without resetting progress."
             }
         }
     },

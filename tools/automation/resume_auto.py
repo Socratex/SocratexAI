@@ -8,28 +8,36 @@ import json
 import os
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from automation.controller import Registry, project_path  # noqa: E402
+from automation.controller import Registry, current_run, limit_availability, project_path  # noqa: E402
 from automation.desktop_bridge import DesktopBridge, find_endpoint  # noqa: E402
 from automation.files import write_projection  # noqa: E402
 from automation.recovery import eligibility, record_delivery, reserve_wake, resolve_delivery  # noqa: E402
 
 
 def sweep(registry: Registry, bridge, *, dry_run: bool = False, repo: str | None = None,
-          thread_id: str | None = None) -> list[dict]:
+          thread_id: str | None = None, account_limits: dict | None = None) -> list[dict]:
     # Freeze exact run identities, then recheck each under the shared OS lock.
     with registry.transaction() as data:
         entries = [dict(row) for row in data["threads"].values()
                    if (repo is None or row["repo"] == project_path(repo))
                    and (thread_id is None or row["thread_id"] == thread_id)]
     results = []
+    available, retry_at = limit_availability(account_limits, time.time()) if account_limits is not None else (True, 0)
     for entry in entries:
         reason = eligibility(entry, time.time())
         if reason:
             results.append({"thread_id": entry["thread_id"], "action": "skip", "reason": reason})
+            continue
+        if not available:
+            if not dry_run:
+                with registry.transaction() as data:
+                    current_run(data, entry["thread_id"], entry["run_id"])["next_check_at"] = retry_at
+            results.append({"thread_id": entry["thread_id"], "action": "skip", "reason": "account_limit", "next_check_at": retry_at})
             continue
         try:
             observation = bridge.observation(entry)
@@ -53,6 +61,24 @@ def sweep(registry: Registry, bridge, *, dry_run: bool = False, repo: str | None
     return results
 
 
+def human_report(report: dict) -> str:
+    reasons = {"inactive": "AUTO nieaktywne lub zakonczone", "terminal_or_needs_input": "STOP lub potrzebna decyzja",
+               "account_limit": "limit konta - nie wysylam promptu", "backoff": "oczekiwanie do kolejnej dozwolonej proby",
+               "delivery_pending": "poprzednia wysylka oczekuje na potwierdzenie", "thread_not_idle": "czat pracuje lub nie jest gotowy",
+               "project_busy": "inny czat projektu pracuje", "project_reserved": "projekt ma rezerwacje",
+               "batch_finished_or_invalid": "partia zakonczona lub niepoprawny stan"}
+    timestamp = datetime.fromtimestamp(report["observed_at"]).astimezone().strftime("%Y-%m-%d %H:%M:%S")
+    lines = [f"[{timestamp}] Kontrola AUTO" + (" (podglad)" if report["dry_run"] else "")]
+    actions = {"sent": "wyslano CONTINUE-AUTO", "would_send": "podglad: mozna wznowic",
+               "blocked": "kontrola zablokowana", "delivery_unknown": "niepotwierdzona wysylka - bez ponawiania"}
+    for row in report["results"]:
+        detail = reasons.get(row.get("reason"), row.get("error") or actions.get(row["action"], row["action"]))
+        lines.append(f"  {row['thread_id']}: {detail}")
+    if not report["results"]:
+        lines.append("  Brak pasujacych AUTO.")
+    return "\n".join(lines)
+
+
 def main(argv: list[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -60,6 +86,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--state-dir", type=Path)
     parser.add_argument("--dry-run", action="store_true", help="Observe and report; never reserve or send a prompt")
+    parser.add_argument("--human", action="store_true", help="Readable console output instead of JSON")
     parser.add_argument("--repo", help="Optional exact project filter; default scans all registered AUTO grants")
     parser.add_argument("--thread-id", help="Optional exact target filter; never selected by recency")
     parser.add_argument("--endpoint", help="Local desktop pipe/socket; default detects the running Windows app")
@@ -95,10 +122,11 @@ def main(argv: list[str] | None = None) -> int:
         endpoint = find_endpoint(args.endpoint or config.get("endpoint"))
         with DesktopBridge(endpoint, caller, args.timeout) as bridge:
             sweep_started = True
-            results = sweep(registry, bridge, dry_run=args.dry_run, repo=args.repo, thread_id=args.thread_id)
+            limits = bridge.call("get_usage_limits", {})
+            results = sweep(registry, bridge, dry_run=args.dry_run, repo=args.repo, thread_id=args.thread_id, account_limits=limits)
         report = {"observed_at": time.time(), "dry_run": args.dry_run, "results": results}
         write_projection(registry.home / "last-recovery.json", json.dumps(report, ensure_ascii=False, indent=4) + "\n")
-        print(json.dumps(report, ensure_ascii=False, indent=4))
+        print(human_report(report) if args.human else json.dumps(report, ensure_ascii=False, indent=4))
         return 2 if any(row["action"] in {"blocked", "delivery_unknown"} for row in results) else 0
     except (OSError, ValueError, KeyError, RuntimeError, TimeoutError) as exc:
         print(json.dumps({"ok": False, "dispatch_may_have_occurred": sweep_started and not args.dry_run,

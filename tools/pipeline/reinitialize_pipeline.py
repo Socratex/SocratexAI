@@ -118,6 +118,7 @@ def main() -> int:
     for pack in packs:
         if pack == "code":
             ensure_template(template_root, target_root, "code/AUTO resume.bat", "AUTO resume.bat", args.dry_run)
+            ensure_template(template_root, target_root, "code/AUTO scheduler.bat", "AUTO scheduler.bat", args.dry_run)
             for template, destination in [
                 ("code/DOCS.json", "DOCS.json"),
                 ("code/STATE.json", "STATE.json"),

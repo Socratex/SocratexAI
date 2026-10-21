@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-21T13:26:23+02:00",
+    "generatedAt": "2026-10-21T18:11:23+02:00",
     "threshold": 300,
     "files": [
         {
@@ -16,7 +16,7 @@
         },
         {
             "path": "tools/automation/controller.py",
-            "lines": 459,
+            "lines": 469,
             "extension": ".py",
             "large": true
         },
@@ -52,7 +52,7 @@
         },
         {
             "path": "tools/pipeline/Initialize-SocratexPipeline.py",
-            "lines": 304,
+            "lines": 305,
             "extension": ".py",
             "large": true
         },
@@ -71,6 +71,12 @@
         {
             "path": "tools/pipeline/import_existing_project.py",
             "lines": 259,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/tests/test_recovery.py",
+            "lines": 257,
             "extension": ".py",
             "large": false
         },
@@ -129,12 +135,6 @@
             "large": false
         },
         {
-            "path": "tools/automation/tests/test_recovery.py",
-            "lines": 211,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/documents/document_structure_normalizer_engine.py",
             "lines": 204,
             "extension": ".py",
@@ -166,7 +166,7 @@
         },
         {
             "path": "tools/automation/auto.py",
-            "lines": 173,
+            "lines": 175,
             "extension": ".py",
             "large": false
         },
@@ -232,7 +232,7 @@
         },
         {
             "path": "tools/pipeline/reinitialize_pipeline.py",
-            "lines": 137,
+            "lines": 138,
             "extension": ".py",
             "large": false
         },
@@ -257,6 +257,12 @@
         {
             "path": "tools/repo/repo_tool_helpers.py",
             "lines": 130,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/resume_auto.py",
+            "lines": 126,
             "extension": ".py",
             "large": false
         },
@@ -329,12 +335,6 @@
         {
             "path": "tools/adapters/gpt_shared_conversation_extract.py",
             "lines": 101,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/resume_auto.py",
-            "lines": 100,
             "extension": ".py",
             "large": false
         },
@@ -840,6 +840,18 @@
             "path": "tools/text/write_utf8_file.py",
             "lines": 21,
             "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "AUTO scheduler.bat",
+            "lines": 20,
+            "extension": ".bat",
+            "large": false
+        },
+        {
+            "path": "templates/code/AUTO scheduler.bat",
+            "lines": 20,
+            "extension": ".bat",
             "large": false
         },
         {
