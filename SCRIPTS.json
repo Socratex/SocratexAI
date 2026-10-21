@@ -138,7 +138,6 @@
         "test_code_line_index.py",
         "auto.py",
         "sync_auto.py",
-        "AUTO resume.bat",
         "AUTO scheduler.bat"
     ],
     "content": {
@@ -3057,19 +3056,6 @@
                 "failure": "Exit1 for drift in check mode; invalid path rejected."
             }
         },
-        "AUTO resume.bat": {
-            "path": "AUTO resume.bat",
-            "category": "automation",
-            "description": "Windows manual AUTO recovery launcher with argument/exit-code forwarding.",
-            "input": {
-                "required": [],
-                "optional": []
-            },
-            "output": {
-                "success": "Python recovery report.",
-                "failure": "Python exit code."
-            }
-        },
         "AUTO scheduler.bat": {
             "path": "AUTO scheduler.bat",
             "category": "automation",
@@ -3079,7 +3065,7 @@
                 "optional": [
                     "--once"
                 ],
-                "rule": "Calls AUTO resume.bat --human synchronously. --once preserves checker exit code; failed timeout exits instead of looping."
+                "rule": "Directly invokes internal resume_auto.py --human synchronously. The only user-facing AUTO BAT. --once preserves checker exit code; failed timeout exits instead of looping."
             },
             "output": {
                 "success": "Visible readable check results and600s waiting; --once exits after one sweep.",

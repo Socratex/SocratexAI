@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-21T18:11:23+02:00",
+    "generatedAt": "2026-10-21T19:04:47+02:00",
     "threshold": 300,
     "files": [
         {
@@ -52,7 +52,7 @@
         },
         {
             "path": "tools/pipeline/Initialize-SocratexPipeline.py",
-            "lines": 305,
+            "lines": 304,
             "extension": ".py",
             "large": true
         },
@@ -69,14 +69,14 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/import_existing_project.py",
-            "lines": 259,
+            "path": "tools/automation/tests/test_recovery.py",
+            "lines": 260,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/automation/tests/test_recovery.py",
-            "lines": 257,
+            "path": "tools/pipeline/import_existing_project.py",
+            "lines": 259,
             "extension": ".py",
             "large": false
         },
@@ -232,7 +232,7 @@
         },
         {
             "path": "tools/pipeline/reinitialize_pipeline.py",
-            "lines": 138,
+            "lines": 137,
             "extension": ".py",
             "large": false
         },
@@ -771,6 +771,18 @@
             "large": false
         },
         {
+            "path": "AUTO scheduler.bat",
+            "lines": 24,
+            "extension": ".bat",
+            "large": false
+        },
+        {
+            "path": "templates/code/AUTO scheduler.bat",
+            "lines": 24,
+            "extension": ".bat",
+            "large": false
+        },
+        {
             "path": "tools/codebase/test_code_line_index.py",
             "lines": 24,
             "extension": ".py",
@@ -843,18 +855,6 @@
             "large": false
         },
         {
-            "path": "AUTO scheduler.bat",
-            "lines": 20,
-            "extension": ".bat",
-            "large": false
-        },
-        {
-            "path": "templates/code/AUTO scheduler.bat",
-            "lines": 20,
-            "extension": ".bat",
-            "large": false
-        },
-        {
             "path": "tools/automation/generic_instructions.py",
             "lines": 20,
             "extension": ".py",
@@ -888,18 +888,6 @@
             "path": "tools/knowledge/knowledge_file_select.py",
             "lines": 13,
             "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "AUTO resume.bat",
-            "lines": 9,
-            "extension": ".bat",
-            "large": false
-        },
-        {
-            "path": "templates/code/AUTO resume.bat",
-            "lines": 9,
-            "extension": ".bat",
             "large": false
         },
         {

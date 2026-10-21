@@ -6,6 +6,7 @@ import subprocess
 import struct
 import tempfile
 import unittest
+import sys
 from pathlib import Path
 
 from tools.automation.controller import Registry, limit_availability
@@ -297,15 +298,17 @@ class ConsoleSchedulerTests(unittest.TestCase):
             root = Path(directory)
             launcher = root / "AUTO scheduler.bat"
             write_utf8_file(launcher, source.read_text(encoding="utf-8"))
-            write_utf8_file(root / "AUTO resume.bat", '@echo off\necho %*>>"%~dp0count.txt"\nexit /b 37\n')
+            checker = root / "Tools/automation/resume_auto.py"
+            write_utf8_file(checker, 'import sys\nfrom pathlib import Path\np=Path(__file__).parents[2]/"count.txt"\np.write_text(" ".join(sys.argv[1:])+"\\n")\nraise SystemExit(37)\n')
+            environment = dict(os.environ, PATH=str(Path(sys.executable).parent) + os.pathsep + os.environ.get("PATH", ""))
             result = subprocess.run(f'cmd /d /s /c ""{launcher}" --once"', cwd=root.parent,
-                                    capture_output=True, timeout=5)
+                                    capture_output=True, timeout=5, env=environment)
             self.assertEqual(37, result.returncode, (result.stdout, result.stderr))
             self.assertEqual(["--human"], (root / "count.txt").read_text().splitlines())
 
     def test_scheduler_uses_foreground_call_and_interruptible_console_wait(self):
         text = (Path(__file__).resolve().parents[3] / "AUTO scheduler.bat").read_text(encoding="utf-8")
-        self.assertIn('call "%AUTO_SCHEDULER_ROOT%AUTO resume.bat" --human', text)
+        self.assertIn('"%AUTO_PYTHON%" -B "%AUTO_SCRIPT%" --human', text)
         self.assertIn('/t 600 /nobreak', text)
         self.assertNotIn("start ", text.casefold())
         self.assertNotIn("powershell", text.casefold())

@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-9aae96c9cbe0
+Generated: source-e53b0f525242
 
 ## Source of Truth
 
@@ -7887,7 +7887,6 @@ Draft placeholder:
                 "required_paths": [
                     "core/AUTO-PILOT.json",
                     "templates/code/AUTO-PILOT.json",
-                    "templates/code/AUTO resume.bat",
                     "tools/automation/auto.py",
                     "tools/automation/resume_auto.py",
                     "tools/automation/recovery.py",
@@ -7933,7 +7932,7 @@ Draft placeholder:
                 ],
                 "known_failure_if_missing": "External ticks can restart terminal grants, duplicate prompts after crashes or collide with active project work.",
                 "finalizer_boundary": "Directory scopes expand changed descendants before staging; temporary current_task is excluded, while exact tracked-artifact deletion may be explicitly finalized. Regression: smoke_scoped_finalizer.py.",
-                "console_scheduler": "Visible foreground CMD loop owns timing; checker is one-shot with limit preflight. Defaults manual and migrates old grant transport without resetting progress."
+                "console_scheduler": "One user-facing AUTO scheduler.bat directly runs the internal Python checker; no AUTO resume.bat wrapper. Foreground CMD owns600s waiting; closing console stops future checks."
             }
         }
     },

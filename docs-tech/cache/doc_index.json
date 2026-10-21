@@ -5400,7 +5400,6 @@
         "test_code_line_index.py",
         "auto.py",
         "sync_auto.py",
-        "AUTO resume.bat",
         "AUTO scheduler.bat"
       ],
       "top_level_keys": [
@@ -6235,12 +6234,6 @@
           "path": "content.sync_auto.py",
           "title": "",
           "ref": "content.sync_auto.py",
-          "status": ""
-        },
-        "AUTO resume.bat": {
-          "path": "content.AUTO resume.bat",
-          "title": "",
-          "ref": "content.AUTO resume.bat",
           "status": ""
         },
         "AUTO scheduler.bat": {

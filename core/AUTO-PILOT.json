@@ -15,7 +15,6 @@
     ],
     "content": {
         "entrypoints": [
-            "AUTO resume.bat",
             "python -B tools/automation/resume_auto.py",
             "--dry-run observes without sending",
             "--repo and --thread-id optionally narrow the exact targets",
@@ -32,11 +31,12 @@
         "concurrency": "Desktop observation and message enqueue are not one application transaction. If human input or another heartbeat starts in that interval, normal native-begin still blocks a second unit and STOP remains authoritative. The outbox prevents duplicate external sends; it does not claim exactly-once execution by a remote app. Do not override native project checks.",
         "execution": "START AUTO persists only the explicitly approved scope/source/batch in the shared registry. Agent CONTINUE-AUTO reads generated instructions, prepares a source-hashed task list and fresh native-snapshot, then native-begin before work. Finalize only after project checks/commit/push; auto.py finalize requires exact run/wake/receipt. Only todo/progress execute; needs_input/STOP/batch/queue completion remain terminal. Project-specific task-export adapters are optional and are not assumed by the portable toolkit.",
         "console_scheduler": {
-            "entrypoint": "AUTO scheduler.bat is a visible foreground CMD loop. It calls the one-shot AUTO resume.bat --human immediately, then waits 600 seconds using timeout.exe /nobreak. Closing that CMD stops future checks; an AUTO task already started in Codex continues independently. No START/detached process, Python polling loop, native heartbeat or OS scheduled task is created.",
-            "once": "AUTO resume.bat / resume_auto.py always performs one sweep and exits. AUTO scheduler.bat --once performs one sweep and returns the checker exit code, without waiting. Scheduler wait failure exits instead of spinning.",
+            "entrypoint": "AUTO scheduler.bat is a visible foreground CMD loop. It calls the one-shot resume_auto.py --human immediately, then waits 600 seconds using timeout.exe /nobreak. Closing that CMD stops future checks; an AUTO task already started in Codex continues independently. No START/detached process, Python polling loop, native heartbeat or OS scheduled task is created.",
+            "once": "resume_auto.py always performs one sweep and exits. AUTO scheduler.bat --once performs one sweep and returns the checker exit code, without waiting. Scheduler wait failure exits instead of spinning.",
             "limits": "One-shot runner reads account limits before any project scan or send. Denied/missing/malformed usage data cannot trigger a prompt; backoff is durable. Eligible candidates still need fresh complete project activity and a fresh final limit check at reservation.",
             "transport": "New START defaults to wake_transport=manual. use-manual-transport --thread-id ID --run-id RUN detaches scheduler_id into retired_scheduler_id without resetting enabled/state/progress/inflight. Pause the exact existing automation through automation_update before migration. attach-scheduler is an explicit legacy heartbeat opt-in; do not use it in normal AUTO or rearm the retired timer.",
-            "startup": "User may add a shortcut to AUTO scheduler.bat to Windows Startup. The window stays visible, and closing it stops its loop. No Startup shortcut/task/service is installed by this change. Python checker remains suitable for a future separately chosen cron."
+            "startup": "User may add a shortcut to AUTO scheduler.bat to Windows Startup. The window stays visible, and closing it stops its loop. No Startup shortcut/task/service is installed by this change. Python checker remains suitable for a future separately chosen cron.",
+            "single_launcher": "AUTO scheduler.bat is the only user-facing AUTO launcher. It directly starts the internal one-shot Python checker; there is no AUTO resume.bat wrapper. Closing CMD stops future checks."
         }
     },
     "metadata": {

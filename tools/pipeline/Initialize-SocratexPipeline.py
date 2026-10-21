@@ -119,7 +119,6 @@ def copy_project_files(root: Path, install_root: Path, keep: set[str], ai_mode: 
     if "code" in keep:
         for template in ["DOCS.json", "STATE.json", "_PLAN.json", "DECISIONS.json", "PIPELINE-CONFIG.json", "AUTO-PILOT.json"]:
             copy_template(root, install_root, f"code/{template}", template, dry_run)
-        copy_template(root, root, "code/AUTO resume.bat", "AUTO resume.bat", dry_run)
         copy_template(root, root, "code/AUTO scheduler.bat", "AUTO scheduler.bat", dry_run)
     else:
         for template in ["DOCS.json", "STATE.md", "_PLAN.md", "DECISIONS.md", "JOURNAL.md", "REVIEW.md", "PIPELINE-CONFIG.json"]:
