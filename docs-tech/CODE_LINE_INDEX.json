@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-21T23:35:20+02:00",
+    "generatedAt": "2026-10-28T23:25:03+01:00",
     "threshold": 300,
     "files": [
         {
@@ -16,7 +16,7 @@
         },
         {
             "path": "tools/automation/controller.py",
-            "lines": 484,
+            "lines": 515,
             "extension": ".py",
             "large": true
         },
@@ -147,6 +147,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/auto.py",
+            "lines": 186,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/quality/script_runtime_gate.py",
             "lines": 184,
             "extension": ".py",
@@ -167,12 +173,6 @@
         {
             "path": "tools/setup/run_interactive_setup.py",
             "lines": 181,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/auto.py",
-            "lines": 178,
             "extension": ".py",
             "large": false
         },
@@ -381,14 +381,20 @@
             "large": false
         },
         {
-            "path": "tools/pipeline/pipeline_bootstrap_index.py",
-            "lines": 93,
+            "path": "tools/automation/tests/test_console_scheduler.py",
+            "lines": 95,
             "extension": ".py",
             "large": false
         },
         {
             "path": "tools/automation/files.py",
-            "lines": 92,
+            "lines": 93,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/pipeline/pipeline_bootstrap_index.py",
+            "lines": 93,
             "extension": ".py",
             "large": false
         },
@@ -407,12 +413,6 @@
         {
             "path": "tools/automation/codex_probe.py",
             "lines": 89,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/tests/test_console_scheduler.py",
-            "lines": 88,
             "extension": ".py",
             "large": false
         },
@@ -449,6 +449,12 @@
         {
             "path": "tools/shared/repo_helpers.py",
             "lines": 79,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/tests/test_amend.py",
+            "lines": 78,
             "extension": ".py",
             "large": false
         },

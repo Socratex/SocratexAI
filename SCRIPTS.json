@@ -3029,9 +3029,11 @@
                     "--tasks-file",
                     "--scheduler-id",
                     "--wake-id",
-                    "use-manual-transport --thread-id ID --run-id RUN"
+                    "use-manual-transport --thread-id ID --run-id RUN",
+                    "--approval-note (amend)"
                 ],
-                "rule": "Read core/AUTO-PILOT.json and generated per-chat instructions. Source pipeline START uses --mode native --wake-transport manual unless an existing heartbeat was explicitly selected. Generic task lists must have canonical source hashes; schema2 project/F8 adapters are optional and not bundled. Finalize after normal repository verification and commit/push. Never fabricate operator acceptance. New grants default to manual. use-manual-transport detaches the old scheduler preserving progress; pause that exact native automation first. attach-scheduler is explicit heartbeat opt-in only."
+                "rule": "Read core/AUTO-PILOT.json and generated per-chat instructions. Source pipeline START uses --mode native --wake-transport manual unless an existing heartbeat was explicitly selected. Generic task lists must have canonical source hashes; schema2 project/F8 adapters are optional and not bundled. Finalize after normal repository verification and commit/push. Never fabricate operator acceptance. New grants default to manual. use-manual-transport detaches the old scheduler preserving progress; pause that exact native automation first. attach-scheduler is explicit heartbeat opt-in only.",
+                "amend_contract": "Po bezpośredniej zgodzie właściciela na rozszerzenie aktywnej kolejki zapisz najpierw nowy uporządkowany zakres w kanonicznym planie. auto.py amend --thread-id ID --run-id RUN --scope TEKST --batch-size N --approval-note TEKST [--prompt-context TEKST] zmienia wyłącznie scope, limit i opcjonalny kontekst. Wymaga dokładnego aktywnego nieterminalnego runu bez inflight; limit wolno tylko zachować lub zwiększyć. Repo/źródła/tryb/transport są stałe. Zachowuje run_id, licznik, receipts, historię, checkpoint, potrzeby operatora i recovery. Zapisuje rewizję z uzasadnieniem zgody, unieważnia projekcję zadań; następna rezerwacja wymaga świeżych źródeł. Powtórzenie jest idempotentne. Nie wznawia STOP/terminal, nie wysyła prompta, nie tworzy schedulera ani nowego runu. Zmiana grantu nie jest ukończeniem jednostki AUTO."
             },
             "output": {
                 "success": "JSON grant/context/authorization/report; only execute grants one unit.",

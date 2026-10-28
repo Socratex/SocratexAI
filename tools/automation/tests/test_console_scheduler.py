@@ -7,6 +7,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -40,8 +41,14 @@ class ConsoleStartupTests(unittest.TestCase):
             child.kill()
             child.wait(timeout=5)
             child.stdout.close()
-        with scheduler_lock(path) as available:
-            self.assertTrue(available)
+        # Windows may finish releasing file locks shortly after process exit is signalled.
+        deadline = time.monotonic() + 2
+        while True:
+            with scheduler_lock(path) as available:
+                if available:
+                    break
+            self.assertLess(time.monotonic(), deadline, "Lock survived owner process death")
+            time.sleep(0.01)
 
     @unittest.skipUnless(os.name == "nt", "Windows CMD")
     def test_serve_preserves_spaces_unicode_exit_code_and_releases_lock(self):

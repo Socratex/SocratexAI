@@ -150,6 +150,38 @@ class Registry:
             data["threads"][thread_id] = entry
             return dict(entry)
 
+    def amend(self, thread_id: str, run_id: str, scope: str, batch_size: int,
+              approval_note: str, prompt_context: str | None = None) -> dict:
+        scope = nonempty(scope, "scope")
+        approval_note = nonempty(approval_note, "approval_note")
+        if isinstance(batch_size, bool) or not isinstance(batch_size, int) or not 1 <= batch_size <= 100:
+            raise ValueError("batch_size must be an integer between 1 and 100")
+        if prompt_context is not None and not isinstance(prompt_context, str):
+            raise ValueError("prompt_context must be text")
+        with self.transaction() as data:
+            entry = current_run(data, thread_id, run_id)
+            if not entry["enabled"] or entry["state"] in TERMINAL_STATES:
+                raise ValueError("Only an active nonterminal AUTO grant may be amended")
+            if entry.get("inflight"):
+                raise ValueError("Finish the reserved unit before amending its grant")
+            if batch_size < entry["batch_size"]:
+                raise ValueError("An amendment may extend, never reduce, the batch limit")
+            context = entry.get("prompt_context", "") if prompt_context is None else prompt_context.strip()
+            before = {key: entry.get(key, "") for key in ("scope", "batch_size", "prompt_context")}
+            after = {"scope": scope, "batch_size": batch_size, "prompt_context": context}
+            if before == after:
+                return {"action": "grant_unchanged", "run_id": run_id, "completed": entry["completed"],
+                        "batch_size": batch_size, "dispatch": False}
+            entry.setdefault("grant_amendments", []).append({
+                "revision": len(entry.get("grant_amendments", [])) + 1,
+                "approved_at": time.time(), "approval_note": approval_note, "before": before, "after": after,
+            })
+            entry.update(after)
+            # A changed approved queue must be re-read from canonical sources before reservation.
+            entry.pop("task_projection", None)
+            return {"action": "grant_amended", "run_id": run_id, "completed": entry["completed"],
+                    "batch_size": batch_size, "revision": len(entry["grant_amendments"]), "dispatch": False}
+
     def get(self, thread_id: str) -> dict:
         with self.transaction() as data:
             return dict(data["threads"][thread_id])

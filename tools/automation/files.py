@@ -37,6 +37,7 @@ def progress_record(entry: dict) -> dict:
     return {"thread_id": entry["thread_id"], "run_id": entry["run_id"], "repo": entry["repo"],
             "scope": entry["scope"], "sources": entry["sources"], "state": entry["state"],
             "prompt_context": entry.get("prompt_context", ""),
+            "grant_amendments": entry.get("grant_amendments", []),
             "completed": entry["completed"], "batch_size": entry["batch_size"],
             "steps": steps, "inflight": entry.get("inflight"), "checkpoint": entry.get("checkpoint"),
             "task_projection": entry.get("task_projection", []),
@@ -96,7 +97,7 @@ def synchronize(home: Path, data: dict) -> None:
     for entry in data["threads"].values():
         located = paths(home, entry["thread_id"], entry["run_id"])
         configuration = {key: entry.get(key) for key in ("thread_id", "run_id", "repo", "scope", "sources", "mode",
-                         "enabled", "state", "batch_size", "completed", "scheduler_id", "prompt_context", "task_policy_version", "last_prompt_context", "wake_transport")}
+                         "enabled", "state", "batch_size", "completed", "scheduler_id", "prompt_context", "task_policy_version", "last_prompt_context", "wake_transport", "grant_amendments")}
         configuration.update(files=located, source_registry=str(home / "registry.json"))
         configuration["recovery"] = entry.get("recovery")
         write_projection(Path(located["thread"]), json.dumps(configuration, ensure_ascii=False, indent=4) + "\n")

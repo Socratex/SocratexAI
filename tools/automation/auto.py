@@ -35,12 +35,17 @@ def parser() -> argparse.ArgumentParser:
     start.add_argument("--batch-size", type=int, default=3)
     start.add_argument("--mode", choices=("pilot", "native"), default="pilot")
     start.add_argument("--wake-transport", choices=("heartbeat", "manual"), default="manual")
-    for name in ("start", "stop", "status", "finalize", "tick", "watch", "probe", "attach-scheduler", "confirm-wake", "report",
+    for name in ("start", "amend", "stop", "status", "finalize", "tick", "watch", "probe", "attach-scheduler", "confirm-wake", "report",
                  "native-snapshot", "native-begin", "scheduler-request", "control-handoff", "project-roster", "context", "import-progress", "project-tasks", "use-manual-transport"):
         cmd = start if name == "start" else sub.add_parser(name)
         cmd.add_argument("--thread-id", default=os.environ.get("CODEX_THREAD_ID"), help="Required identity; never guessed from recency")
-        if name in {"finalize", "attach-scheduler", "confirm-wake", "native-begin", "control-handoff", "import-progress", "use-manual-transport"}:
+        if name in {"amend", "finalize", "attach-scheduler", "confirm-wake", "native-begin", "control-handoff", "import-progress", "use-manual-transport"}:
             cmd.add_argument("--run-id", required=True)
+        if name == "amend":
+            cmd.add_argument("--scope", required=True)
+            cmd.add_argument("--batch-size", type=int, required=True)
+            cmd.add_argument("--approval-note", required=True)
+            cmd.add_argument("--prompt-context")
         if name == "finalize":
             cmd.add_argument("--repo", required=True)
             cmd.add_argument("--report-file", required=True)
@@ -100,6 +105,9 @@ def execute(args: argparse.Namespace) -> object:
         entry = registry.start(args.thread_id, args.repo, args.scope, args.sources, args.batch_size, args.mode, args.prompt_context, args.wake_transport)
         entry["console_scheduler"] = start_for_grant(entry, registry.home, Path(__file__).resolve().parents[2] / "AUTO scheduler.bat")
         return entry
+    if command == "amend":
+        return registry.amend(args.thread_id, args.run_id, args.scope, args.batch_size,
+                              args.approval_note, args.prompt_context)
     if command == "status":
         return registry.get(args.thread_id)
     if command == "use-manual-transport":

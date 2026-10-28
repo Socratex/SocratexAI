@@ -599,6 +599,12 @@
                 "date": "2026-10-21",
                 "feature": "manual_auto_recovery",
                 "change": "Manual AUTO now chains verified steps in its current chat. START opens one visible CMD watchdog with300s normal and600s limit polling, quiet status-change reporting, known reset time/remaining minutes, and one annotated exact-ID recovery prompt after fresh account availability. Why: Keep the watchdog as recovery support while preserving STOP, project locks, account checks and durable duplicate suppression."
+            },
+            {
+                "version": "0.2.0-alpha",
+                "date": "2026-10-28",
+                "feature": "active_auto_grant_amendment",
+                "change": "Added auto.py amend for explicitly approved active queue extensions. Keeps the same run, completed receipts, checkpoint, pending needs and recovery; rejects stale, terminal or reserved work and batch reductions. Records approval revisions and refreshes task projection without dispatching a prompt. Verified by preservation/rejection/idempotence tests and the portable AUTO suite."
             }
         ]
     },

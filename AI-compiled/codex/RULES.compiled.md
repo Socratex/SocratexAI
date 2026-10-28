@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-01c85de2081a
+Generated: source-885558563954
 
 ## Source of Truth
 
@@ -555,7 +555,8 @@ Draft placeholder:
             "surgical_scope_clean_island_code",
             "text_first_usage_search_with_legacy_fragment_pass",
             "gpt_conversation_ingestion_tools",
-            "manual_auto_recovery"
+            "manual_auto_recovery",
+            "active_auto_grant_amendment"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -7943,6 +7944,38 @@ Draft placeholder:
                 "standalone_identity": "No configure/environment prerequisite. Each eligible registered grant supplies its exact caller context unless explicitly overridden; destination always stays the exact registered target. Regression covers absent setup, multiple projects, limits, project busy and duplicate suppression.",
                 "watchdog_policy": "Manual AUTO self-continues immediately in the current chat/turn after a successful finalizer returns continuation.action=continue_current_turn. Refresh source task projection and authoritative native snapshot, then native-begin for each unit with current turn ID + :auto: + completed. Retry the same unit with the same wake ID. STOP, needs_input, batch/queue completion, account limits and project locks stop chaining. No messages to self and no native heartbeat in manual mode. START opens/reuses one visible CMD watchdog; closing CMD stops future recovery checks only. Foreground CMD checks every300s, or600s while the checker reports an account limit (exit10). Python always performs one sweep and exits. Limit data is queried again at most every600s, even when a later reset is known; the clock alone never authorizes sending. Preserve native project/limit checks and OS-locked outbox. Unknown delivery is never automatically retried. Console prints only changed status/error/reset time or a new successful send. Identical checks, countdown-only changes and initially inactive historical grants stay quiet. watchdog-status.json stores fingerprints, last-recovery.json is an overwritten snapshot. On entering a limit show its known local reset date/time and remaining minutes; unknown reset stays explicit. SOCRATEX_AUTO_TIMEZONE defaults to Europe/Warsaw, with OS local fallback when zone data is unavailable. Ordinary recovery sends exactly CONTINUE-AUTO to the registered ID. After a previously observed limit and a fresh available account snapshot, send exactly CONTINUE-AUTO (limit reached previously, continue). Persist that prompt in the prepared outbox. The suffix is transport metadata, never prompt_context or a scope change, and does not bypass native-begin. Terminal/input-blocked tasks remain asleep.",
                 "verification_evidence": "80 source AUTO tests and160 Riftbound AUTO tests passed. Two consecutive real Windows CMD checks: one project_busy change then silence, both exit0. Live post-limit production recovery remains operator verification."
+            },
+            "active_auto_grant_amendment": {
+                "summary": "Owner-approved extension of an active AUTO scope and batch limit without replacing its run or progress.",
+                "required_paths": [
+                    "tools/automation/auto.py",
+                    "tools/automation/controller.py",
+                    "tools/automation/files.py",
+                    "tools/automation/tests/test_amend.py",
+                    "core/AUTO-PILOT.json",
+                    "templates/code/AUTO-PILOT.json"
+                ],
+                "required_scripts": [
+                    "auto.py"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "auto.py"
+                    ]
+                },
+                "required_docs": [
+                    "core/AUTO-PILOT.json"
+                ],
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Preserve exact run identity, completed receipts, pending needs, recovery and project ownership.",
+                    "Require owner approval, reject terminal/stopped or reserved work and limit reductions.",
+                    "Refresh canonical task projection before the next reservation; amendment does not dispatch."
+                ],
+                "verification_commands": [
+                    "python -B -m unittest discover -s tools/automation/tests -q"
+                ],
+                "known_failure_if_missing": "Restarting an active grant to increase its batch loses the current run identity and progress count."
             }
         }
     },

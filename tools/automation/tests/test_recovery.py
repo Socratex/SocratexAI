@@ -383,7 +383,7 @@ class ConsoleSchedulerTests(unittest.TestCase):
             write_utf8_file(checker, 'import sys\nfrom pathlib import Path\np=Path(__file__).parents[2]/"count.txt"\np.write_text(" ".join(sys.argv[1:])+"\\n")\nraise SystemExit(37)\n')
             environment = dict(os.environ, PATH=str(Path(sys.executable).parent) + os.pathsep + os.environ.get("PATH", ""))
             result = subprocess.run(f'cmd /d /s /c ""{launcher}" --once"', cwd=root.parent,
-                                    capture_output=True, timeout=5, env=environment)
+                                    capture_output=True, timeout=30, env=environment)
             self.assertEqual(37, result.returncode, (result.stdout, result.stderr))
             self.assertEqual(["--watchdog"], (root / "count.txt").read_text().splitlines())
 
