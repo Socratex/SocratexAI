@@ -25,6 +25,7 @@
         "multi_prompt": {
             "when": "A user prompt contains multiple paragraphs with separable tasks, pass-sized scopes",
             "then": [
+                "subroutine:route_token_tools",
                 "Identify every separable task in the prompt before editing files.",
                 "Merge duplicate or overlapping tasks from input into one scope instead of creating parallel duplicates.",
                 "Check _PLAN.json with Tools/json/json_read.py to find other duplicates - if found - append input tasks to existing PLAN entries with JSON document scripts instead of adding new tasks to PLAN",
@@ -38,6 +39,7 @@
             "when": "Direct answer, explanation, or factual project question without edits.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Read only the smallest source, document, or context slice needed to answer accurately - use compiled documents and search by tags.",
                 "Do not edit files.",
                 "subroutine:finish"
@@ -47,6 +49,7 @@
             "when": "Documentation change.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "subroutine:check_potential_suggestions",
                 "Identify the target document and stick to rules from DOCS.json if present.",
                 "subroutine:inspect_structured_document",
@@ -60,6 +63,7 @@
             "when": "Local code, tooling, config, or documentation implementation in one ownership area.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Classify the task from the user request and load only the smallest additional context capsule needed.",
                 "subroutine:inspect_gdscript",
                 "subroutine:edit_safely",
@@ -70,6 +74,7 @@
         "broad_refactor": {
             "when": "Broad feature, refactor, migration, or multi-system change.",
             "then": [
+                "subroutine:route_token_tools",
                 "subroutine:request_high_cost_confirmation",
                 "subroutine:load_context",
                 "Split work into clear passes or ownership slices before editing.",
@@ -82,6 +87,7 @@
             "when": "Plan, TODO, target, priority, pass, or document-structure work.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Preserve every unresolved requirement by moving, merging, splitting, or renaming it.",
                 "Keep _PLAN.json limited to active and future passes.",
                 "Remove completed passes from _PLAN.json only after completion.",
@@ -93,6 +99,7 @@
             "when": "Code review, plan review, diff review, or risk review.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Identify the exact diff, branch, files, or plan being reviewed.",
                 "Inspect the smallest relevant context needed to judge behavior.",
                 "Prioritize bugs, regressions, unsafe assumptions, missing tests, and ownership violations.",
@@ -107,6 +114,7 @@
             "when": "Feel, performance, frame pacing, UI readability, diagnostics, or log analysis.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Inspect only the relevant logs, diagnostics, screenshots, source files, or context capsules.",
                 "Add targeted diagnostics before speculative repeated fixes when evidence is incomplete.",
                 "subroutine:diagnostic_report",
@@ -117,6 +125,7 @@
             "when": "Visual direction, rendering style, procedural visuals, graphics systems, UI visuals, shaders, or assets.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Inspect the smallest relevant scene, shader, asset, UI, or rendering code slice.",
                 "Preserve current visual direction unless the user explicitly asks to change it.",
                 "subroutine:edit_safely",
@@ -129,6 +138,7 @@
             "when": "Music, SFX, voice, adaptive audio, audio runtime, buses, or audio assets.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Inspect the smallest relevant audio asset, bus, config, scene, or runtime code slice.",
                 "Preserve current audio direction unless the user explicitly asks to change it.",
                 "subroutine:edit_safely",
@@ -141,6 +151,7 @@
             "when": "Standalone CONTEXT command.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Run Tools/knowledge/context_tags.py with the user text, or with \"context\" for a standalone CONTEXT command.",
                 "Run Tools/knowledge/knowledge_select.py -Tags <tags> -Match any.",
                 "Read _PLAN.json, docs/TODO.json, or focused context-docs files only when the paired task requires them.",
@@ -152,6 +163,7 @@
             "when": "Standalone CONTINUE command or explicit pass execution from _PLAN.json.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Read _PLAN.json through Tools/json/json_read.py.",
                 "Before executing the resolved pass or proposed target, decide whether you need user clarification, missing information, product direction, or a choice between meaningful implementation variants.",
                 "If clarification is needed, ask the user and wait instead of guessing; if everything is clear, proceed with the selected pass.",
@@ -170,6 +182,7 @@
         "prompt_command": {
             "when": "Standalone PROMPT command.",
             "then": [
+                "subroutine:route_token_tools",
                 "Inspect _PROMPTS.md first if it exists.",
                 "If _PROMPTS.md contains one actionable prompt, execute it.",
                 "If _PROMPTS.md contains multiple prompts or separable sections, merge duplicate or overlapping scopes into _PROMPT-QUEUE.json.",
@@ -186,6 +199,7 @@
         "bug_command": {
             "when": "Standalone BUG command or active bug-registry work.",
             "then": [
+                "subroutine:route_token_tools",
                 "Read docs-tech/BUGS.json through Tools/json/json_read.py.",
                 "subroutine:load_context",
                 "Select the next active bug by current focus, diagnostic readiness, reproduction likelihood, and future-change cost.",
@@ -200,6 +214,7 @@
         "console_command": {
             "when": "Standalone CONSOLE command or Codex Run console error work.",
             "then": [
+                "subroutine:route_token_tools",
                 "Stop if CONSOLE-LOG is missing or empty, and report that no Codex Run console output is available.",
                 "Run Tools/gamedev/console_summary.py.",
                 "Read CONSOLE-LOG-SUMMARY first.",
@@ -215,6 +230,7 @@
         "log_command": {
             "when": "LOG command with a diagnostic description.",
             "then": [
+                "subroutine:route_token_tools",
                 "Require a non-empty diagnostic description from \"LOG <description>\" or following lines.",
                 "Stop without inspecting or modifying files if the description is missing.",
                 "Run Tools/gamedev/log_summary.py --description <description>.",
@@ -233,6 +249,7 @@
         "audit_command": {
             "when": "Standalone AUDIT command.",
             "then": [
+                "subroutine:route_token_tools",
                 "Run Tools/documents/audit_docs.py.",
                 "Inspect reported errors and warnings.",
                 "Fix hard process or document contract errors immediately when the correction is local and unambiguous.",
@@ -247,6 +264,7 @@
             "when": "Standalone COMPILE command.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Run Tools/pipeline/compile.py.",
                 "Inspect refreshed, stale, missing, or changed compiled files.",
                 "Stop if compile produced no committed-file changes.",
@@ -258,6 +276,7 @@
             "when": "The user asks to do work in a particular way, order, style, or constraint.",
             "then": [
                 "subroutine:load_context",
+                "subroutine:route_token_tools",
                 "Identify the requested method, style, or execution constraint from phrases such as do this in way X.",
                 "Evaluate whether that method is actually the best fit for the task, project contracts, and future-change cost.",
                 "If the requested method is sound, apply the matching flow with that constraint.",
@@ -268,6 +287,7 @@
         "manual_mode": {
             "when": "User says to \"start manual mode\" in any language - and keep it active until user says to \"end manual mode\" in any language.",
             "then": [
+                "subroutine:route_token_tools",
                 "Activate ONLY when requested \"manual mode\" in prompt specifically",
                 "While active, treat each user request as a direct file-edit/command request unless the user clearly asks a question instead.",
                 "Edit the requested file/files or run commands immediately.",
@@ -475,6 +495,11 @@
                 "Warn before large-repo sweeps, broad refactors, repeated retries, or long iterative debugging.",
                 "State why the task may be expensive in usage terms.",
                 "Offer a scoped lower-cost option when feasible and wait for confirmation before clearly high-usage work."
+            ],
+            "route_token_tools": [
+                "Apply WORKFLOW.json token_efficient_tools before source exploration, verbose output or context export; reuse current decisions.",
+                "Select matching available RTK, ast-grep, Serena, Graphify, TOON or Repomix; load the canonical core/skills/token-efficient-code/SKILL.md only when invocation details are needed.",
+                "Preserve raw validation, project readers, frozen layers and scoped execution. A missing/stale/incomplete or more expensive tool permits a narrow reliable fallback; report material limitations once."
             ]
         }
     }

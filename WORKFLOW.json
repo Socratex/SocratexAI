@@ -12,7 +12,8 @@
         "json_structural_edit_tooling",
         "single_entry_tool_handler",
         "gpt_conversation_input_routing",
-        "auto_recovery"
+        "auto_recovery",
+        "token_efficient_tools"
     ],
     "content": {
         "quick_index": {
@@ -84,6 +85,21 @@
             "title": "AUTO Recovery",
             "rule": "Use FLOWS auto_pilot and core/AUTO-PILOT.json. New AUTO grants default to manual transport. Visible foreground AUTO scheduler.bat calls the one-shot checker every600s; closing CMD stops future checks. Never recreate native heartbeat after a manual finalizer; respect account denial before scans/sending. No OS autostart is installed implicitly.",
             "watchdog_policy": "Manual AUTO self-continues immediately in the current chat/turn after a successful finalizer returns continuation.action=continue_current_turn. Refresh source task projection and authoritative native snapshot, then native-begin for each unit with current turn ID + :auto: + completed. Retry the same unit with the same wake ID. STOP, needs_input, batch/queue completion, account limits and project locks stop chaining. No messages to self and no native heartbeat in manual mode. START opens/reuses one visible CMD watchdog; closing CMD stops future recovery checks only. Foreground CMD checks every300s, or600s while the checker reports an account limit (exit10). Python always performs one sweep and exits. Limit data is queried again at most every600s, even when a later reset is known; the clock alone never authorizes sending. Preserve native project/limit checks and OS-locked outbox. Unknown delivery is never automatically retried. Ordinary recovery sends exactly CONTINUE-AUTO to the registered ID. After a previously observed limit and a fresh available account snapshot, send exactly CONTINUE-AUTO (limit reached previously, continue). Persist that prompt in the prepared outbox. The suffix is transport metadata, never prompt_context or a scope change, and does not bypass native-begin. Terminal/input-blocked tasks remain asleep."
+        },
+        "token_efficient_tools": {
+            "title": "Conditional Local Code Tools",
+            "rule": "Before source exploration, verbose CLI output or context export, select the available tool whose trigger matches. This is conditional routing, not six mandatory tool executions per task.",
+            "routes": {
+                "rtk": "Supported verbose read-only CLI summaries; retain raw canonical checks, receipts and exit codes.",
+                "ast_grep": "Structural syntax queries in supported languages; literal names use rg.",
+                "serena": "Focused semantic symbols/references/implementations through a verified read-only LSP/MCP session.",
+                "graphify": "Justified repeated cross-file dependency exploration using a fresh bounded local code-only graph.",
+                "toon": "Selected uniform JSON records when smaller than compact JSON, with round-trip fidelity.",
+                "repomix": "A genuinely needed bounded multi-file export with explicit scope, security scanning and token budget."
+            },
+            "details": "Read core/skills/token-efficient-code/SKILL.md in the source checkout, or SocratexAI/core/skills/token-efficient-code/SKILL.md in installed projects, only when invocation details are needed. Resolve real Linux/macOS/Windows executables; do not assume owner paths or an MCP reload in the current session.",
+            "fallback": "Use a narrow reliable source/rg read when a tool is absent, stale, incomplete or costs more context. State a material fallback once; installation and savings are never inferred.",
+            "boundaries": "Preserve document readers, canonical gates/finalizers, raw verification and project frozen layers. No automatic full-repo scans/exports, installs, cloud/paid backends or gameplay control."
         }
     },
     "metadata": {

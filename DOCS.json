@@ -20,7 +20,8 @@
         "docs-tech/",
         "docs-tech/TOOL-ERRORS.json",
         "AI-compiled/",
-        "core/AUTO-PILOT.json"
+        "core/AUTO-PILOT.json",
+        "core/skills/token-efficient-code/SKILL.md"
     ],
     "content": {
         "DOCS.json": {
@@ -110,6 +111,10 @@
         "core/AUTO-PILOT.json": {
             "role": "Portable AUTO lifecycle, manual recovery state/outbox and local desktop transport contract.",
             "read": "before START/STOP/CONTINUE AUTO or manual recovery tooling"
+        },
+        "core/skills/token-efficient-code/SKILL.md": {
+            "role": "On-demand portable invocation of six local code-context tools; shared details for conditional workflow routing.",
+            "read": "when a matching tool trigger requires setup/invocation details; no automatic installations or whole-repository indexing"
         }
     },
     "metadata": {

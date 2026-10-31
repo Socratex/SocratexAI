@@ -28,7 +28,8 @@
             "docs-tech/",
             "docs-tech/TOOL-ERRORS.json",
             "AI-compiled/",
-            "core/AUTO-PILOT.json"
+            "core/AUTO-PILOT.json",
+            "core/skills/token-efficient-code/SKILL.md"
         ],
         "WORKFLOW.json": [
             "quick_index",
@@ -43,7 +44,8 @@
             "json_structural_edit_tooling",
             "single_entry_tool_handler",
             "gpt_conversation_input_routing",
-            "auto_recovery"
+            "auto_recovery",
+            "token_efficient_tools"
         ],
         "COMMANDS.json": [
             "CONTEXT",
@@ -221,8 +223,15 @@
             "auto.py",
             "sync_auto.py",
             "AUTO scheduler.bat",
+            "console_scheduler.py",
             "shutdown.py",
-            "AUTO cancel shutdown.bat"
+            "AUTO cancel shutdown.bat",
+            "rtk",
+            "ast-grep",
+            "serena MCP",
+            "graphify",
+            "toon",
+            "repomix"
         ]
     },
     "metadata": {

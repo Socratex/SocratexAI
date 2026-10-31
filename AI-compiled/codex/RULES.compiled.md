@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-28c8820d12fb
+Generated: source-d6086e2bbed1
 
 ## Source of Truth
 
@@ -556,7 +556,8 @@ Draft placeholder:
             "text_first_usage_search_with_legacy_fragment_pass",
             "gpt_conversation_ingestion_tools",
             "manual_auto_recovery",
-            "active_auto_grant_amendment"
+            "active_auto_grant_amendment",
+            "conditional_local_code_tools"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -7981,6 +7982,49 @@ Draft placeholder:
                     "python -B -m unittest discover -s tools/automation/tests -q"
                 ],
                 "known_failure_if_missing": "Restarting an active grant to increase its batch loses the current run identity and progress count."
+            },
+            "conditional_local_code_tools": {
+                "summary": "Conditional local RTK, ast-grep, Serena, Graphify, TOON and Repomix routing with portable on-demand invocation details, task-sized context and preserved raw verification.",
+                "required_paths": [
+                    "WORKFLOW.json",
+                    "FLOWS.json",
+                    "SCRIPTS.json",
+                    "core/skills/token-efficient-code/SKILL.md",
+                    "project/code/WORKFLOW.json",
+                    "templates/WORKFLOW.json",
+                    "profiles/SocratexGamedev/WORKFLOW.json",
+                    "profiles/SocratexGamedev/FLOWS.json",
+                    "profiles/SocratexBusinessDev/WORKFLOW.json"
+                ],
+                "required_docs": [
+                    "WORKFLOW.json",
+                    "FLOWS.json",
+                    "SCRIPTS.json",
+                    "core/UPDATE-PROTOCOL.json"
+                ],
+                "required_catalog_entries": {
+                    "SCRIPTS": [
+                        "rtk",
+                        "ast-grep",
+                        "serena MCP",
+                        "graphify",
+                        "toon",
+                        "repomix"
+                    ]
+                },
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Keep source/code-pack/template/profile routing aligned and invocation details on demand.",
+                    "Use actual installed platform commands and validate a real LSP query; never equate an installed CLI with an active MCP.",
+                    "Preserve security scanning, code-only local graphs, project frozen-layer restrictions and original verification receipts.",
+                    "Keep machine paths, per-project language scopes and frozen-engine exclusions in the child; do not copy one project's C#-only configuration into generic installs."
+                ],
+                "verification_commands": [
+                    "python3 -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python3 -B tools/pipeline/compile_pipeline_context.py --check",
+                    "python3 -B tools/documents/audit_docs.py"
+                ],
+                "known_failure_if_missing": "Installed tools are unused or invoked with another platform's paths, or agents run costly full scans/cloud extraction instead of selecting a scoped local tool."
             }
         }
     },

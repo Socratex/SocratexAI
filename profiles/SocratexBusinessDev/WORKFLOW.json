@@ -21,7 +21,8 @@
         "eng_coding",
         "eng_comments",
         "eng_testing",
-        "workflow_handoff"
+        "workflow_handoff",
+        "token_efficient_tools"
     ],
     "content": {
         "quick_index": {
@@ -111,6 +112,21 @@
         "workflow_handoff": {
             "title": "📤 Capsule — Workflow & handoff",
             "content": "Task lifecycle (read -> decide complexity -> plan -> implement -> report -> test -> joint verification -> handoff):\n- READ the whole ticket + linked tickets first; flag inaccessible referenced docs.\n- DECIDE complexity: easy single-file fix -> do it; multi-step / architectural -> PLAN first.\n- PLAN: research known approaches before custom design; decide shape (surgical / extract-to-helper / structured module / full rewrite) driven by change size, business fit, and predictable load. Save PLAN before implementing.\n- IMPLEMENT per PLAN; the user reviews the code.\n- REPORT in business storytelling (subprofile 'Writing mechanics').\n- TEST per `eng_testing`.\n- VERIFY jointly: user runs manual, agent runs automated, iterate.\n- HANDOFF: draft every paste-able artifact (PR body, ticket comment, deployment plan) in working memory.\n\nOwnership boundary (default in this work model):\n- authored history and outward lifecycle stay with the USER: commit, push, PR creation, ticket transitions, wiki deployment plan.\n- the agent prepares all draft text but never INITIATES the PR / ticket / wiki write lifecycle, unless the user explicitly delegates a specific one-off.\n- reading (PR view / diff, ticket read) is fine.\n\nMeta-tooling is NOT a ticket:\n- framework / pipeline / agent-scratch / bootstrap work is how-we-work, separate from what-we-ship. Never fold it into the active ticket's state / PLAN / PR / comment.\n- do not infer 'the pipeline is being changed because of ticket X'; the tracks are independent.\n\nWorkflow improvements ride along:\n- genuine dev-loop / observability / refactor improvements found WHILE doing ticket work, that reduce future cost on similar work, DEFAULT to being included in the same PR.\n- flag them as a separate PR section so the reviewer can opt out.\n- the line: project-side dev tooling rides along; edits to the shared FRAMEWORK / workspace config do NOT (that is meta-tooling, above)."
+        },
+        "token_efficient_tools": {
+            "title": "Conditional Local Code Tools",
+            "rule": "Before source exploration, verbose CLI output or context export, select the available tool whose trigger matches. This is conditional routing, not six mandatory tool executions per task.",
+            "routes": {
+                "rtk": "Supported verbose read-only CLI summaries; retain raw canonical checks, receipts and exit codes.",
+                "ast_grep": "Structural syntax queries in supported languages; literal names use rg.",
+                "serena": "Focused semantic symbols/references/implementations through a verified read-only LSP/MCP session.",
+                "graphify": "Justified repeated cross-file dependency exploration using a fresh bounded local code-only graph.",
+                "toon": "Selected uniform JSON records when smaller than compact JSON, with round-trip fidelity.",
+                "repomix": "A genuinely needed bounded multi-file export with explicit scope, security scanning and token budget."
+            },
+            "details": "Read core/skills/token-efficient-code/SKILL.md in the source checkout, or SocratexAI/core/skills/token-efficient-code/SKILL.md in installed projects, only when invocation details are needed. Resolve real Linux/macOS/Windows executables; do not assume owner paths or an MCP reload in the current session.",
+            "fallback": "Use a narrow reliable source/rg read when a tool is absent, stale, incomplete or costs more context. State a material fallback once; installation and savings are never inferred.",
+            "boundaries": "Preserve document readers, canonical gates/finalizers, raw verification and project frozen layers. No automatic full-repo scans/exports, installs, cloud/paid backends or gameplay control."
         }
     },
     "metadata": {

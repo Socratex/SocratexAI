@@ -139,8 +139,15 @@
         "auto.py",
         "sync_auto.py",
         "AUTO scheduler.bat",
+        "console_scheduler.py",
         "shutdown.py",
-        "AUTO cancel shutdown.bat"
+        "AUTO cancel shutdown.bat",
+        "rtk",
+        "ast-grep",
+        "serena MCP",
+        "graphify",
+        "toon",
+        "repomix"
     ],
     "content": {
         "add_changelog_entry.py": {
@@ -3128,6 +3135,78 @@
                 "success": "JSON z anulowanymi politykami i kod0.",
                 "failure": "Jawny kod błędu; nieudane anulowanie nie jest zgłaszane jako sukces."
             }
+        },
+        "rtk": {
+            "category": "external_tools",
+            "description": "Compact supported CLI output; preserve canonical verification evidence.",
+            "input": {
+                "rule": "Compact supported CLI output; preserve canonical verification evidence. See core/skills/token-efficient-code/SKILL.md for portable invocation.",
+                "prerequisite": "Executable installed locally, or active MCP for Serena; absence is a disclosed fallback, not automatic installation authorization."
+            },
+            "output": {
+                "success": "Task-scoped retrieval/export checked against the required evidence.",
+                "failure": "Preserve error/exit code and use the narrowest reliable fallback without claiming success."
+            }
+        },
+        "ast-grep": {
+            "category": "external_tools",
+            "description": "Scoped structural syntax matching in the selected supported language.",
+            "input": {
+                "rule": "Scoped structural syntax matching in the selected supported language. See core/skills/token-efficient-code/SKILL.md for portable invocation.",
+                "prerequisite": "Executable installed locally, or active MCP for Serena; absence is a disclosed fallback, not automatic installation authorization."
+            },
+            "output": {
+                "success": "Task-scoped retrieval/export checked against the required evidence.",
+                "failure": "Preserve error/exit code and use the narrowest reliable fallback without claiming success."
+            }
+        },
+        "serena MCP": {
+            "category": "external_tools",
+            "description": "Read-only semantic retrieval with initial_instructions, session and exact project activation; verify a real symbol query.",
+            "input": {
+                "rule": "Read-only semantic retrieval with initial_instructions, session and exact project activation; verify a real symbol query. See core/skills/token-efficient-code/SKILL.md for portable invocation.",
+                "prerequisite": "Executable installed locally, or active MCP for Serena; absence is a disclosed fallback, not automatic installation authorization."
+            },
+            "output": {
+                "success": "Task-scoped retrieval/export checked against the required evidence.",
+                "failure": "Preserve error/exit code and use the narrowest reliable fallback without claiming success."
+            }
+        },
+        "graphify": {
+            "category": "external_tools",
+            "description": "Bounded local code-only dependency graph extraction/query; no default LLM backend.",
+            "input": {
+                "rule": "Bounded local code-only dependency graph extraction/query; no default LLM backend. See core/skills/token-efficient-code/SKILL.md for portable invocation.",
+                "prerequisite": "Executable installed locally, or active MCP for Serena; absence is a disclosed fallback, not automatic installation authorization."
+            },
+            "output": {
+                "success": "Task-scoped retrieval/export checked against the required evidence.",
+                "failure": "Preserve error/exit code and use the narrowest reliable fallback without claiming success."
+            }
+        },
+        "toon": {
+            "category": "external_tools",
+            "description": "Encode selected uniform JSON records and verify decoded values.",
+            "input": {
+                "rule": "Encode selected uniform JSON records and verify decoded values. See core/skills/token-efficient-code/SKILL.md for portable invocation.",
+                "prerequisite": "Executable installed locally, or active MCP for Serena; absence is a disclosed fallback, not automatic installation authorization."
+            },
+            "output": {
+                "success": "Task-scoped retrieval/export checked against the required evidence.",
+                "failure": "Preserve error/exit code and use the narrowest reliable fallback without claiming success."
+            }
+        },
+        "repomix": {
+            "category": "external_tools",
+            "description": "Bounded local context export with explicit includes/excludes, security scanning and token budget.",
+            "input": {
+                "rule": "Bounded local context export with explicit includes/excludes, security scanning and token budget. See core/skills/token-efficient-code/SKILL.md for portable invocation.",
+                "prerequisite": "Executable installed locally, or active MCP for Serena; absence is a disclosed fallback, not automatic installation authorization."
+            },
+            "output": {
+                "success": "Task-scoped retrieval/export checked against the required evidence.",
+                "failure": "Preserve error/exit code and use the narrowest reliable fallback without claiming success."
+            }
         }
     },
     "metadata": {
@@ -3334,8 +3413,16 @@
                 "json_line_move.py",
                 "json_line_move.py",
                 "smoke_json_tools.py"
+            ],
+            "external_tools": [
+                "rtk",
+                "ast-grep",
+                "serena MCP",
+                "graphify",
+                "toon",
+                "repomix"
             ]
         },
-        "category_rule": "Scripts live under tools/<category>/ and SCRIPTS.json keeps the filename index plus exact categorized path for execution."
+        "category_rule": "Scripts live under tools/<category>/ and SCRIPTS.json keeps the filename index plus exact categorized path for execution. External executable/MCP entries use category external_tools and omit a repository script path; their invocation is owned by core/skills/token-efficient-code/SKILL.md."
     }
 }

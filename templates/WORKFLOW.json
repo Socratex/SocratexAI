@@ -7,7 +7,8 @@
         "active_pain_points",
         "priority_rules",
         "agent_behavior",
-        "team_on_demand"
+        "team_on_demand",
+        "token_efficient_tools"
     ],
     "content": {
         "summary": "Manual project workflow layer for priority steering.",
@@ -15,10 +16,11 @@
             "read_when": [
                 "Planning, priority, roadmap, broad feature triage, or project-risk judgment is needed.",
                 "A user request may conflict with a higher-priority active pain point.",
-                "The agent must decide whether work belongs in the active plan, backlog, issue registry, or decision log."
+                "The agent must decide whether work belongs in the active plan, backlog, issue registry, or decision log.",
+                "Conditional tool routing for source retrieval, verbose CLI output or bounded exports must be selected; read only token_efficient_tools for this purpose."
             ],
             "do_not_read_when": [
-                "A narrow local fix has no priority or planning impact.",
+                "A narrow local fix has no priority or planning impact and applicable token_efficient_tools routing is already loaded.",
                 "The visible state and target files are sufficient for a direct answer.",
                 "A special command workflow already selects a narrower required context."
             ]
@@ -106,6 +108,21 @@
                 "team pipeline"
             ],
             "limitation": "A role is a decision lens and checklist for the current agent response, not a separate independent worker."
+        },
+        "token_efficient_tools": {
+            "title": "Conditional Local Code Tools",
+            "rule": "Before source exploration, verbose CLI output or context export, select the available tool whose trigger matches. This is conditional routing, not six mandatory tool executions per task.",
+            "routes": {
+                "rtk": "Supported verbose read-only CLI summaries; retain raw canonical checks, receipts and exit codes.",
+                "ast_grep": "Structural syntax queries in supported languages; literal names use rg.",
+                "serena": "Focused semantic symbols/references/implementations through a verified read-only LSP/MCP session.",
+                "graphify": "Justified repeated cross-file dependency exploration using a fresh bounded local code-only graph.",
+                "toon": "Selected uniform JSON records when smaller than compact JSON, with round-trip fidelity.",
+                "repomix": "A genuinely needed bounded multi-file export with explicit scope, security scanning and token budget."
+            },
+            "details": "Read core/skills/token-efficient-code/SKILL.md in the source checkout, or SocratexAI/core/skills/token-efficient-code/SKILL.md in installed projects, only when invocation details are needed. Resolve real Linux/macOS/Windows executables; do not assume owner paths or an MCP reload in the current session.",
+            "fallback": "Use a narrow reliable source/rg read when a tool is absent, stale, incomplete or costs more context. State a material fallback once; installation and savings are never inferred.",
+            "boundaries": "Preserve document readers, canonical gates/finalizers, raw verification and project frozen layers. No automatic full-repo scans/exports, installs, cloud/paid backends or gameplay control."
         }
     },
     "metadata": {

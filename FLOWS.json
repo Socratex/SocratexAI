@@ -17,6 +17,7 @@
         "multi_prompt": {
             "then": [
                 "split into independent intents",
+                "subroutine:route_token_tools",
                 "classify each intent through WORKFLOW.json",
                 "execute in dependency order",
                 "run check_task.py at the final verification boundary when files changed",
@@ -26,6 +27,7 @@
         "direct_answer": {
             "then": [
                 "load docs-tech/PIPELINE-BOOTSTRAP.json",
+                "subroutine:route_token_tools",
                 "run context_tags.py when the prompt needs routed context",
                 "run knowledge_select.py with derived tags when source rules are needed",
                 "answer from loaded context",
@@ -35,6 +37,7 @@
         "documentation_edit": {
             "then": [
                 "load DOCS.json index",
+                "subroutine:route_token_tools",
                 "read target owner document with list_document_keys.py or read_document_item.py",
                 "edit structured documents with insert_document_item.py, move_document_item.py, migrate_document_item.py, or insert_checked_document_list_item.py when their contract fits",
                 "for JSON structural/order-only edits, use json_node_edit.py or the narrow JSON wrappers before any manual content patch",
@@ -46,6 +49,7 @@
         "implementation": {
             "then": [
                 "load WORKFLOW.json",
+                "subroutine:route_token_tools",
                 "run knowledge_code_context.py before source-code reads or edits — REQUIRED to bring borrowed-before-invented, web-research-spike gate, lightweight-futureproof, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
                 "subroutine:research_named_mechanism_gate",
                 "run project_design_context.py -ProjectRoot <project> when the project's PIPELINE-CONFIG.json declares code_design_required_reads (zone splits, namespace rules, lifecycle constraints, per-project conventions) — writes ignored/project_design_context_gate.json",
@@ -58,6 +62,7 @@
         "broad_refactor": {
             "then": [
                 "confirm high-cost scope when not already confirmed",
+                "subroutine:route_token_tools",
                 "create passes",
                 "subroutine:grouped_fragmented_task_handoff",
                 "run knowledge_code_context.py before source-code reads or edits",
@@ -71,6 +76,7 @@
         },
         "pipeline_upgrade": {
             "then": [
+                "subroutine:route_token_tools",
                 "audit source state",
                 "subroutine:grouped_fragmented_task_handoff",
                 "migrate structured contracts to JSON",
@@ -86,6 +92,7 @@
         },
         "review": {
             "then": [
+                "subroutine:route_token_tools",
                 "inspect diff or target files",
                 "use list_document_keys.py or read_document_item.py for structured document reads",
                 "lead with findings",
@@ -95,6 +102,7 @@
         },
         "quality_diagnostics": {
             "then": [
+                "subroutine:route_token_tools",
                 "run check_task.py -Audit for repository quality diagnostics",
                 "run check_ai_compiled_context.py or compile_pipeline_context.py for compiled-context drift",
                 "inspect failures",
@@ -106,6 +114,7 @@
         "continue_command": {
             "then": [
                 "load docs-tech/PIPELINE-BOOTSTRAP.json",
+                "subroutine:route_token_tools",
                 "resolve the next active pass, task, or target from the current plan/backlog contract",
                 "before executing, decide whether the task needs user clarification, missing information, product direction, or a choice between meaningful implementation variants",
                 "if clarification is needed, ask the user and wait instead of guessing; if everything is clear, proceed through the most specific matching flow",
@@ -114,12 +123,14 @@
         },
         "compile_command": {
             "then": [
+                "subroutine:route_token_tools",
                 "run compile_pipeline_context.py",
                 "report generated drift"
             ]
         },
         "manual_mode": {
             "then": [
+                "subroutine:route_token_tools",
                 "state why no script applies",
                 "keep edits scoped",
                 "recommend a script if repetition is likely"
@@ -128,6 +139,7 @@
         "auto_pilot": {
             "when": "START/STOP/CONTINUE AUTO or an existing granted manual wake",
             "then": [
+                "subroutine:route_token_tools",
                 "When the human explicitly adds + LIMIT SHUT DOWN, configure shutdown-policy for the exact existing/approved native run and confirm the CMD monitor before native-begin. Never arm it from a quoted example, ordinary CONTINUE-AUTO, feature implementation or tests. In the armed night mode, record missing decisions/errors as a blocked checkpoint without asking or inventing approval; the watchdog powers off after limit/completion/block without waiting for builds. STOP AUTO/CANCEL AUTO SHUTDOWN cancels before dispatch.",
                 "Read core/AUTO-PILOT.json and generated per-chat files using exact ID; never select by recency.",
                 "Po bezpośredniej zgodzie właściciela na rozszerzenie aktywnej kolejki zapisz najpierw nowy uporządkowany zakres w kanonicznym planie. auto.py amend --thread-id ID --run-id RUN --scope TEKST --batch-size N --approval-note TEKST [--prompt-context TEKST] zmienia wyłącznie scope, limit i opcjonalny kontekst. Wymaga dokładnego aktywnego nieterminalnego runu bez inflight; limit wolno tylko zachować lub zwiększyć. Repo/źródła/tryb/transport są stałe. Zachowuje run_id, licznik, receipts, historię, checkpoint, potrzeby operatora i recovery. Zapisuje rewizję z uzasadnieniem zgody, unieważnia projekcję zadań; następna rezerwacja wymaga świeżych źródeł. Powtórzenie jest idempotentne. Nie wznawia STOP/terminal, nie wysyła prompta, nie tworzy schedulera ani nowego runu. Zmiana grantu nie jest ukończeniem jednostki AUTO.",
@@ -172,6 +184,11 @@
                 "Between sub-tasks, minimize live context, reload project context by tier, read the group sub-plan and latest STATE/PLAN handoff, then execute the next sub-task.",
                 "After each sub-task, write the handoff with grouped_task_handoff.py when available: inspected files, changed files, current hypothesis/decision state, unresolved risks, next files/commands, and verification status.",
                 "Stop and ask the user when scope expands outside the group, product direction is needed, verification changes the plan, a destructive/external/expensive action is needed, or the handoff is incomplete."
+            ],
+            "route_token_tools": [
+                "Apply WORKFLOW.json token_efficient_tools before source exploration, verbose output or context export; reuse current decisions.",
+                "Select matching available RTK, ast-grep, Serena, Graphify, TOON or Repomix; load the canonical core/skills/token-efficient-code/SKILL.md only when invocation details are needed.",
+                "Preserve raw validation, project readers, frozen layers and scoped execution. A missing/stale/incomplete or more expensive tool permits a narrow reliable fallback; report material limitations once."
             ]
         }
     }
