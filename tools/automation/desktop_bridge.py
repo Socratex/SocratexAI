@@ -194,7 +194,10 @@ class DesktopBridge:
             fresh = self.call("list_threads", {"limit": 50})
             recent = complete_inventory(entry, roster, polls, fresh, time.time())
         limits = self.call("get_usage_limits", {})
-        return snapshot(entry, recent, limits, time.time(), 50)
+        result = snapshot(entry, recent, limits, time.time(), 50)
+        result["active_host_threads"] = [row["id"] for row in recent.get("threads", []) + recent.get("pinnedThreads", [])
+                                         if row.get("kind") == "codex" and row.get("status") == "active"]
+        return result
 
     def send(self, thread_id: str, prompt: str = "CONTINUE-AUTO") -> dict:
         if prompt not in {"CONTINUE-AUTO", "CONTINUE-AUTO (limit reached previously, continue)"}:

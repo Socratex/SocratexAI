@@ -36,10 +36,10 @@ def parser() -> argparse.ArgumentParser:
     start.add_argument("--mode", choices=("pilot", "native"), default="pilot")
     start.add_argument("--wake-transport", choices=("heartbeat", "manual"), default="manual")
     for name in ("start", "amend", "stop", "status", "finalize", "tick", "watch", "probe", "attach-scheduler", "confirm-wake", "report",
-                 "native-snapshot", "native-begin", "scheduler-request", "control-handoff", "project-roster", "context", "import-progress", "project-tasks", "use-manual-transport"):
+                 "native-snapshot", "native-begin", "scheduler-request", "control-handoff", "project-roster", "context", "import-progress", "project-tasks", "use-manual-transport", "shutdown-policy", "shutdown-blocked"):
         cmd = start if name == "start" else sub.add_parser(name)
         cmd.add_argument("--thread-id", default=os.environ.get("CODEX_THREAD_ID"), help="Required identity; never guessed from recency")
-        if name in {"amend", "finalize", "attach-scheduler", "confirm-wake", "native-begin", "control-handoff", "import-progress", "use-manual-transport"}:
+        if name in {"amend", "finalize", "attach-scheduler", "confirm-wake", "native-begin", "control-handoff", "import-progress", "use-manual-transport", "shutdown-policy", "shutdown-blocked"}:
             cmd.add_argument("--run-id", required=True)
         if name == "amend":
             cmd.add_argument("--scope", required=True)
@@ -90,6 +90,13 @@ def parser() -> argparse.ArgumentParser:
             cmd.add_argument("--needs-only", action="store_true")
         if name == "import-progress":
             cmd.add_argument("--report-files", nargs="+", required=True)
+        if name == "shutdown-policy":
+            choice = cmd.add_mutually_exclusive_group(required=True)
+            choice.add_argument("--enable", action="store_true")
+            choice.add_argument("--disable", action="store_true")
+            cmd.add_argument("--approval-note", default="")
+        if name == "shutdown-blocked":
+            cmd.add_argument("--reason", required=True)
     return cli
 
 
@@ -100,6 +107,23 @@ def execute(args: argparse.Namespace) -> object:
         return registry.context(args.thread_id, args.scheduler_id)
     if not args.thread_id or not args.thread_id.strip():
         raise ValueError("--thread-id is required when CODEX_THREAD_ID is unavailable; never use the latest chat")
+    if command == "shutdown-policy":
+        from automation.shutdown import configure
+        result = configure(registry, args.thread_id, args.run_id, enabled=args.enable, approval_note=args.approval_note)
+        if args.enable:
+            from automation.console_scheduler import ensure_scheduler
+            try:
+                result["console_scheduler"] = ensure_scheduler(registry.home,
+                    Path(__file__).resolve().parents[2] / "AUTO scheduler.bat")
+                if result["console_scheduler"].get("action") not in {"started", "already_running"}:
+                    raise RuntimeError("Windows AUTO shutdown monitor could not be started")
+            except (OSError, RuntimeError, TimeoutError):
+                configure(registry, args.thread_id, args.run_id, enabled=False)
+                raise
+        return result
+    if command == "shutdown-blocked":
+        from automation.shutdown import block
+        return block(registry, args.thread_id, args.run_id, args.reason)
     if command == "start":
         from automation.console_scheduler import start_for_grant
         entry = registry.start(args.thread_id, args.repo, args.scope, args.sources, args.batch_size, args.mode, args.prompt_context, args.wake_transport)

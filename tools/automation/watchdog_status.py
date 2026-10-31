@@ -26,6 +26,7 @@ def changes(report: dict, previous: dict) -> tuple[list[str], dict]:
     labels = {"inactive": "AUTO nieaktywne lub zakonczone", "terminal_or_needs_input": "STOP lub potrzebna decyzja",
               "thread_not_idle": "AUTO pracuje lub nie jest gotowe", "project_busy": "projekt zajety",
               "project_reserved": "projekt zarezerwowany", "delivery_pending": "oczekuje na potwierdzenie wysylki",
+              "shutdown_pending": "postep zapisany; wylaczenie komputera po30s (STOP AUTO anuluje)",
               "backoff": "oczekuje na dozwolona probe", "batch_finished_or_invalid": "partia zakonczona lub bledna"}
     for row in report["results"]:
         identity = row["thread_id"]
@@ -44,7 +45,7 @@ def changes(report: dict, previous: dict) -> tuple[list[str], dict]:
                 detail += f"odnowienie {local_time(reset)} (pozostalo {minutes} min); kontrola za 10 min"
         elif row["action"] == "sent":
             detail = "wyslano " + row.get("prompt", "CONTINUE-AUTO")
-        elif row["action"] in {"blocked", "delivery_unknown"}:
+        elif row["action"] in {"blocked", "delivery_unknown", "shutdown_failed"}:
             detail = "BLAD: " + row.get("error", row["action"])
         else:
             detail = labels.get(row.get("reason"), row["action"])

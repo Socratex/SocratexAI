@@ -26,6 +26,7 @@ set "AUTO_SCHEDULER_RESULT=%ERRORLEVEL%"
 if /i "%~1"=="--once" exit /b %AUTO_SCHEDULER_RESULT%
 set "AUTO_WAIT=300"
 if "%AUTO_SCHEDULER_RESULT%"=="10" set "AUTO_WAIT=600"
+if "%AUTO_SCHEDULER_RESULT%"=="30" set "AUTO_WAIT=5"
 "%SystemRoot%\System32\timeout.exe" /t %AUTO_WAIT% /nobreak >nul
 if errorlevel 1 exit /b 2
 goto check

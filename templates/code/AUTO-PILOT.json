@@ -3,13 +3,23 @@
         "owner",
         "commands",
         "lifecycle",
-        "scheduler"
+        "scheduler",
+        "unattended_shutdown"
     ],
     "content": {
         "owner": "Installed shared contract: SocratexAI/core/AUTO-PILOT.json. Source scripts: SocratexAI/tools/automation. Keep project task adapters separate.",
         "commands": "Explicit START AUTO, STOP AUTO, CONTINUE-AUTO. Manual runner: python -B SocratexAI/tools/automation/resume_auto.py; --dry-run for observation. No scheduler installed.\nPo bezpośredniej zgodzie właściciela na rozszerzenie aktywnej kolejki zapisz najpierw nowy uporządkowany zakres w kanonicznym planie. auto.py amend --thread-id ID --run-id RUN --scope TEKST --batch-size N --approval-note TEKST [--prompt-context TEKST] zmienia wyłącznie scope, limit i opcjonalny kontekst. Wymaga dokładnego aktywnego nieterminalnego runu bez inflight; limit wolno tylko zachować lub zwiększyć. Repo/źródła/tryb/transport są stałe. Zachowuje run_id, licznik, receipts, historię, checkpoint, potrzeby operatora i recovery. Zapisuje rewizję z uzasadnieniem zgody, unieważnia projekcję zadań; następna rezerwacja wymaga świeżych źródeł. Powtórzenie jest idempotentne. Nie wznawia STOP/terminal, nie wysyła prompta, nie tworzy schedulera ani nowego runu. Zmiana grantu nie jest ukończeniem jednostki AUTO.",
         "lifecycle": "Register approved scope/source/batch, native-begin before work, verified finalizer receipt after project checks/commit/push. Persist progress and recovery completion/blocker fields; never fabricate idle or operator acceptance.",
-        "scheduler": "Visible AUTO scheduler.bat calls one-shot resume_auto.py every600s. Closing CMD stops future checks. START defaults manual; no native heartbeat or autostart installation. Keep completion/progress/STOP checks."
+        "scheduler": "Visible AUTO scheduler.bat calls one-shot resume_auto.py every600s. Closing CMD stops future checks. START defaults manual; no native heartbeat or autostart installation. Keep completion/progress/STOP checks.",
+        "unattended_shutdown": {
+            "title": "Nocne AUTO i wyłączenie komputera",
+            "contract": "Tryb nocny wyłącznie po jawnym poleceniu właściciela, np. CONTINUE AUTO + LIMIT SHUT DOWN. Dotyczy dokładnego thread_id/run_id aktywnego Native AUTO, bez poszerzania kolejki ani restartu terminalnego runa. Najpierw zapisz ustawienie przez auto.py shutdown-policy --thread-id ID --run-id RUN --enable --approval-note \"jawne polecenie użytkownika\", zapewnij działający CMD scheduler, potem wykonuj normalny zatwierdzony AUTO. Nie zadawaj pytań w tym trybie; obowiązkową decyzję lub błąd zapisz jako needs_input, a gdy poprawna finalizacja jest niemożliwa użyj shutdown-blocked --reason OPIS. Nie zgaduj decyzji, nie pomijaj testów, nie naliczaj ukończenia ani fikcyjnego commitu. Po świeżym natywnym potwierdzeniu limitu, końca partii/kolejki albo blokady watchdog zapisuje checkpoint, odczekuje własne30s i wyłącza Windows. Nie czeka na build. Bieżący czat/projekt i widoczne inne czaty muszą być bezczynne; prywatny App Server i stary snapshot nie są dowodem. STOP AUTO albo shutdown-policy --disable anuluje przed dispatch. CANCEL AUTO SHUTDOWN oznacza samo anulowanie opcji, bez zatrzymania kolejki. Domyślnie wyłączone; nie dziedziczy się na nowy run ani nowy start Windows. Status i dry-run nigdy nie wyłączają komputera. Po zleceniu/błędzie komendy nie ma automatycznej powtórki ani wznowienia w tej samej sesji bez anulowania; po restarcie zwykłe wznowienie może kontynuować zachowaną rezerwację. Monitor używa dotychczasowej kadencji, a podczas własnego odliczania sprawdza co5s; zmiany statusu pokazuje raz. Normalne zamknięcie Windows, bez wymuszenia utraty niezapisanych danych innych aplikacji; mogą one zatrzymać zamknięcie. Implementacja/test tej funkcji nie oznacza jej uzbrojenia.",
+            "implementation": "tools/automation/shutdown.py",
+            "platform": "Windows",
+            "default": "off",
+            "countdown_seconds": 30,
+            "wait_for_build": false
+        }
     },
     "metadata": {
         "document": {

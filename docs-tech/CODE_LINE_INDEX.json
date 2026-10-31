@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-28T23:25:03+01:00",
+    "generatedAt": "2026-10-31T14:22:28+01:00",
     "threshold": 300,
     "files": [
         {
@@ -16,7 +16,7 @@
         },
         {
             "path": "tools/automation/controller.py",
-            "lines": 515,
+            "lines": 517,
             "extension": ".py",
             "large": true
         },
@@ -141,26 +141,32 @@
             "large": false
         },
         {
+            "path": "tools/automation/auto.py",
+            "lines": 210,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/documents/document_structure_normalizer_engine.py",
             "lines": 204,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/automation/auto.py",
-            "lines": 186,
+            "path": "tools/automation/tests/test_shutdown.py",
+            "lines": 192,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/desktop_bridge.py",
+            "lines": 185,
             "extension": ".py",
             "large": false
         },
         {
             "path": "tools/quality/script_runtime_gate.py",
             "lines": 184,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/desktop_bridge.py",
-            "lines": 182,
             "extension": ".py",
             "large": false
         },
@@ -177,6 +183,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/resume_auto.py",
+            "lines": 178,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/task_flow_audit.py",
             "lines": 170,
             "extension": ".py",
@@ -185,12 +197,6 @@
         {
             "path": "tools/repo/end_prompt_snapshot.py",
             "lines": 169,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/resume_auto.py",
-            "lines": 164,
             "extension": ".py",
             "large": false
         },
@@ -232,7 +238,7 @@
         },
         {
             "path": "tools/automation/native.py",
-            "lines": 146,
+            "lines": 150,
             "extension": ".py",
             "large": false
         },
@@ -257,6 +263,12 @@
         {
             "path": "tools/tasks/grouped_task_handoff.py",
             "lines": 136,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/shutdown.py",
+            "lines": 132,
             "extension": ".py",
             "large": false
         },
@@ -321,6 +333,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/recovery.py",
+            "lines": 106,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/text/normalize_json_files.py",
             "lines": 105,
             "extension": ".py",
@@ -328,12 +346,6 @@
         },
         {
             "path": "tools/automation/console_scheduler.py",
-            "lines": 103,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/recovery.py",
             "lines": 103,
             "extension": ".py",
             "large": false
@@ -369,6 +381,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/files.py",
+            "lines": 98,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/pipeline/resolve_workspace_root.py",
             "lines": 98,
             "extension": ".py",
@@ -383,12 +401,6 @@
         {
             "path": "tools/automation/tests/test_console_scheduler.py",
             "lines": 95,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/files.py",
-            "lines": 93,
             "extension": ".py",
             "large": false
         },
@@ -567,14 +579,14 @@
             "large": false
         },
         {
-            "path": "tools/chains/helper_refactor_smoke.py",
+            "path": "tools/automation/watchdog_status.py",
             "lines": 55,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/automation/watchdog_status.py",
-            "lines": 54,
+            "path": "tools/chains/helper_refactor_smoke.py",
+            "lines": 55,
             "extension": ".py",
             "large": false
         },
@@ -735,6 +747,18 @@
             "large": false
         },
         {
+            "path": "AUTO scheduler.bat",
+            "lines": 32,
+            "extension": ".bat",
+            "large": false
+        },
+        {
+            "path": "templates/code/AUTO scheduler.bat",
+            "lines": 32,
+            "extension": ".bat",
+            "large": false
+        },
+        {
             "path": "tools/automation/sync_auto.py",
             "lines": 32,
             "extension": ".py",
@@ -762,18 +786,6 @@
             "path": "tools/quality/check_python_syntax.py",
             "lines": 32,
             "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "AUTO scheduler.bat",
-            "lines": 31,
-            "extension": ".bat",
-            "large": false
-        },
-        {
-            "path": "templates/code/AUTO scheduler.bat",
-            "lines": 31,
-            "extension": ".bat",
             "large": false
         },
         {

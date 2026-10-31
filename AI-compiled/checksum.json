@@ -1,16 +1,16 @@
 {
   "schema": "socratex-compiled-agent-checksum/v1",
-  "generated_at": "source-885558563954",
+  "generated_at": "source-337f25bb52b4",
   "source_hashes": {
     "AGENTS.md": "47c083c7c04b06f4166c07abc1a6ab72a21666e5d15c7d7738eb48e984d4c5fa",
     "README.md": "83704bc0eee36bc1415b44bcf23cc7b7dfcf4e69a1810983f30112abaadc607e",
     "PUBLIC-BOOTSTRAP.md": "11a965ed15688fb9d714111763fc23f05e300da2abfaff366d20e91711ea1414",
     "DOCS.json": "402a8be2178e43fe9cab39fa019e6a3c1f33aeffb1ece3d9c16d6577e6d5a63d",
     "WORKFLOW.json": "7888249b1f1758385e9e9faf2f74e585bdbacd0d58dd33794ed4dbd42f18f7d5",
-    "COMMANDS.json": "26ab6b201da3f67b28deade808baa87044b5aecc2c3243a3af6cca88df0213c4",
-    "FLOWS.json": "549368bd919572e973f2413f25bfdae057dc156534009ba4bcbb5ac36feb559b",
-    "SCRIPTS.json": "0b5089bce839ed1b107707e3299328b4bc61ddc5f0e446ed284331eac90a0a13",
-    "docs-tech/PIPELINE-BOOTSTRAP.json": "4b41447e817f82392d29b096499a4573110684c8e7be4650ec718499f0aac9f2",
+    "COMMANDS.json": "6a6a4bbb22564274eeb593145d637f4424bc186e1db9a4d01615d252318e4978",
+    "FLOWS.json": "e219fd3679d72ed4c7b02fcc75c79c18dffe13255fc656a8067c5a94a124c4a8",
+    "SCRIPTS.json": "2589f6383b1249a08d23fb29f6213d6ed9698b2a4a01d10c6a6af7b86cd5b116",
+    "docs-tech/PIPELINE-BOOTSTRAP.json": "c9e29423185225f0df394bb613a367ab9957192dd9d40c64e29f34eeaddf4cc3",
     "core/AGENT-CONTRACT.json": "db7613df5df052a37bd9cb95ab4fe4113a957cdc50a63f79cf2bc7ba1bd6fc65",
     "core/CONTEXT-TIERS.json": "9aade292deca1b20852a093134c1bd99a846c547638c117493042b723c4251e1",
     "core/MEMORY-MODEL.json": "e45f8e969378eefe36e3b402fecd7d5a1bb529cd6946cf60c7e8ddd3a4c50d93",
@@ -55,11 +55,11 @@
   },
   "output_hashes": {
     "README.md": "9b68fe594e40ac2212a5389d7462f60bc6515963555b93ee3963ae1b1271554e",
-    "INDEX.json": "011d109eb42a69a10761b56326c054962eb35b29461ede7ce0ceb2cb011c243a",
-    "codex/ENTRYPOINT.md": "7006ca5e4fe7fe86b19cec94971ebb7425ee1cfa4977f0df5e82922c389aef55",
-    "codex/RULES.compiled.md": "92518d98db580f0fd957c8386607682f8a527268220809fa60c9e19caa71830b",
-    "codex/WORKFLOW.compiled.md": "b014ba8fb4ec68197dcc1ac27c1649476992754130824e05d99a49a65135e570",
-    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "bdeada9021f24c7cbdafbe78c7693813876a51c24596487c0da1686ef857abc5",
-    "codex/TEAM.compiled.md": "bd91d98c8c5408d4f95a0b8ebdc8b658eb5567ecde2d6e49cbfc4270d8c21c8b"
+    "INDEX.json": "9b15cab05283873fdf2a498e9c7812ece10fdc97f7ca6d2764f69b25d6141c43",
+    "codex/ENTRYPOINT.md": "ee4113207c394f5086b66361d84bbd0e450589cc6322ca5fe1134958e2938691",
+    "codex/RULES.compiled.md": "ed117d30ab3dd8098592f56290d74018fb8632f24e3d86f274922a6f8ec9feb4",
+    "codex/WORKFLOW.compiled.md": "96d094873c119c918f242232d158eeefb1fd565770e913af5394a69f77a58fbf",
+    "codex/CONTEXTUAL-WORKFLOW.compiled.md": "98ccd2e3f4e43cdc25c530ce822cf6714937749ca3412aa5335358feccec762d",
+    "codex/TEAM.compiled.md": "fd3dbbe7b52b115d4f60d9d09e445bb8405a5f916186386c1e383de121424fa7"
   }
 }

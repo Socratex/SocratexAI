@@ -34,6 +34,9 @@ def recovery_record(entry: dict) -> dict:
 
 
 def eligibility(entry: dict, now: float) -> str | None:
+    from .shutdown import pending
+    if pending(entry):
+        return "shutdown_pending" if (entry.get("shutdown_policy") or {}).get("armed") else "shutdown_finished"
     if entry.get("mode") != "native" or entry.get("enabled") is not True:
         return "inactive"
     if entry.get("state") not in RECOVERABLE_STATES or entry.get("needs"):

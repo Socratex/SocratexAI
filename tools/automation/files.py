@@ -38,6 +38,7 @@ def progress_record(entry: dict) -> dict:
             "scope": entry["scope"], "sources": entry["sources"], "state": entry["state"],
             "prompt_context": entry.get("prompt_context", ""),
             "grant_amendments": entry.get("grant_amendments", []),
+            "shutdown_policy": entry.get("shutdown_policy"),
             "completed": entry["completed"], "batch_size": entry["batch_size"],
             "steps": steps, "inflight": entry.get("inflight"), "checkpoint": entry.get("checkpoint"),
             "task_projection": entry.get("task_projection", []),
@@ -73,6 +74,10 @@ def summary(record: dict) -> str:
             lines.append("| " + " | ".join(cell(row[key]) for key in ("id", "needed", "how", "blocks")) + " |")
     else:
         lines.append("📌 Nie zapisano aktualnych próśb do operatora.")
+    if record.get("shutdown_policy"):
+        policy = record["shutdown_policy"]
+        lines += ["", "## 🌙 Wyłączenie", "", "🌙 Stan: " + policy.get("phase", "unknown")
+                  + "; powód: " + policy.get("trigger", policy.get("cancel_reason", "jeszcze nie wystąpił")) + "."]
     return "\n".join(lines) + "\n"
 
 

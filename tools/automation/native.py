@@ -61,6 +61,9 @@ def authorize(registry: Registry, thread_id: str, run_id: str, scheduler_id: str
     wake_id = nonempty(wake_id, "wake_id")
     with registry.transaction() as data:
         entry = current_run(data, thread_id, run_id)
+        from .shutdown import pending
+        if pending(entry):
+            return {"action": "stop", "reason": "shutdown_pending"}
         if entry["mode"] != "native":
             raise ValueError("Native execution requires explicit START AUTO --mode native")
         if not entry["enabled"] or entry["state"] in TERMINAL_STATES:
@@ -142,7 +145,8 @@ def render_instructions(entry: dict) -> str:
         if exc.name != __package__ + ".instructions":
             raise
         from .generic_instructions import render_instructions as render
-    return render(entry)
+    from .shutdown import instructions
+    return render(entry) + instructions(entry)
 
 
 def scheduler_request(entry: dict, retry_at: float | None = None, now: float | None = None, pause: bool = False) -> dict:

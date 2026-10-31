@@ -20,7 +20,7 @@ from automation.recovery import eligibility, record_delivery, reserve_wake, reso
 
 
 def sweep(registry: Registry, bridge, *, dry_run: bool = False, repo: str | None = None,
-          thread_id: str | None = None, account_limits: dict | None = None) -> list[dict]:
+          thread_id: str | None = None, account_limits: dict | None = None, observations: dict | None = None) -> list[dict]:
     # Freeze exact run identities, then recheck each under the shared OS lock.
     with registry.transaction() as data:
         entries = [dict(row) for row in data["threads"].values()
@@ -41,7 +41,7 @@ def sweep(registry: Registry, bridge, *, dry_run: bool = False, repo: str | None
                             "next_check_at": retry_at, "limit_reset_at": limit_reset_at(account_limits)})
             continue
         try:
-            observation = bridge.observation(entry)
+            observation = (observations or {}).get(entry["thread_id"]) or bridge.observation(entry)
             reservation = reserve_wake(registry, entry["thread_id"], entry["run_id"], observation, dry_run=dry_run)
             if reservation["action"] != "prepared":
                 results.append(reservation)
@@ -88,6 +88,18 @@ def check_registered(registry: Registry, *, caller: str | None, endpoint: str | 
                    and (thread_id is None or row["thread_id"] == thread_id)]
     results = []
     for entry in entries:
+        if (entry.get("shutdown_policy") or {}).get("armed"):
+            from automation.shutdown import advance, system_shutdown
+            with DesktopBridge(find_endpoint(endpoint), caller or entry["thread_id"], timeout) as bridge:
+                observation = bridge.observation(entry)
+                power = advance(registry, entry["thread_id"], entry["run_id"], observation,
+                                executor=system_shutdown, dry_run=dry_run)
+                if power["action"] != "continue":
+                    results.append(power)
+                    continue
+                results.extend(sweep(registry, bridge, dry_run=dry_run, repo=repo, thread_id=entry["thread_id"],
+                                     account_limits=observation["limits"], observations={entry["thread_id"]: observation}))
+            continue
         reason = eligibility(entry, time.time())
         if reason:
             waiting = entry.get("limit_wait") or {}
@@ -157,7 +169,9 @@ def main(argv: list[str] | None = None) -> int:
             print_changes(registry.home, report)
         else:
             print(human_report(report) if args.human else json.dumps(report, ensure_ascii=False, indent=4))
-        if any(row["action"] in {"blocked", "delivery_unknown"} for row in results):
+        if any(row["action"] == "shutdown_pending" for row in results):
+            return 30
+        if any(row["action"] in {"blocked", "delivery_unknown", "shutdown_failed"} for row in results):
             return 2
         return 10 if args.watchdog and any(row.get("reason") == "account_limit" for row in results) else 0
     except (OSError, ValueError, KeyError, RuntimeError, TimeoutError) as exc:

@@ -62,7 +62,10 @@
             "START AUTO",
             "STOP AUTO",
             "CONTINUE-AUTO",
-            "CONTINUE AUTO"
+            "CONTINUE AUTO",
+            "CONTINUE AUTO + LIMIT SHUT DOWN",
+            "START AUTO + LIMIT SHUT DOWN",
+            "CANCEL AUTO SHUTDOWN"
         ],
         "FLOWS.json": [
             "multi_prompt",
@@ -217,7 +220,8 @@
             "test_code_line_index.py",
             "auto.py",
             "sync_auto.py",
-            "AUTO scheduler.bat"
+            "AUTO scheduler.bat",
+            "shutdown.py"
         ]
     },
     "metadata": {

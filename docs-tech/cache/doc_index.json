@@ -54,7 +54,10 @@
         "START AUTO",
         "STOP AUTO",
         "CONTINUE-AUTO",
-        "CONTINUE AUTO"
+        "CONTINUE AUTO",
+        "CONTINUE AUTO + LIMIT SHUT DOWN",
+        "START AUTO + LIMIT SHUT DOWN",
+        "CANCEL AUTO SHUTDOWN"
       ],
       "top_level_keys": [
         "index",
@@ -162,6 +165,24 @@
           "path": "content.CONTINUE AUTO",
           "title": "",
           "ref": "content.CONTINUE AUTO",
+          "status": ""
+        },
+        "CONTINUE AUTO + LIMIT SHUT DOWN": {
+          "path": "content.CONTINUE AUTO + LIMIT SHUT DOWN",
+          "title": "",
+          "ref": "content.CONTINUE AUTO + LIMIT SHUT DOWN",
+          "status": ""
+        },
+        "START AUTO + LIMIT SHUT DOWN": {
+          "path": "content.START AUTO + LIMIT SHUT DOWN",
+          "title": "",
+          "ref": "content.START AUTO + LIMIT SHUT DOWN",
+          "status": ""
+        },
+        "CANCEL AUTO SHUTDOWN": {
+          "path": "content.CANCEL AUTO SHUTDOWN",
+          "title": "",
+          "ref": "content.CANCEL AUTO SHUTDOWN",
           "status": ""
         }
       }
@@ -639,7 +660,12 @@
         "verification",
         "concurrency",
         "execution",
-        "console_scheduler"
+        "console_scheduler",
+        "self_continuation",
+        "watchdog_cadence",
+        "status_changes",
+        "recovery_prompt",
+        "unattended_shutdown"
       ],
       "top_level_keys": [
         "index",
@@ -741,6 +767,12 @@
           "path": "content.recovery_prompt",
           "title": "recovery_prompt",
           "ref": "content.recovery_prompt",
+          "status": ""
+        },
+        "unattended_shutdown": {
+          "path": "content.unattended_shutdown",
+          "title": "Nocne AUTO i wyłączenie komputera",
+          "ref": "content.unattended_shutdown",
           "status": ""
         }
       }
@@ -5424,7 +5456,8 @@
         "test_code_line_index.py",
         "auto.py",
         "sync_auto.py",
-        "AUTO scheduler.bat"
+        "AUTO scheduler.bat",
+        "shutdown.py"
       ],
       "top_level_keys": [
         "index",
@@ -6271,6 +6304,12 @@
           "title": "",
           "ref": "content.console_scheduler.py",
           "status": ""
+        },
+        "shutdown.py": {
+          "path": "content.shutdown.py",
+          "title": "",
+          "ref": "content.shutdown.py",
+          "status": ""
         }
       }
     },
@@ -6418,7 +6457,8 @@
         "owner",
         "commands",
         "lifecycle",
-        "scheduler"
+        "scheduler",
+        "unattended_shutdown"
       ],
       "top_level_keys": [
         "index",
@@ -6448,6 +6488,12 @@
           "path": "content.scheduler",
           "title": "scheduler",
           "ref": "content.scheduler",
+          "status": ""
+        },
+        "unattended_shutdown": {
+          "path": "content.unattended_shutdown",
+          "title": "Nocne AUTO i wyłączenie komputera",
+          "ref": "content.unattended_shutdown",
           "status": ""
         }
       }

@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "text"))
 from utf8_file_helpers import write_utf8_file
 
 PORTABLE = ("__init__.py", "auto.py", "controller.py", "files.py", "native.py", "selection.py", "roster.py",
-            "finalizer.py", "codex_probe.py", "generic_instructions.py", "desktop_bridge.py", "recovery.py", "resume_auto.py", "console_scheduler.py", "watchdog_status.py")
+            "finalizer.py", "codex_probe.py", "generic_instructions.py", "desktop_bridge.py", "recovery.py", "resume_auto.py", "console_scheduler.py", "watchdog_status.py", "shutdown.py")
 
 
 def main():

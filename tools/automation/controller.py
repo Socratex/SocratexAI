@@ -244,6 +244,8 @@ class Registry:
     def stop(self, thread_id: str) -> dict:
         with self.transaction() as data:
             entry = data["threads"][thread_id]
+            from .shutdown import cancel
+            cancel(entry, "STOP AUTO")
             entry.update(enabled=False, state="stopped", next_check_at=0)
             return dict(entry)
 
