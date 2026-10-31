@@ -221,7 +221,8 @@
             "auto.py",
             "sync_auto.py",
             "AUTO scheduler.bat",
-            "shutdown.py"
+            "shutdown.py",
+            "AUTO cancel shutdown.bat"
         ]
     },
     "metadata": {

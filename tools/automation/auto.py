@@ -27,6 +27,7 @@ def parser() -> argparse.ArgumentParser:
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("--state-dir", type=Path, help="Local registry directory; default outside the checkout")
     sub = cli.add_subparsers(dest="command", required=True)
+    sub.add_parser("cancel-shutdown", help="Cancel pending computer shutdowns locally without an AI account or thread lookup")
     start = sub.add_parser("start", help="Register a thread grant; native mode permits scheduled scoped work")
     start.add_argument("--repo", required=True)
     start.add_argument("--scope", required=True, help="Explicit approved thematic scope, not a new product mandate")
@@ -105,6 +106,9 @@ def execute(args: argparse.Namespace) -> object:
     command = args.command
     if command == "context":
         return registry.context(args.thread_id, args.scheduler_id)
+    if command == "cancel-shutdown":
+        from automation.shutdown import cancel_all
+        return cancel_all(registry)
     if not args.thread_id or not args.thread_id.strip():
         raise ValueError("--thread-id is required when CODEX_THREAD_ID is unavailable; never use the latest chat")
     if command == "shutdown-policy":

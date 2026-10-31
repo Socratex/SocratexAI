@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 import time
 
-from .controller import current_run, limit_availability, nonempty, validate_snapshot
+from .controller import current_run, limit_availability, nonempty, remember_limit, validate_snapshot
 
 COUNTDOWN_SECONDS = 30
 
@@ -25,6 +25,17 @@ def cancel(entry: dict, reason: str) -> None:
     policy = entry.get("shutdown_policy")
     if policy:
         policy.update(armed=False, phase="cancelled", cancel_reason=reason)
+
+
+def cancel_all(registry) -> dict:
+    cancelled = []
+    with registry.transaction() as data:
+        for entry in data["threads"].values():
+            policy = entry.get("shutdown_policy") or {}
+            if policy.get("armed") or policy.get("phase") == "dispatch_reserved":
+                cancel(entry, "local_machine_cancel")
+                cancelled.append({"thread_id": entry["thread_id"], "run_id": entry["run_id"]})
+    return {"action": "shutdown_cancelled", "cancelled": cancelled, "dispatch": False}
 
 
 def configure(registry, thread_id: str, run_id: str, *, enabled: bool,
@@ -110,6 +121,11 @@ def advance(registry, thread_id: str, run_id: str, observation: dict, *, executo
         if dry_run:
             return {**base, "action": "would_shutdown", "trigger": trigger, "dispatch": False}
         if policy.get("phase") != "pending":
+            if trigger == "account_limit":
+                _, retry_at = limit_availability(observation["limits"], now)
+                remember_limit(entry, observation["limits"], now, retry_at)
+                if entry.get("inflight"):
+                    entry["resume_pending"] = True
             policy.update(phase="pending", trigger=trigger, shutdown_at=now + COUNTDOWN_SECONDS)
         if now < policy["shutdown_at"]:
             return {**base, "action": "shutdown_pending", "reason": "shutdown_pending", "trigger": trigger,

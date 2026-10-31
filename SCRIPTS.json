@@ -139,7 +139,8 @@
         "auto.py",
         "sync_auto.py",
         "AUTO scheduler.bat",
-        "shutdown.py"
+        "shutdown.py",
+        "AUTO cancel shutdown.bat"
     ],
     "content": {
         "add_changelog_entry.py": {
@@ -3013,7 +3014,7 @@
             "description": "Portable AUTO grant/lifecycle, checked native reservations, progress, completion data and manual/heartbeat transport.",
             "input": {
                 "required": [
-                    "subcommand; see --help",
+                    "subcommand; see --help|cancel-shutdown",
                     "--thread-id or CODEX_THREAD_ID"
                 ],
                 "optional": [
@@ -3035,7 +3036,7 @@
                     "shutdown-policy --run-id RUN --enable|--disable [--approval-note TEXT]",
                     "shutdown-blocked --run-id RUN --reason TEXT"
                 ],
-                "rule": "Read core/AUTO-PILOT.json and generated per-chat instructions. Source pipeline START uses --mode native --wake-transport manual unless an existing heartbeat was explicitly selected. Generic task lists must have canonical source hashes; schema2 project/F8 adapters are optional and not bundled. Finalize after normal repository verification and commit/push. Never fabricate operator acceptance. New grants default to manual. use-manual-transport detaches the old scheduler preserving progress; pause that exact native automation first. attach-scheduler is explicit heartbeat opt-in only. Tryb nocny wyłącznie po jawnym poleceniu właściciela, np. CONTINUE AUTO + LIMIT SHUT DOWN. Dotyczy dokładnego thread_id/run_id aktywnego Native AUTO, bez poszerzania kolejki ani restartu terminalnego runa. Najpierw zapisz ustawienie przez auto.py shutdown-policy --thread-id ID --run-id RUN --enable --approval-note \"jawne polecenie użytkownika\", zapewnij działający CMD scheduler, potem wykonuj normalny zatwierdzony AUTO. Nie zadawaj pytań w tym trybie; obowiązkową decyzję lub błąd zapisz jako needs_input, a gdy poprawna finalizacja jest niemożliwa użyj shutdown-blocked --reason OPIS. Nie zgaduj decyzji, nie pomijaj testów, nie naliczaj ukończenia ani fikcyjnego commitu. Po świeżym natywnym potwierdzeniu limitu, końca partii/kolejki albo blokady watchdog zapisuje checkpoint, odczekuje własne30s i wyłącza Windows. Nie czeka na build. Bieżący czat/projekt i widoczne inne czaty muszą być bezczynne; prywatny App Server i stary snapshot nie są dowodem. STOP AUTO albo shutdown-policy --disable anuluje przed dispatch. CANCEL AUTO SHUTDOWN oznacza samo anulowanie opcji, bez zatrzymania kolejki. Domyślnie wyłączone; nie dziedziczy się na nowy run ani nowy start Windows. Status i dry-run nigdy nie wyłączają komputera. Po zleceniu/błędzie komendy nie ma automatycznej powtórki ani wznowienia w tej samej sesji bez anulowania; po restarcie zwykłe wznowienie może kontynuować zachowaną rezerwację. Monitor używa dotychczasowej kadencji, a podczas własnego odliczania sprawdza co5s; zmiany statusu pokazuje raz. Normalne zamknięcie Windows, bez wymuszenia utraty niezapisanych danych innych aplikacji; mogą one zatrzymać zamknięcie. Implementacja/test tej funkcji nie oznacza jej uzbrojenia.",
+                "rule": "Read core/AUTO-PILOT.json and generated per-chat instructions. Source pipeline START uses --mode native --wake-transport manual unless an existing heartbeat was explicitly selected. Generic task lists must have canonical source hashes; schema2 project/F8 adapters are optional and not bundled. Finalize after normal repository verification and commit/push. Never fabricate operator acceptance. New grants default to manual. use-manual-transport detaches the old scheduler preserving progress; pause that exact native automation first. attach-scheduler is explicit heartbeat opt-in only. Tryb nocny wyłącznie po jawnym poleceniu właściciela, np. CONTINUE AUTO + LIMIT SHUT DOWN. Dotyczy dokładnego thread_id/run_id aktywnego Native AUTO, bez poszerzania kolejki ani restartu terminalnego runa. Najpierw zapisz ustawienie przez auto.py shutdown-policy --thread-id ID --run-id RUN --enable --approval-note \"jawne polecenie użytkownika\", zapewnij działający CMD scheduler, potem wykonuj normalny zatwierdzony AUTO. Nie zadawaj pytań w tym trybie; obowiązkową decyzję lub błąd zapisz jako needs_input, a gdy poprawna finalizacja jest niemożliwa użyj shutdown-blocked --reason OPIS. Nie zgaduj decyzji, nie pomijaj testów, nie naliczaj ukończenia ani fikcyjnego commitu. Po świeżym natywnym potwierdzeniu limitu, końca partii/kolejki albo blokady watchdog zapisuje checkpoint, odczekuje własne30s i wyłącza Windows. Nie czeka na build. Bieżący czat/projekt i widoczne inne czaty muszą być bezczynne; prywatny App Server i stary snapshot nie są dowodem. STOP AUTO albo shutdown-policy --disable anuluje przed dispatch. CANCEL AUTO SHUTDOWN oznacza samo anulowanie opcji, bez zatrzymania kolejki. Domyślnie wyłączone; nie dziedziczy się na nowy run ani nowy start Windows. Status i dry-run nigdy nie wyłączają komputera. Po zleceniu/błędzie komendy nie ma automatycznej powtórki ani wznowienia w tej samej sesji bez anulowania; po restarcie zwykłe wznowienie może kontynuować zachowaną rezerwację. Monitor używa dotychczasowej kadencji, a podczas własnego odliczania sprawdza co5s; zmiany statusu pokazuje raz. Normalne zamknięcie Windows, bez wymuszenia utraty niezapisanych danych innych aplikacji; mogą one zatrzymać zamknięcie. Implementacja/test tej funkcji nie oznacza jej uzbrojenia. cancel-shutdown cancels all pending local machine policies without a thread ID, scheduler startup, AI call or stopping the grant. AUTO cancel shutdown.bat invokes it; -Help is read-only.",
                 "amend_contract": "Po bezpośredniej zgodzie właściciela na rozszerzenie aktywnej kolejki zapisz najpierw nowy uporządkowany zakres w kanonicznym planie. auto.py amend --thread-id ID --run-id RUN --scope TEKST --batch-size N --approval-note TEKST [--prompt-context TEKST] zmienia wyłącznie scope, limit i opcjonalny kontekst. Wymaga dokładnego aktywnego nieterminalnego runu bez inflight; limit wolno tylko zachować lub zwiększyć. Repo/źródła/tryb/transport są stałe. Zachowuje run_id, licznik, receipts, historię, checkpoint, potrzeby operatora i recovery. Zapisuje rewizję z uzasadnieniem zgody, unieważnia projekcję zadań; następna rezerwacja wymaga świeżych źródeł. Powtórzenie jest idempotentne. Nie wznawia STOP/terminal, nie wysyła prompta, nie tworzy schedulera ani nowego runu. Zmiana grantu nie jest ukończeniem jednostki AUTO."
             },
             "output": {
@@ -3109,6 +3110,23 @@
             "output": {
                 "success": "Durable armed/pending/requested/cancelled/failed status and saved checkpoint. Actual OS action only from an armed watchdog after fresh native evidence and countdown.",
                 "failure": "Fail closed on invalid identity, stale/non-native observation or active chat. OS error recorded and never retried automatically."
+            }
+        },
+        "AUTO cancel shutdown.bat": {
+            "path": "AUTO cancel shutdown.bat",
+            "category": "Pipeline",
+            "description": "Anuluje oczekujące wyłączenia AUTO bez konta AI i wyszukiwania ID czatu.",
+            "input": {
+                "required": [],
+                "optional": [
+                    "-Help",
+                    "--help"
+                ],
+                "rule": "Bez argumentów uruchamia lokalne auto.py cancel-shutdown. Nie uruchamia/zatrzymuje pracy, nie zleca shutdown i nie pyta modelu. Działa przed dispatch systemowym; Help niczego nie zmienia."
+            },
+            "output": {
+                "success": "JSON z anulowanymi politykami i kod0.",
+                "failure": "Jawny kod błędu; nieudane anulowanie nie jest zgłaszane jako sukces."
             }
         }
     },

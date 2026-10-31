@@ -610,7 +610,7 @@
                 "version": "1.1",
                 "date": "2026-10-31",
                 "feature": "manual_auto_recovery",
-                "change": "Added opt-in per-run unattended shutdown on account limit, completed work or a saved block; checkpoint-first one-shot dispatch, cancellation, boot binding, native idle checks and no build wait. OS shutdown itself is not executed by automated tests."
+                "change": "Added opt-in per-run unattended shutdown on account limit, completed work or a saved block; checkpoint-first one-shot dispatch, cancellation, boot binding, native idle checks and no build wait. OS shutdown itself is not executed by automated tests. Preserve LIMIT resume markers before dispatch and provide a local cancel BAT independent of the AI account."
             }
         ]
     },

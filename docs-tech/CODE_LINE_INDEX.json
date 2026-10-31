@@ -1,5 +1,5 @@
 {
-    "generatedAt": "2026-10-31T14:22:28+01:00",
+    "generatedAt": "2026-10-31T14:41:12+01:00",
     "threshold": 300,
     "files": [
         {
@@ -135,26 +135,26 @@
             "large": false
         },
         {
+            "path": "tools/automation/tests/test_shutdown.py",
+            "lines": 223,
+            "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "tools/automation/auto.py",
+            "lines": 214,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/diagnostics/log_summary.py",
             "lines": 213,
             "extension": ".py",
             "large": false
         },
         {
-            "path": "tools/automation/auto.py",
-            "lines": 210,
-            "extension": ".py",
-            "large": false
-        },
-        {
             "path": "tools/documents/document_structure_normalizer_engine.py",
             "lines": 204,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/tests/test_shutdown.py",
-            "lines": 192,
             "extension": ".py",
             "large": false
         },
@@ -243,6 +243,12 @@
             "large": false
         },
         {
+            "path": "tools/automation/shutdown.py",
+            "lines": 146,
+            "extension": ".py",
+            "large": false
+        },
+        {
             "path": "tools/repo/open_pipeline_learning_issue.py",
             "lines": 146,
             "extension": ".py",
@@ -263,12 +269,6 @@
         {
             "path": "tools/tasks/grouped_task_handoff.py",
             "lines": 136,
-            "extension": ".py",
-            "large": false
-        },
-        {
-            "path": "tools/automation/shutdown.py",
-            "lines": 132,
             "extension": ".py",
             "large": false
         },
@@ -906,6 +906,18 @@
             "path": "tools/text/write_utf8_file.py",
             "lines": 21,
             "extension": ".py",
+            "large": false
+        },
+        {
+            "path": "AUTO cancel shutdown.bat",
+            "lines": 19,
+            "extension": ".bat",
+            "large": false
+        },
+        {
+            "path": "templates/code/AUTO cancel shutdown.bat",
+            "lines": 19,
+            "extension": ".bat",
             "large": false
         },
         {

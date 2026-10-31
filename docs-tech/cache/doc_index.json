@@ -5457,7 +5457,8 @@
         "auto.py",
         "sync_auto.py",
         "AUTO scheduler.bat",
-        "shutdown.py"
+        "shutdown.py",
+        "AUTO cancel shutdown.bat"
       ],
       "top_level_keys": [
         "index",
@@ -6309,6 +6310,12 @@
           "path": "content.shutdown.py",
           "title": "",
           "ref": "content.shutdown.py",
+          "status": ""
+        },
+        "AUTO cancel shutdown.bat": {
+          "path": "content.AUTO cancel shutdown.bat",
+          "title": "",
+          "ref": "content.AUTO cancel shutdown.bat",
           "status": ""
         }
       }

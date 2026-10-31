@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+import shutil
+import subprocess
 from unittest.mock import Mock, patch
 import importlib
 
@@ -78,6 +80,10 @@ class ShutdownTests(unittest.TestCase):
         self.arm()
         self.change(inflight={"task_id": "unfinished"}, checkpoint="last verified")
         self.assertEqual("shutdown_pending", self.advance(limited=True)["action"])
+        saved = self.registry.get("A")
+        self.assertEqual("waiting_limit", saved["state"])
+        self.assertTrue(saved["resume_pending"])
+        self.assertTrue(saved["limit_wait"]["active"])
         self.assertEqual("shutdown_pending", eligibility(self.registry.get("A"), 1001))
         self.assertEqual("shutdown_pending", self.advance(now=1029, limited=True)["action"])
         self.executor.assert_not_called()
@@ -135,6 +141,33 @@ class ShutdownTests(unittest.TestCase):
         fresh = self.registry.start("A", str(self.root), "approved", ["PLAN.json"], 2, "native")
         self.assertNotIn("shutdown_policy", fresh)
         self.assertNotEqual(self.run, fresh["run_id"])
+
+    def test_local_cancel_needs_no_ai_or_thread_lookup_and_does_not_stop_work(self):
+        from tools.automation.auto import main
+        self.arm(); self.advance(limited=True)
+        with patch("automation.console_scheduler.ensure_scheduler", side_effect=AssertionError("No monitor or AI call needed")):
+            self.assertEqual(0, main(["--state-dir", str(self.registry.home), "cancel-shutdown"]))
+        entry = self.registry.get("A")
+        self.assertFalse(entry["shutdown_policy"]["armed"])
+        self.assertTrue(entry["enabled"])
+        self.advance(now=1031, limited=True)
+        self.executor.assert_not_called()
+
+    @unittest.skipUnless(os.name == "nt", "Windows cancel wrapper")
+    def test_local_cancel_bat_works_from_unicode_path_and_help_does_not_touch_state(self):
+        project = Path(__file__).resolve().parents[3]
+        wrapper = self.root / "AUTO cancel shutdown.bat"
+        shutil.copyfile(project / wrapper.name, wrapper)
+        script = self.root / "Tools/automation/auto.py"
+        script.parent.mkdir(parents=True, exist_ok=True)
+        script.write_text("import sys\nfrom pathlib import Path\nassert sys.argv[1:] == ['cancel-shutdown']\nPath('cancel-receipt.txt').write_text('local cancel')\n", encoding="utf-8")
+        for args in (("--help",), ("unexpected",)):
+            result = subprocess.run(["cmd", "/d", "/c", "call", str(wrapper), *args], cwd=self.root, capture_output=True)
+            self.assertEqual(0 if args == ("--help",) else 2, result.returncode)
+            self.assertFalse((self.root / "cancel-receipt.txt").exists())
+        result = subprocess.run(["cmd", "/d", "/c", "call", str(wrapper)], cwd=self.root, capture_output=True)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertEqual("local cancel", (self.root / "cancel-receipt.txt").read_text())
 
     def test_stale_foreign_and_private_observations_cannot_turn_off_a_computer(self):
         self.arm()

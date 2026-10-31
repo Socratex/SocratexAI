@@ -56,7 +56,9 @@
             "platform": "Windows",
             "default": "off",
             "countdown_seconds": 30,
-            "wait_for_build": false
+            "wait_for_build": false,
+            "local_cancel": "AUTO cancel shutdown.bat / auto.py cancel-shutdown: działa bez AI i ID czatu; anuluje oczekujące polityki maszyny, nie zatrzymuje grantu. Help jest odczytem.",
+            "resume_after_limit": "Przed odliczaniem świeży limit zapisuje istniejący limit_wait/waiting_limit oraz resume_pending dla zachowanej rezerwacji. Po ponownym uruchomieniu wznowienie ma prawdziwy dowód przerwania limitem."
         }
     },
     "metadata": {

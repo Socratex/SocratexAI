@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-337f25bb52b4
+Generated: source-28c8820d12fb
 
 ## Source of Truth
 
@@ -7884,7 +7884,7 @@ Draft placeholder:
                 "known_failure_if_missing": "Agents waste context on raw ChatGPT share HTML or whole private exports, or attempt brittle/private live-account scraping instead of extracting a compact conversation artifact first."
             },
             "manual_auto_recovery": {
-                "summary": "Native AUTO self-continuation with a visible300s/600s recovery watchdog, quiet status changes, account reset tracking and durable exact-ID outbox. Optional one-run unattended shutdown on limit/completion/block, with saved progress, native idle evidence, cancellation and no build wait.",
+                "summary": "Native AUTO self-continuation with a visible300s/600s recovery watchdog, quiet status changes, account reset tracking and durable exact-ID outbox. Optional one-run unattended shutdown on limit/completion/block, with saved progress, native idle evidence, cancellation and no build wait. Limit recovery proof is checkpointed before power dispatch; local cancellation works without AI.",
                 "required_paths": [
                     "core/AUTO-PILOT.json",
                     "templates/code/AUTO-PILOT.json",
@@ -7910,7 +7910,8 @@ Draft placeholder:
                     "tools/automation/tests/test_native.py",
                     "tools/automation/tests/test_console_scheduler.py",
                     "tools/automation/shutdown.py",
-                    "tools/automation/tests/test_shutdown.py"
+                    "tools/automation/tests/test_shutdown.py",
+                    "templates/code/AUTO cancel shutdown.bat"
                 ],
                 "required_scripts": [
                     "auto.py",
@@ -7924,7 +7925,8 @@ Draft placeholder:
                         "resume_auto.py",
                         "sync_auto.py",
                         "console_scheduler.py",
-                        "shutdown.py"
+                        "shutdown.py",
+                        "AUTO cancel shutdown.bat"
                     ]
                 },
                 "required_docs": [
