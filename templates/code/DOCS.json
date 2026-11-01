@@ -23,7 +23,8 @@
         "context-docs/ENGINEERING.json",
         "context-docs/*.json",
         "ignored/ai-socratex/*.md",
-        "AUTO-PILOT.json"
+        "AUTO-PILOT.json",
+        ".codex/"
     ],
     "content": {
         "SOCRATEX.md": {
@@ -191,6 +192,10 @@
             "role": "Local entrypoint to the installed shared AUTO lifecycle/manual recovery contract.",
             "read_when": "Before explicit START/STOP/CONTINUE AUTO or manual recovery work.",
             "write_when": "Only for project-specific AUTO adapter boundaries; core remains source-owned."
+        },
+        ".codex/": {
+            "role": "Optional project-native Codex configuration, preserved across managed updates. Policy: SocratexAI/core/AI-RESOURCE-ROUTING.json.",
+            "read": "when selecting/configuring native agents"
         }
     },
     "metadata": {

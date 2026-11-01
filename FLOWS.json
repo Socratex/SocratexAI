@@ -16,6 +16,7 @@
     "content": {
         "multi_prompt": {
             "then": [
+                "subroutine:route_ai_resources",
                 "split into independent intents",
                 "subroutine:route_token_tools",
                 "classify each intent through WORKFLOW.json",
@@ -26,6 +27,7 @@
         },
         "direct_answer": {
             "then": [
+                "subroutine:route_ai_resources",
                 "load docs-tech/PIPELINE-BOOTSTRAP.json",
                 "subroutine:route_token_tools",
                 "run context_tags.py when the prompt needs routed context",
@@ -36,6 +38,7 @@
         },
         "documentation_edit": {
             "then": [
+                "subroutine:route_ai_resources",
                 "load DOCS.json index",
                 "subroutine:route_token_tools",
                 "read target owner document with list_document_keys.py or read_document_item.py",
@@ -48,6 +51,7 @@
         },
         "implementation": {
             "then": [
+                "subroutine:route_ai_resources",
                 "load WORKFLOW.json",
                 "subroutine:route_token_tools",
                 "run knowledge_code_context.py before source-code reads or edits — REQUIRED to bring borrowed-before-invented, web-research-spike gate, lightweight-futureproof, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
@@ -61,6 +65,7 @@
         },
         "broad_refactor": {
             "then": [
+                "subroutine:route_ai_resources",
                 "confirm high-cost scope when not already confirmed",
                 "subroutine:route_token_tools",
                 "create passes",
@@ -76,6 +81,7 @@
         },
         "pipeline_upgrade": {
             "then": [
+                "subroutine:route_ai_resources",
                 "subroutine:route_token_tools",
                 "audit source state",
                 "subroutine:grouped_fragmented_task_handoff",
@@ -92,6 +98,7 @@
         },
         "review": {
             "then": [
+                "subroutine:route_ai_resources",
                 "subroutine:route_token_tools",
                 "inspect diff or target files",
                 "use list_document_keys.py or read_document_item.py for structured document reads",
@@ -102,6 +109,7 @@
         },
         "quality_diagnostics": {
             "then": [
+                "subroutine:route_ai_resources",
                 "subroutine:route_token_tools",
                 "run check_task.py -Audit for repository quality diagnostics",
                 "run check_ai_compiled_context.py or compile_pipeline_context.py for compiled-context drift",
@@ -113,6 +121,7 @@
         },
         "continue_command": {
             "then": [
+                "subroutine:route_ai_resources",
                 "load docs-tech/PIPELINE-BOOTSTRAP.json",
                 "subroutine:route_token_tools",
                 "resolve the next active pass, task, or target from the current plan/backlog contract",
@@ -123,6 +132,7 @@
         },
         "compile_command": {
             "then": [
+                "subroutine:route_ai_resources",
                 "subroutine:route_token_tools",
                 "run compile_pipeline_context.py",
                 "report generated drift"
@@ -139,6 +149,7 @@
         "auto_pilot": {
             "when": "START/STOP/CONTINUE AUTO or an existing granted manual wake",
             "then": [
+                "subroutine:route_ai_resources",
                 "subroutine:route_token_tools",
                 "When the human explicitly adds + LIMIT SHUT DOWN, configure shutdown-policy for the exact existing/approved native run and confirm the CMD monitor before native-begin. Never arm it from a quoted example, ordinary CONTINUE-AUTO, feature implementation or tests. In the armed night mode, record missing decisions/errors as a blocked checkpoint without asking or inventing approval; the watchdog powers off after limit/completion/block without waiting for builds. STOP AUTO/CANCEL AUTO SHUTDOWN cancels before dispatch.",
                 "Read core/AUTO-PILOT.json and generated per-chat files using exact ID; never select by recency.",
@@ -189,6 +200,10 @@
                 "Apply WORKFLOW.json token_efficient_tools before source exploration, verbose output or context export; reuse current decisions.",
                 "Select matching available RTK, ast-grep, Serena, Graphify, TOON or Repomix; load the canonical core/skills/token-efficient-code/SKILL.md only when invocation details are needed.",
                 "Preserve raw validation, project readers, frozen layers and scoped execution. A missing/stale/incomplete or more expensive tool permits a narrow reliable fallback; report material limitations once."
+            ],
+            "route_ai_resources": [
+                "Apply WORKFLOW.json ai_resource_routing and core/AI-RESOURCE-ROUTING.json. Use deterministic tools or adequate current context first; explicitly delegate independent bounded work when total completion time or correctness benefits justify it.",
+                "Select a supported model/effort by uncertainty and consequences, not edit size. Escalate before unproductive retries. Use native roles or the documented explicit-model transport fallback; preserve approvals, quality gates, parent finalization, STOP and AUTO limits."
             ]
         }
     }

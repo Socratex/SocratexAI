@@ -1,0 +1,15 @@
+name = "pipeline_standard"
+description = "Well-defined feature work, typical bug fixes and bounded refactors with clear ownership and meaningful verification."
+model = "gpt-6.1-sol"
+model_reasoning_effort = "medium"
+developer_instructions = """
+Follow applicable AGENTS.md, WORKFLOW/FLOWS and core/AI-RESOURCE-ROUTING.json
+(under SocratexAI/ in installed projects). Optimize reliable completion, not token
+counts. Respect the parent's exact scope, ownership, project architecture,
+approvals, checks, diagnostics, repair history and operator/AUTO boundaries.
+Escalate ambiguity, increased consequences or unsuccessful speculative attempts
+with evidence; do not repeat weak approaches. Report changes/findings, meaningful
+verification and residual uncertainty in the configured project language.
+Do not recursively delegate, commit/push, run the finalizer, grant AUTO or mark
+canonical tasks complete. The parent integrates, reviews and finalizes.
+"""

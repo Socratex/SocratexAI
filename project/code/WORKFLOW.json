@@ -12,7 +12,8 @@
         "task_work_tracking",
         "branch_scoped_workflow",
         "roi_workflow",
-        "context_cost_control"
+        "context_cost_control",
+        "ai_resource_routing"
     ],
     "content": {
         "quick_index": {
@@ -78,6 +79,10 @@
             "title": "Context Cost Control",
             "format": "markdown-section",
             "body": "## Context Cost Control\n\nUse `core/CONTEXT-COMPACTION.json` when a session becomes long, after several major passes, or after repeated retry loops.\n\nPrefer a hard reset after compacting `STATE.json` and relevant `context-docs/` over carrying stale live context indefinitely.\n"
+        },
+        "ai_resource_routing": {
+            "title": "AI Resource Routing",
+            "rule": "Apply core/AI-RESOURCE-ROUTING.json for each substantive task and AUTO turn. Quality and total time to correct completion outrank token savings. Prefer deterministic tools and adequate current context. Explicitly delegate independent bounded work only when useful, elevate uncertainty/risk, and keep existing approvals, verification, finalizer and AUTO boundaries."
         }
     },
     "metadata": {

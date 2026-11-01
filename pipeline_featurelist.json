@@ -129,7 +129,8 @@
             "gpt_conversation_ingestion_tools",
             "manual_auto_recovery",
             "active_auto_grant_amendment",
-            "conditional_local_code_tools"
+            "conditional_local_code_tools",
+            "risk_sensitive_codex_resource_routing"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -7597,6 +7598,38 @@
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Installed tools are unused or invoked with another platform's paths, or agents run costly full scans/cloud extraction instead of selecting a scoped local tool."
+            },
+            "risk_sensitive_codex_resource_routing": {
+                "summary": "Quality-first native model/reasoning selection and conditional delegation, with current-context reuse, escalation and truthful transport limitations.",
+                "required_paths": [
+                    "core/AI-RESOURCE-ROUTING.json",
+                    "core/AGENT-CONTRACT.json",
+                    "WORKFLOW.json",
+                    "FLOWS.json",
+                    "project/code/WORKFLOW.json",
+                    "templates/WORKFLOW.json",
+                    "templates/codex/config.toml",
+                    "templates/codex/agents/pipeline_quick.toml",
+                    "templates/codex/agents/pipeline_standard.toml",
+                    "templates/codex/agents/pipeline_deep.toml",
+                    "templates/codex/agents/pipeline_critical.toml",
+                    "templates/codex/agents/pipeline_reviewer.toml"
+                ],
+                "required_docs": [
+                    "WORKFLOW.json",
+                    "FLOWS.json"
+                ],
+                "known_failure_if_missing": "Agents choose weak defaults for sensitive work, manufacture parallelism, or claim model switching/role activation without native evidence.",
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Preserve explicit model choices, approvals, quality gates and AUTO scope.",
+                    "Verify current native schema, model catalog and actual execution; do not infer savings.",
+                    "Keep portable native examples opt-in; preserve existing project .codex settings."
+                ],
+                "verification_commands": [
+                    "python -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python -B tools/pipeline/rebuild_ai_compiled_context.py --check"
+                ]
             }
         }
     },

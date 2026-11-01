@@ -13,7 +13,8 @@
         "single_entry_tool_handler",
         "gpt_conversation_input_routing",
         "auto_recovery",
-        "token_efficient_tools"
+        "token_efficient_tools",
+        "ai_resource_routing"
     ],
     "content": {
         "quick_index": {
@@ -100,6 +101,10 @@
             "details": "Read core/skills/token-efficient-code/SKILL.md in the source checkout, or SocratexAI/core/skills/token-efficient-code/SKILL.md in installed projects, only when invocation details are needed. Resolve real Linux/macOS/Windows executables; do not assume owner paths or an MCP reload in the current session.",
             "fallback": "Use a narrow reliable source/rg read when a tool is absent, stale, incomplete or costs more context. State a material fallback once; installation and savings are never inferred.",
             "boundaries": "Preserve document readers, canonical gates/finalizers, raw verification and project frozen layers. No automatic full-repo scans/exports, installs, cloud/paid backends or gameplay control."
+        },
+        "ai_resource_routing": {
+            "title": "AI Resource Routing",
+            "rule": "Apply core/AI-RESOURCE-ROUTING.json for each substantive task and AUTO turn. Quality and total time to correct completion outrank token savings. Prefer deterministic tools and adequate current context. Explicitly delegate independent bounded work only when useful, elevate uncertainty/risk, and keep existing approvals, verification, finalizer and AUTO boundaries."
         }
     },
     "metadata": {

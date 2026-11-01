@@ -21,7 +21,10 @@
         "docs-tech/TOOL-ERRORS.json",
         "AI-compiled/",
         "core/AUTO-PILOT.json",
-        "core/skills/token-efficient-code/SKILL.md"
+        "core/skills/token-efficient-code/SKILL.md",
+        ".codex/",
+        "core/AI-RESOURCE-ROUTING.json",
+        "templates/codex/"
     ],
     "content": {
         "DOCS.json": {
@@ -115,6 +118,18 @@
         "core/skills/token-efficient-code/SKILL.md": {
             "role": "On-demand portable invocation of six local code-context tools; shared details for conditional workflow routing.",
             "read": "when a matching tool trigger requires setup/invocation details; no automatic installations or whole-repository indexing"
+        },
+        ".codex/": {
+            "role": "Source-project native Codex defaults and standalone roles; not a managed-package payload.",
+            "read": "when configuring or verifying native agents"
+        },
+        "core/AI-RESOURCE-ROUTING.json": {
+            "role": "Shared quality-first model/reasoning/delegation policy.",
+            "read": "each substantive task through WORKFLOW; details only when needed"
+        },
+        "templates/codex/": {
+            "role": "Opt-in native config/role examples; verify model availability and merge, never overwrite project settings.",
+            "read": "during explicitly requested AI setup"
         }
     },
     "metadata": {

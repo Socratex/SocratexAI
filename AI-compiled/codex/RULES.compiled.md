@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-d6086e2bbed1
+Generated: source-bc2eb7a13e94
 
 ## Source of Truth
 
@@ -21,7 +21,7 @@ Generated: source-d6086e2bbed1
 {
     "title": "Operating Principles",
     "format": "markdown-section",
-    "body": "## Operating Principles\n\n- Prefer epistemic accuracy over agreement, optimism, or style.\n- Separate observed facts, reasoned inference, speculation, and value judgment.\n- Do not mirror the user's belief unless it is independently supported by evidence.\n- Challenge vague, unsupported, contradictory, or likely false assumptions when the correction is useful.\n- State uncertainty explicitly when confidence is limited.\n- Prefer explicit contracts over hidden convention.\n- Preserve momentum when the request is clear.\n- Do not execute non-obvious work on a vague task. Before acting, the goal, owner surface, scope boundary, and completion signal must be clear from the user request, active plan, or loaded project state. If not, ask.\n- If new ambiguity appears during execution and it can change scope, behavior, priority, or acceptance, pause and ask instead of guessing through it.\n- Ask questions only when missing information materially changes the action.\n- Keep project-facing files concise, current, and useful.\n- Read `DOCS.json` before reading, creating, renaming, or updating project documents.\n- Update `DOCS.json` whenever a durable document is added, removed, renamed, or its role changes.\n- Prefer the smallest meaningful ownership slice.\n- Avoid broad sweeps when a narrow contract point solves the problem.\n- Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.\n- Prefer high-ROI improvements over comprehensive but low-impact passes.\n- When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.\n- Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.\n- For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text when a tag extractor is available, then query the compiled knowledge layer by those tags before answering or executing. Treat tag-selected notes as routing context, not a replacement for exact source reads when edits or high-stakes claims depend on source truth.\n- Use repository scripts and existing automation wherever they safely reduce manual work, repeated steps, or drift. If an owned script fails because its input contract, validation, docs, platform handling, quoting, paths, encoding, output, or repeatability is weak, fix the script or its documentation/contract before preserving a manual workaround, unless the failure is a true one-off outside the task scope.\n- Avoid duplicated script and script-helper logic. When two scripts perform the same work or use the same function shape, resolver, parser, command runner, JSON/document operation, bootstrap/env handling, logging, validation, or output formatting, extract that behavior into a shared helper/module and parameterize the callers instead of copy-pasting local implementations. Reusable pipeline scripts and helpers should be copied or synced directly from the source pipeline instead of drifting into local variants; project-specific wrappers must stay thin and explicit about their delta.\n- When improving reusable SocratexPipeline behavior, keep source contracts, project packs, templates, feature contracts, and compiled/update surfaces in parity. If the user says to improve the template too, treat template parity as mandatory acceptance criteria, not as a follow-up.\n"
+    "body": "## Operating Principles\n\n- Prefer epistemic accuracy over agreement, optimism, or style.\n- Separate observed facts, reasoned inference, speculation, and value judgment.\n- Do not mirror the user's belief unless it is independently supported by evidence.\n- Challenge vague, unsupported, contradictory, or likely false assumptions when the correction is useful.\n- State uncertainty explicitly when confidence is limited.\n- Prefer explicit contracts over hidden convention.\n- Preserve momentum when the request is clear.\n- Do not execute non-obvious work on a vague task. Before acting, the goal, owner surface, scope boundary, and completion signal must be clear from the user request, active plan, or loaded project state. If not, ask.\n- If new ambiguity appears during execution and it can change scope, behavior, priority, or acceptance, pause and ask instead of guessing through it.\n- Ask questions only when missing information materially changes the action.\n- Keep project-facing files concise, current, and useful.\n- Read `DOCS.json` before reading, creating, renaming, or updating project documents.\n- Update `DOCS.json` whenever a durable document is added, removed, renamed, or its role changes.\n- Prefer the smallest meaningful ownership slice.\n- Avoid broad sweeps when a narrow contract point solves the problem.\n- Do not delete unresolved requirements; move, merge, split, or demote them into the correct planning layer.\n- Prefer high-ROI improvements over comprehensive but low-impact passes.\n- When suggesting multiple improvements, rank them by ROI and call out the top one to three explicitly.\n- Distinguish what looks good in abstraction from what pays off for this project's profile. The latter wins.\n- For every user command or substantive question, load the main workflow/instruction context first, derive context tags from the user text when a tag extractor is available, then query the compiled knowledge layer by those tags before answering or executing. Treat tag-selected notes as routing context, not a replacement for exact source reads when edits or high-stakes claims depend on source truth.\n- Use repository scripts and existing automation wherever they safely reduce manual work, repeated steps, or drift. If an owned script fails because its input contract, validation, docs, platform handling, quoting, paths, encoding, output, or repeatability is weak, fix the script or its documentation/contract before preserving a manual workaround, unless the failure is a true one-off outside the task scope.\n- Avoid duplicated script and script-helper logic. When two scripts perform the same work or use the same function shape, resolver, parser, command runner, JSON/document operation, bootstrap/env handling, logging, validation, or output formatting, extract that behavior into a shared helper/module and parameterize the callers instead of copy-pasting local implementations. Reusable pipeline scripts and helpers should be copied or synced directly from the source pipeline instead of drifting into local variants; project-specific wrappers must stay thin and explicit about their delta.\n- When improving reusable SocratexPipeline behavior, keep source contracts, project packs, templates, feature contracts, and compiled/update surfaces in parity. If the user says to improve the template too, treat template parity as mandatory acceptance criteria, not as a follow-up.\n\n- Apply `core/AI-RESOURCE-ROUTING.json`: maximize correct completion, use deterministic work for mechanical tasks, reuse adequate context, and raise model/reasoning for uncertainty or sensitive boundaries. Native delegation is explicitly requested only for independent bounded work whose time/correctness benefit exceeds coordination cost. Preserve all existing approval, verification and finalization rules.\n"
 }
 
 
@@ -557,7 +557,8 @@ Draft placeholder:
             "gpt_conversation_ingestion_tools",
             "manual_auto_recovery",
             "active_auto_grant_amendment",
-            "conditional_local_code_tools"
+            "conditional_local_code_tools",
+            "risk_sensitive_codex_resource_routing"
         ],
         "feature_contracts": {
             "adapter_pack_bootstrap": {
@@ -8025,6 +8026,38 @@ Draft placeholder:
                     "python3 -B tools/documents/audit_docs.py"
                 ],
                 "known_failure_if_missing": "Installed tools are unused or invoked with another platform's paths, or agents run costly full scans/cloud extraction instead of selecting a scoped local tool."
+            },
+            "risk_sensitive_codex_resource_routing": {
+                "summary": "Quality-first native model/reasoning selection and conditional delegation, with current-context reuse, escalation and truthful transport limitations.",
+                "required_paths": [
+                    "core/AI-RESOURCE-ROUTING.json",
+                    "core/AGENT-CONTRACT.json",
+                    "WORKFLOW.json",
+                    "FLOWS.json",
+                    "project/code/WORKFLOW.json",
+                    "templates/WORKFLOW.json",
+                    "templates/codex/config.toml",
+                    "templates/codex/agents/pipeline_quick.toml",
+                    "templates/codex/agents/pipeline_standard.toml",
+                    "templates/codex/agents/pipeline_deep.toml",
+                    "templates/codex/agents/pipeline_critical.toml",
+                    "templates/codex/agents/pipeline_reviewer.toml"
+                ],
+                "required_docs": [
+                    "WORKFLOW.json",
+                    "FLOWS.json"
+                ],
+                "known_failure_if_missing": "Agents choose weak defaults for sensitive work, manufacture parallelism, or claim model switching/role activation without native evidence.",
+                "sync_direction": "source_to_child",
+                "promotion_checklist": [
+                    "Preserve explicit model choices, approvals, quality gates and AUTO scope.",
+                    "Verify current native schema, model catalog and actual execution; do not infer savings.",
+                    "Keep portable native examples opt-in; preserve existing project .codex settings."
+                ],
+                "verification_commands": [
+                    "python -B tools/repo/check_pipeline_feature_contracts.py",
+                    "python -B tools/pipeline/rebuild_ai_compiled_context.py --check"
+                ]
             }
         }
     },

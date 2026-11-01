@@ -17,7 +17,8 @@
         "REVIEW.md",
         "_INSTRUCTIONS.md",
         "_INSTRUCTION-QUEUE.json",
-        "context-docs/*.json"
+        "context-docs/*.json",
+        ".codex/"
     ],
     "content": {
         "SOCRATEX.md": {
@@ -145,6 +146,10 @@
             "format": "json",
             "read_when": "When the relevant topic is in scope and STATE.md is insufficient.",
             "write_when": "Durable current-state context would reduce future rereading cost."
+        },
+        ".codex/": {
+            "role": "Optional project-native Codex configuration, preserved across managed updates. Policy: SocratexAI/core/AI-RESOURCE-ROUTING.json.",
+            "read": "when selecting/configuring native agents"
         }
     },
     "metadata": {

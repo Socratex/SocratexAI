@@ -53,7 +53,7 @@
         "safety": {
             "title": "Safety",
             "format": "markdown-section",
-            "body": "## Safety\n\nDo not overwrite project memory such as active state, branch state, plans, backlog, decisions, or context docs unless the updater explicitly preserves or migrates them.\n\nDo not update from an untrusted URL without telling the user what source will be used.\n\nIf update source is missing, ask for it and stop before changing files.\n"
+            "body": "## Safety\n\nDo not overwrite project memory such as active state, branch state, plans, backlog, decisions, or context docs unless the updater explicitly preserves or migrates them.\n\nDo not update from an untrusted URL without telling the user what source will be used.\n\nIf update source is missing, ask for it and stop before changing files.\n\nNative `.codex/` project settings are not managed-package replacements. Preserve them during updates. `templates/codex/` contains opt-in native examples; explicit AI setup must check actual model/effort availability and merge existing choices rather than overwriting them.\n"
         }
     },
     "metadata": {

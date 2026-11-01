@@ -29,7 +29,10 @@
             "docs-tech/TOOL-ERRORS.json",
             "AI-compiled/",
             "core/AUTO-PILOT.json",
-            "core/skills/token-efficient-code/SKILL.md"
+            "core/skills/token-efficient-code/SKILL.md",
+            ".codex/",
+            "core/AI-RESOURCE-ROUTING.json",
+            "templates/codex/"
         ],
         "WORKFLOW.json": [
             "quick_index",
@@ -45,7 +48,8 @@
             "single_entry_tool_handler",
             "gpt_conversation_input_routing",
             "auto_recovery",
-            "token_efficient_tools"
+            "token_efficient_tools",
+            "ai_resource_routing"
         ],
         "COMMANDS.json": [
             "CONTEXT",
