@@ -1,6 +1,6 @@
 # 🧭 SocratexAI
 
-One global AI core for **Claude Code** and **Codex**: shared rules, reply style, model routing, risk scoring, agents, skills, hooks and tools. Clone it once per machine. Every project then gets the same behavior by default, and a `git pull` updates all of them.
+One global AI core for **Claude Code** and **Codex**: shared rules, reply style, model routing, risk scoring, tier agents, skills (with a self-improving loop), hooks and tools. Clone it once per machine. Every project then gets the same behavior by default, and a `git pull` updates all of them.
 
 ## 🚀 Install
 
@@ -45,15 +45,25 @@ Project rules win over the core, except safety rules, which projects can only ma
 | `tools/risk_score.py` | 0-10 risk score of the current diff -> model tier and effort (`core/RISK-RULES.json`, project override `.ai/RISK-RULES.json`) |
 | `tools/routing_log.py`, `tools/routing_stats.py` | log routing outcomes per project and propose rule tuning |
 | `tools/json_read.py` | read one key or search a big JSON file without loading it whole |
+| `tools/skill_learn.py` | log a correction or failure next to a skill (`LEARNINGS.jsonl`); merges repeats, marks a skill READY for `skill-reflect` |
+| `tools/improvements_check.py` | list ledger items whose `verify` command fails on this machine (report only) |
 | `tools/backup.py` | zip and restore global agent config (never credential files) |
 | `tools/build_index.py` | regenerate `INDEX.json`; `--check` in CI |
 | `tools/check_leaks.py` | block private paths, tokens and local patterns before a push |
 | `claude/hooks/guard.py` | PreToolUse guard: destructive git, secrets, project big files and read-only folders |
 
+## 🧩 Agents and skills
+
+- **Tier agents** (`claude/agents/`): `scout` (cheap search), `implementer` (execution from a spec), `planner` (plans, read-only), `reviewer` (independent review; a finding is CONFIRMED only when reproduced). Codex gets matching profiles generated from `core/ROUTING.json`.
+- **Shared skills** (`skills/`): `spec` (one-form interview ending in `SPEC.md`), `memory-review` (monthly clean-up), `skill-reflect` (turns logged learnings into owner-approved edits of `SKILL.md`), `token-efficient-code`, `gpt-share-read`.
+- **Claude-only skill** (`claude/skills/`): `usage-optimize` (token and cost analysis with `prompt-analytics`).
+- **On-demand rules** (`core/rules/`): code style, commits, review, ROI, routing, safety, security review (business projects only), task gating.
+
 ## 📚 Docs
 
 - `docs/AI-PRACTICES.md`: findings about working with AI agents (what helped, what failed, why).
-- `docs/IMPROVEMENTS.json`: every adopted improvement with status.
+- `docs/IMPROVEMENTS.json`: one ledger of every idea we weighed. Each item has a `status` (adopted, rejected, considering), the promise (`expected_result`), our verdict (`result`) and proof (`result_evidence`, `own:` = measured by us). Check it before proposing a plugin or tool again.
+- `docs/AUDIT-pstack-ecc.md`: why we borrow ideas from pstack and ECC but install neither.
 - `docs/ROUTER-LOOP.md`: the measure -> route -> learn loop for model choice.
 - `docs/SETUP-NOTES.md`: machine setup notes.
 
