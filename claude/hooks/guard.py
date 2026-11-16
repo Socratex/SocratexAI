@@ -35,6 +35,7 @@ GIT_RULES = (
     (GIT + r"stash\s+(?:drop|clear)\b", "Dropping stashes loses work."),
     (GIT + r"push\b[^|;&]*\s(?:--force\b|-f\b)", "Force push rewrites shared history; ask the owner."),
     (GIT + r"branch\s+-D\b", "Force-deleting a branch loses commits; ask the owner."),
+    (GIT + r"add\s+(?:-\w*A\w*|--all|\.)(?:\s|$)", "Stage your own paths only; add -A or . would sweep in other sessions' uncommitted work."),
     (READ_VERBS + r"\s+[^|;&]*\.env(?:\.(?!example|sample|template)\w+)?(?:\s|$|[\"'])", "Secret files are off limits."),
 )
 
