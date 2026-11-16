@@ -22,6 +22,7 @@
         {"when": "the owner corrects you during a skill, or a skill step fails, needs a workaround or misfires", "follow": "tools/skill_learn.py add (one sentence); never patch the skill on the spot"},
         {"when": "skill_learn.py shows a READY skill, or the owner asks to improve skills", "follow": "skill skill-reflect"},
         {"when": "monthly upkeep of memory, scripts and skills", "follow": "skill memory-review (includes skill-reflect)"},
+        {"when": "first session after pull on a new computer, or the owner asks what improvements are missing", "follow": "tools/improvements_check.py (add --scope business on work machines), then one form with the missing items; install per core/rules/SAFETY.md"},
         {"when": "the owner asks about usage, cost or limits", "follow": "Claude: skill usage-optimize; Codex: its codex-usage skill"},
         {"when": "the project uses the legacy SocratexPipeline (SOCRATEX.md present or INDEX.json flag)", "follow": "legacy-pipeline/AGENTS.md"}
     ],

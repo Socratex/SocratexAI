@@ -182,6 +182,10 @@
       "what": "Fail when tracked files contain private references: user paths or patterns from local/sensitive-patterns.txt."
     },
     {
+      "path": "tools/improvements_check.py",
+      "what": "Lists improvements from docs/IMPROVEMENTS.json whose machine check fails on this computer."
+    },
+    {
       "path": "tools/install.py",
       "what": "Install SocratexAI as the global AI core for Claude Code and Codex on this machine."
     },
