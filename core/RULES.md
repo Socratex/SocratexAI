@@ -32,6 +32,7 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 - Quality does not depend on the model tier: cheaper models keep the same standard (readable code, explicit contracts, borrowed over invented, documented decisions); gates and review enforce it.
 - Borrow before inventing: check proven patterns, engine or framework features and existing project tools before building a custom solution; name the cost when you do build one.
 - Repeated mechanical fix (formatting, index drift, cache refresh): use or write a small owning script and wire it into the finalizer, so nobody has to remember the manual sequence. Third repetition of anything: propose script > skill > memory note.
+- Skill learnings: when the owner corrects you while one of our skills is in use, or a skill step fails, needs a workaround or the skill misfires, log one sentence right away: `tools/skill_learn.py add --skill <name> --kind correction|failure|workaround|misfire --note "<do X instead of Y>"`. Do not edit the skill then; skill `skill-reflect` applies batched edits.
 - Code is 100% English (identifiers, comments, UI strings, logs, prompts). Documents and talk use the language from `local/profile.md`. Commit messages: simple English.
 - Data that scripts read lives in JSON; text that people and models read lives in Markdown with YAML frontmatter (`type`, `title`, `description`, `updated`).
 

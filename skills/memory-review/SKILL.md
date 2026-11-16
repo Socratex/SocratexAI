@@ -18,10 +18,11 @@ Goal: keep memory and tools short, true and useful. Delete nothing without appro
    - actions repeated 3 times without a script (automation candidates),
    - size: memory index over about 50 lines, an always-loaded rules file over about 150 lines,
    - INDEX.json entries whose path no longer exists (`python $SOCRATEX_HOME/tools/build_index.py --check`).
-4. If `prompt-analytics` is installed, add 2-3 numbers (cost, strong-model share, fixed session start cost) and compare with last month.
-5. Ask in one form (up to 4 questions, recommendation first, one-sentence consequence per option), for example: which merges to approve (multi-select), what to do with unused scripts (move to `_trash/` / keep / show list), whether to automate a repeated action with a script.
-6. Apply only approved changes. Report in UCE: entries merged, items moved, new index size.
-7. Add a dated finding to `docs/AI-PRACTICES.md` when the review taught something new.
+4. Run `python $SOCRATEX_HOME/tools/skill_learn.py status`; for READY skills follow skill `skill-reflect` and put its edits into the same form as step 6.
+5. If `prompt-analytics` is installed, add 2-3 numbers (cost, strong-model share, fixed session start cost) and compare with last month.
+6. Ask in one form (up to 4 questions, recommendation first, one-sentence consequence per option), for example: which merges to approve (multi-select), what to do with unused scripts (move to `_trash/` / keep / show list), whether to automate a repeated action with a script.
+7. Apply only approved changes. Report in UCE: entries merged, items moved, new index size.
+8. Add a dated finding to `docs/AI-PRACTICES.md` when the review taught something new.
 
 ## Rules
 - Memory can be wrong: fix or remove a false entry (after approval).

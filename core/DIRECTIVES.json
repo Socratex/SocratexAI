@@ -17,7 +17,9 @@
         {"when": "review a diff before reporting done", "follow": "core/rules/REVIEW.md"},
         {"when": "write a report to the owner", "follow": "core/STYLE.md"},
         {"when": "learn something new about working with AI", "follow": "docs/AI-PRACTICES.md findings log"},
-        {"when": "monthly upkeep of memory, scripts and skills", "follow": "skill memory-review"},
+        {"when": "the owner corrects you during a skill, or a skill step fails, needs a workaround or misfires", "follow": "tools/skill_learn.py add (one sentence); never patch the skill on the spot"},
+        {"when": "skill_learn.py shows a READY skill, or the owner asks to improve skills", "follow": "skill skill-reflect"},
+        {"when": "monthly upkeep of memory, scripts and skills", "follow": "skill memory-review (includes skill-reflect)"},
         {"when": "the owner asks about usage, cost or limits", "follow": "Claude: skill usage-optimize; Codex: its codex-usage skill"},
         {"when": "the project uses the legacy SocratexPipeline (SOCRATEX.md present or INDEX.json flag)", "follow": "legacy-pipeline/AGENTS.md"}
     ],

@@ -114,6 +114,12 @@
       "what": "Monthly review of agent memory, scripts, skills and rule documents - merges duplicates, flags stale or unused items, asks the owner in one form what to change. Use on /memory-review or when the owner asks to clean up memory or tidy the tools."
     },
     {
+      "name": "skill-reflect",
+      "path": "skills/skill-reflect",
+      "for": "claude+codex",
+      "what": "Turn logged skill learnings (LEARNINGS.jsonl next to each skill) into small owner-approved edits of SKILL.md. Use on /skill-reflect, during memory-review, or when skill_learn.py reports a skill as READY. Not for writing new skills from scratch."
+    },
+    {
       "name": "spec",
       "path": "skills/spec",
       "for": "claude+codex",
@@ -186,6 +192,10 @@
     {
       "path": "tools/routing_stats.py",
       "what": "Read audits/routing_log.jsonl and propose routing changes (the LEARNED half of the loop)."
+    },
+    {
+      "path": "tools/skill_learn.py",
+      "what": "Learnings log for skills: the capture half of the self-improving skill loop."
     },
     {
       "path": "claude/hooks/guard.py",
