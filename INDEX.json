@@ -26,6 +26,10 @@
       "what": "When and how Claude and Codex commit, push and squash."
     },
     {
+      "path": "core/rules/FLOWS.md",
+      "what": "One flow per task type (feature, bug, refactor, review, docs, big task) with research gate, closure evidence and file-based handoff for large work."
+    },
+    {
       "path": "core/rules/REVIEW.md",
       "what": "What to run and check before reporting a change as done."
     },
