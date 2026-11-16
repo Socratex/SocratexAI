@@ -1,0 +1,9 @@
+{
+  "_about": "Project overrides read by $SOCRATEX_HOME/claude/hooks/guard.py.",
+  "big_files": ["TASKS.json"],
+  "big_file_reader": "python $SOCRATEX_HOME/tools/json_read.py FILE path.to.key",
+  "read_only_dirs": ["archive/"],
+  "blocked_commands": [
+    {"pattern": "rm -rf build", "reason": "Use the project clean script.", "command_start": true}
+  ]
+}

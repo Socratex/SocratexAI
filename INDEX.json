@@ -1,0 +1,195 @@
+{
+  "schema": "socratex-index/v1",
+  "purpose": "Map of the SocratexAI global AI core. Read this first; open only the entry you need.",
+  "generated_by": "tools/build_index.py (do not edit by hand)",
+  "layers": {
+    "core": "core/RULES.md + core/STYLE.md: always loaded for Claude and Codex",
+    "local": "local/: private, gitignored owner profile and patterns (created from local.example/)",
+    "project": "each project's INDEX.json, AGENTS.md/CLAUDE.md and optional .ai/ overrides",
+    "legacy": "legacy-pipeline/: the full older framework, enabled per project by flag (see core/RULES.md)"
+  },
+  "docs": [
+    {
+      "path": "core/RULES.md",
+      "what": "Always-loaded rules shared by Claude Code and Codex in every project."
+    },
+    {
+      "path": "core/STYLE.md",
+      "what": "How Claude and Codex report to the owner in chat; overrides other report formats."
+    },
+    {
+      "path": "core/rules/CODE-STYLE.md",
+      "what": "Engineering standard for writing and reviewing code in any language; the project's own standard wins on conflict."
+    },
+    {
+      "path": "core/rules/COMMITS.md",
+      "what": "When and how Claude and Codex commit, push and squash."
+    },
+    {
+      "path": "core/rules/REVIEW.md",
+      "what": "What to run and check before reporting a change as done."
+    },
+    {
+      "path": "core/rules/ROI.md",
+      "what": "How to choose between implementations and when to do the better version now."
+    },
+    {
+      "path": "core/rules/ROUTING.md",
+      "what": "Which model and effort to use, when to delegate or escalate, risk-based verification and the outcome log."
+    },
+    {
+      "path": "core/rules/SAFETY.md",
+      "what": "Backup, consent and rollback rules for changing agent configuration on this machine."
+    },
+    {
+      "path": "core/rules/TASK-GATING.md",
+      "what": "When to just do it, when to plan first, when to research first and when to ask."
+    },
+    {
+      "path": "core/templates/KNOWLEDGE-NOTE.md",
+      "what": "Frontmatter and layout for any rule document, guide or knowledge note, so scripts can index it and agents can skim it."
+    },
+    {
+      "path": "core/templates/STAGE-CONTRACT.md",
+      "what": "Template for one stage of a multi-stage pipeline with a human review after each stage (numbered folders, contract, output handoff)."
+    },
+    {
+      "path": "docs/AI-PRACTICES.md",
+      "what": "Portable knowledge base and dated findings log on working well with AI coding agents (Claude Code, Codex)."
+    },
+    {
+      "path": "docs/ROUTER-LOOP.md",
+      "what": "Risk-based verification levels (LIGHT/STANDARD/FULL) and a learning loop that tunes model routing from logged task outcomes."
+    },
+    {
+      "path": "docs/SETUP-NOTES.md",
+      "what": "Operational notes for a Claude Code setup that AI-PRACTICES does not cover - usage metrics, session hygiene, settings, memory conventions, monthly review, self-growth safety."
+    },
+    {
+      "path": "claude/CLAUDE.md",
+      "what": "Claude Code additions to the shared core (subagents, hooks, environment, tools); imported by the generated ~/.claude/CLAUDE.md."
+    },
+    {
+      "path": "codex/AGENTS.md",
+      "what": "Codex additions to the shared core; tools/install.py concatenates core rules, this file and the local profile into ~/.codex/AGENTS.md."
+    },
+    {
+      "path": "templates/project/AGENTS.md",
+      "what": "🧭 <Project> agent rules"
+    },
+    {
+      "path": "templates/project/CLAUDE.md",
+      "what": "Claude notes for <Project>"
+    }
+  ],
+  "data": [
+    {
+      "path": "core/DIRECTIVES.json",
+      "what": "socratex-directives/v1"
+    },
+    {
+      "path": "core/RISK-RULES.json",
+      "what": "socratex-risk-rules/v1"
+    },
+    {
+      "path": "core/ROUTING.json",
+      "what": "socratex-model-routing/v1"
+    },
+    {
+      "path": "docs/IMPROVEMENTS.json",
+      "what": "Machine-readable list of AI workflow improvements and their status"
+    }
+  ],
+  "skills": [
+    {
+      "name": "gpt-share-read",
+      "path": "skills/gpt-share-read",
+      "for": "claude+codex",
+      "what": "Read a public ChatGPT conversation link (chatgpt.com/share/...) or a saved HTML of such a page and extract its messages as Markdown or JSON. Use whenever the owner pastes a GPT/ChatGPT link and wants it read, summarized, searched or continued. Do not use WebFetch or a browser for these links."
+    },
+    {
+      "name": "memory-review",
+      "path": "skills/memory-review",
+      "for": "claude+codex",
+      "what": "Monthly review of agent memory, scripts, skills and rule documents - merges duplicates, flags stale or unused items, asks the owner in one form what to change. Use on /memory-review or when the owner asks to clean up memory or tidy the tools."
+    },
+    {
+      "name": "spec",
+      "path": "skills/spec",
+      "for": "claude+codex",
+      "what": "Interview with one form before non-trivial work, ending with a SPEC.md file (goal, out of scope, decisions, acceptance criteria, edge cases, verification). Use on /spec or when a task is larger than about an hour, touches architecture, data, saves, payments or auth, or the requirements are unclear. Not for small fixes or one-off scripts."
+    },
+    {
+      "name": "token-efficient-code",
+      "path": "skills/token-efficient-code",
+      "for": "claude+codex",
+      "what": "Select locally installed RTK, ast-grep, Serena, Graphify, TOON and Repomix for bounded code retrieval, CLI output reduction and context exports when the task benefits from those operations. Follow the active project workflow and preserve original verification evidence."
+    },
+    {
+      "name": "usage-optimize",
+      "path": "claude/skills/usage-optimize",
+      "for": "claude",
+      "what": "Analyze token usage and cost of Claude Code work with `prompt-analytics` (local JSONL) and say what to optimize in the workflow (router sessions, cross-agent handoff, subagents, CLAUDE.md/AGENTS.md, MCP). Use when the owner asks about cost, usage, tokens, limits, \"what to optimize\", or provides a CSV from `prompt-analytics export`."
+    }
+  ],
+  "agents": [
+    {
+      "name": "implementer",
+      "path": "claude/agents/implementer.md",
+      "what": "Implements a clearly specified change (code, tests, docs) from a full brief with goal, paths, acceptance criteria and checks. Not for unclear requirements or architecture."
+    },
+    {
+      "name": "planner",
+      "path": "claude/agents/planner.md",
+      "what": "High-tier planner and architect. Use for plans, architecture proposals, triage of unclear requirements and hard debugging analysis. Read-only; returns a plan with decisions, risks and acceptance checks."
+    },
+    {
+      "name": "reviewer",
+      "path": "claude/agents/reviewer.md",
+      "what": "Independent high-tier reviewer of a diff or change against its spec and the project standard. Read-only; returns a verdict, defects and risks, not style nitpicks."
+    },
+    {
+      "name": "scout",
+      "path": "claude/agents/scout.md",
+      "what": "Cheap read-only searcher. Use for finding code, collecting facts from many files, summarising logs, checking whether something exists. Returns a short conclusion, not dumps."
+    }
+  ],
+  "tools": [
+    {
+      "path": "tools/backup.py",
+      "what": "Zip the global Claude Code and Codex configuration (never credentials) before any config change."
+    },
+    {
+      "path": "tools/build_index.py",
+      "what": "Build INDEX.json (the map agents read first) from frontmatter, SKILL.md files and tool docstrings."
+    },
+    {
+      "path": "tools/check_leaks.py",
+      "what": "Fail when tracked files contain private references: user paths or patterns from local/sensitive-patterns.txt."
+    },
+    {
+      "path": "tools/install.py",
+      "what": "Install SocratexAI as the global AI core for Claude Code and Codex on this machine."
+    },
+    {
+      "path": "tools/json_read.py",
+      "what": "Read single fields from a big JSON file instead of dumping the whole file into the agent context."
+    },
+    {
+      "path": "tools/risk_score.py",
+      "what": "Score the risk of a change from its diff and pick a verification level."
+    },
+    {
+      "path": "tools/routing_log.py",
+      "what": "Append one task outcome to audits/routing_log.jsonl (the router feedback loop)."
+    },
+    {
+      "path": "tools/routing_stats.py",
+      "what": "Read audits/routing_log.jsonl and propose routing changes (the LEARNED half of the loop)."
+    },
+    {
+      "path": "claude/hooks/guard.py",
+      "what": "Claude Code PreToolUse hook: deterministic guard for rules that have zero exceptions."
+    }
+  ]
+}

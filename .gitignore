@@ -16,8 +16,6 @@ learning/inbox/*.json
 logs/*
 !logs/.gitkeep
 
-# Local maintainer reference copied from private projects
-tools/upstream-riftbound/
 
 # Common tooling noise
 .DS_Store
@@ -25,3 +23,7 @@ Thumbs.db
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# SocratexAI v2: private owner layer and machine output
+/local/
+audits/

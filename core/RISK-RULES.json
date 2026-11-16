@@ -1,0 +1,71 @@
+{
+    "schema": "socratex-risk-rules/v1",
+    "note": "Default rules read by tools/risk_score.py. A project overrides the whole file with .ai/RISK-RULES.json. Points are starting values; change them only through routing_stats proposals approved by the owner. Design: docs/ROUTER-LOOP.md.",
+    "levels": {
+        "light_max": 2,
+        "standard_max": 5,
+        "score_cap": 10
+    },
+    "ignore_globs": [
+        "*/cache/*",
+        "*AI-compiled/*",
+        "graphify-out/*",
+        "*.dll",
+        "*.pdb",
+        "*.sqlite",
+        "*.meta",
+        "*.lock",
+        "package-lock.json"
+    ],
+    "path_rules": [
+        {
+            "name": "save and persistent data",
+            "points": 4,
+            "globs": ["*/Save/*", "*/save/*", "*Persistence*", "*Migration*", "*/migrations/*", "*.sql"]
+        },
+        {
+            "name": "auth and payments",
+            "points": 4,
+            "globs": ["*/auth/*", "*Auth*", "*/payments/*", "*Payment*", "*Billing*"]
+        },
+        {
+            "name": "agent safety and settings",
+            "points": 4,
+            "globs": [".claude/settings*.json", ".claude/hooks/*", ".codex/*", ".ai/guard.json", "*guard*.py", "*stop_gate*"]
+        },
+        {
+            "name": "build and project config",
+            "points": 4,
+            "globs": ["*.asmdef", "*.csproj", "*.props", "*.targets", "*.sln", "package.json", "pyproject.toml", "requirements*.txt", "Dockerfile", "*.gradle", "*ProjectSettings/*", "*Packages/manifest.json", ".github/workflows/*"]
+        },
+        {
+            "name": "core runtime flow",
+            "points": 2,
+            "globs": ["*/Core/*", "*.Core/*", "*Bootstrap*", "*Sessions/*", "*WorldGen*", "*Generation*"]
+        },
+        {
+            "name": "routing and task pipeline",
+            "points": 2,
+            "globs": [".ai/*.json", "TASKS.json", "*/handoff/*"]
+        }
+    ],
+    "size": {
+        "lines": 150,
+        "files": 5,
+        "points": 2
+    },
+    "missing_tests": {
+        "points": 2,
+        "code_suffixes": [".cs", ".py", ".ts", ".tsx", ".js", ".go", ".java", ".kt", ".rs", ".php", ".rb", ".gd"],
+        "test_markers": ["/tests/", "/Tests/", "tests/", "test_", "Tests.", ".test.", ".spec.", "_test."]
+    },
+    "writer": {
+        "cheap_tier_points": 1,
+        "retry_points": 1
+    },
+    "docs_only": {
+        "points": -3,
+        "suffixes": [".md", ".txt"]
+    },
+    "learned": []
+}

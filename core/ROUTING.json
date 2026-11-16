@@ -1,0 +1,50 @@
+{
+    "schema": "socratex-model-routing/v1",
+    "note": "Single source of truth for model choice (Claude and Codex). Mirrored by claude/agents/*.md and codex/agents/*.toml, checked by tools/tests. Human-readable policy: core/rules/ROUTING.md. Aliases, not pinned IDs, so a model retirement does not silently break routing. A project may override tiers in its own .ai/ROUTING.json.",
+    "principles": [
+        "Plan with the expensive tier once; execute with the cheaper tier; verify with a deterministic gate (tests, analyzers, finalizer) before trusting the result.",
+        "Send predictable, well-specified steps to the cheapest tier that passes the gate; escalate only the ambiguous remainder.",
+        "Escalate on evidence: a failed gate or a blocked report moves the task one tier up with the evidence attached, never repeated blind retries on the same tier.",
+        "Review and implementation use separate contexts; the reviewer is never the agent that wrote the change.",
+        "Single agent by default; delegate only with a concrete total-cost advantage (handoff plus verification included); no recursive delegation.",
+        "If the top tier or the high tier handles more than about 15 percent of tasks, routing is too conservative or tasks are harder than assumed: review the mix."
+    ],
+    "claude": {
+        "cheap": {"alias": "haiku", "use": ["search", "fact gathering across many files", "mechanical edits from a pattern", "log summaries"]},
+        "standard": {"alias": "sonnet", "use": ["router session", "implementation from a clear spec", "docs and tests from a spec", "ops and notifications"]},
+        "high": {"alias": "opus", "use": ["plan and architecture", "triage of unclear requirements", "independent review", "hard debugging", "escalations"], "how": "subagent with model opus or a separate session; the router stays on standard"},
+        "top": {"alias": null, "rule": "Only with owner approval: explain the reason, cost and expected gain first, then ask and wait for an explicit yes."}
+    },
+    "codex": {
+        "cheap": {"model": "gpt-6-luna", "effort": "medium", "profile": "socratex_quick", "use": ["simple, fully specified, low-risk, easily verified work"]},
+        "standard": {"model": "gpt-6.1-terra", "effort": "medium", "profile": "socratex_standard", "use": ["spec implementation", "queue tasks", "routine refactors"]},
+        "high": {"model": "gpt-6.1-sol", "effort": "high", "profile": "socratex_deep, socratex_reviewer", "use": ["parent that plans and integrates", "review", "uncertain or coupled work", "escalated tasks"]},
+        "top": {"model": "gpt-6-astra", "effort": null, "rule": "Never automatic. Analysis only, after multiple evidenced failed repairs, and only with owner approval after an explanation (attempts, evidence, scope). Approval does not authorize implementation, extra agents or xhigh effort."}
+    },
+    "effort_by_task_type": {
+        "search": "low",
+        "docs": "low",
+        "implementation": "medium",
+        "refactor": "medium",
+        "ops": "low",
+        "review": "high",
+        "plan": "high",
+        "debug": "high"
+    },
+    "escalation": {
+        "queue": "A standard run that reports blocked with escalate=true is retried once on high; a second failure goes to the owner.",
+        "interactive": "After two failed attempts on a tier, stop, summarize evidence and move up one tier or ask the owner."
+    },
+    "claude_agents": {
+        "scout": "cheap",
+        "implementer": "standard",
+        "planner": "high",
+        "reviewer": "high"
+    },
+    "codex_agents": {
+        "socratex_quick": "cheap",
+        "socratex_standard": "standard",
+        "socratex_deep": "high",
+        "socratex_reviewer": "high"
+    }
+}
