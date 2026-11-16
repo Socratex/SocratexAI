@@ -47,13 +47,21 @@ Zapisany, żeby nie powtarzać. Przed ponownym audytem sprawdź sekcję "Kiedy o
 - **ECC w całości**: ryzyko rozdęcia kontekstu (sprzeczne z pozycją 25), duplikacja hooków przy stackowaniu instalacji, otwarte błędy na natywnym Windows (observer daemon, zapis pamięci - ECC #2489, #2626), nieoficjalne forki mogą zawierać malware (ostrzeżenie z README), `/astra-review` wysyła diffy do OpenAI, płatny tier Pro.
 - **pstack w całości**: domyślny panel review zakłada modele/vendorów, których nie używamy (pozycje 16, 17 = N); `/poteto-mode` jako router przejąłby rolę naszego DIRECTIVES. Formal verification (TLA+) - nieadekwatne do gry Unity.
 
-## 💡 Rekomendacja
-Pożyczać idee jako 3-4 krótkie reguły tekstowe, nie pakiety:
-1. `prove-it-works` + `explain-the-number` -> dopisać do `core/rules/REVIEW.md` i TASK-GATING (najtańsze, największy zwrot).
-2. `interrogate` -> w `reviewer.md`: finding bez powtarzalnego dowodu oznaczać jako PLAUSIBLE, nie CONFIRMED.
-3. Jeden `core/rules/PLAYBOOKS.md` (bug / feature / refactor / ship) po ~10 linii każdy, podpięty w DIRECTIVES.
-4. Jednorazowy, tylko do odczytu skan AgentShield (`ecc-agentshield`) na naszej konfiguracji - wymaga zgody właściciela (instalacja narzędzia z npm).
-Wdrożenie punktów 1-3: zadanie na ok. godzinę, bez nowych zależności.
+## 💡 Rekomendacja (zrewidowana po uwagach właściciela, 2026-11-16)
+Pierwotnie proponowano 4 punkty; po weryfikacji:
+1. ~~`prove-it-works` + `explain-the-number`~~ **ODRZUCONE.** Pokrywa to już: Stop hook / `verify` (deterministyczny, 0 tokenów modelu), status zadania "test" (człowiek zamyka), "Say no evidence instead of inventing test results" w RULES, manual-check w FULL (REVIEW.md). Reguła tekstowa nie da agentowi "feelingu" gry; ryzyko ceremonialnych "zweryfikowano" bez realnej weryfikacji (hipoteza, brak dowodu).
+2. `interrogate` -> w `reviewer.md`: finding bez powtarzalnego dowodu = PLAUSIBLE, nie CONFIRMED. **ZATWIERDZONE przez właściciela.**
+3. ~~PLAYBOOKS.md~~ **ODRZUCONE.** `legacy-pipeline/FLOWS.json` (12 flow wg typu intencji) robi to już, ciężej i skryptowo; w projektach core wystarcza TASK-GATING.
+4. Skan AgentShield: opcjonalny, wymaga zgody (npm).
+Inne idee do rozważenia: patrz sekcja "Dodatkowe pomysły".
+
+## 🧩 Dodatkowe pomysły (z README, niezweryfikowane w użyciu)
+- pstack `laziness-protocol` / `subtract-before-you-add`: jedno zdanie w CODE-STYLE (najmniejsza zmiana, usuń zanim dodasz) - działa przeciw slopowi, koszt ~20 tokenów.
+- pstack `never-block-on-the-human`: decyduj na domyślnych i wypisz założenia - zgodne z "standby to tarcie"; częściowo już w regule Ambiguity (limit 4 pytań).
+- pstack `why`: odpowiedź z historii commitów/PR zamiast z kodu - tanie, bez nowej infrastruktury.
+- ECC limity wstrzykiwania (`ECC_SESSION_START_MAX_CHARS`, max instynktów): idea budżetu znaków na kontekst startowy; sprawdzać u nas rozmiar sesyjnego startu skryptem.
+- ECC `security-review` odpalany tylko na trigger (auth, sekrety, płatności, user input): pasuje do B2B, niski koszt bo warunkowy.
+- ECC instincts z confidence: licznik powtórzeń w `skill_learn` (mała zmiana).
 
 ## 🔁 Kiedy odświeżyć
 - Gdy pstack lub ECC wyda duży release, albo gdy IMPROVEMENTS.json urośnie o >10 pozycji.
