@@ -15,3 +15,5 @@ updated: 2026-11-16
 - No framework-building for hypothetical needs; add extension points early only when they will pay off soon.
 - Before adding a non-trivial runtime system, define its budget (active counts, tick or materialization budget, pooling or data-only fallback, a metric or log to watch). When expected scale is unknown and it affects architecture, ask the owner for the load shape (counts, frequency, growth 2x/10x/100x).
 - For non-trivial tasks, name the known pattern or standard trick you are applying; call out any custom solution together with its trade-off.
+- Weigh value against effort, risk and reversibility for this project profile. Flag elegant work that does not pay off now.
+- Plans and reviews may end with one to three "worth doing now" picks, each on its own line.

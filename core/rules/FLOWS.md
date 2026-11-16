@@ -14,7 +14,7 @@ Merged value of the legacy FLOWS, WORKFLOW and TASK-WORK documents. Pick the flo
 |---|---|---|---|
 | Question | smallest source that answers it | answer, state uncertainty | answer is sourced or marked as inference |
 | Feature | project state or plan, then only the owning source files | research gate, then smallest maintainable change at the owning boundary | project gate passes, closure evidence given |
-| Bug | bug report, logs, state | separate observed behavior from hypothesis, reproduce or find evidence, fix the root cause at the owning boundary, add a diagnostic when confidence is low | repro no longer fails, cause named |
+| Bug | bug report, logs, state | separate observed behavior from hypothesis, reproduce or find evidence, fix the root cause at the owning boundary, add a diagnostic when confidence is low. Note attempted fixes so none is repeated. Keep the logs until the owner confirms the fix | repro no longer fails, cause named |
 | Logs, crash, trace | the supplied logs | extract errors with timestamps, group by cause, then treat as a bug | likely cause named, data separated from inference |
 | Refactor | code of the area plus its tests | behavior stays the same, small coherent slices, tests green after each slice | gate passes, no behavior diff |
 | Docs or rules edit | the owning document, then the nearest index | edit in the owning place, no duplicate of another document | index updated if a document moved or was added |
@@ -51,8 +51,19 @@ How:
 - One micro-task active at a time. Write a short result when it is done.
 - After each sub-task write a handoff in the same file: files read, files changed, current hypothesis, risks and assumptions, exact next step, checks already run, whether to continue or stop for the owner.
 - The next sub-task reads the handoff first, not the chat history.
-- Long session or repeated retry loops: save the state to the file, then start fresh instead of dragging stale context.
+- Hard reset (save state to the file, then fresh session) when:
+  - retry loops repeat,
+  - assumptions look stale,
+  - the scope changed,
+  - several big passes have run.
+- Never copy the chat history into the new session. The file is the bridge.
+- Status that must not be edited casually (pass or fail per item) goes in JSON. Prose notes go in Markdown.
+- A fresh session starts by reading the file and running a basic check.
 - When done: remove the file, or keep only durable facts in the project docs.
+
+## 📝 Spec step (only when it pays)
+- Big or risky work: write a short spec, then have the spec itself reviewed before coding (`skill spec`).
+- Small, local work: no spec. Plan mode is enough.
 
 ## 🛑 Stop and ask when
 - scope grows outside the approved group,

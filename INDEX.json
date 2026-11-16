@@ -54,6 +54,10 @@
       "what": "When to just do it, when to plan first, when to research first and when to ask."
     },
     {
+      "path": "core/templates/DECISION.md",
+      "what": "Short record for a choice that future work must not casually undo."
+    },
+    {
       "path": "core/templates/KNOWLEDGE-NOTE.md",
       "what": "Frontmatter and layout for any rule document, guide or knowledge note, so scripts can index it and agents can skim it."
     },

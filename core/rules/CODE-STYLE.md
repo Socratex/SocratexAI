@@ -36,3 +36,10 @@ updated: 2026-11-16
 - No micro-optimization without evidence; but for predictable scale (hot paths, batches, mass data) choose the lightweight-by-design shape now: data-first truth, batching, pooling, bounded caches.
 - Placeholders only when clearly marked and scoped; never fake-complete behavior that looks production-ready.
 - Data-access code: explicit joins and aliases, qualified references, safeguards against unintended mass updates or deletes.
+
+## 🏛️ Domain and invariants (owner preference)
+- Code is an executable domain model: domain names, dependencies point inward, validation at the edges.
+- Invariants are findable: one obvious place per rule, checked where data enters.
+- Risky work always ships with a check that can fail (test, assertion or gate).
+- Before writing new code, search for existing code that already does it (borrow before inventing). This is inference from duplication data, not a proven effect.
+- A decision future work must not undo gets a short record: `core/templates/DECISION.md`.

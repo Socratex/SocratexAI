@@ -13,3 +13,5 @@ updated: 2026-11-16
 - Squash: after committing, look at unpushed commits; when two or more neighbors cover the same domain, merge them into one with one message. Never rewrite commits already pushed unless the owner asks for history cleanup.
 - Squash on a dirty tree without rebase: `git commit-tree <tree> -p <parent> -F msg` (keep author and dates), then `git update-ref refs/heads/<branch> <new> <old>`, and check that the final tree is identical. When the project finalizer pushes immediately, run it with its no-push option first.
 - No extra post-push verification unless the owner asks or the push fails.
+- Do not commit while a required check is failing. Say which check was skipped.
+- Do not switch branches over unresolved local work.
