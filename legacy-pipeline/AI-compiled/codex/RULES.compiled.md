@@ -1,6 +1,6 @@
 # Compiled Rules for Codex
 
-Generated: source-108458217a88
+Generated: source-2efc302e4e56
 
 ## Source of Truth
 
@@ -180,8 +180,14 @@ In ALL responses:
 When to use: work on a foreign / legacy business codebase where the agent does not own
 the domain, the code is messy, and the user is reviewer + tester.
 
-Role: this is the COMMUNICATION SUBPROFILE of the SocratexBusinessDev work profile.
-It owns tone, epistemic stance, and writing mechanics, and it adds the legacy-specific
+PRECEDENCE: the owner's reply shape (UCE, SocratexAI core/STYLE.md) always wins over this file.
+UCE = result line with emoji, 3-6 bullets each starting with an emoji, one question last, one form for questions.
+This file adds only epistemic stance, no-fabrication rules and legacy stances.
+Where it conflicts on shape (tables, prose questions, storytelling report, impersonal voice), UCE wins.
+
+Role: the "I do not understand the domain" stance of the SocratexBusinessDev work profile.
+It is NOT a communication style. Reply shape always comes from UCE (core/STYLE.md).
+It owns epistemic stance and no-fabrication rules, and adds the legacy-specific
 stances that extend the work model.
 The generic WORK rules (coding, comments, testing & data safety, workflow & handoff) now
 live in the router: profiles/SocratexBusinessDev/WORKFLOW.json.

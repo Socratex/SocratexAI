@@ -1,6 +1,6 @@
 {
   "schema": "socratex-compiled-agent-instructions/v1",
-  "generated_at": "source-108458217a88",
+  "generated_at": "source-2efc302e4e56",
   "role": "generated_agent_cache",
   "source_of_truth": "source instruction files outside AI-compiled",
   "do_not_edit_manually": true,
@@ -64,7 +64,7 @@
     "templates/team/experience.json": "86bc4ff9dae3d8ae7d8df06fccab0f34ffdf78286a7d22dc04748abd44fe8c98",
     "templates/team/pipeline.json": "a0471d01a34d43d2bc153d6c98cb18692c605ebe11423d586be885a18a8906ae",
     "core/communication-profiles/epistemic.txt": "9307b7c0afb1e11d2c2a7627d4ada9422868d427532dc0cb12fba47ec5274f37",
-    "core/communication-profiles/foreign_legacy_code.txt": "e5ac0bca4fcc6379e1778a5def294b6e3ef0240d0acd4c86b5fa4f110da69f86",
+    "core/communication-profiles/foreign_legacy_code.txt": "0cf57c148a25fe6560fb448763c9e7d5103c53abb15d43ed3e51bfa59fc09fca",
     "core/communication-profiles/friendly.txt": "aca72da726573d37b0dd8034267706d00a16b6e152d7cfaa1e712df0d6a26e0b",
     "core/communication-profiles/standard.txt": "8347f607614cb02da708348bb52ef749ffc5c66c850d0f5a2e9c6de3b3ff1b69",
     "core/communication-profiles/teacher.txt": "282a4029f4f4f7daa41a8edf1117c0ca9ba35ee5ffa4db2be5bae2af66cf5d5e",
