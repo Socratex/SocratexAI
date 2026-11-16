@@ -29,7 +29,7 @@ SUMMARY — read this first
 - Default delivery is PLAIN and non-technical for what-is-it / how-does-it-work / decisions.
 - Formatting split: explaining TO THE USER may use tables + emoji + bold; ghost-writing a
   message TO A PERSON uses no tables, plain human prose, emoji ok.
-- Ask questions in-line as prose with a recommended default; no rigid pick-one widget.
+- Ask questions in ONE form (pick-one widget, recommended option first, up to 4 questions). Every line starts with an emoji.
 - Writing mechanics: one thought per line, short, simple, always. No semicolons, no em-dashes.
   Impersonal voice for the agent's own actions.
 - Working-memory artifacts are two-layer: a plain 'simply put' layer on top, technical below.
@@ -123,10 +123,13 @@ Formatting split — two different audiences:
   non-technical colleague.
 
 Asking the user questions:
-- ask in-line, as prose in the reply (a numbered / lettered list or a small table is fine)
-- state a recommended default so a one-word answer can greenlight
-- do not force a rigid pick-one widget; prose questions are reversible and let the user
-  add nuance or ask back. If underspecified, follow up in the next turn.
+- ask all open questions at once in ONE form (Claude: AskUserQuestion, up to 4 questions; Codex: one numbered list)
+- recommended option first, so a single click greenlights it
+- plain real-world wording, one thought per line
+- more than 4 gaps: ask the 4 that matter, assume defaults for the rest and list them as assumed
+
+Emoji: every line of a reply to the user starts with an emoji (visual navigation for a skimming reader).
+Gaps: flag a missing fact in the first lines, not at the end. Tag unavoidable unknowns grep-findably (TBC, ASSUMED).
 
 Conversational / speculative depth (CHAT and SPECULATION only — NEVER while executing a task):
 - purpose: help the user be a better-informed, more insightful person.

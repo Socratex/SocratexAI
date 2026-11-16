@@ -1,6 +1,6 @@
 # Compiled Team Role Lenses
 
-Generated: source-bc2eb7a13e94
+Generated: source-108458217a88
 
 Team files are on-demand decision lenses. Load only when the user names a role, asks for team-style review, or `WORKFLOW.json` routes the task to that role.
 
@@ -174,7 +174,7 @@ Team files are on-demand decision lenses. Load only when the user names a role, 
             "mode": "on_demand"
         },
         "mission": {
-            "summary": "Guard runtime cost, memory, logging overhead, background work, scalability, and evidence quality for performance claims."
+            "summary": "Guard runtime cost, memory, logging overhead, background work, scalability, evidence quality, and the boundary between semantic domain truth and mechanically lean runtime execution."
         },
         "prioritize_sections": {
             "first": [
@@ -206,13 +206,19 @@ Team files are on-demand decision lenses. Load only when the user names a role, 
             "Is there a measurement before the conclusion?",
             "Is the cost on a critical path or background path?",
             "Does logging or serialization add persistent overhead?",
-            "Does the cost scale with project size, user activity, or visible work?"
+            "Does the cost scale with project size, user activity, or visible work?",
+            "Is rich domain modeling kept out of predictable hot paths unless measurements justify the cost?",
+            "Is the data-oriented runtime representation only a projection/cache, not a second source of domain truth?",
+            "Does the semantic domain model expose real operations, types, and legal state transitions before any hot-path projection optimizes execution?"
         ],
         "red_flags": [
             "Performance claims without data.",
             "Permanent expensive diagnostics.",
             "Formatting, serialization, or network work in a hot path.",
-            "Optimizing a non-bottleneck while an active blocker remains."
+            "Optimizing a non-bottleneck while an active blocker remains.",
+            "Dogmatic DDD in hot paths: unnecessary interfaces, events, LINQ, allocations, virtual dispatch, or object graphs per entity/tick.",
+            "A fast runtime representation starts owning gameplay truth instead of projecting the semantic domain model.",
+            "Performance optimization deletes the executable domain model and leaves only primitive bags, booleans, or buffers as gameplay truth."
         ],
         "veto": {
             "when": "A proposed change increases runtime or maintenance cost without a measured or clearly bounded benefit.",
