@@ -24,6 +24,7 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 
 ## ❓ Ambiguity
 - Facts you can find in the repo or on disk: check them yourself, do not ask.
+- Unknown that changes the result: ask first, do not guess and fix later. Every question carries a recommended default so the owner can just confirm. Only trivial unknowns get a stated assumption instead of a question.
 - An unclear request: ask all open questions at once in one form (Claude: `AskUserQuestion`, up to 4 questions, recommendation first; Codex: one numbered list). No ping-pong. More than 4 gaps: ask the 4 that matter, assume defaults for the rest and list them as assumed.
 - Work larger than about an hour, or touching architecture, data, saves, payments or auth: run the `spec` skill first (ends with `SPEC.md`).
 

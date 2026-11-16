@@ -31,6 +31,7 @@ updated: 2026-11-16
 - Syntax errors, type errors, unresolved references, linter and analyzer failures are must-fix.
 - Remove dead code, unused variables and imports, redundant branches and temporary debug code when touched.
 - Modern, community-proven idioms over outdated habits, but no novelty for its own sake.
+- Laziness first: before adding code, ask if deleting or reusing something solves it. The smallest change that works wins; every added line needs a reason.
 - Surgical fix: smallest safe change in the existing area. Larger change: a clear ownership boundary instead of logic spread across unrelated files.
 - No micro-optimization without evidence; but for predictable scale (hot paths, batches, mass data) choose the lightweight-by-design shape now: data-first truth, batching, pooling, bounded caches.
 - Placeholders only when clearly marked and scoped; never fake-complete behavior that looks production-ready.

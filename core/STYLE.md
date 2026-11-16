@@ -14,6 +14,7 @@ Applies to Claude and Codex in every project and is passed on to subagents that 
 - First line: the result, with an emoji.
 - Then 3-6 short bullets, each starting with an emoji from the legend.
 - At most one decision question, marked ❓, as the last line.
+- The owner skims, does not read numbers, paths or jargon. Plain short words and a simple cognitive message: "startup context of ECC: not measured, worth it", not a technical noun phrase. Short beats complete; numbers and paths only when they decide something.
 - Hard rule: reports are summaries. No line numbers, no step-by-step diaries, no long excerpts. Explain details only when the owner asks.
 - Describe tasks in plain short words, never by internal IDs or hashes.
 - Lists of more than three items, or items longer than five words: one item per line.

@@ -42,6 +42,10 @@
       "what": "Backup, consent and rollback rules for changing agent configuration on this machine."
     },
     {
+      "path": "core/rules/SECURITY-REVIEW.md",
+      "what": "Short security checklist for business and client projects; run only when a change touches auth, secrets, payments, user input or external endpoints. Not for game projects."
+    },
+    {
       "path": "core/rules/TASK-GATING.md",
       "what": "When to just do it, when to plan first, when to research first and when to ask."
     },

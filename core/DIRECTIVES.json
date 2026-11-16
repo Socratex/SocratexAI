@@ -15,6 +15,8 @@
         {"when": "finish any change", "follow": "core/rules/COMMITS.md: own paths only, project finalizer when it has one, commit and push at the end of the prompt"},
         {"when": "finish a task (after the commit)", "follow": "tools/risk_score.py --commit HEAD (report-only), then tools/routing_log.py once; core/rules/ROUTING.md section Feedback loop"},
         {"when": "review a diff before reporting done", "follow": "core/rules/REVIEW.md"},
+        {"when": "the owner asks why code or a decision is the way it is", "follow": "history first: git log -S / git blame / commit and PR messages; read the code only if history has no answer, and say which of the two answered"},
+        {"when": "a business or client project change touches auth, secrets, payments, user input or external endpoints (not game projects)", "follow": "core/rules/SECURITY-REVIEW.md"},
         {"when": "write a report to the owner", "follow": "core/STYLE.md"},
         {"when": "learn something new about working with AI", "follow": "docs/AI-PRACTICES.md findings log"},
         {"when": "the owner corrects you during a skill, or a skill step fails, needs a workaround or misfires", "follow": "tools/skill_learn.py add (one sentence); never patch the skill on the spot"},

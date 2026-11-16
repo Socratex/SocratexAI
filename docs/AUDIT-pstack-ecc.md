@@ -41,7 +41,7 @@ Zapisany, żeby nie powtarzać. Przed ponownym audytem sprawdź sekcję "Kiedy o
 3. Reviewer nie wymaga, by finding był potwierdzony uruchomieniem (pstack `interrogate`) - mniej fałszywych alarmów.
 4. Brak playbooków per typ zadania (bug/refactor/ship). Może wystarczyć jeden krótki plik, nie 23.
 5. Brak skilla odtwarzania stanu sesji ("recall/session pickup"); częściowo pokrywa pamięć projektu.
-6. Uczenie: `skill_learn` nie ma licznika powtórzeń/pewności jak instincts ECC (mała poprawka, nie nowy system).
+6. ~~Uczenie: brak licznika powtórzeń~~ **BŁĄD AUDYTU**: `skill_learn.py` ma już licznik (merge podobnych wpisów, `count`, READY przy powtórzonej korekcie). Brakuje tylko wygasania starych wpisów i automatycznego zbierania - nie wdrożone, nie potrzebne teraz.
 
 ## 🚫 Czego nie instalować
 - **ECC w całości**: ryzyko rozdęcia kontekstu (sprzeczne z pozycją 25), duplikacja hooków przy stackowaniu instalacji, otwarte błędy na natywnym Windows (observer daemon, zapis pamięci - ECC #2489, #2626), nieoficjalne forki mogą zawierać malware (ostrzeżenie z README), `/astra-review` wysyła diffy do OpenAI, płatny tier Pro.
@@ -54,6 +54,13 @@ Pierwotnie proponowano 4 punkty; po weryfikacji:
 3. ~~PLAYBOOKS.md~~ **ODRZUCONE.** `legacy-pipeline/FLOWS.json` (12 flow wg typu intencji) robi to już, ciężej i skryptowo; w projektach core wystarcza TASK-GATING.
 4. Skan AgentShield: opcjonalny, wymaga zgody (npm).
 Inne idee do rozważenia: patrz sekcja "Dodatkowe pomysły".
+
+## ✅ Wdrożone 2026-11-16
+- laziness-protocol -> `core/rules/CODE-STYLE.md`.
+- why -> wiersz w `core/DIRECTIVES.json` (historia git przed czytaniem kodu).
+- never-block-on-the-human -> odwrócone na życzenie właściciela: przy niewiadomych najpierw formularz z domyślnymi (`core/RULES.md`, Ambiguity).
+- Styl dla ADHD (proste komunikaty bez liczb i ścieżek) -> `core/STYLE.md`.
+- security-review tylko dla projektów biznesowych -> `core/rules/SECURITY-REVIEW.md` + wiersz w DIRECTIVES. Gamedev: security check na roadmapie przed multi lub wydaniem (zadanie właściciela).
 
 ## 🧩 Dodatkowe pomysły (z README, niezweryfikowane w użyciu)
 - pstack `laziness-protocol` / `subtract-before-you-add`: jedno zdanie w CODE-STYLE (najmniejsza zmiana, usuń zanim dodasz) - działa przeciw slopowi, koszt ~20 tokenów.
