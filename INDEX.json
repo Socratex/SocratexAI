@@ -58,6 +58,10 @@
       "what": "Portable knowledge base and dated findings log on working well with AI coding agents (Claude Code, Codex)."
     },
     {
+      "path": "docs/AUDIT-pstack-ecc.md",
+      "what": "Porównanie naszego rdzenia AI z pstack (poteto) i Everything Claude Code (ECC); co pożyczyć, czego nie instalować."
+    },
+    {
       "path": "docs/ROUTER-LOOP.md",
       "what": "Risk-based verification levels (LIGHT/STANDARD/FULL) and a learning loop that tunes model routing from logged task outcomes."
     },
