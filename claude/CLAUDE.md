@@ -30,5 +30,8 @@ The shared core (`core/RULES.md`, `core/STYLE.md`) applies first; this file adds
 - Plugin `codex@openai-codex`: `/codex:review` (second opinion on a diff) and `/codex:rescue` (delegation). The always-on review gate stays off because it burns both agents' limits.
 - Disable MCP servers and plugins you do not use: each adds a fixed cost to every session.
 
+## 🧪 When improving AI
+- The owner names a plugin, tool, method or program to use or evaluate: read `$SOCRATEX_HOME/docs/IMPROVEMENTS.json` first (do not re-propose rejected items), then record the outcome there with status, expected_result, result and result_evidence, and commit it to SocratexAI. Details: `core/RULES.md`, bullet Named solutions ledger.
+
 ## 💬 Replies
 - Follow `core/STYLE.md` (UCE). Codex-style report headers from project files (Usage/Impact blocks) are for Codex; Claude uses UCE.
