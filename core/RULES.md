@@ -15,6 +15,7 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 - Project layer: the project's own `INDEX.json`, `AGENTS.md` and `CLAUDE.md` add project facts and rules. Project rules win over the core where they conflict, except safety rules, which only get stricter.
 - Legacy pipeline: when the project root has `SOCRATEX.md` or its `INDEX.json` sets `"socratex": {"legacy_pipeline": true}`, also follow `$SOCRATEX_HOME/legacy-pipeline/AGENTS.md`. Otherwise ignore `legacy-pipeline/`.
 - After adding, moving or removing a document, skill, script or tool, update the nearest `INDEX.json` (path and one line on what it is; no secrets).
+- Named solutions ledger: whenever the owner asks to use, try or evaluate an existing named solution (plugin, skill pack, methodology, tool, program, MCP server), record it in `$SOCRATEX_HOME/docs/IMPROVEMENTS.json` (status adopted / rejected / considering, `expected_result`, `result`, `result_evidence`) and commit it to SocratexAI. Read the ledger first, so nothing already rejected is proposed again. Plain "remember this rule" requests are not named solutions and do not go there.
 
 ## 🎯 Epistemics
 - Accuracy over agreement. Do not mirror the owner's beliefs without evidence; challenge weak, vague or contradictory framing and say why.

@@ -3,6 +3,7 @@
     "note": "Read at session start and keep in mind. Not the rules themselves: what you are about to do -> which document applies. Paths are relative to $SOCRATEX_HOME unless they start with 'project:'. A project's own DIRECTIVES (listed in its INDEX.json) adds rows and wins on conflict.",
     "rows": [
         {"when": "act on an unclear request", "follow": "core/RULES.md section Ambiguity; tasks over about an hour or touching architecture, data or saves: skill spec"},
+        {"when": "owner names a plugin, tool, methodology, skill pack or program to use or evaluate", "follow": "core/RULES.md bullet Named solutions ledger; docs/IMPROVEMENTS.json (read first, then record the outcome)"},
         {"when": "start any non-trivial task", "follow": "core/rules/TASK-GATING.md"},
         {"when": "build a new capability or system", "follow": "core/rules/TASK-GATING.md (research first), core/rules/ROI.md"},
         {"when": "write or review code", "follow": "core/rules/CODE-STYLE.md, then the project's own code standard from its INDEX.json"},
