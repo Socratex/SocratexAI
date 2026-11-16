@@ -23,6 +23,7 @@ The shared core (`core/RULES.md`, `core/STYLE.md`) applies first; this file adds
 
 ## 🔒 Hooks (enforced by the harness, installed by `tools/install.py`)
 - `PreToolUse` runs `claude/hooks/guard.py` (destructive git, secret files, ledger dumps; projects add patterns in `.ai/guard.json`).
+- `Stop` runs `claude/hooks/uce_check.py`: blocks a reply once when a top-level line lacks a leading emoji or is over 220 characters (opt out with `SOCRATEX_UCE=0`).
 - A project may add its own `Stop` gate in its `.claude/settings.json` (fast tests of the changed area). Fix the code, not the tests.
 
 ## 🧰 Tools

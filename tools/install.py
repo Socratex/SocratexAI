@@ -164,7 +164,7 @@ def deep_merge(base: dict, extra: dict) -> dict:
 
 def merge_list(base: list, extra: list) -> list:
     """Union that replaces hook entries pointing at the SocratexAI guard instead of duplicating them."""
-    result = [item for item in base if "claude/hooks/guard.py" not in json.dumps(item)]
+    result = [item for item in base if "claude/hooks/" not in json.dumps(item)]
     for item in extra:
         if item not in result:
             result.append(item)

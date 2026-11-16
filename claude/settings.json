@@ -28,6 +28,17 @@
                     }
                 ]
             }
+        ],
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "\"{PYTHON}\" -I -B \"{SOCRATEX_HOME}/claude/hooks/uce_check.py\"",
+                        "timeout": 10
+                    }
+                ]
+            }
         ]
     },
     "extraKnownMarketplaces": {
