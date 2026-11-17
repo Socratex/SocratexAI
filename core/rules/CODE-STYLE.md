@@ -22,9 +22,10 @@ updated: 2026-11-16
 - Separate pure logic from I/O, framework glue and persistence; isolate nondeterminism behind small testable interfaces.
 
 ## 💬 Comments
-- Only two kinds: business comments (what a system does, why it exists) and quirk comments (workaround, hazard, TODO, non-obvious constraint).
+- No comments by default: the code explains itself through names and structure.
+- Only quirk comments: a workaround, a hazard, a TODO or a non-obvious constraint. Very short.
 - No docblocks that restate names, types or obvious behavior.
-- Every new or materially refactored main class and main entry method gets one short business comment.
+- A project may be stricter ("no comments at all, last resort only") in its `PROJECT.md`.
 
 ## ✅ Quality rules
 - Guard clauses over deep nesting; explicit branching and error handling; fail fast on invalid state; normalize external errors at boundaries.

@@ -59,7 +59,7 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 - A command blocked by a hook is a boundary, not an obstacle: use the safe alternative or ask.
 
 ## 📦 Finishing
-- Commit and push your own finished work at the end of the prompt, without asking, using the project's finalizer when it has one (rules: `core/rules/COMMITS.md`).
+- Commit your own finished work at the end of the prompt, without asking, using the project's finalizer when it has one (rules: `core/rules/COMMITS.md`). Push only when the project says the AI pushes; otherwise the owner pushes.
 - After the commit: `tools/risk_score.py --commit HEAD` (verification level, report-only until the owner switches it on) and log the outcome once with `tools/routing_log.py` (see `core/rules/ROUTING.md`).
-- Log every new finding about working with AI in `$SOCRATEX_HOME/docs/AI-PRACTICES.md` (findings log: date, what, evidence, verdict) and push it with the core.
+- Log every new finding about working with AI in `$SOCRATEX_HOME/docs/AI-PRACTICES.md` (findings log: date, what, evidence, verdict) and commit it with the core.
 - Report per `core/STYLE.md`.
