@@ -25,7 +25,7 @@ updated: 2026-11-16
 - No comments by default: the code explains itself through names and structure.
 - Only quirk comments: a workaround, a hazard, a TODO or a non-obvious constraint. Very short.
 - No docblocks that restate names, types or obvious behavior.
-- A project may be stricter ("no comments at all, last resort only") in its `PROJECT.md`.
+- The project decides the comment style: it may be stricter ("no comments at all, last resort only") or looser (e.g. a short business comment per main class) in its `PROJECT.md` or code-style rules; the project wins.
 
 ## ✅ Quality rules
 - Guard clauses over deep nesting; explicit branching and error handling; fail fast on invalid state; normalize external errors at boundaries.
