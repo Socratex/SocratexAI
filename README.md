@@ -70,6 +70,8 @@ Nothing happens before you answer. The installer asks, shows the reason for each
 | UCE reply style | yes (a personal style, say no for neutral replies) | very short, emoji-led replies |
 | Git hooks, `SOCRATEX_HOME` variable | yes | auto-sync after pull, leak scan before push |
 
+Also recommended, outside the installer: the third-party mod [CC-Usage-Band](https://github.com/JetsonChan/CC-Usage-Band) (MIT). It puts one line above the prompt with the 5-hour and 7-day limits, context window and cache hit rate, and draws it as SVG in the desktop Code tab. Install it yourself: `claude plugin marketplace add JetsonChan/CC-Usage-Band`, then `claude plugin install usage-band@cc-usage-band`. We read its code before installing (no network, no process execution, no file writes), but only for the version we tried (1.0.6); read it again before you install. It overlaps with the flow panel only a little: the band shows limits, the panel shows where tokens go.
+
 ```bash
 python tools/install.py --yes           # no questions, recommended answers (for scripts)
 python tools/install.py --reconfigure   # ask again
