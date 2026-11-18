@@ -2,7 +2,6 @@
   "schema": "project-index/v1",
   "purpose": "Map of this project's docs, rules and tools for AI agents. Paths are relative to the project root.",
   "socratex": {
-    "legacy_pipeline": false,
     "notes": "Global rules come from $SOCRATEX_HOME (SocratexAI). Put only project facts and project rules here."
   },
   "docs": [

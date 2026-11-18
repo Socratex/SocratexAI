@@ -79,7 +79,6 @@ def build() -> dict:
             "core": "core/RULES.md + core/STYLE.md: always loaded for Claude and Codex",
             "local": "local/: private, gitignored owner profile and patterns (created from local.example/)",
             "project": "each project's INDEX.json, AGENTS.md/CLAUDE.md and optional .ai/ overrides",
-            "legacy": "legacy-pipeline/: the full older framework, enabled per project by flag (see core/RULES.md)",
         },
         "docs": docs,
         "data": data,
