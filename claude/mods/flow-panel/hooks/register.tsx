@@ -197,7 +197,9 @@ type Src = Pick<FlowView, 'nodes' | 'subs' | 'mainRunning' | 'wTotal' | 'k'>
 
 // A session's branches: its own paths first, then the sessions it started,
 // each of those holding the same again. `count` numbers the sessions.
-const rowsOf = (s: Src, now: number, count: { n: number }): Row[] => [
+const MAX_DEPTH = 4 // a guard: never draw sessions nested deeper than this
+
+const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0): Row[] => [
   ...s.nodes.map(nd => {
     const isRunning = nd.running > 0
     const ring: Box['ring'] =
@@ -218,7 +220,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }): Row[] => [
       kids: [] as Row[],
     }
   }),
-  ...s.subs.map(sub => {
+  ...(depth >= MAX_DEPTH ? [] : s.subs).map(sub => {
     count.n += 1
     const label = `Session ${count.n}`
 
@@ -229,7 +231,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }): Row[] => [
       ring: sub.isWaiting ? ('waiting' as const) : undefined,
       text: costText(sub.k, sub.wTotal),
       isActive: sub.mainRunning,
-      kids: rowsOf(sub, now, count),
+      kids: rowsOf(sub, now, count, depth + 1),
     }
   }),
 ]
@@ -247,21 +249,19 @@ const layout = (
   idx: { i: number },
 ): number => {
   let y = y0
-  // Room for the widest figure on this level's lines, no more: the nested
-  // levels add up, and a wide picture is scaled down to the pane.
-  const gap = Math.max(...rows.map(r => r.text.length * 12 + 12)) + ELBOW + 8
   for (const r of rows) {
-    const left = trunkX + gap
+    const left = trunkX + ELBOW + 6
     const d = `M${trunkX},${topY} V${y - ELBOW} Q${trunkX},${y} ${trunkX + ELBOW},${y} H${left}`
     const pw = r.text.length * 12 + 12
     idx.i += 1
+    // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push(
-      line(d, KIND[r.kind].fill, idx.i, r.isActive, 0) + pill((trunkX + ELBOW + left) / 2, y, r.text, pw),
+      line(d, KIND[r.kind].fill, idx.i, r.isActive, 0) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
     )
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring }))
-    out.right = Math.max(out.right, left + r.w)
+    out.right = Math.max(out.right, left + r.w + 6 + pw)
     out.bottom = Math.max(out.bottom, y + 20)
-    y = r.kids.length ? layout(r.kids, left + 16, y + 20, y + ROW, out, idx) : y + ROW
+    y = r.kids.length ? layout(r.kids, left + 12, y + 20, y + ROW, out, idx) : y + ROW
   }
 
   return y
@@ -439,11 +439,12 @@ async function restoredFor($: EngineInterface, v: FlowView): Promise<FlowView> {
     saved = null
     const dir = await folderOf($)
     if (dir) {
-      const f = (await loadShared($, dir, selfId)) ?? (await loadShared($, dir, 'last'))
+      const f = await loadShared($, dir, selfId)
       const old = f?.view
       if (old && Array.isArray(old.nodes) && Array.isArray(old.subs) && typeof old.k === 'number') {
         saved = {
           ...old,
+          subs: [], // rebuilt from the sessions' own files by the next poll
           nodes: old.nodes.map(n => ({ ...n, running: 0, isBackground: false })),
           mainRunning: false,
           isWaiting: false,
