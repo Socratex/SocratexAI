@@ -7,15 +7,14 @@ const PANE = 'flow-panel'
 
 // Tunables
 const FONT = 20 // label size in CSS px (the SVG is drawn 1:1)
-const W = 440
-const H = 300
+const W = 300
 const RADIUS = 10
 const MAX_NODES = 4
 const ACTIVE_MS = 3000 // a node stays "lit" this long after its last call
 const ERROR_MS = 6000
 const LABEL_CHARS = 8
 const COST_DECIMALS = 3 // decimals of a path's cost in percent
-const FLUSH_MS = 1000 // state writes are batched into one redraw per this long
+const FLUSH_MS = 2000 // state writes are batched into one redraw per this long
 
 // Relative price of a token, the stand-in for how much of the limit it eats.
 // A guess from API list prices; the learned factor `k` absorbs the scale.
@@ -123,35 +122,13 @@ const applyLimit = (
 
 // ---------------------------------------------------------------- drawing
 
-const curve = (a: Box, b: Box) => {
-  const x1 = a.cx
-  const y1 = a.cy + a.h / 2
-  const x2 = b.cx
-  const y2 = b.cy - b.h / 2
-  const mid = (y1 + y2) / 2
-  return `M${x1},${y1} C${x1},${mid} ${x2},${mid} ${x2},${y2}`
-}
+const M = 10 // left/top margin, px
+const TRUNK = M + 24 // x of the vertical trunk
+const ELBOW = 14 // radius of the rounded corners
+const ROW = 64 // vertical distance between branches
+const BOX_X = TRUNK + 160 // left edge of level-1 boxes (room for a label on the branch)
 
-// Where a label sits on the curve: the middle of a vertical line, but for a
-// slanted one a point near the child end, where neighbours are far enough apart.
-const labelPoint = (a: Box, b: Box) => {
-  const x1 = a.cx
-  const y1 = a.cy + a.h / 2
-  const x2 = b.cx
-  const y2 = b.cy - b.h / 2
-  if (Math.abs(x2 - x1) < 20) return { x: (x1 + x2) / 2, y: (y1 + y2) / 2 }
-  const mid = (y1 + y2) / 2
-  const t = 0.75
-  const b0 = (1 - t) ** 3
-  const b1 = 3 * (1 - t) ** 2 * t
-  const b2 = 3 * (1 - t) * t ** 2
-  const b3 = t ** 3
-
-  return { x: x1 * (b0 + b1) + x2 * (b2 + b3), y: y1 * b0 + mid * (b1 + b2) + y2 * b3 }
-}
-
-const pill = (x: number, y: number, text: string) => {
-  const pw = text.length * 12 + 12
+const pill = (x: number, y: number, text: string, pw: number) => {
   return (
     `<rect x="${x - pw / 2}" y="${y - 15}" width="${pw}" height="30" rx="8" ry="8" fill="#1e1e1e"/>` +
     `<text x="${x}" y="${y}" fill="#cfd8dc" font-size="${FONT}" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">${text}</text>`
@@ -159,21 +136,16 @@ const pill = (x: number, y: number, text: string) => {
 }
 
 // A line, plus a travelling dot (coloured like the component it leads to)
-// while that component is active, plus its label.
-// `phase` (the time of the last flush) makes a redrawn dot carry on from where
-// it was instead of jumping back to the start of the line.
-const edge = (a: Box, b: Box, i: number, isActive: boolean, label: string, phase: number) => {
-  const d = curve(a, b)
-  const colour = KIND[b.kind].fill
-  const p = labelPoint(a, b)
+// while that component is active. `phase` (the time of the last flush) makes
+// a redrawn dot carry on instead of jumping back to the start of the line.
+const line = (d: string, colour: string, i: number, isActive: boolean, phase: number) => {
   const dur = 1.5 + i * 0.3
-  const begin = -(((phase / 1000) % dur)).toFixed(2)
+  const begin = -((phase / 1000) % dur).toFixed(2)
   return (
     `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="${isActive ? 0.8 : 0.3}" stroke-width="2"/>` +
     (isActive
       ? `<circle r="5" fill="${colour}"><animateMotion begin="${begin}s" dur="${dur}s" repeatCount="indefinite" path="${d}"/></circle>`
-      : '') +
-    pill(p.x, p.y, label)
+      : '')
   )
 }
 
@@ -203,15 +175,17 @@ const draw = (v: FlowView, now: number): string => {
   const you: Box = {
     label: 'Ty',
     kind: 'you',
-    cx: 220,
-    cy: 32,
+    cx: M + 48,
+    cy: M + 20,
     w: 96,
     h: 40,
     ring: v.isWaiting ? 'waiting' : undefined,
   }
-  const claude: Box = { label: 'Claude', kind: 'claude', cx: 220, cy: 130, w: 130, h: 46 }
+  const claude: Box = { label: 'Claude', kind: 'claude', cx: M + 65, cy: M + 100, w: 130, h: 46 }
+  const trunkTop = you.cy + you.h / 2
+  const trunkEnd = claude.cy - claude.h / 2
+  const branchTop = claude.cy + claude.h / 2
 
-  const n = v.nodes.length
   const kids = v.nodes.map((nd, i) => {
     const isRunning = nd.running > 0
     const ring: Box['ring'] =
@@ -223,8 +197,8 @@ const draw = (v: FlowView, now: number): string => {
     const box: Box = {
       label: esc(nd.label.slice(0, LABEL_CHARS)),
       kind: nd.kind,
-      cx: 220 + (i - (n - 1) / 2) * 110,
-      cy: 238,
+      cx: BOX_X + 48,
+      cy: branchTop + 50 + i * ROW,
       w: 96,
       h: 40,
       ring,
@@ -232,12 +206,27 @@ const draw = (v: FlowView, now: number): string => {
     return { nd, box, isActive: isRunning || now - nd.at < ACTIVE_MS }
   })
 
+  const growth = growthText(v)
+  const gw = growth.length * 12 + 12
+  const lastY = kids.length ? kids[kids.length - 1].box.cy + 30 : branchTop + 20
+  const height = lastY + M
+
+  // Branches: down the trunk, round the corner, along to the box.
+  const branches = kids.map((k, i) => {
+    const y = k.box.cy
+    const x2 = k.box.cx - k.box.w / 2
+    const d = `M${TRUNK},${branchTop} V${y - ELBOW} Q${TRUNK},${y} ${TRUNK + ELBOW},${y} H${x2}`
+    const text = costText(v, k.nd)
+    const pw = text.length * 12 + 12
+    const px = (TRUNK + ELBOW + x2) / 2
+    return line(d, KIND[k.box.kind].fill, i + 1, k.isActive, v.flushAt) + pill(px, y, text, pw)
+  })
+
   return (
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">` +
-    edge(you, claude, 0, v.mainRunning, growthText(v), v.flushAt) +
-    kids
-      .map((k, i) => edge(claude, k.box, i + 1, k.isActive, costText(v, k.nd), v.flushAt))
-      .join('') +
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${height}" width="${W}" height="${height}">` +
+    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, v.flushAt) +
+    pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
+    branches.join('') +
     node(you) +
     node(claude) +
     kids.map(k => node(k.box)).join('') +
