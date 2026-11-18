@@ -247,9 +247,18 @@ type Row = {
   kind: Kind
   w: number
   ring?: Box['ring']
+  usd: number | undefined // the figure on its line; undefined = not known yet
   text: string
   isActive: boolean
   kids: Row[]
+}
+
+// The sum of the known figures of some rows; '...' (undefined) when there are
+// rows but none of them is known yet. No rows at all sum to zero.
+const sumUsd = (rows: Row[]): number | undefined => {
+  const known = rows.map(r => r.usd).filter((u): u is number => u !== undefined)
+
+  return rows.length > 0 && known.length === 0 ? undefined : known.reduce((a, b) => a + b, 0)
 }
 
 type Src = Pick<SubTree, 'nodes' | 'subs' | 'mainRunning' | 'perW' | 'usd'>
@@ -262,7 +271,8 @@ let selfId = ''
 const MAX_DEPTH = 4 // a guard: never draw sessions nested deeper than this
 
 const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId]): Row[] => [
-  ...s.nodes.map(nd => {
+  ...s.nodes.map((nd): Row => {
+    const usd = nodeUsd(nd, s.perW)
     const isRunning = nd.running > 0
     const ring: Box['ring'] =
       now - nd.errorAt < ERROR_MS
@@ -277,15 +287,21 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       kind: nd.kind as Kind,
       w: 96,
       ring,
-      text: usdText(nodeUsd(nd, s.perW)),
+      usd,
+      text: usdText(usd),
       isActive: isRunning || s.mainRunning,
-      kids: [] as Row[],
+      kids: [],
     }
   }),
   // A session already on the path above is the same session again: skip it.
-  ...(depth >= MAX_DEPTH ? [] : s.subs.filter(sub => !path.includes(sub.id))).map(sub => {
+  ...(depth >= MAX_DEPTH ? [] : s.subs.filter(sub => !path.includes(sub.id))).map((sub): Row => {
     count.n += 1
     const label = `Session ${count.n}`
+    const kids = rowsOf(sub, now, count, depth + 1, [...path, sub.id])
+    // While a session works, its own ledger figure only moves at the end of a
+    // turn, so it shows the sum of its branches, which grows as they finish.
+    // Once it is idle, it shows what it really spent (its own model tokens too).
+    const usd = sub.mainRunning ? sumUsd(kids) : sub.usd
 
     return {
       label,
@@ -293,9 +309,10 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       kind: 'session' as Kind,
       w: 120,
       ring: undefined,
-      text: usdText(sub.usd),
+      usd,
+      text: usdText(usd),
       isActive: sub.mainRunning,
-      kids: rowsOf(sub, now, count, depth + 1, [...path, sub.id]),
+      kids,
     }
   }),
 ]
@@ -348,13 +365,11 @@ const draw = (v: FlowView, now: number): string => {
 
   const out: Out = { lines: [], boxes: [], right: M + 130, bottom: branchTop }
   const nowS = now / 1000
-  layout(rowsOf(treeOf(v), now, { n: 0 }), TRUNK, branchTop, branchTop + 50, out, nowS)
+  const rows = rowsOf(treeOf(v), now, { n: 0 })
+  layout(rows, TRUNK, branchTop, branchTop + 50, out, nowS)
 
-  // User -> Claude: the sum of the branches below (their known figures).
-  const tree = treeOf(v)
-  const parts = [...tree.nodes.map(n => nodeUsd(n, tree.perW)), ...tree.subs.map(s => s.usd)]
-  const known = parts.filter((p): p is number => p !== undefined)
-  const growth = parts.length > 0 && known.length === 0 ? '...' : usdText(known.reduce((a, b) => a + b, 0))
+  // User -> Claude: the sum of the branches below, as their lines show them.
+  const growth = usdText(sumUsd(rows))
   const gw = growth.length * 12 + 12
   const width = Math.max(MIN_W, out.right + M)
   const height = out.bottom + M
