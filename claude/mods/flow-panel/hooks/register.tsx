@@ -190,8 +190,21 @@ const growthText = (v: FlowView) =>
     ? '...'
     : `+${pct(Math.max(0, v.limitPct - v.basePct))}%`
 
-// Claude -> a path: the estimated share of the 5-hour limit it cost, in percent.
-const costText = (k: number, w: number) => (k > 0 ? `~${pct(w * k)}%` : '...')
+// Claude -> a path: what it cost in US dollars, as the engine's cost ledger
+// prices it (two significant digits below one dollar, trailing zeros dropped).
+const usdText = (n: number | undefined): string => {
+  if (n === undefined) return '...'
+  if (n <= 0) return '$0'
+  const decimals = n >= 1 ? 2 : Math.min(8, Math.ceil(-Math.log10(n)) + 1)
+  const s = n.toFixed(decimals)
+
+  return `$${s.includes('.') ? s.replace(/\.?0+$/, '') : s}`
+}
+
+// A path's dollars: an agent's own (exact) plus its tool results, priced at the
+// session's average dollars per weighted token. Unknown until that average is.
+const nodeUsd = (n: FlowNode, perW: number | undefined): number | undefined =>
+  n.usd === undefined && n.w > 0 && !perW ? undefined : (n.usd ?? 0) + n.w * (perW ?? 0)
 
 // One branch of the tree: a box, the figure on its line and what hangs below it.
 type Row = {
@@ -205,7 +218,7 @@ type Row = {
   kids: Row[]
 }
 
-type Src = Pick<FlowView, 'nodes' | 'subs' | 'mainRunning' | 'wTotal' | 'k'>
+type Src = Pick<SubTree, 'nodes' | 'subs' | 'mainRunning' | 'perW' | 'usd'>
 
 // The session this copy of the mod runs in: the root of every tree it draws.
 let selfId = ''
@@ -230,7 +243,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       kind: nd.kind as Kind,
       w: 96,
       ring,
-      text: costText(s.k, nd.w),
+      text: usdText(nodeUsd(nd, s.perW)),
       isActive: isRunning || s.mainRunning,
       kids: [] as Row[],
     }
@@ -246,7 +259,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       kind: 'session' as Kind,
       w: 120,
       ring: undefined,
-      text: costText(sub.k, sub.wTotal),
+      text: usdText(sub.usd),
       isActive: sub.mainRunning,
       kids: rowsOf(sub, now, count, depth + 1, [...path, sub.id]),
     }
@@ -299,7 +312,7 @@ const draw = (v: FlowView, now: number): string => {
   const branchTop = claude.cy + claude.h / 2
 
   const out: Out = { lines: [], boxes: [], right: M + 130, bottom: branchTop }
-  layout(rowsOf(v, now, { n: 0 }), TRUNK, branchTop, branchTop + 50, out, { i: 0 })
+  layout(rowsOf(treeOf(v), now, { n: 0 }),TRUNK, branchTop, branchTop + 50, out, { i: 0 })
 
   const growth = growthText(v)
   const gw = growth.length * 12 + 12
@@ -416,6 +429,9 @@ const treeOf = (v: FlowView): SubTree => ({
   isWaiting: v.isWaiting,
   wTotal: v.wTotal,
   k: v.k,
+  // dollars the session spent since its last prompt, and its dollars per weighted token
+  usd: v.lastUsd === undefined ? undefined : Math.max(0, v.lastUsd - (v.promptUsd ?? v.lastUsd)),
+  perW: (v.allW ?? 0) > 0 ? Math.max(0, (v.lastUsd ?? 0) - (v.baseUsd ?? 0)) / (v.allW ?? 1) : 0,
 })
 
 async function folderOf($: EngineInterface): Promise<string> {
@@ -763,7 +779,16 @@ export const register: Register = on => {
     // parent recognises it.
     const head = e.command ? '' : norm(e.text).slice(0, HEAD_CHARS)
     // A new prompt starts a fresh view: only segments used since then show.
-    await change($, v => ({ ...v, nodes: [], agentNode: {}, head: v.head || head || undefined }))
+    const usdNow = (await $.session.usage()).cost?.usd ?? 0
+    await change($, v => ({
+      ...v,
+      nodes: [],
+      agentNode: {},
+      head: v.head || head || undefined,
+      promptUsd: usdNow,
+      lastUsd: usdNow,
+      baseUsd: v.baseUsd ?? usdNow, // the ledger before this mod saw any turn
+    }))
 
     return next(e)
   })
@@ -795,12 +820,17 @@ export const register: Register = on => {
   // turn is also charged to that agent's own path.
   on('turn.complete', async ($, e, next) => {
     const cost = weigh(e.usage)
+    // The engine's own ledger: what this turn added is charged to its agent's path.
+    const usd = (await $.session.usage()).cost?.usd ?? 0
     await change($, v => {
       const key = e.agentId === undefined ? undefined : v.agentNode[e.agentId]
+      const delta = Math.max(0, usd - (v.lastUsd ?? usd))
       const moved: FlowView = {
         ...v,
         wTotal: v.wTotal + cost,
-        nodes: key ? v.nodes.map(n => (n.key === key ? { ...n, w: n.w + cost } : n)) : v.nodes,
+        allW: (v.allW ?? 0) + cost,
+        lastUsd: usd,
+        nodes: key ? v.nodes.map(n => (n.key === key ? { ...n, usd: (n.usd ?? 0) + delta } : n)) : v.nodes,
         ...(e.agentId === undefined ? { mainRunning: false, isWaiting: true } : {}),
       }
 

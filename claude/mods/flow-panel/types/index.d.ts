@@ -8,7 +8,8 @@ export type FlowNode = {
   running: number // calls in flight
   isBackground: boolean // a background agent is running
   errorAt: number // last failure, ms (0 = none)
-  w: number // weighted tokens this path has cost (see weights in register.tsx)
+  w: number // weighted tokens of this path's tool results (see weights in register.tsx)
+  usd?: number // dollars the engine's ledger charged to this agent's own turns
 }
 
 // The tree of one session, as it is shared with the session that started it.
@@ -21,9 +22,15 @@ export type SubTree = {
   isWaiting: boolean
   wTotal: number
   k: number
+  usd?: number // dollars spent since the session's last prompt (undefined = unknown)
+  perW?: number // the session's dollars per weighted token (0 = not yet known)
 }
 
 export type FlowView = {
+  allW?: number // weighted tokens of every turn this session (never reset)
+  lastUsd?: number // the engine's cost ledger at the last turn, dollars
+  promptUsd?: number // the ledger when the last prompt started
+  baseUsd?: number // the ledger before this mod saw any turn (a resumed session has spent before)
   head?: string // this session's first prompt: how its parent recognises it
   spawns?: Array<{ at: number; snippet: string }> // start_session calls made here: when, and the start of the brief
   title?: string // first prompt of this session (its name in the parent's tooltip)
