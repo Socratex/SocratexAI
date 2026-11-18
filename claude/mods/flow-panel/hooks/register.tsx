@@ -132,7 +132,6 @@ const M = 5 // left/top margin, px (always 5px from the left edge)
 const TRUNK = M + 24 // x of the vertical trunk
 const ELBOW = 14 // radius of the rounded corners
 const ROW = 64 // vertical distance between branches
-const BOX_X = TRUNK + 160 // left edge of level-1 boxes (room for a label on the branch)
 
 const pill = (x: number, y: number, text: string, pw: number) => {
   return (
@@ -245,8 +244,11 @@ const layout = (
   idx: { i: number },
 ): number => {
   let y = y0
+  // Room for the widest figure on this level's lines, no more: the nested
+  // levels add up, and a wide picture is scaled down to the pane.
+  const gap = Math.max(...rows.map(r => r.text.length * 12 + 12)) + ELBOW + 8
   for (const r of rows) {
-    const left = trunkX + 160
+    const left = trunkX + gap
     const d = `M${trunkX},${topY} V${y - ELBOW} Q${trunkX},${y} ${trunkX + ELBOW},${y} H${left}`
     const pw = r.text.length * 12 + 12
     idx.i += 1
@@ -256,7 +258,7 @@ const layout = (
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring }))
     out.right = Math.max(out.right, left + r.w)
     out.bottom = Math.max(out.bottom, y + 20)
-    y = r.kids.length ? layout(r.kids, left + 24, y + 20, y + ROW, out, idx) : y + ROW
+    y = r.kids.length ? layout(r.kids, left + 16, y + 20, y + ROW, out, idx) : y + ROW
   }
 
   return y
