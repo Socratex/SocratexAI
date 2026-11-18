@@ -78,7 +78,7 @@ const INITIAL: FlowView = {
 // Change the shape tag when FlowView changes: it declines what an earlier
 // version stored, which outlives a reload.
 const view = atom({ plugin: 'flow-panel', key: 'view' } as const, INITIAL, {
-  shape: 'flow-7',
+  shape: 'flow-8',
 })
 
 // ------------------------------------------------------------------ maths
@@ -216,33 +216,84 @@ const DOT_GAP = 1 // free space between neighbouring dots of a batch, px
 const clockBegin = (nowS: number, period: number, offset = 0): string =>
   (-(((nowS - offset) % period) + period) % period).toFixed(3)
 
-const line = (d: string, length: number, colour: string, isActive: boolean, nowS: number, light = colour, tps?: number) => {
+// The same path walked the other way. Paths here are only M, V, H and Q with
+// absolute coordinates, so reversing is a matter of reading the points back.
+const reversePath = (d: string): string => {
+  const toks = d.match(/[MVHQ]|-?\d+(?:\.\d+)?/g) ?? []
+  const segs: Array<{ c: string; n: number[] }> = []
+  for (const t of toks) {
+    if (/[MVHQ]/.test(t)) segs.push({ c: t, n: [] })
+    else segs[segs.length - 1]!.n.push(Number(t))
+  }
+  let [x, y] = segs[0]!.n as [number, number]
+  const pts: Array<{ c: string; n: number[]; from: [number, number] }> = []
+  for (const sg of segs.slice(1)) {
+    pts.push({ ...sg, from: [x, y] })
+    if (sg.c === 'V') y = sg.n[0]!
+    else if (sg.c === 'H') x = sg.n[0]!
+    else if (sg.c === 'Q') [x, y] = [sg.n[2]!, sg.n[3]!]
+  }
+  let out = `M${x},${y}`
+  for (const sg of pts.reverse()) {
+    if (sg.c === 'V') out += ` V${sg.from[1]}`
+    else if (sg.c === 'H') out += ` H${sg.from[0]}`
+    else if (sg.c === 'Q') out += ` Q${sg.n[0]},${sg.n[1]} ${sg.from[0]},${sg.from[1]}`
+  }
+
+  return out
+}
+
+const LANE = 6 // px between the centre of a line and the centre of each lane
+
+// One active line carries two lanes of dots: the request goes down (parent to
+// child) on one side of the line, the result comes back up on the other. Each
+// lane has its own batch size (the tier of its own pace). A dot is offset
+// sideways by its `cy`, which `rotate="auto"` turns perpendicular to the path,
+// so the lane keeps the same side of its direction of travel round the corners:
+// down it rides on the west/south side, up on the east/north side.
+const line = (
+  d: string,
+  length: number,
+  colour: string,
+  isActive: boolean,
+  nowS: number,
+  light = colour,
+  tpsUp?: number,
+  tpsDown?: number,
+) => {
   if (!isActive) return `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="0.3" stroke-width="2"/>`
 
   // A dot needs `travel` seconds for the line. A batch of `count` dots, each
   // trailing the one before by `lag` seconds, leaves every EMIT_S, so `n` batches
   // are on the line at once; each dot runs, then waits unseen for its next turn.
-  const count = TIERS[tierOf(tps)]!.dots
   const lag = (DOT_BODY + DOT_GAP) / DOT_SPEED
   const travel = Math.max(0.2, length / DOT_SPEED)
-  const n = Math.max(1, Math.ceil((travel + (count - 1) * lag) / EMIT_S))
-  const cycle = n * EMIT_S
-  const run = (travel / cycle).toFixed(4)
-  let dots = ''
-  for (let j = 0; j < n; j += 1) {
-    for (let i = 0; i < count; i += 1) {
-      const begin = clockBegin(nowS, cycle, j * EMIT_S + i * lag)
-      const motion =
-        `<animateMotion begin="${begin}s" dur="${cycle}s" repeatCount="indefinite" rotate="auto" path="${d}" ` +
-        `calcMode="linear" keyPoints="0;1;1" keyTimes="0;${run};1"/>` +
-        `<animate attributeName="visibility" values="visible;hidden;hidden" keyTimes="0;${run};1" calcMode="discrete" dur="${cycle}s" begin="${begin}s" repeatCount="indefinite"/>`
-      // glow, solid body in the lighter colour, and a white-hot centre
-      dots +=
-        `<ellipse rx="${DOT_BODY / 2 + 4.5}" ry="7" fill="${light}" opacity="0.95" filter="url(#dotglow)">${motion}</ellipse>` +
-        `<ellipse rx="${DOT_BODY / 2}" ry="3.6" fill="${light}">${motion}</ellipse>` +
-        `<ellipse rx="3.5" ry="1.4" fill="#fff" opacity="0.9">${motion}</ellipse>`
+  const lane = (path: string, count: number, tint: string, offset: number): string => {
+    const n = Math.max(1, Math.ceil((travel + (count - 1) * lag) / EMIT_S))
+    const cycle = n * EMIT_S
+    const run = (travel / cycle).toFixed(4)
+    let dots = ''
+    for (let j = 0; j < n; j += 1) {
+      for (let i = 0; i < count; i += 1) {
+        const begin = clockBegin(nowS, cycle, j * EMIT_S + i * lag + offset)
+        const motion =
+          `<animateMotion begin="${begin}s" dur="${cycle}s" repeatCount="indefinite" rotate="auto" path="${path}" ` +
+          `calcMode="linear" keyPoints="0;1;1" keyTimes="0;${run};1"/>` +
+          `<animate attributeName="visibility" values="visible;hidden;hidden" keyTimes="0;${run};1" calcMode="discrete" dur="${cycle}s" begin="${begin}s" repeatCount="indefinite"/>`
+        // glow, solid body in the lighter colour, and a white-hot centre
+        dots +=
+          `<ellipse cy="${LANE}" rx="${DOT_BODY / 2 + 4.5}" ry="7" fill="${tint}" opacity="0.95" filter="url(#dotglow)">${motion}</ellipse>` +
+          `<ellipse cy="${LANE}" rx="${DOT_BODY / 2}" ry="3.6" fill="${tint}">${motion}</ellipse>` +
+          `<ellipse cy="${LANE}" rx="3.5" ry="1.4" fill="#fff" opacity="0.9">${motion}</ellipse>`
+      }
     }
+
+    return dots
   }
+  // The returning lane starts half a beat later, so the two lanes do not pulse in step.
+  const dots =
+    lane(d, TIERS[tierOf(tpsDown)]!.dots, light, 0) +
+    lane(reversePath(d), TIERS[tierOf(tpsUp)]!.dots, light, EMIT_S / 2)
   // The pulse: a blurred halo and the line itself brighten as each dot leaves.
   const beat = clockBegin(nowS, EMIT_S)
   const halo =
@@ -312,7 +363,8 @@ type Row = {
   usd: number | undefined // the figure on its line; undefined = not known yet
   text: string
   isActive: boolean
-  tps?: number // token pace of this line: sets how many dots a batch holds
+  tps?: number // token pace of the result coming back up: sets the dots of the up lane
+  tpsIn?: number // token pace of the request going down: sets the dots of the down lane
   kids: Row[]
 }
 
@@ -354,6 +406,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       text: usdText(usd),
       isActive: isRunning || s.mainRunning,
       tps: nd.tps ?? s.tps,
+      tpsIn: nd.tpsIn,
       kids: [],
     }
   }),
@@ -403,8 +456,8 @@ const layout = (
     const pw = r.text.length * 12 + 12
     // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push({
-      rank: r.isActive ? tierOf(r.tps) : -1, // idle lines lie below every active one
-      svg: line(d, length, KIND[r.kind].fill, r.isActive, nowS, KIND[r.kind].light, r.tps) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
+      rank: r.isActive ? Math.max(tierOf(r.tps), tierOf(r.tpsIn)) : -1, // idle lines lie below every active one
+      svg: line(d, length, KIND[r.kind].fill, r.isActive, nowS, KIND[r.kind].light, r.tps, r.tpsIn) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
     })
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
@@ -1026,6 +1079,7 @@ export const register: Register = on => {
 
     let failed = false
     let resultTokens = 0
+    const requestTokens = tokensOf(args)
     try {
       const ran = await next(e)
       resultTokens = tokensOf(ran)
@@ -1048,6 +1102,7 @@ export const register: Register = on => {
                 errorAt: failed ? end : n.errorAt,
                 w: n.w + resultTokens * RESULT_WEIGHT,
                 tps: paceOf(resultTokens, end - now) ?? n.tps,
+                tpsIn: paceOf(requestTokens, end - now) ?? n.tpsIn,
               }
             : n,
         ),
