@@ -392,6 +392,7 @@ let held: FlowView | undefined
 // "Session N" tiles. Nothing here costs model tokens.
 
 let startedAt = 0
+let lastPublished = ''
 let lastSpawnAt = 0 // when this session last called start_session
 
 const treeOf = (v: FlowView): SubTree => ({
@@ -416,6 +417,11 @@ async function publish($: EngineInterface, v: FlowView, ended = false): Promise<
   const dir = await folderOf($)
   if (!dir || (isEmpty(v) && !ended)) return // never overwrite a saved view with an empty one
   try {
+    // Only a real change rewrites the file: its updatedAt must mean "this session
+    // did something", or no session would ever look stale (the poll flushes often).
+    const body = JSON.stringify({ tree: treeOf(v), view: v, ended })
+    if (body === lastPublished) return
+    lastPublished = body
     const at = await $.clock.now()
     const text = JSON.stringify({ id: selfId, startedAt, updatedAt: at, tree: treeOf(v), view: v, ended })
     await $.fs.write(`${dir}/${selfId}.json`, text)
