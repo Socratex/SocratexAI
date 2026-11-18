@@ -152,17 +152,25 @@ const pill = (x: number, y: number, text: string, pw: number) => {
 // The dots are small, long and glowing; the more the line's component cost, the
 // more of them run along it (spread evenly): 1 for next to nothing, up to 8.
 const DOTS_MAX = 8
+const DOT_GAP = 1.4 // spacing between dots on one line, as a multiple of an even spread over it
 const dotCount = (usd: number | undefined): number =>
   Math.max(1, Math.min(DOTS_MAX, 1 + Math.round(Math.log2(1 + ((usd ?? 0) * 100) / 0.05))))
 
 const line = (d: string, colour: string, i: number, isActive: boolean, phase: number, usd?: number) => {
   const dur = 1.5 + i * 0.3
   const n = dotCount(usd)
+  // A dot runs the line in `dur` and then rests unseen for the rest of its cycle,
+  // which is DOT_GAP times longer: the dots stay as many but sit further apart.
+  const cycle = dur * DOT_GAP
+  const run = (1 / DOT_GAP).toFixed(3)
   let dots = ''
   if (isActive) {
     for (let j = 0; j < n; j += 1) {
-      const begin = (-((phase % dur) + (j * dur) / n)).toFixed(2)
-      const motion = `<animateMotion begin="${begin}s" dur="${dur}s" repeatCount="indefinite" rotate="auto" path="${d}"/>`
+      const begin = (-((phase % cycle) + (j * cycle) / n)).toFixed(2)
+      const motion =
+        `<animateMotion begin="${begin}s" dur="${cycle}s" repeatCount="indefinite" rotate="auto" path="${d}" ` +
+        `calcMode="linear" keyPoints="0;1;1" keyTimes="0;${run};1"/>` +
+        `<animate attributeName="visibility" values="visible;hidden;hidden" keyTimes="0;${run};1" calcMode="discrete" dur="${cycle}s" begin="${begin}s" repeatCount="indefinite"/>`
       dots +=
         `<ellipse rx="9" ry="4.5" fill="${colour}" opacity="0.55" filter="url(#dotglow)">${motion}</ellipse>` +
         `<ellipse rx="6" ry="2.5" fill="${colour}">${motion}</ellipse>`
