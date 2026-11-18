@@ -27,3 +27,6 @@ __pycache__/
 # SocratexAI v2: private owner layer and machine output
 /local/
 audits/
+
+# Read-only reference packs (tools/subrepos.py); never tracked
+/subrepos/

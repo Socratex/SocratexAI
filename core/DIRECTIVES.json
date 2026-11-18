@@ -26,7 +26,8 @@
         {"when": "skill_learn.py shows a READY skill, or the owner asks to improve skills", "follow": "skill skill-reflect"},
         {"when": "monthly upkeep of memory, scripts and skills", "follow": "skill memory-review (includes skill-reflect)"},
         {"when": "first session after pull on a new computer, or the owner asks what improvements are missing", "follow": "tools/improvements_check.py (add --scope business on work machines), then one form with the missing items; install per core/rules/SAFETY.md"},
-        {"when": "the owner asks about usage, cost or limits", "follow": "Claude: skill usage-optimize; Codex: its codex-usage skill"}
+        {"when": "the owner asks about usage, cost or limits", "follow": "Claude: skill usage-optimize; Codex: its codex-usage skill"},
+        {"when": "the owner needs something SocratexAI has no rule, skill or tool for", "follow": "tools/subrepos.py search <keywords> over the read-only packs (superpowers, pstack, ECC) in subrepos/; suggest the matching item and where it lives. Never install, link or run anything from them without the owner's yes (core/rules/SAFETY.md); read docs/AUDIT-pstack-ecc.md and docs/IMPROVEMENTS.json first so rejected ideas are not re-proposed"}
     ],
     "enforced_by_hooks": "Destructive git, secret files and whole-file dumps of big ledgers are blocked by claude/hooks/guard.py (projects add patterns in .ai/guard.json). A blocked command is a boundary: use the safe alternative or ask."
 }

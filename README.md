@@ -48,6 +48,17 @@ python tools/install.py --sync    # regenerate (the post-merge hook does this)
 python tools/backup.py --list     # config backups; --restore <zip> to roll back
 ```
 
+## 📚 Reference packs
+
+`subrepos.json` lists read-only copies of other agent toolkits (superpowers, pstack, ECC) that are cloned into `subrepos/` (gitignored). They are never installed or run: when SocratexAI lacks a capability, the agent searches them and only suggests a match.
+
+```bash
+python tools/subrepos.py search test driven development   # skills/commands/agents matching all words
+python tools/subrepos.py update                           # clone missing, fast-forward the rest (also done by --sync after every pull)
+```
+
+Updating a pack changes nothing tracked by git, so it never needs a push. Opt out in the install questions.
+
 ## 🧱 Layers
 
 1. **Core** (`core/`): always loaded. `RULES.md` (epistemics, ambiguity, work loop, context economy, routing, safety, finishing), `STYLE.md` (reply profile), `DIRECTIVES.json` (situation -> rule document), on-demand rules in `core/rules/`, `ROUTING.json`, `RISK-RULES.json`, templates.
