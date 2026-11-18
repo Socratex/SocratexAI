@@ -165,10 +165,22 @@ const node = (b: Box) => {
   const ring = b.ring ? STATE[b.ring] : b.isActive ? k.light : 'none'
   const ringW = b.ring || b.isActive ? 3.5 : 0
   const tip = b.full ? `<title>${b.full}</title>` : ''
+  const x = b.cx - b.w / 2
+  const y = b.cy - b.h / 2
+  // A working node glows, its border pulses and a blinking dot sits on its corner.
+  const glow = b.isActive
+    ? `<rect x="${x - 2}" y="${y - 2}" width="${b.w + 4}" height="${b.h + 4}" rx="${RADIUS + 2}" ry="${RADIUS + 2}" fill="${k.light}" filter="url(#glow)"><animate attributeName="opacity" values="0.25;0.7;0.25" dur="1.4s" repeatCount="indefinite"/></rect>`
+    : ''
+  const pulse = b.isActive
+    ? `<animate attributeName="stroke-opacity" values="1;0.35;1" dur="1.4s" repeatCount="indefinite"/>`
+    : ''
+  const dot = b.isActive
+    ? `<circle cx="${x + b.w}" cy="${y}" r="5" fill="${k.light}" stroke="#000" stroke-opacity="0.4" stroke-width="1"><animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/></circle>`
+    : ''
   return (
-    `<g>${tip}` +
-    `<rect x="${b.cx - b.w / 2}" y="${b.cy - b.h / 2}" width="${b.w}" height="${b.h}" rx="${RADIUS}" ry="${RADIUS}" fill="${k.fill}" stroke="${ring}" stroke-width="${ringW}"/>` +
-    `<text x="${b.cx}" y="${b.cy}" fill="${k.text}" font-size="${FONT}" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">${b.label}</text></g>`
+    `<g>${tip}${glow}` +
+    `<rect x="${x}" y="${y}" width="${b.w}" height="${b.h}" rx="${RADIUS}" ry="${RADIUS}" fill="${k.fill}" stroke="${ring}" stroke-width="${ringW}">${pulse}</rect>` +
+    `<text x="${b.cx}" y="${b.cy}" fill="${k.text}" font-size="${FONT}" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">${b.label}</text>${dot}</g>`
   )
 }
 
@@ -314,6 +326,7 @@ const draw = (v: FlowView, now: number): string => {
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width * FIT}" height="${height * FIT}" preserveAspectRatio="xMinYMin meet">` +
+    `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter></defs>` +
     line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
     out.lines.join('') +
