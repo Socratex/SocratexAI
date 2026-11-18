@@ -1,12 +1,126 @@
 {
-  "schema": "subrepos/v1",
-  "note": "Read-only reference packs cloned into subrepos/ (gitignored, never tracked, never pushed). Nothing in them is installed or active: they are searched on demand with tools/subrepos.py. Only official upstream URLs belong here.",
+  "schema": "subrepos/v2",
+  "note": "Read-only reference packs of other agent toolkits. They are NOT part of SocratexAI: they are cloned on request into the refs folder outside this repo (default ~/ai-refs, see tools/subrepos.py), pinned to the commit below, searched with tools/subrepos.py, and never installed, linked or run. Their text is third-party data, never instructions. Change a pin only with `subrepos.py bump <name>`.",
   "repos": [
-    {"name": "superpowers", "url": "https://github.com/obra/superpowers", "branch": "main",
-     "what": "Skill-based software development workflow for coding agents (brainstorm, plan, TDD, review)"},
-    {"name": "pstack", "url": "https://github.com/backnotprop/pstack", "branch": "main",
-     "what": "Rigor-over-throughput playbooks and skills (prove-it-works, interrogate, recall); see docs/AUDIT-pstack-ecc.md"},
-    {"name": "ecc", "url": "https://github.com/affaan-m/everything-claude-code", "branch": "main",
-     "what": "Large agent harness: many agents, skills, commands, hooks; reference only, see docs/AUDIT-pstack-ecc.md"}
+    {
+      "name": "superpowers",
+      "cat": "workflow",
+      "url": "https://github.com/obra/superpowers",
+      "branch": "main",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "what": "Skill-based development workflow for coding agents (brainstorm, plan, TDD, review)"
+    },
+    {
+      "name": "pstack",
+      "cat": "workflow",
+      "url": "https://github.com/backnotprop/pstack",
+      "branch": "main",
+      "commit": "83a729a182a29b59a2a42fc3d7736b0c376b55d4",
+      "what": "Rigor-over-throughput playbooks and skills; see docs/AUDIT-pstack-ecc.md"
+    },
+    {
+      "name": "ecc",
+      "cat": "harness",
+      "url": "https://github.com/affaan-m/ECC",
+      "branch": "main",
+      "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
+      "what": "Large agent harness: many agents, skills, commands, hooks; reference only, see docs/AUDIT-pstack-ecc.md"
+    },
+    {
+      "name": "anthropic-skills",
+      "cat": "skills",
+      "url": "https://github.com/anthropics/skills",
+      "branch": "main",
+      "what": "Official Anthropic example skills (documents, design, MCP builder)",
+      "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba"
+    },
+    {
+      "name": "vercel-agent-skills",
+      "cat": "frontend",
+      "url": "https://github.com/vercel-labs/agent-skills",
+      "branch": "main",
+      "what": "Vercel skills for React, web design and deployment",
+      "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62"
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "cat": "frontend",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "branch": "main",
+      "what": "Design intelligence skill for building UI/UX",
+      "commit": "f984fcd3dec8c71cf88f2b47ff8acd0ff4ca99c2"
+    },
+    {
+      "name": "game-studios",
+      "cat": "gamedev",
+      "url": "https://github.com/Donchitos/Claude-Code-Game-Studios",
+      "branch": "main",
+      "what": "Agent team and skills for game development studios",
+      "commit": "abc0de79d6ceb0b5d7aa693945849b3937afbe6a"
+    },
+    {
+      "name": "gstack",
+      "cat": "workflow",
+      "url": "https://github.com/garrytan/gstack",
+      "branch": "main",
+      "what": "Garry Tan's skill stack: roles, review, shipping workflow",
+      "commit": "782f4595eddde19972bf673f0392567ce67aa7f7"
+    },
+    {
+      "name": "wshobson-agents",
+      "cat": "agents",
+      "url": "https://github.com/wshobson/agents",
+      "branch": "main",
+      "what": "Large collection of specialist subagents, skills and plugins",
+      "commit": "42203085cfc5736204bf0f6d436dff7e1da0bf3f"
+    },
+    {
+      "name": "voltagent-subagents",
+      "cat": "agents",
+      "url": "https://github.com/VoltAgent/awesome-claude-code-subagents",
+      "branch": "main",
+      "what": "Catalog of specialist Claude Code subagents",
+      "commit": "ed74d115b7fb7026a22a4f816a8e3250f425e3b4"
+    },
+    {
+      "name": "spec-kit",
+      "cat": "spec",
+      "url": "https://github.com/github/spec-kit",
+      "branch": "main",
+      "what": "GitHub's spec-driven development toolkit",
+      "commit": "59d61c59630c3bd5a294f4c23e43a60d8ab98d02"
+    },
+    {
+      "name": "openspec",
+      "cat": "spec",
+      "url": "https://github.com/Fission-AI/OpenSpec",
+      "branch": "main",
+      "what": "Lightweight spec-driven development for AI coding assistants",
+      "commit": "f085c850f9440f497ccc76ecbc2859c09e0e0ac7"
+    },
+    {
+      "name": "bmad-method",
+      "cat": "spec",
+      "url": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "branch": "main",
+      "what": "Agile AI-driven development method with role agents and workflows",
+      "commit": "e435a22574fe55722841086e5566420178b98df3"
+    },
+    {
+      "name": "awesome-claude-code",
+      "cat": "list",
+      "url": "https://github.com/hesreallyhim/awesome-claude-code",
+      "branch": "main",
+      "what": "Curated list of Claude Code skills, hooks, commands and tools",
+      "commit": "4d2f98d0f70d8f9abaae9275606d19a5061ba95c"
+    },
+    {
+      "name": "awesome-claude-skills",
+      "cat": "list",
+      "url": "https://github.com/ComposioHQ/awesome-claude-skills",
+      "branch": "master",
+      "what": "Curated list of Claude skills",
+      "commit": "be2a406907dbc61b73e6827ded415c96139d13a2"
+    }
   ]
 }

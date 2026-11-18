@@ -28,5 +28,3 @@ __pycache__/
 /local/
 audits/
 
-# Read-only reference packs (tools/subrepos.py); never tracked
-/subrepos/
