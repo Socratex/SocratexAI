@@ -48,6 +48,61 @@ const STATE = {
 }
 
 type Kind = keyof typeof KIND
+
+// Every session gets its own small shift of the whole palette, so its tree reads
+// as a family of its own: the hue moves a few degrees and the lightness a little
+// up or down. The shift covers fills, active borders, glow, lines and dots (they
+// all come from `palette`); state rings and text colours stay as they are,
+// because they carry meaning. The root tree (this session) is never shifted.
+const SHADES = [
+  { hue: 0, light: 0 },
+  { hue: 14, light: 0.05 },
+  { hue: -14, light: -0.05 },
+  { hue: 26, light: -0.04 },
+  { hue: -26, light: 0.06 },
+  { hue: 8, light: -0.08 },
+  { hue: -8, light: 0.09 },
+]
+
+const hexToHsl = (hex: string): [number, number, number] => {
+  const r = parseInt(hex.slice(1, 3), 16) / 255
+  const g = parseInt(hex.slice(3, 5), 16) / 255
+  const b = parseInt(hex.slice(5, 7), 16) / 255
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const l = (max + min) / 2
+  const d = max - min
+  if (d === 0) return [0, 0, l]
+  const sat = d / (1 - Math.abs(2 * l - 1))
+  const h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4
+
+  return [(h * 60 + 360) % 360, sat, l]
+}
+
+const hslToHex = (h: number, s: number, l: number): string => {
+  const c = (1 - Math.abs(2 * l - 1)) * s
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1))
+  const m = l - c / 2
+  const [r, g, b] = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x]
+  const hex = (v: number): string => Math.round((v + m) * 255).toString(16).padStart(2, '0')
+
+  return `#${hex(r)}${hex(g)}${hex(b)}`
+}
+
+const shiftHex = (hex: string, shade: number): string => {
+  const sh = SHADES[shade <= 0 ? 0 : 1 + ((shade - 1) % (SHADES.length - 1))]!
+  if (sh.hue === 0 && sh.light === 0) return hex
+  const [h, s, l] = hexToHsl(hex)
+
+  return hslToHex((h + sh.hue + 360) % 360, s, Math.min(0.9, Math.max(0.1, l + sh.light)))
+}
+
+// The colours of a kind in a session's shade (0 = the root tree, unshifted).
+const palette = (kind: Kind, shade = 0): { fill: string; light: string; text: string } => {
+  const k = KIND[kind]
+
+  return { fill: shiftHex(k.fill, shade), light: shiftHex(k.light, shade), text: k.text }
+}
 type Box = {
   label: string
   full?: string // the whole name, shown as a tooltip when label is cut
@@ -58,6 +113,7 @@ type Box = {
   h: number
   ring?: keyof typeof STATE
   isActive?: boolean // working now: a lighter border of its own colour
+  shade?: number // the session's colour shift (index into SHADES)
 }
 
 const INITIAL: FlowView = {
@@ -307,7 +363,7 @@ const line = (
 }
 
 const node = (b: Box) => {
-  const k = KIND[b.kind]
+  const k = palette(b.kind, b.shade)
   const ring = b.ring ? STATE[b.ring] : b.isActive ? k.light : 'none'
   const ringW = b.ring || b.isActive ? 3.5 : 0
   const tip = b.full ? `<title>${b.full}</title>` : ''
@@ -365,6 +421,7 @@ type Row = {
   isActive: boolean
   tps?: number // token pace of the result coming back up: sets the dots of the up lane
   tpsIn?: number // token pace of the request going down: sets the dots of the down lane
+  shade: number // the session's colour shift: the same for a session tile and everything below it
   kids: Row[]
 }
 
@@ -385,7 +442,7 @@ let selfId = ''
 // each of those holding the same again. `count` numbers the sessions.
 const MAX_DEPTH = 4 // a guard: never draw sessions nested deeper than this
 
-const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId]): Row[] => [
+const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId], shade = 0): Row[] => [
   ...s.nodes.map((nd): Row => {
     const usd = nodeUsd(nd, s.perW)
     const isRunning = nd.running > 0
@@ -407,6 +464,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       isActive: isRunning || s.mainRunning,
       tps: nd.tps ?? s.tps,
       tpsIn: nd.tpsIn,
+      shade,
       kids: [],
     }
   }),
@@ -414,7 +472,8 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
   ...(depth >= MAX_DEPTH ? [] : s.subs.filter(sub => !path.includes(sub.id))).map((sub): Row => {
     count.n += 1
     const label = `Session ${count.n}`
-    const kids = rowsOf(sub, now, count, depth + 1, [...path, sub.id])
+    const subShade = count.n // the n-th session of the drawing; 0 stays the root's own
+    const kids = rowsOf(sub, now, count, depth + 1, [...path, sub.id], subShade)
     // While a session works, its own ledger figure only moves at the end of a
     // turn, so it shows the sum of its branches, which grows as they finish.
     // Once it is idle, it shows what it really spent (its own model tokens too).
@@ -430,6 +489,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       text: usdText(usd),
       isActive: sub.mainRunning,
       tps: sub.tps,
+      shade: subShade,
       kids,
     }
   }),
@@ -457,9 +517,9 @@ const layout = (
     // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push({
       rank: r.isActive ? Math.max(tierOf(r.tps), tierOf(r.tpsIn)) : -1, // idle lines lie below every active one
-      svg: line(d, length, KIND[r.kind].fill, r.isActive, nowS, KIND[r.kind].light, r.tps, r.tpsIn) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
+      svg: line(d, length, palette(r.kind, r.shade).fill, r.isActive, nowS, palette(r.kind, r.shade).light, r.tps, r.tpsIn) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
     })
-    out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive }))
+    out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive, shade: r.shade }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
     out.bottom = Math.max(out.bottom, y + 20)
     y = r.kids.length ? layout(r.kids, left + 12, y + 20, y + ROW, out, nowS) : y + ROW
