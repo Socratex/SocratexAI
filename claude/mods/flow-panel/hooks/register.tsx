@@ -146,40 +146,51 @@ const pill = (x: number, y: number, text: string, pw: number) => {
   )
 }
 
-// A line, plus a travelling dot (coloured like the component it leads to)
-// while that component is active. `phase` (the time of the last flush) makes
-// a redrawn dot carry on instead of jumping back to the start of the line.
-// The dots are small, long and glowing; the more the line's component cost, the
-// more of them run along it (spread evenly): 1 for next to nothing, up to 8.
-const DOTS_MAX = 8
-const DOT_GAP = 1.4 // spacing between dots on one line, as a multiple of an even spread over it
-const dotCount = (usd: number | undefined): number =>
-  Math.max(1, Math.min(DOTS_MAX, 1 + Math.round(Math.log2(1 + ((usd ?? 0) * 100) / 0.05))))
+// A line, plus travelling dots (coloured like the component it leads to) while
+// that component is active. A new dot leaves the start every EMIT_S seconds and
+// every dot moves at DOT_SPEED px/s, so a long line simply holds more dots.
+// All timing is pinned to the wall clock (`nowS`), so a redraw carries on where
+// the dots were instead of restarting them. An active line also pulses once per
+// emitted dot.
+const DOT_SPEED = 120 // px per second, the same on every line
+const EMIT_S = 1 // a new dot every this many seconds
 
-const line = (d: string, colour: string, i: number, isActive: boolean, phase: number, usd?: number, light = colour) => {
-  const dur = 1.5 + i * 0.3
-  const n = dotCount(usd)
-  // A dot runs the line in `dur` and then rests unseen for the rest of its cycle,
-  // which is DOT_GAP times longer: the dots stay as many but sit further apart.
-  const cycle = dur * DOT_GAP
-  const run = (1 / DOT_GAP).toFixed(3)
+// Seconds since a wall-clock-aligned cycle of `period` began, as a negative SMIL begin.
+const clockBegin = (nowS: number, period: number, offset = 0): string =>
+  (-(((nowS - offset) % period) + period) % period).toFixed(3)
+
+const line = (d: string, length: number, colour: string, isActive: boolean, nowS: number, light = colour) => {
+  if (!isActive) return `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="0.3" stroke-width="2"/>`
+
+  // A dot needs `travel` seconds for the line. With one emitted per EMIT_S, `n`
+  // of them are on it at once; each runs, then waits unseen for its next turn.
+  const travel = Math.max(0.2, length / DOT_SPEED)
+  const n = Math.max(1, Math.ceil(travel / EMIT_S))
+  const cycle = n * EMIT_S
+  const run = (travel / cycle).toFixed(4)
   let dots = ''
-  if (isActive) {
-    for (let j = 0; j < n; j += 1) {
-      const begin = (-((phase % cycle) + (j * cycle) / n)).toFixed(2)
-      const motion =
-        `<animateMotion begin="${begin}s" dur="${cycle}s" repeatCount="indefinite" rotate="auto" path="${d}" ` +
-        `calcMode="linear" keyPoints="0;1;1" keyTimes="0;${run};1"/>` +
-        `<animate attributeName="visibility" values="visible;hidden;hidden" keyTimes="0;${run};1" calcMode="discrete" dur="${cycle}s" begin="${begin}s" repeatCount="indefinite"/>`
-      // glow, solid body in the lighter colour, and a white-hot centre
-      dots +=
-        `<ellipse rx="12" ry="7" fill="${light}" opacity="0.95" filter="url(#dotglow)">${motion}</ellipse>` +
-        `<ellipse rx="7.5" ry="3.6" fill="${light}">${motion}</ellipse>` +
-        `<ellipse rx="3.5" ry="1.4" fill="#fff" opacity="0.9">${motion}</ellipse>`
-    }
+  for (let j = 0; j < n; j += 1) {
+    const begin = clockBegin(nowS, cycle, j * EMIT_S)
+    const motion =
+      `<animateMotion begin="${begin}s" dur="${cycle}s" repeatCount="indefinite" rotate="auto" path="${d}" ` +
+      `calcMode="linear" keyPoints="0;1;1" keyTimes="0;${run};1"/>` +
+      `<animate attributeName="visibility" values="visible;hidden;hidden" keyTimes="0;${run};1" calcMode="discrete" dur="${cycle}s" begin="${begin}s" repeatCount="indefinite"/>`
+    // glow, solid body in the lighter colour, and a white-hot centre
+    dots +=
+      `<ellipse rx="12" ry="7" fill="${light}" opacity="0.95" filter="url(#dotglow)">${motion}</ellipse>` +
+      `<ellipse rx="7.5" ry="3.6" fill="${light}">${motion}</ellipse>` +
+      `<ellipse rx="3.5" ry="1.4" fill="#fff" opacity="0.9">${motion}</ellipse>`
   }
+  // The pulse: a blurred halo and the line itself brighten as each dot leaves.
+  const beat = clockBegin(nowS, EMIT_S)
+  const halo =
+    `<path d="${d}" fill="none" stroke="${light}" stroke-width="8" stroke-linecap="round" filter="url(#lineglow)">` +
+    `<animate attributeName="stroke-opacity" values="0.7;0.15;0.7" dur="${EMIT_S}s" begin="${beat}s" repeatCount="indefinite"/></path>`
+  const body =
+    `<path d="${d}" fill="none" stroke="${light}" stroke-width="3">` +
+    `<animate attributeName="stroke-opacity" values="1;0.5;1" dur="${EMIT_S}s" begin="${beat}s" repeatCount="indefinite"/></path>`
 
-  return `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="${isActive ? 0.8 : 0.3}" stroke-width="2"/>${dots}`
+  return `${halo}${body}${dots}`
 }
 
 const node = (b: Box) => {
@@ -237,7 +248,6 @@ type Row = {
   w: number
   ring?: Box['ring']
   text: string
-  usd?: number // what the branch cost: how many dots run along its line
   isActive: boolean
   kids: Row[]
 }
@@ -268,7 +278,6 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       w: 96,
       ring,
       text: usdText(nodeUsd(nd, s.perW)),
-      usd: nodeUsd(nd, s.perW),
       isActive: isRunning || s.mainRunning,
       kids: [] as Row[],
     }
@@ -285,7 +294,6 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       w: 120,
       ring: undefined,
       text: usdText(sub.usd),
-      usd: sub.usd,
       isActive: sub.mainRunning,
       kids: rowsOf(sub, now, count, depth + 1, [...path, sub.id]),
     }
@@ -302,22 +310,23 @@ const layout = (
   topY: number,
   y0: number,
   out: Out,
-  idx: { i: number },
+  nowS: number,
 ): number => {
   let y = y0
   for (const r of rows) {
     const left = trunkX + ELBOW + 6
     const d = `M${trunkX},${topY} V${y - ELBOW} Q${trunkX},${y} ${trunkX + ELBOW},${y} H${left}`
+    // straight down, a rounded quarter (about 1.16 x its radius), then across
+    const length = Math.max(0, y - ELBOW - topY) + ELBOW * 1.16 + (left - trunkX - ELBOW)
     const pw = r.text.length * 12 + 12
-    idx.i += 1
     // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push(
-      line(d, KIND[r.kind].fill, idx.i, r.isActive, 0, r.usd, KIND[r.kind].light) +pill(left + r.w + 6 + pw / 2, y, r.text, pw),
+      line(d, length, KIND[r.kind].fill, r.isActive, nowS, KIND[r.kind].light) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
     )
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
     out.bottom = Math.max(out.bottom, y + 20)
-    y = r.kids.length ? layout(r.kids, left + 12, y + 20, y + ROW, out, idx) : y + ROW
+    y = r.kids.length ? layout(r.kids, left + 12, y + 20, y + ROW, out, nowS) : y + ROW
   }
 
   return y
@@ -338,7 +347,8 @@ const draw = (v: FlowView, now: number): string => {
   const branchTop = claude.cy + claude.h / 2
 
   const out: Out = { lines: [], boxes: [], right: M + 130, bottom: branchTop }
-  layout(rowsOf(treeOf(v), now, { n: 0 }),TRUNK, branchTop, branchTop + 50, out, { i: 0 })
+  const nowS = now / 1000
+  layout(rowsOf(treeOf(v), now, { n: 0 }), TRUNK, branchTop, branchTop + 50, out, nowS)
 
   // User -> Claude: the sum of the branches below (their known figures).
   const tree = treeOf(v)
@@ -351,8 +361,8 @@ const draw = (v: FlowView, now: number): string => {
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width * FIT}" height="${height * FIT}" preserveAspectRatio="xMinYMin meet">` +
-    `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
-    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0, known.reduce((a, b) => a + b, 0), KIND.claude.light) +
+    `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="3"/></filter><filter id="lineglow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${width + 40}" height="${height + 40}"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
+    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, trunkEnd - trunkTop, KIND.claude.fill, v.mainRunning, nowS, KIND.claude.light) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
     out.lines.join('') +
     node(you) +
@@ -778,7 +788,8 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
 }
 
 export const register: Register = on => {
-  // A redraw restarts the dots, so there is no steady timer: each event
+  // Dots are pinned to the wall clock, so a redraw does not restart them; still
+  // there is no steady timer: each event
   // schedules one redraw for when a lit node or an error expires.
   on('session.start', async ($, e, next) => {
     await $.command.register({
