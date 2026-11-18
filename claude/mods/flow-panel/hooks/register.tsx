@@ -465,7 +465,7 @@ async function poll($: EngineInterface): Promise<void> {
   const dir = await folderOf($)
   if (!dir) return
   const cur = held ?? (await read($, view))
-  const ids = [...cur.sessionIds]
+  const ids = cur.sessionIds.filter(id => id !== 'last' && id !== selfId) // ids from older saved views may be stale
 
   // A file born soon after our start_session call is the session we started.
   if (lastSpawnAt > 0) {
