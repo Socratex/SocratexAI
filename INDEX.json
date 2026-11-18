@@ -86,6 +86,10 @@
       "what": "Claude Code additions to the shared core (subagents, hooks, environment, tools); imported by the generated ~/.claude/CLAUDE.md."
     },
     {
+      "path": "claude/mods/flow-panel/README.md",
+      "what": "Claude Code mod that draws an animated graph of Claude's work (you, Claude, sub-agents, tools, MCP, skills) with the 5-hour limit growth and a per-path cost estimate in a side panel."
+    },
+    {
       "path": "codex/AGENTS.md",
       "what": "Codex additions to the shared core; tools/install.py concatenates core rules, this file and the local profile into ~/.codex/AGENTS.md."
     },

@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "INDEX.json"
-DOC_DIRS = ["core", "core/rules", "core/templates", "docs", "claude", "codex", "templates/project"]
+DOC_DIRS = ["core", "core/rules", "core/templates", "docs", "claude", "claude/mods/flow-panel", "codex", "templates/project"]
 
 
 def frontmatter(path: Path) -> dict[str, str]:
