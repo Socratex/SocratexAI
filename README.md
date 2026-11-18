@@ -9,7 +9,26 @@ git clone https://github.com/Socratex/SocratexAI.git ~/SocratexAI
 python ~/SocratexAI/tools/install.py
 ```
 
-The installer is idempotent. It backs up your current agent config first (`~/claude-backup/`), then:
+## 🙋 What it changes on your machine
+
+Nothing happens before you answer. The installer asks, shows the reason for each question, and Enter takes the recommended answer. Your answers are saved in `local/install.json` (gitignored); `--sync` and the post-pull hook reuse them and never ask or widen anything.
+
+| Question | Recommended | Why it exists |
+|---|---|---|
+| Config folders | auto-detected (`CLAUDE_CONFIG_DIR`, `CODEX_HOME`, else `~/.claude`, `~/.codex`) | non-default layouts just work |
+| Claude Code / Codex | whatever is detected | each side is optional |
+| Merge into `settings.json` | yes | installs the guard hook and secret deny rules; without it the guard is **not** active |
+| Codex plugin in Claude | only if Codex is present | adds `/codex:review` and `/codex:rescue` |
+| Flow panel mod | no | optional local usage view |
+| UCE reply style | yes (a personal style, say no for neutral replies) | very short, emoji-led replies |
+| Git hooks, `SOCRATEX_HOME` variable | yes | auto-sync after pull, leak scan before push |
+
+```bash
+python tools/install.py --yes           # no questions, recommended answers (for scripts)
+python tools/install.py --reconfigure   # ask again
+```
+
+The installer is idempotent. It backs up your current agent config first (`~/claude-backup/`), then (for the parts you accepted):
 
 | Target | What it gets |
 |---|---|
