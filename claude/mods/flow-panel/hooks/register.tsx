@@ -486,6 +486,101 @@ async function restoredFor($: EngineInterface, v: FlowView): Promise<FlowView> {
   return saved ?? v
 }
 
+// ------------------------------------------- the desktop app's own session store
+// The Claude desktop app keeps one small file per session (title, who started it,
+// archived or not). Where it exists it tells exactly which sessions are ours, so
+// nothing has to be guessed; elsewhere the brief matching below is the fallback.
+type Entry = { name: string; kind: string; mtimeMs: number }
+type Stored = {
+  local: string
+  cli: string // the id a mod sees as its session id
+  from: string // the session that started it
+  isFork: boolean // a side chat the person forked, not work we started
+  isArchived: boolean
+  title: string
+  created: number
+  mtime: number
+}
+
+const STORE_SCAN_MS = 10000
+const STORE_AGE_MS = 3 * 24 * 3600 * 1000 // older session files are not looked at
+const stored = new Map<string, Stored>()
+let storeDirs: string[] | undefined
+let lastStoreAt = 0
+
+async function entriesOf($: EngineInterface, path: string): Promise<Entry[]> {
+  try {
+    return (await $.fs.list(path)) as Entry[]
+  } catch {
+    return []
+  }
+}
+
+async function findStoreDirs($: EngineInterface): Promise<string[]> {
+  const slash = (v: unknown) => String(v ?? '').replace(/\\/g, '/')
+  const home =
+    slash(await $.env.get('HOME')) ||
+    slash(await $.env.get('USERPROFILE')) ||
+    slash(await $.env.get('SOCRATEX_HOME')).replace(/\/[^/]+$/, '')
+  const local = slash(await $.env.get('LOCALAPPDATA')) || `${home}/AppData/Local`
+  const roaming = slash(await $.env.get('APPDATA')) || `${home}/AppData/Roaming`
+  const roots = [
+    ...(await entriesOf($, `${local}/Claude-Data`))
+      .filter(d => d.kind === 'dir')
+      .map(d => `${local}/Claude-Data/${d.name}/claude-code-sessions`),
+    `${roaming}/Claude/claude-code-sessions`,
+    `${home}/Library/Application Support/Claude/claude-code-sessions`,
+    `${home}/.config/Claude/claude-code-sessions`,
+  ]
+  const dirs: string[] = []
+  for (const root of roots) {
+    for (const account of (await entriesOf($, root)).filter(d => d.kind === 'dir')) {
+      for (const org of (await entriesOf($, `${root}/${account.name}`)).filter(d => d.kind === 'dir')) {
+        dirs.push(`${root}/${account.name}/${org.name}`)
+      }
+    }
+  }
+
+  return dirs
+}
+
+// Reads new session files once; a file of ours or one we started is read again when it changes.
+async function scanStore($: EngineInterface): Promise<void> {
+  const now = await $.clock.now()
+  if (now - lastStoreAt < STORE_SCAN_MS) return
+  lastStoreAt = now
+  try {
+    if (!storeDirs) storeDirs = await findStoreDirs($)
+    const mine = [...stored.values()].find(s => s.cli === selfId)?.local
+    for (const dir of storeDirs) {
+      for (const e of await entriesOf($, dir)) {
+        if (e.kind !== 'file' || !/^local_.*\.json$/.test(e.name) || now - e.mtimeMs > STORE_AGE_MS) continue
+        const path = `${dir}/${e.name}`
+        const old = stored.get(path)
+        const isWatched = !!old && (old.cli === selfId || (!!mine && old.from === mine))
+        if (old && !(isWatched && old.mtime !== e.mtimeMs)) continue
+        try {
+          const j = JSON.parse(String(await $.fs.read(path))) as Record<string, any>
+          stored.set(path, {
+            local: e.name.replace(/\.json$/, ''),
+            cli: String(j.cliSessionId ?? ''),
+            from: String(j.spawnedFrom?.sessionId ?? ''),
+            isFork: j.spawnedFrom?.userFork === true,
+            isArchived: j.isArchived === true,
+            title: String(j.title ?? ''),
+            created: Number(j.createdAt ?? 0),
+            mtime: e.mtimeMs,
+          })
+        } catch {
+          // half-written or unreadable: tried again on the next change
+        }
+      }
+    }
+  } catch {
+    storeDirs = []
+  }
+}
+
 let lastTitleAt = 0
 
 // The title the sidebar shows is kept in the session's transcript as the last
@@ -511,10 +606,37 @@ async function refreshTitle($: EngineInterface): Promise<void> {
 async function poll($: EngineInterface): Promise<void> {
   const dir = await folderOf($)
   if (!dir) return
-  await refreshTitle($)
+  await scanStore($)
+  const mine = [...stored.values()].find(s => s.cli === selfId)
+  if (!mine) await refreshTitle($)
   const cur = held ?? (await read($, view))
   const spawns = cur.spawns ?? []
   const now = await $.clock.now()
+
+  if (mine) {
+    // The app says exactly which sessions we started: draw those, nothing else.
+    const kids = [...stored.values()]
+      .filter(s => s.from === mine.local && !s.isFork && !s.isArchived && s.cli !== '' && s.cli !== selfId)
+      .sort((a, b) => a.created - b.created)
+    const subs: SubTree[] = []
+    for (const k of kids) {
+      const f = await loadShared($, dir, k.cli)
+      const tree: SubTree = f?.tree ?? {
+        id: k.cli,
+        nodes: [],
+        subs: [],
+        mainRunning: false,
+        isWaiting: false,
+        wTotal: 0,
+        k: 0,
+      }
+      subs.push({ ...tree, id: k.cli, title: k.title || tree.title })
+    }
+    change($, v => ({ ...v, title: mine.title || v.title, sessionIds: kids.map(k => k.cli), subs }))
+
+    return
+  }
+
   // Ours only when its first prompt is the brief of one of our start_session calls.
   const isOurs = (f: Shared | undefined): boolean => {
     const head = f?.view?.head
