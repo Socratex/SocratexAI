@@ -34,7 +34,6 @@ python tools/backup.py --list     # config backups; --restore <zip> to roll back
 1. **Core** (`core/`): always loaded. `RULES.md` (epistemics, ambiguity, work loop, context economy, routing, safety, finishing), `STYLE.md` (reply profile), `DIRECTIVES.json` (situation -> rule document), on-demand rules in `core/rules/`, `ROUTING.json`, `RISK-RULES.json`, templates.
 2. **Local** (`local/`, gitignored): your language, name, machine paths and private leak patterns. Created from `local.example/` on install.
 3. **Project**: each project keeps its own `INDEX.json`, `AGENTS.md`, `CLAUDE.md` and optional `.ai/` overrides (`guard.json`, `RISK-RULES.json`, `ROUTING.json`). No copy of SocratexAI inside projects. Start from `templates/project/`.
-4. **Legacy pipeline** (`legacy-pipeline/`): the full older Socratex framework (task ledgers, compiled context, knowledge DB, profiles). Off by default; a project turns it on with a `SOCRATEX.md` file in its root or `"socratex": {"legacy_pipeline": true}` in its `INDEX.json`.
 
 Project rules win over the core, except safety rules, which projects can only make stricter.
 
