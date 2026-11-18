@@ -201,7 +201,7 @@ const pill = (x: number, y: number, text: string, pw: number) => {
 const DOT_SPEED = 120 // px per second, the same on every line
 const EMIT_S = 1 // a new batch of dots every this many seconds
 const DOT_BODY = 15 // length of a dot's solid body, px
-const DOT_GAP = 2 // free space between neighbouring dots of a batch, px
+const DOT_GAP = 1 // free space between neighbouring dots of a batch, px
 
 // Seconds since a wall-clock-aligned cycle of `period` began, as a negative SMIL begin.
 const clockBegin = (nowS: number, period: number, offset = 0): string =>
