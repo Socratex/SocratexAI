@@ -190,16 +190,10 @@ const growthText = (v: FlowView) =>
     ? '...'
     : `+${pct(Math.max(0, v.limitPct - v.basePct))}%`
 
-// Claude -> a path: what it cost in US dollars, as the engine's cost ledger
-// prices it (two significant digits below one dollar, trailing zeros dropped).
-const usdText = (n: number | undefined): string => {
-  if (n === undefined) return '...'
-  if (n <= 0) return '$0'
-  const decimals = n >= 1 ? 2 : Math.min(8, Math.ceil(-Math.log10(n)) + 1)
-  const s = n.toFixed(decimals)
-
-  return `$${s.includes('.') ? s.replace(/\.?0+$/, '') : s}`
-}
+// Claude -> a path: what it cost in US cents, as the engine's cost ledger prices
+// it, rounded like the percent figures (see `pct`).
+const usdText = (usd: number | undefined): string =>
+  usd === undefined ? '...' : `${pct(usd * 100)}¢`
 
 // A path's dollars: an agent's own (exact) plus its tool results, priced at the
 // session's average dollars per weighted token. Unknown until that average is.
