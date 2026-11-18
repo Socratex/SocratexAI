@@ -7,9 +7,10 @@ const PANE = 'flow-panel'
 
 // Tunables
 const FONT = 20 // label size in CSS px (the SVG is drawn 1:1)
-// The box takes the drawing's own width up to the pane, so a drawing declared FIT
+// The box takes the drawing's own width up to the pane and a wider drawing is
+// shrunk to it, so FIT must stay 1 (3 made everything three times smaller). A drawing declared FIT
 // times larger than its viewBox is stretched to the pane width (scaled up or down).
-const FIT = 3
+const FIT = 1
 const MIN_W = 300
 const SYNC_MS = 3000 // how often the shared session files are looked at
 const ATTACH_WINDOW_MS = 120000 // a new session file this soon after start_session is its child
