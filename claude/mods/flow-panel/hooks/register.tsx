@@ -156,7 +156,7 @@ const DOT_GAP = 1.4 // spacing between dots on one line, as a multiple of an eve
 const dotCount = (usd: number | undefined): number =>
   Math.max(1, Math.min(DOTS_MAX, 1 + Math.round(Math.log2(1 + ((usd ?? 0) * 100) / 0.05))))
 
-const line = (d: string, colour: string, i: number, isActive: boolean, phase: number, usd?: number) => {
+const line = (d: string, colour: string, i: number, isActive: boolean, phase: number, usd?: number, light = colour) => {
   const dur = 1.5 + i * 0.3
   const n = dotCount(usd)
   // A dot runs the line in `dur` and then rests unseen for the rest of its cycle,
@@ -171,9 +171,11 @@ const line = (d: string, colour: string, i: number, isActive: boolean, phase: nu
         `<animateMotion begin="${begin}s" dur="${cycle}s" repeatCount="indefinite" rotate="auto" path="${d}" ` +
         `calcMode="linear" keyPoints="0;1;1" keyTimes="0;${run};1"/>` +
         `<animate attributeName="visibility" values="visible;hidden;hidden" keyTimes="0;${run};1" calcMode="discrete" dur="${cycle}s" begin="${begin}s" repeatCount="indefinite"/>`
+      // glow, solid body in the lighter colour, and a white-hot centre
       dots +=
-        `<ellipse rx="9" ry="4.5" fill="${colour}" opacity="0.55" filter="url(#dotglow)">${motion}</ellipse>` +
-        `<ellipse rx="6" ry="2.5" fill="${colour}">${motion}</ellipse>`
+        `<ellipse rx="12" ry="7" fill="${light}" opacity="0.95" filter="url(#dotglow)">${motion}</ellipse>` +
+        `<ellipse rx="7.5" ry="3.6" fill="${light}">${motion}</ellipse>` +
+        `<ellipse rx="3.5" ry="1.4" fill="#fff" opacity="0.9">${motion}</ellipse>`
     }
   }
 
@@ -310,7 +312,7 @@ const layout = (
     idx.i += 1
     // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push(
-      line(d, KIND[r.kind].fill, idx.i, r.isActive, 0, r.usd) +pill(left + r.w + 6 + pw / 2, y, r.text, pw),
+      line(d, KIND[r.kind].fill, idx.i, r.isActive, 0, r.usd, KIND[r.kind].light) +pill(left + r.w + 6 + pw / 2, y, r.text, pw),
     )
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
@@ -349,8 +351,8 @@ const draw = (v: FlowView, now: number): string => {
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width * FIT}" height="${height * FIT}" preserveAspectRatio="xMinYMin meet">` +
-    `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="2.5"/></filter></defs>` +
-    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0, known.reduce((a, b) => a + b, 0)) +
+    `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
+    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0, known.reduce((a, b) => a + b, 0), KIND.claude.light) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
     out.lines.join('') +
     node(you) +
