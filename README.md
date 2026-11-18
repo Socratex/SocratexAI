@@ -18,16 +18,36 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 - Process rules are text the model follows. Only the guard is enforced by a hook, and the guard is a safety net against mistakes, not a sandbox: it matches common command shapes and misses indirect writes (for example through `bash -c`).
 - Only Claude Code and Codex are supported. Cursor, Gemini, OpenCode and others are not.
 - Needs Python 3 for the installer and tools (CI runs 3.12 on Linux and Windows; the minimum version is not verified). Node is not needed, except for the optional flow-panel mod.
-- Young and small: one author, history from 2026-11, no benchmarks of its effect. The routing loop and risk score are report-only and have little real data yet.
+- Young and small: one author, first commit 2026-04-28, no benchmarks of its effect. The routing loop and risk score are report-only and have little real data yet.
 - Some defaults are the author's taste (emoji reply style, Polish profile example). The reply style is optional at install; language and name live in your own `local/profile.md`.
 
 ## 🧳 Use only part of it
 
 The pieces are plain files, so you can take only what you need:
-- **Rules only:** copy `core/RULES.md` and `core/rules/` into your own agent instructions. No Python needed.
+- **Rules only:** the rule text in `core/RULES.md`, `core/STYLE.md` and `core/rules/` reads fine without Python. But it points at things you would not have: `tools/skill_learn.py`, `risk_score.py`, `routing_log.py` and `json_read.py`, the `$SOCRATEX_HOME` variable, `local/profile.md`, `core/DIRECTIVES.json` and `INDEX.json`. Those references would dangle; edit them out or copy the tools too. Python-free means "text only", not "everything works".
 - **Skills only:** `skills/<name>/SKILL.md` are standard skill folders. We only tested them in Claude Code and Codex; other agents that read this format should work but are untested.
 - **Guard only:** `claude/hooks/guard.py` is one stdlib-only Python file for the Claude Code `PreToolUse` hook.
 - A separate "rules and skills only" installer mode does not exist yet.
+
+## ⚖️ Compare before you choose
+
+If you want a deep, enforced-by-text engineering process (TDD, a full debugging method, many playbooks), or you use an agent other than Claude Code and Codex, pick [superpowers](https://github.com/obra/superpowers) or [pstack](https://github.com/backnotprop/pstack) instead of SocratexAI. Checked by reading the pinned clones on 2026-11-18; file evidence is in `docs/AUDIT-pstack-ecc.md`. Hooks were never run.
+
+**superpowers**
+- Has, we do not: a test-first rule ("no production code without a failing test"), a four-phase debugging skill, a chain from idea to plan to subagent execution to review, plugins for many agent harnesses, a much larger test suite. We copied only short versions of its fresh-evidence rule and its debugging stop.
+- We have, it does not: a guard hook (it ships one startup hook only), a risk score and routing log (not found in the files read).
+- Similar: small startup text, model choice by role with escalation after failed fixes.
+
+**pstack**
+- Has, we do not: 22 playbooks, a decision-log skill, recall and why skills, per-role model setup, plain skills with no dependencies. Its review panels and multi-model setup: described in its README, not verified in files.
+- We have, it does not: a guard hook (no hook config found), one JSON source for Claude and Codex tier agents (Codex support in pstack: not verified), a measured routing loop (not found).
+- Similar: short rules for proof before done and for explaining a measured number (we added short versions).
+
+**Others, one line each**
+- ECC: far larger (hundreds of skills, many hooks, a Codex path); rules are loaded always, so install selectively. Not run, hook quality not verified.
+- spec-kit: spec-first workflow with templates. A different job from a rule core; our `spec` skill is a one-form interview, much smaller.
+
+Not claimed anywhere above: that SocratexAI gives better results than any of these. There is no benchmark.
 
 ## 🚀 Install
 
@@ -69,6 +89,8 @@ The installer is idempotent. It backs up your current agent config first (`~/cla
 | `SOCRATEX_HOME` | user environment variable and Codex shell environment |
 | `.git/hooks` | `post-merge` reruns `install.py --sync` after every pull; `pre-push` runs the leak check |
 
+Trust: because of the `post-merge` hook, code from this repo runs on your machine on every update, and `settings.json` gets the guard hook. Read the diff before you pull, or skip the git hooks at install.
+
 ```bash
 python tools/install.py --check   # what is missing or stale, changes nothing
 python tools/install.py --sync    # regenerate (the post-merge hook does this)
@@ -77,7 +99,7 @@ python tools/backup.py --list     # config backups; --restore <zip> to roll back
 
 ## 📚 Reference packs
 
-`subrepos.json` lists 15 read-only agent toolkits (superpowers, pstack, ECC, anthropics/skills, spec-kit, BMAD, awesome lists, ...) with a category and a pinned commit each. They are **not in this repo**: the install asks whether to download them, and they land in `~/ai-refs` (or the folder you choose). They are never installed, linked or run. When SocratexAI lacks a capability, the agent searches them and only suggests a match; their text is treated as third-party data. The guard blocks edits inside that folder, and because it is outside the repo no agent loads their instructions as nested project rules.
+`subrepos.json` lists 15 read-only agent toolkits (superpowers, pstack, ECC, anthropics/skills, spec-kit, BMAD, awesome lists, ...) with a category and a pinned commit each. They are **not in this repo**: the install asks whether to download them, and they land in `~/ai-refs` (or the folder you choose). They are never installed, linked or run. When SocratexAI lacks a capability, the agent searches them and only suggests a match; their text is treated as third-party data. The guard blocks edits inside that folder, and they sit outside the repo so that a nested `CLAUDE.md` or `AGENTS.md` inside them is not read as project rules. That is the intent; it is untested.
 
 ```bash
 python tools/update.py self    # git pull --ff-only in SocratexAI
