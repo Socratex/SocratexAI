@@ -196,11 +196,14 @@ type Row = {
 
 type Src = Pick<FlowView, 'nodes' | 'subs' | 'mainRunning' | 'wTotal' | 'k'>
 
+// The session this copy of the mod runs in: the root of every tree it draws.
+let selfId = ''
+
 // A session's branches: its own paths first, then the sessions it started,
 // each of those holding the same again. `count` numbers the sessions.
 const MAX_DEPTH = 4 // a guard: never draw sessions nested deeper than this
 
-const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0): Row[] => [
+const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId]): Row[] => [
   ...s.nodes.map(nd => {
     const isRunning = nd.running > 0
     const ring: Box['ring'] =
@@ -221,7 +224,8 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0): Row[] => 
       kids: [] as Row[],
     }
   }),
-  ...(depth >= MAX_DEPTH ? [] : s.subs).map(sub => {
+  // A session already on the path above is the same session again: skip it.
+  ...(depth >= MAX_DEPTH ? [] : s.subs.filter(sub => !path.includes(sub.id))).map(sub => {
     count.n += 1
     const label = `Session ${count.n}`
 
@@ -232,7 +236,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0): Row[] => 
       ring: sub.isWaiting ? ('waiting' as const) : undefined,
       text: costText(sub.k, sub.wTotal),
       isActive: sub.mainRunning,
-      kids: rowsOf(sub, now, count, depth + 1),
+      kids: rowsOf(sub, now, count, depth + 1, [...path, sub.id]),
     }
   }),
 ]
@@ -381,11 +385,11 @@ let held: FlowView | undefined
 // folder; a session that starts others finds their files and draws them as
 // "Session N" tiles. Nothing here costs model tokens.
 
-let selfId = ''
 let startedAt = 0
 let lastSpawnAt = 0 // when this session last called start_session
 
 const treeOf = (v: FlowView): SubTree => ({
+  id: selfId,
   nodes: v.nodes,
   subs: v.subs,
   mainRunning: v.mainRunning,
@@ -487,7 +491,7 @@ async function poll($: EngineInterface): Promise<void> {
   for (const id of ids) {
     const f = await loadShared($, dir, id)
     if (f) {
-      subs.push(f.tree)
+      subs.push({ ...f.tree, id })
       kept.push(id)
     }
   }
@@ -661,6 +665,7 @@ export const register: Register = on => {
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
     const { Box, Text, Svg } = $.ui.resolve(e)
+    await folderOf($) // makes sure the session id is known before drawing
     const v = await restoredFor($, await read($, view))
     const now = await $.clock.now()
 

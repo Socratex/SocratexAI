@@ -13,6 +13,7 @@ export type FlowNode = {
 
 // The tree of one session, as it is shared with the session that started it.
 export type SubTree = {
+  id: string // the session's id: a tree never shows a session that is already above it
   nodes: FlowNode[]
   subs: SubTree[] // sessions that session started in turn
   mainRunning: boolean
