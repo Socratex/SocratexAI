@@ -173,7 +173,7 @@ const costText = (v: FlowView, n: FlowNode) =>
 
 const draw = (v: FlowView, now: number): string => {
   const you: Box = {
-    label: 'Ty',
+    label: 'User',
     kind: 'you',
     cx: M + 48,
     cy: M + 20,

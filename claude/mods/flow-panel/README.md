@@ -9,8 +9,8 @@ updated: 2026-11-18
 
 A side panel for Claude Code (desktop app). It costs no model tokens: it only listens to engine events and draws SVG.
 
-- Layout: a vertical file-tree, left-aligned (10px margin) with rounded elbows. `Ty` on top, `Claude` below, one branch per path.
-- Trunk `Ty -> Claude`: growth of the account's 5-hour limit in percent since the mod first saw the current window.
+- Layout: a vertical file-tree, left-aligned (10px margin) with rounded elbows. `User` on top, `Claude` below, one branch per path.
+- Trunk `User -> Claude`: growth of the account's 5-hour limit in percent since the mod first saw the current window.
 - Lines from Claude: estimated share of the limit each path cost, in percent (3 decimals). Sub-agents use their exact turn usage; tools, MCP and skills are charged by the size of their result (the call itself counts as 0). A learned factor converts weighted tokens to percent, so the figure is `~?%` until the limit has moved once.
 - Colours: you blue, Claude orange, sub-agent cyan, tool burgundy, MCP purple, skill yellow. Rings: orange = waiting for you, red = error, green = background work.
 
