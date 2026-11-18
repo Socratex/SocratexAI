@@ -11,7 +11,7 @@ A side panel for Claude Code (desktop app). It costs no model tokens: it only li
 
 - Layout: a vertical file-tree, left-aligned (10px margin) with rounded elbows. `User` on top, `Claude` below, one branch per path.
 - Trunk `User -> Claude`: growth of the account's 5-hour limit in percent since the mod first saw the current window.
-- Lines from Claude: what each path cost in US cents (¢, rounded like the percent figures), from the engine's own cost ledger (`$.session.usage().cost`, the figure `/cost` shows; free to read). Sub-agents get the ledger growth over their own turns; tools, MCP and skills get their result size priced at the session's average dollars per weighted token (`...` until known); a Session tile shows what it spent since its last prompt. Parallel agents blur each other a little. The figure at the top stays the real growth of the 5-hour limit in percent.
+- Lines from Claude: what each path cost in US cents (¢, rounded like the percent figures), from the engine's own cost ledger (`$.session.usage().cost`, the figure `/cost` shows; free to read). Sub-agents get the ledger growth over their own turns; tools, MCP and skills get their result size priced at the session's average dollars per weighted token (`...` until known); a Session tile shows what it spent since its last prompt. Parallel agents blur each other a little. The figure between User and Claude is the sum of the branches below.
 - Colours: user blue, Claude orange, sessions and sub-agents cyan, tool burgundy, MCP purple, skill yellow, desktop-app tools orange. A component working right now has a border in a lighter shade of its own colour; an idle one has none. Red ring = error, green = background work.
 
 ## Always on

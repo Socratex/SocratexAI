@@ -185,11 +185,6 @@ const pct = (n: number): string => {
   return s.includes('.') ? s.replace(/\.?0+$/, '') : s
 }
 
-const growthText = (v: FlowView) =>
-  v.limitPct < 0 || v.basePct < 0
-    ? '...'
-    : `+${pct(Math.max(0, v.limitPct - v.basePct))}%`
-
 // Claude -> a path: what it cost in US cents, as the engine's cost ledger prices
 // it, rounded like the percent figures (see `pct`).
 const usdText = (usd: number | undefined): string =>
@@ -308,7 +303,11 @@ const draw = (v: FlowView, now: number): string => {
   const out: Out = { lines: [], boxes: [], right: M + 130, bottom: branchTop }
   layout(rowsOf(treeOf(v), now, { n: 0 }),TRUNK, branchTop, branchTop + 50, out, { i: 0 })
 
-  const growth = growthText(v)
+  // User -> Claude: the sum of the branches below (their known figures).
+  const tree = treeOf(v)
+  const parts = [...tree.nodes.map(n => nodeUsd(n, tree.perW)), ...tree.subs.map(s => s.usd)]
+  const known = parts.filter((p): p is number => p !== undefined)
+  const growth = parts.length > 0 && known.length === 0 ? '...' : usdText(known.reduce((a, b) => a + b, 0))
   const gw = growth.length * 12 + 12
   const width = Math.max(MIN_W, out.right + M)
   const height = out.bottom + M
