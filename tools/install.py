@@ -46,7 +46,7 @@ STYLE_DOC = "core/STYLE.md"
 
 # Answers of the install questions. Defaults reproduce the original full install; the wizard narrows them.
 PREF_DEFAULTS = {"claude": True, "codex": True, "merge_settings": True, "codex_plugin": True, "flow_panel": True,
-                 "style": "uce", "git_hooks": True, "set_env": True, "claude_dir": "", "codex_dir": ""}
+                 "style": "uce", "git_hooks": True, "set_env": True, "subrepos": True, "claude_dir": "", "codex_dir": ""}
 PREFS = dict(PREF_DEFAULTS)
 CLAUDE = HOME_DIR / ".claude"
 CODEX = HOME_DIR / ".codex"
@@ -148,6 +148,9 @@ def collect_prefs(auto: bool) -> dict:
                              True, auto)
     prefs["set_env"] = ask("Set the SOCRATEX_HOME user environment variable?",
                            "Lets rules and skills find this folder from any project.", True, auto)
+    prefs["subrepos"] = ask("Download the reference packs (superpowers, pstack, ECC) into subrepos/?",
+                            "Read-only copies (about 120 MB) that are searched on demand when SocratexAI lacks a "
+                            "capability. Nothing from them is installed or run; git never tracks them.", True, auto)
     return prefs
 
 
@@ -391,6 +394,18 @@ def install_env(report: list[str], check: bool) -> None:
         report.append("  add to your shell profile: export SOCRATEX_HOME=" + posix(SOCRATEX))
 
 
+def install_subrepos(mode: str, report: list[str]) -> None:
+    """Reference packs (subrepos.json): cloned on a full install, fast-forwarded after every pull (--sync)."""
+    if not PREFS["subrepos"]:
+        return
+    import subrepos
+    if mode == "check":
+        report += [f"clone reference pack {repo['name']}" for repo in subrepos.load_manifest()
+                   if not (subrepos.DEST / repo["name"] / ".git").exists()]
+    else:
+        subrepos.cmd_update(quiet=mode == "sync")
+
+
 def install_git_hooks(python: str, report: list[str], check: bool) -> None:
     if not PREFS["git_hooks"]:
         return
@@ -447,6 +462,7 @@ def run(mode: str, auto: bool = False, reconfigure: bool = False) -> int:
         install_codex(report, check)
     install_env(report, check)
     install_git_hooks(python, report, check)
+    install_subrepos(mode, report)
     if check:
         print("SocratexAI install is up to date." if not report else "Missing or stale:\n  " + "\n  ".join(report))
         return 1 if report else 0

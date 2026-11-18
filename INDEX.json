@@ -221,6 +221,10 @@
       "what": "Learnings log for skills: the capture half of the self-improving skill loop."
     },
     {
+      "path": "tools/subrepos.py",
+      "what": "Keep read-only reference packs (subrepos.json) in subrepos/ and search them on demand."
+    },
+    {
       "path": "claude/hooks/guard.py",
       "what": "Claude Code PreToolUse hook: deterministic guard for rules that have zero exceptions."
     }

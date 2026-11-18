@@ -1,0 +1,12 @@
+{
+  "schema": "subrepos/v1",
+  "note": "Read-only reference packs cloned into subrepos/ (gitignored, never tracked, never pushed). Nothing in them is installed or active: they are searched on demand with tools/subrepos.py. Only official upstream URLs belong here.",
+  "repos": [
+    {"name": "superpowers", "url": "https://github.com/obra/superpowers", "branch": "main",
+     "what": "Skill-based software development workflow for coding agents (brainstorm, plan, TDD, review)"},
+    {"name": "pstack", "url": "https://github.com/backnotprop/pstack", "branch": "main",
+     "what": "Rigor-over-throughput playbooks and skills (prove-it-works, interrogate, recall); see docs/AUDIT-pstack-ecc.md"},
+    {"name": "ecc", "url": "https://github.com/affaan-m/everything-claude-code", "branch": "main",
+     "what": "Large agent harness: many agents, skills, commands, hooks; reference only, see docs/AUDIT-pstack-ecc.md"}
+  ]
+}
