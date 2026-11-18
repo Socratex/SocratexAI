@@ -163,12 +163,12 @@ const esc = (s: string) => s.replace(/[<>&"]/g, '')
 // You -> Claude: how far the account's 5-hour limit has grown since the base.
 const growthText = (v: FlowView) =>
   v.limitPct < 0 || v.basePct < 0
-    ? '–%'
+    ? '...'
     : `+${Math.max(0, v.limitPct - v.basePct).toFixed(1)}%`
 
 // Claude -> a path: the estimated share of the 5-hour limit it cost, in percent.
 const costText = (v: FlowView, n: FlowNode) =>
-  v.k > 0 ? `~${(n.w * v.k).toFixed(COST_DECIMALS)}%` : '~?%'
+  v.k > 0 ? `~${(n.w * v.k).toFixed(COST_DECIMALS)}%` : '...'
 
 const draw = (v: FlowView, now: number): string => {
   const you: Box = {
