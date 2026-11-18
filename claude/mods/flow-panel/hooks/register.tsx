@@ -139,7 +139,7 @@ const pill = (x: number, y: number, text: string, pw: number) => {
 // a redrawn dot carry on instead of jumping back to the start of the line.
 const line = (d: string, colour: string, i: number, isActive: boolean, phase: number) => {
   const dur = 1.5 + i * 0.3
-  const begin = -((phase / 1000) % dur).toFixed(2)
+  const begin = -(phase % dur).toFixed(2)
   return (
     `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="${isActive ? 0.8 : 0.3}" stroke-width="2"/>` +
     (isActive
@@ -219,12 +219,12 @@ const draw = (v: FlowView, now: number): string => {
     const text = costText(v, k.nd)
     const pw = text.length * 12 + 12
     const px = (TRUNK + ELBOW + x2) / 2
-    return line(d, KIND[k.box.kind].fill, i + 1, k.isActive, v.flushAt) + pill(px, y, text, pw)
+    return line(d, KIND[k.box.kind].fill, i + 1, k.isActive, 0) + pill(px, y, text, pw)
   })
 
   return (
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${height}" width="${W}" height="${height}">` +
-    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, v.flushAt) +
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${height}" width="${W}" height="${height}" preserveAspectRatio="xMinYMin meet">` +
+    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
     branches.join('') +
     node(you) +
@@ -299,6 +299,10 @@ const tokensOf = (result: unknown): number => {
 let queued: Array<(v: FlowView) => FlowView> = []
 let isFlushPending = false
 
+// State that changed but would draw the same picture is held here instead of
+// being written: a write redraws the pane, and every redraw makes it blink.
+let held: FlowView | undefined
+
 function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
   queued.push(fn)
   if (isFlushPending) return
@@ -308,7 +312,14 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
     queued = []
     isFlushPending = false
     const at = await $.clock.now()
-    await update($, view, v => ({ ...batch.reduce((acc, f) => f(acc), v), flushAt: at }))
+    const cur = held ?? (await read($, view))
+    const next = batch.reduce((acc, f) => f(acc), cur)
+    if (draw(next, at) === draw(cur, at)) {
+      held = next
+      return
+    }
+    held = undefined
+    await update($, view, () => next)
   })
 }
 

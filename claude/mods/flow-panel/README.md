@@ -31,9 +31,9 @@ Set `FLOW_PANEL` to `0` in the `env` block of a settings file; the project value
 ## Limits
 
 - The limit figure is the whole account's, so other sessions inflate it and the learned factor.
-- Lit paths (moving dots) follow the main turn, with no timers: redraws happen only on events, to keep blinking down. Left margin is 5px.
+- Lit paths (moving dots) follow the main turn. A state change that would draw the same picture is held back, not written, so the pane redraws (and blinks) only when something visible changes. SVG is pinned top-left, margin 5px.
 - A new prompt clears the segments; only paths used since then are shown.
-- Lit paths (moving dots) follow the main turn, with no timers: redraws happen only on events, to keep blinking down. Left margin is 5px.
+- Lit paths (moving dots) follow the main turn. A state change that would draw the same picture is held back, not written, so the pane redraws (and blinks) only when something visible changes. SVG is pinned top-left, margin 5px.
 - A new prompt clears the segments; only paths used since then are shown.
 - Figures refresh after each main turn, not continuously. Redraws are batched to one per 2 seconds, with dots keeping their phase, to avoid blinking.
 - Tuning constants (font, weights) are at the top of `hooks/register.tsx`.
