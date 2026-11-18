@@ -1,0 +1,82 @@
+"""Tests of the flow-panel tps -> tier mapping (runs the real code with Node 22+)."""
+
+from __future__ import annotations
+
+import json
+import re
+import shutil
+import subprocess
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).parents[2]
+SOURCE = ROOT / "claude/mods/flow-panel/hooks/register.tsx"
+NODES = [str(Path.home() / ".local/opt/node22/bin/node"), "node"]
+
+
+def _node() -> str | None:
+    for candidate in NODES:
+        path = candidate if Path(candidate).is_absolute() else shutil.which(candidate)
+        if not path or not Path(path).exists():
+            continue
+        out = subprocess.run([path, "--version"], capture_output=True, text=True).stdout.strip()
+        major = int(re.match(r"v(\d+)", out).group(1)) if re.match(r"v(\d+)", out) else 0
+        if major >= 22:
+            return path
+    return None
+
+
+def _run(expr: str) -> object:
+    """Evaluate a JS expression inside the <tiers> block of register.tsx."""
+    node = _node()
+    if node is None:
+        raise unittest.SkipTest("Node 22+ not available")
+    block = re.search(r"// <tiers>\n(.*?)// </tiers>", SOURCE.read_text(), re.S)
+    assert block, "tiers block markers missing in register.tsx"
+    with tempfile.TemporaryDirectory() as tmp:
+        script = Path(tmp) / "t.ts"
+        script.write_text(block.group(1) + f"\nconsole.log(JSON.stringify(({expr}) ?? null))\n")
+        res = subprocess.run(
+            [node, "--experimental-strip-types", "--no-warnings", str(script)], capture_output=True, text=True
+        )
+    assert res.returncode == 0, res.stderr
+    return json.loads(res.stdout)
+
+
+class FlowTiers(unittest.TestCase):
+    def test_eight_tiers_one_to_eight_dots(self) -> None:
+        self.assertEqual(_run("TIERS.map(t => t.dots)"), [1, 2, 3, 4, 5, 6, 7, 8])
+
+    def test_thresholds_start_at_zero_and_strictly_increase(self) -> None:
+        mins = _run("TIERS.map(t => t.minTps)")
+        self.assertEqual(mins[0], 0)
+        self.assertTrue(all(a < b for a, b in zip(mins, mins[1:])))
+
+    def test_every_boundary_belongs_to_the_higher_tier(self) -> None:
+        mins = _run("TIERS.map(t => t.minTps)")
+        for i, m in enumerate(mins):
+            self.assertEqual(_run(f"tierOf({m})"), i)
+            if i:
+                self.assertEqual(_run(f"tierOf({m} - 0.001)"), i - 1)
+
+    def test_zero_negative_and_unknown_are_the_lowest_tier(self) -> None:
+        for value in ["0", "-5", "undefined", "NaN"]:
+            self.assertEqual(_run(f"tierOf({value})"), 0)
+
+    def test_huge_values_cap_at_the_top_tier(self) -> None:
+        for value in ["1e6", "1e12", "Infinity"]:
+            self.assertEqual(_run(f"tierOf({value})"), 7)
+
+    def test_monotonic(self) -> None:
+        tiers = _run("Array.from({length: 20000}, (_, i) => tierOf(i * 0.5))")
+        self.assertTrue(all(a <= b for a, b in zip(tiers, tiers[1:])))
+
+    def test_pace_of_a_turn(self) -> None:
+        self.assertEqual(_run("paceOf(1000, 2000)"), 500)
+        self.assertIsNone(_run("paceOf(1000, 100)"))  # too short to mean anything
+        self.assertEqual(_run("paceOf(0, 5000)"), 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

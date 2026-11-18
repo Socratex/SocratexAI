@@ -78,7 +78,7 @@ const INITIAL: FlowView = {
 // Change the shape tag when FlowView changes: it declines what an earlier
 // version stored, which outlives a reload.
 const view = atom({ plugin: 'flow-panel', key: 'view' } as const, INITIAL, {
-  shape: 'flow-6',
+  shape: 'flow-7',
 })
 
 // ------------------------------------------------------------------ maths
@@ -132,6 +132,51 @@ const applyLimit = (
   return calibrate(next)
 }
 
+// ---------------------------------------------------------------- intensity
+// <tiers>
+// How hard a line works is the pace of tokens through it, in tokens per second
+// (tps): input + output + cache-write tokens of a turn over the turn's wall time
+// (cache reads are cheap and would drown everything else). Every second one
+// batch of dots leaves; the batch size (1-8) is the tier of the line's tps.
+//
+// Thresholds come from the owner's own data, not a guess: 25k assistant turns
+// in ~/.claude/projects transcripts (measured 2026-11-18, turns of 1-600 s),
+// tps of the turns at percentiles p10/p25/p40/p55/p70/p85/p95 was
+// 219/375/559/816/1254/2322/5465. Those seven cut points make eight tiers; they
+// grow about 1.5x to 2.4x per step (roughly logarithmic), so the middle tiers
+// separate everyday work and the top two only light up on really heavy turns
+// instead of filling the screen. Rounded for readability. Typical model
+// generation speeds: no source, derived from local data (the output-only median
+// there is about 220 tok/s, inflated by streamed entries, so it is not a model
+// speed claim). Change the pace of the animation by editing this table only.
+const TIERS = [
+  { name: 'almost nothing', minTps: 0, dots: 1 },
+  { name: 'little', minTps: 220, dots: 2 }, // p10
+  { name: 'not so little', minTps: 375, dots: 3 }, // p25
+  { name: 'medium', minTps: 560, dots: 4 }, // p40
+  { name: 'a bit above medium', minTps: 800, dots: 5 }, // p55
+  { name: 'quite a lot', minTps: 1250, dots: 6 }, // p70
+  { name: 'a lot', minTps: 2300, dots: 7 }, // p85
+  { name: 'tons', minTps: 5500, dots: 8 }, // p95
+]
+
+// The tier (0-based index into TIERS) of a pace; unknown, zero or negative pace
+// is the lowest tier, so an active line always shows at least one dot.
+const tierOf = (tps: number | undefined): number => {
+  if (tps === undefined || !(tps > 0)) return 0
+  let tier = 0
+  for (let i = 0; i < TIERS.length; i += 1) if (tps >= TIERS[i]!.minTps) tier = i
+
+  return tier
+}
+
+// Tokens per second of a turn that moved `tokens` in `ms`; undefined when the
+// time is too short to mean anything.
+const MIN_TURN_MS = 500
+const paceOf = (tokens: number, ms: number): number | undefined =>
+  ms >= MIN_TURN_MS && tokens >= 0 ? tokens / (ms / 1000) : undefined
+// </tiers>
+
 // ---------------------------------------------------------------- drawing
 
 const M = 5 // left/top margin, px (always 5px from the left edge)
@@ -147,39 +192,47 @@ const pill = (x: number, y: number, text: string, pw: number) => {
 }
 
 // A line, plus travelling dots (coloured like the component it leads to) while
-// that component is active. A new dot leaves the start every EMIT_S seconds and
+// that component is active. A new batch of dots (1-8, by the line's tps tier)
+// leaves the start every EMIT_S seconds, the dots in a row DOT_GAP apart, and
 // every dot moves at DOT_SPEED px/s, so a long line simply holds more dots.
 // All timing is pinned to the wall clock (`nowS`), so a redraw carries on where
 // the dots were instead of restarting them. An active line also pulses once per
 // emitted dot.
 const DOT_SPEED = 120 // px per second, the same on every line
-const EMIT_S = 1 // a new dot every this many seconds
+const EMIT_S = 1 // a new batch of dots every this many seconds
+const DOT_BODY = 15 // length of a dot's solid body, px
+const DOT_GAP = 3 // free space between neighbouring dots of a batch, px
 
 // Seconds since a wall-clock-aligned cycle of `period` began, as a negative SMIL begin.
 const clockBegin = (nowS: number, period: number, offset = 0): string =>
   (-(((nowS - offset) % period) + period) % period).toFixed(3)
 
-const line = (d: string, length: number, colour: string, isActive: boolean, nowS: number, light = colour) => {
+const line = (d: string, length: number, colour: string, isActive: boolean, nowS: number, light = colour, tps?: number) => {
   if (!isActive) return `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="0.3" stroke-width="2"/>`
 
-  // A dot needs `travel` seconds for the line. With one emitted per EMIT_S, `n`
-  // of them are on it at once; each runs, then waits unseen for its next turn.
+  // A dot needs `travel` seconds for the line. A batch of `count` dots, each
+  // trailing the one before by `lag` seconds, leaves every EMIT_S, so `n` batches
+  // are on the line at once; each dot runs, then waits unseen for its next turn.
+  const count = TIERS[tierOf(tps)]!.dots
+  const lag = (DOT_BODY + DOT_GAP) / DOT_SPEED
   const travel = Math.max(0.2, length / DOT_SPEED)
-  const n = Math.max(1, Math.ceil(travel / EMIT_S))
+  const n = Math.max(1, Math.ceil((travel + (count - 1) * lag) / EMIT_S))
   const cycle = n * EMIT_S
   const run = (travel / cycle).toFixed(4)
   let dots = ''
   for (let j = 0; j < n; j += 1) {
-    const begin = clockBegin(nowS, cycle, j * EMIT_S)
-    const motion =
-      `<animateMotion begin="${begin}s" dur="${cycle}s" repeatCount="indefinite" rotate="auto" path="${d}" ` +
-      `calcMode="linear" keyPoints="0;1;1" keyTimes="0;${run};1"/>` +
-      `<animate attributeName="visibility" values="visible;hidden;hidden" keyTimes="0;${run};1" calcMode="discrete" dur="${cycle}s" begin="${begin}s" repeatCount="indefinite"/>`
-    // glow, solid body in the lighter colour, and a white-hot centre
-    dots +=
-      `<ellipse rx="12" ry="7" fill="${light}" opacity="0.95" filter="url(#dotglow)">${motion}</ellipse>` +
-      `<ellipse rx="7.5" ry="3.6" fill="${light}">${motion}</ellipse>` +
-      `<ellipse rx="3.5" ry="1.4" fill="#fff" opacity="0.9">${motion}</ellipse>`
+    for (let i = 0; i < count; i += 1) {
+      const begin = clockBegin(nowS, cycle, j * EMIT_S + i * lag)
+      const motion =
+        `<animateMotion begin="${begin}s" dur="${cycle}s" repeatCount="indefinite" rotate="auto" path="${d}" ` +
+        `calcMode="linear" keyPoints="0;1;1" keyTimes="0;${run};1"/>` +
+        `<animate attributeName="visibility" values="visible;hidden;hidden" keyTimes="0;${run};1" calcMode="discrete" dur="${cycle}s" begin="${begin}s" repeatCount="indefinite"/>`
+      // glow, solid body in the lighter colour, and a white-hot centre
+      dots +=
+        `<ellipse rx="${DOT_BODY / 2 + 4.5}" ry="7" fill="${light}" opacity="0.95" filter="url(#dotglow)">${motion}</ellipse>` +
+        `<ellipse rx="${DOT_BODY / 2}" ry="3.6" fill="${light}">${motion}</ellipse>` +
+        `<ellipse rx="3.5" ry="1.4" fill="#fff" opacity="0.9">${motion}</ellipse>`
+    }
   }
   // The pulse: a blurred halo and the line itself brighten as each dot leaves.
   const beat = clockBegin(nowS, EMIT_S)
@@ -250,6 +303,7 @@ type Row = {
   usd: number | undefined // the figure on its line; undefined = not known yet
   text: string
   isActive: boolean
+  tps?: number // token pace of this line: sets how many dots a batch holds
   kids: Row[]
 }
 
@@ -261,7 +315,7 @@ const sumUsd = (rows: Row[]): number | undefined => {
   return rows.length > 0 && known.length === 0 ? undefined : known.reduce((a, b) => a + b, 0)
 }
 
-type Src = Pick<SubTree, 'nodes' | 'subs' | 'mainRunning' | 'perW' | 'usd'>
+type Src = Pick<SubTree, 'nodes' | 'subs' | 'mainRunning' | 'perW' | 'usd' | 'tps'>
 
 // The session this copy of the mod runs in: the root of every tree it draws.
 let selfId = ''
@@ -290,6 +344,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       usd,
       text: usdText(usd),
       isActive: isRunning || s.mainRunning,
+      tps: nd.tps ?? s.tps,
       kids: [],
     }
   }),
@@ -312,6 +367,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       usd,
       text: usdText(usd),
       isActive: sub.mainRunning,
+      tps: sub.tps,
       kids,
     }
   }),
@@ -338,7 +394,7 @@ const layout = (
     const pw = r.text.length * 12 + 12
     // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push(
-      line(d, length, KIND[r.kind].fill, r.isActive, nowS, KIND[r.kind].light) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
+      line(d, length, KIND[r.kind].fill, r.isActive, nowS, KIND[r.kind].light, r.tps) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
     )
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
@@ -377,7 +433,7 @@ const draw = (v: FlowView, now: number): string => {
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width * FIT}" height="${height * FIT}" preserveAspectRatio="xMinYMin meet">` +
     `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="3"/></filter><filter id="lineglow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${width + 40}" height="${height + 40}"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
-    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, trunkEnd - trunkTop, KIND.claude.fill, v.mainRunning, nowS, KIND.claude.light) +
+    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, trunkEnd - trunkTop, KIND.claude.fill, v.mainRunning, nowS, KIND.claude.light, v.mainTps) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
     out.lines.join('') +
     node(you) +
@@ -447,6 +503,12 @@ const touch = (
 }
 
 
+// When each running turn began, by agent id ('' = the main loop), for its pace.
+const turnStartedAt = new Map<string, number>()
+
+const freshTokens = (u: Usage | undefined): number =>
+  u ? (u.input_tokens ?? 0) + (u.output_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0) : 0
+
 const tokensOf = (result: unknown): number => {
   try {
     return (JSON.stringify(result) ?? '').length / CHARS_PER_TOKEN
@@ -485,6 +547,7 @@ const treeOf = (v: FlowView): SubTree => ({
   isWaiting: v.isWaiting,
   wTotal: v.wTotal,
   k: v.k,
+  tps: v.mainTps,
   // dollars the session spent since its last prompt, and its dollars per weighted token
   usd: v.lastUsd === undefined ? undefined : Math.max(0, v.lastUsd - (v.promptUsd ?? v.lastUsd)),
   perW: (v.allW ?? 0) > 0 ? Math.max(0, (v.lastUsd ?? 0) - (v.baseUsd ?? 0)) / (v.allW ?? 1) : 0,
@@ -866,6 +929,7 @@ export const register: Register = on => {
   })
 
   on('turn.start', async ($, e, next) => {
+    turnStartedAt.set(e.agentId ?? '', await $.clock.now())
     if (e.agentId === undefined) {
       await change($, v => ({ ...v, mainRunning: true, isWaiting: false }))
     }
@@ -877,6 +941,10 @@ export const register: Register = on => {
   // turn is also charged to that agent's own path.
   on('turn.complete', async ($, e, next) => {
     const cost = weigh(e.usage)
+    // Pace of this turn: fresh tokens (not cache reads) over its wall time.
+    const began = turnStartedAt.get(e.agentId ?? '')
+    turnStartedAt.delete(e.agentId ?? '')
+    const tps = began === undefined ? undefined : paceOf(freshTokens(e.usage), (await $.clock.now()) - began)
     // The engine's own ledger: what this turn added is charged to its agent's path.
     const usd = (await $.session.usage()).cost?.usd ?? 0
     await change($, v => {
@@ -887,8 +955,8 @@ export const register: Register = on => {
         wTotal: v.wTotal + cost,
         allW: (v.allW ?? 0) + cost,
         lastUsd: usd,
-        nodes: key ? v.nodes.map(n => (n.key === key ? { ...n, usd: (n.usd ?? 0) + delta } : n)) : v.nodes,
-        ...(e.agentId === undefined ? { mainRunning: false, isWaiting: true } : {}),
+        nodes: key ? v.nodes.map(n => (n.key === key ? { ...n, usd: (n.usd ?? 0) + delta, tps: tps ?? n.tps } : n)) : v.nodes,
+        ...(e.agentId === undefined ? { mainRunning: false, isWaiting: true, mainTps: tps ?? v.mainTps } : {}),
       }
 
       return calibrate(moved)
@@ -969,6 +1037,7 @@ export const register: Register = on => {
                 isBackground: n.running - 1 > 0 ? n.isBackground : false,
                 errorAt: failed ? end : n.errorAt,
                 w: n.w + resultTokens * RESULT_WEIGHT,
+                tps: paceOf(resultTokens, end - now) ?? n.tps,
               }
             : n,
         ),

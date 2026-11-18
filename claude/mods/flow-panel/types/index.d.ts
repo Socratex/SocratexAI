@@ -10,6 +10,7 @@ export type FlowNode = {
   errorAt: number // last failure, ms (0 = none)
   w: number // weighted tokens of this path's tool results (see weights in register.tsx)
   usd?: number // dollars the engine's ledger charged to this agent's own turns
+  tps?: number // tokens per second of its last turn or call (sets the dots per batch)
 }
 
 // The tree of one session, as it is shared with the session that started it.
@@ -23,10 +24,12 @@ export type SubTree = {
   wTotal: number
   k: number
   usd?: number // dollars spent since the session's last prompt (undefined = unknown)
+  tps?: number // tokens per second of the session's last main turn
   perW?: number // the session's dollars per weighted token (0 = not yet known)
 }
 
 export type FlowView = {
+  mainTps?: number // tokens per second of the main loop's last turn
   allW?: number // weighted tokens of every turn this session (never reset)
   lastUsd?: number // the engine's cost ledger at the last turn, dollars
   promptUsd?: number // the ledger when the last prompt started
