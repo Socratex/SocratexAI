@@ -19,7 +19,6 @@ const RADIUS = 10
 const MAX_NODES = 4
 const ERROR_MS = 6000
 const LABEL_CHARS = 8
-const COST_DECIMALS = 3 // decimals of a path's cost in percent
 const FLUSH_MS = 2000 // state writes are batched into one redraw per this long
 
 // Relative price of a token, the stand-in for how much of the limit it eats.
@@ -176,14 +175,23 @@ const node = (b: Box) => {
 const esc = (s: string) => s.replace(/[<>&"]/g, '')
 
 // You -> Claude: how far the account's 5-hour limit has grown since the base.
+// Short percent: 1 or more keeps one decimal, below 1 keeps one significant
+// digit (0.054 -> 0.05, 0.245 -> 0.2); trailing zeros are dropped (18.0 -> 18).
+const pct = (n: number): string => {
+  if (n <= 0) return '0'
+  const decimals = n >= 1 ? 1 : Math.min(20, Math.ceil(-Math.log10(n)))
+  const s = n.toFixed(decimals)
+
+  return s.includes('.') ? s.replace(/\.?0+$/, '') : s
+}
+
 const growthText = (v: FlowView) =>
   v.limitPct < 0 || v.basePct < 0
     ? '...'
-    : `+${Math.max(0, v.limitPct - v.basePct).toFixed(1)}%`
+    : `+${pct(Math.max(0, v.limitPct - v.basePct))}%`
 
 // Claude -> a path: the estimated share of the 5-hour limit it cost, in percent.
-const costText = (k: number, w: number) =>
-  k > 0 ? `~${(w * k).toFixed(COST_DECIMALS)}%` : '...'
+const costText = (k: number, w: number) => (k > 0 ? `~${pct(w * k)}%` : '...')
 
 // One branch of the tree: a box, the figure on its line and what hangs below it.
 type Row = {
