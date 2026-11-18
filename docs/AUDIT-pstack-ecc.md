@@ -1,81 +1,81 @@
 ---
 type: audit
 title: SocratexAI vs pstack vs ECC
-description: Porównanie naszego rdzenia AI z pstack (poteto) i Everything Claude Code (ECC); co pożyczyć, czego nie instalować.
-updated: 2026-11-16
+description: Comparison of our AI core with pstack (poteto) and Everything Claude Code (ECC); what to borrow, what not to install.
+updated: 2026-11-18
 ---
 
-# 🔍 Audyt: SocratexAI vs pstack vs ECC
+# 🔍 Audit: SocratexAI vs pstack vs ECC
 
-Zapisany, żeby nie powtarzać. Przed ponownym audytem sprawdź sekcję "Kiedy odświeżyć".
+Saved so it is not repeated. Before auditing again, read the section "When to refresh".
 
-## 📏 Metoda i pewność
-- Źródło: README obu projektów (WebSearch + WebFetch, 2026-11-16) oraz lokalny przegląd SocratexAI (`core/`, `claude/`, `skills/`, `docs/IMPROVEMENTS.json`).
-- Nie instalowano ani nie czytano kodu hooków pstack/ECC. Wnioski o jakości działania to hipotezy; fakty to tylko opisy z README.
-- ECC README przeczytane do znaku 100000 z 139919 (końcówka nieprzeczytana).
+## 📏 Method and confidence
+- Source: the READMEs of both projects (WebSearch + WebFetch, 2026-11-16) and a local review of SocratexAI (`core/`, `claude/`, `skills/`, `docs/IMPROVEMENTS.json`).
+- The pstack/ECC hook code was neither installed nor read. Conclusions about how well they work are hypotheses; only the README descriptions are facts.
+- The ECC README was read up to character 100000 of 139919 (the tail was not read).
 
-## 🧱 Czym są
-- **SocratexAI**: mały rdzeń reguł (~11 KB zawsze ładowane), 4 agenci tierowi, 5 skilli, 1 hook (guard), narzędzia py (risk_score, routing_log, backup, skill_learn), DIRECTIVES jako indeks "co robię -> która reguła".
-- **pstack** (Lauren Tan / poteto, port z cursor/plugins/pstack; forki: backnotprop, michael-denyer, painhardcore, zbeyens, mdsmithaustin): filozofia "rygor ponad przepustowość". Router `/poteto-mode`, 23 playbooki, ok. 50 skilli, 24 zasady, 2 agenci. README nie opisuje hooków (poza forkiem michael-denyer: SessionStart wstrzykuje mandat routingu).
-- **ECC** (affaan-m/ECC, dawniej everything-claude-code, MIT): "agent harness" - 71 agentów, 314 skilli, 98 shimów komend, hooki, rules, Memory Vault, instincts z confidence, AgentShield (skan konfiguracji). Hasło: optymalizuj okno kontekstu, resztę persystuj.
+## 🧱 What they are
+- **SocratexAI**: a small rule core (~11 KB always loaded), 4 tiered agents, 5 skills, 1 hook (guard), Python tools (risk_score, routing_log, backup, skill_learn), DIRECTIVES as an index "what I do -> which rule applies".
+- **pstack** (Lauren Tan / poteto, port of cursor/plugins/pstack; forks: backnotprop, michael-denyer, painhardcore, zbeyens, mdsmithaustin): philosophy "rigor over throughput". Router `/poteto-mode`, 23 playbooks, about 50 skills, 24 rules, 2 agents. The README does not describe hooks (except the michael-denyer fork: SessionStart injects a routing mandate).
+- **ECC** (affaan-m/ECC, formerly everything-claude-code, MIT): an "agent harness" - 71 agents, 314 skills, 98 command shims, hooks, rules, Memory Vault, instincts with confidence, AgentShield (config scan). Motto: optimize the context window, persist the rest.
 
-## 📊 Porównanie
-| Obszar | SocratexAI | pstack | ECC |
+## 📊 Comparison
+| Area | SocratexAI | pstack | ECC |
 |---|---|---|---|
-| Rozmiar kontekstu startowego | bardzo mały, celowo | mały (zasady indeksowane inline w routerze) | duży ryzyko: rules zawsze ładowane, katalog reklamowany modelowi |
-| Routing modeli | tiery + eskalacja na dowodach, jedno źródło JSON | role -> modele przez `/setup-pstack`, panel review wielu modeli | słabo opisany w README |
-| Weryfikacja | bramki deterministyczne, risk_score, osobny reviewer | `prove-it-works`, `explain-the-number`, `interrogate` (zostają tylko findings potwierdzone uruchomieniem), formal verification | tdd-workflow, code/security-reviewer, e2e-runner |
-| Playbooki typów zadań | brak (TASK-GATING + spec) | 23 (bug, feature, refactor, perf, ship, babysit PR...) | wiele komend /plan /tdd /build-fix |
-| Pamięć / uczenie | auto-memory, skill_learn -> skill-reflect, memory-review, AI-PRACTICES | `recall`, `why`, `show-me-your-work` (TSV decyzji) | instincts z confidence, Memory Vault, continuous-learning-v2 |
-| Bezpieczeństwo | guard.py, deny na sekrety, backup przed zmianą configu, zgoda właściciela | brak opisu | AgentShield; ale sam niesie ryzyka (niżej) |
-| Hooki | PreToolUse guard, opcjonalny Stop gate | brak w upstream | wiele (session-start, suggest-compact, evaluate-session) |
+| Startup context size | very small, on purpose | small (rules indexed inline in the router) | risk of large: rules always loaded, catalog advertised to the model |
+| Model routing | tiers + escalation on evidence, one JSON source | roles -> models via `/setup-pstack`, multi-model review panel | poorly described in the README |
+| Verification | deterministic gates, risk_score, separate reviewer | `prove-it-works`, `explain-the-number`, `interrogate` (only findings confirmed by running stay), formal verification | tdd-workflow, code/security-reviewer, e2e-runner |
+| Task-type playbooks | none (TASK-GATING + spec) | 23 (bug, feature, refactor, perf, ship, babysit PR...) | many commands /plan /tdd /build-fix |
+| Memory / learning | auto-memory, skill_learn -> skill-reflect, memory-review, AI-PRACTICES | `recall`, `why`, `show-me-your-work` (decision TSV) | instincts with confidence, Memory Vault, continuous-learning-v2 |
+| Security | guard.py, deny on secrets, backup before config change, owner consent | not described | AgentShield; but it carries its own risks (below) |
+| Hooks | PreToolUse guard, optional Stop gate | none upstream | many (session-start, suggest-compact, evaluate-session) |
 
-## ✅ Mocne strony SocratexAI (nie ruszać)
-- Zasada "borrow before inventing" i kryterium dodania funkcji (pozycja 54 w IMPROVEMENTS) - chroni przed rozrostem, który widać w ECC.
-- Eskalacja na dowodach i separacja generatora od reviewera - zgodne z kierunkiem pstack (`interrogate`).
-- Oszczędność kontekstu jako reguła pierwszej klasy.
+## ✅ SocratexAI strengths (do not touch)
+- The "borrow before inventing" rule and the criterion for adding a feature (item 54 in IMPROVEMENTS) - protects against the bloat visible in ECC.
+- Escalation on evidence and separating the generator from the reviewer - in line with the pstack direction (`interrogate`).
+- Context economy as a first-class rule.
 
-## 🕳️ Luki w SocratexAI (hipotezy do oceny)
-1. Brak reguły "dowód działania": kiedy mówię "zrobione", co musi być uruchomione na prawdziwym artefakcie (pstack `prove-it-works`).
-2. Brak reguły weryfikacji liczb/pomiarów przed raportem (pstack `explain-the-number`) - istotne przy perf-scan i FPS w projektach gier.
-3. Reviewer nie wymaga, by finding był potwierdzony uruchomieniem (pstack `interrogate`) - mniej fałszywych alarmów.
-4. Brak playbooków per typ zadania (bug/refactor/ship). Może wystarczyć jeden krótki plik, nie 23.
-5. Brak skilla odtwarzania stanu sesji ("recall/session pickup"); częściowo pokrywa pamięć projektu.
-6. ~~Uczenie: brak licznika powtórzeń~~ **BŁĄD AUDYTU**: `skill_learn.py` ma już licznik (merge podobnych wpisów, `count`, READY przy powtórzonej korekcie). Brakuje tylko wygasania starych wpisów i automatycznego zbierania - nie wdrożone, nie potrzebne teraz.
+## 🕳️ SocratexAI gaps (hypotheses to assess)
+1. No "proof it works" rule: when I say "done", what must have run on the real artifact (pstack `prove-it-works`).
+2. No rule to verify numbers/measurements before reporting (pstack `explain-the-number`) - matters for perf-scan and FPS in game projects.
+3. The reviewer does not require a finding to be confirmed by running (pstack `interrogate`) - fewer false alarms.
+4. No per-task-type playbooks (bug/refactor/ship). One short file may be enough, not 23.
+5. No skill for restoring session state ("recall/session pickup"); partly covered by project memory.
+6. ~~Learning: no repeat counter~~ **AUDIT ERROR**: `skill_learn.py` already has a counter (merging similar entries, `count`, READY on a repeated correction). Only expiry of old entries and automatic collection are missing - not implemented, not needed now.
 
-## 🚫 Czego nie instalować
-- **ECC w całości**: ryzyko rozdęcia kontekstu (sprzeczne z pozycją 25), duplikacja hooków przy stackowaniu instalacji, otwarte błędy na natywnym Windows (observer daemon, zapis pamięci - ECC #2489, #2626), nieoficjalne forki mogą zawierać malware (ostrzeżenie z README), `/astra-review` wysyła diffy do OpenAI, płatny tier Pro.
-- **pstack w całości**: domyślny panel review zakłada modele/vendorów, których nie używamy (pozycje 16, 17 = N); `/poteto-mode` jako router przejąłby rolę naszego DIRECTIVES. Formal verification (TLA+) - nieadekwatne do gry Unity.
+## 🚫 What not to install
+- **ECC as a whole**: risk of context bloat (contradicts item 25), duplicated hooks when stacking installs, open bugs on native Windows (observer daemon, memory writes - ECC #2489, #2626), unofficial forks may contain malware (README warning), `/astra-review` sends diffs to OpenAI, paid Pro tier.
+- **pstack as a whole**: the default review panel assumes models/vendors we do not use (items 16, 17 = N); `/poteto-mode` as a router would take over the role of our DIRECTIVES. Formal verification (TLA+) - not suited to a Unity game.
 
-## 💡 Rekomendacja (zrewidowana po uwagach właściciela, 2026-11-16)
-Pierwotnie proponowano 4 punkty; po weryfikacji:
-1. ~~`prove-it-works` + `explain-the-number`~~ **ODRZUCONE.** Pokrywa to już: Stop hook / `verify` (deterministyczny, 0 tokenów modelu), status zadania "test" (człowiek zamyka), "Say no evidence instead of inventing test results" w RULES, manual-check w FULL (REVIEW.md). Reguła tekstowa nie da agentowi "feelingu" gry; ryzyko ceremonialnych "zweryfikowano" bez realnej weryfikacji (hipoteza, brak dowodu).
-2. `interrogate` -> w `reviewer.md`: finding bez powtarzalnego dowodu = PLAUSIBLE, nie CONFIRMED. **ZATWIERDZONE przez właściciela.**
-3. ~~PLAYBOOKS.md~~ **ODRZUCONE.** `legacy-pipeline/FLOWS.json` (12 flow wg typu intencji) robi to już, ciężej i skryptowo; w projektach core wystarcza TASK-GATING.
-4. Skan AgentShield: opcjonalny, wymaga zgody (npm).
-Inne idee do rozważenia: patrz sekcja "Dodatkowe pomysły".
+## 💡 Recommendation (revised after owner feedback, 2026-11-16)
+Originally 4 points were proposed; after verification:
+1. ~~`prove-it-works` + `explain-the-number`~~ **REJECTED.** Already covered by: Stop hook / `verify` (deterministic, 0 model tokens), task status "test" (a human closes it), "Say no evidence instead of inventing test results" in RULES, manual check in FULL (REVIEW.md). A text rule will not give the agent a "feel" for the game; risk of ceremonial "verified" without real verification (hypothesis, no evidence).
+2. `interrogate` -> in `reviewer.md`: a finding without repeatable proof = PLAUSIBLE, not CONFIRMED. **APPROVED by the owner.**
+3. ~~PLAYBOOKS.md~~ **REJECTED.** The old legacy pipeline's `FLOWS.json` (12 flows by intent type; now only on the git branch `legacy`) did this already, heavier and script-driven; in projects the core's TASK-GATING is enough.
+4. AgentShield scan: optional, needs consent (npm).
+Other ideas to consider: see the section "Additional ideas".
 
-## ✅ Wdrożone 2026-11-16
+## ✅ Implemented 2026-11-16
 - laziness-protocol -> `core/rules/CODE-STYLE.md`.
-- why -> wiersz w `core/DIRECTIVES.json` (historia git przed czytaniem kodu).
-- never-block-on-the-human -> odwrócone na życzenie właściciela: przy niewiadomych najpierw formularz z domyślnymi (`core/RULES.md`, Ambiguity).
-- Styl dla ADHD (proste komunikaty bez liczb i ścieżek) -> `core/STYLE.md`.
-- security-review tylko dla projektów biznesowych -> `core/rules/SECURITY-REVIEW.md` + wiersz w DIRECTIVES. Gamedev: security check na roadmapie przed multi lub wydaniem (zadanie właściciela).
+- why -> a row in `core/DIRECTIVES.json` (git history before reading code).
+- never-block-on-the-human -> reversed at the owner's request: for unknowns, a form with defaults first (`core/RULES.md`, Ambiguity).
+- Reply style for fast skimming (simple messages without numbers and paths) -> `core/STYLE.md`.
+- security-review only for business projects -> `core/rules/SECURITY-REVIEW.md` + a row in DIRECTIVES. Game dev: a security check on the roadmap before multiplayer or release (owner's task).
 
-## 🧩 Dodatkowe pomysły (z README, niezweryfikowane w użyciu)
-- pstack `laziness-protocol` / `subtract-before-you-add`: jedno zdanie w CODE-STYLE (najmniejsza zmiana, usuń zanim dodasz) - działa przeciw slopowi, koszt ~20 tokenów.
-- pstack `never-block-on-the-human`: decyduj na domyślnych i wypisz założenia - zgodne z "standby to tarcie"; częściowo już w regule Ambiguity (limit 4 pytań).
-- pstack `why`: odpowiedź z historii commitów/PR zamiast z kodu - tanie, bez nowej infrastruktury.
-- ECC limity wstrzykiwania (`ECC_SESSION_START_MAX_CHARS`, max instynktów): idea budżetu znaków na kontekst startowy; sprawdzać u nas rozmiar sesyjnego startu skryptem.
-- ECC `security-review` odpalany tylko na trigger (auth, sekrety, płatności, user input): pasuje do B2B, niski koszt bo warunkowy.
-- ECC instincts z confidence: licznik powtórzeń w `skill_learn` (mała zmiana).
+## 🧩 Additional ideas (from READMEs, not verified in use)
+- pstack `laziness-protocol` / `subtract-before-you-add`: one sentence in CODE-STYLE (smallest change, remove before you add) - works against slop, costs ~20 tokens.
+- pstack `never-block-on-the-human`: decide on defaults and list the assumptions - fits "standby is friction"; partly already in the Ambiguity rule (limit of 4 questions).
+- pstack `why`: answer from commit/PR history instead of code - cheap, no new infrastructure.
+- ECC injection limits (`ECC_SESSION_START_MAX_CHARS`, max instincts): the idea of a character budget for startup context; check our session-start size with a script.
+- ECC `security-review` fired only on a trigger (auth, secrets, payments, user input): fits B2B, low cost because it is conditional.
+- ECC instincts with confidence: a repeat counter in `skill_learn` (small change).
 
-## 🔁 Kiedy odświeżyć
-- Gdy pstack lub ECC wyda duży release, albo gdy IMPROVEMENTS.json urośnie o >10 pozycji.
-- Przy ponownym audycie: nie powtarzaj zbierania opisów; sprawdź tylko zmiany po 2026-11-16 (releases ECC: 2.2.x; pstack upstream: cursor/plugins/pstack) i status punktów 1-4 powyżej.
-- Nie zweryfikowano: jakości hooków, realnego kosztu tokenów ECC po instalacji, zachowania pstack na Windows.
+## 🔁 When to refresh
+- When pstack or ECC ships a big release, or when IMPROVEMENTS.json grows by more than 10 items.
+- On a repeat audit: do not collect the descriptions again; check only changes after 2026-11-16 (ECC releases: 2.2.x; pstack upstream: cursor/plugins/pstack) and the status of points 1-4 above.
+- Not verified: hook quality, the real token cost of ECC after install, pstack behavior on Windows.
 
-## 📎 Źródła
+## 📎 Sources
 - https://github.com/backnotprop/pstack
 - https://github.com/michael-denyer/pstack-claude
 - https://github.com/painhardcore/pstack

@@ -70,7 +70,7 @@
     },
     {
       "path": "docs/AUDIT-pstack-ecc.md",
-      "what": "Porównanie naszego rdzenia AI z pstack (poteto) i Everything Claude Code (ECC); co pożyczyć, czego nie instalować."
+      "what": "Comparison of our AI core with pstack (poteto) and Everything Claude Code (ECC); what to borrow, what not to install."
     },
     {
       "path": "docs/ROUTER-LOOP.md",
