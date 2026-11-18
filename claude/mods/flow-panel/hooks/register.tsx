@@ -401,16 +401,15 @@ async function publish($: EngineInterface, v: FlowView): Promise<void> {
   if (!dir) return
   try {
     const at = await $.clock.now()
-    await $.fs.write(
-      `${dir}/${selfId}.json`,
-      JSON.stringify({ id: selfId, startedAt, updatedAt: at, tree: treeOf(v) }),
-    )
+    const text = JSON.stringify({ id: selfId, startedAt, updatedAt: at, tree: treeOf(v), view: v })
+    await $.fs.write(`${dir}/${selfId}.json`, text)
+    await $.fs.write(`${dir}/last.json`, text) // what a fresh session starts from
   } catch {
     // the shared folder is optional: without it there are simply no session tiles
   }
 }
 
-type Shared = { id: string; startedAt: number; updatedAt: number; tree: SubTree }
+type Shared = { id: string; startedAt: number; updatedAt: number; tree: SubTree; view?: FlowView }
 
 async function loadShared($: EngineInterface, dir: string, id: string): Promise<Shared | undefined> {
   try {
@@ -418,6 +417,27 @@ async function loadShared($: EngineInterface, dir: string, id: string): Promise<
   } catch {
     return undefined
   }
+}
+
+// After a restart the pane would start empty: take the last saved view instead
+// (this session's own file when it was resumed, else the newest of any session).
+async function restore($: EngineInterface): Promise<void> {
+  const dir = await folderOf($)
+  if (!dir) return
+  const f = (await loadShared($, dir, selfId)) ?? (await loadShared($, dir, 'last'))
+  const old = f?.view
+  if (!old || !Array.isArray(old.nodes) || !Array.isArray(old.subs) || typeof old.k !== 'number') return
+  await change($, v =>
+    v.nodes.length > 0 || v.subs.length > 0 || v.wTotal > 0
+      ? v
+      : {
+          ...old,
+          nodes: old.nodes.map(n => ({ ...n, running: 0, isBackground: false })),
+          mainRunning: false,
+          isWaiting: false,
+          flushAt: 0,
+        },
+  )
 }
 
 async function poll($: EngineInterface): Promise<void> {
@@ -493,6 +513,7 @@ export const register: Register = on => {
     if ((await $.env.get('FLOW_PANEL')) !== '0') {
       void $.ui.open({ id: PANE, title: 'Flow' })
     }
+    await restore($)
     const { rateLimits } = await $.session.usage()
     const win = rateLimits.find(r => r.kind === 'five_hour')
     await change($, v => applyLimit(v, win))
