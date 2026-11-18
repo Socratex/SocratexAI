@@ -10,7 +10,8 @@ export type FlowNode = {
   errorAt: number // last failure, ms (0 = none)
   w: number // weighted tokens of this path's tool results (see weights in register.tsx)
   usd?: number // dollars the engine's ledger charged to this agent's own turns
-  tps?: number // tokens per second of its last turn or call (sets the dots per batch)
+  tps?: number // tokens per second of its last turn or the result of its last call (dots of the up lane)
+  tpsIn?: number // tokens per second of the request of its last call (dots of the down lane)
 }
 
 // The tree of one session, as it is shared with the session that started it.
