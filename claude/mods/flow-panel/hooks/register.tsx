@@ -403,7 +403,7 @@ async function folderOf($: EngineInterface): Promise<string> {
 
 async function publish($: EngineInterface, v: FlowView): Promise<void> {
   const dir = await folderOf($)
-  if (!dir) return
+  if (!dir || isEmpty(v)) return // never overwrite a saved view with an empty one
   try {
     const at = await $.clock.now()
     const text = JSON.stringify({ id: selfId, startedAt, updatedAt: at, tree: treeOf(v), view: v })
@@ -426,23 +426,34 @@ async function loadShared($: EngineInterface, dir: string, id: string): Promise<
 
 // After a restart the pane would start empty: take the last saved view instead
 // (this session's own file when it was resumed, else the newest of any session).
-async function restore($: EngineInterface): Promise<void> {
-  const dir = await folderOf($)
-  if (!dir) return
-  const f = (await loadShared($, dir, selfId)) ?? (await loadShared($, dir, 'last'))
-  const old = f?.view
-  if (!old || !Array.isArray(old.nodes) || !Array.isArray(old.subs) || typeof old.k !== 'number') return
-  await change($, v =>
-    v.nodes.length > 0 || v.subs.length > 0 || v.wTotal > 0
-      ? v
-      : {
+// Not tied to session.start, which a resumed session may never raise: it runs
+// when the pane draws or a write is about to happen, whichever comes first.
+let saved: FlowView | null | undefined
+
+const isEmpty = (v: FlowView): boolean =>
+  v.nodes.length === 0 && v.subs.length === 0 && v.wTotal === 0 && v.limitPct < 0
+
+async function restoredFor($: EngineInterface, v: FlowView): Promise<FlowView> {
+  if (!isEmpty(v)) return v
+  if (saved === undefined) {
+    saved = null
+    const dir = await folderOf($)
+    if (dir) {
+      const f = (await loadShared($, dir, selfId)) ?? (await loadShared($, dir, 'last'))
+      const old = f?.view
+      if (old && Array.isArray(old.nodes) && Array.isArray(old.subs) && typeof old.k === 'number') {
+        saved = {
           ...old,
           nodes: old.nodes.map(n => ({ ...n, running: 0, isBackground: false })),
           mainRunning: false,
           isWaiting: false,
           flushAt: 0,
-        },
-  )
+        }
+      }
+    }
+  }
+
+  return saved ?? v
 }
 
 async function poll($: EngineInterface): Promise<void> {
@@ -490,7 +501,7 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
     queued = []
     isFlushPending = false
     const at = await $.clock.now()
-    const cur = held ?? (await read($, view))
+    const cur = await restoredFor($, held ?? (await read($, view)))
     const next = batch.reduce((acc, f) => f(acc), cur)
     if (draw(next, at) === draw(cur, at)) {
       held = next
@@ -518,7 +529,6 @@ export const register: Register = on => {
     if ((await $.env.get('FLOW_PANEL')) !== '0') {
       void $.ui.open({ id: PANE, title: 'Flow' })
     }
-    await restore($)
     const { rateLimits } = await $.session.usage()
     const win = rateLimits.find(r => r.kind === 'five_hour')
     await change($, v => applyLimit(v, win))
@@ -649,7 +659,7 @@ export const register: Register = on => {
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
     const { Box, Text, Svg } = $.ui.resolve(e)
-    const v = await read($, view)
+    const v = await restoredFor($, await read($, view))
     const now = await $.clock.now()
 
     return (
