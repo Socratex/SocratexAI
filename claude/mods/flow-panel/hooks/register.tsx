@@ -175,6 +175,15 @@ const tierOf = (tps: number | undefined): number => {
 const MIN_TURN_MS = 500
 const paceOf = (tokens: number, ms: number): number | undefined =>
   ms >= MIN_TURN_MS && tokens >= 0 ? tokens / (ms / 1000) : undefined
+
+// Paint order of lines: SVG has no z-index, a later element lies on top. Idle
+// lines go first, then active ones by rising tier, so the busiest line is on
+// top. The sort is stable: equal intensity keeps the layout order.
+const byIntensity = <T extends { rank: number }>(items: T[]): T[] =>
+  items
+    .map((item, i) => ({ item, i }))
+    .sort((a, b) => a.item.rank - b.item.rank || a.i - b.i)
+    .map(x => x.item)
 // </tiers>
 
 // ---------------------------------------------------------------- drawing
@@ -373,7 +382,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
   }),
 ]
 
-type Out = { lines: string[]; boxes: string[]; right: number; bottom: number }
+type Out = { lines: Array<{ rank: number; svg: string }>; boxes: string[]; right: number; bottom: number }
 
 // Lays rows out down a trunk: a rounded elbow to each box, and a row's own
 // branches start below it, a step to the right. Returns the next free row.
@@ -393,9 +402,10 @@ const layout = (
     const length = Math.max(0, y - ELBOW - topY) + ELBOW * 1.16 + (left - trunkX - ELBOW)
     const pw = r.text.length * 12 + 12
     // The figure sits right of the box, so deeper levels cost little width.
-    out.lines.push(
-      line(d, length, KIND[r.kind].fill, r.isActive, nowS, KIND[r.kind].light, r.tps) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
-    )
+    out.lines.push({
+      rank: r.isActive ? tierOf(r.tps) : -1, // idle lines lie below every active one
+      svg: line(d, length, KIND[r.kind].fill, r.isActive, nowS, KIND[r.kind].light, r.tps) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
+    })
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
     out.bottom = Math.max(out.bottom, y + 20)
@@ -435,7 +445,7 @@ const draw = (v: FlowView, now: number): string => {
     `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="3"/></filter><filter id="lineglow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${width + 40}" height="${height + 40}"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
     line(`M${TRUNK},${trunkTop} V${trunkEnd}`, trunkEnd - trunkTop, KIND.claude.fill, v.mainRunning, nowS, KIND.claude.light, v.mainTps) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
-    out.lines.join('') +
+    byIntensity(out.lines).map(l => l.svg).join('') +
     node(you) +
     node(claude) +
     out.boxes.join('') +
