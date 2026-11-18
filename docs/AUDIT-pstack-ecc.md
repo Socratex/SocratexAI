@@ -70,6 +70,14 @@ Other ideas to consider: see the section "Additional ideas".
 - ECC `security-review` fired only on a trigger (auth, secrets, payments, user input): fits B2B, low cost because it is conditional.
 - ECC instincts with confidence: a repeat counter in `skill_learn` (small change).
 
+## 🔬 Re-check against pinned clones (2026-11-18)
+Read in `~/ai-refs` (nothing run). Evidence behind the README section "Compare before you choose":
+- superpowers: `skills/test-driven-development/SKILL.md` (iron law: no production code without a failing test), `skills/systematic-debugging/SKILL.md` (four phases, stop after 3 failed fixes), `skills/verification-before-completion/SKILL.md`, `skills/subagent-driven-development/SKILL.md` (model selection, BLOCKED status, fix-loop escalation), `hooks/hooks.json` (only SessionStart), harness plugin folders at repo root.
+- pstack: `skills/poteto-mode/playbooks/` (22 files), `skills/principle-prove-it-works`, `skills/principle-explain-the-number`, `skills/show-me-your-work`, `skills/recall`, `skills/why`, `skills/setup-pstack`; no `hooks*.json` found.
+- ECC: `README.md` (rules always loaded, selective install), `hooks/hooks.json` (26 matchers), counts of `agents/`, `skills/`, `commands/`.
+- Not verified: pstack review panels and Codex support, superpowers installer behavior, hook quality in any repo, git activity (clones are shallow), real token cost of skill descriptions.
+- Correction: earlier text said "history 2 days"; the repo has commits since 2026-04-28.
+
 ## 🔁 When to refresh
 - When pstack or ECC ships a big release, or when IMPROVEMENTS.json grows by more than 10 items.
 - On a repeat audit: do not collect the descriptions again; check only changes after 2026-11-16 (ECC releases: 2.2.x; pstack upstream: cursor/plugins/pstack) and the status of points 1-4 above.
