@@ -679,6 +679,31 @@ async function poll($: EngineInterface): Promise<void> {
   change($, v => ({ ...v, sessionIds: kept, subs }))
 }
 
+// Debugging aid: the last lines of what redrew the pane and why, kept in
+// $SOCRATEX_HOME/local/flow-debug-<session>.log (outside the shared folder).
+let dbgLines: string[] = []
+
+async function dbg($: EngineInterface, msg: string): Promise<void> {
+  const at = await $.clock.now()
+  dbgLines = [...dbgLines, `${new Date(at).toISOString().slice(11, 23)} ${msg}`].slice(-80)
+  const dir = await folderOf($)
+  if (!dir) return
+  try {
+    await $.fs.write(`${dir.replace(/\/flow$/, '')}/flow-debug-${selfId.slice(0, 8)}.log`, dbgLines.join('\n'))
+  } catch {
+    // a debugging aid only
+  }
+}
+
+const firstDiff = (a: string, b: string): string => {
+  let i = 0
+  while (i < a.length && i < b.length && a[i] === b[i]) i += 1
+
+  return `at ${i}: [${a.slice(Math.max(0, i - 30), i + 50)}] vs [${b.slice(Math.max(0, i - 30), i + 50)}]`
+}
+
+let lastSource = ''
+
 function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
   queued.push(fn)
   if (isFlushPending) return
@@ -690,12 +715,15 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
     const at = await $.clock.now()
     const cur = await restoredFor($, held ?? (await read($, view)))
     const next = batch.reduce((acc, f) => f(acc), cur)
-    if (draw(next, at) === draw(cur, at)) {
+    const before = draw(cur, at)
+    const after = draw(next, at)
+    if (after === before) {
       held = next
       await publish($, next)
 
       return
     }
+    await dbg($, `flush REDRAW ${firstDiff(before, after)}`)
     held = undefined
     await update($, view, () => next)
     await publish($, next)
@@ -867,6 +895,8 @@ export const register: Register = on => {
     const v = await restoredFor($, await read($, view))
     const now = await $.clock.now()
     const source = draw(v, now)
+    await dbg($, `render ${source === lastSource ? 'same picture' : `new picture ${firstDiff(lastSource, source)}`}`)
+    lastSource = source
     // Without an explicit size the pane seems to cap the drawing's height and
     // shrink a taller one, so state the drawing's own size.
     const size = /width="([\d.]+)" height="([\d.]+)"/.exec(source)
