@@ -305,8 +305,8 @@ const draw = (v: FlowView, now: number): string => {
     out.boxes.join('') +
     // Grey edges at the bottom and right of the drawing: they show where the
     // drawing ends, so it is visible what limits its size in the pane.
-    `<line x1="0" y1="${height - 1}" x2="${width}" y2="${height - 1}" stroke="#777" stroke-width="2"/>` +
-    `<line x1="${width - 1}" y1="0" x2="${width - 1}" y2="${height}" stroke="#777" stroke-width="2"/>` +
+    `<line x1="0" y1="${height - 1}" x2="${width}" y2="${height - 1}" stroke="#777" stroke-opacity="0.3" stroke-width="2"/>` +
+    `<line x1="${width - 1}" y1="0" x2="${width - 1}" y2="${height}" stroke="#777" stroke-opacity="0.3" stroke-width="2"/>` +
     `</svg>`
   )
 }
