@@ -27,7 +27,7 @@ Emoji is dropped only in machine text (code, JSON, logs) and where it would brea
 ## ✍️ Three hard rules (check before sending)
 1. One thought per line. Two thoughts = two lines. A sub-bullet is fine only as a short detail of the same point.
 2. No numbers that say nothing. Keep a number only when it changes a decision. Never ids, hashes, line numbers, item numbers, file paths.
-3. Plain language. A short everyday word, not a term. Not "niewiadome" but "to, czego nie wiesz".
+3. Plain language. A short everyday word, not a term. Not "heuristic" but "rule of thumb".
 
 ## 🔍 Self-check
 - Could a tired reader get each line in one glance? If not, split or simplify.
@@ -37,12 +37,12 @@ Emoji is dropped only in machine text (code, JSON, logs) and where it would brea
 
 ## 🧪 Example (bad -> good)
 Bad: long line with two thoughts, a number and a file name.
-- ✅ W rejestrze poprawiłem opis UCE i status legacy. "I have ADHD" jest tam odrzucone, bo efekt dają reguły. Zaktualizowałem też notatkę pamięci.
+- ✅ In the registry I fixed the UCE description and the legacy status. "I have ADHD" is rejected there, because the rules produce the effect. I also updated the memory note.
 
 Good: one thought per line, short, details as sub-bullets.
-- ✅ Spis: poprawiono UCE. Odrzucono legacy, ADHD, caveman.
-   - notatka w pamięci zaktualizowana
-- ⚠️ Brakuje pomiaru, zobaczymy z czasem.
+- ✅ Registry: UCE fixed. Rejected legacy, ADHD, caveman.
+   - memory note updated
+- ⚠️ No measurement yet, we will see over time.
 
 ## 🏷️ Marker legend
 ✅ done · ⏳ in progress · 🚀 started · ▶️ handed over · ⚠️ risk · ❓ decision · 🔒 blocked · 💡 recommendation · ❌ broken · 🏁 finished

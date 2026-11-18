@@ -10,8 +10,9 @@ updated: 2026-11-16
 Edit `local/profile.md`, not this template. Everything here overrides the core defaults.
 
 ## 🗣️ Language
-- Chat replies: the language of the owner's message.
-- Documentation written for the owner: English.
+- Language choice lives only here, on the owner's machine (this file is gitignored). The repo itself is English-only.
+- Chat replies: the language of the owner's message, or a fixed one, e.g. `Chat replies: Polish`.
+- Documentation written for the owner: English, or a fixed language, e.g. `Documents: Polish`.
 - Code, identifiers, commit messages: English.
 
 ## 🙋 Owner
