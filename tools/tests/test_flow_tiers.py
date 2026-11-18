@@ -77,6 +77,13 @@ class FlowTiers(unittest.TestCase):
         self.assertIsNone(_run("paceOf(1000, 100)"))  # too short to mean anything
         self.assertEqual(_run("paceOf(0, 5000)"), 0)
 
+    def test_busiest_line_is_painted_last_and_ties_keep_order(self) -> None:
+        order = _run(
+            "byIntensity([{rank: 3, n: 'a'}, {rank: -1, n: 'b'}, {rank: 7, n: 'c'}, "
+            "{rank: 3, n: 'd'}, {rank: 0, n: 'e'}]).map(x => x.n)"
+        )
+        self.assertEqual(order, ["b", "e", "a", "d", "c"])
+
 
 if __name__ == "__main__":
     unittest.main()
