@@ -10,7 +10,7 @@ updated: 2026-11-18
 A side panel for Claude Code (desktop app). It costs no model tokens: it only listens to engine events and draws SVG.
 
 - Top line `Ty -> Claude`: growth of the account's 5-hour limit in percent since the mod first saw the current window.
-- Lines from Claude: estimated share of the limit each path cost, in per mille (0.01 steps). Sub-agents use their exact turn usage; tools, MCP and skills are charged by the size of their result (the call itself counts as 0). A learned factor converts weighted tokens to per mille, so the figure is `~?` until the limit has moved once.
+- Lines from Claude: estimated share of the limit each path cost, in percent (3 decimals). Sub-agents use their exact turn usage; tools, MCP and skills are charged by the size of their result (the call itself counts as 0). A learned factor converts weighted tokens to percent, so the figure is `~?%` until the limit has moved once.
 - Colours: you blue, Claude orange, sub-agent cyan, tool burgundy, MCP purple, skill yellow. Rings: orange = waiting for you, red = error, green = background work.
 
 ## Always on
@@ -30,5 +30,5 @@ Set `FLOW_PANEL` to `0` in the `env` block of a settings file; the project value
 ## Limits
 
 - The limit figure is the whole account's, so other sessions inflate it and the learned factor.
-- Figures refresh after each main turn, not continuously.
+- Figures refresh after each main turn, not continuously. Redraws are batched to one per second, with dots keeping their phase, to avoid blinking.
 - Tuning constants (font, weights) are at the top of `hooks/register.tsx`.

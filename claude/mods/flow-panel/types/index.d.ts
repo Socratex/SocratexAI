@@ -19,7 +19,8 @@ export type FlowView = {
   basePct: number // limitPct when this mod first saw the window (-1 = unknown)
   baseReset: string // the window's reset time the base belongs to
   wTotal: number // weighted tokens of all turns since the base (exact usage)
-  k: number // learned per mille of the limit per weighted token (0 = not yet)
+  k: number // learned percent of the limit per weighted token (0 = not yet)
+  flushAt: number // when the last batched redraw happened, ms (dot phase)
   agentNode: Record<string, string> // sub-agent id -> node key
   tick: number // bumped to force a redraw when something expires
 }

@@ -1,5 +1,5 @@
 import { atom, read, update } from 'claude-code'
-import type { Register } from 'claude-code'
+import type { EngineInterface, Register } from 'claude-code'
 
 import type { FlowNode, FlowView, NodeKind } from '../types'
 
@@ -14,6 +14,8 @@ const MAX_NODES = 4
 const ACTIVE_MS = 3000 // a node stays "lit" this long after its last call
 const ERROR_MS = 6000
 const LABEL_CHARS = 8
+const COST_DECIMALS = 3 // decimals of a path's cost in percent
+const FLUSH_MS = 1000 // state writes are batched into one redraw per this long
 
 // Relative price of a token, the stand-in for how much of the limit it eats.
 // A guess from API list prices; the learned factor `k` absorbs the scale.
@@ -59,12 +61,13 @@ const INITIAL: FlowView = {
   wTotal: 0,
   k: 0,
   agentNode: {},
+  flushAt: 0,
   tick: 0,
 }
 // Change the shape tag when FlowView changes: it declines what an earlier
 // version stored, which outlives a reload.
 const view = atom({ plugin: 'flow-panel', key: 'view' } as const, INITIAL, {
-  shape: 'flow-4',
+  shape: 'flow-5',
 })
 
 // ------------------------------------------------------------------ maths
@@ -84,13 +87,13 @@ const weigh = (u: Usage | undefined): number =>
       (u.cache_creation_input_tokens ?? 0) * WEIGHT.cacheWrite
     : 0
 
-// Learn k (per mille per weighted token) from how far the limit has moved since
-// the base against what the turns since then weighed. The limit is the whole
-// account's, so other sessions inflate k a little; it is an estimate.
+// Learn k (percent of the limit per weighted token) from how far the limit has
+// moved since the base against what the turns since then weighed. The limit is
+// the whole account's, so other sessions inflate k a little; it is an estimate.
 const calibrate = (v: FlowView): FlowView => {
-  const permille = (v.limitPct - v.basePct) * 10
-  return v.limitPct >= 0 && v.basePct >= 0 && permille > 0 && v.wTotal > 0
-    ? { ...v, k: permille / v.wTotal }
+  const grown = v.limitPct - v.basePct
+  return v.limitPct >= 0 && v.basePct >= 0 && grown > 0 && v.wTotal > 0
+    ? { ...v, k: grown / v.wTotal }
     : v
 }
 
@@ -157,14 +160,18 @@ const pill = (x: number, y: number, text: string) => {
 
 // A line, plus a travelling dot (coloured like the component it leads to)
 // while that component is active, plus its label.
-const edge = (a: Box, b: Box, i: number, isActive: boolean, label: string) => {
+// `phase` (the time of the last flush) makes a redrawn dot carry on from where
+// it was instead of jumping back to the start of the line.
+const edge = (a: Box, b: Box, i: number, isActive: boolean, label: string, phase: number) => {
   const d = curve(a, b)
   const colour = KIND[b.kind].fill
   const p = labelPoint(a, b)
+  const dur = 1.5 + i * 0.3
+  const begin = -(((phase / 1000) % dur)).toFixed(2)
   return (
     `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="${isActive ? 0.8 : 0.3}" stroke-width="2"/>` +
     (isActive
-      ? `<circle r="5" fill="${colour}"><animateMotion dur="${1.5 + i * 0.3}s" repeatCount="indefinite" path="${d}"/></circle>`
+      ? `<circle r="5" fill="${colour}"><animateMotion begin="${begin}s" dur="${dur}s" repeatCount="indefinite" path="${d}"/></circle>`
       : '') +
     pill(p.x, p.y, label)
   )
@@ -188,9 +195,9 @@ const growthText = (v: FlowView) =>
     ? '–%'
     : `+${Math.max(0, v.limitPct - v.basePct).toFixed(1)}%`
 
-// Claude -> a path: the estimated share of the limit it cost, in per mille.
+// Claude -> a path: the estimated share of the 5-hour limit it cost, in percent.
 const costText = (v: FlowView, n: FlowNode) =>
-  v.k > 0 ? `~${(n.w * v.k).toFixed(2)}‰` : '~?‰'
+  v.k > 0 ? `~${(n.w * v.k).toFixed(COST_DECIMALS)}%` : '~?%'
 
 const draw = (v: FlowView, now: number): string => {
   const you: Box = {
@@ -227,8 +234,10 @@ const draw = (v: FlowView, now: number): string => {
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">` +
-    edge(you, claude, 0, v.mainRunning, growthText(v)) +
-    kids.map((k, i) => edge(claude, k.box, i + 1, k.isActive, costText(v, k.nd))).join('') +
+    edge(you, claude, 0, v.mainRunning, growthText(v), v.flushAt) +
+    kids
+      .map((k, i) => edge(claude, k.box, i + 1, k.isActive, costText(v, k.nd), v.flushAt))
+      .join('') +
     node(you) +
     node(claude) +
     kids.map(k => node(k.box)).join('') +
@@ -297,6 +306,24 @@ const tokensOf = (result: unknown): number => {
   }
 }
 
+// Every state write redraws the pane, and a redraw makes the SVG frame blink.
+// So writes are queued and applied together, at most once per FLUSH_MS.
+let queued: Array<(v: FlowView) => FlowView> = []
+let isFlushPending = false
+
+function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
+  queued.push(fn)
+  if (isFlushPending) return
+  isFlushPending = true
+  $.clock.after(FLUSH_MS, async () => {
+    const batch = queued
+    queued = []
+    isFlushPending = false
+    const at = await $.clock.now()
+    await update($, view, v => ({ ...batch.reduce((acc, f) => f(acc), v), flushAt: at }))
+  })
+}
+
 export const register: Register = on => {
   // A redraw restarts the dots, so there is no steady timer: each event
   // schedules one redraw for when a lit node or an error expires.
@@ -313,15 +340,17 @@ export const register: Register = on => {
     }
     const { rateLimits } = await $.session.usage()
     const win = rateLimits.find(r => r.kind === 'five_hour')
-    await update($, view, v => applyLimit(v, win))
+    await change($, v => applyLimit(v, win))
 
     return next(e)
   })
 
   // Every prompt brings the panel back if it was closed (unless switched off).
   on('prompt.submit', async ($, e, next) => {
+    // Open only when it is not up: a repeated open re-seats the pane.
     if ((await $.env.get('FLOW_PANEL')) !== '0') {
-      void $.ui.open({ id: PANE, title: 'Flow' })
+      const isUp = (await $.ui.panes()).some(pane => pane.id === PANE)
+      if (!isUp) void $.ui.open({ id: PANE, title: 'Flow' })
     }
 
     return next(e)
@@ -336,7 +365,7 @@ export const register: Register = on => {
 
   on('turn.start', async ($, e, next) => {
     if (e.agentId === undefined) {
-      await update($, view, v => ({ ...v, mainRunning: true, isWaiting: false }))
+      await change($, v => ({ ...v, mainRunning: true, isWaiting: false }))
     }
 
     return next(e)
@@ -346,7 +375,7 @@ export const register: Register = on => {
   // turn is also charged to that agent's own path.
   on('turn.complete', async ($, e, next) => {
     const cost = weigh(e.usage)
-    await update($, view, v => {
+    await change($, v => {
       const key = e.agentId === undefined ? undefined : v.agentNode[e.agentId]
       const moved: FlowView = {
         ...v,
@@ -368,7 +397,7 @@ export const register: Register = on => {
     if (id) {
       const now = await $.clock.now()
       const target = agentTarget(e.subagentType)
-      await update($, view, v => ({
+      await change($, v => ({
         ...v,
         agentNode: { ...v.agentNode, [id]: target.key },
         nodes: touch(v.nodes, target, now, n => ({ ...n, at: now })),
@@ -383,7 +412,7 @@ export const register: Register = on => {
   on('session.measure', async ($, e, next) => {
     const { rateLimits } = await $.session.usage()
     const win = rateLimits.find(r => r.kind === 'five_hour')
-    await update($, view, v => applyLimit(v, win))
+    await change($, v => applyLimit(v, win))
 
     return next(e)
   })
@@ -393,7 +422,7 @@ export const register: Register = on => {
     const args = e as unknown as Record<string, unknown>
     const c = classify(String(e.tool), args)
     const isBackground = args.run_in_background === true
-    await update($, view, v => ({
+    await change($, v => ({
       ...v,
       nodes: touch(v.nodes, c, now, n => ({
         ...n,
@@ -415,7 +444,7 @@ export const register: Register = on => {
       throw err
     } finally {
       const end = await $.clock.now()
-      await update($, view, v => ({
+      await change($, v => ({
         ...v,
         nodes: v.nodes.map(n =>
           n.key === c.key
@@ -430,8 +459,8 @@ export const register: Register = on => {
             : n,
         ),
       }))
-      $.clock.after(ACTIVE_MS + 200, () => update($, view, bump))
-      if (failed) $.clock.after(ERROR_MS + 200, () => update($, view, bump))
+      $.clock.after(ACTIVE_MS + 200, () => change($, bump))
+      if (failed) $.clock.after(ERROR_MS + 200, () => change($, bump))
     }
   })
 
