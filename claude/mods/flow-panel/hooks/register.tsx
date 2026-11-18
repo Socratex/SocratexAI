@@ -149,15 +149,27 @@ const pill = (x: number, y: number, text: string, pw: number) => {
 // A line, plus a travelling dot (coloured like the component it leads to)
 // while that component is active. `phase` (the time of the last flush) makes
 // a redrawn dot carry on instead of jumping back to the start of the line.
-const line = (d: string, colour: string, i: number, isActive: boolean, phase: number) => {
+// The dots are small, long and glowing; the more the line's component cost, the
+// more of them run along it (spread evenly): 1 for next to nothing, up to 8.
+const DOTS_MAX = 8
+const dotCount = (usd: number | undefined): number =>
+  Math.max(1, Math.min(DOTS_MAX, 1 + Math.round(Math.log2(1 + ((usd ?? 0) * 100) / 0.05))))
+
+const line = (d: string, colour: string, i: number, isActive: boolean, phase: number, usd?: number) => {
   const dur = 1.5 + i * 0.3
-  const begin = -(phase % dur).toFixed(2)
-  return (
-    `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="${isActive ? 0.8 : 0.3}" stroke-width="2"/>` +
-    (isActive
-      ? `<circle r="5" fill="${colour}"><animateMotion begin="${begin}s" dur="${dur}s" repeatCount="indefinite" path="${d}"/></circle>`
-      : '')
-  )
+  const n = dotCount(usd)
+  let dots = ''
+  if (isActive) {
+    for (let j = 0; j < n; j += 1) {
+      const begin = (-((phase % dur) + (j * dur) / n)).toFixed(2)
+      const motion = `<animateMotion begin="${begin}s" dur="${dur}s" repeatCount="indefinite" rotate="auto" path="${d}"/>`
+      dots +=
+        `<ellipse rx="9" ry="4.5" fill="${colour}" opacity="0.55" filter="url(#dotglow)">${motion}</ellipse>` +
+        `<ellipse rx="6" ry="2.5" fill="${colour}">${motion}</ellipse>`
+    }
+  }
+
+  return `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="${isActive ? 0.8 : 0.3}" stroke-width="2"/>${dots}`
 }
 
 const node = (b: Box) => {
@@ -215,6 +227,7 @@ type Row = {
   w: number
   ring?: Box['ring']
   text: string
+  usd?: number // what the branch cost: how many dots run along its line
   isActive: boolean
   kids: Row[]
 }
@@ -245,6 +258,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       w: 96,
       ring,
       text: usdText(nodeUsd(nd, s.perW)),
+      usd: nodeUsd(nd, s.perW),
       isActive: isRunning || s.mainRunning,
       kids: [] as Row[],
     }
@@ -261,6 +275,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       w: 120,
       ring: undefined,
       text: usdText(sub.usd),
+      usd: sub.usd,
       isActive: sub.mainRunning,
       kids: rowsOf(sub, now, count, depth + 1, [...path, sub.id]),
     }
@@ -287,7 +302,7 @@ const layout = (
     idx.i += 1
     // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push(
-      line(d, KIND[r.kind].fill, idx.i, r.isActive, 0) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
+      line(d, KIND[r.kind].fill, idx.i, r.isActive, 0, r.usd) +pill(left + r.w + 6 + pw / 2, y, r.text, pw),
     )
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
@@ -326,8 +341,8 @@ const draw = (v: FlowView, now: number): string => {
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width * FIT}" height="${height * FIT}" preserveAspectRatio="xMinYMin meet">` +
-    `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter></defs>` +
-    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0) +
+    `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="2.5"/></filter></defs>` +
+    line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0, known.reduce((a, b) => a + b, 0)) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
     out.lines.join('') +
     node(you) +
