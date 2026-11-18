@@ -413,7 +413,6 @@ async function publish($: EngineInterface, v: FlowView): Promise<void> {
     const at = await $.clock.now()
     const text = JSON.stringify({ id: selfId, startedAt, updatedAt: at, tree: treeOf(v), view: v })
     await $.fs.write(`${dir}/${selfId}.json`, text)
-    await $.fs.write(`${dir}/last.json`, text) // what a fresh session starts from
   } catch {
     // the shared folder is optional: without it there are simply no session tiles
   }
@@ -478,7 +477,7 @@ async function poll($: EngineInterface): Promise<void> {
     }
     for (const n of names) {
       const id = n.name.replace(/\.json$/, '')
-      if (!n.name.endsWith('.json') || id === selfId || ids.includes(id)) continue
+      if (!n.name.endsWith('.json') || id === 'last' || id === selfId || ids.includes(id)) continue
       const f = await loadShared($, dir, id)
       if (f && f.startedAt >= lastSpawnAt - 2000 && f.startedAt <= lastSpawnAt + ATTACH_WINDOW_MS) {
         ids.push(id)

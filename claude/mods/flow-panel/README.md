@@ -33,11 +33,11 @@ Set `FLOW_PANEL` to `0` in the `env` block of a settings file; the project value
 - The limit figure is the whole account's, so other sessions inflate it and the learned factor.
 - Lit paths (moving dots) follow the main turn. A state change that would draw the same picture is held back, not written, so the pane redraws (and blinks) only when something visible changes. SVG is pinned top-left, margin 5px.
 - Sessions started from here (start_session) show as grey "Session N" tiles holding their own full tree, nested. Each session with the mod writes its tree to `$SOCRATEX_HOME/local/flow/<session id>.json`; the parent attaches files born within 2 min of its start_session call (a heuristic, so an unrelated session started at the same moment can be attached by mistake).
-- The last view is saved to `local/flow/` (per session and as `last.json`) and restored at session start, so a restart does not begin empty.
+- The last view is saved to `local/flow/` (one file per session) and restored at session start, so a restart does not begin empty.
 - A new prompt clears the segments; only paths used since then are shown.
 - Lit paths (moving dots) follow the main turn. A state change that would draw the same picture is held back, not written, so the pane redraws (and blinks) only when something visible changes. SVG is pinned top-left, margin 5px.
 - Sessions started from here (start_session) show as grey "Session N" tiles holding their own full tree, nested. Each session with the mod writes its tree to `$SOCRATEX_HOME/local/flow/<session id>.json`; the parent attaches files born within 2 min of its start_session call (a heuristic, so an unrelated session started at the same moment can be attached by mistake).
-- The last view is saved to `local/flow/` (per session and as `last.json`) and restored at session start, so a restart does not begin empty.
+- The last view is saved to `local/flow/` (one file per session) and restored at session start, so a restart does not begin empty.
 - A new prompt clears the segments; only paths used since then are shown.
 - Figures refresh after each main turn, not continuously. Redraws are batched to one per 2 seconds, with dots keeping their phase, to avoid blinking.
 - Tuning constants (font, weights) are at the top of `hooks/register.tsx`.
