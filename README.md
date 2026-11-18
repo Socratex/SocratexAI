@@ -14,14 +14,12 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 - An installer that asks first and backs up your config before touching it.
 
 **What you do not get**
-- Not a full process kit. The task flows are short tables, not long skills. If you want enforced TDD, a long debugging method or many playbooks, [superpowers](https://github.com/obra/superpowers) and [pstack](https://github.com/backnotprop/pstack) go much deeper.
-- Process rules are text the model follows. Only the guard is enforced by a hook.
+- Not a full process kit. The task flows are short tables, not long skills. There is no enforced TDD, no long debugging method and no playbook library.
+- Process rules are text the model follows. Only the guard is enforced by a hook, and the guard is a safety net against mistakes, not a sandbox: it matches common command shapes and misses indirect writes (for example through `bash -c`).
 - Only Claude Code and Codex are supported. Cursor, Gemini, OpenCode and others are not.
 - Needs Python 3 for the installer and tools (CI runs 3.12 on Linux and Windows; the minimum version is not verified). Node is not needed, except for the optional flow-panel mod.
-- Young and small: one author, history from 2026-11, no benchmarks showing it beats other setups. The routing loop and risk score are report-only and have little real data yet.
+- Young and small: one author, history from 2026-11, no benchmarks of its effect. The routing loop and risk score are report-only and have little real data yet.
 - Some defaults are the author's taste (emoji reply style, Polish profile example). The reply style is optional at install; language and name live in your own `local/profile.md`.
-
-**Compared with others** (read from pinned clones on 2026-11-18, details in `docs/AUDIT-pstack-ecc.md`): smaller startup than ECC and gstack, a stronger guard than superpowers and pstack (they ship none), and a measured routing loop none of the files we read had. Behind them in process depth, test volume, and supported tools.
 
 ## 🧳 Use only part of it
 

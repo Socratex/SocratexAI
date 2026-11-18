@@ -15,7 +15,7 @@ Saved so it is not repeated. Before auditing again, read the section "When to re
 - The ECC README was read up to character 100000 of 139919 (the tail was not read).
 
 ## 🧱 What they are
-- **SocratexAI**: a small rule core (~11 KB always loaded), 4 tiered agents, 5 skills, 1 hook (guard), Python tools (risk_score, routing_log, backup, skill_learn), DIRECTIVES as an index "what I do -> which rule applies".
+- **SocratexAI**: a small rule core (~19 KB always loaded), 4 tiered agents, 5 skills, 1 hook (guard), Python tools (risk_score, routing_log, backup, skill_learn), DIRECTIVES as an index "what I do -> which rule applies".
 - **pstack** (Lauren Tan / poteto, port of cursor/plugins/pstack; forks: backnotprop, michael-denyer, painhardcore, zbeyens, mdsmithaustin): philosophy "rigor over throughput". Router `/poteto-mode`, 23 playbooks, about 50 skills, 24 rules, 2 agents. The README does not describe hooks (except the michael-denyer fork: SessionStart injects a routing mandate).
 - **ECC** (affaan-m/ECC, formerly everything-claude-code, MIT): an "agent harness" - 71 agents, 314 skills, 98 command shims, hooks, rules, Memory Vault, instincts with confidence, AgentShield (config scan). Motto: optimize the context window, persist the rest.
 
