@@ -234,7 +234,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
 
     return {
       label,
-      full: esc(sub.title ? `${label}: ${sub.title}` : label),
+      full: esc(sub.title || label),
       kind: 'session' as Kind,
       w: 120,
       ring: undefined,
@@ -475,9 +475,32 @@ async function restoredFor($: EngineInterface, v: FlowView): Promise<FlowView> {
   return saved ?? v
 }
 
+let lastTitleAt = 0
+
+// The title the sidebar shows is kept in the session's transcript as the last
+// "customTitle" (or "aiTitle") line; read at most once a minute.
+async function refreshTitle($: EngineInterface): Promise<void> {
+  const now = await $.clock.now()
+  if (now - lastTitleAt < 60000) return
+  lastTitleAt = now
+  try {
+    const { transcriptPath } = await $.session.info()
+    if (!transcriptPath) return
+    const text = String(await $.fs.read(transcriptPath))
+    const hits = [...text.matchAll(/"(?:customTitle|aiTitle)":("(?:[^"\\]|\\.)*")/g)]
+    const last = hits[hits.length - 1]
+    if (!last) return
+    const title = String(JSON.parse(last[1] as string)).slice(0, 80)
+    change($, v => (v.title === title ? v : { ...v, title }))
+  } catch {
+    // no readable transcript: the tooltip just shows "Session N"
+  }
+}
+
 async function poll($: EngineInterface): Promise<void> {
   const dir = await folderOf($)
   if (!dir) return
+  await refreshTitle($)
   const cur = held ?? (await read($, view))
   const ids = cur.sessionIds.filter(id => id !== 'last' && id !== selfId) // ids from older saved views may be stale
 
@@ -565,10 +588,8 @@ export const register: Register = on => {
       const isUp = (await $.ui.panes()).some(pane => pane.id === PANE)
       if (!isUp) void $.ui.open({ id: PANE, title: 'Flow' })
     }
-    // The first real prompt names the session (shown in the parent's tooltip).
-    const name = e.command ? '' : e.text.trim().replace(/\s+/g, ' ').slice(0, 80)
     // A new prompt starts a fresh view: only segments used since then show.
-    await change($, v => ({ ...v, nodes: [], agentNode: {}, title: v.title || name || undefined }))
+    await change($, v => ({ ...v, nodes: [], agentNode: {} }))
 
     return next(e)
   })
