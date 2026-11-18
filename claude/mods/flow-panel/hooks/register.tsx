@@ -34,6 +34,7 @@ const KIND = {
   mcp: { fill: '#8e44ad', text: '#ffffff' }, // purple
   skill: { fill: '#f2c94c', text: '#1b1b1b' }, // yellow
   session: { fill: '#78909c', text: '#102027' }, // grey-blue
+  app: { fill: '#e8803a', text: '#1b1b1b' }, // orange: the desktop app's own tools (ccd_*)
 }
 const STATE = {
   waiting: '#ff9800', // waiting for the user
@@ -314,6 +315,10 @@ const classify = (tool: string, args: Record<string, unknown>): Target => {
   if (tool === 'Skill') {
     const skill = typeof args.skill === 'string' ? args.skill : 'Skill'
     return { key: `skill:${skill}`, label: skill, kind: 'skill' }
+  }
+  if (tool.startsWith('mcp__ccd_')) {
+    const app = (tool.split('__')[1] ?? 'app').replace(/^ccd_/, '')
+    return { key: `app:${app}`, label: app, kind: 'app' }
   }
   if (tool.startsWith('mcp__')) {
     const server = tool.split('__')[1] ?? 'mcp'

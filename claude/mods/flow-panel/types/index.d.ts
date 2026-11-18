@@ -1,4 +1,4 @@
-export type NodeKind = 'agent' | 'tool' | 'mcp' | 'skill'
+export type NodeKind = 'agent' | 'tool' | 'mcp' | 'skill' | 'app'
 
 export type FlowNode = {
   key: string // unique id: tool name, MCP server, skill or agent type
