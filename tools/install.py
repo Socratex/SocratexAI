@@ -46,7 +46,7 @@ STYLE_DOC = "core/STYLE.md"
 
 # Answers of the install questions. Defaults reproduce the original full install; the wizard narrows them.
 PREF_DEFAULTS = {"claude": True, "codex": True, "merge_settings": True, "codex_plugin": True, "flow_panel": True,
-                 "style": "uce", "git_hooks": True, "set_env": True, "subrepos": True, "claude_dir": "", "codex_dir": ""}
+                 "style": "uce", "git_hooks": True, "set_env": True, "subrepos": False, "refs_dir": "", "claude_dir": "", "codex_dir": ""}
 PREFS = dict(PREF_DEFAULTS)
 CLAUDE = HOME_DIR / ".claude"
 CODEX = HOME_DIR / ".codex"
@@ -148,9 +148,13 @@ def collect_prefs(auto: bool) -> dict:
                              True, auto)
     prefs["set_env"] = ask("Set the SOCRATEX_HOME user environment variable?",
                            "Lets rules and skills find this folder from any project.", True, auto)
-    prefs["subrepos"] = ask("Download the reference packs (superpowers, pstack, ECC) into subrepos/?",
-                            "Read-only copies (about 120 MB) that are searched on demand when SocratexAI lacks a "
-                            "capability. Nothing from them is installed or run; git never tracks them.", True, auto)
+    prefs["subrepos"] = ask(
+        "Download the reference packs (15 other agent toolkits: superpowers, pstack, ECC, spec-kit, ...)?",
+        "Read-only copies (several hundred MB) kept OUTSIDE this repo and searched only when SocratexAI lacks a "
+        "capability. Nothing from them is installed or run. Skip it and fetch later with tools/subrepos.py update.",
+        False, auto)
+    if prefs["subrepos"]:
+        prefs["refs_dir"] = ask_text("Folder for the reference packs:", str(Path.home() / "ai-refs"), auto)
     return prefs
 
 
@@ -287,7 +291,8 @@ def merge_list(base: list, extra: list) -> list:
 def settings_fragment(python: str) -> dict:
     """The settings.json fragment for the chosen options (optional parts are dropped, never forced)."""
     text = (SOCRATEX / "claude" / "settings.json").read_text(encoding="utf-8")
-    fragment = json.loads(text.replace("{SOCRATEX_HOME}", posix(SOCRATEX)).replace("{PYTHON}", python.replace("\\", "/")))
+    fragment = json.loads(text.replace("{SOCRATEX_HOME}", posix(SOCRATEX)).replace("{PYTHON}", python.replace("\\", "/"))
+                               .replace("{REFS_DIR}", posix(refs_folder())))
     if not PREFS["codex_plugin"]:
         fragment.pop("extraKnownMarketplaces", None)
         fragment.pop("enabledPlugins", None)
@@ -394,16 +399,23 @@ def install_env(report: list[str], check: bool) -> None:
         report.append("  add to your shell profile: export SOCRATEX_HOME=" + posix(SOCRATEX))
 
 
+def refs_folder() -> Path:
+    """Where the reference packs live: the saved choice, else SOCRATEX_REFS / ~/ai-refs."""
+    if PREFS.get("refs_dir"):
+        return Path(PREFS["refs_dir"])
+    import subrepos
+    return subrepos.refs_dir()
+
+
 def install_subrepos(mode: str, report: list[str]) -> None:
-    """Reference packs (subrepos.json): cloned on a full install, fast-forwarded after every pull (--sync)."""
-    if not PREFS["subrepos"]:
+    """Download the reference packs once, on a full install the owner agreed to. Never on --sync or --check:
+    updating packs is the separate, on-request `tools/update.py refs`."""
+    if mode != "full" or not PREFS["subrepos"]:
         return
     import subrepos
-    if mode == "check":
-        report += [f"clone reference pack {repo['name']}" for repo in subrepos.load_manifest()
-                   if not (subrepos.DEST / repo["name"] / ".git").exists()]
-    else:
-        subrepos.cmd_update(quiet=mode == "sync")
+    os.environ["SOCRATEX_REFS"] = str(refs_folder())
+    if subrepos.cmd_update([]):
+        report.append("note: some reference packs failed to download; rerun `python tools/update.py refs`")
 
 
 def install_git_hooks(python: str, report: list[str], check: bool) -> None:

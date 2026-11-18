@@ -1,4 +1,4 @@
-"""Tests for the reference-pack tool: search ranking, caps and the manifest."""
+"""Tests for the reference-pack tool: location, search ranking, pins and failure reporting."""
 
 from __future__ import annotations
 
@@ -18,28 +18,50 @@ def skill(pack: Path, rel: str, name: str, description: str, body: str = "") -> 
     path.write_text(f"---\nname: {name}\ndescription: {description}\n---\n{body}\n", encoding="utf-8")
 
 
-def fake_packs(tmp_path, monkeypatch):
+def fake_packs(tmp_path, monkeypatch) -> Path:
     manifest = tmp_path / "subrepos.json"
-    manifest.write_text(json.dumps({"repos": [{"name": "a", "url": "x", "branch": "main", "what": ""},
-                                              {"name": "b", "url": "x", "branch": "main", "what": ""}]}),
-                        encoding="utf-8")
+    repos = [{"name": "a", "cat": "workflow", "url": "x", "branch": "main", "what": ""},
+             {"name": "b", "cat": "frontend", "url": "x", "branch": "main", "what": ""}]
+    manifest.write_text(json.dumps({"repos": repos}), encoding="utf-8")
     monkeypatch.setattr(subrepos, "MANIFEST", manifest)
-    monkeypatch.setattr(subrepos, "DEST", tmp_path / "packs")
+    monkeypatch.setenv("SOCRATEX_REFS", str(tmp_path / "packs"))
     return tmp_path / "packs"
 
 
-def test_manifest_lists_only_github_https_urls():
+def test_real_manifest_is_github_https_pinned_and_categorised():
     for repo in subrepos.load_manifest():
-        assert repo["url"].startswith("https://github.com/") and repo["branch"]
+        assert repo["url"].startswith("https://github.com/") and repo["branch"] and repo["cat"]
+        assert len(repo.get("commit", "x" * 40)) == 40
+
+
+def test_packs_live_outside_the_repo(monkeypatch):
+    monkeypatch.delenv("SOCRATEX_REFS", raising=False)
+    assert subrepos.ROOT not in subrepos.refs_dir().parents and subrepos.refs_dir() != subrepos.ROOT
+    monkeypatch.setenv("SOCRATEX_REFS", "/somewhere/else")
+    assert subrepos.refs_dir() == Path("/somewhere/else")
 
 
 def test_search_matches_all_words_and_treats_hyphens_as_spaces(tmp_path, monkeypatch):
     packs = fake_packs(tmp_path, monkeypatch)
     skill(packs / "a", "skills/test-driven-development/SKILL.md", "test-driven-development", "Write the test first")
     skill(packs / "a", "skills/cooking/SKILL.md", "cooking", "Make soup")
-    hits = subrepos.search(["test", "driven", "development"])
-    assert [hit[2] for hit in hits] == ["test-driven-development"]
+    assert [hit[2] for hit in subrepos.search(["test", "driven", "development"])] == ["test-driven-development"]
     assert subrepos.search(["test", "soup"]) == []
+
+
+def test_filler_words_are_ignored_and_alone_they_are_rejected(tmp_path, monkeypatch, capsys):
+    packs = fake_packs(tmp_path, monkeypatch)
+    skill(packs / "a", "skills/review/SKILL.md", "review", "Review code", "it works for it")
+    assert subrepos.meaningful(["it", "works", "Review"]) == ["review"]
+    assert subrepos.cmd_search(["it", "works"], None) == 1
+    assert "filler" in capsys.readouterr().out
+
+
+def test_name_and_description_outweigh_body_mentions(tmp_path, monkeypatch):
+    packs = fake_packs(tmp_path, monkeypatch)
+    skill(packs / "a", "skills/x/SKILL.md", "x", "unrelated", "deploy " * 40)
+    skill(packs / "a", "skills/deploy/SKILL.md", "deploy", "Deploy the app", "deploy once")
+    assert subrepos.search(["deploy"])[0][2] == "deploy"
 
 
 def test_each_pack_contributes_at_most_per_pack_hits(tmp_path, monkeypatch):
@@ -48,8 +70,21 @@ def test_each_pack_contributes_at_most_per_pack_hits(tmp_path, monkeypatch):
         skill(packs / "a", f"skills/s{number}/SKILL.md", f"s{number}", "review code carefully")
     skill(packs / "b", "skills/r/SKILL.md", "r", "review code once")
     hits = subrepos.search(["review"], per_pack=3)
-    assert sum(hit[1].startswith("a/") for hit in hits) == 3
-    assert any(hit[1].startswith("b/") for hit in hits)
+    assert sum(hit[1].startswith("a/") for hit in hits) == 3 and any(hit[1].startswith("b/") for hit in hits)
+
+
+def test_category_filter(tmp_path, monkeypatch):
+    packs = fake_packs(tmp_path, monkeypatch)
+    skill(packs / "a", "skills/r/SKILL.md", "r", "review code")
+    skill(packs / "b", "skills/q/SKILL.md", "q", "review design")
+    assert [hit[1][0] for hit in subrepos.search(["review"], cat="frontend")] == ["b"]
+
+
+def test_search_output_is_marked_as_third_party_data(tmp_path, monkeypatch, capsys):
+    packs = fake_packs(tmp_path, monkeypatch)
+    skill(packs / "a", "skills/r/SKILL.md", "r", "review code")
+    assert subrepos.cmd_search(["review"], None) == 0
+    assert capsys.readouterr().out.startswith("THIRD-PARTY CONTENT")
 
 
 def test_non_skill_folders_and_tests_are_ignored(tmp_path, monkeypatch):
@@ -59,8 +94,43 @@ def test_non_skill_folders_and_tests_are_ignored(tmp_path, monkeypatch):
     assert subrepos.search(["review"]) == []
 
 
-def test_update_reports_clone_failure_without_raising(tmp_path, monkeypatch):
+def test_failures_are_reported_not_hidden(tmp_path, monkeypatch, capsys):
     fake_packs(tmp_path, monkeypatch)
     monkeypatch.setattr(subrepos, "git", lambda *a, **k: subprocess.CompletedProcess([], 1, "", "offline"))
-    line = subrepos.update_one({"name": "a", "url": "https://github.com/none/none", "branch": "main"})
-    assert "clone failed" in line
+    assert subrepos.cmd_update([]) == 1
+    out = capsys.readouterr().out
+    assert "[error  ] a" in out and "[error  ] b" in out and "2 error" in out
+
+
+def test_one_failing_pack_does_not_stop_the_others(tmp_path, monkeypatch):
+    fake_packs(tmp_path, monkeypatch)
+    calls = []
+
+    def fake_update(repo, dest):
+        calls.append(repo["name"])
+        return ("error", "boom") if repo["name"] == "a" else ("ok", "fine")
+
+    monkeypatch.setattr(subrepos, "update_one", fake_update)
+    assert subrepos.cmd_update([]) == 1 and calls == ["a", "b"]
+
+
+def test_disabled_pack_is_skipped(tmp_path):
+    status, _ = subrepos.update_one({"name": "z", "url": "x", "branch": "m", "disabled": True}, tmp_path)
+    assert status == "skipped"
+
+
+def test_bump_needs_a_terminal_or_yes_and_keeps_the_pin(tmp_path, monkeypatch):
+    packs = fake_packs(tmp_path, monkeypatch)
+    repo = {"name": "a", "url": "x", "branch": "main", "commit": "1" * 40}
+    outputs = {"rev-parse": "2" * 40, "log": "subject"}
+
+    def fake_git(args, cwd=None):
+        return subprocess.CompletedProcess([], 0, outputs.get(args[0], ""), "")
+
+    monkeypatch.setattr(subrepos, "git", fake_git)
+    monkeypatch.setattr(subrepos, "prepare", lambda *a: None)
+    monkeypatch.setattr(sys.stdin, "isatty", lambda: False)
+    status, _ = subrepos.bump_one(repo, packs, yes=False)
+    assert status == "skipped" and repo["commit"] == "1" * 40
+    status, _ = subrepos.bump_one(repo, packs, yes=True)
+    assert status == "ok" and repo["commit"] == "2" * 40

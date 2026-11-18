@@ -140,3 +140,18 @@ def test_broken_project_config_does_not_crash_the_guard(tmp_path):
 
 def test_other_tools_pass_through(tmp_path):
     assert run_guard({"tool_name": "Grep", "tool_input": {"pattern": "x"}}, tmp_path)[0] == 0
+
+
+def test_reference_packs_folder_is_read_only(tmp_path):
+    env = {"SOCRATEX_REFS": str(tmp_path / "ai-refs")}
+    inside = str(tmp_path / "ai-refs" / "pack" / "SKILL.md")
+    assert run_guard(tool("Edit", inside), tmp_path, env=env)[0] == 2
+    assert run_guard(tool("Write", inside.replace("/", "\\")), tmp_path, env=env)[0] == 2
+    assert run_guard(tool("Read", inside), tmp_path, env=env)[0] == 0
+    assert run_guard(tool("Edit", str(tmp_path / "ai-refs-other" / "x.md")), tmp_path, env=env)[0] == 0
+    for command in ("rm -rf ~/ai-refs/pack", "echo x > ~/ai-refs/pack/a.md", "sed -i s/a/b/ ai-refs/p/x.md",
+                    "mv ai-refs/p ai-refs/q", "git -C ~/ai-refs/pack commit -am x"):
+        assert run_guard(bash(command), tmp_path, env=env)[0] == 2, command
+    for command in ("ls ~/ai-refs", "cat ~/ai-refs/pack/SKILL.md", "rg skill ~/ai-refs | head",
+                    "python tools/subrepos.py update", "git -C ~/ai-refs/pack log -1"):
+        assert run_guard(bash(command), tmp_path, env=env)[0] == 0, command

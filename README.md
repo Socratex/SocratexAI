@@ -50,14 +50,16 @@ python tools/backup.py --list     # config backups; --restore <zip> to roll back
 
 ## 📚 Reference packs
 
-`subrepos.json` lists read-only copies of other agent toolkits (superpowers, pstack, ECC) that are cloned into `subrepos/` (gitignored). They are never installed or run: when SocratexAI lacks a capability, the agent searches them and only suggests a match.
+`subrepos.json` lists 15 read-only agent toolkits (superpowers, pstack, ECC, anthropics/skills, spec-kit, BMAD, awesome lists, ...) with a category and a pinned commit each. They are **not in this repo**: the install asks whether to download them, and they land in `~/ai-refs` (or the folder you choose). They are never installed, linked or run. When SocratexAI lacks a capability, the agent searches them and only suggests a match; their text is treated as third-party data. The guard blocks edits inside that folder, and because it is outside the repo no agent loads their instructions as nested project rules.
 
 ```bash
-python tools/subrepos.py search test driven development   # skills/commands/agents matching all words
-python tools/subrepos.py update                           # clone missing, fast-forward the rest (also done by --sync after every pull)
+python tools/update.py self    # git pull --ff-only in SocratexAI
+python tools/update.py refs    # download/checkout the pinned commits (one try per pack, errors listed, exit 1 on any)
+python tools/subrepos.py bump <name>        # show upstream changes since the pin, move the pin only after your yes
+python tools/subrepos.py search --cat gamedev game design   # filler words ignored; name/description outrank body text
 ```
 
-Updating a pack changes nothing tracked by git, so it never needs a push. Opt out in the install questions.
+Pins live in the tracked `subrepos.json`, so another machine gets the same versions. `--sync` and the post-pull hook never touch the packs.
 
 ## 🧱 Layers
 

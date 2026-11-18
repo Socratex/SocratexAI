@@ -222,7 +222,11 @@
     },
     {
       "path": "tools/subrepos.py",
-      "what": "Keep read-only reference packs (subrepos.json) in subrepos/ and search them on demand."
+      "what": "Reference packs of other agent toolkits: download on request, pin, bump and search (read-only, never run)."
+    },
+    {
+      "path": "tools/update.py",
+      "what": "Update SocratexAI and the reference packs as two independent steps."
     },
     {
       "path": "claude/hooks/guard.py",
