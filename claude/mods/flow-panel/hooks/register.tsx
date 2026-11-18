@@ -402,7 +402,10 @@ let held: FlowView | undefined
 
 let startedAt = 0
 let lastPublished = ''
-let lastSpawnAt = 0 // when this session last called start_session
+const HEAD_CHARS = 400 // how much of its first prompt a session shares
+const SNIPPET_CHARS = 60 // how much of a brief identifies the session it started
+type Spawn = { at: number; snippet: string }
+const norm = (s: string) => s.replace(/\s+/g, ' ').trim()
 
 const treeOf = (v: FlowView): SubTree => ({
   id: selfId,
@@ -510,10 +513,20 @@ async function poll($: EngineInterface): Promise<void> {
   if (!dir) return
   await refreshTitle($)
   const cur = held ?? (await read($, view))
-  const ids = cur.sessionIds.filter(id => id !== 'last' && id !== selfId) // ids from older saved views may be stale
+  const spawns = cur.spawns ?? []
+  const now = await $.clock.now()
+  // Ours only when its first prompt is the brief of one of our start_session calls.
+  const isOurs = (f: Shared | undefined): boolean => {
+    const head = f?.view?.head
+    return !!head && spawns.some(s => s.snippet !== '' && head.includes(s.snippet))
+  }
+  const ids: string[] = []
+  for (const id of cur.sessionIds.filter(id => id !== 'last' && id !== selfId)) {
+    if (isOurs(await loadShared($, dir, id))) ids.push(id) // drops ids attached by older, looser rules
+  }
 
-  // A file born soon after our start_session call is the session we started.
-  if (lastSpawnAt > 0) {
+  // A file born soon after one of our start_session calls, with that brief as its head.
+  if (spawns.some(s => now - s.at < ATTACH_WINDOW_MS * 5)) {
     let names: Array<{ name: string }> = []
     try {
       names = await $.fs.list(dir)
@@ -524,7 +537,8 @@ async function poll($: EngineInterface): Promise<void> {
       const id = n.name.replace(/\.json$/, '')
       if (!n.name.endsWith('.json') || id === 'last' || id === selfId || ids.includes(id)) continue
       const f = await loadShared($, dir, id)
-      if (f && f.startedAt >= lastSpawnAt - 2000 && f.startedAt <= lastSpawnAt + ATTACH_WINDOW_MS) {
+      const born = f?.startedAt ?? 0
+      if (f && isOurs(f) && spawns.some(s => born >= s.at - 2000 && born <= s.at + ATTACH_WINDOW_MS)) {
         ids.push(id)
       }
     }
@@ -532,7 +546,6 @@ async function poll($: EngineInterface): Promise<void> {
 
   const subs: SubTree[] = []
   const kept: string[] = []
-  const now = await $.clock.now()
   for (const id of ids) {
     const f = await loadShared($, dir, id)
     // Gone when it said it ended (archived, closed) or has not been heard from for long.
@@ -596,8 +609,11 @@ export const register: Register = on => {
       const isUp = (await $.ui.panes()).some(pane => pane.id === PANE)
       if (!isUp) void $.ui.open({ id: PANE, title: 'Flow' })
     }
+    // The session's first prompt (the brief, for a started session) is how its
+    // parent recognises it.
+    const head = e.command ? '' : norm(e.text).slice(0, HEAD_CHARS)
     // A new prompt starts a fresh view: only segments used since then show.
-    await change($, v => ({ ...v, nodes: [], agentNode: {} }))
+    await change($, v => ({ ...v, nodes: [], agentNode: {}, head: v.head || head || undefined }))
 
     return next(e)
   })
@@ -676,9 +692,15 @@ export const register: Register = on => {
     const args = e as unknown as Record<string, unknown>
     const c = classify(String(e.tool), args)
     const isBackground = args.run_in_background === true
-    if (/start_session|hand_off_to_session/.test(String(e.tool))) lastSpawnAt = now
+    // A session we start gets a brief: remember its start, so the child can be
+    // recognised by that brief later (and no other session is taken for it).
+    const spawn: Spawn[] =
+      /start_session|hand_off_to_session/.test(String(e.tool)) && typeof args.prompt === 'string'
+        ? [{ at: now, snippet: norm(args.prompt).slice(0, SNIPPET_CHARS) }]
+        : []
     await change($, v => ({
       ...v,
+      spawns: [...(v.spawns ?? []), ...spawn].slice(-20),
       nodes: touch(v.nodes, c, now, n => ({
         ...n,
         at: now,

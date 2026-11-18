@@ -24,6 +24,8 @@ export type SubTree = {
 }
 
 export type FlowView = {
+  head?: string // this session's first prompt: how its parent recognises it
+  spawns?: Array<{ at: number; snippet: string }> // start_session calls made here: when, and the start of the brief
   title?: string // first prompt of this session (its name in the parent's tooltip)
   sessionIds: string[] // sessions this one started (found by their shared files)
   subs: SubTree[] // their trees, in the same order
