@@ -31,15 +31,16 @@ const RESULT_WEIGHT = 1.35
 const CHARS_PER_TOKEN = 4
 
 // Component colours (fill) and state colours (ring).
+// `light` is the border of a component that is working right now.
 const KIND = {
-  you: { fill: '#3b82f6', text: '#ffffff' }, // blue
-  claude: { fill: '#e8803a', text: '#1b1b1b' }, // orange
-  agent: { fill: '#26c6da', text: '#102027' }, // cyan
-  tool: { fill: '#8e1b3a', text: '#ffffff' }, // burgundy
-  mcp: { fill: '#8e44ad', text: '#ffffff' }, // purple
-  skill: { fill: '#f2c94c', text: '#1b1b1b' }, // yellow
-  session: { fill: '#78909c', text: '#102027' }, // grey-blue
-  app: { fill: '#e8803a', text: '#1b1b1b' }, // orange: the desktop app's own tools (ccd_*)
+  you: { fill: '#3b82f6', light: '#8ab4fa', text: '#ffffff' }, // blue
+  claude: { fill: '#e8803a', light: '#f4a76b', text: '#1b1b1b' }, // orange
+  agent: { fill: '#26c6da', light: '#7ee3ef', text: '#102027' }, // cyan
+  tool: { fill: '#8e1b3a', light: '#c2476a', text: '#ffffff' }, // burgundy
+  mcp: { fill: '#8e44ad', light: '#be7fd6', text: '#ffffff' }, // purple
+  skill: { fill: '#f2c94c', light: '#f8e08e', text: '#1b1b1b' }, // yellow
+  session: { fill: '#26c6da', light: '#7ee3ef', text: '#102027' }, // cyan, like a sub-agent
+  app: { fill: '#e8803a', light: '#f4a76b', text: '#1b1b1b' }, // orange: the desktop app's own tools (ccd_*)
 }
 const STATE = {
   waiting: '#ff9800', // waiting for the user
@@ -57,6 +58,7 @@ type Box = {
   w: number
   h: number
   ring?: keyof typeof STATE
+  isActive?: boolean // working now: a lighter border of its own colour
 }
 
 const INITIAL: FlowView = {
@@ -161,8 +163,8 @@ const line = (d: string, colour: string, i: number, isActive: boolean, phase: nu
 
 const node = (b: Box) => {
   const k = KIND[b.kind]
-  const ring = b.ring ? STATE[b.ring] : 'none'
-  const ringW = b.ring ? 3.5 : 0
+  const ring = b.ring ? STATE[b.ring] : b.isActive ? k.light : 'none'
+  const ringW = b.ring || b.isActive ? 3.5 : 0
   const tip = b.full ? `<title>${b.full}</title>` : ''
   return (
     `<g>${tip}` +
@@ -234,7 +236,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       label,
       kind: 'session' as Kind,
       w: 120,
-      ring: sub.isWaiting ? ('waiting' as const) : undefined,
+      ring: undefined,
       text: costText(sub.k, sub.wTotal),
       isActive: sub.mainRunning,
       kids: rowsOf(sub, now, count, depth + 1, [...path, sub.id]),
@@ -264,7 +266,7 @@ const layout = (
     out.lines.push(
       line(d, KIND[r.kind].fill, idx.i, r.isActive, 0) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
     )
-    out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring }))
+    out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
     out.bottom = Math.max(out.bottom, y + 20)
     y = r.kids.length ? layout(r.kids, left + 12, y + 20, y + ROW, out, idx) : y + ROW
@@ -281,9 +283,8 @@ const draw = (v: FlowView, now: number): string => {
     cy: M + 20,
     w: 96,
     h: 40,
-    ring: v.isWaiting ? 'waiting' : undefined,
   }
-  const claude: Box = { label: 'Claude', kind: 'claude', cx: M + 65, cy: M + 100, w: 130, h: 46 }
+  const claude: Box = { label: 'Claude', kind: 'claude', cx: M + 65, cy: M + 100, w: 130, h: 46, isActive: v.mainRunning }
   const trunkTop = you.cy + you.h / 2
   const trunkEnd = claude.cy - claude.h / 2
   const branchTop = claude.cy + claude.h / 2
