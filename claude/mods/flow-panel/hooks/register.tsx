@@ -234,6 +234,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
 
     return {
       label,
+      full: esc(sub.title ? `${label}: ${sub.title}` : label),
       kind: 'session' as Kind,
       w: 120,
       ring: undefined,
@@ -397,6 +398,7 @@ let lastSpawnAt = 0 // when this session last called start_session
 
 const treeOf = (v: FlowView): SubTree => ({
   id: selfId,
+  title: v.title,
   nodes: v.nodes,
   subs: v.subs,
   mainRunning: v.mainRunning,
@@ -563,8 +565,10 @@ export const register: Register = on => {
       const isUp = (await $.ui.panes()).some(pane => pane.id === PANE)
       if (!isUp) void $.ui.open({ id: PANE, title: 'Flow' })
     }
+    // The first real prompt names the session (shown in the parent's tooltip).
+    const name = e.command ? '' : e.text.trim().replace(/\s+/g, ' ').slice(0, 80)
     // A new prompt starts a fresh view: only segments used since then show.
-    await change($, v => ({ ...v, nodes: [], agentNode: {} }))
+    await change($, v => ({ ...v, nodes: [], agentNode: {}, title: v.title || name || undefined }))
 
     return next(e)
   })

@@ -14,6 +14,7 @@ export type FlowNode = {
 // The tree of one session, as it is shared with the session that started it.
 export type SubTree = {
   id: string // the session's id: a tree never shows a session that is already above it
+  title?: string // first prompt of the session, shown in its tooltip
   nodes: FlowNode[]
   subs: SubTree[] // sessions that session started in turn
   mainRunning: boolean
@@ -23,6 +24,7 @@ export type SubTree = {
 }
 
 export type FlowView = {
+  title?: string // first prompt of this session (its name in the parent's tooltip)
   sessionIds: string[] // sessions this one started (found by their shared files)
   subs: SubTree[] // their trees, in the same order
 
