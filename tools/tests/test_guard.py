@@ -150,8 +150,17 @@ def test_reference_packs_folder_is_read_only(tmp_path):
     assert run_guard(tool("Read", inside), tmp_path, env=env)[0] == 0
     assert run_guard(tool("Edit", str(tmp_path / "ai-refs-other" / "x.md")), tmp_path, env=env)[0] == 0
     for command in ("rm -rf ~/ai-refs/pack", "echo x > ~/ai-refs/pack/a.md", "sed -i s/a/b/ ai-refs/p/x.md",
-                    "mv ai-refs/p ai-refs/q", "git -C ~/ai-refs/pack commit -am x"):
+                    "mv ai-refs/p ai-refs/q", "git -C ~/ai-refs/pack commit -am x", "cp /tmp/a ~/ai-refs/x",
+                    "mv subrepos ~/ai-refs/_old", "cd /tmp && rm -rf ~/ai-refs"):
         assert run_guard(bash(command), tmp_path, env=env)[0] == 2, command
     for command in ("ls ~/ai-refs", "cat ~/ai-refs/pack/SKILL.md", "rg skill ~/ai-refs | head",
                     "python tools/subrepos.py update", "git -C ~/ai-refs/pack log -1"):
+        assert run_guard(bash(command), tmp_path, env=env)[0] == 0, command
+
+
+def test_reference_packs_rule_matches_paths_not_words(tmp_path):
+    """Reads of the packs, prose mentions and search terms must not trip the read-only rule."""
+    env = {"SOCRATEX_REFS": str(tmp_path / "ai-refs")}
+    for command in ("git commit -m 'note about ~/ai-refs packs'", "cp ~/ai-refs/x /tmp/x", "rg mkdir ~/ai-refs",
+                    "mv subrepos /tmp/x", "echo ai-refs > /tmp/notes.txt"):
         assert run_guard(bash(command), tmp_path, env=env)[0] == 0, command

@@ -28,3 +28,6 @@ __pycache__/
 /local/
 audits/
 
+
+# Reference packs live outside the repo; this guards against a stray clone being committed
+/subrepos/

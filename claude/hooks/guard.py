@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import shlex
 import sys
 from pathlib import Path
 
@@ -46,13 +47,65 @@ def in_refs(path: str) -> bool:
     return norm == root or norm.startswith(root + "/")
 
 
-def command_writes_refs(command: str) -> bool:
-    """A command that mentions the refs folder (by its folder name) together with a write verb or a redirect."""
-    folder = refs_root().rsplit("/", 1)[-1]
-    text = command.replace("\\", "/").lower()
-    if folder not in text:
+WRITE_VERBS = {"rm", "mv", "touch", "mkdir", "tee", "rmdir", "truncate", "chmod", "unlink", "remove-item", "set-content",
+               "add-content", "out-file", "move-item", "new-item"}
+GIT_WRITE = {"commit", "push", "reset", "checkout", "clean", "apply", "am", "merge", "rebase", "restore", "add", "rm", "mv"}
+
+
+def is_refs_path(token: str) -> bool:
+    """True when one argument names a path inside the refs folder (free text with spaces never counts)."""
+    text = token.strip("\"'").replace("\\", "/").lower()
+    if not text or re.search(r"\s", text):
         return False
-    return bool(REFS_WRITE.search(command)) or bool(re.search(r">>?\s*[\"']?[^\s;&|]*" + re.escape(folder), text))
+    if text == "~" or text.startswith("~/"):
+        text = str(Path.home()).replace("\\", "/").lower() + text[1:]
+    folder = refs_root().rsplit("/", 1)[-1]
+    return in_refs(text) or ("/" + folder + "/") in ("/" + text.rstrip("/") + "/")
+
+
+def segment_writes_refs(segment: str) -> bool:
+    for match in re.finditer(r">>?\s*([^\s;&|<>]+)", segment):
+        if is_refs_path(match.group(1)):
+            return True
+    try:
+        tokens = shlex.split(segment)
+    except ValueError:  # unbalanced quotes: stay strict
+        folder = refs_root().rsplit("/", 1)[-1]
+        return folder in segment.replace("\\", "/").lower() and bool(REFS_WRITE.search(segment))
+    while tokens and (re.fullmatch(r"\w+=\S*", tokens[0]) or tokens[0] in ("sudo", "command", "env")):
+        tokens.pop(0)
+    if not tokens:
+        return False
+    cmd, args = tokens[0].lower().rsplit("/", 1)[-1], tokens[1:]
+    paths = [a for a in args if not a.startswith("-")]
+    if cmd in WRITE_VERBS:
+        return any(is_refs_path(a) for a in args)
+    if cmd in ("cp", "copy-item"):  # copying FROM the packs is a read; only the destination counts
+        return bool(paths) and is_refs_path(paths[-1])
+    if cmd == "sed":
+        in_place = any(re.fullmatch(r"-\w*i\w*(\..*)?|--in-place(=.*)?", a) for a in args)
+        return in_place and any(is_refs_path(a) for a in args)
+    if cmd == "git":
+        index, sub = 0, ""
+        while index < len(args):
+            if args[index] in ("-C", "-c"):
+                index += 2
+            elif args[index].startswith("-"):
+                index += 1
+            else:
+                sub = args[index]
+                break
+        return sub in GIT_WRITE and any(is_refs_path(a) for a in args)
+    return False
+
+
+def command_writes_refs(command: str) -> bool:
+    """A command whose write verb targets a path inside the refs folder (reads, searches and prose mentions pass)."""
+    folder = refs_root().rsplit("/", 1)[-1]
+    if folder not in command.replace("\\", "/").lower():
+        return False
+    return any(segment_writes_refs(part) for part in re.split(r"\|\||&&|[;|&\n]", command))
+
 
 GIT_RULES = (
     (GIT + r"reset\s+--hard\b", "git reset --hard would destroy uncommitted work (other sessions share this tree)."),

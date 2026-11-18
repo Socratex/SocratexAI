@@ -134,3 +134,62 @@ def test_bump_needs_a_terminal_or_yes_and_keeps_the_pin(tmp_path, monkeypatch):
     assert status == "skipped" and repo["commit"] == "1" * 40
     status, _ = subrepos.bump_one(repo, packs, yes=True)
     assert status == "ok" and repo["commit"] == "2" * 40
+
+
+def make_origin(tmp_path: Path) -> tuple[Path, str, str]:
+    """A local git repo with two commits; returns (path, first_commit, second_commit)."""
+    origin = tmp_path / "origin"
+    origin.mkdir()
+    run = lambda *args: subprocess.run(["git", *args], cwd=origin, capture_output=True, text=True, check=True).stdout.strip()  # noqa: E731
+    run("init", "-q", "-b", "main")
+    run("config", "user.email", "t@example.com")
+    run("config", "user.name", "t")
+    (origin / "a.txt").write_text("one", encoding="utf-8")
+    run("add", "a.txt")
+    run("commit", "-q", "-m", "one")
+    first = run("rev-parse", "HEAD")
+    (origin / "a.txt").write_text("two", encoding="utf-8")
+    run("commit", "-q", "-am", "two")
+    return origin, first, run("rev-parse", "HEAD")
+
+
+def test_update_one_moves_a_pack_to_its_pin_not_the_branch_tip(tmp_path):
+    origin, first, second = make_origin(tmp_path)
+    repo = {"name": "p", "url": origin.as_posix(), "branch": "main", "commit": first}
+    dest = tmp_path / "packs"
+    dest.mkdir()
+    status, message = subrepos.update_one(repo, dest)
+    assert status == "ok" and "pinned" in message
+    assert (dest / "p" / "a.txt").read_text(encoding="utf-8") == "one"
+    repo["commit"] = second  # a bump moves the pin forward
+    assert subrepos.update_one(repo, dest)[0] == "ok"
+    assert (dest / "p" / "a.txt").read_text(encoding="utf-8") == "two"
+
+
+def test_update_one_reports_an_unreachable_source_as_an_error(tmp_path):
+    dest = tmp_path / "packs"
+    dest.mkdir()
+    repo = {"name": "p", "url": (tmp_path / "missing").as_posix(), "branch": "main", "commit": "0" * 40}
+    assert subrepos.update_one(repo, dest)[0] == "error"
+
+
+def test_refs_dir_is_read_from_local_install_json(tmp_path, monkeypatch):
+    prefs = tmp_path / "install.json"
+    prefs.write_text(json.dumps({"refs_dir": str(tmp_path / "chosen")}), encoding="utf-8")
+    monkeypatch.setattr(subrepos, "PREFS_FILE", prefs)
+    monkeypatch.delenv("SOCRATEX_REFS", raising=False)
+    assert subrepos.refs_dir() == tmp_path / "chosen"
+    monkeypatch.setenv("SOCRATEX_REFS", str(tmp_path / "env"))  # the environment wins over the saved choice
+    assert subrepos.refs_dir() == tmp_path / "env"
+
+
+def test_update_script_exit_code_follows_the_pack_result(monkeypatch):
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    import update  # noqa: E402
+
+    monkeypatch.setattr(update.subrepos, "cmd_update", lambda names: 1)
+    assert update.main(["refs"]) == 1
+    monkeypatch.setattr(update.subrepos, "cmd_update", lambda names: 0)
+    assert update.main(["refs"]) == 0
+    monkeypatch.setattr(update, "update_self", lambda: 1)  # a failed pull never hides behind good packs
+    assert update.main(["all"]) == 1
