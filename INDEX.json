@@ -29,6 +29,10 @@
       "what": "One flow per task type (feature, bug, refactor, review, docs, big task) with research gate, closure evidence and file-based handoff for large work."
     },
     {
+      "path": "core/rules/MEASUREMENTS.md",
+      "what": "Before trusting or reporting a measured number (FPS, latency, speedup, eval result): decide first, find the limiter, rule out a wrong measurement."
+    },
+    {
       "path": "core/rules/REVIEW.md",
       "what": "What to run and check before reporting a change as done."
     },
