@@ -12,7 +12,7 @@ const FONT = 20 // label size in CSS px (the SVG is drawn 1:1)
 // times larger than its viewBox is stretched to the pane width (scaled up or down).
 const FIT = 1
 const MIN_W = 300
-const STALE_MS = 15 * 60 * 1000 // a session file this old, never updated, is dropped
+const STALE_MS = 3 * 60 * 1000 // an idle session file this old is dropped (the app tells the mod nothing about archiving)
 const SYNC_MS = 3000 // how often the shared session files are looked at
 const ATTACH_WINDOW_MS = 120000 // a new session file this soon after start_session is its child
 const RADIUS = 10
@@ -497,7 +497,7 @@ async function poll($: EngineInterface): Promise<void> {
   for (const id of ids) {
     const f = await loadShared($, dir, id)
     // Gone when it said it ended (archived, closed) or has not been heard from for long.
-    if (f && !f.ended && now - f.updatedAt < STALE_MS) {
+    if (f && !f.ended && (f.tree.mainRunning || now - f.updatedAt < STALE_MS)) {
       subs.push({ ...f.tree, id })
       kept.push(id)
     }
