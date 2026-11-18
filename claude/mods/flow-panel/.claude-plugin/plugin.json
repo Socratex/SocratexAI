@@ -1,0 +1,6 @@
+{
+  "name": "flow-panel",
+  "version": "0.3.0",
+  "description": "Animated node graph of Claude's work: you, Claude, sub-agents, tools, MCP servers and skills, with the 5-hour limit growth and a per-path cost estimate in percent.",
+  "types": "./types/index.d.ts"
+}

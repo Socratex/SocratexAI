@@ -1,0 +1,45 @@
+{
+    "_note": "Fragment merged into ~/.claude/settings.json by tools/install.py. Keys here win; other keys in the user's file are kept. {SOCRATEX_HOME} and {PYTHON} are replaced at install time.",
+    "env": {
+        "SOCRATEX_HOME": "{SOCRATEX_HOME}",
+        "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+        "CLAUDE_CODE_PLUGIN_DIRS": "{SOCRATEX_HOME}/claude/mods/flow-panel"
+    },
+    "autoCompactWindow": 300000,
+    "permissions": {
+        "deny": [
+            "Read(**/.env)",
+            "Read(**/.env.*)",
+            "Read(**/*.pem)",
+            "Read(**/*.key)",
+            "Read(~/.ssh/**)",
+            "Read(~/.claude/.credentials.json)",
+            "Read(~/.codex/auth.json)"
+        ]
+    },
+    "hooks": {
+        "PreToolUse": [
+            {
+                "matcher": "Bash|Read|Edit|Write",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "\"{PYTHON}\" -I -B \"{SOCRATEX_HOME}/claude/hooks/guard.py\"",
+                        "timeout": 10
+                    }
+                ]
+            }
+        ]
+    },
+    "extraKnownMarketplaces": {
+        "openai-codex": {
+            "source": {
+                "source": "github",
+                "repo": "openai/codex-plugin-cc"
+            }
+        }
+    },
+    "enabledPlugins": {
+        "codex@openai-codex": true
+    }
+}

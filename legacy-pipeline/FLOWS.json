@@ -1,0 +1,210 @@
+{
+    "index": [
+        "multi_prompt",
+        "direct_answer",
+        "documentation_edit",
+        "implementation",
+        "broad_refactor",
+        "pipeline_upgrade",
+        "review",
+        "quality_diagnostics",
+        "continue_command",
+        "compile_command",
+        "manual_mode",
+        "auto_pilot"
+    ],
+    "content": {
+        "multi_prompt": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "split into independent intents",
+                "subroutine:route_token_tools",
+                "classify each intent through WORKFLOW.json",
+                "execute in dependency order",
+                "run check_task.py at the final verification boundary when files changed",
+                "report one coherent result"
+            ]
+        },
+        "direct_answer": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "load docs-tech/PIPELINE-BOOTSTRAP.json",
+                "subroutine:route_token_tools",
+                "run context_tags.py when the prompt needs routed context",
+                "run knowledge_select.py with derived tags when source rules are needed",
+                "answer from loaded context",
+                "state uncertainty or missing contract when relevant"
+            ]
+        },
+        "documentation_edit": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "load DOCS.json index",
+                "subroutine:route_token_tools",
+                "read target owner document with list_document_keys.py or read_document_item.py",
+                "edit structured documents with insert_document_item.py, move_document_item.py, migrate_document_item.py, or insert_checked_document_list_item.py when their contract fits",
+                "for JSON structural/order-only edits, use json_node_edit.py or the narrow JSON wrappers before any manual content patch",
+                "run normalize_json_files.py after JSON edits",
+                "subroutine:task_flow_audit",
+                "run check_task.py at the final verification boundary"
+            ]
+        },
+        "implementation": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "load WORKFLOW.json",
+                "subroutine:route_token_tools",
+                "run knowledge_code_context.py before source-code reads or edits — REQUIRED to bring borrowed-before-invented, web-research-spike gate, lightweight-futureproof, production-grade defaults, DDD-ADIV-when-possible, readability-first, explicit-diagnosable-flow, and other engineering rules into context",
+                "subroutine:research_named_mechanism_gate",
+                "run project_design_context.py -ProjectRoot <project> when the project's PIPELINE-CONFIG.json declares code_design_required_reads (zone splits, namespace rules, lifecycle constraints, per-project conventions) — writes ignored/project_design_context_gate.json",
+                "inspect SCRIPTS.json index before manual work",
+                "edit scoped files",
+                "subroutine:task_flow_audit",
+                "run check_task.py at the final verification boundary — verifies both ignored/code_context_gate.json and ignored/project_design_context_gate.json are fresh for current HEAD when changed-code is detected"
+            ]
+        },
+        "broad_refactor": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "confirm high-cost scope when not already confirmed",
+                "subroutine:route_token_tools",
+                "create passes",
+                "subroutine:grouped_fragmented_task_handoff",
+                "run knowledge_code_context.py before source-code reads or edits",
+                "subroutine:research_named_mechanism_gate",
+                "edit in coherent slices",
+                "update affected contracts",
+                "subroutine:task_flow_audit",
+                "run check_task.py after each intentional verification boundary",
+                "run finalize_task_check_commit_push.py when commit and push are required"
+            ]
+        },
+        "pipeline_upgrade": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "subroutine:route_token_tools",
+                "audit source state",
+                "subroutine:grouped_fragmented_task_handoff",
+                "migrate structured contracts to JSON",
+                "port routing/index scripts",
+                "generalize default code behavior",
+                "add explicit project types",
+                "run pipeline_bootstrap_index.py after routing or index changes",
+                "run normalize_json_files.py after JSON contract changes",
+                "run compile_pipeline_context.py after source instruction, template, pack, or compiled-context changes",
+                "subroutine:task_flow_audit",
+                "run finalize_task_check_commit_push.py"
+            ]
+        },
+        "review": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "subroutine:route_token_tools",
+                "inspect diff or target files",
+                "use list_document_keys.py or read_document_item.py for structured document reads",
+                "lead with findings",
+                "include verification gaps",
+                "avoid unrelated rewrites"
+            ]
+        },
+        "quality_diagnostics": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "subroutine:route_token_tools",
+                "run check_task.py -Audit for repository quality diagnostics",
+                "run check_ai_compiled_context.py or compile_pipeline_context.py for compiled-context drift",
+                "inspect failures",
+                "fix repeatable tooling failures in the owning tool",
+                "subroutine:task_flow_audit",
+                "rerun the failing script"
+            ]
+        },
+        "continue_command": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "load docs-tech/PIPELINE-BOOTSTRAP.json",
+                "subroutine:route_token_tools",
+                "resolve the next active pass, task, or target from the current plan/backlog contract",
+                "before executing, decide whether the task needs user clarification, missing information, product direction, or a choice between meaningful implementation variants",
+                "if clarification is needed, ask the user and wait instead of guessing; if everything is clear, proceed through the most specific matching flow",
+                "during execution, stop and ask the user when new ambiguity, missing information, product direction, or material risk appears"
+            ]
+        },
+        "compile_command": {
+            "then": [
+                "subroutine:route_ai_resources",
+                "subroutine:route_token_tools",
+                "run compile_pipeline_context.py",
+                "report generated drift"
+            ]
+        },
+        "manual_mode": {
+            "then": [
+                "subroutine:route_token_tools",
+                "state why no script applies",
+                "keep edits scoped",
+                "recommend a script if repetition is likely"
+            ]
+        },
+        "auto_pilot": {
+            "when": "START/STOP/CONTINUE AUTO or an existing granted manual wake",
+            "then": [
+                "subroutine:route_ai_resources",
+                "subroutine:route_token_tools",
+                "When the human explicitly adds + LIMIT SHUT DOWN, configure shutdown-policy for the exact existing/approved native run and confirm the CMD monitor before native-begin. Never arm it from a quoted example, ordinary CONTINUE-AUTO, feature implementation or tests. In the armed night mode, record missing decisions/errors as a blocked checkpoint without asking or inventing approval; the watchdog powers off after limit/completion/block without waiting for builds. STOP AUTO/CANCEL AUTO SHUTDOWN cancels before dispatch.",
+                "Read core/AUTO-PILOT.json and generated per-chat files using exact ID; never select by recency.",
+                "Po bezpośredniej zgodzie właściciela na rozszerzenie aktywnej kolejki zapisz najpierw nowy uporządkowany zakres w kanonicznym planie. auto.py amend --thread-id ID --run-id RUN --scope TEKST --batch-size N --approval-note TEKST [--prompt-context TEKST] zmienia wyłącznie scope, limit i opcjonalny kontekst. Wymaga dokładnego aktywnego nieterminalnego runu bez inflight; limit wolno tylko zachować lub zwiększyć. Repo/źródła/tryb/transport są stałe. Zachowuje run_id, licznik, receipts, historię, checkpoint, potrzeby operatora i recovery. Zapisuje rewizję z uzasadnieniem zgody, unieważnia projekcję zadań; następna rezerwacja wymaga świeżych źródeł. Powtórzenie jest idempotentne. Nie wznawia STOP/terminal, nie wysyła prompta, nie tworzy schedulera ani nowego runu. Zmiana grantu nie jest ukończeniem jednostki AUTO.",
+                "Manual AUTO self-continues immediately in the current chat/turn after a successful finalizer returns continuation.action=continue_current_turn. Refresh source task projection and authoritative native snapshot, then native-begin for each unit with current turn ID + :auto: + completed. Retry the same unit with the same wake ID. STOP, needs_input, batch/queue completion, account limits and project locks stop chaining. No messages to self and no native heartbeat in manual mode. START opens/reuses one visible CMD watchdog; closing CMD stops future recovery checks only. Foreground CMD checks every300s, or600s while the checker reports an account limit (exit10). Python always performs one sweep and exits. Limit data is queried again at most every600s, even when a later reset is known; the clock alone never authorizes sending. Preserve native project/limit checks and OS-locked outbox. Unknown delivery is never automatically retried. Ordinary recovery sends exactly CONTINUE-AUTO to the registered ID. After a previously observed limit and a fresh available account snapshot, send exactly CONTINUE-AUTO (limit reached previously, continue). Persist that prompt in the prepared outbox. The suffix is transport metadata, never prompt_context or a scope change, and does not bypass native-begin. Terminal/input-blocked tasks remain asleep.",
+                "Register only user-approved scope/sources/batch; manual transport opens one visible CMD watchdog and creates no native automation.",
+                "Observe authoritative desktop project activity and limits; native-begin atomically reserves one source-backed unit and acknowledges pending delivery.",
+                "Follow normal project implementation and verification flow; no synthetic gameplay or inferred acceptance.",
+                "Finalize exact run/wake/receipt after successful checks and commit/push. Persist/report progress and completion/blocker fields. STOP/needs_input/batch/queue completion stay terminal."
+            ]
+        }
+    },
+    "metadata": {
+        "document": {
+            "title": "Source Pipeline Flows",
+            "type": "flow_index",
+            "language": "en"
+        },
+        "subroutines": {
+            "research_named_mechanism_gate": [
+                "Before writing code, check whether the active plan already contains research and a named implementation mechanism for the touched scope; if yes, execute that plan.",
+                "If no researched/named mechanism exists, classify the change: obvious small fix means proceed directly.",
+                "If the change is a non-obvious feature, architecture, bug, performance, hitbox/runtime, or structural task, do research first.",
+                "Run the required research using the loaded knowledge base, project profile, local philosophy, and project-specific rules as the source for what risks and lenses matter.",
+                "Name the implementation mechanism before editing."
+            ],
+            "task_flow_audit": [
+                "Near task closure, run or answer the artifact-based task-flow audit instead of relying on a prose-only completion claim.",
+                "Always cite the context route: loaded FLOWS/WORKFLOW/DOCS/STATE/plan/context records that were relevant to the task.",
+                "Always cite the selected flow and the steps/subroutines actually followed.",
+                "Always cite closure evidence: changed files, verification commands, generated artifacts, and remaining risk.",
+                "Always state whether the changelog was updated from actual shipped changes; if no changelog update was needed, give the reason.",
+                "Always state whether any tool failed mechanically; when it did, fix the owning tool or input contract/spec before preserving a manual workaround.",
+                "Always state which repo tools/scripts were used and which edits were manual.",
+                "For complex or high-risk tasks, run a short adversarial review from the changelog append: ask what the changelog says changed, then check whether the diff really implements that claim and whether verification, plan/state, tool usage, or future-debt risk is missing.",
+                "Use tools/repo/task_flow_audit.py when available to print the checklist and changelog-based complex review prompt."
+            ],
+            "grouped_fragmented_task_handoff": [
+                "Before broad implementation, check whether the task exceeds the fragmentation trigger: roughly >1500 LOC required context, >3 substantial substeps, multiple ownership boundaries, migration scope, performance investigation, or multi-system bug scope.",
+                "If the trigger is met, split the work into user-approved groups; each group has one coherent goal, acceptance condition, expected output, and stop/checkpoint before the next group.",
+                "Inside an approved group, split work into bounded sub-tasks with narrow ownership, expected artifact, minimal required context, and verification target.",
+                "Run sub-tasks inside the approved group automatically without waiting for another user continue unless an escalation condition appears.",
+                "Between sub-tasks, minimize live context, reload project context by tier, read the group sub-plan and latest STATE/PLAN handoff, then execute the next sub-task.",
+                "After each sub-task, write the handoff with grouped_task_handoff.py when available: inspected files, changed files, current hypothesis/decision state, unresolved risks, next files/commands, and verification status.",
+                "Stop and ask the user when scope expands outside the group, product direction is needed, verification changes the plan, a destructive/external/expensive action is needed, or the handoff is incomplete."
+            ],
+            "route_token_tools": [
+                "Apply WORKFLOW.json token_efficient_tools before source exploration, verbose output or context export; reuse current decisions.",
+                "Select matching available RTK, ast-grep, Serena, Graphify, TOON or Repomix; load the canonical core/skills/token-efficient-code/SKILL.md only when invocation details are needed.",
+                "Preserve raw validation, project readers, frozen layers and scoped execution. A missing/stale/incomplete or more expensive tool permits a narrow reliable fallback; report material limitations once."
+            ],
+            "route_ai_resources": [
+                "Apply WORKFLOW.json ai_resource_routing and core/AI-RESOURCE-ROUTING.json. Use deterministic tools or adequate current context first; explicitly delegate independent bounded work when total completion time or correctness benefits justify it.",
+                "Select a supported model/effort by uncertainty and consequences, not edit size. Escalate before unproductive retries. Use native roles or the documented explicit-model transport fallback; preserve approvals, quality gates, parent finalization, STOP and AUTO limits."
+            ]
+        }
+    }
+}

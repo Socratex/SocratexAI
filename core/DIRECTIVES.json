@@ -1,0 +1,33 @@
+{
+    "schema": "socratex-directives/v1",
+    "note": "Read at session start and keep in mind. Not the rules themselves: what you are about to do -> which document applies. Paths are relative to $SOCRATEX_HOME unless they start with 'project:'. A project's own DIRECTIVES (listed in its INDEX.json) adds rows and wins on conflict.",
+    "rows": [
+        {"when": "act on an unclear request", "follow": "core/RULES.md section Ambiguity; tasks over about an hour or touching architecture, data or saves: skill spec"},
+        {"when": "owner names a plugin, tool, methodology, skill pack or program to use or evaluate", "follow": "core/RULES.md bullet Named solutions ledger; docs/IMPROVEMENTS.json (read first, then record the outcome)"},
+        {"when": "start any non-trivial task", "follow": "core/rules/TASK-GATING.md, then the flow for its type in core/rules/FLOWS.md"},
+        {"when": "implement a feature, fix a bug, refactor, or finish a non-trivial task", "follow": "core/rules/FLOWS.md (research gate before non-obvious code, closure evidence at the end)"},
+        {"when": "big task: context above about 1500 lines, more than 3 substantial steps, may outlive the session", "follow": "core/rules/FLOWS.md section Big task (task file and handoffs in project .ai/)"},
+        {"when": "build a new capability or system", "follow": "core/rules/TASK-GATING.md (research first), core/rules/ROI.md"},
+        {"when": "write or review code", "follow": "core/rules/CODE-STYLE.md, then the project's own code standard from its INDEX.json"},
+        {"when": "choose a model or effort, spawn a subagent or delegate", "follow": "core/rules/ROUTING.md and core/ROUTING.json"},
+        {"when": "plan a multi-stage pipeline where a human reviews each stage", "follow": "core/templates/STAGE-CONTRACT.md"},
+        {"when": "write a knowledge note, rule document or project doc", "follow": "core/templates/KNOWLEDGE-NOTE.md (frontmatter), then update the nearest INDEX.json"},
+        {"when": "read or edit big JSON documents", "follow": "tools/json_read.py for single fields; never dump whole ledgers"},
+        {"when": "look for a document, skill, script or tool, or add one", "follow": "INDEX.json here, then the project's INDEX.json; update the index after adding, moving or removing"},
+        {"when": "change agent configuration (settings, hooks, permissions, MCP, installs)", "follow": "core/rules/SAFETY.md: backup with tools/backup.py, show the change, wait for the owner's yes"},
+        {"when": "finish any change", "follow": "core/rules/COMMITS.md: own paths only, project finalizer when it has one, commit at the end of the prompt, push only if the project says the AI pushes"},
+        {"when": "finish a task (after the commit)", "follow": "tools/risk_score.py --commit HEAD (report-only), then tools/routing_log.py once; core/rules/ROUTING.md section Feedback loop"},
+        {"when": "review a diff before reporting done", "follow": "core/rules/REVIEW.md"},
+        {"when": "the owner asks why code or a decision is the way it is", "follow": "history first: git log -S / git blame / commit and PR messages; read the code only if history has no answer, and say which of the two answered"},
+        {"when": "a business or client project change touches auth, secrets, payments, user input or external endpoints (not game projects)", "follow": "core/rules/SECURITY-REVIEW.md"},
+        {"when": "write a report to the owner", "follow": "core/STYLE.md"},
+        {"when": "learn something new about working with AI", "follow": "docs/AI-PRACTICES.md findings log"},
+        {"when": "the owner corrects you during a skill, or a skill step fails, needs a workaround or misfires", "follow": "tools/skill_learn.py add (one sentence); never patch the skill on the spot"},
+        {"when": "skill_learn.py shows a READY skill, or the owner asks to improve skills", "follow": "skill skill-reflect"},
+        {"when": "monthly upkeep of memory, scripts and skills", "follow": "skill memory-review (includes skill-reflect)"},
+        {"when": "first session after pull on a new computer, or the owner asks what improvements are missing", "follow": "tools/improvements_check.py (add --scope business on work machines), then one form with the missing items; install per core/rules/SAFETY.md"},
+        {"when": "the owner asks about usage, cost or limits", "follow": "Claude: skill usage-optimize; Codex: its codex-usage skill"},
+        {"when": "the project uses the legacy SocratexPipeline (SOCRATEX.md present or INDEX.json flag)", "follow": "legacy-pipeline/AGENTS.md"}
+    ],
+    "enforced_by_hooks": "Destructive git, secret files and whole-file dumps of big ledgers are blocked by claude/hooks/guard.py (projects add patterns in .ai/guard.json). A blocked command is a boundary: use the safe alternative or ask."
+}
