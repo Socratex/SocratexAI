@@ -2,6 +2,35 @@
 
 One global AI core for **Claude Code** and **Codex**: shared rules, reply style, model routing, risk scoring, tier agents, skills (with a self-improving loop), hooks and tools. Clone it once per machine. Every project then gets the same behavior by default, and a `git pull` updates all of them.
 
+## 🎯 What it is, and what it is not
+
+A small rule core, not a framework. Total always-loaded text is about 19 KB (a test fails above 20 KB). Everything else loads only when a task needs it.
+
+**What you get**
+- One shared source of rules for Claude Code and Codex.
+- A guard hook that blocks destructive git, secret-file reads and whole-file dumps of big ledgers. Fail-closed, covered by tests.
+- Model routing with escalation on evidence (a failed gate or a BLOCKED report moves work one tier up), a risk score for each diff, and an outcome log.
+- Five shared skills, tier agents, and a loop that turns logged corrections into reviewed skill edits.
+- An installer that asks first and backs up your config before touching it.
+
+**What you do not get**
+- Not a full process kit. The task flows are short tables, not long skills. If you want enforced TDD, a long debugging method or many playbooks, [superpowers](https://github.com/obra/superpowers) and [pstack](https://github.com/backnotprop/pstack) go much deeper.
+- Process rules are text the model follows. Only the guard is enforced by a hook.
+- Only Claude Code and Codex are supported. Cursor, Gemini, OpenCode and others are not.
+- Needs Python 3 for the installer and tools (CI runs 3.12 on Linux and Windows; the minimum version is not verified). Node is not needed, except for the optional flow-panel mod.
+- Young and small: one author, history from 2026-11, no benchmarks showing it beats other setups. The routing loop and risk score are report-only and have little real data yet.
+- Some defaults are the author's taste (emoji reply style, Polish profile example). The reply style is optional at install; language and name live in your own `local/profile.md`.
+
+**Compared with others** (read from pinned clones on 2026-11-18, details in `docs/AUDIT-pstack-ecc.md`): smaller startup than ECC and gstack, a stronger guard than superpowers and pstack (they ship none), and a measured routing loop none of the files we read had. Behind them in process depth, test volume, and supported tools.
+
+## 🧳 Use only part of it
+
+The pieces are plain files, so you can take only what you need:
+- **Rules only:** copy `core/RULES.md` and `core/rules/` into your own agent instructions. No Python needed.
+- **Skills only:** `skills/<name>/SKILL.md` are standard skill folders. We only tested them in Claude Code and Codex; other agents that read this format should work but are untested.
+- **Guard only:** `claude/hooks/guard.py` is one stdlib-only Python file for the Claude Code `PreToolUse` hook.
+- A separate "rules and skills only" installer mode does not exist yet.
+
 ## 🚀 Install
 
 ```bash
