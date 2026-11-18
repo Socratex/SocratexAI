@@ -12,6 +12,7 @@ const FONT = 20 // label size in CSS px (the SVG is drawn 1:1)
 // times larger than its viewBox is stretched to the pane width (scaled up or down).
 const FIT = 1
 const MIN_W = 300
+const STALE_MS = 15 * 60 * 1000 // a session file this old, never updated, is dropped
 const SYNC_MS = 3000 // how often the shared session files are looked at
 const ATTACH_WINDOW_MS = 120000 // a new session file this soon after start_session is its child
 const RADIUS = 10
@@ -410,19 +411,19 @@ async function folderOf($: EngineInterface): Promise<string> {
   return home ? `${home.replace(/\\/g, '/')}/local/flow` : ''
 }
 
-async function publish($: EngineInterface, v: FlowView): Promise<void> {
+async function publish($: EngineInterface, v: FlowView, ended = false): Promise<void> {
   const dir = await folderOf($)
-  if (!dir || isEmpty(v)) return // never overwrite a saved view with an empty one
+  if (!dir || (isEmpty(v) && !ended)) return // never overwrite a saved view with an empty one
   try {
     const at = await $.clock.now()
-    const text = JSON.stringify({ id: selfId, startedAt, updatedAt: at, tree: treeOf(v), view: v })
+    const text = JSON.stringify({ id: selfId, startedAt, updatedAt: at, tree: treeOf(v), view: v, ended })
     await $.fs.write(`${dir}/${selfId}.json`, text)
   } catch {
     // the shared folder is optional: without it there are simply no session tiles
   }
 }
 
-type Shared = { id: string; startedAt: number; updatedAt: number; tree: SubTree; view?: FlowView }
+type Shared = { id: string; startedAt: number; updatedAt: number; tree: SubTree; view?: FlowView; ended?: boolean }
 
 async function loadShared($: EngineInterface, dir: string, id: string): Promise<Shared | undefined> {
   try {
@@ -491,9 +492,11 @@ async function poll($: EngineInterface): Promise<void> {
 
   const subs: SubTree[] = []
   const kept: string[] = []
+  const now = await $.clock.now()
   for (const id of ids) {
     const f = await loadShared($, dir, id)
-    if (f) {
+    // Gone when it said it ended (archived, closed) or has not been heard from for long.
+    if (f && !f.ended && now - f.updatedAt < STALE_MS) {
       subs.push({ ...f.tree, id })
       kept.push(id)
     }
@@ -564,6 +567,14 @@ export const register: Register = on => {
     await $.ui.open({ id: PANE, title: 'Flow' })
 
     return { text: 'Flow pane opened.' }
+  })
+
+  // A closing or archived session marks its file, so the session that started it
+  // stops drawing it.
+  on('session.end', async ($, e, next) => {
+    await publish($, held ?? (await read($, view)), true)
+
+    return next(e)
   })
 
   on('turn.start', async ($, e, next) => {
