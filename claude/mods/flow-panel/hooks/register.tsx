@@ -10,7 +10,6 @@ const FONT = 20 // label size in CSS px (the SVG is drawn 1:1)
 const W = 300
 const RADIUS = 10
 const MAX_NODES = 4
-const ACTIVE_MS = 3000 // a node stays "lit" this long after its last call
 const ERROR_MS = 6000
 const LABEL_CHARS = 8
 const COST_DECIMALS = 3 // decimals of a path's cost in percent
@@ -122,18 +121,7 @@ const applyLimit = (
 
 // ---------------------------------------------------------------- drawing
 
-// Mouse-wheel zoom, run inside the SVG's own frame (a trial: it only works if
-// that frame allows scripts). The wheel changes the viewBox; a redraw resets it.
-const ZOOM =
-  '<script><![CDATA[' +
-  'var s=document.documentElement,b=s.viewBox.baseVal,w0=b.width,h0=b.height;' +
-  's.addEventListener("wheel",function(e){e.preventDefault();' +
-  'var f=e.deltaY>0?1.1:0.9,nw=Math.min(w0*4,Math.max(w0/4,b.width*f)),nh=nw*h0/w0;' +
-  'var r=s.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;' +
-  'b.x+=(b.width-nw)*px;b.y+=(b.height-nh)*py;b.width=nw;b.height=nh;},{passive:false});' +
-  ']]></script>'
-
-const M = 10 // left/top margin, px
+const M = 5 // left/top margin, px (always 5px from the left edge)
 const TRUNK = M + 24 // x of the vertical trunk
 const ELBOW = 14 // radius of the rounded corners
 const ROW = 64 // vertical distance between branches
@@ -214,7 +202,7 @@ const draw = (v: FlowView, now: number): string => {
       h: 40,
       ring,
     }
-    return { nd, box, isActive: isRunning || now - nd.at < ACTIVE_MS }
+    return { nd, box, isActive: isRunning || v.mainRunning }
   })
 
   const growth = growthText(v)
@@ -242,7 +230,6 @@ const draw = (v: FlowView, now: number): string => {
     node(you) +
     node(claude) +
     kids.map(k => node(k.box)).join('') +
-    ZOOM +
     `</svg>`
   )
 }
@@ -298,7 +285,6 @@ const touch = (
   return next
 }
 
-const bump = (v: FlowView): FlowView => ({ ...v, tick: v.tick + 1 })
 
 const tokensOf = (result: unknown): number => {
   try {
@@ -463,8 +449,6 @@ export const register: Register = on => {
             : n,
         ),
       }))
-      $.clock.after(ACTIVE_MS + 200, () => change($, bump))
-      if (failed) $.clock.after(ERROR_MS + 200, () => change($, bump))
     }
   })
 
@@ -474,7 +458,7 @@ export const register: Register = on => {
     const now = await $.clock.now()
 
     return (
-      <Box flexDirection="column">
+      <Box flexDirection="column" alignItems="flex-start">
         {Svg ? (
           <Svg
             source={draw(v, now)}
