@@ -11,7 +11,20 @@ export type FlowNode = {
   w: number // weighted tokens this path has cost (see weights in register.tsx)
 }
 
+// The tree of one session, as it is shared with the session that started it.
+export type SubTree = {
+  nodes: FlowNode[]
+  subs: SubTree[] // sessions that session started in turn
+  mainRunning: boolean
+  isWaiting: boolean
+  wTotal: number
+  k: number
+}
+
 export type FlowView = {
+  sessionIds: string[] // sessions this one started (found by their shared files)
+  subs: SubTree[] // their trees, in the same order
+
   nodes: FlowNode[]
   mainRunning: boolean // the main loop is mid-turn
   isWaiting: boolean // Claude finished, the next move is the user's

@@ -1,13 +1,15 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
-import type { FlowNode, FlowView, NodeKind } from '../types'
+import type { FlowNode, FlowView, NodeKind, SubTree } from '../types'
 
 const PANE = 'flow-panel'
 
 // Tunables
 const FONT = 20 // label size in CSS px (the SVG is drawn 1:1)
-const W = 300
+const MIN_W = 300
+const SYNC_MS = 3000 // how often the shared session files are looked at
+const ATTACH_WINDOW_MS = 120000 // a new session file this soon after start_session is its child
 const RADIUS = 10
 const MAX_NODES = 4
 const ERROR_MS = 6000
@@ -31,6 +33,7 @@ const KIND = {
   tool: { fill: '#8e1b3a', text: '#ffffff' }, // burgundy
   mcp: { fill: '#8e44ad', text: '#ffffff' }, // purple
   skill: { fill: '#f2c94c', text: '#1b1b1b' }, // yellow
+  session: { fill: '#78909c', text: '#102027' }, // grey-blue
 }
 const STATE = {
   waiting: '#ff9800', // waiting for the user
@@ -50,6 +53,8 @@ type Box = {
 }
 
 const INITIAL: FlowView = {
+  sessionIds: [],
+  subs: [],
   nodes: [],
   mainRunning: false,
   isWaiting: false,
@@ -65,7 +70,7 @@ const INITIAL: FlowView = {
 // Change the shape tag when FlowView changes: it declines what an earlier
 // version stored, which outlives a reload.
 const view = atom({ plugin: 'flow-panel', key: 'view' } as const, INITIAL, {
-  shape: 'flow-5',
+  shape: 'flow-6',
 })
 
 // ------------------------------------------------------------------ maths
@@ -167,8 +172,89 @@ const growthText = (v: FlowView) =>
     : `+${Math.max(0, v.limitPct - v.basePct).toFixed(1)}%`
 
 // Claude -> a path: the estimated share of the 5-hour limit it cost, in percent.
-const costText = (v: FlowView, n: FlowNode) =>
-  v.k > 0 ? `~${(n.w * v.k).toFixed(COST_DECIMALS)}%` : '...'
+const costText = (k: number, w: number) =>
+  k > 0 ? `~${(w * k).toFixed(COST_DECIMALS)}%` : '...'
+
+// One branch of the tree: a box, the figure on its line and what hangs below it.
+type Row = {
+  label: string
+  kind: Kind
+  w: number
+  ring?: Box['ring']
+  text: string
+  isActive: boolean
+  kids: Row[]
+}
+
+type Src = Pick<FlowView, 'nodes' | 'subs' | 'mainRunning' | 'wTotal' | 'k'>
+
+// A session's branches: its own paths first, then the sessions it started,
+// each of those holding the same again. `count` numbers the sessions.
+const rowsOf = (s: Src, now: number, count: { n: number }): Row[] => [
+  ...s.nodes.map(nd => {
+    const isRunning = nd.running > 0
+    const ring: Box['ring'] =
+      now - nd.errorAt < ERROR_MS
+        ? 'error'
+        : isRunning && nd.isBackground
+          ? 'background'
+          : undefined
+
+    return {
+      label: esc(nd.label.slice(0, LABEL_CHARS)),
+      kind: nd.kind as Kind,
+      w: 96,
+      ring,
+      text: costText(s.k, nd.w),
+      isActive: isRunning || s.mainRunning,
+      kids: [] as Row[],
+    }
+  }),
+  ...s.subs.map(sub => {
+    count.n += 1
+    const label = `Session ${count.n}`
+
+    return {
+      label,
+      kind: 'session' as Kind,
+      w: 120,
+      ring: sub.isWaiting ? ('waiting' as const) : undefined,
+      text: costText(sub.k, sub.wTotal),
+      isActive: sub.mainRunning,
+      kids: rowsOf(sub, now, count),
+    }
+  }),
+]
+
+type Out = { lines: string[]; boxes: string[]; right: number; bottom: number }
+
+// Lays rows out down a trunk: a rounded elbow to each box, and a row's own
+// branches start below it, a step to the right. Returns the next free row.
+const layout = (
+  rows: Row[],
+  trunkX: number,
+  topY: number,
+  y0: number,
+  out: Out,
+  idx: { i: number },
+): number => {
+  let y = y0
+  for (const r of rows) {
+    const left = trunkX + 160
+    const d = `M${trunkX},${topY} V${y - ELBOW} Q${trunkX},${y} ${trunkX + ELBOW},${y} H${left}`
+    const pw = r.text.length * 12 + 12
+    idx.i += 1
+    out.lines.push(
+      line(d, KIND[r.kind].fill, idx.i, r.isActive, 0) + pill((trunkX + ELBOW + left) / 2, y, r.text, pw),
+    )
+    out.boxes.push(node({ label: r.label, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring }))
+    out.right = Math.max(out.right, left + r.w)
+    out.bottom = Math.max(out.bottom, y + 20)
+    y = r.kids.length ? layout(r.kids, left + 24, y + 20, y + ROW, out, idx) : y + ROW
+  }
+
+  return y
+}
 
 const draw = (v: FlowView, now: number): string => {
   const you: Box = {
@@ -185,51 +271,22 @@ const draw = (v: FlowView, now: number): string => {
   const trunkEnd = claude.cy - claude.h / 2
   const branchTop = claude.cy + claude.h / 2
 
-  const kids = v.nodes.map((nd, i) => {
-    const isRunning = nd.running > 0
-    const ring: Box['ring'] =
-      now - nd.errorAt < ERROR_MS
-        ? 'error'
-        : isRunning && nd.isBackground
-          ? 'background'
-          : undefined
-    const box: Box = {
-      label: esc(nd.label.slice(0, LABEL_CHARS)),
-      kind: nd.kind,
-      cx: BOX_X + 48,
-      cy: branchTop + 50 + i * ROW,
-      w: 96,
-      h: 40,
-      ring,
-    }
-    return { nd, box, isActive: isRunning || v.mainRunning }
-  })
+  const out: Out = { lines: [], boxes: [], right: M + 130, bottom: branchTop }
+  layout(rowsOf(v, now, { n: 0 }), TRUNK, branchTop, branchTop + 50, out, { i: 0 })
 
   const growth = growthText(v)
   const gw = growth.length * 12 + 12
-  const last = kids[kids.length - 1]
-  const lastY = last ? last.box.cy + 30 : branchTop + 20
-  const height = lastY + M
-
-  // Branches: down the trunk, round the corner, along to the box.
-  const branches = kids.map((k, i) => {
-    const y = k.box.cy
-    const x2 = k.box.cx - k.box.w / 2
-    const d = `M${TRUNK},${branchTop} V${y - ELBOW} Q${TRUNK},${y} ${TRUNK + ELBOW},${y} H${x2}`
-    const text = costText(v, k.nd)
-    const pw = text.length * 12 + 12
-    const px = (TRUNK + ELBOW + x2) / 2
-    return line(d, KIND[k.box.kind].fill, i + 1, k.isActive, 0) + pill(px, y, text, pw)
-  })
+  const width = Math.max(MIN_W, out.right + M)
+  const height = out.bottom + M
 
   return (
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${height}" width="${W}" height="${height}" preserveAspectRatio="xMinYMin meet">` +
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" preserveAspectRatio="xMinYMin meet">` +
     line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
-    branches.join('') +
+    out.lines.join('') +
     node(you) +
     node(claude) +
-    kids.map(k => node(k.box)).join('') +
+    out.boxes.join('') +
     `</svg>`
   )
 }
@@ -303,6 +360,92 @@ let isFlushPending = false
 // being written: a write redraws the pane, and every redraw makes it blink.
 let held: FlowView | undefined
 
+// ------------------------------------------------- sessions started from here
+// Every session with the mod writes its tree to a file of its own in a shared
+// folder; a session that starts others finds their files and draws them as
+// "Session N" tiles. Nothing here costs model tokens.
+
+let selfId = ''
+let startedAt = 0
+let lastSpawnAt = 0 // when this session last called start_session
+
+const treeOf = (v: FlowView): SubTree => ({
+  nodes: v.nodes,
+  subs: v.subs,
+  mainRunning: v.mainRunning,
+  isWaiting: v.isWaiting,
+  wTotal: v.wTotal,
+  k: v.k,
+})
+
+async function folderOf($: EngineInterface): Promise<string> {
+  const home = await $.env.get('SOCRATEX_HOME')
+  if (!selfId) selfId = await $.session.id()
+  if (!startedAt) startedAt = await $.clock.now()
+
+  return home ? `${home.replace(/\\/g, '/')}/local/flow` : ''
+}
+
+async function publish($: EngineInterface, v: FlowView): Promise<void> {
+  const dir = await folderOf($)
+  if (!dir) return
+  try {
+    const at = await $.clock.now()
+    await $.fs.write(
+      `${dir}/${selfId}.json`,
+      JSON.stringify({ id: selfId, startedAt, updatedAt: at, tree: treeOf(v) }),
+    )
+  } catch {
+    // the shared folder is optional: without it there are simply no session tiles
+  }
+}
+
+type Shared = { id: string; startedAt: number; updatedAt: number; tree: SubTree }
+
+async function loadShared($: EngineInterface, dir: string, id: string): Promise<Shared | undefined> {
+  try {
+    return JSON.parse(String(await $.fs.read(`${dir}/${id}.json`))) as Shared
+  } catch {
+    return undefined
+  }
+}
+
+async function poll($: EngineInterface): Promise<void> {
+  const dir = await folderOf($)
+  if (!dir) return
+  const cur = held ?? (await read($, view))
+  const ids = [...cur.sessionIds]
+
+  // A file born soon after our start_session call is the session we started.
+  if (lastSpawnAt > 0) {
+    let names: Array<{ name: string }> = []
+    try {
+      names = await $.fs.list(dir)
+    } catch {
+      names = []
+    }
+    for (const n of names) {
+      const id = n.name.replace(/\.json$/, '')
+      if (!n.name.endsWith('.json') || id === selfId || ids.includes(id)) continue
+      const f = await loadShared($, dir, id)
+      if (f && f.startedAt >= lastSpawnAt - 2000 && f.startedAt <= lastSpawnAt + ATTACH_WINDOW_MS) {
+        ids.push(id)
+      }
+    }
+  }
+
+  const subs: SubTree[] = []
+  const kept: string[] = []
+  for (const id of ids) {
+    const f = await loadShared($, dir, id)
+    if (f) {
+      subs.push(f.tree)
+      kept.push(id)
+    }
+  }
+  change($, v => ({ ...v, sessionIds: kept, subs }))
+}
+
 function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
   queued.push(fn)
   if (isFlushPending) return
@@ -316,10 +459,13 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
     const next = batch.reduce((acc, f) => f(acc), cur)
     if (draw(next, at) === draw(cur, at)) {
       held = next
+      await publish($, next)
+
       return
     }
     held = undefined
     await update($, view, () => next)
+    await publish($, next)
   })
 }
 
@@ -340,6 +486,7 @@ export const register: Register = on => {
     const { rateLimits } = await $.session.usage()
     const win = rateLimits.find(r => r.kind === 'five_hour')
     await change($, v => applyLimit(v, win))
+    $.clock.every(SYNC_MS, () => poll($))
 
     return next(e)
   })
@@ -423,6 +570,7 @@ export const register: Register = on => {
     const args = e as unknown as Record<string, unknown>
     const c = classify(String(e.tool), args)
     const isBackground = args.run_in_background === true
+    if (/start_session|hand_off_to_session/.test(String(e.tool))) lastSpawnAt = now
     await change($, v => ({
       ...v,
       nodes: touch(v.nodes, c, now, n => ({
