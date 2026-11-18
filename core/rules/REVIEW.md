@@ -9,6 +9,7 @@ updated: 2026-11-16
 
 - Non-trivial changes to domain logic, UI, input, persistence or runtime flow, and any finished refactor: run the project's quality gate (named in its INDEX.json or AGENTS.md). Not after every tiny edit during active iteration.
 - Parse errors, failed lint, formatting violations and compiler or analyzer warnings are must-fix unless the owner approves an exception.
+- Proof before "done": a claim that something works or passes needs fresh output of the command that proves it, from this turn, read in full (exit code, failure count). No output, no claim; say what was not run.
 - A check skipped because a tool is missing: say so in the report.
 - A repo tool that exists but is not found on PATH is a tooling defect: fix the bootstrap script now or record it as the next task.
 - Verification depth comes from `tools/risk_score.py` (LIGHT / STANDARD / FULL); FULL adds an independent reviewer (high tier, separate context, gets only diff and spec) and a manual-check request.

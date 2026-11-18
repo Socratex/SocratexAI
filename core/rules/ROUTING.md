@@ -27,6 +27,7 @@ Source of truth: `core/ROUTING.json` (mirrored by `claude/agents/*.md` and `code
 
 - Claude: the router session stays on sonnet; opus runs as a subagent or a separate session. Delegate through `subagent_type`, not a hand-written `model`.
 - A subagent starts with a clean context: give it the goal, paths, acceptance criteria and result format. Independent parts run in parallel; dependent ones in order.
+- A delegate ends its report with one status: DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT or BLOCKED. BLOCKED or NEEDS_CONTEXT is the evidence that triggers escalation or a better brief; the parent never retries it unchanged.
 - Deterministic scripts and the current agent come before delegation for tiny or mechanical work.
 - Effort per task type: `core/ROUTING.json` `effort_by_task_type`.
 

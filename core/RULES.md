@@ -46,10 +46,8 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 - Warn before work that will burn unusual usage (large sweeps, long retry loops) and offer a cheaper scoped option.
 
 ## 🤖 Model routing (details: `core/ROUTING.json`, `core/rules/ROUTING.md`)
-- Plan with the high tier once, execute with standard or cheap, verify with a deterministic gate before trusting the result.
-- Escalate on evidence: a failed gate or a blocked report moves the work one tier up with the evidence attached; after two failed attempts on a tier, stop and move up or ask.
-- Review runs in a separate context from the implementation. The top tier is used only after an explained owner approval.
-- Delegate only when the brief is shorter than the work; one level of delegation, no recursion; always check a delegate's result before reporting or committing.
+- Plan with the high tier once, execute cheaper, verify with a deterministic gate; escalate one tier on evidence (failed gate, BLOCKED report); two failed attempts on a tier: stop and move up or ask.
+- Review runs in a separate context. Top tier only after an explained owner yes. Delegate only when the brief is shorter than the work, one level deep, and check the result before reporting.
 
 ## 🔒 Safety
 - Never touch other agents' or sessions' uncommitted changes. Commit only your own paths, never `git add -A`.

@@ -14,7 +14,7 @@ Merged value of the legacy FLOWS, WORKFLOW and TASK-WORK documents. Pick the flo
 |---|---|---|---|
 | Question | smallest source that answers it | answer, state uncertainty | answer is sourced or marked as inference |
 | Feature | project state or plan, then only the owning source files | research gate, then smallest maintainable change at the owning boundary | project gate passes, closure evidence given |
-| Bug | bug report, logs, state | separate observed behavior from hypothesis, reproduce or find evidence, fix the root cause at the owning boundary, add a diagnostic when confidence is low. Note attempted fixes so none is repeated. Keep the logs until the owner confirms the fix | repro no longer fails, cause named |
+| Bug | bug report, logs, state | separate observed behavior from hypothesis, reproduce or find evidence, fix the root cause at the owning boundary (no fix before the cause is named), add a diagnostic when confidence is low. After 3 failed fixes stop and question the approach or architecture. Note attempted fixes so none is repeated. Keep the logs until the owner confirms the fix | repro no longer fails, cause named (a failing test that reproduces it comes first where the project has tests) |
 | Logs, crash, trace | the supplied logs | extract errors with timestamps, group by cause, then treat as a bug | likely cause named, data separated from inference |
 | Refactor | code of the area plus its tests | behavior stays the same, small coherent slices, tests green after each slice | gate passes, no behavior diff |
 | Docs or rules edit | the owning document, then the nearest index | edit in the owning place, no duplicate of another document | index updated if a document moved or was added |
