@@ -44,6 +44,7 @@ const STATE = {
 type Kind = keyof typeof KIND
 type Box = {
   label: string
+  full?: string // the whole name, shown as a tooltip when label is cut
   kind: Kind
   cx: number
   cy: number
@@ -157,9 +158,11 @@ const node = (b: Box) => {
   const k = KIND[b.kind]
   const ring = b.ring ? STATE[b.ring] : 'none'
   const ringW = b.ring ? 3.5 : 0
+  const tip = b.full ? `<title>${b.full}</title>` : ''
   return (
+    `<g>${tip}` +
     `<rect x="${b.cx - b.w / 2}" y="${b.cy - b.h / 2}" width="${b.w}" height="${b.h}" rx="${RADIUS}" ry="${RADIUS}" fill="${k.fill}" stroke="${ring}" stroke-width="${ringW}"/>` +
-    `<text x="${b.cx}" y="${b.cy}" fill="${k.text}" font-size="${FONT}" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">${b.label}</text>`
+    `<text x="${b.cx}" y="${b.cy}" fill="${k.text}" font-size="${FONT}" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">${b.label}</text></g>`
   )
 }
 
@@ -178,6 +181,7 @@ const costText = (k: number, w: number) =>
 // One branch of the tree: a box, the figure on its line and what hangs below it.
 type Row = {
   label: string
+  full?: string
   kind: Kind
   w: number
   ring?: Box['ring']
@@ -201,7 +205,8 @@ const rowsOf = (s: Src, now: number, count: { n: number }): Row[] => [
           : undefined
 
     return {
-      label: esc(nd.label.slice(0, LABEL_CHARS)),
+      label: esc(nd.label.length > LABEL_CHARS ? `${nd.label.slice(0, LABEL_CHARS - 1)}…` : nd.label),
+      full: nd.label.length > LABEL_CHARS ? esc(nd.label) : undefined,
       kind: nd.kind as Kind,
       w: 96,
       ring,
@@ -247,7 +252,7 @@ const layout = (
     out.lines.push(
       line(d, KIND[r.kind].fill, idx.i, r.isActive, 0) + pill((trunkX + ELBOW + left) / 2, y, r.text, pw),
     )
-    out.boxes.push(node({ label: r.label, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring }))
+    out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring }))
     out.right = Math.max(out.right, left + r.w)
     out.bottom = Math.max(out.bottom, y + 20)
     y = r.kids.length ? layout(r.kids, left + 24, y + 20, y + ROW, out, idx) : y + ROW
