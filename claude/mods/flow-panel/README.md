@@ -31,5 +31,9 @@ Set `FLOW_PANEL` to `0` in the `env` block of a settings file; the project value
 ## Limits
 
 - The limit figure is the whole account's, so other sessions inflate it and the learned factor.
+- Mouse-wheel zoom is a trial (script inside the SVG); it resets on every redraw.
+- A new prompt clears the segments; only paths used since then are shown.
+- Mouse-wheel zoom is a trial (script inside the SVG); it resets on every redraw.
+- A new prompt clears the segments; only paths used since then are shown.
 - Figures refresh after each main turn, not continuously. Redraws are batched to one per 2 seconds, with dots keeping their phase, to avoid blinking.
 - Tuning constants (font, weights) are at the top of `hooks/register.tsx`.

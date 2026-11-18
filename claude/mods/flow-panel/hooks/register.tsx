@@ -122,6 +122,17 @@ const applyLimit = (
 
 // ---------------------------------------------------------------- drawing
 
+// Mouse-wheel zoom, run inside the SVG's own frame (a trial: it only works if
+// that frame allows scripts). The wheel changes the viewBox; a redraw resets it.
+const ZOOM =
+  '<script><![CDATA[' +
+  'var s=document.documentElement,b=s.viewBox.baseVal,w0=b.width,h0=b.height;' +
+  's.addEventListener("wheel",function(e){e.preventDefault();' +
+  'var f=e.deltaY>0?1.1:0.9,nw=Math.min(w0*4,Math.max(w0/4,b.width*f)),nh=nw*h0/w0;' +
+  'var r=s.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;' +
+  'b.x+=(b.width-nw)*px;b.y+=(b.height-nh)*py;b.width=nw;b.height=nh;},{passive:false});' +
+  ']]></script>'
+
 const M = 10 // left/top margin, px
 const TRUNK = M + 24 // x of the vertical trunk
 const ELBOW = 14 // radius of the rounded corners
@@ -208,7 +219,8 @@ const draw = (v: FlowView, now: number): string => {
 
   const growth = growthText(v)
   const gw = growth.length * 12 + 12
-  const lastY = kids.length ? kids[kids.length - 1].box.cy + 30 : branchTop + 20
+  const last = kids[kids.length - 1]
+  const lastY = last ? last.box.cy + 30 : branchTop + 20
   const height = lastY + M
 
   // Branches: down the trunk, round the corner, along to the box.
@@ -230,6 +242,7 @@ const draw = (v: FlowView, now: number): string => {
     node(you) +
     node(claude) +
     kids.map(k => node(k.box)).join('') +
+    ZOOM +
     `</svg>`
   )
 }
@@ -341,6 +354,8 @@ export const register: Register = on => {
       const isUp = (await $.ui.panes()).some(pane => pane.id === PANE)
       if (!isUp) void $.ui.open({ id: PANE, title: 'Flow' })
     }
+    // A new prompt starts a fresh view: only segments used since then show.
+    await change($, v => ({ ...v, nodes: [], agentNode: {} }))
 
     return next(e)
   })
