@@ -671,12 +671,18 @@ export const register: Register = on => {
     await folderOf($) // makes sure the session id is known before drawing
     const v = await restoredFor($, await read($, view))
     const now = await $.clock.now()
+    const source = draw(v, now)
+    // Without an explicit size the pane seems to cap the drawing's height and
+    // shrink a taller one, so state the drawing's own size.
+    const size = /width="([\d.]+)" height="([\d.]+)"/.exec(source)
 
     return (
       <Box flexDirection="column" alignItems="flex-start">
         {Svg ? (
           <Svg
-            source={draw(v, now)}
+            source={source}
+            width={size ? Number(size[1]) : undefined}
+            height={size ? Number(size[2]) : undefined}
             alt="Live graph: you, Claude and the sub-agents, tools, MCP servers and skills it uses, with the limit cost on each line"
             isInteractive
           />
