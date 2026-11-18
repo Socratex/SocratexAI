@@ -7,6 +7,9 @@ const PANE = 'flow-panel'
 
 // Tunables
 const FONT = 20 // label size in CSS px (the SVG is drawn 1:1)
+// The box takes the drawing's own width up to the pane, so a drawing declared FIT
+// times larger than its viewBox is stretched to the pane width (scaled up or down).
+const FIT = 3
 const MIN_W = 300
 const SYNC_MS = 3000 // how often the shared session files are looked at
 const ATTACH_WINDOW_MS = 120000 // a new session file this soon after start_session is its child
@@ -288,7 +291,7 @@ const draw = (v: FlowView, now: number): string => {
   const height = out.bottom + M
 
   return (
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" preserveAspectRatio="xMinYMin meet">` +
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width * FIT}" height="${height * FIT}" preserveAspectRatio="xMinYMin meet">` +
     line(`M${TRUNK},${trunkTop} V${trunkEnd}`, KIND.claude.fill, 0, v.mainRunning, 0) +
     pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
     out.lines.join('') +
