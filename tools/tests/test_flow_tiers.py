@@ -113,6 +113,20 @@ class FlowTiers(unittest.TestCase):
             self.assertEqual(_run(f"fmtTime({value})"), text, value)
         self.assertEqual(_run("fmtTime(undefined)"), "0s")
 
+    def test_live_time_grows_one_second_per_second_per_running_call(self) -> None:
+        # one call started at t=1000 ms, now t=4000: 3 s spent, plus 2 s already booked
+        self.assertEqual(_run("liveElapsed(2000, 1, 1000, 4000)"), 5000)
+        # two calls started at 1000 and 2000, now 4000: 3 s + 2 s
+        self.assertEqual(_run("liveElapsed(0, 2, 3000, 4000)"), 5000)
+        self.assertEqual(_run("liveElapsed(0, 0, 0, 4000)"), 0)
+        self.assertEqual(_run("liveElapsed(0, 1, 9000, 4000)"), 0)  # never negative
+
+    def test_live_labels_count_up_by_the_second(self) -> None:
+        self.assertEqual(_run("liveLabels(0, 1, 1000, 4000, 4)"), ["3s", "4s", "5s", "6s"])
+        self.assertEqual(_run("liveLabels(0, 1, 0, 58000, 4)"), ["58s", "59s", "1m00s", "1m01s"])
+        self.assertEqual(_run("liveLabels(0, 2, 8000, 5000, 3)"), ["2s", "4s", "6s"])  # two calls: twice as fast
+        self.assertEqual(len(_run("liveLabels(0, 1, 0, 0, 0)")), 1)  # always at least one label
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -12,6 +12,7 @@ export type FlowNode = {
   usd?: number // dollars the engine's ledger charged to this agent's own turns
   tps?: number // tokens per second of its last turn or the result of its last call (dots of the up lane)
   tok?: number // fresh tokens this path moved (agent turns: input + output + cache write; tools: request + result)
+  startSum?: number // sum of the start times (ms) of the calls running now: the live time is ms + running * now - startSum
   ms?: number // wall time this path spent executing (agent turns, tool calls), summed
   tpsIn?: number // tokens per second of the request of its last call (dots of the down lane)
 }

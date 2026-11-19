@@ -280,6 +280,18 @@ const fmtTime = (ms: number): string => {
 
   return `${Math.floor(s / 60)}m${String(s % 60).padStart(2, '0')}s`
 }
+
+// Live time. A path that is running now has `running` calls, which started at
+// `startSum` in total, so the time it has spent grows by `running` seconds each
+// second: elapsed(T) = ms + running * T - startSum. The picture pre-draws one
+// label per second ahead and a SMIL animation shows them one after another.
+const liveElapsed = (ms: number, running: number, startSum: number, nowMs: number): number =>
+  Math.max(0, ms + running * nowMs - startSum)
+
+const liveLabels = (ms: number, running: number, startSum: number, nowMs: number, count: number): string[] =>
+  Array.from({ length: Math.max(1, count) }, (_, k) =>
+    fmtTime(Math.floor(liveElapsed(ms, running, startSum, nowMs + k * 1000) / 1000) * 1000),
+  )
 // </tiers>
 
 // ---------------------------------------------------------------- drawing
@@ -288,6 +300,21 @@ const M = 5 // left/top margin, px (always 5px from the left edge)
 const TRUNK = M + 24 // x of the vertical trunk
 const ELBOW = 14 // radius of the rounded corners
 const ROW = 64 // vertical distance between branches
+
+// The same pill with a time that ticks on its own: one <text> per second, each
+// shown for its second by a SMIL <set>; the last one stays.
+const livePill = (x: number, y: number, labels: string[], pw: number): string => {
+  const at = (k: number, last: boolean): string =>
+    `<text class="t" x="${x}" y="${y}"${k === 0 ? '' : ' visibility="hidden"'}>${labels[k]}` +
+    (k === 0
+      ? `<set attributeName="visibility" to="hidden" begin="1s" fill="freeze"/>`
+      : `<set attributeName="visibility" to="visible" begin="${k}s"${last ? ' fill="freeze"' : ' dur="1s"'}/>`) +
+    `</text>`
+  let texts = ''
+  for (let k = 0; k < labels.length; k += 1) texts += at(k, k === labels.length - 1)
+
+  return `<rect x="${x - pw / 2}" y="${y - 15}" width="${pw}" height="30" rx="8" ry="8" fill="#1e1e1e"/>` + texts
+}
 
 const pill = (x: number, y: number, text: string, pw: number) => {
   return (
@@ -459,6 +486,8 @@ type Row = {
   usd: number | undefined // the figure on its line; undefined = not known yet
   tok: number // fresh tokens of the path (a session: the sum of its branches)
   ms: number // execution time of the path (a session: the sum of its branches)
+  liveN: number // calls running now (a session: the sum over its branches); its time ticks while > 0
+  liveSum: number // their start times, summed (see liveElapsed)
   text: string
   isActive: boolean
   tps?: number // token pace of the result coming back up: sets the dots of the up lane
@@ -483,6 +512,12 @@ type Src = Pick<SubTree, 'nodes' | 'subs' | 'mainRunning' | 'perW' | 'usd' | 'tp
 
 // The measure the figures show while a picture is drawn (set by `draw`).
 let shownFigure: Figure = 'cost'
+// The clock the drawing was made at, and how many live timers it may still carry.
+const nowMsOf = (now: number): number => now
+const LIVE_SECONDS = 70 // labels drawn ahead of a ticking time; a redraw is forced before they run out
+const LIVE_MAX = 6 // ticking times per drawing (the SVG source is capped at 131072 characters)
+const LIVE_REFRESH_MS = 60000
+let liveLeft = LIVE_MAX
 
 // The session this copy of the mod runs in: the root of every tree it draws.
 let selfId = ''
@@ -511,7 +546,9 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       usd,
       tok: nd.tok ?? 0,
       ms: nd.ms ?? 0,
-      text: figureText(shownFigure, { usd, tok: nd.tok ?? 0, ms: nd.ms ?? 0 }),
+      liveN: isRunning ? nd.running : 0,
+      liveSum: isRunning ? (nd.startSum ?? 0) : 0,
+      text: figureText(shownFigure, { usd, tok: nd.tok ?? 0, ms: (nd.ms ?? 0) + (isRunning ? liveElapsed(0, nd.running, nd.startSum ?? 0, nowMsOf(now)) : 0) }),
       isActive: isRunning || s.mainRunning,
       tps: nd.tps ?? s.tps,
       tpsIn: nd.tpsIn,
@@ -531,6 +568,8 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
     const usd = sub.mainRunning ? sumUsd(kids) : sub.usd
     const tok = kids.reduce((a, k) => a + k.tok, 0)
     const ms = kids.reduce((a, k) => a + k.ms, 0)
+    const liveN = kids.reduce((a, k) => a + k.liveN, 0)
+    const liveSum = kids.reduce((a, k) => a + k.liveSum, 0)
 
     return {
       label,
@@ -541,7 +580,9 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       usd,
       tok,
       ms,
-      text: figureText(shownFigure, { usd, tok, ms }),
+      liveN,
+      liveSum,
+      text: figureText(shownFigure, { usd, tok, ms: ms + (liveN > 0 ? liveElapsed(0, liveN, liveSum, nowMsOf(now)) : 0) }),
       isActive: sub.mainRunning,
       tps: sub.tps,
       shade: subShade,
@@ -568,11 +609,14 @@ const layout = (
     const d = `M${trunkX},${topY} V${y - ELBOW} Q${trunkX},${y} ${trunkX + ELBOW},${y} H${left}`
     // straight down, a rounded quarter (about 1.16 x its radius), then across
     const length = Math.max(0, y - ELBOW - topY) + ELBOW * 1.16 + (left - trunkX - ELBOW)
-    const pw = r.text.length * 12 + 12
+    const isLive = shownFigure === 'time' && r.liveN > 0 && liveLeft > 0
+    const labels = isLive ? liveLabels(r.ms, r.liveN, r.liveSum, nowS * 1000, LIVE_SECONDS) : []
+    if (isLive) liveLeft -= 1
+    const pw = (isLive ? labels[labels.length - 1]!.length : r.text.length) * 12 + 12
     // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push({
       rank: r.isActive ? Math.max(tierOf(r.tps), tierOf(r.tpsIn)) : -1, // idle lines lie below every active one
-      svg: line(d, length, palette(r.kind, r.shade).fill, r.isActive, nowS, palette(r.kind, r.shade).light, r.tps, r.tpsIn) + pill(left + r.w + 6 + pw / 2, y, r.text, pw),
+      svg: line(d, length, palette(r.kind, r.shade).fill, r.isActive, nowS, palette(r.kind, r.shade).light, r.tps, r.tpsIn) + (isLive ? livePill(left + r.w + 6 + pw / 2, y, labels, pw) : pill(left + r.w + 6 + pw / 2, y, r.text, pw)),
     })
     out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive, shade: r.shade }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
@@ -585,6 +629,7 @@ const layout = (
 
 const draw = (v: FlowView, now: number, figure: Figure = 'cost'): string => {
   shownFigure = figure
+  liveLeft = LIVE_MAX
   const you: Box = {
     label: 'User',
     kind: 'you',
@@ -604,20 +649,27 @@ const draw = (v: FlowView, now: number, figure: Figure = 'cost'): string => {
   layout(rows, TRUNK, branchTop, branchTop + 50, out, nowS)
 
   // User -> Claude: the sum of the branches below, as their lines show them.
+  const totalMs = rows.reduce((a, r) => a + r.ms, 0)
+  const liveN = rows.reduce((a, r) => a + r.liveN, 0)
+  const liveSum = rows.reduce((a, r) => a + r.liveSum, 0)
   const growth = figureText(figure, {
     usd: sumUsd(rows),
     tok: rows.reduce((a, r) => a + r.tok, 0),
-    ms: rows.reduce((a, r) => a + r.ms, 0),
+    ms: totalMs + (liveN > 0 ? liveElapsed(0, liveN, liveSum, now) : 0),
   })
-  const gw = growth.length * 12 + 12
+  const trunkLabels =
+    figure === 'time' && liveN > 0 && liveLeft > 0 ? liveLabels(totalMs, liveN, liveSum, now, LIVE_SECONDS) : undefined
+  const gw = (trunkLabels ? trunkLabels[trunkLabels.length - 1]!.length : growth.length) * 12 + 12
   const width = Math.max(MIN_W, out.right + M)
   const height = out.bottom + M
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width * FIT}" height="${height * FIT}" preserveAspectRatio="xMinYMin meet">` +
-    `<defs><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="3"/></filter><filter id="lineglow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${width + 40}" height="${height + 40}"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
+    `<defs><style>.t{fill:#cfd8dc;font:${FONT}px sans-serif;text-anchor:middle;dominant-baseline:central}</style><filter id="glow" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="4"/></filter><filter id="dotglow" x="-100%" y="-200%" width="300%" height="500%"><feGaussianBlur stdDeviation="3"/></filter><filter id="lineglow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="${width + 40}" height="${height + 40}"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
     line(`M${TRUNK},${trunkTop} V${trunkEnd}`, trunkEnd - trunkTop, KIND.claude.fill, v.mainRunning, nowS, KIND.claude.light, v.mainTps) +
-    pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw) +
+    (trunkLabels
+      ? livePill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, trunkLabels, gw)
+      : pill(TRUNK + 14 + gw / 2, (trunkTop + trunkEnd) / 2, growth, gw)) +
     byIntensity(out.lines).map(l => l.svg).join('') +
     node(you) +
     node(claude) +
@@ -690,6 +742,8 @@ const touch = (
 
 // When each running turn began, by agent id ('' = the main loop), for its pace.
 const turnStartedAt = new Map<string, number>()
+// When a command's fork (/btw ...) started, by agent id: its run is one timed span.
+const spawnedAt = new Map<string, number>()
 
 const freshTokens = (u: Usage | undefined): number =>
   u ? (u.input_tokens ?? 0) + (u.output_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0) : 0
@@ -927,6 +981,7 @@ async function poll($: EngineInterface): Promise<void> {
   const dir = await folderOf($)
   if (!dir) return
   await scanStore($)
+  void armLiveRefresh($)
   const mine = [...stored.values()].find(s => s.cli === selfId)
   if (!mine) await refreshTitle($)
   const cur = held ?? (await read($, view))
@@ -1023,6 +1078,26 @@ const firstDiff = (a: string, b: string): string => {
 }
 
 let lastSource = ''
+
+// A running time ticks by itself for LIVE_SECONDS after it was drawn. While
+// anything runs, one redraw per LIVE_REFRESH_MS keeps the labels coming, even
+// when nothing else changes; it is the only timer the panel keeps.
+const anyRunning = (nodes: FlowNode[], subs: SubTree[]): boolean =>
+  nodes.some(n => n.running > 0) || subs.some(s => anyRunning(s.nodes, s.subs))
+let isRefreshArmed = false
+
+async function armLiveRefresh($: EngineInterface): Promise<void> {
+  if (isRefreshArmed) return
+  isRefreshArmed = true
+  $.clock.after(LIVE_REFRESH_MS, async () => {
+    isRefreshArmed = false
+    const cur = held ?? (await read($, view))
+    if (!anyRunning(cur.nodes, cur.subs)) return
+    held = undefined
+    await update($, view, () => ({ ...cur, tick: cur.tick + 1 }))
+    await armLiveRefresh($)
+  })
+}
 
 function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
   queued.push(fn)
@@ -1133,6 +1208,8 @@ export const register: Register = on => {
     // The engine's own ledger: what this turn added is charged to its agent's path.
     const usd = (await $.session.usage()).cost?.usd ?? 0
     const endedAt = await $.clock.now()
+    const side = e.agentId === undefined ? undefined : spawnedAt.get(e.agentId)
+    if (e.agentId !== undefined) spawnedAt.delete(e.agentId)
     await change($, v => {
       const key = e.agentId === undefined ? undefined : v.agentNode[e.agentId]
       const delta = Math.max(0, usd - (v.lastUsd ?? usd))
@@ -1149,8 +1226,17 @@ export const register: Register = on => {
                     usd: (n.usd ?? 0) + delta,
                     tps: tps ?? n.tps,
                     tok: (n.tok ?? 0) + freshTokens(e.usage),
-                    ms: (n.ms ?? 0) + (began === undefined ? 0 : endedAt - began),
-                    ...(key === sideTarget.key ? { running: Math.max(0, n.running - 1), isBackground: n.running > 1, at: endedAt } : {}),
+                    // A foreground Agent call is still running and counts the whole run itself;
+                    // a background agent and a command's fork have no call to count it.
+                    ms: (n.ms ?? 0) + (key === sideTarget.key ? endedAt - (side ?? endedAt) : n.running === 0 && began !== undefined ? endedAt - began : 0),
+                    ...(key === sideTarget.key
+                      ? {
+                          running: Math.max(0, n.running - 1),
+                          startSum: n.running > 1 ? (n.startSum ?? 0) - (side ?? endedAt) : 0,
+                          isBackground: n.running > 1,
+                          at: endedAt,
+                        }
+                      : {}),
                   }
                 : n,
             )
@@ -1171,12 +1257,22 @@ export const register: Register = on => {
     if (id) {
       const now = await $.clock.now()
       const isSide = isSideFork(e)
+      if (isSide) {
+        spawnedAt.set(id, now)
+        void armLiveRefresh($)
+      }
       const target = isSide ? sideTarget : agentTarget(e.subagentType)
       await change($, v => ({
         ...v,
         agentNode: { ...v.agentNode, [id]: target.key },
         // A command's fork has no tool call to mark it running, so the spawn does.
-        nodes: touch(v.nodes, target, now, n => ({ ...n, at: now, running: n.running + (isSide ? 1 : 0), isBackground: isSide || n.isBackground })),
+        nodes: touch(v.nodes, target, now, n => ({
+          ...n,
+          at: now,
+          running: n.running + (isSide ? 1 : 0),
+          startSum: (n.startSum ?? 0) + (isSide ? now : 0),
+          isBackground: isSide || n.isBackground,
+        })),
       }))
     }
 
@@ -1204,6 +1300,7 @@ export const register: Register = on => {
       /start_session|hand_off_to_session/.test(String(e.tool)) && typeof args.prompt === 'string'
         ? [{ at: now, snippet: norm(args.prompt).slice(0, SNIPPET_CHARS) }]
         : []
+    void armLiveRefresh($)
     await change($, v => ({
       ...v,
       spawns: [...(v.spawns ?? []), ...spawn].slice(-20),
@@ -1211,6 +1308,7 @@ export const register: Register = on => {
         ...n,
         at: now,
         running: n.running + 1,
+        startSum: (n.startSum ?? 0) + now,
         isBackground: isBackground || n.isBackground,
       })),
     }))
@@ -1236,6 +1334,7 @@ export const register: Register = on => {
                 ...n,
                 at: end,
                 running: Math.max(0, n.running - 1),
+                startSum: n.running - 1 > 0 ? (n.startSum ?? 0) - now : 0,
                 isBackground: n.running - 1 > 0 ? n.isBackground : false,
                 errorAt: failed ? end : n.errorAt,
                 w: n.w + resultTokens * RESULT_WEIGHT,
