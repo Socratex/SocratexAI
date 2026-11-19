@@ -2,7 +2,7 @@
 type: rules
 title: AI model routing and feedback loop
 description: Which model and effort to use, when to delegate or escalate, risk-based verification and the outcome log.
-updated: 2026-11-16
+updated: 2026-11-19
 ---
 
 # 🤖 AI model routing (Claude and Codex)
@@ -42,6 +42,21 @@ Source of truth: `core/ROUTING.json` (mirrored by `claude/agents/*.md` and `code
 
 ## 🔝 Top tier needs owner approval
 Never automatic, not in unattended loops and not because a task is critical. Explain why the high tier is not enough (attempts, evidence, exact scope, expected cost and gain), ask, and wait for an explicit yes. Approval covers analysis only, not implementation, extra agents or xhigh effort.
+
+## ⚖️ Load balancing Claude and Codex (owner decision 2026-11-19)
+Claude is the lead for code and anything mathematical; Codex helps so the load and the limits are shared. Claude stays the parent: it writes the brief, integrates and verifies.
+- Codex by default (via `/codex:rescue`, in Claude Code; in Codex itself these just stay there):
+  - searching files and the repo, collecting facts across many files
+  - research on the internet (sources, docs, how others solve it)
+  - non-mathematical 2D and 3D art: concept art, textures, sprites, models and renders judged by look
+  - summaries of long logs and test output, first drafts of docs and translations
+  - mechanical edits from a clear pattern (rename, move, boilerplate)
+  - second opinion on a diff: `/codex:review`, before a push of logic changes
+  - rescue after two failed attempts on one tier, or a second diagnosis of a hard bug
+- Claude by default: writing and changing code, algorithms, geometry and other maths (physics, collision, generation formulas), architecture and plans, integration, finalizer, commits.
+- Balance by load: when one vendor is near its limit or slow, move the delegable part to the other. Never move code or maths to Codex just to save limits.
+- A Codex result is a lead, not proof: Claude checks it with the gate. Art is judged by the owner.
+- Same cost rule as above: no delegation when the brief is longer than the work. Client or sensitive data goes to the second vendor only if the project allows it.
 
 ## 🧩 Codex specifics
 - Parent owns integration, task-ledger updates and finalization. Delegates never commit, push, finalize, start unattended loops or mark tasks complete.
