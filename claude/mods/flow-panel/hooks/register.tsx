@@ -261,25 +261,24 @@ const FIGURES = ['cost', 'time', 'tokens'] as const
 const nextFigure = (f: string | undefined): (typeof FIGURES)[number] =>
   FIGURES[(Math.max(0, FIGURES.indexOf(f as (typeof FIGURES)[number])) + 1) % FIGURES.length]!
 
-// Tokens as 950, 1.2k, 34k, 1.5M (three digits at most, no trailing zero).
+// Tokens in K, then in M, always one decimal: 743 -> 0.7K, 34500 -> 34.5K, 1.5M.
 const fmtTokens = (n: number): string => {
   const v = Math.max(0, Number.isFinite(n) ? n : 0)
-  if (v < 1000) return String(Math.round(v))
-  const [d, unit] = v < 1e6 ? [v / 1e3, 'k'] : [v / 1e6, 'M']
-  const s = d < 10 ? d.toFixed(1) : String(Math.round(d))
+  if (v === 0) return '0'
+  const k = Math.round(v / 100) / 10 // thousands, one decimal
+  if (k < 1000) return `${k.toFixed(1)}K`
 
-  return `${s.replace(/\.0$/, '')}${unit}`
+  return `${(Math.round(v / 1e5) / 10).toFixed(1)}M`
 }
 
-// Wall time as 0.4s, 12s, 3m05s, 1h02m.
+// Wall time in seconds and minutes only: 0.4s, 12s, 3m05s, 62m00s.
 const fmtTime = (ms: number): string => {
   const v = Math.max(0, Number.isFinite(ms) ? ms : 0)
   if (v < 10000) return `${(Math.round(v / 100) / 10).toString()}s`
   const s = Math.round(v / 1000)
   if (s < 60) return `${s}s`
-  if (s < 3600) return `${Math.floor(s / 60)}m${String(s % 60).padStart(2, '0')}s`
 
-  return `${Math.floor(s / 3600)}h${String(Math.floor((s % 3600) / 60)).padStart(2, '0')}m`
+  return `${Math.floor(s / 60)}m${String(s % 60).padStart(2, '0')}s`
 }
 // </tiers>
 
