@@ -102,13 +102,13 @@ class FlowTiers(unittest.TestCase):
         self.assertEqual(_run("nextFigure(undefined)"), "time")  # unknown counts as the first state
 
     def test_token_format(self) -> None:
-        cases = {"0": "0", "950": "950", "1000": "1k", "1234": "1.2k", "34500": "35k", "1500000": "1.5M", "-5": "0"}
+        cases = {"0": "0", "743": "0.7K", "50": "0.1K", "1000": "1.0K", "1234": "1.2K", "34500": "34.5K", "999960": "1.0M", "1500000": "1.5M", "-5": "0"}
         for value, text in cases.items():
             self.assertEqual(_run(f"fmtTokens({value})"), text, value)
         self.assertEqual(_run("fmtTokens(NaN)"), "0")
 
     def test_time_format(self) -> None:
-        cases = {"0": "0s", "400": "0.4s", "12000": "12s", "185000": "3m05s", "3720000": "1h02m"}
+        cases = {"0": "0s", "400": "0.4s", "12000": "12s", "185000": "3m05s", "3720000": "62m00s"}
         for value, text in cases.items():
             self.assertEqual(_run(f"fmtTime({value})"), text, value)
         self.assertEqual(_run("fmtTime(undefined)"), "0s")
