@@ -2,14 +2,14 @@
 type: rules
 title: Task gating
 description: When to just do it, when to plan first, when to research first and when to ask.
-updated: 2026-11-16
+updated: 2026-11-19
 ---
 
 # 🚦 Task gating
 
 - Local, clear, reversible change: implement without asking.
 - Complex, under-specified or multi-boundary work: short plan first.
-- Research first for a new capability or system: how do established products and best practices solve it? Write a short note (known approaches, chosen one and why, resulting build order) before the architecture proposal. Not needed for local fixes.
+- Research first for a new capability or system: how do established products and best practices solve it? Write a short note (known approaches, chosen one and why, resulting build order) before the architecture proposal. Not needed for local fixes. Also research first when the owner complains about the same thing a second or further time: the earlier fix missed the cause.
 - Before executing, check whether the task:
   - affects more than one system (UI, domain logic, persistence, world or data generation),
   - adds or changes state transitions,

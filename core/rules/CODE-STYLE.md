@@ -2,13 +2,14 @@
 type: rules
 title: Code style and quality
 description: Engineering standard for writing and reviewing code in any language; the project's own standard wins on conflict.
-updated: 2026-11-16
+updated: 2026-11-19
 ---
 
 # 🧱 Code style and quality
 
 ## 📜 Code as contract
 - Prefer constructions whose meaning is explicit before runtime: explicit types, ownership, state transitions and side-effect boundaries.
+- Types over untyped parameters: value objects instead of primitive obsession, enums instead of magic strings or numbers, schema validation at boundaries, immutable by default (as far as the language version allows).
 - Hidden semantics, implicit control flow and magic-heavy patterns are liabilities; when a flexible feature obscures the contract, choose the explicit alternative.
 - Keep contracts mechanically checkable by tools and easy to navigate in the IDE.
 - Follow existing project conventions first; adapt syntax, naming and layout to them.
@@ -16,6 +17,7 @@ updated: 2026-11-16
 ## 📖 Read like a book
 - Organize top-down: constants and dependencies, public entry points, orchestration, then lower-level helpers.
 - Public methods are the table of contents, named by business intent; their bodies are short sequences of calls to well-named private methods placed below them. Do not split trivial one-liners.
+- Complex expressions go into named locals that say why; do not extract just to add files.
 - One function, one concern, one abstraction level; extract helpers when a block mixes input, state mutation, presentation, persistence and framework plumbing.
 - Keep each domain easy to find by ownership: orchestration, data truth, configuration and runtime executors each in one obvious place. No parallel ownership of the same concern.
 - Names expose business meaning, not mechanism; side effects stay visible in the call flow.
@@ -32,7 +34,8 @@ updated: 2026-11-16
 - Syntax errors, type errors, unresolved references, linter and analyzer failures are must-fix.
 - Remove dead code, unused variables and imports, redundant branches and temporary debug code when touched.
 - Modern, community-proven idioms over outdated habits, but no novelty for its own sake.
-- Laziness first: before adding code, ask if deleting or reusing something solves it. The smallest change that works wins; every added line needs a reason.
+- Laziness first: before adding code, ask if deleting or reusing something solves it. Every added line needs a reason.
+- Better beats smaller: when it can be done better and there are sensible arguments (ownership, safety, observability, migration safety, clearer contract), do it better; name the argument in one line. Stop when it turns into overengineering. Without such an argument the smallest change that works wins.
 - Surgical fix: smallest safe change in the existing area. Larger change: a clear ownership boundary instead of logic spread across unrelated files.
 - No micro-optimization without evidence; but for predictable scale (hot paths, batches, mass data) choose the lightweight-by-design shape now: data-first truth, batching, pooling, bounded caches.
 - Placeholders only when clearly marked and scoped; never fake-complete behavior that looks production-ready.
@@ -41,6 +44,9 @@ updated: 2026-11-16
 ## 🏛️ Domain and invariants (owner preference)
 - Code is an executable domain model: domain names, dependencies point inward, validation at the edges.
 - Invariants are findable: one obvious place per rule, checked where data enters.
+- Legal state transitions are explicit (a state plus allowed moves), not several independent flags that can contradict each other.
+- A derived view (for performance or display) is never a second source of truth: it is rebuilt from the real data.
+- Domain-specific ids instead of bare primitives where mixing them up would be a bug.
 - Risky work always ships with a check that can fail (test, assertion or gate).
 - Before writing new code, search for existing code that already does it (borrow before inventing). This is inference from duplication data, not a proven effect.
 - A decision future work must not undo gets a short record: `core/templates/DECISION.md`.
