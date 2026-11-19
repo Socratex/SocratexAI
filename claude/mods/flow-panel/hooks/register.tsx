@@ -142,7 +142,6 @@ const view = atom({ plugin: 'flow-panel', key: 'view' } as const, INITIAL, {
 // display choice of this person, not shared with the sessions above or below.
 // The toggle: one icon per measure; the chosen one is lit, the others dim.
 const FIGURE_ICON: Record<Figure, string> = { cost: '$', time: '◷', tokens: '❐' }
-const FIGURE_ON = { fill: '#3b82f6', text: '#ffffff' } // the blue of the "you" box
 
 const figureAtom = atom({ plugin: 'flow-panel', key: 'figure' } as const, 'cost' as Figure, {
   shape: 'figure-1',
@@ -1280,18 +1279,14 @@ export const register: Register = on => {
               {FIGURES.map(f => (
                 <Button
                   key={`figure-${f}`}
-                  plain
                   label={FIGURE_ICON[f]}
+                  // `plain` would draw both states alike, so the lit one is the primary button.
+                  variant={f === figure ? 'primary' : 'secondary'}
+                  dimColor={f !== figure}
                   onPress={() => {
                     void update($, figureAtom, () => f)
                   }}
-                >
-                  {f === figure ? (
-                    <Text color={FIGURE_ON.text} backgroundColor={FIGURE_ON.fill} weight="bold">{` ${FIGURE_ICON[f]} `}</Text>
-                  ) : (
-                    <Text dimColor>{` ${FIGURE_ICON[f]} `}</Text>
-                  )}
-                </Button>
+                />
               ))}
             </Box>
           </Box>
