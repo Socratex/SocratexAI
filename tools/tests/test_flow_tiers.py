@@ -32,7 +32,7 @@ def _run(expr: str) -> object:
     node = _node()
     if node is None:
         raise unittest.SkipTest("Node 22+ not available")
-    block = re.search(r"// <tiers>\n(.*?)// </tiers>", SOURCE.read_text(), re.S)
+    block = re.search(r"// <tiers>\n(.*?)// </tiers>", SOURCE.read_text(encoding="utf-8"), re.S)
     assert block, "tiers block markers missing in register.tsx"
     with tempfile.TemporaryDirectory() as tmp:
         script = Path(tmp) / "t.ts"
