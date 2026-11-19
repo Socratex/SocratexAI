@@ -11,6 +11,8 @@ export type FlowNode = {
   w: number // weighted tokens of this path's tool results (see weights in register.tsx)
   usd?: number // dollars the engine's ledger charged to this agent's own turns
   tps?: number // tokens per second of its last turn or the result of its last call (dots of the up lane)
+  tok?: number // fresh tokens this path moved (agent turns: input + output + cache write; tools: request + result)
+  ms?: number // wall time this path spent executing (agent turns, tool calls), summed
   tpsIn?: number // tokens per second of the request of its last call (dots of the down lane)
 }
 
@@ -54,8 +56,10 @@ export type FlowView = {
   tick: number // bumped to force a redraw when something expires
 }
 
+export type Figure = 'cost' | 'tokens' | 'time' // what the figure on each line shows
+
 declare module 'claude-code' {
   interface PluginState {
-    'flow-panel': { view: Shaped<FlowView> }
+    'flow-panel': { view: Shaped<FlowView>; figure: Shaped<Figure> }
   }
 }

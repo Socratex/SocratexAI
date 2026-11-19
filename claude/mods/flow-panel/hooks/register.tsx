@@ -1,7 +1,7 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
-import type { FlowNode, FlowView, NodeKind, SubTree } from '../types'
+import type { Figure, FlowNode, FlowView, NodeKind, SubTree } from '../types'
 
 const PANE = 'flow-panel'
 
@@ -138,6 +138,12 @@ const view = atom({ plugin: 'flow-panel', key: 'view' } as const, INITIAL, {
   shape: 'flow-8',
 })
 
+// What the figure on every line shows. Kept apart from the view: it is a
+// display choice of this person, not shared with the sessions above or below.
+const figureAtom = atom({ plugin: 'flow-panel', key: 'figure' } as const, 'cost' as Figure, {
+  shape: 'figure-1',
+})
+
 // ------------------------------------------------------------------ maths
 
 type Usage = {
@@ -246,6 +252,32 @@ const byIntensity = <T extends { rank: number }>(items: T[]): T[] =>
 // started: /btw, /subtask or /fork. The engine does not say which, so all three
 // share one "side" kind.
 const isSideFork = (e: { fork?: boolean; tool_use_id?: string }): boolean => e.fork === true && !e.tool_use_id
+
+// The figure on a line is one of three measures; a button cycles through them.
+const FIGURES = ['cost', 'tokens', 'time'] as const
+const nextFigure = (f: string | undefined): (typeof FIGURES)[number] =>
+  FIGURES[(Math.max(0, FIGURES.indexOf(f as (typeof FIGURES)[number])) + 1) % FIGURES.length]!
+
+// Tokens as 950, 1.2k, 34k, 1.5M (three digits at most, no trailing zero).
+const fmtTokens = (n: number): string => {
+  const v = Math.max(0, Number.isFinite(n) ? n : 0)
+  if (v < 1000) return String(Math.round(v))
+  const [d, unit] = v < 1e6 ? [v / 1e3, 'k'] : [v / 1e6, 'M']
+  const s = d < 10 ? d.toFixed(1) : String(Math.round(d))
+
+  return `${s.replace(/\.0$/, '')}${unit}`
+}
+
+// Wall time as 0.4s, 12s, 3m05s, 1h02m.
+const fmtTime = (ms: number): string => {
+  const v = Math.max(0, Number.isFinite(ms) ? ms : 0)
+  if (v < 10000) return `${(Math.round(v / 100) / 10).toString()}s`
+  const s = Math.round(v / 1000)
+  if (s < 60) return `${s}s`
+  if (s < 3600) return `${Math.floor(s / 60)}m${String(s % 60).padStart(2, '0')}s`
+
+  return `${Math.floor(s / 3600)}h${String(Math.floor((s % 3600) / 60)).padStart(2, '0')}m`
+}
 // </tiers>
 
 // ---------------------------------------------------------------- drawing
@@ -423,6 +455,8 @@ type Row = {
   w: number
   ring?: Box['ring']
   usd: number | undefined // the figure on its line; undefined = not known yet
+  tok: number // fresh tokens of the path (a session: the sum of its branches)
+  ms: number // execution time of the path (a session: the sum of its branches)
   text: string
   isActive: boolean
   tps?: number // token pace of the result coming back up: sets the dots of the up lane
@@ -433,6 +467,10 @@ type Row = {
 
 // The sum of the known figures of some rows; '...' (undefined) when there are
 // rows but none of them is known yet. No rows at all sum to zero.
+// The text on a line for the chosen measure.
+const figureText = (f: Figure, r: { usd: number | undefined; tok: number; ms: number }): string =>
+  f === 'tokens' ? fmtTokens(r.tok) : f === 'time' ? fmtTime(r.ms) : usdText(r.usd)
+
 const sumUsd = (rows: Row[]): number | undefined => {
   const known = rows.map(r => r.usd).filter((u): u is number => u !== undefined)
 
@@ -440,6 +478,9 @@ const sumUsd = (rows: Row[]): number | undefined => {
 }
 
 type Src = Pick<SubTree, 'nodes' | 'subs' | 'mainRunning' | 'perW' | 'usd' | 'tps'>
+
+// The measure the figures show while a picture is drawn (set by `draw`).
+let shownFigure: Figure = 'cost'
 
 // The session this copy of the mod runs in: the root of every tree it draws.
 let selfId = ''
@@ -466,7 +507,9 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       w: 96,
       ring,
       usd,
-      text: usdText(usd),
+      tok: nd.tok ?? 0,
+      ms: nd.ms ?? 0,
+      text: figureText(shownFigure, { usd, tok: nd.tok ?? 0, ms: nd.ms ?? 0 }),
       isActive: isRunning || s.mainRunning,
       tps: nd.tps ?? s.tps,
       tpsIn: nd.tpsIn,
@@ -484,6 +527,8 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
     // turn, so it shows the sum of its branches, which grows as they finish.
     // Once it is idle, it shows what it really spent (its own model tokens too).
     const usd = sub.mainRunning ? sumUsd(kids) : sub.usd
+    const tok = kids.reduce((a, k) => a + k.tok, 0)
+    const ms = kids.reduce((a, k) => a + k.ms, 0)
 
     return {
       label,
@@ -492,7 +537,9 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       w: 120,
       ring: undefined,
       usd,
-      text: usdText(usd),
+      tok,
+      ms,
+      text: figureText(shownFigure, { usd, tok, ms }),
       isActive: sub.mainRunning,
       tps: sub.tps,
       shade: subShade,
@@ -534,7 +581,8 @@ const layout = (
   return y
 }
 
-const draw = (v: FlowView, now: number): string => {
+const draw = (v: FlowView, now: number, figure: Figure = 'cost'): string => {
+  shownFigure = figure
   const you: Box = {
     label: 'User',
     kind: 'you',
@@ -554,7 +602,11 @@ const draw = (v: FlowView, now: number): string => {
   layout(rows, TRUNK, branchTop, branchTop + 50, out, nowS)
 
   // User -> Claude: the sum of the branches below, as their lines show them.
-  const growth = usdText(sumUsd(rows))
+  const growth = figureText(figure, {
+    usd: sumUsd(rows),
+    tok: rows.reduce((a, r) => a + r.tok, 0),
+    ms: rows.reduce((a, r) => a + r.ms, 0),
+  })
   const gw = growth.length * 12 + 12
   const width = Math.max(MIN_W, out.right + M)
   const height = out.bottom + M
@@ -1094,6 +1146,8 @@ export const register: Register = on => {
                     ...n,
                     usd: (n.usd ?? 0) + delta,
                     tps: tps ?? n.tps,
+                    tok: (n.tok ?? 0) + freshTokens(e.usage),
+                    ms: (n.ms ?? 0) + (began === undefined ? 0 : endedAt - began),
                     ...(key === sideTarget.key ? { running: Math.max(0, n.running - 1), isBackground: n.running > 1, at: endedAt } : {}),
                   }
                 : n,
@@ -1183,6 +1237,8 @@ export const register: Register = on => {
                 isBackground: n.running - 1 > 0 ? n.isBackground : false,
                 errorAt: failed ? end : n.errorAt,
                 w: n.w + resultTokens * RESULT_WEIGHT,
+                tok: (n.tok ?? 0) + resultTokens + requestTokens,
+                ms: (n.ms ?? 0) + (end - now),
                 tps: paceOf(resultTokens, end - now) ?? n.tps,
                 tpsIn: paceOf(requestTokens, end - now) ?? n.tpsIn,
               }
@@ -1193,11 +1249,12 @@ export const register: Register = on => {
   })
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
-    const { Box, Text, Svg } = $.ui.resolve(e)
+    const { Box, Text, Svg, Button } = $.ui.resolve(e)
     await folderOf($) // makes sure the session id is known before drawing
     const v = await restoredFor($, await read($, view))
     const now = await $.clock.now()
-    const source = draw(v, now)
+    const figure = await read($, figureAtom)
+    const source = draw(v, now, figure)
     await dbg($, `render ${source === lastSource ? 'same picture' : `new picture ${firstDiff(lastSource, source)}`}`)
     lastSource = source
     // Without an explicit size the pane seems to cap the drawing's height and
@@ -1206,6 +1263,11 @@ export const register: Register = on => {
 
     return (
       <Box flexDirection="column" alignItems="flex-start">
+        <Button onPress={() => update($, figureAtom, f => nextFigure(f))}>
+          <Text>
+            {FIGURES.map(f => (f === figure ? `[${f}]` : f)).join('  ')}
+          </Text>
+        </Button>
         {Svg ? (
           <Svg
             source={source}

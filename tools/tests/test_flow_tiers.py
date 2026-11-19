@@ -94,6 +94,25 @@ class FlowTiers(unittest.TestCase):
         self.assertFalse(_run("isSideFork({fork: false, tool_use_id: ''})"))
         self.assertFalse(_run("isSideFork({tool_use_id: ''})"))
 
+    def test_figure_toggle_cycles_through_three_states(self) -> None:
+        self.assertEqual(_run("FIGURES"), ["cost", "tokens", "time"])
+        self.assertEqual(_run("nextFigure('cost')"), "tokens")
+        self.assertEqual(_run("nextFigure('tokens')"), "time")
+        self.assertEqual(_run("nextFigure('time')"), "cost")
+        self.assertEqual(_run("nextFigure(undefined)"), "tokens")  # unknown counts as the first state
+
+    def test_token_format(self) -> None:
+        cases = {"0": "0", "950": "950", "1000": "1k", "1234": "1.2k", "34500": "35k", "1500000": "1.5M", "-5": "0"}
+        for value, text in cases.items():
+            self.assertEqual(_run(f"fmtTokens({value})"), text, value)
+        self.assertEqual(_run("fmtTokens(NaN)"), "0")
+
+    def test_time_format(self) -> None:
+        cases = {"0": "0s", "400": "0.4s", "12000": "12s", "185000": "3m05s", "3720000": "1h02m"}
+        for value, text in cases.items():
+            self.assertEqual(_run(f"fmtTime({value})"), text, value)
+        self.assertEqual(_run("fmtTime(undefined)"), "0s")
+
 
 if __name__ == "__main__":
     unittest.main()
