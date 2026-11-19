@@ -292,6 +292,26 @@ const liveLabels = (ms: number, running: number, startSum: number, nowMs: number
   Array.from({ length: Math.max(1, count) }, (_, k) =>
     fmtTime(Math.floor(liveElapsed(ms, running, startSum, nowMs + k * 1000) / 1000) * 1000),
   )
+// You -> Claude: how far the account's 5-hour limit has grown since the base.
+// Short percent: 1 or more keeps one decimal, below 1 keeps one significant
+// digit (0.054 -> 0.05, 0.245 -> 0.2); trailing zeros are dropped (18.0 -> 18).
+const pct = (n: number): string => {
+  if (n <= 0) return '0'
+  const decimals = n >= 1 ? 1 : Math.min(20, Math.ceil(-Math.log10(n)))
+  const s = n.toFixed(decimals)
+
+  return s.includes('.') ? s.replace(/\.?0+$/, '') : s
+}
+
+// Money: cents (rounded like the percent figures) below one dollar, then dollars
+// with one decimal: 0.4 -> 40¢, 1.234 -> $1.2. Cents that would round up to 100
+// already show as dollars.
+const fmtMoney = (usd: number): string => {
+  const cents = Math.max(0, Number.isFinite(usd) ? usd : 0) * 100
+  if (cents >= 99.95) return `$${(Math.round(cents / 10) / 10).toFixed(1)}`
+
+  return `${pct(cents)}¢`
+}
 // </tiers>
 
 // ---------------------------------------------------------------- drawing
@@ -455,21 +475,8 @@ const node = (b: Box) => {
 
 const esc = (s: string) => s.replace(/[<>&"]/g, '')
 
-// You -> Claude: how far the account's 5-hour limit has grown since the base.
-// Short percent: 1 or more keeps one decimal, below 1 keeps one significant
-// digit (0.054 -> 0.05, 0.245 -> 0.2); trailing zeros are dropped (18.0 -> 18).
-const pct = (n: number): string => {
-  if (n <= 0) return '0'
-  const decimals = n >= 1 ? 1 : Math.min(20, Math.ceil(-Math.log10(n)))
-  const s = n.toFixed(decimals)
-
-  return s.includes('.') ? s.replace(/\.?0+$/, '') : s
-}
-
-// Claude -> a path: what it cost in US cents, as the engine's cost ledger prices
-// it, rounded like the percent figures (see `pct`).
-const usdText = (usd: number | undefined): string =>
-  usd === undefined ? '...' : `${pct(usd * 100)}¢`
+// Claude -> a path: what it cost, as the engine's cost ledger prices it (see `fmtMoney`).
+const usdText = (usd: number | undefined): string => (usd === undefined ? '...' : fmtMoney(usd))
 
 // A path's dollars: an agent's own (exact) plus its tool results, priced at the
 // session's average dollars per weighted token. Unknown until that average is.
