@@ -40,6 +40,7 @@ const KIND = {
   skill: { fill: '#f2c94c', light: '#f8e08e', text: '#1b1b1b' }, // yellow
   session: { fill: '#26c6da', light: '#7ee3ef', text: '#102027' }, // cyan, like a sub-agent
   app: { fill: '#e8803a', light: '#f4a76b', text: '#1b1b1b' }, // orange: the desktop app's own tools (ccd_*)
+  side: { fill: '#ec4899', light: '#f59ac4', text: '#ffffff' }, // pink: a side fork a command started (/btw, /subtask)
 }
 const STATE = {
   waiting: '#ff9800', // waiting for the user
@@ -240,6 +241,11 @@ const byIntensity = <T extends { rank: number }>(items: T[]): T[] =>
     .map((item, i) => ({ item, i }))
     .sort((a, b) => a.item.rank - b.item.rank || a.i - b.i)
     .map(x => x.item)
+
+// A fork that no Agent tool call started (empty tool_use_id) is one a command
+// started: /btw, /subtask or /fork. The engine does not say which, so all three
+// share one "side" kind.
+const isSideFork = (e: { fork?: boolean; tool_use_id?: string }): boolean => e.fork === true && !e.tool_use_id
 // </tiers>
 
 // ---------------------------------------------------------------- drawing
@@ -573,6 +579,8 @@ const draw = (v: FlowView, now: number): string => {
 // ----------------------------------------------------------------- events
 
 type Target = { key: string; label: string; kind: NodeKind }
+
+const sideTarget: Target = { key: 'side:fork', label: 'Side', kind: 'side' }
 
 const agentTarget = (type: string): Target => ({
   key: `agent:${type}`,
@@ -1070,6 +1078,7 @@ export const register: Register = on => {
     const tps = began === undefined ? undefined : paceOf(freshTokens(e.usage), (await $.clock.now()) - began)
     // The engine's own ledger: what this turn added is charged to its agent's path.
     const usd = (await $.session.usage()).cost?.usd ?? 0
+    const endedAt = await $.clock.now()
     await change($, v => {
       const key = e.agentId === undefined ? undefined : v.agentNode[e.agentId]
       const delta = Math.max(0, usd - (v.lastUsd ?? usd))
@@ -1078,7 +1087,18 @@ export const register: Register = on => {
         wTotal: v.wTotal + cost,
         allW: (v.allW ?? 0) + cost,
         lastUsd: usd,
-        nodes: key ? v.nodes.map(n => (n.key === key ? { ...n, usd: (n.usd ?? 0) + delta, tps: tps ?? n.tps } : n)) : v.nodes,
+        nodes: key
+          ? v.nodes.map(n =>
+              n.key === key
+                ? {
+                    ...n,
+                    usd: (n.usd ?? 0) + delta,
+                    tps: tps ?? n.tps,
+                    ...(key === sideTarget.key ? { running: Math.max(0, n.running - 1), isBackground: n.running > 1, at: endedAt } : {}),
+                  }
+                : n,
+            )
+          : v.nodes,
         ...(e.agentId === undefined ? { mainRunning: false, isWaiting: true, mainTps: tps ?? v.mainTps } : {}),
       }
 
@@ -1094,11 +1114,13 @@ export const register: Register = on => {
     const id = 'agentId' in started ? started.agentId : undefined
     if (id) {
       const now = await $.clock.now()
-      const target = agentTarget(e.subagentType)
+      const isSide = isSideFork(e)
+      const target = isSide ? sideTarget : agentTarget(e.subagentType)
       await change($, v => ({
         ...v,
         agentNode: { ...v.agentNode, [id]: target.key },
-        nodes: touch(v.nodes, target, now, n => ({ ...n, at: now })),
+        // A command's fork has no tool call to mark it running, so the spawn does.
+        nodes: touch(v.nodes, target, now, n => ({ ...n, at: now, running: n.running + (isSide ? 1 : 0), isBackground: isSide || n.isBackground })),
       }))
     }
 

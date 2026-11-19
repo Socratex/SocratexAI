@@ -84,6 +84,16 @@ class FlowTiers(unittest.TestCase):
         )
         self.assertEqual(order, ["b", "e", "a", "d", "c"])
 
+    def test_side_fork_is_a_fork_without_a_tool_call(self) -> None:
+        # /btw, /subtask and /fork start a fork with an empty tool_use_id
+        self.assertTrue(_run("isSideFork({fork: true, tool_use_id: ''})"))
+        self.assertTrue(_run("isSideFork({fork: true})"))
+
+    def test_agent_tool_fork_and_plain_agents_are_not_side(self) -> None:
+        self.assertFalse(_run("isSideFork({fork: true, tool_use_id: 'toolu_1'})"))
+        self.assertFalse(_run("isSideFork({fork: false, tool_use_id: ''})"))
+        self.assertFalse(_run("isSideFork({tool_use_id: ''})"))
+
 
 if __name__ == "__main__":
     unittest.main()
