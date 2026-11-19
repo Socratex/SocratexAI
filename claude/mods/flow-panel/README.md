@@ -40,5 +40,5 @@ Set `FLOW_PANEL` to `0` in the `env` block of a settings file; the project value
 - A session that ends or is archived marks its file as ended, and an idle file not updated for 3 minutes is dropped, so finished sessions leave the tree (an idle live session disappears after 3 minutes of silence).
 - A new prompt clears the segments; only paths used since then are shown.
 - Figures refresh after each main turn, not continuously. Redraws are batched to one per 2 seconds, with dots keeping their phase, to avoid blinking.
-- Size guard: the pane refuses an SVG over 131072 characters and then shows "nothing to show yet" for the whole panel. A drawing over 126000 characters is redrawn without moving dots and ticking times, then with fewer nested session levels, until it fits.
+- Size guard: the pane refuses an SVG over 131072 characters and then shows "nothing to show yet" for the whole panel. A drawing over 126000 characters is redrawn step by step until it fits: idle sessions fold into their tile (the figure gets "+N" for the hidden branches; working sessions keep theirs), then no moving dots or ticking times, then fewer nested session levels.
 - Tuning constants (font, weights) are at the top of `hooks/register.tsx`.
