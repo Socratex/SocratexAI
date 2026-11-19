@@ -1253,7 +1253,13 @@ export const register: Register = on => {
     await folderOf($) // makes sure the session id is known before drawing
     const v = await restoredFor($, await read($, view))
     const now = await $.clock.now()
-    const figure = await read($, figureAtom)
+    // The picture must never depend on the toggle: if its value cannot be read, show cost.
+    let figure: Figure = 'cost'
+    try {
+      figure = (await read($, figureAtom)) ?? 'cost'
+    } catch {
+      figure = 'cost'
+    }
     const source = draw(v, now, figure)
     await dbg($, `render ${source === lastSource ? 'same picture' : `new picture ${firstDiff(lastSource, source)}`}`)
     lastSource = source
@@ -1263,11 +1269,15 @@ export const register: Register = on => {
 
     return (
       <Box flexDirection="column" alignItems="flex-start">
-        <Button onPress={() => update($, figureAtom, f => nextFigure(f))}>
-          <Text>
-            {FIGURES.map(f => (f === figure ? `[${f}]` : f)).join('  ')}
-          </Text>
-        </Button>
+        {Button ? (
+          <Button
+            key="figure"
+            label={FIGURES.map(f => (f === figure ? `[${f}]` : f)).join('  ')}
+            onPress={() => {
+              void update($, figureAtom, f => nextFigure(f))
+            }}
+          />
+        ) : null}
         {Svg ? (
           <Svg
             source={source}
