@@ -394,6 +394,8 @@ const LANE = 6 // px between the centre of a line and the centre of each lane
 // sideways by its `cy`, which `rotate="auto"` turns perpendicular to the path,
 // so the lane keeps the same side of its direction of travel round the corners:
 // down it rides on the west/south side, up on the east/north side.
+let isCalm = false // set by `draw`: no moving dots, no ticking times (see `fitted`)
+
 const line = (
   d: string,
   length: number,
@@ -405,6 +407,8 @@ const line = (
   tpsDown?: number,
 ) => {
   if (!isActive) return `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="0.3" stroke-width="2"/>`
+  // A drawing near the size cap loses its moving dots, not the whole picture.
+  if (isCalm) return `<path d="${d}" fill="none" stroke="${light}" stroke-opacity="0.8" stroke-width="3"/>`
 
   // A dot needs `travel` seconds for the line. A batch of `count` dots, each
   // trailing the one before by `lag` seconds, leaves every EMIT_S, so `n` batches
@@ -532,6 +536,7 @@ let selfId = ''
 // A session's branches: its own paths first, then the sessions it started,
 // each of those holding the same again. `count` numbers the sessions.
 const MAX_DEPTH = 4 // a guard: never draw sessions nested deeper than this
+let depthLimit = MAX_DEPTH // lowered by `fitted` when the drawing is still too big
 
 const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId], shade = 0): Row[] => [
   ...s.nodes.map((nd): Row => {
@@ -564,7 +569,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
     }
   }),
   // A session already on the path above is the same session again: skip it.
-  ...(depth >= MAX_DEPTH ? [] : s.subs.filter(sub => !path.includes(sub.id))).map((sub): Row => {
+  ...(depth >= depthLimit ? [] : s.subs.filter(sub => !path.includes(sub.id))).map((sub): Row => {
     count.n += 1
     const label = `Session ${count.n}`
     const subShade = count.n // the n-th session of the drawing; 0 stays the root's own
@@ -636,7 +641,7 @@ const layout = (
 
 const draw = (v: FlowView, now: number, figure: Figure = 'cost'): string => {
   shownFigure = figure
-  liveLeft = LIVE_MAX
+  liveLeft = isCalm ? 0 : LIVE_MAX
   const you: Box = {
     label: 'User',
     kind: 'you',
@@ -687,6 +692,31 @@ const draw = (v: FlowView, now: number, figure: Figure = 'cost'): string => {
     `<line x1="${width - 1}" y1="0" x2="${width - 1}" y2="${height}" stroke="#000" stroke-opacity="0.1" stroke-width="2"/>` +
     `</svg>`
   )
+}
+
+// The pane refuses an Svg whose source is over 131072 characters, and then shows
+// "nothing to show yet" instead of the whole panel. Active lines (two lanes of
+// dots each) are the bulk of a big tree, so: first the full picture, then the
+// same without moving dots and ticking times, then with fewer nested levels.
+const SVG_LIMIT = 126000 // a margin under the pane's 131072
+const fitted = (v: FlowView, now: number, figure: Figure): string => {
+  try {
+    isCalm = false
+    depthLimit = MAX_DEPTH
+    let source = draw(v, now, figure)
+    if (source.length <= SVG_LIMIT) return source
+    isCalm = true
+    for (let depth = MAX_DEPTH; depth >= 0; depth -= 1) {
+      depthLimit = depth
+      source = draw(v, now, figure)
+      if (source.length <= SVG_LIMIT) break
+    }
+
+    return source
+  } finally {
+    isCalm = false
+    depthLimit = MAX_DEPTH
+  }
 }
 
 // ----------------------------------------------------------------- events
@@ -1368,7 +1398,7 @@ export const register: Register = on => {
     } catch {
       figure = 'cost'
     }
-    const source = draw(v, now, figure)
+    const source = fitted(v, now, figure)
     await dbg($, `render ${source === lastSource ? 'same picture' : `new picture ${firstDiff(lastSource, source)}`}`)
     lastSource = source
     // Without an explicit size the pane seems to cap the drawing's height and
