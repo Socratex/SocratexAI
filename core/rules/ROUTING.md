@@ -14,7 +14,7 @@ Source of truth: `core/ROUTING.json` (mirrored by `claude/agents/*.md` and `code
 - Send predictable, well-specified steps to the cheapest tier that passes the gate; escalate only the ambiguous remainder.
 - Escalate on evidence: a failed gate or a blocked report moves the task one tier up with the evidence; after two failed attempts on a tier, stop and move up or ask the owner.
 - Review runs in a separate context from the implementation.
-- Single agent by default; delegate only when handoff plus verification costs clearly less than doing it in place. One level of delegation, exact ownership, no full-history forks.
+- The session is a router (owner decision 2026-11-19): it plans, delegates to the tier agents (`scout`, `implementer`, `planner`, `reviewer`; Codex `socratex_*`), then integrates and verifies. It does the work itself only for small things: one edit, one question, a handful of tool calls, or when the brief would be longer than the work. One level of delegation, exact ownership, no full-history forks.
 - Watch the mix: high or top tier above about 15 percent of tasks means routing is too conservative.
 
 ## 🪜 Tiers
@@ -45,7 +45,7 @@ Never automatic, not in unattended loops and not because a task is critical. Exp
 
 ## ⚖️ Load balancing Claude and Codex (owner decision 2026-11-19)
 Claude is the lead for code and anything mathematical; Codex is Claude's subcontractor in every session so the load and the limits are shared. Claude is the superior: it writes the brief, gives the orders, integrates and verifies. Codex follows the brief and the parent's instructions, reports with a status (DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, BLOCKED) and never commits, pushes or finalizes.
-- Standing rule: in every session Claude checks, before starting a task, whether a part of it belongs in the Codex list below, and sends that part to Codex. This is the one exception to "single agent by default"; the cost rule still holds (no delegation when the brief is longer than the work).
+- Standing rule: in every session Claude checks, before starting a task, whether a part of it belongs in the Codex list below, and sends that part to Codex. The small-things exception from the principles still holds (no delegation when the brief is longer than the work).
 - Codex by default (via `/codex:rescue`, in Claude Code; in Codex itself these just stay there):
   - searching files and the repo, collecting facts across many files
   - research on the internet (sources, docs, how others solve it)

@@ -6,7 +6,7 @@
         "Send predictable, well-specified steps to the cheapest tier that passes the gate; escalate only the ambiguous remainder.",
         "Escalate on evidence: a failed gate or a blocked report moves the task one tier up with the evidence attached, never repeated blind retries on the same tier.",
         "Review and implementation use separate contexts; the reviewer is never the agent that wrote the change.",
-        "Single agent by default; delegate only with a concrete total-cost advantage (handoff plus verification included); no recursive delegation.",
+        "The session is a router: it plans, delegates to the tier agents, integrates and verifies; it works itself only on small things (one edit, one question, a few tool calls, or a brief longer than the work); no recursive delegation.",
         "If the top tier or the high tier handles more than about 15 percent of tasks, routing is too conservative or tasks are harder than assumed: review the mix."
     ],
     "claude": {
