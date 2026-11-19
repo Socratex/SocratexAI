@@ -504,6 +504,7 @@ type Row = {
   tps?: number // token pace of the result coming back up: sets the dots of the up lane
   tpsIn?: number // token pace of the request going down: sets the dots of the down lane
   shade: number // the session's colour shift: the same for a session tile and everything below it
+  isIdle?: boolean // a session with nothing running anywhere in it
   kids: Row[]
 }
 
@@ -537,10 +538,41 @@ let selfId = ''
 // each of those holding the same again. `count` numbers the sessions.
 const MAX_DEPTH = 4 // a guard: never draw sessions nested deeper than this
 let depthLimit = MAX_DEPTH // lowered by `fitted` when the drawing is still too big
-let isFolding = false // set by `fitted`: idle sessions fold into their tile
-const rowCount = (rows: Row[]): number => rows.reduce((a, r) => a + 1 + rowCount(r.kids), 0)
+let isFolding = false // set by `fitted`: idle sessions fold into one tile
+// Near the size cap the idle sessions of one level become a single tile,
+// "6 sessions", whose tooltip lists their names one per line (nested ones indented).
+const sessionNames = (r: Row, indent: string): string[] => [
+  `${indent}${r.label}${r.full && r.full !== r.label ? ` - ${r.full}` : ''}`,
+  ...r.kids.filter(k => k.kind === 'session').flatMap(k => sessionNames(k, `${indent}  `)),
+]
+const groupIdle = (rows: Row[]): Row[] => {
+  const idle = rows.filter(r => r.kind === 'session' && r.isIdle)
+  if (!isFolding || idle.length === 0) return rows
+  const usd = sumUsd(idle)
+  const tok = idle.reduce((a, r) => a + r.tok, 0)
+  const ms = idle.reduce((a, r) => a + r.ms, 0)
+  const label = `${idle.length} session${idle.length === 1 ? '' : 's'}`
+  const group: Row = {
+    label,
+    full: esc(idle.flatMap(r => sessionNames(r, '')).join('\n')),
+    kind: 'session',
+    w: 120,
+    usd,
+    tok,
+    ms,
+    liveN: 0,
+    liveSum: 0,
+    text: figureText(shownFigure, { usd, tok, ms }),
+    isActive: false,
+    shade: idle[0]!.shade,
+    kids: [],
+  }
 
-const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId], shade = 0): Row[] => [
+  return [...rows.filter(r => !idle.includes(r)), group]
+}
+
+const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId], shade = 0): Row[] =>
+  groupIdle([
   ...s.nodes.map((nd): Row => {
     const usd = nodeUsd(nd, s.perW)
     const isRunning = nd.running > 0
@@ -584,11 +616,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
     const ms = kids.reduce((a, k) => a + k.ms, 0)
     const liveN = kids.reduce((a, k) => a + k.liveN, 0)
     const liveSum = kids.reduce((a, k) => a + k.liveSum, 0)
-    // Near the size cap an idle session folds into its tile: the branches are
-    // dropped from the drawing (the figures above were summed from them first)
-    // and the tile says how many it hides.
-    const isFolded = isFolding && kids.length > 0 && !sub.mainRunning && !anyRunning(sub.nodes, sub.subs)
-    const hidden = isFolded ? rowCount(kids) : 0
+    const isIdle = !sub.mainRunning && !anyRunning(sub.nodes, sub.subs)
     const figure = figureText(shownFigure, { usd, tok, ms: ms + (liveN > 0 ? liveElapsed(0, liveN, liveSum, nowMsOf(now)) : 0) })
 
     return {
@@ -600,16 +628,17 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       usd,
       tok,
       ms,
-      liveN: isFolded ? 0 : liveN,
-      liveSum: isFolded ? 0 : liveSum,
-      text: hidden > 0 ? `${figure} +${hidden}` : figure,
+      liveN,
+      liveSum,
+      text: figure,
       isActive: sub.mainRunning,
       tps: sub.tps,
       shade: subShade,
-      kids: isFolded ? [] : kids,
+      isIdle,
+      kids,
     }
   }),
-]
+])
 
 type Out = { lines: Array<{ rank: number; svg: string }>; boxes: string[]; right: number; bottom: number }
 
