@@ -140,6 +140,10 @@ const view = atom({ plugin: 'flow-panel', key: 'view' } as const, INITIAL, {
 
 // What the figure on every line shows. Kept apart from the view: it is a
 // display choice of this person, not shared with the sessions above or below.
+// The toggle: one icon per measure; the chosen one is lit, the others dim.
+const FIGURE_ICON: Record<Figure, string> = { cost: '$', time: '◷', tokens: '❐' }
+const FIGURE_ON = { fill: '#3b82f6', text: '#ffffff' } // the blue of the "you" box
+
 const figureAtom = atom({ plugin: 'flow-panel', key: 'figure' } as const, 'cost' as Figure, {
   shape: 'figure-1',
 })
@@ -254,7 +258,7 @@ const byIntensity = <T extends { rank: number }>(items: T[]): T[] =>
 const isSideFork = (e: { fork?: boolean; tool_use_id?: string }): boolean => e.fork === true && !e.tool_use_id
 
 // The figure on a line is one of three measures; a button cycles through them.
-const FIGURES = ['cost', 'tokens', 'time'] as const
+const FIGURES = ['cost', 'time', 'tokens'] as const
 const nextFigure = (f: string | undefined): (typeof FIGURES)[number] =>
   FIGURES[(Math.max(0, FIGURES.indexOf(f as (typeof FIGURES)[number])) + 1) % FIGURES.length]!
 
@@ -1268,15 +1272,29 @@ export const register: Register = on => {
     const size = /width="([\d.]+)" height="([\d.]+)"/.exec(source)
 
     return (
-      <Box flexDirection="column" alignItems="flex-start">
+      <Box flexDirection="column" alignItems="flex-start" width="100%">
         {Button ? (
-          <Button
-            key="figure"
-            label={FIGURES.map(f => (f === figure ? `[${f}]` : f)).join('  ')}
-            onPress={() => {
-              void update($, figureAtom, f => nextFigure(f))
-            }}
-          />
+          // Centred over the drawing, a gap below it, no background of its own.
+          <Box width="100%" justifyContent="center" marginBottom="md">
+            <Box borderStyle="round" paddingX="sm" gap="md">
+              {FIGURES.map(f => (
+                <Button
+                  key={`figure-${f}`}
+                  plain
+                  label={FIGURE_ICON[f]}
+                  onPress={() => {
+                    void update($, figureAtom, () => f)
+                  }}
+                >
+                  {f === figure ? (
+                    <Text color={FIGURE_ON.text} backgroundColor={FIGURE_ON.fill} weight="bold">{` ${FIGURE_ICON[f]} `}</Text>
+                  ) : (
+                    <Text dimColor>{` ${FIGURE_ICON[f]} `}</Text>
+                  )}
+                </Button>
+              ))}
+            </Box>
+          </Box>
         ) : null}
         {Svg ? (
           <Svg
