@@ -36,9 +36,9 @@ def _run(expr: str) -> object:
     assert block, "tiers block markers missing in register.tsx"
     with tempfile.TemporaryDirectory() as tmp:
         script = Path(tmp) / "t.ts"
-        script.write_text(block.group(1) + f"\nconsole.log(JSON.stringify(({expr}) ?? null))\n")
+        script.write_text(block.group(1) + f"\nconsole.log(JSON.stringify(({expr}) ?? null))\n", encoding="utf-8")
         res = subprocess.run(
-            [node, "--experimental-strip-types", "--no-warnings", str(script)], capture_output=True, text=True
+            [node, "--experimental-strip-types", "--no-warnings", str(script)], capture_output=True, text=True, encoding="utf-8"
         )
     assert res.returncode == 0, res.stderr
     return json.loads(res.stdout)
@@ -126,6 +126,22 @@ class FlowTiers(unittest.TestCase):
         self.assertEqual(_run("liveLabels(0, 1, 0, 58000, 4)"), ["58s", "59s", "1m00s", "1m01s"])
         self.assertEqual(_run("liveLabels(0, 2, 8000, 5000, 3)"), ["2s", "4s", "6s"])  # two calls: twice as fast
         self.assertEqual(len(_run("liveLabels(0, 1, 0, 0, 0)")), 1)  # always at least one label
+
+    def test_money_in_cents_then_dollars_with_one_decimal(self) -> None:
+        cases = {
+            "0": "0¢",
+            "0.0005": "0.05¢",
+            "0.4": "40¢",
+            "0.9": "90¢",
+            "0.9995": "$1.0",
+            "1": "$1.0",
+            "1.234": "$1.2",
+            "12.96": "$13.0",
+            "-1": "0¢",
+        }
+        for value, text in cases.items():
+            self.assertEqual(_run(f"fmtMoney({value})"), text, value)
+        self.assertEqual(_run("fmtMoney(NaN)"), "0¢")
 
 
 if __name__ == "__main__":
