@@ -56,7 +56,7 @@ export type FlowView = {
   tick: number // bumped to force a redraw when something expires
 }
 
-export type Figure = 'cost' | 'tokens' | 'time' // what the figure on each line shows
+export type Figure = 'cost' | 'time' | 'tokens' // what the figure on each line shows
 
 declare module 'claude-code' {
   interface PluginState {
