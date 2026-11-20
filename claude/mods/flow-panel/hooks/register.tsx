@@ -538,16 +538,20 @@ let selfId = ''
 // each of those holding the same again. `count` numbers the sessions.
 const MAX_DEPTH = 4 // a guard: never draw sessions nested deeper than this
 let depthLimit = MAX_DEPTH // lowered by `fitted` when the drawing is still too big
-let isFolding = false // set by `fitted`: idle sessions fold into one tile
-// Near the size cap the idle sessions of one level become a single tile,
-// "6 sessions", whose tooltip lists their names one per line (nested ones indented).
+let isFolding = false // set by `fitted`: idle sessions fold into one tile even when few
+const IDLE_FOLD_AT = 10 // this many idle sessions on one level fold into one tile
+// Idle sessions sink to the bottom of their level and show no children. From
+// IDLE_FOLD_AT of them (or near the size cap) they become a single tile,
+// "12 sessions", whose tooltip lists their names one per line (nested ones indented).
 const sessionNames = (r: Row, indent: string): string[] => [
   `${indent}${r.label}${r.full && r.full !== r.label ? ` - ${r.full}` : ''}`,
   ...r.kids.filter(k => k.kind === 'session').flatMap(k => sessionNames(k, `${indent}  `)),
 ]
 const groupIdle = (rows: Row[]): Row[] => {
   const idle = rows.filter(r => r.kind === 'session' && r.isIdle)
-  if (!isFolding || idle.length === 0) return rows
+  if (idle.length === 0) return rows
+  const rest = rows.filter(r => !idle.includes(r))
+  if (!isFolding && idle.length < IDLE_FOLD_AT) return [...rest, ...idle.map(r => ({ ...r, kids: [] }))]
   const usd = sumUsd(idle)
   const tok = idle.reduce((a, r) => a + r.tok, 0)
   const ms = idle.reduce((a, r) => a + r.ms, 0)
@@ -568,7 +572,7 @@ const groupIdle = (rows: Row[]): Row[] => {
     kids: [],
   }
 
-  return [...rows.filter(r => !idle.includes(r)), group]
+  return [...rest, group]
 }
 
 const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId], shade = 0): Row[] =>
@@ -733,16 +737,19 @@ const draw = (v: FlowView, now: number, figure: Figure = 'cost'): string => {
 
 // The pane refuses an Svg whose source is over 131072 characters, and then shows
 // "nothing to show yet" instead of the whole panel. Active lines (two lanes of
-// dots each) are the bulk of a big tree. Idle sessions are always one tile
-// (what is working keeps its branches and dots); if that is still too big: no
-// moving dots and ticking times anywhere; last, fewer nested levels.
+// dots each) are the bulk of a big tree. Idle sessions sink to the bottom without
+// children (10+ of them fold into one tile); if that is too big, all idle ones
+// fold; then no moving dots and ticking times anywhere; last, fewer nested levels.
 const SVG_LIMIT = 126000 // a margin under the pane's 131072
 const fitted = (v: FlowView, now: number, figure: Figure): string => {
   try {
     isCalm = false
-    isFolding = true // idle sessions are always one tile
+    isFolding = false
     depthLimit = MAX_DEPTH
     let source = draw(v, now, figure)
+    if (source.length <= SVG_LIMIT) return source
+    isFolding = true
+    source = draw(v, now, figure)
     if (source.length <= SVG_LIMIT) return source
     isCalm = true
     for (let depth = MAX_DEPTH; depth >= 0; depth -= 1) {
