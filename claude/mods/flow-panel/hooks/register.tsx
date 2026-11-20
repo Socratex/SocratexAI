@@ -733,20 +733,16 @@ const draw = (v: FlowView, now: number, figure: Figure = 'cost'): string => {
 
 // The pane refuses an Svg whose source is over 131072 characters, and then shows
 // "nothing to show yet" instead of the whole panel. Active lines (two lanes of
-// dots each) are the bulk of a big tree, so, one step at a time until it fits:
-// the full picture; idle sessions folded into their tiles (what is working
-// keeps its dots); then no moving dots and ticking times anywhere; last, fewer
-// nested levels.
+// dots each) are the bulk of a big tree. Idle sessions are always one tile
+// (what is working keeps its branches and dots); if that is still too big: no
+// moving dots and ticking times anywhere; last, fewer nested levels.
 const SVG_LIMIT = 126000 // a margin under the pane's 131072
 const fitted = (v: FlowView, now: number, figure: Figure): string => {
   try {
     isCalm = false
-    isFolding = false
+    isFolding = true // idle sessions are always one tile
     depthLimit = MAX_DEPTH
     let source = draw(v, now, figure)
-    if (source.length <= SVG_LIMIT) return source
-    isFolding = true
-    source = draw(v, now, figure)
     if (source.length <= SVG_LIMIT) return source
     isCalm = true
     for (let depth = MAX_DEPTH; depth >= 0; depth -= 1) {
