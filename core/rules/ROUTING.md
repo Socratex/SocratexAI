@@ -14,7 +14,7 @@ Source of truth: `core/ROUTING.json` (mirrored by `claude/agents/*.md` and `code
 - Send predictable, well-specified steps to the cheapest tier that passes the gate; escalate only the ambiguous remainder.
 - Escalate on evidence: a failed gate or a blocked report moves the task one tier up with the evidence; after two failed attempts on a tier, stop and move up or ask the owner.
 - Review runs in a separate context from the implementation.
-- The session is a router (owner decision 2026-11-19): it plans, delegates to the tier agents (`scout`, `implementer`, `planner`, `reviewer`; Codex `socratex_*`), then integrates and verifies. It does the work itself only for small things: one edit, one question, a handful of tool calls, or when the brief would be longer than the work. One level of delegation, exact ownership, no full-history forks.
+- The session is a router and ALWAYS delegates (owner decision 2026-11-20, replaces the small-things exception of 2026-11-19): it plans, delegates to the tier agents (`scout`, `implementer`, `planner`, `reviewer`; Codex `socratex_*`), then integrates and verifies. It does no search, implementation, test run, log reading or review itself. It acts directly only for: answering the owner, tiny edits of one or two lines it already holds in context, the finalizer/commit, and integrating results. A brief longer than the work is not an excuse; write the short brief. Start delegating at the first step of the first task of a session, not after a reminder. One level of delegation, exact ownership, no full-history forks.
 - Watch the mix: high or top tier above about 15 percent of tasks means routing is too conservative.
 
 ## 🪜 Tiers
@@ -45,19 +45,20 @@ Never automatic, not in unattended loops and not because a task is critical. Exp
 
 ## ⚖️ Load balancing Claude and Codex (owner decision 2026-11-19)
 Claude is the lead for code and anything mathematical; Codex is Claude's subcontractor in every session so the load and the limits are shared. Claude is the superior: it writes the brief, gives the orders, integrates and verifies. Codex follows the brief and the parent's instructions, reports with a status (DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, BLOCKED) and never commits, pushes or finalizes.
-- Standing rule: in every session Claude checks, before starting a task, whether a part of it belongs in the Codex list below, and sends that part to Codex. The small-things exception from the principles still holds (no delegation when the brief is longer than the work).
+- Standing rule: in every session Claude splits every task before starting, and sends every part from the Codex list below to Codex. Tests (running suites, gates, long builds), reviews and other expensive work that needs no decision go to Codex by default; Claude keeps decisions, code and maths. No small-things exception (owner decision 2026-11-20).
 - Codex by default (via `/codex:rescue`, in Claude Code; in Codex itself these just stay there):
   - searching files and the repo, collecting facts across many files
   - research on the internet (sources, docs, how others solve it)
   - 2D and 3D art that is judged by look, not by maths: concept art, textures, sprites, models and renders made by hand or by a generator
   - summaries of long logs and test output, first drafts of docs and translations
   - mechanical edits from a clear pattern (rename, move, boilerplate)
-  - second opinion on a diff: `/codex:review`, before a push of logic changes
+  - running test suites and gates and reporting only failures; independent review of every logic diff (`/codex:review` or `socratex_reviewer`) before commit
+  - expensive, non-decision work: long log analysis, broad sweeps, bulk edits
   - rescue after two failed attempts on one tier, or a second diagnosis of a hard bug
 - Claude by default: writing and changing code, algorithms, geometry and other maths (physics, collision, generation formulas), 2D and 3D graphics built on maths (procedural and generated shapes, meshes, noise, shaders, geometry), architecture and plans, integration, finalizer, commits.
 - Balance by load: when one vendor is near its limit or slow, move the delegable part to the other. Never move code or maths to Codex just to save limits.
 - A Codex result is a lead, not proof: Claude checks it with the gate. Art is judged by the owner.
-- Same cost rule as above: no delegation when the brief is longer than the work. Client or sensitive data goes to the second vendor only if the project allows it.
+- Client or sensitive data goes to the second vendor only if the project allows it.
 
 ## 🧩 Codex specifics
 - Parent owns integration, task-ledger updates and finalization. Delegates never commit, push, finalize, start unattended loops or mark tasks complete.
