@@ -1061,12 +1061,28 @@ async function refreshTitle($: EngineInterface): Promise<void> {
   }
 }
 
+// Debugging aid: logs (only when it changes) whether the app store knows this session
+// and which children it lists, to find why children vanish from the tree.
+let lastTrace = ''
+
+async function traceStore($: EngineInterface, mine: Stored | undefined): Promise<void> {
+  const kids = mine ? [...stored.values()].filter(s => s.from === mine.local) : []
+  const line =
+    `store self=${selfId.slice(0, 8)} found=${!!mine} entries=${stored.size} ` +
+    `kids=[${kids.map(k => `${k.local.slice(6, 14)}:cli=${k.cli.slice(0, 8)}:arch=${k.isArchived}:fork=${k.isFork}`).join(',')}] ` +
+    `cliOfSelfCandidates=[${[...stored.values()].filter(s => s.local === mine?.local || s.cli === selfId).map(s => s.cli.slice(0, 8)).join(',')}]`
+  if (line === lastTrace) return
+  lastTrace = line
+  await dbg($, line)
+}
+
 async function poll($: EngineInterface): Promise<void> {
   const dir = await folderOf($)
   if (!dir) return
   await scanStore($)
   void armLiveRefresh($)
   const mine = [...stored.values()].find(s => s.cli === selfId)
+  await traceStore($, mine)
   if (!mine) await refreshTitle($)
   const cur = held ?? (await read($, view))
   const spawns = cur.spawns ?? []
