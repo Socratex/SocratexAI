@@ -39,6 +39,7 @@ Set `FLOW_PANEL` to `0` in the `env` block of a settings file; the project value
 - The last view is saved to `local/flow/` (one file per session) and restored at session start, so a restart does not begin empty.
 - A session that ends or is archived marks its file as ended, and an idle file not updated for 3 minutes is dropped, so finished sessions leave the tree (an idle live session disappears after 3 minutes of silence).
 - A new prompt clears the segments; only paths used since then are shown.
+- Background agents (`run_in_background`) survive a new prompt: they stay as a running (green) branch with moving dots. The engine sends no "agent ended" event, so one counts as finished 45 s after its last turn ended (`BG_IDLE_MS`). Best effort when several agents start at once.
 - Figures refresh after each main turn, not continuously. Redraws are batched to one per 2 seconds, with dots keeping their phase, to avoid blinking.
 - Size guard: the pane refuses an SVG over 131072 characters and then shows "nothing to show yet" for the whole panel. Idle sessions sink to the bottom of their level and show no children. From 10 idle sessions on one level they become one tile "12 sessions" with their summed figure and a tooltip of their names, one per line (nested ones indented); working sessions keep their branches. A drawing still over 126000 characters folds all idle sessions, then loses moving dots and ticking times, then fewer nested session levels.
 - Tuning constants (font, weights) are at the top of `hooks/register.tsx`.

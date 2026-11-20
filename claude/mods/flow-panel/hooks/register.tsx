@@ -828,6 +828,14 @@ const touch = (
 const turnStartedAt = new Map<string, number>()
 // When a command's fork (/btw ...) started, by agent id: its run is one timed span.
 const spawnedAt = new Map<string, number>()
+// Background agents still working, by agent id. The engine sends no "agent ended"
+// event, so one counts as finished BG_IDLE_MS after its last turn ended. They
+// survive a new prompt: the prompt wipes the view, but not these.
+const BG_IDLE_MS = 45000
+const liveAgents = new Map<string, { key: string; spawnAt: number; last: number }>()
+// Set by the Agent tool call just before the engine spawns it (best effort when
+// several start together).
+let nextSpawnIsBackground = false
 
 const freshTokens = (u: Usage | undefined): number =>
   u ? (u.input_tokens ?? 0) + (u.output_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0) : 0
@@ -1262,8 +1270,9 @@ export const register: Register = on => {
     const usdNow = (await $.session.usage()).cost?.usd ?? 0
     await change($, v => ({
       ...v,
-      nodes: [],
-      agentNode: {},
+      // Background agents that still work stay (their branch, running, green).
+      nodes: v.nodes.filter(n => [...liveAgents.values()].some(a => a.key === n.key && n.running > 0)),
+      agentNode: Object.fromEntries(Object.entries(v.agentNode).filter(([id]) => liveAgents.has(id))),
       head: v.head || head || undefined,
       promptUsd: usdNow,
       lastUsd: usdNow,
@@ -1289,9 +1298,17 @@ export const register: Register = on => {
   })
 
   on('turn.start', async ($, e, next) => {
-    turnStartedAt.set(e.agentId ?? '', await $.clock.now())
+    const startedAt = await $.clock.now()
+    turnStartedAt.set(e.agentId ?? '', startedAt)
     if (e.agentId === undefined) {
       await change($, v => ({ ...v, mainRunning: true, isWaiting: false }))
+    } else {
+      const live = liveAgents.get(e.agentId)
+      if (live) {
+        live.last = startedAt + BG_IDLE_MS * 100 // a turn is running: not idle until it completes
+        void armLiveRefresh($)
+        await change($, v => ({ ...v, nodes: v.nodes.map(n => (n.key === live.key ? { ...n, at: startedAt } : n)) }))
+      }
     }
 
     return next(e)
@@ -1347,6 +1364,34 @@ export const register: Register = on => {
       return calibrate(moved)
     })
 
+    // A background agent with no further turn for BG_IDLE_MS is taken as finished.
+    const live = e.agentId === undefined ? undefined : liveAgents.get(e.agentId)
+    if (e.agentId !== undefined && live) {
+      const id = e.agentId
+      live.last = endedAt
+      $.clock.after(BG_IDLE_MS, async () => {
+        const cur = liveAgents.get(id)
+        if (!cur || cur.last !== endedAt) return
+        liveAgents.delete(id)
+        const end = await $.clock.now()
+        await change($, v => ({
+          ...v,
+          nodes: v.nodes.map(n =>
+            n.key === cur.key
+              ? {
+                  ...n,
+                  at: end,
+                  running: Math.max(0, n.running - 1),
+                  startSum: n.running - 1 > 0 ? (n.startSum ?? 0) - cur.spawnAt : 0,
+                  isBackground: n.running - 1 > 0 ? n.isBackground : false,
+                  ms: (n.ms ?? 0) + (end - cur.spawnAt),
+                }
+              : n,
+          ),
+        }))
+      })
+    }
+
     return next(e)
   })
 
@@ -1362,6 +1407,14 @@ export const register: Register = on => {
         void armLiveRefresh($)
       }
       const target = isSide ? sideTarget : agentTarget(e.subagentType)
+      // A background agent's tool call returns at once, so the spawn keeps it running.
+      const isBg = !isSide && nextSpawnIsBackground
+      nextSpawnIsBackground = false
+      if (isBg) {
+        liveAgents.set(id, { key: target.key, spawnAt: now, last: now + BG_IDLE_MS * 100 })
+        void armLiveRefresh($)
+      }
+      const marks = isSide || isBg
       await change($, v => ({
         ...v,
         agentNode: { ...v.agentNode, [id]: target.key },
@@ -1369,9 +1422,9 @@ export const register: Register = on => {
         nodes: touch(v.nodes, target, now, n => ({
           ...n,
           at: now,
-          running: n.running + (isSide ? 1 : 0),
-          startSum: (n.startSum ?? 0) + (isSide ? now : 0),
-          isBackground: isSide || n.isBackground,
+          running: n.running + (marks ? 1 : 0),
+          startSum: (n.startSum ?? 0) + (marks ? now : 0),
+          isBackground: marks || n.isBackground,
         })),
       }))
     }
@@ -1394,6 +1447,7 @@ export const register: Register = on => {
     const args = e as unknown as Record<string, unknown>
     const c = classify(String(e.tool), args)
     const isBackground = args.run_in_background === true
+    if (c.kind === 'agent') nextSpawnIsBackground = isBackground
     // A session we start gets a brief: remember its start, so the child can be
     // recognised by that brief later (and no other session is taken for it).
     const spawn: Spawn[] =
