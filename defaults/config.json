@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "profile": "duo",
+  "stages": {
+    "review": {"enabled": true},
+    "planning": {"enabled": true}
+  }
+}

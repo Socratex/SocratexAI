@@ -5,10 +5,12 @@ Sources:
   core/, docs/, claude/, codex/ *.md  -> frontmatter `description` (or the first heading)
   skills/*/SKILL.md, claude/skills/*  -> skill name + description
   claude/agents/*.md                  -> agent name + description
-  tools/*.py, tools/pipeline|review/*.py -> first docstring line
+  tools/*.py, tools/pipeline|review|planning/*.py -> first docstring line
   docs/specs/*/*.md                   -> frontmatter `description`
-  tools/pipeline|review/*.json        -> `purpose` or `title`
+  tools/pipeline|review|planning/*.json        -> `purpose` or `title`
   core/*.json                         -> `purpose` or `schema`
+  defaults/*.json                     -> fixed description
+  core/*.py, core/sox, tests/test_*.py -> docstring / test name
 
 Usage:
     python tools/build_index.py           # rewrite INDEX.json
@@ -69,9 +71,11 @@ def build() -> dict:
         payload = json.loads(p.read_text(encoding="utf-8"))
         data.append({"path": rel(p), "what": payload.get("purpose") or payload.get("schema", p.stem)})
     data += [{"path": rel(p), "what": payload.get("purpose") or payload.get("title", p.stem)}
-             for folder in ("review", "pipeline")
+             for folder in ("review", "pipeline", "planning")
              for p in sorted((ROOT / "tools" / folder).glob("*.json"))
              for payload in [json.loads(p.read_text(encoding="utf-8"))]]
+    data += [{"path": rel(p), "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"}
+             for p in sorted((ROOT / "defaults").glob("*.json"))]
     data += [{"path": rel(p), "what": "Machine-readable list of AI workflow improvements and their status"}
              for p in [ROOT / "docs" / "IMPROVEMENTS.json"] if p.exists()]
     skills = [{"name": frontmatter(p).get("name", p.parent.name), "path": rel(p.parent),
@@ -83,6 +87,10 @@ def build() -> dict:
     tools = [{"path": rel(p), "what": docstring(p)}
              for p in sorted((ROOT / "tools").glob("*.py")) + sorted((ROOT / "tools" / "pipeline").glob("*.py"))
              + sorted((ROOT / "tools" / "review").glob("*.py"))]
+    tools += [{"path": rel(p), "what": docstring(p)}
+              for p in sorted((ROOT / "core").glob("*.py")) + [ROOT / "core" / "sox"] if p.is_file()]
+    tools += [{"path": rel(p), "what": docstring(p)}
+              for p in sorted((ROOT / "tests").glob("test_*.py"))]
     tools.append({"path": "claude/hooks/guard.py", "what": docstring(ROOT / "claude" / "hooks" / "guard.py")})
     return {
         "schema": "socratex-index/v1",

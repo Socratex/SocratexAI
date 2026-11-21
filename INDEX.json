@@ -127,6 +127,10 @@
   ],
   "data": [
     {
+      "path": "core/config.schema.json",
+      "what": "Schema of one SocratexAI config layer file (defaults, local overrides, project, project-private)"
+    },
+    {
       "path": "core/DIRECTIVES.json",
       "what": "socratex-directives/v1"
     },
@@ -143,32 +147,16 @@
       "what": "Registry of review micro-checkers (one concern each). A project may add, disable or retier them in .ai/review.json. Spec: docs/specs/review-pipeline/SPEC.md"
     },
     {
-      "path": "tools/planning/checkers.json",
-      "what": "Registry of planning micro-checkers (research decision, interpretation check); same schema and engine as review. Spec: docs/specs/planning-pipeline/SPEC.md"
-    },
-    {
-      "path": "tools/planning/run.py",
-      "what": "Planning pipeline CLI: runs research then the interpretation check on the shared engine, prints a short UCE report; temp files live outside the repo."
-    },
-    {
-      "path": "tools/planning/select_research.py",
-      "what": "Select for the research stage: finds unknowns that facts can settle and picks the executor (Codex or scout) with a reason, no model."
-    },
-    {
-      "path": "tools/planning/select_check.py",
-      "what": "Select for the interpretation check: slices owner answers, plan and research notes only, never the conversation."
-    },
-    {
-      "path": "tools/planning/planning_report.py",
-      "what": "Renders planning findings as a short Polish UCE report."
-    },
-    {
-      "path": "tools/planning/stage_files.py",
-      "what": "Stages answers, plan and notes as inputs in the run folder for the engine."
-    },
-    {
       "path": "tools/pipeline/findings.schema.json",
       "what": "socratex-review-findings/v1"
+    },
+    {
+      "path": "tools/planning/checkers.json",
+      "what": "Registry of planning micro-checkers. Stage 1 (questions) is the normal AskUserQuestion form led by the main session and has no entry here. A project may add, disable or retier entries in .ai/planning.json. Spec: docs/specs/planning-pipeline/SPEC.md"
+    },
+    {
+      "path": "defaults/config.json",
+      "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"
     },
     {
       "path": "docs/IMPROVEMENTS.json",
@@ -335,6 +323,18 @@
     {
       "path": "tools/review/select_tests.py",
       "what": "Select for test-necessity: Python tests without any assertion and tests whose body duplicates an earlier test."
+    },
+    {
+      "path": "core/core.py",
+      "what": "Config resolver: merges layered config files, validates them and records where every value came from."
+    },
+    {
+      "path": "core/sox",
+      "what": "sox: the SocratexAI command line (config show/resolve for now; more subcommands register in COMMANDS)."
+    },
+    {
+      "path": "tests/test_core.py",
+      "what": "Tests for core/core.py (config resolver) and core/sox (CLI)."
     },
     {
       "path": "claude/hooks/guard.py",

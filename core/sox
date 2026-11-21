@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+"""sox: the SocratexAI command line (config show/resolve for now; more subcommands register in COMMANDS)."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import core  # noqa: E402
+
+DIM = "\033[2m"
+RESET = "\033[0m"
+
+
+def _fmt(value: object) -> str:
+    return json.dumps(value, ensure_ascii=False)
+
+
+def cmd_config_show(args: argparse.Namespace) -> int:
+    result = core.resolve(args.project)
+    if args.json:
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        return 0
+    rows = []
+    for key in sorted(result["provenance"]):
+        entry = result["provenance"][key]
+        over = "; ".join(f"{_fmt(o['value'])} ({o['layer']})" for o in entry["overridden"])
+        rows.append((key, _fmt(entry["value"]), f"{entry['layer']}: {entry['file']}", over))
+    heads = ("key", "value", "source")
+    widths = [max([len(h)] + [len(r[i]) for r in rows]) for i, h in enumerate(heads)]
+    color = sys.stdout.isatty()
+    print("  ".join(h.ljust(w) for h, w in zip(heads, widths)) + "  overridden")
+    for key, value, source, over in rows:
+        tail = (f"{DIM}{over}{RESET}" if color else over) if over else ""
+        print("  ".join(c.ljust(w) for c, w in zip((key, value, source), widths)) + "  " + tail)
+    return 0
+
+
+def cmd_config_resolve(args: argparse.Namespace) -> int:
+    core.write_effective(args.project)
+    print(f"Wrote {core.effective_path()}")
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="sox", description=__doc__)
+    top = parser.add_subparsers(dest="command", required=True)
+    config = top.add_parser("config", help="inspect the layered config")
+    sub = config.add_subparsers(dest="action", required=True)
+    show = sub.add_parser("show", help="print resolved values with their source")
+    show.add_argument("--project", help="project root (adds the project and project-private layers)")
+    show.add_argument("--json", action="store_true")
+    resolve = sub.add_parser("resolve", help="write state/effective.json")
+    resolve.add_argument("--project")
+    return parser
+
+
+# (command, action) -> handler; add new subcommands here.
+COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_config_resolve}
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    try:
+        return COMMANDS[(args.command, args.action)](args)
+    except core.ConfigError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())
