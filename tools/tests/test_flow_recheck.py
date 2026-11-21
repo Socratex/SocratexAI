@@ -52,7 +52,7 @@ class FlowRecheck(unittest.TestCase):
     def test_unknown_shapes_and_statuses_close_nothing(self) -> None:
         for expr in ("undefined", "{}", "{result: 'text'}", "{result: {status: 3}}", "{result: {status: 'weird'}}", "'oops'"):
             self.assertEqual(run(f"probeOfResult({expr})"), {"kind": "unknown"}, expr)
-            self.assertNotIn("close", run(f"decideProbe(probeOfResult({expr}), {{hasResolved: true, failures: 0}})"))
+            self.assertNotIn("close", run(f"decideProbe(probeOfResult({expr}), {{failures: 0}})"))
 
     def test_deny_and_errors_are_failures(self) -> None:
         self.assertEqual(run("probeOfResult({deny: 'no'})"), {"kind": "error"})
@@ -60,36 +60,32 @@ class FlowRecheck(unittest.TestCase):
         self.assertEqual(run("probeOfError(new Error('network down'))"), {"kind": "error"})
         self.assertEqual(run("probeOfError('x')"), {"kind": "error"})
 
-    def test_unknown_task_is_told_from_a_transient_error(self) -> None:
-        for text in ("Task not found: abc", "No such task", "unknown task abc", "No task found with id abc", "task abc does not exist"):
-            self.assertEqual(run(f"probeOfError(new Error({text!r}))"), {"kind": "missing"}, text)
-        self.assertEqual(run("probeOfResult({isError: true, text: 'Task not found'})"), {"kind": "missing"})
-        # the tool itself missing, or a bad id format, is not "the task is gone"
-        for text in ("Tool not found: GetTask", "No such tool available: GetTask", "invalid task id format", "timeout while reading"):
+    def test_not_found_is_only_a_failure(self) -> None:
+        for text in ("Task not found: abc", "No such task", "unknown task abc", "Tool not found: GetTask", "timeout"):
             self.assertEqual(run(f"probeOfError(new Error({text!r}))"), {"kind": "error"}, text)
+        self.assertEqual(run("probeOfResult({isError: true, text: 'Task not found'})"), {"kind": "error"})
 
     def test_decide_close_and_book(self) -> None:
-        fresh = "{hasResolved: false, failures: 0}"
-        self.assertEqual(run(f"decideProbe({{kind: 'running'}}, {{hasResolved: false, failures: 2}})"), {"book": {"hasResolved": True, "failures": 0}})
+        fresh = "{failures: 0}"
+        self.assertEqual(run(f"decideProbe({{kind: 'running'}}, {{failures: 2}})"), {"book": {"failures": 0}})
         self.assertEqual(
             run(f"decideProbe({{kind: 'ended', status: 'failed'}}, {fresh})"),
-            {"close": "failed", "book": {"hasResolved": True, "failures": 0}},
+            {"close": "failed", "book": {"failures": 0}},
         )
 
-    def test_missing_closes_only_after_the_tool_has_answered_once(self) -> None:
-        self.assertEqual(run("decideProbe({kind: 'missing'}, {hasResolved: false, failures: 0})"), {"book": {"hasResolved": False, "failures": 1}})
-        self.assertEqual(
-            run("decideProbe({kind: 'missing'}, {hasResolved: true, failures: 1})"),
-            {"close": "completed", "book": {"hasResolved": True, "failures": 0}},
-        )
+    def test_not_found_keeps_the_task_running(self) -> None:
+        for expr in ("probeOfResult({isError: true, text: 'Task not found'})", "probeOfError(new Error('No such task'))"):
+            decided = run(f"decideProbe({expr}, {{failures: 1}})")
+            self.assertNotIn("close", decided)
+            self.assertEqual(decided["book"], {"failures": 2})
 
     def test_failure_backoff(self) -> None:
-        book = run("[1, 2, 3].reduce((b) => decideProbe({kind: 'error'}, b).book, {hasResolved: false, failures: 0})")
+        book = run("[1, 2, 3].reduce((b) => decideProbe({kind: 'error'}, b).book, {failures: 0})")
         self.assertEqual(book["failures"], 3)
         self.assertTrue(run("isRecheckOff(3)"))
         self.assertFalse(run("isRecheckOff(2)"))
         # a good answer resets the run of failures
-        self.assertEqual(run("decideProbe({kind: 'running'}, {hasResolved: false, failures: 2})")["book"]["failures"], 0)
+        self.assertEqual(run("decideProbe({kind: 'running'}, {failures: 2})")["book"]["failures"], 0)
 
     def test_tasks_to_probe_respects_the_start_grace_and_dedupes(self) -> None:
         nodes = "[{taskId: 'old', running: 1}, {taskId: 'new', running: 1}, {taskId: 'done', running: 0}, {taskId: 'unseen', running: 1}, {running: 1}]"

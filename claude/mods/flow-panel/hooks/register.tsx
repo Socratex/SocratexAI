@@ -518,8 +518,8 @@ const goneTasks = (live: ReadonlyMap<string, number>, rows: readonly TaskRow[] |
 // ----------------------------------------------- background task re-check
 // <recheck>
 // While the only live things are background tasks (nothing else runs), the mod asks the
-// engine's GetTask tool about each of them once a minute and closes the ones that
-// finished. Best effort: whether GetTask accepts the ids of a background Bash or a
+// engine's GetTask tool about each of them once a minute and closes only the ones it
+// lists as finished (an explicit ended status). Best effort: whether GetTask accepts the ids of a background Bash or a
 // Monitor is not proven, so every doubt leaves the task running (a longer glow, never a
 // false close). The Stop event's own list (above) still reconciles while other work runs.
 const RECHECK_MS = 60000
@@ -554,22 +554,16 @@ const shouldRecheck = (s: RecheckState): boolean =>
 
 type TaskProbe =
   | { kind: 'ended'; status: 'completed' | 'failed' | 'killed' }
-  | { kind: 'missing' } // the engine says it has no such task
   | { kind: 'running' }
   | { kind: 'unknown' } // an answer of a shape or status not understood
   | { kind: 'error' } // the call threw, was denied or reported an error
-
-// An "unknown task" message, not a "tool unavailable" or "bad id format" one.
-const isMissingTaskText = (text: string): boolean =>
-  !/\btool\b/i.test(text) &&
-  /(no such|unknown) (background )?(task|shell)|\bno (background )?task\b|task\b[^.]{0,60}(not found|does not exist|doesn't exist)|not found[^.]{0,30}\btask/i.test(text)
 
 // What GetTask answered: `{ result: { status, ... } }` (or the bare record), `{ deny }`,
 // or `{ isError, text }`.
 const probeOfResult = (ran: unknown): TaskProbe => {
   const top = (ran && typeof ran === 'object' ? ran : {}) as Record<string, unknown>
   if (typeof top.deny === 'string') return { kind: 'error' }
-  if (top.isError === true) return isMissingTaskText(squash(top.text)) ? { kind: 'missing' } : { kind: 'error' }
+  if (top.isError === true) return { kind: 'error' } // includes "task not found": that never closes a task
   const status = recordOf(ran).status
   if (typeof status !== 'string') return { kind: 'unknown' }
   const word = status.trim().toLowerCase()
@@ -578,21 +572,19 @@ const probeOfResult = (ran: unknown): TaskProbe => {
   return RECHECK_RUNNING.includes(word) ? { kind: 'running' } : { kind: 'unknown' }
 }
 
-// A thrown error: an unknown task is told apart from every other failure by its text.
-const probeOfError = (err: unknown): TaskProbe =>
-  isMissingTaskText(err instanceof Error ? err.message : String(err)) ? { kind: 'missing' } : { kind: 'error' }
+// A thrown error is a failure whatever its text (an unknown task included).
+const probeOfError = (_err: unknown): TaskProbe => ({ kind: 'error' })
 
-type ProbeBook = { hasResolved: boolean; failures: number }
+type ProbeBook = { failures: number }
 // What one probe changes: whether to close the task (with which end status) and the
-// book-keeping. "missing" closes only after GetTask has answered about some task
-// before (so the ids are known to be valid for it); until then it counts as a failure,
-// because an id the tool cannot read at all would otherwise close every task.
+// book-keeping. Only an explicit ended status closes; every other answer (running, not
+// found, error, unknown shape) leaves the task running, and all but "running" count as
+// a useless answer toward the give-up limit.
 const decideProbe = (p: TaskProbe, b: ProbeBook): { close?: 'completed' | 'failed' | 'killed'; book: ProbeBook } => {
-  if (p.kind === 'running') return { book: { hasResolved: true, failures: 0 } }
-  if (p.kind === 'ended') return { close: p.status, book: { hasResolved: true, failures: 0 } }
-  if (p.kind === 'missing' && b.hasResolved) return { close: 'completed', book: { hasResolved: true, failures: 0 } }
+  if (p.kind === 'running') return { book: { failures: 0 } }
+  if (p.kind === 'ended') return { close: p.status, book: { failures: 0 } }
 
-  return { book: { hasResolved: b.hasResolved, failures: b.failures + 1 } }
+  return { book: { failures: b.failures + 1 } }
 }
 const isRecheckOff = (failures: number): boolean => failures >= RECHECK_MAX_FAILS
 
@@ -1143,7 +1135,7 @@ let hasLoggedOther = false
 // Re-check of background tasks (see the <recheck> block): the timer exists only while
 // nothing but background tasks runs.
 let recheckTimer: { cancel: () => void } | undefined
-let recheckBook: ProbeBook = { hasResolved: false, failures: 0 }
+let recheckBook: ProbeBook = { failures: 0 }
 let isRechecking = false
 let isRecheckEnabled: boolean | undefined
 const loggedProbes = new Set<string>() // outcome kinds already written to the debug log
@@ -1573,7 +1565,7 @@ async function syncRecheck($: EngineInterface, v: FlowView): Promise<void> {
   }
 }
 
-// One tick: ask GetTask about each task, close the ones it says are over. Any doubt
+// One tick: ask GetTask about each task, close the ones it lists as finished. Any doubt
 // leaves the task as it is.
 async function recheckTasks($: EngineInterface): Promise<void> {
   if (isRechecking) return
