@@ -7,6 +7,8 @@ updated: 2026-11-19
 
 # flow-panel
 
+Colloquial name: **"kropki"** (the dots), after the moving dots on its lines.
+
 A side panel for Claude Code (desktop app). It costs no model tokens: it only listens to engine events and draws SVG.
 
 - Layout: a vertical file-tree, left-aligned (10px margin) with rounded elbows. `User` on top, `Claude` below, one branch per path.

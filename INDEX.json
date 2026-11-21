@@ -90,7 +90,7 @@
     },
     {
       "path": "claude/mods/flow-panel/README.md",
-      "what": "Claude Code mod that draws an animated graph of Claude's work (you, Claude, sub-agents, tools, MCP, skills) with the 5-hour limit growth and a per-path cost estimate in a side panel."
+      "what": "Claude Code mod (nickname: \"kropki\") that draws an animated graph of Claude's work (you, Claude, sub-agents, tools, MCP, skills) with the 5-hour limit growth and a per-path cost estimate in a side panel."
     },
     {
       "path": "codex/AGENTS.md",
