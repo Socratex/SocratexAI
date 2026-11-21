@@ -57,6 +57,10 @@
       "what": "When to just do it, when to plan first, when to research first and when to ask."
     },
     {
+      "path": "core/rules/WORKFLOW-DETAILS.md",
+      "what": "Verbatim detail bullets from core/RULES.md (named solutions, repeated fixes, skill learnings, context economy, finishing); the startup file keeps one short line per topic."
+    },
+    {
       "path": "core/templates/DECISION.md",
       "what": "Short record for a choice that future work must not casually undo."
     },
@@ -109,6 +113,10 @@
       "what": "Planowanie w trzech tanich etapach (formularz, research, sprawdzenie interpretacji) na wspólnym schemacie rejestru i wspólnym runnerze z pipeline'em review."
     },
     {
+      "path": "docs/specs/restructure/SPEC.md",
+      "what": "Docelowa struktura repo, kolejność nadpisywania, flow jako dane i plan migracji bez przerwy w działaniu"
+    },
+    {
       "path": "docs/specs/review-pipeline/MEASUREMENTS.md",
       "what": "Rozkład wielkości zmian z realnych commitów i uzasadnienie min_changed_lines oraz max_chunk_lines."
     },
@@ -133,30 +141,6 @@
     {
       "path": "tools/review/checkers.json",
       "what": "Registry of review micro-checkers (one concern each). A project may add, disable or retier them in .ai/review.json. Spec: docs/specs/review-pipeline/SPEC.md"
-    },
-    {
-      "path": "tools/planning/checkers.json",
-      "what": "Registry of planning micro-checkers (research decision, interpretation check); same schema and engine as review. Spec: docs/specs/planning-pipeline/SPEC.md"
-    },
-    {
-      "path": "tools/planning/run.py",
-      "what": "Planning pipeline CLI: runs research then the interpretation check on the shared engine, prints a short UCE report; temp files live outside the repo."
-    },
-    {
-      "path": "tools/planning/select_research.py",
-      "what": "Select for the research stage: finds unknowns that facts can settle and picks the executor (Codex or scout) with a reason, no model."
-    },
-    {
-      "path": "tools/planning/select_check.py",
-      "what": "Select for the interpretation check: slices owner answers, plan and research notes only, never the conversation."
-    },
-    {
-      "path": "tools/planning/planning_report.py",
-      "what": "Renders planning findings as a short Polish UCE report."
-    },
-    {
-      "path": "tools/planning/stage_files.py",
-      "what": "Stages answers, plan and notes as inputs in the run folder for the engine."
     },
     {
       "path": "tools/pipeline/findings.schema.json",
@@ -267,6 +251,10 @@
     {
       "path": "tools/skill_learn.py",
       "what": "Learnings log for skills: the capture half of the self-improving skill loop."
+    },
+    {
+      "path": "tools/state.py",
+      "what": "Shared helper for machine output that lives in `state/` (outside git), so `local/` holds only owner settings."
     },
     {
       "path": "tools/subrepos.py",

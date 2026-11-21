@@ -14,7 +14,7 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 - Global index: `$SOCRATEX_HOME/INDEX.json` (path -> what for every rule, skill, tool and doc). Look there before searching the disk.
 - Project layer: the project's own `INDEX.json`, `AGENTS.md` and `CLAUDE.md` add project facts and rules. Project rules win over the core where they conflict, except safety rules, which only get stricter.
 - After adding, moving or removing a document, skill, script or tool, update the nearest `INDEX.json` (path and one line on what it is; no secrets).
-- Named solutions ledger: whenever the owner asks to use, try or evaluate an existing named solution (plugin, skill pack, methodology, tool, program, MCP server), record it in `$SOCRATEX_HOME/docs/IMPROVEMENTS.json` (status adopted / rejected / considering, `expected_result`, `result`, `result_evidence`) and commit it to SocratexAI. Read the ledger first, so nothing already rejected is proposed again. Plain "remember this rule" requests are not named solutions and do not go there.
+- Named solutions ledger: when the owner asks to use, try or evaluate a named solution, record it in `$SOCRATEX_HOME/docs/IMPROVEMENTS.json` (read it first; details: `core/rules/WORKFLOW-DETAILS.md`).
 
 ## 🎯 Epistemics
 - Accuracy over agreement. Do not mirror the owner's beliefs without evidence; challenge weak, vague or contradictory framing and say why.
@@ -33,19 +33,13 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 - Clear, local, reversible request: do it, do not over-discuss. Complex or multi-boundary work: short plan or impact note first.
 - Quality does not depend on the model tier: cheaper models keep the same standard (readable code, explicit contracts, borrowed over invented, documented decisions); gates and review enforce it.
 - Borrow before inventing: check proven patterns, engine or framework features and existing project tools before building a custom solution; name the cost when you do build one.
-- Repeated mechanical fix (formatting, index drift, cache refresh): use or write a small owning script and wire it into the finalizer, so nobody has to remember the manual sequence. Third repetition of anything: propose script > skill > memory note.
-- Two scripts doing the same thing: extract a shared helper and parameterize it, do not keep a second copy.
-- Convenience drives habit: the correct path must be the default path (helper, template, lint gate); a rule that relies on willpower alone will not last.
-- Skill learnings: when the owner corrects you while one of our skills is in use, or a skill step fails, needs a workaround or the skill misfires, log one sentence right away: `tools/skill_learn.py add --skill <name> --kind correction|failure|workaround|misfire --note "<do X instead of Y>"`. Do not edit the skill then; skill `skill-reflect` applies batched edits.
+- Repeated fixes become small scripts, duplicates get a shared helper, the correct path is the default path; log skill corrections right away with `tools/skill_learn.py add` (details: `core/rules/WORKFLOW-DETAILS.md`).
 - Code is 100% English (identifiers, comments, UI strings, logs, prompts). Documents and talk use the language from `local/profile.md`. Commit messages: simple English.
 - Data that scripts read lives in JSON; text that people and models read lives in Markdown with YAML frontmatter (`type`, `title`, `description`, `updated`).
 
 ## 💰 Context economy
 - Every tool result stays in context and is paid again each turn. Bring into the main context only what the next decision needs.
-- Big JSON: read single fields with `$SOCRATEX_HOME/tools/json_read.py`, never dump whole ledgers.
-- Diffs: `git diff --stat` first; full diff only for logic files; a large diff (over about 150 lines) goes to a reviewer subagent that returns a verdict.
-- Logs, test output, builds: filter with `tail` / `rg` for errors; a subagent reads full logs.
-- Wide searches across many files: a cheap subagent returns the conclusion, not the dump.
+- Filter big JSON, diffs, logs and wide searches before they enter context; subagents read the large ones (details: `core/rules/WORKFLOW-DETAILS.md`).
 - Warn before work that will burn unusual usage (large sweeps, long retry loops) and offer a cheaper scoped option.
 
 ## 🤖 Model routing (details: `core/ROUTING.json`, `core/rules/ROUTING.md`)
@@ -62,6 +56,5 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 
 ## 📦 Finishing
 - Commit your own finished work at the end of the prompt, without asking, using the project's finalizer when it has one (rules: `core/rules/COMMITS.md`). Push only when the project says the AI pushes; otherwise the owner pushes.
-- After the commit: `tools/risk_score.py --commit HEAD` (verification level, report-only until the owner switches it on) and log the outcome once with `tools/routing_log.py` (see `core/rules/ROUTING.md`).
-- Log every new finding about working with AI in `$SOCRATEX_HOME/docs/AI-PRACTICES.md` (findings log: date, what, evidence, verdict) and commit it with the core.
+- After the commit: `tools/risk_score.py --commit HEAD`, then log once with `tools/routing_log.py`; log new AI findings in `$SOCRATEX_HOME/docs/AI-PRACTICES.md` (details: `core/rules/WORKFLOW-DETAILS.md`).
 - Report per `core/STYLE.md`.
