@@ -1,0 +1,94 @@
+{
+    "schema": "socratex-checker-registry/v1",
+    "pipeline": "review",
+    "purpose": "Registry of review micro-checkers (one concern each). A project may add, disable or retier them in .ai/review.json. Spec: docs/specs/review-pipeline/SPEC.md",
+    "min_changed_lines": 6,
+    "default_max_chunk_lines": 150,
+    "implementer_tier": "standard",
+    "skip_patterns": [
+        "*.min.js", "*.min.css", "*.map", "*.lock", "package-lock.json", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.ico",
+        "*.pdf", "*.zip", "*.woff", "*.woff2", "*.ttf", "*.pyc", "*_pb2.py", "*.pb.go", "*.generated.*",
+        "*/generated/*", "*/node_modules/*", "*/__pycache__/*"
+    ],
+    "checkers": [
+        {
+            "pipeline": "review",
+            "id": "readability",
+            "concern": "Does the code read like a book: names, function length, nesting.",
+            "scope": "hunk",
+            "max_chunk_lines": 150,
+            "select": "{python} {here}/select_quality.py --mode readability",
+            "tool": "diff-grep",
+            "tier": "standard",
+            "autofix": "agent",
+            "fix_script": null,
+            "enabled": true
+        },
+        {
+            "pipeline": "review",
+            "id": "architecture",
+            "concern": "Does the change respect the architecture and module boundaries.",
+            "scope": "hunk",
+            "max_chunk_lines": 150,
+            "select": "{python} {here}/select_quality.py --mode architecture",
+            "tool": "graphify",
+            "tier": "standard",
+            "autofix": "none",
+            "fix_script": null,
+            "enabled": true
+        },
+        {
+            "pipeline": "review",
+            "id": "test-necessity",
+            "concern": "Is a test justified and not redundant: no missing assertion, no duplicate, not testing the implementation.",
+            "scope": "hunk",
+            "max_chunk_lines": 150,
+            "select": "{python} {here}/select_tests.py",
+            "tool": "diff-grep",
+            "tier": "cheap",
+            "autofix": "agent",
+            "fix_script": null,
+            "enabled": true
+        },
+        {
+            "pipeline": "review",
+            "id": "comments",
+            "concern": "Is a comment justified: not repeating the code, not stale, no commented-out code.",
+            "scope": "hunk",
+            "max_chunk_lines": 150,
+            "select": "{python} {here}/select_comments.py",
+            "tool": "diff-grep",
+            "tier": "cheap",
+            "autofix": "script",
+            "autofix_fallback": "agent",
+            "fix_script": "{python} {here}/fix_comments.py",
+            "enabled": true
+        },
+        {
+            "pipeline": "review",
+            "id": "contracts",
+            "concern": "Explicit contracts and no swallowed errors.",
+            "scope": "hunk",
+            "max_chunk_lines": 150,
+            "select": "{python} {here}/select_quality.py --mode contracts",
+            "tool": "diff-grep",
+            "tier": "cheap",
+            "autofix": "none",
+            "fix_script": null,
+            "enabled": true
+        },
+        {
+            "pipeline": "review",
+            "id": "leaks",
+            "concern": "Secrets and personal data (patterns of tools/check_leaks.py).",
+            "scope": "hunk",
+            "max_chunk_lines": 300,
+            "select": "{python} {here}/select_leaks.py",
+            "tool": "none",
+            "tier": "script",
+            "autofix": "none",
+            "fix_script": null,
+            "enabled": true
+        }
+    ]
+}

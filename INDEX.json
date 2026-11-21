@@ -77,10 +77,6 @@
       "what": "Comparison of our AI core with pstack (poteto) and Everything Claude Code (ECC); what to borrow, what not to install."
     },
     {
-      "path": "docs/specs/planning-pipeline/SPEC.md",
-      "what": "Spec of the planning pipeline: form, optional research, interpretation check as cheap scripted micro-agents on a registry shared with review."
-    },
-    {
       "path": "docs/ROUTER-LOOP.md",
       "what": "Risk-based verification levels (LIGHT/STANDARD/FULL) and a learning loop that tunes model routing from logged task outcomes."
     },
@@ -94,7 +90,7 @@
     },
     {
       "path": "claude/mods/flow-panel/README.md",
-      "what": "Claude Code mod (nickname: \"kropki\") that draws an animated graph of Claude's work (you, Claude, sub-agents, tools, MCP, skills) with the 5-hour limit growth and a per-path cost estimate in a side panel."
+      "what": "Claude Code mod that draws an animated graph of Claude's work (you, Claude, sub-agents, tools, MCP, skills) with the 5-hour limit growth and a per-path cost estimate in a side panel."
     },
     {
       "path": "codex/AGENTS.md",
@@ -107,6 +103,18 @@
     {
       "path": "templates/project/CLAUDE.md",
       "what": "Claude notes for <Project>"
+    },
+    {
+      "path": "docs/specs/planning-pipeline/SPEC.md",
+      "what": "Planowanie w trzech tanich etapach (formularz, research, sprawdzenie interpretacji) na wspólnym schemacie rejestru i wspólnym runnerze z pipeline'em review."
+    },
+    {
+      "path": "docs/specs/review-pipeline/MEASUREMENTS.md",
+      "what": "Rozkład wielkości zmian z realnych commitów i uzasadnienie min_changed_lines oraz max_chunk_lines."
+    },
+    {
+      "path": "docs/specs/review-pipeline/SPEC.md",
+      "what": "Rejestr tanich, oskryptowanych sprawdzaczy (po jednym na zagadnienie), które tylko zgłaszają; poprawki robi jeden wykonawca; zbiera osobna sesja."
     }
   ],
   "data": [
@@ -121,6 +129,14 @@
     {
       "path": "core/ROUTING.json",
       "what": "socratex-model-routing/v1"
+    },
+    {
+      "path": "tools/review/checkers.json",
+      "what": "Registry of review micro-checkers (one concern each). A project may add, disable or retier them in .ai/review.json. Spec: docs/specs/review-pipeline/SPEC.md"
+    },
+    {
+      "path": "tools/pipeline/findings.schema.json",
+      "what": "socratex-review-findings/v1"
     },
     {
       "path": "docs/IMPROVEMENTS.json",
@@ -235,6 +251,54 @@
     {
       "path": "tools/update.py",
       "what": "Update SocratexAI and the reference packs as two independent steps."
+    },
+    {
+      "path": "tools/pipeline/common.py",
+      "what": "Shared pipeline engine helpers: registry loading, git change ranges, chunking, select and fix script execution, run log."
+    },
+    {
+      "path": "tools/pipeline/engine.py",
+      "what": "Shared pipeline engine: chunk changed files, run registry checkers, merge findings, apply fixes in at most 2 rounds."
+    },
+    {
+      "path": "tools/pipeline/merge.py",
+      "what": "Merger of the review pipeline: combines per-checker result files into one schema-validated findings.json."
+    },
+    {
+      "path": "tools/pipeline/selectlib.py",
+      "what": "Tiny helpers shared by the select scripts: read the request from stdin, emit candidates as JSON."
+    },
+    {
+      "path": "tools/review/comment_rules.py",
+      "what": "Detect full-line comments that are commented-out code or merely repeat the next code line (shared by select and fix)."
+    },
+    {
+      "path": "tools/review/fix_comments.py",
+      "what": "Fix script for the comments checker: delete commented-out code and comments that repeat the code (idempotent)."
+    },
+    {
+      "path": "tools/review/report.py",
+      "what": "Aggregator report: renders findings.json as a short Polish UCE report (result line, emoji bullets, one question)."
+    },
+    {
+      "path": "tools/review/run.py",
+      "what": "Review pipeline CLI: runs the shared engine (tools/pipeline) with tools/review/checkers.json and prints the UCE report."
+    },
+    {
+      "path": "tools/review/select_comments.py",
+      "what": "Select for the comments checker: mechanical dead-code and repeating comments, plus comments left for the model."
+    },
+    {
+      "path": "tools/review/select_leaks.py",
+      "what": "Tier-script checker for leaks: applies the tools/check_leaks.py patterns to changed lines, no model involved."
+    },
+    {
+      "path": "tools/review/select_quality.py",
+      "what": "Select for readability, architecture and contracts: cheap diff-grep and AST heuristics that pick candidates for a model."
+    },
+    {
+      "path": "tools/review/select_tests.py",
+      "what": "Select for test-necessity: Python tests without any assertion and tests whose body duplicates an earlier test."
     },
     {
       "path": "claude/hooks/guard.py",

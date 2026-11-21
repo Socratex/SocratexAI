@@ -5,7 +5,9 @@ Sources:
   core/, docs/, claude/, codex/ *.md  -> frontmatter `description` (or the first heading)
   skills/*/SKILL.md, claude/skills/*  -> skill name + description
   claude/agents/*.md                  -> agent name + description
-  tools/*.py                          -> first docstring line
+  tools/*.py, tools/pipeline|review/*.py -> first docstring line
+  docs/specs/*/*.md                   -> frontmatter `description`
+  tools/pipeline|review/*.json        -> `purpose` or `title`
   core/*.json                         -> `purpose` or `schema`
 
 Usage:
@@ -53,14 +55,23 @@ def rel(path: Path) -> str:
     return path.relative_to(ROOT).as_posix()
 
 
+def doc_folders() -> list[str]:
+    specs = ROOT / "docs" / "specs"
+    return DOC_DIRS + (sorted(rel(p) for p in specs.iterdir() if p.is_dir()) if specs.is_dir() else [])
+
+
 def build() -> dict:
     docs = [{"path": rel(p), "what": frontmatter(p)["description"]}
-            for folder in DOC_DIRS if (ROOT / folder).is_dir()
+            for folder in doc_folders() if (ROOT / folder).is_dir()
             for p in sorted((ROOT / folder).glob("*.md"))]
     data = []
     for p in sorted((ROOT / "core").glob("*.json")):
         payload = json.loads(p.read_text(encoding="utf-8"))
         data.append({"path": rel(p), "what": payload.get("purpose") or payload.get("schema", p.stem)})
+    data += [{"path": rel(p), "what": payload.get("purpose") or payload.get("title", p.stem)}
+             for folder in ("review", "pipeline")
+             for p in sorted((ROOT / "tools" / folder).glob("*.json"))
+             for payload in [json.loads(p.read_text(encoding="utf-8"))]]
     data += [{"path": rel(p), "what": "Machine-readable list of AI workflow improvements and their status"}
              for p in [ROOT / "docs" / "IMPROVEMENTS.json"] if p.exists()]
     skills = [{"name": frontmatter(p).get("name", p.parent.name), "path": rel(p.parent),
@@ -69,7 +80,9 @@ def build() -> dict:
               for p in sorted((ROOT / folder).glob("*/SKILL.md"))]
     agents = [{"name": frontmatter(p).get("name", p.stem), "path": rel(p), "what": frontmatter(p)["description"]}
               for p in sorted((ROOT / "claude" / "agents").glob("*.md"))]
-    tools = [{"path": rel(p), "what": docstring(p)} for p in sorted((ROOT / "tools").glob("*.py"))]
+    tools = [{"path": rel(p), "what": docstring(p)}
+             for p in sorted((ROOT / "tools").glob("*.py")) + sorted((ROOT / "tools" / "pipeline").glob("*.py"))
+             + sorted((ROOT / "tools" / "review").glob("*.py"))]
     tools.append({"path": "claude/hooks/guard.py", "what": docstring(ROOT / "claude" / "hooks" / "guard.py")})
     return {
         "schema": "socratex-index/v1",

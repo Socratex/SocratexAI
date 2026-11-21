@@ -1,0 +1,64 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "socratex-review-findings/v1",
+    "type": "object",
+    "required": ["schema", "run_id", "rounds", "checkers", "findings"],
+    "additionalProperties": false,
+    "properties": {
+        "schema": {"enum": ["socratex-review-findings/v1"]},
+        "run_id": {"type": "string", "minLength": 1},
+        "rounds": {"type": "integer", "minimum": 0},
+        "checkers": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["id", "status", "tier", "model_calls", "input_chunks", "input_lines"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {"type": "string"},
+                    "status": {"enum": ["done", "skipped"]},
+                    "reason": {"type": "string"},
+                    "tier": {"enum": ["script", "cheap", "standard", "high"]},
+                    "model_calls": {"type": "integer", "minimum": 0},
+                    "input_chunks": {"type": "integer", "minimum": 0},
+                    "input_lines": {"type": "integer", "minimum": 0},
+                    "skipped_chunks": {"type": "integer", "minimum": 0}
+                }
+            }
+        },
+        "findings": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["id", "checker", "file", "line_start", "line_end", "severity", "kind", "confidence",
+                             "message", "fix", "status", "category"],
+                "additionalProperties": false,
+                "properties": {
+                    "id": {"type": "string", "minLength": 1},
+                    "checker": {"type": "string", "minLength": 1},
+                    "file": {"type": "string", "minLength": 1},
+                    "line_start": {"type": "integer", "minimum": 1},
+                    "line_end": {"type": "integer", "minimum": 1},
+                    "severity": {"enum": ["blocker", "major", "minor", "nit"]},
+                    "kind": {"enum": ["mechanical", "judgment"]},
+                    "confidence": {"enum": ["high", "medium", "low"]},
+                    "message": {"type": "string", "minLength": 1},
+                    "category": {"type": "string", "minLength": 1},
+                    "fix": {
+                        "type": "object",
+                        "required": ["type", "command_or_patch"],
+                        "additionalProperties": false,
+                        "properties": {
+                            "type": {"enum": ["script", "patch", "none"]},
+                            "command_or_patch": {"type": "string"}
+                        }
+                    },
+                    "status": {"enum": ["open", "fixed", "reported", "superseded", "rejected"]},
+                    "note": {"type": "string"},
+                    "superseded_by": {"type": "string"},
+                    "chunk_split": {"type": "boolean"}
+                }
+            }
+        }
+    }
+}
