@@ -11,10 +11,11 @@ Sources:
   core/*.json                         -> `purpose` or `schema`
   defaults/*.json                     -> fixed description
   core/*.py, core/sox, tests/test_*.py -> docstring / test name
+  modules/**/module.json              -> `modules` section (name, kind, what, when, entry, paths); validated first
 
 Usage:
     python tools/build_index.py           # rewrite INDEX.json
-    python tools/build_index.py --check   # exit 1 when INDEX.json is stale
+    python tools/build_index.py --check   # exit 1 when INDEX.json is stale or a manifest is broken
 """
 
 from __future__ import annotations
@@ -26,7 +27,12 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "core"))
+
+import core  # noqa: E402
+
 INDEX = ROOT / "INDEX.json"
+MODULES_DIR = "modules"
 DOC_DIRS = ["core", "core/rules", "core/templates", "docs", "claude", "claude/mods/flow-panel", "codex", "templates/project"]
 
 
@@ -60,6 +66,68 @@ def rel(path: Path) -> str:
 def doc_folders() -> list[str]:
     specs = ROOT / "docs" / "specs"
     return DOC_DIRS + (sorted(rel(p) for p in specs.iterdir() if p.is_dir()) if specs.is_dir() else [])
+
+
+class ManifestError(Exception):
+    """Raised with every manifest problem, one `file: key: message` line each."""
+
+
+def manifest_files(root: Path = ROOT) -> list[Path]:
+    return sorted((root / MODULES_DIR).glob("**/module.json"))
+
+
+def _overlaps(a: str, b: str) -> bool:
+    a, b = a.strip("/"), b.strip("/")
+    return a == b or a.startswith(b + "/") or b.startswith(a + "/")
+
+
+def validate_manifests(root: Path = ROOT) -> tuple[list[dict], list[str]]:
+    """Load every module manifest; return (schema-valid manifests, error lines `file: key: message`)."""
+    schema = json.loads((root / "core" / "module.schema.json").read_text(encoding="utf-8"))
+    errors: list[str] = []
+    manifests: list[dict] = []
+    claimed: list[tuple[str, str, str]] = []
+    for file in manifest_files(root):
+        label = file.relative_to(root).as_posix()
+        try:
+            data = json.loads(file.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"{label}: $: cannot read JSON ({exc})")
+            continue
+        found = core.validate(data, schema, "$")
+        errors += [f"{label}: {line}" for line in found]
+        if found:
+            continue
+        manifests.append(data)
+        if data["name"] != file.parent.name:
+            errors.append(f"{label}: name: '{data['name']}' must equal the folder name '{file.parent.name}'")
+        for key in ("paths", "tests"):
+            errors += [f"{label}: {key}: '{item}' does not exist" for item in data[key] if not (root / item).exists()]
+        for item in data["paths"]:
+            errors += [f"{label}: paths: '{item}' overlaps '{other}' of module '{owner}' ({other_label})"
+                       for other, owner, other_label in claimed if owner != data["name"] and _overlaps(item, other)]
+        claimed += [(item, data["name"], label) for item in data["paths"]]
+    names: set[str] = set()
+    for data in manifests:
+        if data["name"] in names:
+            errors.append(f"module name '{data['name']}' is used twice")
+        names.add(data["name"])
+    for data in manifests:
+        errors += [f"module '{data['name']}': requires: unknown module '{dep}'"
+                   for dep in data.get("requires", []) if dep not in names]
+    return manifests, errors
+
+
+def load_modules(root: Path = ROOT) -> list[dict]:
+    manifests, errors = validate_manifests(root)
+    if errors:
+        raise ManifestError("\n".join(errors))
+    return manifests
+
+
+def modules_section(root: Path = ROOT) -> list[dict]:
+    keep = ("name", "kind", "what", "when", "entry", "paths")
+    return [{key: m[key] for key in keep} for m in sorted(load_modules(root), key=lambda m: (m["kind"], m["name"]))]
 
 
 def build() -> dict:
@@ -106,12 +174,18 @@ def build() -> dict:
         "skills": skills,
         "agents": agents,
         "tools": tools,
+        "modules": modules_section(),
     }
 
 
-def main(argv: list[str]) -> int:
-    text = json.dumps(build(), indent=2, ensure_ascii=False) + "\n"
-    if "--check" in argv:
+def run_index(check: bool) -> int:
+    """Write INDEX.json, or with `check` only compare it; 1 when stale or a manifest is broken."""
+    try:
+        text = json.dumps(build(), indent=2, ensure_ascii=False) + "\n"
+    except ManifestError as exc:
+        print(f"Module manifests are invalid:\n{exc}")
+        return 1
+    if check:
         current = INDEX.read_text(encoding="utf-8") if INDEX.exists() else ""
         if current != text:
             print("INDEX.json is stale: run python tools/build_index.py")
@@ -121,6 +195,10 @@ def main(argv: list[str]) -> int:
     INDEX.write_text(text, encoding="utf-8", newline="\n")
     print(f"Wrote {rel(INDEX)}")
     return 0
+
+
+def main(argv: list[str]) -> int:
+    return run_index("--check" in argv)
 
 
 if __name__ == "__main__":

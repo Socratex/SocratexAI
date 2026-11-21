@@ -1,0 +1,44 @@
+{
+  "schema": "socratex-module/v1",
+  "name": "scripts",
+  "kind": "tools",
+  "what": "Maintenance scripts and the sox command line: install, backup, update, leak check, index, config resolver, state helper, reference packs",
+  "when": "Installing or updating the core, before changing agent config (backup), before a push (leaks), after editing docs or manifests (index)",
+  "entry": [
+    "python tools/install.py --check",
+    "python tools/backup.py",
+    "python tools/update.py all",
+    "python tools/check_leaks.py",
+    "python tools/build_index.py --check",
+    "python tools/json_read.py <file> [<path>]",
+    "python tools/subrepos.py list",
+    "core/sox config show",
+    "core/sox index",
+    "core/sox modules"
+  ],
+  "paths": [
+    "tools/install.py",
+    "tools/backup.py",
+    "tools/update.py",
+    "tools/check_leaks.py",
+    "tools/build_index.py",
+    "tools/json_read.py",
+    "tools/subrepos.py",
+    "tools/state.py",
+    "subrepos.json",
+    "core/sox",
+    "core/sox.cmd",
+    "core/core.py",
+    "core/config.schema.json",
+    "core/module.schema.json",
+    "defaults/config.json"
+  ],
+  "tests": [
+    "tests/test_core.py",
+    "tests/test_modules.py",
+    "tools/tests/test_install_prefs.py",
+    "tools/tests/test_install_tools.py",
+    "tools/tests/test_state.py",
+    "tools/tests/test_subrepos.py"
+  ]
+}

@@ -135,6 +135,10 @@
       "what": "socratex-directives/v1"
     },
     {
+      "path": "core/module.schema.json",
+      "what": "Schema of one module manifest (modules/<group>/<name>/module.json), id socratex-module/v1"
+    },
+    {
       "path": "core/RISK-RULES.json",
       "what": "socratex-risk-rules/v1"
     },
@@ -330,15 +334,140 @@
     },
     {
       "path": "core/sox",
-      "what": "sox: the SocratexAI command line (config show/resolve for now; more subcommands register in COMMANDS)."
+      "what": "sox: the SocratexAI command line (config, index, modules; more subcommands register in COMMANDS)."
     },
     {
       "path": "tests/test_core.py",
       "what": "Tests for core/core.py (config resolver) and core/sox (CLI)."
     },
     {
+      "path": "tests/test_modules.py",
+      "what": "Tests for module manifests (modules/**/module.json), their schema and the index generated from them."
+    },
+    {
       "path": "claude/hooks/guard.py",
       "what": "Claude Code PreToolUse hook: deterministic guard for rules that have zero exceptions."
+    }
+  ],
+  "modules": [
+    {
+      "name": "engine",
+      "kind": "engine",
+      "what": "Shared pipeline engine: chunks changed files, runs registry checkers, merges findings into one schema-validated file",
+      "when": "Never directly: the review and planning stages call it",
+      "entry": [],
+      "paths": [
+        "tools/pipeline"
+      ]
+    },
+    {
+      "name": "gpt",
+      "kind": "gpt",
+      "what": "ChatGPT conversation tools: extract a public share page and search local conversation exports",
+      "when": "When the owner pastes a chatgpt.com/share link or asks to search an exported ChatGPT archive",
+      "entry": [
+        "python tools/gpt/gpt_shared_conversation_extract.py --help",
+        "python tools/gpt/gpt_conversation_archive.py list --source <conversations.json>"
+      ],
+      "paths": [
+        "tools/gpt",
+        "skills/gpt-share-read"
+      ]
+    },
+    {
+      "name": "memory",
+      "kind": "memory",
+      "what": "Learning memory: skill learnings log and the ledger of named AI improvements with machine checks",
+      "when": "When the owner corrects a skill, and when checking which ledger improvements fail on this machine",
+      "entry": [
+        "python tools/skill_learn.py add --skill <skill> --kind correction --note \"<note>\"",
+        "python tools/skill_learn.py status",
+        "python tools/improvements_check.py"
+      ],
+      "paths": [
+        "tools/skill_learn.py",
+        "tools/improvements_check.py",
+        "docs/IMPROVEMENTS.json"
+      ]
+    },
+    {
+      "name": "routing",
+      "kind": "routing",
+      "what": "Model routing: tier table, risk scoring of a diff, outcome log and routing proposals, tier agents",
+      "when": "Before delegating (risk score), after each commit (log) and when tuning the rules (stats)",
+      "entry": [
+        "python tools/risk_score.py --commit HEAD",
+        "python tools/routing_log.py --type implementation --tier standard --agent implementer --effort medium --first-pass yes --fixes 0 --escalated no --commit HEAD",
+        "python tools/routing_stats.py"
+      ],
+      "paths": [
+        "tools/risk_score.py",
+        "tools/routing_log.py",
+        "tools/routing_stats.py",
+        "core/ROUTING.json",
+        "core/RISK-RULES.json",
+        "claude/agents",
+        "docs/ROUTER-LOOP.md"
+      ]
+    },
+    {
+      "name": "planning",
+      "kind": "stage",
+      "what": "Planning pipeline: research of unknowns and a consistency check of owner answers against the plan",
+      "when": "After the owner answered the question form and a plan exists, before implementation starts",
+      "entry": [
+        "python tools/planning/run.py --answers answers.md --plan plan.md"
+      ],
+      "paths": [
+        "tools/planning"
+      ]
+    },
+    {
+      "name": "review",
+      "kind": "stage",
+      "what": "Review pipeline: micro-checkers for comments, leaks, quality and test necessity, merged into one short report",
+      "when": "After a change is done and before the commit, to catch defects with cheap deterministic checks first",
+      "entry": [
+        "python tools/review/run.py --files <file> [<file>...]"
+      ],
+      "paths": [
+        "tools/review"
+      ]
+    },
+    {
+      "name": "scripts",
+      "kind": "tools",
+      "what": "Maintenance scripts and the sox command line: install, backup, update, leak check, index, config resolver, state helper, reference packs",
+      "when": "Installing or updating the core, before changing agent config (backup), before a push (leaks), after editing docs or manifests (index)",
+      "entry": [
+        "python tools/install.py --check",
+        "python tools/backup.py",
+        "python tools/update.py all",
+        "python tools/check_leaks.py",
+        "python tools/build_index.py --check",
+        "python tools/json_read.py <file> [<path>]",
+        "python tools/subrepos.py list",
+        "core/sox config show",
+        "core/sox index",
+        "core/sox modules"
+      ],
+      "paths": [
+        "tools/install.py",
+        "tools/backup.py",
+        "tools/update.py",
+        "tools/check_leaks.py",
+        "tools/build_index.py",
+        "tools/json_read.py",
+        "tools/subrepos.py",
+        "tools/state.py",
+        "subrepos.json",
+        "core/sox",
+        "core/sox.cmd",
+        "core/core.py",
+        "core/config.schema.json",
+        "core/module.schema.json",
+        "defaults/config.json"
+      ]
     }
   ]
 }

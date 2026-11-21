@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""sox: the SocratexAI command line (config show/resolve for now; more subcommands register in COMMANDS)."""
+"""sox: the SocratexAI command line (config, index, modules; more subcommands register in COMMANDS)."""
 
 from __future__ import annotations
 
@@ -11,6 +11,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import core  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+
+import build_index  # noqa: E402
 
 DIM = "\033[2m"
 RESET = "\033[0m"
@@ -46,6 +50,26 @@ def cmd_config_resolve(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_index(args: argparse.Namespace) -> int:
+    return build_index.run_index(args.check)
+
+
+def cmd_modules(args: argparse.Namespace) -> int:
+    try:
+        modules = build_index.load_modules()
+    except build_index.ManifestError as exc:
+        print(f"error: module manifests are invalid:\n{exc}", file=sys.stderr)
+        return 2
+    for kind in sorted({m["kind"] for m in modules}):
+        print(kind)
+        for m in sorted((m for m in modules if m["kind"] == kind), key=lambda m: m["name"]):
+            print(f"  {m['name']}: {m['what']}")
+            print(f"    when: {m['when']}")
+            for command in m["entry"]:
+                print(f"    run:  {command}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="sox", description=__doc__)
     top = parser.add_subparsers(dest="command", required=True)
@@ -56,11 +80,16 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("--json", action="store_true")
     resolve = sub.add_parser("resolve", help="write state/effective.json")
     resolve.add_argument("--project")
+    index = top.add_parser("index", help="regenerate INDEX.json from files and module manifests")
+    index.add_argument("--check", action="store_true", help="exit 1 when INDEX.json is stale")
+    top.add_parser("modules", help="list modules by kind: what, when to run, entry commands")
+    parser.set_defaults(action=None)
     return parser
 
 
 # (command, action) -> handler; add new subcommands here.
-COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_config_resolve}
+COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_config_resolve,
+            ("index", None): cmd_index, ("modules", None): cmd_modules}
 
 
 def main(argv: list[str] | None = None) -> int:

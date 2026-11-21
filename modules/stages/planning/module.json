@@ -1,0 +1,11 @@
+{
+  "schema": "socratex-module/v1",
+  "name": "planning",
+  "kind": "stage",
+  "what": "Planning pipeline: research of unknowns and a consistency check of owner answers against the plan",
+  "when": "After the owner answered the question form and a plan exists, before implementation starts",
+  "entry": ["python tools/planning/run.py --answers answers.md --plan plan.md"],
+  "paths": ["tools/planning"],
+  "tests": ["tools/planning/tests"],
+  "requires": ["engine"]
+}

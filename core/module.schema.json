@@ -1,0 +1,17 @@
+{
+  "purpose": "Schema of one module manifest (modules/<group>/<name>/module.json), id socratex-module/v1",
+  "type": "object",
+  "required": ["schema", "name", "kind", "what", "when", "entry", "paths", "tests"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"type": "string", "enum": ["socratex-module/v1"]},
+    "name": {"type": "string"},
+    "kind": {"type": "string", "enum": ["stage", "routing", "memory", "tools", "engine", "gpt"]},
+    "what": {"type": "string"},
+    "when": {"type": "string"},
+    "entry": {"type": "array", "items": {"type": "string"}},
+    "paths": {"type": "array", "items": {"type": "string"}},
+    "tests": {"type": "array", "items": {"type": "string"}},
+    "requires": {"type": "array", "items": {"type": "string"}}
+  }
+}

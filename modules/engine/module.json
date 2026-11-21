@@ -1,0 +1,10 @@
+{
+  "schema": "socratex-module/v1",
+  "name": "engine",
+  "kind": "engine",
+  "what": "Shared pipeline engine: chunks changed files, runs registry checkers, merges findings into one schema-validated file",
+  "when": "Never directly: the review and planning stages call it",
+  "entry": [],
+  "paths": ["tools/pipeline"],
+  "tests": ["tools/review/tests/test_merge_report.py", "tools/review/tests/test_registry.py"]
+}
