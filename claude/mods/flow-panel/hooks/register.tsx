@@ -41,6 +41,7 @@ const KIND = {
   session: { fill: '#26c6da', light: '#7ee3ef', text: '#102027' }, // cyan, like a sub-agent
   app: { fill: '#e8803a', light: '#f4a76b', text: '#1b1b1b' }, // orange: the desktop app's own tools (ccd_*)
   side: { fill: '#ec4899', light: '#f59ac4', text: '#ffffff' }, // pink: a side fork a command started (/btw, /subtask)
+  task: { fill: '#1e3a8a', light: '#4f6fc4', text: '#ffffff' }, // dark blue: a background command or monitor (/tasks)
 }
 const STATE = {
   waiting: '#ff9800', // waiting for the user
@@ -777,7 +778,7 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
     return {
       label: esc(nd.label.length > LABEL_CHARS ? `${nd.label.slice(0, LABEL_CHARS - 1)}…` : nd.label),
       full: nd.label.length > LABEL_CHARS ? esc(nd.label) : undefined,
-      kind: nd.kind as Kind,
+      kind: (nd.taskId ? 'task' : nd.kind) as Kind,
       w: 96,
       ring,
       usd,
