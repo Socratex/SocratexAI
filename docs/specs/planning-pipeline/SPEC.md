@@ -14,7 +14,7 @@ updated: 2026-11-21
 
 ## 🚫 Poza zakresem
 - Tabela edytowalna (plik MD lub artefakt HTML). Właściciel odrzucił: formularz `AskUserQuestion` wystarcza, więc nie ma pliku tabeli dla człowieka.
-- Implementacja runnera i wspólnego kodu (`tools/pipeline/`); robi to sesja budująca review.
+- Zmiany wspólnego silnika (`tools/pipeline/`): istnieje od commita pipeline'u review; planowanie tylko go używa, a rozszerza go wyłącznie w razie realnej potrzeby (z testami review bez zmian).
 - Pipeline review (osobny spec).
 - Automatyczna zmiana planu bez akceptacji właściciela.
 
@@ -22,7 +22,7 @@ updated: 2026-11-21
 1. Etap 1, pytania: formularz `AskUserQuestion`, do 4 pytań na rundę, rekomendacja pierwsza (zgodnie ze skillem `spec`). Powód: właściciel uznał formularze za dobre, tabela nie wnosi nic ponad nie.
 2. Etap 2, research: opcjonalny, uruchamiany tylko gdy niewiadoma da się rozstrzygnąć faktami. Wykonawcę wybiera router według `core/ROUTING.json` i może to różnić się per projekt. Domyślnie: internet i podsumowania do Codexa, szukanie w repo do `scout`. Przykład: Riftbound, Codex dla internetu, scout dla repo.
 3. Etap 3, sprawdzenie: osobny agent w osobnym kontekście czyta odpowiedzi właściciela i plan, wypisuje niezgodności z intencją i sugestie. Tylko raport, bez zmian planu. Powód: ryzyko cichej zmiany intencji.
-4. Rejestry: osobny plik na pipeline. Review: `tools/review/checkers.json` (istnieje). Planowanie: `tools/planning/checkers.json`. Wspólny schemat `socratex-checker-registry/v1` i wspólny runner; kod współdzielony w `tools/pipeline/` (buduje sesja `local_b63339be-95e0-449b-98be-d5983958eaa5`).
+4. Rejestry: osobny plik na pipeline. Review: `tools/review/checkers.json` (istnieje). Planowanie: `tools/planning/checkers.json`. Wspólny schemat `socratex-checker-registry/v1` i wspólny runner; kod współdzielony w `tools/pipeline/` (gotowy, zbudowany z pipeline'em review).
 5. Pola wpisu rejestru takie jak w review: `id`, `pipeline` (`planning`), `stage`, `concern`, `scope`, `max_chunk_lines`, `select`, `tool`, `tier`, `autofix` (`none` | `agent` | `script`), `fix_script`, `enabled`. Skrypt (`tool`, `select`) znajduje kandydatów, model ocenia tylko ich. Etapy planowania mają `autofix: none`.
 6. Mikro-agenci tylko zgłaszają. Plan zmienia wyłącznie główna sesja po akceptacji właściciela.
 7. Pliki pośrednie (findings, szkice, notatki z researchu) leżą poza repo: `<tempdir>/socratex-pipeline/planning/<run-id>/`. Runner tworzy ten katalog i go sprząta. Jedyny plik trwały to wynik dla człowieka (plan / SPEC.md).
@@ -59,7 +59,8 @@ updated: 2026-11-21
 - Przegląd w osobnym kontekście (`reviewer`) względem tego SPEC.md: czy każde kryterium i przypadek brzegowy ma test.
 
 ## 🧪 Ryzyka i założenia
-- Założenie: schemat `socratex-checker-registry/v1` i `tools/pipeline/` powstają w buildzie review; planowanie czeka na nie z implementacją.
+- Założenie: schemat `socratex-checker-registry/v1` i `tools/pipeline/` już istnieją (build review); planowanie na nich buduje.
+- Założenie: etap 1 to zwykły formularz prowadzony przez główną sesję, bez kodu w pipeline; kod obejmuje etapy 2 i 3 oraz skrypty wyboru wycinków.
 - Ryzyko: etap 3 mylnie zgłasza niezgodności (fałszywe alarmy); łagodzi to raport bez automatycznych zmian.
 - Ryzyko: za dużo etapów dla małych zadań; zadania poniżej godziny pomijają pipeline (jak w skillu `spec`).
 - Założenie: Codex bywa niedostępny, dlatego zawsze jest zapasowy wykonawca research.
