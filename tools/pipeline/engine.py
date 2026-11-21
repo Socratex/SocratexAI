@@ -118,7 +118,9 @@ def prune_stale(pipeline_dir: Path, days: int = STALE_RUN_DAYS) -> None:
 
 class Review:
     def __init__(self, project_dir: Path, run_id: str, registry: dict, *, run_dir: Path | None, model, implementer,
-                 gate, tool_available) -> None:
+                 gate, tool_available, stage: str | None = None, prompt: str = PROMPT) -> None:
+        self.stage = stage
+        self.prompt = prompt
         self.project_dir = project_dir
         self.run_id = run_id
         self.registry = registry
@@ -255,7 +257,7 @@ class Review:
         code = "\n".join(f"{n}: {text}" for n, text in enumerate(lines, row["line_start"]))
         request = {"checker": checker["id"], "tier": tier, "alias": common.tier_alias(tier, self.registry["aliases"]),
                    "file": row["file"], "line_start": row["line_start"], "line_end": row["line_end"],
-                   "prompt": PROMPT.format(checker=checker["id"], concern=checker["concern"], start=row["line_start"],
+                   "prompt": self.prompt.format(checker=checker["id"], concern=checker["concern"], start=row["line_start"],
                                            end=row["line_end"], hint=row.get("message", ""), code=code)}
         for attempt in (1, 2):
             cost["model_calls"] += 1
@@ -294,7 +296,8 @@ class Review:
                 json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
     def check_phase(self, files: list[str], dry_run: bool) -> list[dict]:
-        enabled = [c for c in self.registry["checkers"] if c["enabled"] and (not self.only_script or c["tier"] == "script")]
+        enabled = [c for c in self.registry["checkers"] if c["enabled"] and (not self.only_script or c["tier"] == "script")
+                   and (self.stage is None or c.get("stage") == self.stage)]
 
         def work(checker: dict) -> dict:
             result = self.run_checker(checker, files, dry_run)
@@ -497,8 +500,11 @@ def summarize(run_id: str, files: list[str], changed: int, doc: dict, results: l
 def run_pipeline(registry_path, project_dir, files, *, run_id: str | None = None, dry_run: bool = False,
                  min_changed_lines: int | None = None, fix: bool = True, keep: bool = False,
                  work_base: Path | str | None = None, model=None, implementer=None, gate=None, tool_available=None,
-                 out=print, err=None) -> dict:
+                 out=print, err=None, stage: str | None = None, prompt: str | None = None) -> dict:
     """Run one pipeline over `files`; returns {exit_code, run_dir, plan?, doc?, summary?}.
+
+    Optional `stage` runs only the registry entries with that stage; optional `prompt` replaces the model prompt
+    template (format fields: checker, concern, start, end, hint, code).
 
     Raises common.RegistryError on a bad registry. The run folder is removed at the end unless keep=True.
     """
@@ -517,7 +523,8 @@ def run_pipeline(registry_path, project_dir, files, *, run_id: str | None = None
         run_dir.mkdir(parents=True, exist_ok=True)
     review = Review(project_dir, run_id, registry, run_dir=run_dir, model=model or default_model,
                     implementer=implementer or default_implementer, gate=gate or make_gate(registry["gates"]),
-                    tool_available=tool_available or (lambda name: shutil.which(name) is not None))
+                    tool_available=tool_available or (lambda name: shutil.which(name) is not None), stage=stage,
+                    prompt=prompt or PROMPT)
     if run_dir is not None:
         review.summary_dir = summary_dir
     err = err or (lambda text: print(text, file=sys.stderr))

@@ -1,0 +1,39 @@
+{
+    "schema": "socratex-checker-registry/v1",
+    "pipeline": "planning",
+    "purpose": "Registry of planning micro-checkers. Stage 1 (questions) is the normal AskUserQuestion form led by the main session and has no entry here. A project may add, disable or retier entries in .ai/planning.json. Spec: docs/specs/planning-pipeline/SPEC.md",
+    "min_changed_lines": 0,
+    "default_max_chunk_lines": 400,
+    "implementer_tier": "standard",
+    "skip_patterns": [],
+    "checkers": [
+        {
+            "pipeline": "planning",
+            "id": "research",
+            "stage": "research",
+            "concern": "Find unknowns that facts can settle, decide whether research is needed and record the executor and the reason.",
+            "scope": "file",
+            "max_chunk_lines": 400,
+            "select": "{python} {here}/select_research.py",
+            "tool": "none",
+            "tier": "script",
+            "autofix": "none",
+            "fix_script": null,
+            "enabled": true
+        },
+        {
+            "pipeline": "planning",
+            "id": "interpretation-check",
+            "stage": "check",
+            "concern": "Does the plan match the owner's answers: report mismatches with the intent, research that contradicts an answer, and suggestions. Report only, never rewrite the plan.",
+            "scope": "file",
+            "max_chunk_lines": 400,
+            "select": "{python} {here}/select_check.py",
+            "tool": "none",
+            "tier": "cheap",
+            "autofix": "none",
+            "fix_script": null,
+            "enabled": true
+        }
+    ]
+}
