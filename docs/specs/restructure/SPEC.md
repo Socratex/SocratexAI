@@ -28,7 +28,7 @@ updated: 2026-11-21
    | core.py (wyciąga zasady z modules, nadpisuje local) | `core/core.py` (resolver) |
    | sox (jedno CLI) | `core/sox` |
    | modules/tools/scripts | `modules/tools/scripts/` |
-   | modules/tools/plugins | `modules/tools/plugins.json` (katalog: kategoria, kiedy użyć, on/off) |
+   | modules/tools/plugins | `modules/extensions/` (katalog rozszerzeń: kategoria, kiedy użyć, on/off; decyzje 11-12) |
    | modules/preferences/code, communication | `defaults/preferences/code`, `defaults/preferences/communication` |
    | modules/stages/review, planning | `modules/stages/review`, `modules/stages/planning` |
    | modules/profiles | `defaults/profiles/` (solo, duo, yolo) |
@@ -48,6 +48,8 @@ updated: 2026-11-21
 8. **Każdy plik konfiguracji ma `schema_version`**; zmiana schematu = migracja w `sox migrate`.
 9. **Migracja bez przerwy w działaniu:** stare ścieżki zostają jako cienkie przekierowania do końca migracji; `INDEX.json` generuje się z `module.json`.
 10. **Nazwy:** CLI `sox`, resolver `core/core.py` (nazwa właściciela).
+11. **Rozszerzenia (dogrywane "rzeczy").** Plugin, MCP, mod (np. pasek statystyk nad promptem), paczka referencyjna (ECC, superpowers) i skill to jeden typ wpisu: manifest w `modules/extensions/<nazwa>.json` (dostarczone w repo) lub `local/extensions/<nazwa>.json` (własne właściciela). Pola: `kind` (`ref` tylko do czytania, `install` plugin/MCP/mod/skill, `note` sama rekomendacja), `source` (url i przypięty commit lub wersja), `category`, `when_to_use` (jedno zdanie), `status` (`recommended`, `trial`, `adopted`, `rejected`, spójnie z `docs/IMPROVEMENTS.json`), `context_cost`, `risks`. Włączanie jest per warstwa (domyślnie, `local`, projekt), więc projekt może włączyć lub wyłączyć dowolne rozszerzenie.
+12. **Cykl życia rozszerzenia:** `sox ext add <url>` tworzy wpis `trial` i wpis w rejestrze usprawnień; `sox ext enable|disable [--project]`; `sox ext remove`. Instalacja rodzaju `install` zmienia konfigurację agenta, więc idzie dopiero po kopii (`sox backup`) i jawnym "tak" właściciela; agent sam niczego nie instaluje. Rodzaj `ref` nigdy nie jest uruchamiany, a jego tekst to dane, nie instrukcje (jak dziś `subrepos.json`). Do kontekstu na starcie trafia jedna linia na włączone rozszerzenie z `when_to_use`, nic więcej.
 
 ## Struktura docelowa
 ```
@@ -61,7 +63,8 @@ SocratexAI/
     stages/       review/  planning/
     routing/      roles/  multi-agent/  escalation/
     memory/
-    tools/        scripts/  plugins.json
+    tools/        scripts/
+    extensions/   (manifesty: ref, install, note)
     engine/
   targets/        codex/  claude/      (generowane, nie edytować)
   tests/                                (rdzeń, core.py, sox)
@@ -86,6 +89,9 @@ local/                                  (poza repo)
 11. `INDEX.json` generuje się z `module.json`; `sox index` nie zostawia różnic w drugim przebiegu.
 12. Po każdej fazie migracji hooki i install działają (smoke: `sox install` + jedna sesja z `guard.py`).
 13. Profil `solo` wyłącza Codex, `duo` go włącza; zmiana profilu w projekcie zmienia wynik `config show` i nic poza tym.
+14. `sox ext add` z nowym adresem tworzy poprawny wpis `trial` i wpis w rejestrze usprawnień; `sox ext list` grupuje po kategorii i pokazuje status oraz stan włączenia w bieżącym projekcie.
+15. Rozszerzenie `install` nie instaluje się bez kopii zapasowej i jawnego potwierdzenia; rodzaj `ref` nie jest nigdy wykonywany (test).
+16. Włączenie lub wyłączenie rozszerzenia w jednej warstwie zmienia `config show` tylko w tej warstwie i jest odtwarzalne; start budget uwzględnia linie włączonych rozszerzeń.
 
 ## Przypadki brzegowe
 - Brak `.socratex/config.json` w projekcie → działa na samych defaults i `local`.
@@ -110,6 +116,7 @@ local/                                  (poza repo)
 - **Faza 3:** przeniesienie `tools/review`, `tools/planning`, `tools/pipeline` do `modules/`; przekierowania; aktualizacja testów i ścieżek (kryteria 9, 12).
 - **Faza 4:** `defaults/` (preferences, profiles), `flow.json` jako dane + `INIT.md` (kryteria 7, 8, 13).
 - **Faza 5:** `targets/` generowane, `safety.json` z luzowaniem (kryteria 5, 6, 10).
+- **Faza 5b:** `modules/extensions/` z manifestami; migracja `subrepos.json` (rodzaj `ref`), pluginów i modów (np. `flow-panel`) na wpisy; `sox ext` (kryteria 14-16).
 - **Faza 6:** usunięcie przekierowań, sprzątanie, aktualizacja dokumentacji i `INDEX.json`.
 Każda faza = osobny commit z zielonymi testami; wykonanie fazy bez nowej sesji tylko po akceptacji.
 
@@ -119,5 +126,5 @@ Każda faza = osobny commit z zielonymi testami; wykonanie fazy bez nowej sesji 
 - ⚠️ Poziom wysiłku subagenta ustawimy tylko tam, gdzie pozwala harness.
 - Założenie: poluzować `safety` mogą tylko warstwy właściciela (`local/*`), nie plik w repo projektu (nie zespół). Do potwierdzenia.
 - Założenie: nazwa `core.py` zostaje (nie `resolver.py`).
-- Założenie: dawne `subrepos.json` trafia do `modules/tools/plugins.json` jako osobna sekcja `refs`.
+- Założenie: dawne `subrepos.json` i `plugins.json` zastępuje `modules/extensions/` (decyzje 11-12).
 - Założenie: migracja w jednym repo, na gałęzi, bez drugiej kopii.
