@@ -39,6 +39,7 @@ def test_no_changes_exits_zero_without_model_call(repo, run_kwargs):
     assert result["exit_code"] == 0 and model.calls == []
     events = repo.log_events("r1")
     assert len(kinds(events, "empty_diff")) == 1
+    assert len(events) == 1  # an empty run is exactly one log line
 
 
 def test_trivial_change_below_threshold_is_skipped(repo, run_kwargs):
@@ -118,7 +119,7 @@ def test_binary_and_generated_files_are_skipped(repo, run_kwargs):
     model = FakeModel()
     result = go(repo, files=["logo.png", "bundle.min.js", "blob.dat"], model=model, **run_kwargs)
     assert result["exit_code"] == 0 and model.calls == []
-    skipped = kinds(repo.log_events("r1"), "skipped_file")
+    skipped = kinds(repo.log_events("r1"), "empty_diff")[0]["skipped"]
     assert {e["file"] for e in skipped} == {"logo.png", "bundle.min.js", "blob.dat"}
     assert all(e["reason"] for e in skipped)
 
@@ -346,7 +347,7 @@ def test_cli_dry_run_and_empty_diff(repo, capsys):
 def test_files_outside_project_are_rejected(repo, tmp_path, run_kwargs):
     result = go(repo, files=[str(tmp_path / "elsewhere.py")], model=FakeModel(), **run_kwargs)
     assert result["exit_code"] == 0
-    assert kinds(repo.log_events("r1"), "skipped_file")[0]["reason"].startswith("outside")
+    assert kinds(repo.log_events("r1"), "empty_diff")[0]["skipped"][0]["reason"].startswith("outside")
 
 
 def test_default_helpers_exist():

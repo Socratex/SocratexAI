@@ -143,6 +143,13 @@ class RunLog:
         self.events: list[dict] = []
         self._lock = threading.Lock()
 
+    def reset(self) -> None:
+        """Drop everything logged so far (used to collapse an empty run into one line)."""
+        with self._lock:
+            self.events.clear()
+            if self.path is not None:
+                self.path.write_text("", encoding="utf-8")
+
     def event(self, name: str, **fields) -> dict:
         row = {"event": name, "ts": datetime.now().isoformat(timespec="milliseconds"), "t": time.time(), **fields}
         with self._lock:

@@ -536,7 +536,10 @@ def execute(review: Review, files: list[str], run_id: str, run_dir: Path | None,
     changed = review.collect_changes(files)
     finish = {"exit_code": 0}
     if not review.changes:
-        review.log.event("empty_diff", reason="no changed files to review")
+        skipped = [{"file": e["file"], "reason": e["reason"]} for e in review.log.events if e["event"] == "skipped_file"]
+        review.log.reset()
+        review.log.event("empty_diff", run_id=run_id, files=len(files), skipped=skipped,
+                         reason="no changed files to review")
         out("No changes to review.")
         return finish
     if changed < threshold:
