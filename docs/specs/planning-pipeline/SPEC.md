@@ -20,7 +20,7 @@ updated: 2026-11-21
 
 ## 🧱 Decyzje
 1. Etap 1, pytania: formularz `AskUserQuestion`, do 4 pytań na rundę, rekomendacja pierwsza (zgodnie ze skillem `spec`). Powód: właściciel uznał formularze za dobre, tabela nie wnosi nic ponad nie.
-2. Etap 2, research: opcjonalny, uruchamiany tylko gdy niewiadoma da się rozstrzygnąć faktami. Wykonawcę wybiera router według `core/ROUTING.json` i może to różnić się per projekt. Domyślnie: internet i podsumowania do Codexa, szukanie w repo do `scout`. Przykład: Riftbound, Codex dla internetu, scout dla repo.
+2. Etap 2, research: opcjonalny, uruchamiany tylko gdy niewiadoma da się rozstrzygnąć faktami. Wykonawcę wybiera router według `core/ROUTING.json` i może to różnić się per projekt. Domyślnie: internet i podsumowania do Codexa, szukanie w repo do `scout`. Przykład: Codex dla internetu, scout dla repo.
 3. Etap 3, sprawdzenie: osobny agent w osobnym kontekście czyta odpowiedzi właściciela i plan, wypisuje niezgodności z intencją i sugestie. Tylko raport, bez zmian planu. Powód: ryzyko cichej zmiany intencji.
 4. Rejestry: osobny plik na pipeline. Review: `tools/review/checkers.json` (istnieje). Planowanie: `tools/planning/checkers.json`. Wspólny schemat `socratex-checker-registry/v1` i wspólny runner; kod współdzielony w `tools/pipeline/` (gotowy, zbudowany z pipeline'em review).
 5. Pola wpisu rejestru takie jak w review: `id`, `pipeline` (`planning`), `stage`, `concern`, `scope`, `max_chunk_lines`, `select`, `tool`, `tier`, `autofix` (`none` | `agent` | `script`), `fix_script`, `enabled`. Skrypt (`tool`, `select`) znajduje kandydatów, model ocenia tylko ich. Etapy planowania mają `autofix: none`.
