@@ -77,6 +77,10 @@
       "what": "Comparison of our AI core with pstack (poteto) and Everything Claude Code (ECC); what to borrow, what not to install."
     },
     {
+      "path": "docs/specs/planning-pipeline/SPEC.md",
+      "what": "Spec of the planning pipeline: form, optional research, interpretation check as cheap scripted micro-agents on a registry shared with review."
+    },
+    {
       "path": "docs/ROUTER-LOOP.md",
       "what": "Risk-based verification levels (LIGHT/STANDARD/FULL) and a learning loop that tunes model routing from logged task outcomes."
     },
