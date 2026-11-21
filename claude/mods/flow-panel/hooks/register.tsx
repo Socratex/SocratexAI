@@ -46,7 +46,7 @@ const KIND = {
 const STATE = {
   waiting: '#ff9800', // waiting for the user
   error: '#e53935',
-  background: '#43a047', // background work
+  background: '#9e9e9e', // background work (grey)
 }
 
 type Kind = keyof typeof KIND
@@ -116,7 +116,7 @@ type Box = {
   ring?: keyof typeof STATE
   isActive?: boolean // working now: a lighter border of its own colour
   shade?: number // the session's colour shift (index into SHADES)
-  led?: boolean // a small blinking green status LED in the top-right corner (work with no usage data to show as dots)
+  led?: boolean // a small blinking grey status LED in the top-right corner (work with no usage data to show as dots)
 }
 
 const INITIAL: FlowView = {
@@ -1431,7 +1431,7 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
   })
 }
 
-// A background agent is over: its branch stops running (green ring off) and the
+// A background agent is over: its branch stops running (grey ring off) and the
 // time since its start is booked.
 async function endAgent($: EngineInterface, id: string): Promise<void> {
   const cur = liveAgents.get(id)
@@ -1565,7 +1565,7 @@ export const register: Register = on => {
     const usdNow = (await $.session.usage()).cost?.usd ?? 0
     await change($, v => ({
       ...v,
-      // Background agents and tasks that still work stay (their branch, running, green).
+      // Background agents and tasks that still work stay (their branch, running, grey).
       nodes: v.nodes.filter(n => n.running > 0 && ((!!n.taskId && liveTasks.has(n.taskId)) || [...liveAgents.values()].some(a => a.key === n.key))),
       agentNode: Object.fromEntries(Object.entries(v.agentNode).filter(([id]) => liveAgents.has(id))),
       head: v.head || head || undefined,

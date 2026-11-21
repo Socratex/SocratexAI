@@ -10,8 +10,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 from flow_js import run_module  # noqa: E402
 
 NOW = 1_000_000
-LED = '<circle cx="'  # the LED and the plain activity dot are both circles; the LED has the background-green fill
-GREEN = "#43a047"
+LED = '<circle cx="'  # the LED and the plain activity dot are both circles; the LED has the background-grey fill
+GREEN = "#9e9e9e"
 
 SETUP = f"""
 const NOW = {NOW}
@@ -38,7 +38,7 @@ class FlowDraw(unittest.TestCase):
         got = run(
             "const s = fitted(view([task]), NOW, 'cost');"
             f"console.log(JSON.stringify({{leds: count(s, 'fill=\"{GREEN}\" stroke=\"#000\"'), ellipses: count(s, '<ellipse'), motion: count(s, 'animateMotion'),"
-            " pulse: count(s, 'values=\"0.7;0.15;0.7\"'), glow: count(s, 'values=\"0.25;0.7;0.25\"'), ring: count(s, 'stroke=\"#43a047\"'),"
+            " pulse: count(s, 'values=\"0.7;0.15;0.7\"'), glow: count(s, 'values=\"0.25;0.7;0.25\"'), ring: count(s, 'stroke=\"#9e9e9e\"'),"
             " title: s.includes('<title>Run the dev server</title>'), label: s.includes('>Run the…<') || s.includes('>Run the…</text>')}))"
         )
         self.assertEqual(got["leds"], 1)
@@ -46,7 +46,7 @@ class FlowDraw(unittest.TestCase):
         self.assertEqual(got["motion"], 0)
         self.assertGreaterEqual(got["pulse"], 1)  # the line pulses
         self.assertGreaterEqual(got["glow"], 1)  # the block glows
-        self.assertGreaterEqual(got["ring"], 1)  # green ring
+        self.assertGreaterEqual(got["ring"], 1)  # grey ring
         self.assertTrue(got["title"])  # tooltip: the full task name
 
     def test_task_figure_is_time_only(self) -> None:
