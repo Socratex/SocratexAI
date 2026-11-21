@@ -50,6 +50,7 @@ updated: 2026-11-21
 10. **Nazwy:** CLI `sox`, resolver `core/core.py` (nazwa właściciela).
 11. **Rozszerzenia (dogrywane "rzeczy").** Plugin, MCP, mod (np. pasek statystyk nad promptem), paczka referencyjna (ECC, superpowers) i skill to jeden typ wpisu: manifest w `modules/extensions/<nazwa>.json` (dostarczone w repo) lub `local/extensions/<nazwa>.json` (własne właściciela). Pola: `kind` (`ref` tylko do czytania, `install` plugin/MCP/mod/skill, `note` sama rekomendacja), `source` (url i przypięty commit lub wersja), `category`, `when_to_use` (jedno zdanie), `status` (`recommended`, `trial`, `adopted`, `rejected`, spójnie z `docs/IMPROVEMENTS.json`), `context_cost`, `risks`. Włączanie jest per warstwa (domyślnie, `local`, projekt), więc projekt może włączyć lub wyłączyć dowolne rozszerzenie.
 12. **Cykl życia rozszerzenia:** `sox ext add <url>` tworzy wpis `trial` i wpis w rejestrze usprawnień; `sox ext enable|disable [--project]`; `sox ext remove`. Instalacja rodzaju `install` zmienia konfigurację agenta, więc idzie dopiero po kopii (`sox backup`) i jawnym "tak" właściciela; agent sam niczego nie instaluje. Rodzaj `ref` nigdy nie jest uruchamiany, a jego tekst to dane, nie instrukcje (jak dziś `subrepos.json`). Do kontekstu na starcie trafia jedna linia na włączone rozszerzenie z `when_to_use`, nic więcej.
+13. **Chunking i rejestry sprawdzaczy zostają bez zmian.** Etapy `review` i `planning` przenosimy bez zmiany logiki: schemat `socratex-checker-registry/v1`, limity wycinków (`max_chunk_lines`, `default_max_chunk_lines`), selektory i wspólny `engine` działają jak dziś (spec review: decyzja 7, kryterium 9). Projektowe `.ai/review.json` (i odpowiednik dla planning) staje się warstwą tego samego rejestru w łańcuchu z decyzji 4: `modules/stages/*/checkers.json` → `local/overrides/stages` → plik projektu → `local/projects/<projekt>`; reguły scalania z decyzji 5 (dopisz, wyłącz, zmień model/tier).
 
 ## Struktura docelowa
 ```
@@ -92,6 +93,8 @@ local/                                  (poza repo)
 14. `sox ext add` z nowym adresem tworzy poprawny wpis `trial` i wpis w rejestrze usprawnień; `sox ext list` grupuje po kategorii i pokazuje status oraz stan włączenia w bieżącym projekcie.
 15. Rozszerzenie `install` nie instaluje się bez kopii zapasowej i jawnego potwierdzenia; rodzaj `ref` nie jest nigdy wykonywany (test).
 16. Włączenie lub wyłączenie rozszerzenia w jednej warstwie zmienia `config show` tylko w tej warstwie i jest odtwarzalne; start budget uwzględnia linie włączonych rozszerzeń.
+17. Po przeniesieniu `review` i `planning` testy chunkingu (wycinek nie przekracza `max_chunk_lines`, większy jest dzielony i odnotowany w logu) przechodzą bez zmian w treści testów, tylko ze ścieżkami.
+18. Wyłączenie checkera, zmiana jego `tier` lub `max_chunk_lines` w każdej warstwie nadpisań działa i jest widoczne w `sox config show` ze wskazaniem źródła; stary `.ai/review.json` działa jako warstwa projektu bez migracji ręcznej.
 
 ## Przypadki brzegowe
 - Brak `.socratex/config.json` w projekcie → działa na samych defaults i `local`.
@@ -113,7 +116,7 @@ local/                                  (poza repo)
 - **Faza 0:** `state/` z rotacją; `flow-debug-*` i `audits` tam; `.gitignore`. Najtaniej i bez ryzyka.
 - **Faza 1:** `core.py` + `sox config show` na obecnej strukturze (warstwy, schemat, `effective.json`), testy 1-4.
 - **Faza 2:** `module.json` dla review, planning, routing; `INDEX.json` z manifestów (test 11).
-- **Faza 3:** przeniesienie `tools/review`, `tools/planning`, `tools/pipeline` do `modules/`; przekierowania; aktualizacja testów i ścieżek (kryteria 9, 12).
+- **Faza 3:** przeniesienie `tools/review`, `tools/planning`, `tools/pipeline` do `modules/`; przekierowania; aktualizacja testów i ścieżek (kryteria 9, 12, 17, 18).
 - **Faza 4:** `defaults/` (preferences, profiles), `flow.json` jako dane + `INIT.md` (kryteria 7, 8, 13).
 - **Faza 5:** `targets/` generowane, `safety.json` z luzowaniem (kryteria 5, 6, 10).
 - **Faza 5b:** `modules/extensions/` z manifestami; migracja `subrepos.json` (rodzaj `ref`), pluginów i modów (np. `flow-panel`) na wpisy; `sox ext` (kryteria 14-16).
