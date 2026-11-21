@@ -1472,7 +1472,8 @@ async function poll($: EngineInterface): Promise<void> {
 }
 
 // Debugging aid: the last lines of what redrew the pane and why, kept in
-// $SOCRATEX_HOME/local/flow-debug-<session>.log (outside the shared folder).
+// $SOCRATEX_HOME/state/flow-debug/<session>.log (outside git; the mod cannot delete files,
+// so old logs are rotated by `python tools/state.py rotate flow-debug`).
 let dbgLines: string[] = []
 
 async function dbg($: EngineInterface, msg: string): Promise<void> {
@@ -1481,7 +1482,7 @@ async function dbg($: EngineInterface, msg: string): Promise<void> {
   const dir = await folderOf($)
   if (!dir) return
   try {
-    await $.fs.write(`${dir.replace(/\/flow$/, '')}/flow-debug-${selfId.slice(0, 8)}.log`, dbgLines.join('\n'))
+    await $.fs.write(`${dir.replace(/\/local\/flow$/, '')}/state/flow-debug/${selfId.slice(0, 8)}.log`, dbgLines.join('\n'))
   } catch {
     // a debugging aid only
   }
