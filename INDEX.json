@@ -143,6 +143,30 @@
       "what": "Registry of review micro-checkers (one concern each). A project may add, disable or retier them in .ai/review.json. Spec: docs/specs/review-pipeline/SPEC.md"
     },
     {
+      "path": "tools/planning/checkers.json",
+      "what": "Registry of planning micro-checkers (research decision, interpretation check); same schema and engine as review. Spec: docs/specs/planning-pipeline/SPEC.md"
+    },
+    {
+      "path": "tools/planning/run.py",
+      "what": "Planning pipeline CLI: runs research then the interpretation check on the shared engine, prints a short UCE report; temp files live outside the repo."
+    },
+    {
+      "path": "tools/planning/select_research.py",
+      "what": "Select for the research stage: finds unknowns that facts can settle and picks the executor (Codex or scout) with a reason, no model."
+    },
+    {
+      "path": "tools/planning/select_check.py",
+      "what": "Select for the interpretation check: slices owner answers, plan and research notes only, never the conversation."
+    },
+    {
+      "path": "tools/planning/planning_report.py",
+      "what": "Renders planning findings as a short Polish UCE report."
+    },
+    {
+      "path": "tools/planning/stage_files.py",
+      "what": "Stages answers, plan and notes as inputs in the run folder for the engine."
+    },
+    {
       "path": "tools/pipeline/findings.schema.json",
       "what": "socratex-review-findings/v1"
     },
