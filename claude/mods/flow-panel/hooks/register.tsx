@@ -16,7 +16,7 @@ const STALE_MS = 3 * 60 * 1000 // an idle session file this old is dropped (the 
 const SYNC_MS = 3000 // how often the shared session files are looked at
 const ATTACH_WINDOW_MS = 120000 // a new session file this soon after start_session is its child
 const RADIUS = 10
-const MAX_NODES = 4
+const MAX_NODES = 12
 const ERROR_MS = 6000
 const LABEL_CHARS = 8
 const FLUSH_MS = 2000 // state writes are batched into one redraw per this long
@@ -115,6 +115,7 @@ type Box = {
   ring?: keyof typeof STATE
   isActive?: boolean // working now: a lighter border of its own colour
   shade?: number // the session's colour shift (index into SHADES)
+  led?: boolean // a small blinking green status LED in the top-right corner (work with no usage data to show as dots)
 }
 
 const INITIAL: FlowView = {
@@ -135,7 +136,7 @@ const INITIAL: FlowView = {
 // Change the shape tag when FlowView changes: it declines what an earlier
 // version stored, which outlives a reload.
 const view = atom({ plugin: 'flow-panel', key: 'view' } as const, INITIAL, {
-  shape: 'flow-8',
+  shape: 'flow-9',
 })
 
 // What the figure on every line shows. Kept apart from the view: it is a
@@ -314,6 +315,191 @@ const fmtMoney = (usd: number): string => {
 }
 // </tiers>
 
+// ------------------------------------------------------------- merged blocks
+// <merge>
+const esc = (s: string) => s.replace(/[<>&"]/g, '')
+
+// Claude -> a path: what it cost, as the engine's cost ledger prices it (see `fmtMoney`).
+const usdText = (usd: number | undefined): string => (usd === undefined ? '...' : fmtMoney(usd))
+
+// The text on a line for the chosen measure. A path with no usage data at all
+// (a background command) has no cost and no tokens, only time.
+const figureText = (
+  f: 'cost' | 'time' | 'tokens',
+  r: { usd: number | undefined; tok: number; ms: number; noUsage?: boolean },
+): string =>
+  r.noUsage && f !== 'time' ? '-' : f === 'tokens' ? fmtTokens(r.tok) : f === 'time' ? fmtTime(r.ms) : usdText(r.usd)
+
+// Leaf blocks (no children) that cost less than this merge into one block per
+// category when a category has two or more of them. The threshold is always by
+// cost, whatever the toggle shows, so blocks do not jump when the unit changes.
+const CHEAP_USD = 0.01
+const MERGE_LABELS: Record<string, string> = { tool: 'Tools', mcp: 'MCP', skill: 'Skills', app: 'Apps' }
+
+type MergeRow = {
+  label: string
+  full?: string
+  kind: string
+  ring?: string
+  usd: number | undefined
+  tok: number
+  ms: number
+  liveN: number
+  liveSum: number
+  text: string
+  isActive: boolean
+  tps?: number
+  tpsIn?: number
+  noUsage?: boolean
+  led?: boolean
+  calls?: number
+  kids: unknown[]
+}
+
+// A block with an unknown cost ('...') or no usage data (a task) is never merged.
+const isCheapLeaf = (r: MergeRow): boolean =>
+  r.kind in MERGE_LABELS && r.kids.length === 0 && !r.noUsage && r.usd !== undefined && r.usd < CHEAP_USD
+
+const mergedRow = <T extends MergeRow>(group: T[], unit: 'cost' | 'time' | 'tokens', nowMs: number): T => {
+  const sum = (pick: (r: T) => number): number => group.reduce((a, r) => a + pick(r), 0)
+  const live = (r: { ms: number; liveN: number; liveSum: number }): number =>
+    r.ms + (r.liveN > 0 ? liveElapsed(0, r.liveN, r.liveSum, nowMs) : 0)
+  const total = {
+    usd: sum(r => r.usd ?? 0),
+    tok: sum(r => r.tok),
+    ms: sum(r => r.ms),
+    liveN: sum(r => r.liveN),
+    liveSum: sum(r => r.liveSum),
+  }
+  // The tooltip: one member a line in the chosen unit; the same name twice counts calls.
+  const byName = new Map<string, { calls: number; usd: number; tok: number; ms: number; liveN: number; liveSum: number }>()
+  for (const r of group) {
+    const name = r.full ?? r.label // the whole name: the label is cut and two names may share a prefix
+    const m = byName.get(name) ?? { calls: 0, usd: 0, tok: 0, ms: 0, liveN: 0, liveSum: 0 }
+    byName.set(name, {
+      calls: m.calls + (r.calls ?? 1),
+      usd: m.usd + (r.usd ?? 0),
+      tok: m.tok + r.tok,
+      ms: m.ms + r.ms,
+      liveN: m.liveN + r.liveN,
+      liveSum: m.liveSum + r.liveSum,
+    })
+  }
+  const lines = [...byName.entries()].map(
+    ([name, m]) => `${name}${m.calls > 1 ? ` (x${m.calls})` : ''} ${figureText(unit, { usd: m.usd, tok: m.tok, ms: live(m) })}`,
+  )
+  const ring = group.some(r => r.ring === 'error') ? 'error' : group.some(r => r.ring === 'background') ? 'background' : undefined
+
+  return {
+    ...group[0]!,
+    label: MERGE_LABELS[group[0]!.kind]!,
+    full: esc(lines.join('\n')),
+    ring,
+    ...total,
+    text: figureText(unit, { usd: total.usd, tok: total.tok, ms: live(total) }),
+    isActive: group.some(r => r.isActive),
+    led: group.some(r => r.led),
+    calls: sum(r => r.calls ?? 1),
+    tps: group.reduce<number | undefined>((a, r) => (r.tps === undefined ? a : Math.max(a ?? 0, r.tps)), undefined),
+    tpsIn: group.reduce<number | undefined>((a, r) => (r.tpsIn === undefined ? a : Math.max(a ?? 0, r.tpsIn)), undefined),
+  }
+}
+
+// Per category, the cheap leaf blocks become one block (at the place of the
+// first of them) when there are two or more; a single cheap block stays as is.
+const mergeCheap = <T extends MergeRow>(rows: T[], unit: 'cost' | 'time' | 'tokens', nowMs: number): T[] => {
+  const groups = new Map<string, T[]>()
+  for (const r of rows) if (isCheapLeaf(r)) groups.set(r.kind, [...(groups.get(r.kind) ?? []), r])
+  const out: T[] = []
+  const placed = new Set<string>()
+  for (const r of rows) {
+    const group = isCheapLeaf(r) ? groups.get(r.kind) : undefined
+    if (!group || group.length < 2) out.push(r)
+    else if (!placed.has(r.kind)) {
+      placed.add(r.kind)
+      out.push(mergedRow(group, unit, nowMs))
+    }
+  }
+
+  return out
+}
+// </merge>
+
+// ------------------------------------------------------- background tasks
+// <tasks>
+// A background command (Bash run_in_background, Ctrl+B, a timeout that moved it to
+// the background) or a Monitor shows as a block of its own for as long as it runs.
+// It has no token or cost data, so it is drawn without dots.
+const TASK_NAME_CHARS = 200
+const squash = (v: unknown): string => (typeof v === 'string' ? v.replace(/\s+/g, ' ').trim() : '')
+
+// The name /tasks lists: Bash its description, else its command; Monitor its description.
+const taskNameOf = (tool: string, input: Record<string, unknown>): string =>
+  (squash(input.description) || squash(input.command)).slice(0, TASK_NAME_CHARS) || tool
+
+// The tool call's own record: from `tool.call` it is `{ result }`, a bare record also works.
+const recordOf = (ran: unknown): Record<string, unknown> => {
+  const r = (ran as { result?: unknown } | undefined)?.result ?? ran
+
+  return r && typeof r === 'object' ? (r as Record<string, unknown>) : {}
+}
+
+// The id of the task a finished tool call started: Bash returns `backgroundTaskId`
+// only when the command went to the background, Monitor always returns `taskId`.
+const taskIdOf = (tool: string, ran: unknown): string | undefined => {
+  const r = recordOf(ran)
+  const id = tool === 'Bash' ? r.backgroundTaskId : tool === 'Monitor' ? r.taskId : undefined
+
+  return typeof id === 'string' && id !== '' ? id : undefined
+}
+
+// How long a finite Monitor may run (0 = no limit); the engine reports the expiry
+// itself, this is only a backstop.
+const monitorTimeoutMs = (ran: unknown): number => {
+  const r = recordOf(ran)
+
+  return r.persistent === true || typeof r.timeoutMs !== 'number' || !(r.timeoutMs > 0) ? 0 : r.timeoutMs
+}
+
+// The task a TaskStop call stopped.
+const stoppedTaskOf = (input: Record<string, unknown>, ran: unknown): string | undefined => {
+  const id = recordOf(ran).task_id ?? input.task_id ?? input.shell_id
+
+  return typeof id === 'string' && id !== '' ? id : undefined
+}
+
+// A task-notification message: `<task-notification><task-id>..</task-id><status>completed</status>
+// <summary>..</summary></task-notification>`. A notification without a status
+// (say a Monitor event line) is not an end.
+const RUNNING_WORDS = ['running', 'working', 'pending', 'progress', 'in_progress']
+const parseTaskEnd = (text: string): { id: string; status: string; summary: string; isEnded: boolean } | undefined => {
+  const tag = (name: string): string | undefined =>
+    new RegExp(`<${name}>\\s*([\\s\\S]*?)\\s*</${name}>`, 'i').exec(text)?.[1]?.trim() || undefined
+  const id = tag('task-id') ?? tag('task_id') ?? tag('taskId') ?? /task[ _-]?id["':=\s]+([A-Za-z0-9_-]+)/i.exec(text)?.[1]
+  if (!id) return undefined
+  const status = (tag('status') ?? '').toLowerCase()
+
+  return { id, status, summary: squash(tag('summary')), isEnded: status !== '' && !RUNNING_WORDS.includes(status) }
+}
+
+// A background agent is done when the agent list says it ended, or has dropped it
+// (the engine drops a finished agent's row a little later). A freshly started
+// agent may not be listed yet, hence the grace.
+const AGENT_GRACE_MS = 10000
+const AGENT_ENDED = ['completed', 'failed', 'killed']
+const isAgentDone = (status: string | undefined, ageMs: number): boolean =>
+  status === undefined ? ageMs > AGENT_GRACE_MS : AGENT_ENDED.includes(status)
+
+// Task nodes that still run in a stored view but that this process never saw start:
+// they ended while nobody listened, so they are closed. `isKnown` says which ids were
+// seen live.
+type TaskNode = { taskId?: string; running: number; startSum?: number; isBackground: boolean }
+const isStaleTask = (n: TaskNode, isKnown: (id: string) => boolean): boolean =>
+  !!n.taskId && n.running > 0 && !isKnown(n.taskId)
+const closeStaleTasks = <T extends TaskNode>(nodes: T[], isKnown: (id: string) => boolean): T[] =>
+  nodes.map(n => (isStaleTask(n, isKnown) ? { ...n, running: 0, startSum: 0, isBackground: false } : n))
+// </tasks>
+
 // ---------------------------------------------------------------- drawing
 
 const M = 5 // left/top margin, px (always 5px from the left edge)
@@ -405,6 +591,7 @@ const line = (
   light = colour,
   tpsUp?: number,
   tpsDown?: number,
+  hasNoDots = false, // no usage data to show: the line only pulses (see Row.noUsage)
 ) => {
   if (!isActive) return `<path d="${d}" fill="none" stroke="${colour}" stroke-opacity="0.3" stroke-width="2"/>`
   // A drawing near the size cap loses its moving dots, not the whole picture.
@@ -438,9 +625,10 @@ const line = (
     return dots
   }
   // The returning lane starts half a beat later, so the two lanes do not pulse in step.
-  const dots =
-    lane(d, TIERS[tierOf(tpsDown)]!.dots, light, 0) +
-    lane(reversePath(d), TIERS[tierOf(tpsUp)]!.dots, light, EMIT_S / 2)
+  const dots = hasNoDots
+    ? ''
+    : lane(d, TIERS[tierOf(tpsDown)]!.dots, light, 0) +
+      lane(reversePath(d), TIERS[tierOf(tpsUp)]!.dots, light, EMIT_S / 2)
   // The pulse: a blurred halo and the line itself brighten as each dot leaves.
   const beat = clockBegin(nowS, EMIT_S)
   const halo =
@@ -467,7 +655,9 @@ const node = (b: Box) => {
   const pulse = b.isActive
     ? `<animate attributeName="stroke-opacity" values="1;0.35;1" dur="1.4s" repeatCount="indefinite"/>`
     : ''
-  const dot = b.isActive
+  const dot = b.led
+    ? `<circle cx="${x + b.w}" cy="${y}" r="5" fill="${STATE.background}" stroke="#000" stroke-opacity="0.4" stroke-width="1"><animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/></circle>`
+    : b.isActive
     ? `<circle cx="${x + b.w}" cy="${y}" r="5" fill="${k.light}" stroke="#000" stroke-opacity="0.4" stroke-width="1"><animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/></circle>`
     : ''
   return (
@@ -476,11 +666,6 @@ const node = (b: Box) => {
     `<text x="${b.cx}" y="${b.cy}" fill="${k.text}" font-size="${FONT}" font-family="sans-serif" text-anchor="middle" dominant-baseline="central">${b.label}</text>${dot}</g>`
   )
 }
-
-const esc = (s: string) => s.replace(/[<>&"]/g, '')
-
-// Claude -> a path: what it cost, as the engine's cost ledger prices it (see `fmtMoney`).
-const usdText = (usd: number | undefined): string => (usd === undefined ? '...' : fmtMoney(usd))
 
 // A path's dollars: an agent's own (exact) plus its tool results, priced at the
 // session's average dollars per weighted token. Unknown until that average is.
@@ -505,19 +690,20 @@ type Row = {
   tpsIn?: number // token pace of the request going down: sets the dots of the down lane
   shade: number // the session's colour shift: the same for a session tile and everything below it
   isIdle?: boolean // a session with nothing running anywhere in it
+  noUsage?: boolean // no token or cost data exists (a background command): no dots, a status LED instead
+  led?: boolean // a status LED on the block (any merged member has one)
+  calls?: number // calls the path had; shown in the tooltip of a merged block
   kids: Row[]
 }
 
 // The sum of the known figures of some rows; '...' (undefined) when there are
-// rows but none of them is known yet. No rows at all sum to zero.
-// The text on a line for the chosen measure.
-const figureText = (f: Figure, r: { usd: number | undefined; tok: number; ms: number }): string =>
-  f === 'tokens' ? fmtTokens(r.tok) : f === 'time' ? fmtTime(r.ms) : usdText(r.usd)
-
+// rows but none of them is known yet. No rows at all sum to zero. Rows with no
+// usage data at all (background commands) are not part of any sum.
 const sumUsd = (rows: Row[]): number | undefined => {
-  const known = rows.map(r => r.usd).filter((u): u is number => u !== undefined)
+  const counted = rows.filter(r => !r.noUsage)
+  const known = counted.map(r => r.usd).filter((u): u is number => u !== undefined)
 
-  return rows.length > 0 && known.length === 0 ? undefined : known.reduce((a, b) => a + b, 0)
+  return counted.length > 0 && known.length === 0 ? undefined : known.reduce((a, b) => a + b, 0)
 }
 
 type Src = Pick<SubTree, 'nodes' | 'subs' | 'mainRunning' | 'perW' | 'usd' | 'tps'>
@@ -577,8 +763,9 @@ const groupIdle = (rows: Row[]): Row[] => {
 
 const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId], shade = 0): Row[] =>
   groupIdle([
-  ...s.nodes.map((nd): Row => {
-    const usd = nodeUsd(nd, s.perW)
+  ...mergeCheap(s.nodes.map((nd): Row => {
+    const noUsage = nd.hasUsage === false
+    const usd = noUsage ? undefined : nodeUsd(nd, s.perW)
     const isRunning = nd.running > 0
     const ring: Box['ring'] =
       now - nd.errorAt < ERROR_MS
@@ -598,14 +785,17 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       ms: nd.ms ?? 0,
       liveN: isRunning ? nd.running : 0,
       liveSum: isRunning ? (nd.startSum ?? 0) : 0,
-      text: figureText(shownFigure, { usd, tok: nd.tok ?? 0, ms: (nd.ms ?? 0) + (isRunning ? liveElapsed(0, nd.running, nd.startSum ?? 0, nowMsOf(now)) : 0) }),
+      text: figureText(shownFigure, { usd, tok: nd.tok ?? 0, ms: (nd.ms ?? 0) + (isRunning ? liveElapsed(0, nd.running, nd.startSum ?? 0, nowMsOf(now)) : 0), noUsage }),
       isActive: isRunning || s.mainRunning,
       tps: nd.tps ?? s.tps,
       tpsIn: nd.tpsIn,
       shade,
+      noUsage,
+      led: noUsage && isRunning,
+      calls: nd.calls,
       kids: [],
     }
-  }),
+  }), shownFigure, nowMsOf(now)),
   // A session already on the path above is the same session again: skip it.
   ...(depth >= depthLimit ? [] : s.subs.filter(sub => !path.includes(sub.id))).map((sub): Row => {
     count.n += 1
@@ -617,9 +807,11 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
     // Once it is idle, it shows what it really spent (its own model tokens too).
     const usd = sub.mainRunning ? sumUsd(kids) : sub.usd
     const tok = kids.reduce((a, k) => a + k.tok, 0)
-    const ms = kids.reduce((a, k) => a + k.ms, 0)
-    const liveN = kids.reduce((a, k) => a + k.liveN, 0)
-    const liveSum = kids.reduce((a, k) => a + k.liveSum, 0)
+    // A background task keeps its time on its own line; it is not part of a session's time.
+    const timed = kids.filter(k => !k.noUsage)
+    const ms = timed.reduce((a, k) => a + k.ms, 0)
+    const liveN = timed.reduce((a, k) => a + k.liveN, 0)
+    const liveSum = timed.reduce((a, k) => a + k.liveSum, 0)
     const isIdle = !sub.mainRunning && !anyRunning(sub.nodes, sub.subs)
     const figure = figureText(shownFigure, { usd, tok, ms: ms + (liveN > 0 ? liveElapsed(0, liveN, liveSum, nowMsOf(now)) : 0) })
 
@@ -669,9 +861,9 @@ const layout = (
     // The figure sits right of the box, so deeper levels cost little width.
     out.lines.push({
       rank: r.isActive ? Math.max(tierOf(r.tps), tierOf(r.tpsIn)) : -1, // idle lines lie below every active one
-      svg: line(d, length, palette(r.kind, r.shade).fill, r.isActive, nowS, palette(r.kind, r.shade).light, r.tps, r.tpsIn) + (isLive ? livePill(left + r.w + 6 + pw / 2, y, labels, pw) : pill(left + r.w + 6 + pw / 2, y, r.text, pw)),
+      svg: line(d, length, palette(r.kind, r.shade).fill, r.isActive, nowS, palette(r.kind, r.shade).light, r.tps, r.tpsIn, r.noUsage) + (isLive ? livePill(left + r.w + 6 + pw / 2, y, labels, pw) : pill(left + r.w + 6 + pw / 2, y, r.text, pw)),
     })
-    out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive, shade: r.shade }))
+    out.boxes.push(node({ label: r.label, full: r.full, kind: r.kind, cx: left + r.w / 2, cy: y, w: r.w, h: 40, ring: r.ring, isActive: r.isActive, shade: r.shade, led: r.led }))
     out.right = Math.max(out.right, left + r.w + 6 + pw)
     out.bottom = Math.max(out.bottom, y + 20)
     y = r.kids.length ? layout(r.kids, left + 12, y + 20, y + ROW, out, nowS) : y + ROW
@@ -702,9 +894,10 @@ const draw = (v: FlowView, now: number, figure: Figure = 'cost'): string => {
   layout(rows, TRUNK, branchTop, branchTop + 50, out, nowS)
 
   // User -> Claude: the sum of the branches below, as their lines show them.
-  const totalMs = rows.reduce((a, r) => a + r.ms, 0)
-  const liveN = rows.reduce((a, r) => a + r.liveN, 0)
-  const liveSum = rows.reduce((a, r) => a + r.liveSum, 0)
+  const timed = rows.filter(r => !r.noUsage) // tasks keep their time on their own line
+  const totalMs = timed.reduce((a, r) => a + r.ms, 0)
+  const liveN = timed.reduce((a, r) => a + r.liveN, 0)
+  const liveSum = timed.reduce((a, r) => a + r.liveSum, 0)
   const growth = figureText(figure, {
     usd: sumUsd(rows),
     tok: rows.reduce((a, r) => a + r.tok, 0),
@@ -828,14 +1021,16 @@ const touch = (
 const turnStartedAt = new Map<string, number>()
 // When a command's fork (/btw ...) started, by agent id: its run is one timed span.
 const spawnedAt = new Map<string, number>()
-// Background agents still working, by agent id. The engine sends no "agent ended"
-// event, so one counts as finished BG_IDLE_MS after its last turn ended. They
-// survive a new prompt: the prompt wipes the view, but not these.
-const BG_IDLE_MS = 45000
-const liveAgents = new Map<string, { key: string; spawnAt: number; last: number }>()
-// Set by the Agent tool call just before the engine spawns it (best effort when
-// several start together).
-let nextSpawnIsBackground = false
+// Background agents still working, by agent id. They survive a new prompt: the
+// prompt wipes the view, but not these. The periodic poll reads the engine's agent
+// list (`$.agent.list()`) and ends the ones it reports finished (see `syncAgents`).
+const liveAgents = new Map<string, { key: string; spawnAt: number }>()
+// Background tasks seen starting in this process. The view outlives a reload, this does
+// not: a task node that is running in the view but is not here ended while nobody listened.
+const liveTasks = new Set<string>()
+// Whether the log already holds a sample of a task notification (one line each, once).
+let hasLoggedEnd = false
+let hasLoggedOther = false
 
 const freshTokens = (u: Usage | undefined): number =>
   u ? (u.input_tokens ?? 0) + (u.output_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0) : 0
@@ -1085,6 +1280,8 @@ async function traceStore($: EngineInterface, mine: Stored | undefined): Promise
 }
 
 async function poll($: EngineInterface): Promise<void> {
+  await syncAgents($)
+  await dropStaleTasks($)
   const dir = await folderOf($)
   if (!dir) return
   await scanStore($)
@@ -1233,6 +1430,96 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
   })
 }
 
+// A background agent is over: its branch stops running (green ring off) and the
+// time since its start is booked.
+async function endAgent($: EngineInterface, id: string): Promise<void> {
+  const cur = liveAgents.get(id)
+  if (!cur) return
+  liveAgents.delete(id)
+  const end = await $.clock.now()
+  await change($, v => ({
+    ...v,
+    nodes: v.nodes.map(n =>
+      n.key === cur.key
+        ? {
+            ...n,
+            at: end,
+            running: Math.max(0, n.running - 1),
+            startSum: n.running - 1 > 0 ? (n.startSum ?? 0) - cur.spawnAt : 0,
+            isBackground: n.running - 1 > 0 ? n.isBackground : false,
+            ms: (n.ms ?? 0) + (end - cur.spawnAt),
+          }
+        : n,
+    ),
+  }))
+}
+
+// The poll's look at the engine's agent list: a background agent that finished (or
+// that the engine has dropped) ends here. Replaces a guess from idle time.
+async function syncAgents($: EngineInterface): Promise<void> {
+  if (liveAgents.size === 0) return
+  try {
+    const list = await $.agent.list()
+    const now = await $.clock.now()
+    for (const [id, a] of [...liveAgents]) {
+      if (isAgentDone(list.find(x => x.id === id)?.status, now - a.spawnAt)) await endAgent($, id)
+    }
+  } catch {
+    // no agent list: the agents stay as they are until it can be read
+  }
+}
+
+// A background task is over (notification, TaskStop, Monitor timeout): the block
+// stops running and the time it ran is booked. Idempotent.
+async function endTask($: EngineInterface, id: string, status: string): Promise<void> {
+  liveTasks.delete(id)
+  const end = await $.clock.now()
+  await change($, v => ({
+    ...v,
+    nodes: v.nodes.map(n =>
+      n.taskId === id && n.running > 0
+        ? {
+            ...n,
+            at: end,
+            running: 0,
+            startSum: 0,
+            isBackground: false,
+            errorAt: status === 'failed' ? end : n.errorAt,
+            ms: (n.ms ?? 0) + Math.max(0, end - (n.startSum ?? end)),
+          }
+        : n,
+    ),
+  }))
+}
+
+// A task node still running in the stored view that this process never saw start ended
+// while the mod was not listening (restart, kill): close it. Tasks seen live keep running
+// without a time limit.
+async function dropStaleTasks($: EngineInterface): Promise<void> {
+  const cur = held ?? (await read($, view))
+  const isKnown = (id: string): boolean => liveTasks.has(id)
+  if (!cur.nodes.some(n => isStaleTask(n, isKnown))) return
+  await change($, v => ({ ...v, nodes: closeStaleTasks(v.nodes, isKnown) }))
+}
+
+// The engine's message that a background task ended arrives as a prompt flagged
+// as a task notification. The first of each kind is written to the debug log
+// (once), so its real shape can be compared with what /tasks shows.
+async function onTaskNotification($: EngineInterface, text: string): Promise<void> {
+  const parsed = parseTaskEnd(text)
+  const sample = (): string => `notification ${JSON.stringify(squash(text).slice(0, 600))}`
+  if (parsed?.isEnded && !hasLoggedEnd) {
+    hasLoggedEnd = true
+    await dbg($, `task end ${sample()} -> id=${parsed.id} status=${parsed.status}`)
+  } else if (!parsed?.isEnded && !hasLoggedOther) {
+    hasLoggedOther = true
+    await dbg($, `task notification without end ${sample()}`)
+  }
+  if (!parsed?.isEnded) return
+  await endTask($, parsed.id, parsed.status)
+  await endAgent($, parsed.id)
+}
+
 export const register: Register = on => {
   // Dots are pinned to the wall clock, so a redraw does not restart them; still
   // there is no steady timer: each event
@@ -1258,6 +1545,13 @@ export const register: Register = on => {
 
   // Every prompt brings the panel back if it was closed (unless switched off).
   on('prompt.submit', async ($, e, next) => {
+    // A background task's notification is not the owner's prompt: it must neither
+    // clear the panel nor restart the prompt's cost. It only ends the task it names.
+    if (e.origin?.kind === 'task-notification') {
+      await onTaskNotification($, e.text)
+
+      return next(e)
+    }
     // Open only when it is not up: a repeated open re-seats the pane.
     if ((await $.env.get('FLOW_PANEL')) !== '0') {
       const isUp = (await $.ui.panes()).some(pane => pane.id === PANE)
@@ -1270,8 +1564,8 @@ export const register: Register = on => {
     const usdNow = (await $.session.usage()).cost?.usd ?? 0
     await change($, v => ({
       ...v,
-      // Background agents that still work stay (their branch, running, green).
-      nodes: v.nodes.filter(n => [...liveAgents.values()].some(a => a.key === n.key && n.running > 0)),
+      // Background agents and tasks that still work stay (their branch, running, green).
+      nodes: v.nodes.filter(n => n.running > 0 && ((!!n.taskId && liveTasks.has(n.taskId)) || [...liveAgents.values()].some(a => a.key === n.key))),
       agentNode: Object.fromEntries(Object.entries(v.agentNode).filter(([id]) => liveAgents.has(id))),
       head: v.head || head || undefined,
       promptUsd: usdNow,
@@ -1305,7 +1599,6 @@ export const register: Register = on => {
     } else {
       const live = liveAgents.get(e.agentId)
       if (live) {
-        live.last = startedAt + BG_IDLE_MS * 100 // a turn is running: not idle until it completes
         void armLiveRefresh($)
         await change($, v => ({ ...v, nodes: v.nodes.map(n => (n.key === live.key ? { ...n, at: startedAt } : n)) }))
       }
@@ -1364,34 +1657,6 @@ export const register: Register = on => {
       return calibrate(moved)
     })
 
-    // A background agent with no further turn for BG_IDLE_MS is taken as finished.
-    const live = e.agentId === undefined ? undefined : liveAgents.get(e.agentId)
-    if (e.agentId !== undefined && live) {
-      const id = e.agentId
-      live.last = endedAt
-      $.clock.after(BG_IDLE_MS, async () => {
-        const cur = liveAgents.get(id)
-        if (!cur || cur.last !== endedAt) return
-        liveAgents.delete(id)
-        const end = await $.clock.now()
-        await change($, v => ({
-          ...v,
-          nodes: v.nodes.map(n =>
-            n.key === cur.key
-              ? {
-                  ...n,
-                  at: end,
-                  running: Math.max(0, n.running - 1),
-                  startSum: n.running - 1 > 0 ? (n.startSum ?? 0) - cur.spawnAt : 0,
-                  isBackground: n.running - 1 > 0 ? n.isBackground : false,
-                  ms: (n.ms ?? 0) + (end - cur.spawnAt),
-                }
-              : n,
-          ),
-        }))
-      })
-    }
-
     return next(e)
   })
 
@@ -1408,10 +1673,10 @@ export const register: Register = on => {
       }
       const target = isSide ? sideTarget : agentTarget(e.subagentType)
       // A background agent's tool call returns at once, so the spawn keeps it running.
-      const isBg = !isSide && nextSpawnIsBackground
-      nextSpawnIsBackground = false
+      // The spawn event says outright whether it is one (a teammate is not).
+      const isBg = !isSide && e.background === true && !e.isTeammate
       if (isBg) {
-        liveAgents.set(id, { key: target.key, spawnAt: now, last: now + BG_IDLE_MS * 100 })
+        liveAgents.set(id, { key: target.key, spawnAt: now })
         void armLiveRefresh($)
       }
       const marks = isSide || isBg
@@ -1447,7 +1712,6 @@ export const register: Register = on => {
     const args = e as unknown as Record<string, unknown>
     const c = classify(String(e.tool), args)
     const isBackground = args.run_in_background === true
-    if (c.kind === 'agent') nextSpawnIsBackground = isBackground
     // A session we start gets a brief: remember its start, so the child can be
     // recognised by that brief later (and no other session is taken for it).
     const spawn: Spawn[] =
@@ -1469,10 +1733,19 @@ export const register: Register = on => {
 
     let failed = false
     let resultTokens = 0
+    let taskId: string | undefined
+    let monitorMs = 0
     const requestTokens = tokensOf(args)
     try {
       const ran = await next(e)
       resultTokens = tokensOf(ran)
+      // A command that went to the background, or a Monitor, stays as a running block.
+      taskId = taskIdOf(String(e.tool), ran)
+      monitorMs = e.tool === 'Monitor' ? monitorTimeoutMs(ran) : 0
+      if (e.tool === 'TaskStop') {
+        const stopped = stoppedTaskOf(args, ran)
+        if (stopped) void endTask($, stopped, 'killed')
+      }
 
       return ran
     } catch (err) {
@@ -1492,6 +1765,7 @@ export const register: Register = on => {
                 isBackground: n.running - 1 > 0 ? n.isBackground : false,
                 errorAt: failed ? end : n.errorAt,
                 w: n.w + resultTokens * RESULT_WEIGHT,
+                calls: (n.calls ?? 0) + 1,
                 tok: (n.tok ?? 0) + resultTokens + requestTokens,
                 ms: (n.ms ?? 0) + (end - now),
                 tps: paceOf(resultTokens, end - now) ?? n.tps,
@@ -1500,6 +1774,31 @@ export const register: Register = on => {
             : n,
         ),
       }))
+      if (taskId && !failed) {
+        const id = taskId
+        liveTasks.add(id)
+        const task: Target = { key: `task:${id}`, label: taskNameOf(String(e.tool), args), kind: 'tool' }
+        await change($, v =>
+          v.nodes.some(n => n.taskId === id)
+            ? v
+            : {
+                ...v,
+                nodes: touch(v.nodes, task, end, n => ({
+                  ...n,
+                  at: end,
+                  taskId: id,
+                  taskName: task.label,
+                  hasUsage: false,
+                  running: 1,
+                  startSum: now,
+                  isBackground: true,
+                  calls: 1,
+                })),
+              },
+        )
+        // A finite Monitor ends at its deadline; the engine says so too, this is a backstop.
+        if (monitorMs > 0) $.clock.after(monitorMs + 5000, () => endTask($, id, 'timeout'))
+      }
     }
   })
 

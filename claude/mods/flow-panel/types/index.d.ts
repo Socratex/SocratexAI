@@ -15,6 +15,10 @@ export type FlowNode = {
   startSum?: number // sum of the start times (ms) of the calls running now: the live time is ms + running * now - startSum
   ms?: number // wall time this path spent executing (agent turns, tool calls), summed
   tpsIn?: number // tokens per second of the request of its last call (dots of the down lane)
+  taskId?: string // a background task (Bash, Monitor): the engine's task id; the node is that task, not a tool
+  taskName?: string // the task's name as /tasks lists it (Bash: description, else command; Monitor: description)
+  calls?: number // how many calls this path has had (shown as "(x2)" in the tooltip of a merged block)
+  hasUsage?: boolean // false = no token or cost data exists for it (a background command): drawn without dots, with a status LED
 }
 
 // The tree of one session, as it is shared with the session that started it.
