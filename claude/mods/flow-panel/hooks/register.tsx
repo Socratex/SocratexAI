@@ -499,6 +499,20 @@ const isStaleTask = (n: TaskNode, isKnown: (id: string) => boolean): boolean =>
   !!n.taskId && n.running > 0 && !isKnown(n.taskId)
 const closeStaleTasks = <T extends TaskNode>(nodes: T[], isKnown: (id: string) => boolean): T[] =>
   nodes.map(n => (isStaleTask(n, isKnown) ? { ...n, running: 0, startSum: 0, isBackground: false } : n))
+
+// The engine's own list of in-flight background work (what /tasks shows) is handed to the
+// mod only with the Stop event (`background_tasks`, one row per shell, monitor, subagent
+// or workflow). A task this process saw start that is absent from a Stop's list, or
+// listed with an ended status, is over. A freshly started task gets a grace period.
+const TASK_GRACE_MS = 10000
+const TASK_ENDED = ['completed', 'failed', 'killed', 'stopped', 'cancelled', 'canceled', 'error']
+type TaskRow = { id: string; status?: string }
+const isTaskGone = (row: TaskRow | undefined, ageMs: number): boolean =>
+  row === undefined ? ageMs > TASK_GRACE_MS : TASK_ENDED.includes((row.status ?? '').toLowerCase())
+// Ids of the live tasks (id -> start time) that the list says are over. An undefined list
+// (an engine that sends none) closes nothing.
+const goneTasks = (live: ReadonlyMap<string, number>, rows: readonly TaskRow[] | undefined, now: number): string[] =>
+  rows === undefined ? [] : [...live].filter(([id, at]) => isTaskGone(rows.find(r => r.id === id), now - at)).map(([id]) => id)
 // </tasks>
 
 // ---------------------------------------------------------------- drawing
@@ -1028,7 +1042,7 @@ const spawnedAt = new Map<string, number>()
 const liveAgents = new Map<string, { key: string; spawnAt: number }>()
 // Background tasks seen starting in this process. The view outlives a reload, this does
 // not: a task node that is running in the view but is not here ended while nobody listened.
-const liveTasks = new Set<string>()
+const liveTasks = new Map<string, number>() // task id -> when it was seen starting
 // Whether the log already holds a sample of a task notification (one line each, once).
 let hasLoggedEnd = false
 let hasLoggedOther = false
@@ -1592,6 +1606,20 @@ export const register: Register = on => {
     return next(e)
   })
 
+  // The one place the engine lists its background tasks: the Stop event carries them.
+  // Close the tasks this process follows that the list no longer holds (or ends).
+  on('classic.Stop', async ($, e, next) => {
+    try {
+      const rows = (e as { background_tasks?: TaskRow[] }).background_tasks
+      const now = await $.clock.now()
+      for (const id of goneTasks(liveTasks, rows, now)) await endTask($, id, 'completed')
+    } catch {
+      // no list: the tasks stay as they are
+    }
+
+    return next(e)
+  })
+
   on('turn.start', async ($, e, next) => {
     const startedAt = await $.clock.now()
     turnStartedAt.set(e.agentId ?? '', startedAt)
@@ -1777,7 +1805,7 @@ export const register: Register = on => {
       }))
       if (taskId && !failed) {
         const id = taskId
-        liveTasks.add(id)
+        liveTasks.set(id, end)
         const task: Target = { key: `task:${id}`, label: taskNameOf(String(e.tool), args), kind: 'tool' }
         await change($, v =>
           v.nodes.some(n => n.taskId === id)

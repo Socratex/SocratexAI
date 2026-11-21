@@ -99,6 +99,21 @@ class FlowTasks(unittest.TestCase):
         self.assertTrue(run("isStaleTask({taskId: 'x', running: 1, isBackground: true}, () => false)"))
         self.assertFalse(run("isStaleTask({taskId: 'x', running: 1, isBackground: true}, () => true)"))
 
+    def test_task_gone_by_stop_list(self) -> None:
+        self.assertTrue(run("isTaskGone({id: 'a', status: 'completed'}, 0)"))
+        self.assertTrue(run("isTaskGone({id: 'a', status: 'Killed'}, 0)"))
+        self.assertFalse(run("isTaskGone({id: 'a', status: 'running'}, 999999)"))
+        self.assertFalse(run("isTaskGone({id: 'a'}, 999999)"))  # listed without a status: still in flight
+        self.assertFalse(run("isTaskGone(undefined, 5000)"))  # not listed yet: grace
+        self.assertTrue(run("isTaskGone(undefined, 20000)"))  # dropped from the list
+
+    def test_gone_tasks_from_a_list(self) -> None:
+        live = "new Map([['a', 0], ['b', 0], ['c', 95000], ['d', 0]])"
+        rows = "[{id: 'a', status: 'running'}, {id: 'd', status: 'failed'}]"
+        self.assertEqual(run(f"goneTasks({live}, {rows}, 100000)"), ["b", "d"])  # c is inside its grace
+        self.assertEqual(run(f"goneTasks({live}, [], 100000)"), ["a", "b", "d"])  # nothing in flight
+        self.assertEqual(run(f"goneTasks({live}, undefined, 100000)"), [])  # no list: close nothing
+
 
 if __name__ == "__main__":
     unittest.main()
