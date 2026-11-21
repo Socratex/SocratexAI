@@ -515,6 +515,100 @@ const goneTasks = (live: ReadonlyMap<string, number>, rows: readonly TaskRow[] |
   rows === undefined ? [] : [...live].filter(([id, at]) => isTaskGone(rows.find(r => r.id === id), now - at)).map(([id]) => id)
 // </tasks>
 
+// ----------------------------------------------- background task re-check
+// <recheck>
+// While the only live things are background tasks (nothing else runs), the mod asks the
+// engine's GetTask tool about each of them once a minute and closes the ones that
+// finished. Best effort: whether GetTask accepts the ids of a background Bash or a
+// Monitor is not proven, so every doubt leaves the task running (a longer glow, never a
+// false close). The Stop event's own list (above) still reconciles while other work runs.
+const RECHECK_MS = 60000
+const RECHECK_MAX_FAILS = 3 // consecutive useless answers after which the tool is given up
+const RECHECK_ENDED: Record<string, 'completed' | 'failed' | 'killed'> = {
+  completed: 'completed',
+  failed: 'failed',
+  error: 'failed',
+  killed: 'killed',
+  stopped: 'killed',
+  cancelled: 'killed',
+  canceled: 'killed',
+}
+const RECHECK_RUNNING = ['working', 'running', 'pending', 'in_progress', 'progress']
+
+type RecheckState = {
+  isEnabled: boolean // FLOW_TASK_RECHECK is not 0
+  failures: number // consecutive probes that told nothing usable
+  mainRunning: boolean
+  liveAgents: number // background agents this process follows
+  nodes: Array<{ taskId?: string; running: number }>
+}
+
+// True when something still runs that is a background task and nothing else does.
+const shouldRecheck = (s: RecheckState): boolean =>
+  s.isEnabled &&
+  s.failures < RECHECK_MAX_FAILS &&
+  !s.mainRunning &&
+  s.liveAgents === 0 &&
+  s.nodes.some(n => n.running > 0 && !!n.taskId) &&
+  s.nodes.every(n => n.running === 0 || !!n.taskId)
+
+type TaskProbe =
+  | { kind: 'ended'; status: 'completed' | 'failed' | 'killed' }
+  | { kind: 'missing' } // the engine says it has no such task
+  | { kind: 'running' }
+  | { kind: 'unknown' } // an answer of a shape or status not understood
+  | { kind: 'error' } // the call threw, was denied or reported an error
+
+// An "unknown task" message, not a "tool unavailable" or "bad id format" one.
+const isMissingTaskText = (text: string): boolean =>
+  !/\btool\b/i.test(text) &&
+  /(no such|unknown) (background )?(task|shell)|\bno (background )?task\b|task\b[^.]{0,60}(not found|does not exist|doesn't exist)|not found[^.]{0,30}\btask/i.test(text)
+
+// What GetTask answered: `{ result: { status, ... } }` (or the bare record), `{ deny }`,
+// or `{ isError, text }`.
+const probeOfResult = (ran: unknown): TaskProbe => {
+  const top = (ran && typeof ran === 'object' ? ran : {}) as Record<string, unknown>
+  if (typeof top.deny === 'string') return { kind: 'error' }
+  if (top.isError === true) return isMissingTaskText(squash(top.text)) ? { kind: 'missing' } : { kind: 'error' }
+  const status = recordOf(ran).status
+  if (typeof status !== 'string') return { kind: 'unknown' }
+  const word = status.trim().toLowerCase()
+  if (word in RECHECK_ENDED) return { kind: 'ended', status: RECHECK_ENDED[word] }
+
+  return RECHECK_RUNNING.includes(word) ? { kind: 'running' } : { kind: 'unknown' }
+}
+
+// A thrown error: an unknown task is told apart from every other failure by its text.
+const probeOfError = (err: unknown): TaskProbe =>
+  isMissingTaskText(err instanceof Error ? err.message : String(err)) ? { kind: 'missing' } : { kind: 'error' }
+
+type ProbeBook = { hasResolved: boolean; failures: number }
+// What one probe changes: whether to close the task (with which end status) and the
+// book-keeping. "missing" closes only after GetTask has answered about some task
+// before (so the ids are known to be valid for it); until then it counts as a failure,
+// because an id the tool cannot read at all would otherwise close every task.
+const decideProbe = (p: TaskProbe, b: ProbeBook): { close?: 'completed' | 'failed' | 'killed'; book: ProbeBook } => {
+  if (p.kind === 'running') return { book: { hasResolved: true, failures: 0 } }
+  if (p.kind === 'ended') return { close: p.status, book: { hasResolved: true, failures: 0 } }
+  if (p.kind === 'missing' && b.hasResolved) return { close: 'completed', book: { hasResolved: true, failures: 0 } }
+
+  return { book: { hasResolved: b.hasResolved, failures: b.failures + 1 } }
+}
+const isRecheckOff = (failures: number): boolean => failures >= RECHECK_MAX_FAILS
+
+// Ids to probe now: tasks the panel shows as running that this process saw start, past
+// the same start grace as the Stop-list check.
+const tasksToProbe = (
+  nodes: ReadonlyArray<{ taskId?: string; running: number }>,
+  live: ReadonlyMap<string, number>,
+  now: number,
+): string[] => {
+  const ids = nodes.filter(n => n.running > 0 && !!n.taskId && live.has(n.taskId)).map(n => n.taskId as string)
+
+  return [...new Set(ids)].filter(id => now - (live.get(id) ?? now) > TASK_GRACE_MS)
+}
+// </recheck>
+
 // ---------------------------------------------------------------- drawing
 
 const M = 5 // left/top margin, px (always 5px from the left edge)
@@ -1046,6 +1140,13 @@ const liveTasks = new Map<string, number>() // task id -> when it was seen start
 // Whether the log already holds a sample of a task notification (one line each, once).
 let hasLoggedEnd = false
 let hasLoggedOther = false
+// Re-check of background tasks (see the <recheck> block): the timer exists only while
+// nothing but background tasks runs.
+let recheckTimer: { cancel: () => void } | undefined
+let recheckBook: ProbeBook = { hasResolved: false, failures: 0 }
+let isRechecking = false
+let isRecheckEnabled: boolean | undefined
+const loggedProbes = new Set<string>() // outcome kinds already written to the debug log
 
 const freshTokens = (u: Usage | undefined): number =>
   u ? (u.input_tokens ?? 0) + (u.output_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0) : 0
@@ -1432,6 +1533,7 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
     const next = batch.reduce((acc, f) => f(acc), cur)
     const before = draw(cur, at)
     const after = draw(next, at)
+    void syncRecheck($, next)
     if (after === before) {
       held = next
       await publish($, next)
@@ -1443,6 +1545,75 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
     await update($, view, () => next)
     await publish($, next)
   })
+}
+
+// Arms the 60 s re-check while the only live things are background tasks, and drops it
+// the moment other work starts, no task remains, or the tool proved useless. Reads the
+// state it is given; touches no view, so it can never redraw anything by itself.
+async function syncRecheck($: EngineInterface, v: FlowView): Promise<void> {
+  try {
+    if (isRecheckEnabled === undefined) isRecheckEnabled = (await $.env.get('FLOW_TASK_RECHECK')) !== '0'
+    const want = shouldRecheck({
+      isEnabled: isRecheckEnabled,
+      failures: recheckBook.failures,
+      mainRunning: v.mainRunning,
+      liveAgents: liveAgents.size,
+      nodes: v.nodes,
+    })
+    if (want && !recheckTimer) {
+      recheckTimer = $.clock.every(RECHECK_MS, () => {
+        void recheckTasks($)
+      })
+    } else if (!want && recheckTimer) {
+      recheckTimer.cancel()
+      recheckTimer = undefined
+    }
+  } catch {
+    // a best-effort aid
+  }
+}
+
+// One tick: ask GetTask about each task, close the ones it says are over. Any doubt
+// leaves the task as it is.
+async function recheckTasks($: EngineInterface): Promise<void> {
+  if (isRechecking) return
+  isRechecking = true
+  try {
+    const cur = held ?? (await read($, view))
+    const now = await $.clock.now()
+    const ids = tasksToProbe(cur.nodes, liveTasks, now)
+    for (const id of ids) {
+      if (!recheckTimer) break // other work started meanwhile
+      let probe: TaskProbe
+      let raw = ''
+      try {
+        // Raised by the mod itself: this plugin's own tool.call hook does not see it.
+        const ran = await $.tool.call({ tool: 'GetTask', taskId: id } as Parameters<typeof $.tool.call>[0])
+        probe = probeOfResult(ran)
+        raw = JSON.stringify(ran) ?? ''
+      } catch (err) {
+        probe = probeOfError(err)
+        raw = `threw ${err instanceof Error ? err.message : String(err)}`
+      }
+      if (loggedProbes.size === 0) await dbg($, `recheck first call GetTask(${id}) raw ${JSON.stringify(raw.slice(0, 600))}`)
+      if (!loggedProbes.has(probe.kind)) {
+        loggedProbes.add(probe.kind)
+        await dbg($, `recheck outcome ${probe.kind} for ${id}: ${JSON.stringify(raw.slice(0, 300))}`)
+      }
+      const decided = decideProbe(probe, recheckBook)
+      recheckBook = decided.book
+      if (decided.close) await endTask($, id, decided.close)
+      if (isRecheckOff(recheckBook.failures)) {
+        await dbg($, `recheck off: ${recheckBook.failures} useless GetTask answers in a row`)
+        break
+      }
+    }
+    await syncRecheck($, cur)
+  } catch {
+    // a best-effort aid
+  } finally {
+    isRechecking = false
+  }
 }
 
 // A background agent is over: its branch stops running (grey ring off) and the
