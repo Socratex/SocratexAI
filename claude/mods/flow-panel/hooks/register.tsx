@@ -518,7 +518,7 @@ const goneTasks = (live: ReadonlyMap<string, number>, rows: readonly TaskRow[] |
 // ----------------------------------------------- background task re-check
 // <recheck>
 // While the only live things are background tasks (nothing else runs), the mod asks the
-// engine's GetTask tool about each of them once a minute and closes only the ones it
+// engine's GetTask tool about each of them (once right away, then every minute) and closes only the ones it
 // lists as finished (an explicit ended status). Best effort: whether GetTask accepts the ids of a background Bash or a
 // Monitor is not proven, so every doubt leaves the task running (a longer glow, never a
 // false close). The Stop event's own list (above) still reconciles while other work runs.
@@ -587,6 +587,10 @@ const decideProbe = (p: TaskProbe, b: ProbeBook): { close?: 'completed' | 'faile
   return { book: { failures: b.failures + 1 } }
 }
 const isRecheckOff = (failures: number): boolean => failures >= RECHECK_MAX_FAILS
+
+// One check runs right away when the timer condition begins to hold (not a minute later);
+// while the timer already runs, only its ticks check.
+const isInitialCheckDue = (want: boolean, isTimerRunning: boolean): boolean => want && !isTimerRunning
 
 // Ids to probe now: tasks the panel shows as running that this process saw start, past
 // the same start grace as the Stop-list check.
@@ -1552,10 +1556,12 @@ async function syncRecheck($: EngineInterface, v: FlowView): Promise<void> {
       liveAgents: liveAgents.size,
       nodes: v.nodes,
     })
-    if (want && !recheckTimer) {
+    if (isInitialCheckDue(want, !!recheckTimer)) {
       recheckTimer = $.clock.every(RECHECK_MS, () => {
         void recheckTasks($)
       })
+      // No task shown means no call: recheckTasks probes only displayed running tasks.
+      void recheckTasks($, v)
     } else if (!want && recheckTimer) {
       recheckTimer.cancel()
       recheckTimer = undefined
@@ -1567,11 +1573,11 @@ async function syncRecheck($: EngineInterface, v: FlowView): Promise<void> {
 
 // One tick: ask GetTask about each task, close the ones it lists as finished. Any doubt
 // leaves the task as it is.
-async function recheckTasks($: EngineInterface): Promise<void> {
+async function recheckTasks($: EngineInterface, shown?: FlowView): Promise<void> {
   if (isRechecking) return
   isRechecking = true
   try {
-    const cur = held ?? (await read($, view))
+    const cur = shown ?? held ?? (await read($, view))
     const now = await $.clock.now()
     const ids = tasksToProbe(cur.nodes, liveTasks, now)
     for (const id of ids) {
@@ -1600,6 +1606,7 @@ async function recheckTasks($: EngineInterface): Promise<void> {
         break
       }
     }
+    isRechecking = false // lets a re-armed timer run its first check at once
     await syncRecheck($, cur)
   } catch {
     // a best-effort aid
@@ -1998,6 +2005,7 @@ export const register: Register = on => {
     const { Box, Text, Svg, Button } = $.ui.resolve(e)
     await folderOf($) // makes sure the session id is known before drawing
     const v = await restoredFor($, await read($, view))
+    void syncRecheck($, v) // the panel loaded with tasks still shown: check at once
     const now = await $.clock.now()
     // The picture must never depend on the toggle: if its value cannot be read, show cost.
     let figure: Figure = 'cost'

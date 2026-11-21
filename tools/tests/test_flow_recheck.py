@@ -41,6 +41,16 @@ class FlowRecheck(unittest.TestCase):
         self.assertFalse(run(f"shouldRecheck({state(failures='3')})"))
         self.assertTrue(run(f"shouldRecheck({state(failures='2')})"))
 
+    def test_initial_check_is_due_only_when_the_timer_starts(self) -> None:
+        self.assertTrue(run("isInitialCheckDue(true, false)"))
+        self.assertFalse(run("isInitialCheckDue(true, true)"))  # the timer's own ticks check
+        self.assertFalse(run("isInitialCheckDue(false, false)"))  # no condition, no call
+        self.assertFalse(run("isInitialCheckDue(false, true)"))
+
+    def test_no_task_displayed_probes_nothing(self) -> None:
+        self.assertEqual(run("tasksToProbe([], new Map([['a', 0]]), 100000)"), [])
+        self.assertEqual(run("tasksToProbe([{taskId: 'a', running: 0}], new Map([['a', 0]]), 100000)"), [])
+
     def test_probe_of_a_status(self) -> None:
         self.assertEqual(run("probeOfResult({result: {taskId: 'a', status: 'working'}})"), {"kind": "running"})
         self.assertEqual(run("probeOfResult({taskId: 'a', status: 'Working'})"), {"kind": "running"})  # bare record
