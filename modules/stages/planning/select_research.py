@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 # Import with the shared engine folder and this folder first, then take them off again so importing this
 # module in-process never shadows same-named modules of the review pipeline.
-_added = [str(q) for q in (HERE, HERE.parent / "pipeline") if str(q) not in sys.path]
+_added = [str(q) for q in (HERE, HERE.parents[1] / "engine") if str(q) not in sys.path]
 sys.path[:0] = _added
 try:
     import selectlib  # noqa: E402
@@ -28,7 +28,7 @@ finally:
     for _path in _added:
         sys.path.remove(_path)
 
-ROUTING = HERE.parents[1] / "core" / "ROUTING.json"
+ROUTING = HERE.parents[2] / "core" / "ROUTING.json"
 CODEX_ENV = "PLANNING_CODEX_AVAILABLE"
 UNKNOWN = re.compile(r"\b(unknown|tbd|to verify|to check|need to check|needs checking|not sure|unclear|find out)\b"
                      r"|niewiadom|do sprawdzenia|nie wiadomo|do ustalenia|sprawdzi[cć]|niejasn|\?\s*$",

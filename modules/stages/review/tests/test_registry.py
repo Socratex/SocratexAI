@@ -107,3 +107,39 @@ def test_pipeline_must_be_known_and_match_the_registry(tmp_path, bad):
 def test_here_placeholder_points_at_the_registry_folder(tmp_path):
     path = write_registry(tmp_path / "r.json", [GOOD])
     assert common.load_registry(path, None)["checkers"][0]["here"] == tmp_path.resolve()
+
+
+def write_layer(path, doc):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(doc), encoding="utf-8")
+
+
+def test_override_layers_apply_in_order_and_later_layers_win(repo, tmp_path):
+    local = tmp_path / "local"
+    write_layer(local / "overrides" / "stages" / "review.json",
+                {"checkers": {"comments": {"tier": "standard", "max_chunk_lines": 40}, "contracts": {"enabled": False}}})
+    write_layer(repo.path / ".ai" / "review.json", {"checkers": {"comments": {"tier": "high"}}})
+    by_id = {c["id"]: c for c in common.load_registry(REGISTRY_PATH, repo.path)["checkers"]}
+    assert by_id["comments"]["tier"] == "high" and by_id["comments"]["max_chunk_lines"] == 40
+    assert by_id["contracts"]["enabled"] is False
+    write_layer(local / "projects" / repo.path.name / "review.json", {"checkers": {"comments": {"tier": "cheap", "max_chunk_lines": 25}}})
+    by_id = {c["id"]: c for c in common.load_registry(REGISTRY_PATH, repo.path)["checkers"]}
+    assert by_id["comments"]["tier"] == "cheap" and by_id["comments"]["max_chunk_lines"] == 25
+    assert [label for label, _, _ in common.override_layers("review", repo.path)] == [
+        "local/overrides/stages/review.json", ".ai/review.json", f"local/projects/{repo.path.name}/review.json"]
+
+
+def test_missing_layers_are_skipped_and_a_broken_layer_names_its_file(repo, tmp_path):
+    assert common.load_registry(REGISTRY_PATH, repo.path)["checkers"] == common.load_registry(REGISTRY_PATH, None)["checkers"]
+    path = tmp_path / "local" / "overrides" / "stages" / "review.json"
+    path.parent.mkdir(parents=True)
+    path.write_text("{", encoding="utf-8")
+    with pytest.raises(common.RegistryError, match="local/overrides/stages/review.json"):
+        common.load_registry(REGISTRY_PATH, None)
+
+
+def test_checker_added_by_a_local_layer_resolves_here_to_that_layer_folder(repo, tmp_path):
+    layer = tmp_path / "local" / "projects" / repo.path.name / "review.json"
+    write_layer(layer, {"add": [GOOD]})
+    added = {c["id"]: c for c in common.load_registry(REGISTRY_PATH, repo.path)["checkers"]}["x"]
+    assert added["here"] == layer.parent

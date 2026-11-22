@@ -5,9 +5,9 @@ Sources:
   core/, docs/, claude/, codex/ *.md  -> frontmatter `description` (or the first heading)
   skills/*/SKILL.md, claude/skills/*  -> skill name + description
   claude/agents/*.md                  -> agent name + description
-  tools/*.py, tools/pipeline|review|planning/*.py -> first docstring line
+  tools/*.py, modules/engine/*.py, modules/stages/review/*.py -> first docstring line
   docs/specs/*/*.md                   -> frontmatter `description`
-  tools/pipeline|review|planning/*.json        -> `purpose` or `title`
+  modules/engine|stages/review|stages/planning/*.json -> `purpose` or `title` (module.json excluded)
   core/*.json                         -> `purpose` or `schema`
   defaults/*.json                     -> fixed description
   core/*.py, core/sox, tests/test_*.py -> docstring / test name
@@ -139,8 +139,8 @@ def build() -> dict:
         payload = json.loads(p.read_text(encoding="utf-8"))
         data.append({"path": rel(p), "what": payload.get("purpose") or payload.get("schema", p.stem)})
     data += [{"path": rel(p), "what": payload.get("purpose") or payload.get("title", p.stem)}
-             for folder in ("review", "pipeline", "planning")
-             for p in sorted((ROOT / "tools" / folder).glob("*.json"))
+             for folder in ("stages/review", "engine", "stages/planning")
+             for p in sorted((ROOT / "modules" / folder).glob("*.json")) if p.name != "module.json"
              for payload in [json.loads(p.read_text(encoding="utf-8"))]]
     data += [{"path": rel(p), "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"}
              for p in sorted((ROOT / "defaults").glob("*.json"))]
@@ -153,8 +153,8 @@ def build() -> dict:
     agents = [{"name": frontmatter(p).get("name", p.stem), "path": rel(p), "what": frontmatter(p)["description"]}
               for p in sorted((ROOT / "claude" / "agents").glob("*.md"))]
     tools = [{"path": rel(p), "what": docstring(p)}
-             for p in sorted((ROOT / "tools").glob("*.py")) + sorted((ROOT / "tools" / "pipeline").glob("*.py"))
-             + sorted((ROOT / "tools" / "review").glob("*.py"))]
+             for p in sorted((ROOT / "tools").glob("*.py")) + sorted((ROOT / "modules" / "engine").glob("*.py"))
+             + sorted((ROOT / "modules" / "stages" / "review").glob("*.py"))]
     tools += [{"path": rel(p), "what": docstring(p)}
               for p in sorted((ROOT / "core").glob("*.py")) + [ROOT / "core" / "sox"] if p.is_file()]
     tools += [{"path": rel(p), "what": docstring(p)}

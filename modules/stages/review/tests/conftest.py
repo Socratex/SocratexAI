@@ -11,11 +11,11 @@ from pathlib import Path
 import pytest
 
 REVIEW_DIR = Path(__file__).resolve().parents[1]
-PIPELINE_DIR = REVIEW_DIR.parent / "pipeline"
+PIPELINE_DIR = REVIEW_DIR.parents[1] / "engine"
 REGISTRY_PATH = REVIEW_DIR / "checkers.json"
 sys.path.insert(0, str(REVIEW_DIR))
 sys.path.insert(0, str(PIPELINE_DIR))
-sys.path.insert(0, str(REVIEW_DIR.parent))
+sys.path.insert(0, str(REVIEW_DIR.parents[2] / "tools"))
 
 APP_V1 = "def add(a, b):\n    return a + b\n"
 APP_V2_COMMENTS = (
@@ -75,6 +75,8 @@ def repo(tmp_path: Path, monkeypatch) -> Repo:
     root.mkdir()
     work = tmp_path / "work"
     monkeypatch.setenv("SOCRATEX_PIPELINE_DIR", str(work))
+    import common
+    monkeypatch.setattr(common, "LOCAL_DIR", tmp_path / "local")
     made = Repo(root, work)
     made.git("init", "-q")
     made.git("config", "core.autocrlf", "false")

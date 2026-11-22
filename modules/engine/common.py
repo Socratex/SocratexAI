@@ -17,6 +17,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 ROUTING = ROOT / "core" / "ROUTING.json"
+LOCAL_DIR = ROOT / "local"
 REGISTRY_SCHEMA = "socratex-checker-registry/v1"
 PIPELINES = ("review", "planning")
 
@@ -82,10 +83,28 @@ def validate_checker(raw: dict, position: int) -> dict:
     return checker
 
 
-def load_registry(path: Path, project_dir: Path | None) -> dict:
-    """Load and validate a registry, then apply the project override `.ai/<pipeline>.json` on a copy; nothing is written.
+def override_layers(pipeline: str, project_dir: Path | None) -> list[tuple[str, Path, Path]]:
+    """Override files in merge order after the stage's own registry: (label, file, folder `{here}` of its added checkers).
 
-    `{here}` in select and fix commands resolves to the folder of the registry file.
+    Order: local/overrides/stages/<pipeline>.json, the project file `.ai/<pipeline>.json`, then the private
+    local/projects/<project folder name>/<pipeline>.json. Files that do not exist are skipped by the loader.
+    """
+    layers = [(f"local/overrides/stages/{pipeline}.json", LOCAL_DIR / "overrides" / "stages" / f"{pipeline}.json",
+               LOCAL_DIR / "overrides" / "stages")]
+    if project_dir is not None:
+        project = Path(project_dir).resolve()
+        layers.append((override_path(pipeline).as_posix(), project / override_path(pipeline), project))
+        private = LOCAL_DIR / "projects" / project.name
+        layers.append((f"local/projects/{project.name}/{pipeline}.json", private / f"{pipeline}.json", private))
+    return layers
+
+
+def load_registry(path: Path, project_dir: Path | None) -> dict:
+    """Load and validate a registry, then apply the override layers (see `override_layers`) on a copy; nothing is written.
+
+    Each layer may change fields of existing checkers (`checkers`, including `enabled`, `tier`, `max_chunk_lines`),
+    append new ones (`add`) and set the registry-wide keys; later layers win. `{here}` in select and fix commands
+    resolves to the folder of the registry file, or to the layer's folder for checkers a layer added.
     """
     path = Path(path)
     try:
@@ -98,40 +117,48 @@ def load_registry(path: Path, project_dir: Path | None) -> dict:
     if pipeline not in PIPELINES:
         raise RegistryError(f"registry pipeline must be one of {', '.join(PIPELINES)}, got {pipeline!r}")
     checkers = copy.deepcopy(base.get("checkers", []))
-    override: dict = {}
-    source = override_path(pipeline)
-    if project_dir is not None and (Path(project_dir) / source).is_file():
+    here = path.resolve().parent
+    added_here: dict[str, Path] = {}
+    skip_patterns = list(base.get("skip_patterns", []))
+    settings = {key: base[key] for key in ("min_changed_lines", "gates", "implementer_tier") if key in base}
+    aliases: dict = {}
+    for label, source, layer_here in override_layers(pipeline, project_dir):
+        if not source.is_file():
+            continue
         try:
-            override = json.loads((Path(project_dir) / source).read_text(encoding="utf-8"))
+            override = json.loads(source.read_text(encoding="utf-8"))
         except json.JSONDecodeError as err:
-            raise RegistryError(f"{source.as_posix()} is not valid JSON: {err}") from err
-    by_id = {c.get("id"): c for c in checkers}
-    for checker_id, changes in override.get("checkers", {}).items():
-        if checker_id not in by_id:
-            raise RegistryError(f"{source.as_posix()}: unknown checker {checker_id!r}")
-        by_id[checker_id].update(changes)
-    checkers += copy.deepcopy(override.get("add", []))
+            raise RegistryError(f"{label} is not valid JSON: {err}") from err
+        by_id = {c.get("id"): c for c in checkers}
+        for checker_id, changes in override.get("checkers", {}).items():
+            if checker_id not in by_id:
+                raise RegistryError(f"{label}: unknown checker {checker_id!r}")
+            by_id[checker_id].update(changes)
+        added = copy.deepcopy(override.get("add", []))
+        checkers += added
+        added_here.update({raw.get("id"): layer_here for raw in added})
+        skip_patterns += override.get("skip_patterns", [])
+        aliases.update(override.get("aliases", {}))
+        settings.update({key: override[key] for key in ("min_changed_lines", "gates", "implementer_tier") if key in override})
     validated = [validate_checker(raw, number) for number, raw in enumerate(checkers, 1)]
     ids = [c["id"] for c in validated]
     if len(set(ids)) != len(ids):
         raise RegistryError(f"duplicate checker ids: {sorted({i for i in ids if ids.count(i) > 1})}")
     default_chunk = int(base.get("default_max_chunk_lines", 100))
-    here = path.resolve().parent
-    added_ids = {raw.get("id") for raw in override.get("add", [])}
     for checker in validated:
         if checker["pipeline"] != pipeline:
             raise RegistryError(f"checker {checker['id']!r}: pipeline {checker['pipeline']!r} does not match the "
                                 f"registry pipeline {pipeline!r}")
         checker.setdefault("max_chunk_lines", default_chunk)
-        checker["here"] = Path(project_dir).resolve() if checker["id"] in added_ids else here
+        checker["here"] = added_here.get(checker["id"], here)
     return {
         "pipeline": pipeline,
         "checkers": validated,
-        "skip_patterns": list(base.get("skip_patterns", [])) + list(override.get("skip_patterns", [])),
-        "min_changed_lines": int(override.get("min_changed_lines", base.get("min_changed_lines", 0))),
-        "aliases": dict(override.get("aliases", {})),
-        "gates": list(override.get("gates", base.get("gates", []))),
-        "implementer_tier": override.get("implementer_tier", base.get("implementer_tier", "standard")),
+        "skip_patterns": skip_patterns,
+        "min_changed_lines": int(settings.get("min_changed_lines", 0)),
+        "aliases": aliases,
+        "gates": list(settings.get("gates", [])),
+        "implementer_tier": settings.get("implementer_tier", "standard"),
     }
 
 

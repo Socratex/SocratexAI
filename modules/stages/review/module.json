@@ -4,8 +4,8 @@
   "kind": "stage",
   "what": "Review pipeline: micro-checkers for comments, leaks, quality and test necessity, merged into one short report",
   "when": "After a change is done and before the commit, to catch defects with cheap deterministic checks first",
-  "entry": ["python tools/review/run.py --files <file> [<file>...]"],
-  "paths": ["tools/review"],
-  "tests": ["tools/review/tests"],
+  "entry": ["python modules/stages/review/run.py --files <file> [<file>...]"],
+  "paths": ["modules/stages/review"],
+  "tests": ["modules/stages/review/tests"],
   "requires": ["engine"]
 }

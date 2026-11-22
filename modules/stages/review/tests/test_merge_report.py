@@ -13,7 +13,7 @@ import common
 import merge
 import report
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 
 
 def finding(fid, checker="comments", file="a.py", start=1, end=3, severity="minor", category="stale", **extra):
@@ -121,16 +121,16 @@ def test_report_cli_reads_findings_file(tmp_path, capsys):
 
 def test_directives_has_review_row_and_index_lists_new_tools_and_doc():
     directives = json.loads((ROOT / "core" / "DIRECTIVES.json").read_text(encoding="utf-8"))
-    rows = [r for r in directives["rows"] if "tools/review/run.py" in r["follow"]]
+    rows = [r for r in directives["rows"] if "modules/stages/review/run.py" in r["follow"]]
     assert rows and "SPEC.md" in rows[0]["follow"]
     index = json.loads((ROOT / "INDEX.json").read_text(encoding="utf-8"))
     tool_paths = {t["path"] for t in index["tools"]}
-    assert {"tools/review/run.py", "tools/review/report.py", "tools/pipeline/engine.py", "tools/pipeline/merge.py",
-            "tools/pipeline/common.py"} <= tool_paths
-    assert "tools/review/tests/conftest.py" not in tool_paths
+    assert {"modules/stages/review/run.py", "modules/stages/review/report.py", "modules/engine/engine.py",
+            "modules/engine/merge.py", "modules/engine/common.py"} <= tool_paths
+    assert "modules/stages/review/tests/conftest.py" not in tool_paths
     assert any(d["path"] == "docs/specs/review-pipeline/SPEC.md" for d in index["docs"])
-    assert any(d["path"] == "tools/review/checkers.json" for d in index["data"])
-    assert any(d["path"] == "tools/pipeline/findings.schema.json" for d in index["data"])
+    assert any(d["path"] == "modules/stages/review/checkers.json" for d in index["data"])
+    assert any(d["path"] == "modules/engine/findings.schema.json" for d in index["data"])
 
 
 def test_index_is_current():
@@ -143,7 +143,7 @@ def test_index_is_current():
 def test_no_private_references_in_review_files():
     sys.path.insert(0, str(ROOT / "tools"))
     import check_leaks
-    files = [p for folder in ("review", "pipeline") for p in (ROOT / "tools" / folder).rglob("*")
+    files = [p for folder in ("stages/review", "engine") for p in (ROOT / "modules" / folder).rglob("*")
              if p.is_file() and "__pycache__" not in p.parts]
     files += list((ROOT / "docs" / "specs" / "review-pipeline").glob("*.md"))
     assert check_leaks.scan(files, check_leaks.patterns()) == []
@@ -153,6 +153,6 @@ def test_report_script_prints_utf8_even_on_a_legacy_console(tmp_path):
     import subprocess
     path = tmp_path / "findings.json"
     path.write_text(json.dumps(sample_doc()), encoding="utf-8")
-    done = subprocess.run([sys.executable, str(ROOT / "tools" / "review" / "report.py"), str(path)], capture_output=True,
+    done = subprocess.run([sys.executable, str(ROOT / "modules" / "stages" / "review" / "report.py"), str(path)], capture_output=True,
                           env={**__import__("os").environ, "PYTHONIOENCODING": "cp1250", "PYTHONUTF8": "0"})
     assert done.returncode == 0 and done.stdout.decode("utf-8").startswith("❌")

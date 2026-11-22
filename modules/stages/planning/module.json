@@ -4,8 +4,8 @@
   "kind": "stage",
   "what": "Planning pipeline: research of unknowns and a consistency check of owner answers against the plan",
   "when": "After the owner answered the question form and a plan exists, before implementation starts",
-  "entry": ["python tools/planning/run.py --answers answers.md --plan plan.md"],
-  "paths": ["tools/planning"],
-  "tests": ["tools/planning/tests"],
+  "entry": ["python modules/stages/planning/run.py --answers answers.md --plan plan.md"],
+  "paths": ["modules/stages/planning"],
+  "tests": ["modules/stages/planning/tests"],
   "requires": ["engine"]
 }

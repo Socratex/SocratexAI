@@ -1,6 +1,6 @@
 """Shared pipeline engine: chunk changed files, run registry checkers, merge findings, apply fixes in at most 2 rounds.
 
-Library, no CLI: a pipeline wrapper (for example tools/review/run.py) passes its registry path. All run files
+Library, no CLI: a pipeline wrapper (for example modules/stages/review/run.py) passes its registry path. All run files
 (per-checker results, findings.json, log.jsonl, summary.json) live outside the repository under
 <temp dir>/socratex-pipeline/<pipeline>/<run id>/ (base overridable by the work_base argument or the
 SOCRATEX_PIPELINE_DIR environment variable) and are removed after the run unless keep=True.

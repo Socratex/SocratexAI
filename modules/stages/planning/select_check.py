@@ -12,7 +12,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 # Import with the shared engine folder and this folder first, then take them off again so importing this
 # module in-process never shadows same-named modules of the review pipeline.
-_added = [str(q) for q in (HERE, HERE.parent / "pipeline") if str(q) not in sys.path]
+_added = [str(q) for q in (HERE, HERE.parents[1] / "engine") if str(q) not in sys.path]
 sys.path[:0] = _added
 try:
     import selectlib  # noqa: E402

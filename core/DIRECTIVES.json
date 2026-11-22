@@ -6,7 +6,7 @@
         {"when": "owner names a plugin, tool, methodology, skill pack or program to use or evaluate", "follow": "core/RULES.md bullet Named solutions ledger; docs/IMPROVEMENTS.json (read first, then record the outcome)"},
         {"when": "start any non-trivial task", "follow": "core/rules/TASK-GATING.md, then the flow for its type in core/rules/FLOWS.md"},
         {"when": "implement a feature, fix a bug, refactor, or finish a non-trivial task", "follow": "core/rules/FLOWS.md (research gate before non-obvious code, closure evidence at the end)"},
-        {"when": "finish a series of changes, before the commit", "follow": "tools/review/run.py --files <own changed files> (spec docs/specs/review-pipeline/SPEC.md)"},
+        {"when": "finish a series of changes, before the commit", "follow": "modules/stages/review/run.py --files <own changed files> (spec docs/specs/review-pipeline/SPEC.md)"},
         {"when": "big task: context above about 1500 lines, more than 3 substantial steps, may outlive the session", "follow": "core/rules/FLOWS.md section Big task (task file and handoffs in project .ai/)"},
         {"when": "build a new capability or system", "follow": "core/rules/TASK-GATING.md (research first), core/rules/ROI.md"},
         {"when": "write or review code", "follow": "core/rules/CODE-STYLE.md, then the project's own code standard from its INDEX.json"},

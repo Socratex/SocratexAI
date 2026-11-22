@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 PLANNING_DIR = Path(__file__).resolve().parents[1]
-PIPELINE_DIR = PLANNING_DIR.parent / "pipeline"
+PIPELINE_DIR = PLANNING_DIR.parents[1] / "engine"
 REGISTRY_PATH = PLANNING_DIR / "checkers.json"
 sys.path.append(str(PIPELINE_DIR))
 sys.path.append(str(PLANNING_DIR))
@@ -68,6 +68,8 @@ def project(tmp_path: Path, monkeypatch) -> Project:
     work = tmp_path / "work"
     monkeypatch.setenv("SOCRATEX_PIPELINE_DIR", str(work))
     monkeypatch.setenv("PLANNING_CODEX_AVAILABLE", "1")
+    import common
+    monkeypatch.setattr(common, "LOCAL_DIR", tmp_path / "local")
     made = Project(tmp_path / "proj", work)
     made.path.mkdir()
     made.git("init", "-q")

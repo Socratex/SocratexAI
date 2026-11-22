@@ -147,15 +147,15 @@
       "what": "socratex-model-routing/v1"
     },
     {
-      "path": "tools/review/checkers.json",
+      "path": "modules/stages/review/checkers.json",
       "what": "Registry of review micro-checkers (one concern each). A project may add, disable or retier them in .ai/review.json. Spec: docs/specs/review-pipeline/SPEC.md"
     },
     {
-      "path": "tools/pipeline/findings.schema.json",
+      "path": "modules/engine/findings.schema.json",
       "what": "socratex-review-findings/v1"
     },
     {
-      "path": "tools/planning/checkers.json",
+      "path": "modules/stages/planning/checkers.json",
       "what": "Registry of planning micro-checkers. Stage 1 (questions) is the normal AskUserQuestion form led by the main session and has no entry here. A project may add, disable or retier entries in .ai/planning.json. Spec: docs/specs/planning-pipeline/SPEC.md"
     },
     {
@@ -281,51 +281,51 @@
       "what": "Update SocratexAI and the reference packs as two independent steps."
     },
     {
-      "path": "tools/pipeline/common.py",
+      "path": "modules/engine/common.py",
       "what": "Shared pipeline engine helpers: registry loading, git change ranges, chunking, select and fix script execution, run log."
     },
     {
-      "path": "tools/pipeline/engine.py",
+      "path": "modules/engine/engine.py",
       "what": "Shared pipeline engine: chunk changed files, run registry checkers, merge findings, apply fixes in at most 2 rounds."
     },
     {
-      "path": "tools/pipeline/merge.py",
+      "path": "modules/engine/merge.py",
       "what": "Merger of the review pipeline: combines per-checker result files into one schema-validated findings.json."
     },
     {
-      "path": "tools/pipeline/selectlib.py",
+      "path": "modules/engine/selectlib.py",
       "what": "Tiny helpers shared by the select scripts: read the request from stdin, emit candidates as JSON."
     },
     {
-      "path": "tools/review/comment_rules.py",
+      "path": "modules/stages/review/comment_rules.py",
       "what": "Detect full-line comments that are commented-out code or merely repeat the next code line (shared by select and fix)."
     },
     {
-      "path": "tools/review/fix_comments.py",
+      "path": "modules/stages/review/fix_comments.py",
       "what": "Fix script for the comments checker: delete commented-out code and comments that repeat the code (idempotent)."
     },
     {
-      "path": "tools/review/report.py",
+      "path": "modules/stages/review/report.py",
       "what": "Aggregator report: renders findings.json as a short Polish UCE report (result line, emoji bullets, one question)."
     },
     {
-      "path": "tools/review/run.py",
-      "what": "Review pipeline CLI: runs the shared engine (tools/pipeline) with tools/review/checkers.json and prints the UCE report."
+      "path": "modules/stages/review/run.py",
+      "what": "Review pipeline CLI: runs the shared engine (modules/engine) with modules/stages/review/checkers.json and prints the UCE report."
     },
     {
-      "path": "tools/review/select_comments.py",
+      "path": "modules/stages/review/select_comments.py",
       "what": "Select for the comments checker: mechanical dead-code and repeating comments, plus comments left for the model."
     },
     {
-      "path": "tools/review/select_leaks.py",
+      "path": "modules/stages/review/select_leaks.py",
       "what": "Tier-script checker for leaks: applies the tools/check_leaks.py patterns to changed lines, no model involved."
     },
     {
-      "path": "tools/review/select_quality.py",
+      "path": "modules/stages/review/select_quality.py",
       "what": "Select for readability, architecture and contracts: cheap diff-grep and AST heuristics that pick candidates for a model."
     },
     {
-      "path": "tools/review/select_tests.py",
+      "path": "modules/stages/review/select_tests.py",
       "what": "Select for test-necessity: Python tests without any assertion and tests whose body duplicates an earlier test."
     },
     {
@@ -357,7 +357,7 @@
       "when": "Never directly: the review and planning stages call it",
       "entry": [],
       "paths": [
-        "tools/pipeline"
+        "modules/engine"
       ]
     },
     {
@@ -416,10 +416,10 @@
       "what": "Planning pipeline: research of unknowns and a consistency check of owner answers against the plan",
       "when": "After the owner answered the question form and a plan exists, before implementation starts",
       "entry": [
-        "python tools/planning/run.py --answers answers.md --plan plan.md"
+        "python modules/stages/planning/run.py --answers answers.md --plan plan.md"
       ],
       "paths": [
-        "tools/planning"
+        "modules/stages/planning"
       ]
     },
     {
@@ -428,10 +428,10 @@
       "what": "Review pipeline: micro-checkers for comments, leaks, quality and test necessity, merged into one short report",
       "when": "After a change is done and before the commit, to catch defects with cheap deterministic checks first",
       "entry": [
-        "python tools/review/run.py --files <file> [<file>...]"
+        "python modules/stages/review/run.py --files <file> [<file>...]"
       ],
       "paths": [
-        "tools/review"
+        "modules/stages/review"
       ]
     },
     {

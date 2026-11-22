@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-# planning_testkit first: it puts tools/pipeline and tools/planning on sys.path.
+# planning_testkit first: it puts modules/engine and modules/stages/planning on sys.path.
 from planning_testkit import PLAN_NO_UNKNOWNS, PLANNING_DIR, REGISTRY_PATH, FakeModel, go, planning_run, project  # noqa: F401 (fixture)
 
 import common  # noqa: E402
