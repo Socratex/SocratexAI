@@ -33,6 +33,16 @@
         "delegate": {"type": "boolean"}
       }
     },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tier_overrides": {
+          "type": "object",
+          "additionalProperties": {"type": "string", "enum": ["cheap", "standard", "high"]}
+        }
+      }
+    },
     "safety": {
       "type": "object",
       "additionalProperties": false,

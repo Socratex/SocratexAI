@@ -3,7 +3,7 @@
   "name": "core",
   "kind": "tools",
   "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer, named safety rules, generated install targets",
-  "when": "Reading the effective config or the flow table at the start of a task, checking flow references, regenerating the index, planning or applying the agent config install (sox install), relaxing a safety rule",
+  "when": "Reading the effective config (with the checker overrides per stage) or the flow table at the start of a task, checking flow references and step dependencies, rotating or adopting state logs, migrating config schema versions, backing up the agent config, running the test suite, regenerating the index, planning or applying the agent config install (sox install), relaxing a safety rule",
   "entry": [
     "core/sox config show",
     "core/sox flow show",
@@ -11,12 +11,17 @@
     "core/sox index",
     "core/sox modules",
     "core/sox install --plan",
-    "core/sox install --check"
+    "core/sox install --check",
+    "core/sox state rotate --dry-run",
+    "core/sox migrate --check",
+    "core/sox backup --list",
+    "core/sox test"
   ],
   "paths": [
     "core/sox",
     "core/sox.cmd",
     "core/core.py",
+    "core/migrate.py",
     "core/INIT.md",
     "core/flow.json",
     "core/flow.schema.json",
@@ -34,6 +39,7 @@
     "tests/test_modules.py",
     "tests/test_flow.py",
     "tests/test_safety.py",
-    "tests/test_targets.py"
+    "tests/test_targets.py",
+    "tests/test_cleanup.py"
   ]
 }

@@ -15,6 +15,7 @@ import core  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
 import build_index  # noqa: E402
+import state  # noqa: E402
 
 DIM = "\033[2m"
 RESET = "\033[0m"
@@ -46,14 +47,33 @@ def print_enabled_extensions(enabled: list[dict]) -> None:
     print()
 
 
+def print_stage_registries(stages: dict) -> None:
+    """The third block of `config show`: checkers a layer above a stage's own checkers.json changed or added."""
+    print("Stage registries:")
+    for stage, info in stages.items():
+        print(f"  {stage}:")
+        if info["error"]:
+            print(f"    error: {info['error']}")
+        for change in info["changes"]:
+            what = "added" if change["kind"] == "added" else f"{change['kind']} ({change['field']}: {_fmt(change['from'])} -> {_fmt(change['to'])})"
+            print(f"    {change['checker']}  {what}  <- {change['layer']}: {change['file']}")
+        if not info["changes"] and not info["error"]:
+            print("    no changes above the stage's own checkers.json")
+    if not stages:
+        print("  none")
+    print()
+
+
 def cmd_config_show(args: argparse.Namespace) -> int:
     result = core.resolve(args.project)
     enabled = core.enabled_extensions(result)
+    stages = core.stage_provenance(args.project)
     if args.json:
-        print(json.dumps({**result, "enabled_extensions": enabled}, indent=2, ensure_ascii=False))
+        print(json.dumps({**result, "enabled_extensions": enabled, "stage_registries": stages}, indent=2, ensure_ascii=False))
         return 0
     print_relaxed_safety(result["safety"])
     print_enabled_extensions(enabled)
+    print_stage_registries(stages)
     rows = []
     for key in sorted(result["provenance"]):
         entry = result["provenance"][key]
@@ -70,7 +90,7 @@ def cmd_config_show(args: argparse.Namespace) -> int:
 
 
 def cmd_config_resolve(args: argparse.Namespace) -> int:
-    core.write_effective(args.project)
+    core.write_effective(args.project)  # also rotates old state logs, at most once per day
     print(f"Wrote {core.effective_path()}")
     return 0
 
@@ -125,6 +145,7 @@ def cmd_install(args: argparse.Namespace) -> int:
     import targets
 
     sys.stdout.reconfigure(encoding="utf-8")
+    state.rotate_daily()
     install.apply_prefs(install.load_prefs() or {})
     if args.plan:
         report, changes = install.collect_plan(args.target)
@@ -158,7 +179,79 @@ def cmd_install(args: argparse.Namespace) -> int:
 
 
 def cmd_index(args: argparse.Namespace) -> int:
+    state.rotate_daily()
     return build_index.run_index(args.check)
+
+
+def _human_size(count: int) -> str:
+    return f"{count / 1024:.1f} KB" if count < 1024 * 1024 else f"{count / 1024 / 1024:.1f} MB"
+
+
+def cmd_state(args: argparse.Namespace) -> int:
+    """`sox state rotate [--dry-run]` and `sox state adopt-logs [--yes]` (see tools/state.py)."""
+    root = Path(args.root) if args.root else None
+    if args.action == "rotate":
+        removed = state.rotate_known(root, dry_run=args.dry_run)
+        verb = "would remove" if args.dry_run else "removed"
+        for name, paths in removed.items():
+            print(f"{name}: {verb} {len(paths)} file(s)")
+        if not removed:
+            print("nothing to rotate (no known state subdirectory exists)")
+        return 0
+    found = state.adopt_logs(root, move=args.yes)
+    total = sum(size for _, _, size in found)
+    if not found:
+        print("no legacy local/flow-debug-*.log files to adopt")
+    elif args.yes:
+        print(f"moved {len(found)} file(s), {_human_size(total)}, into state/flow-debug/ (nothing deleted)")
+    else:
+        print(f"dry run: {len(found)} legacy log(s), {_human_size(total)}, would be moved from local/ into state/flow-debug/; "
+              "run with --yes to move them (nothing is ever deleted)")
+    return 0
+
+
+def cmd_backup(args: argparse.Namespace) -> int:
+    """`sox backup [--list | --restore ZIP]`: delegates to tools/backup.py (no logic copy)."""
+    import backup
+
+    argv = ["--list"] if args.list else ["--restore", args.restore] if args.restore else []
+    return backup.main(argv)
+
+
+def pytest_command(paths: list[str], which=None) -> list[str]:
+    """The pytest command this repo's suite uses: through `uv run --with pytest --with jsonschema` when uv exists."""
+    import shutil
+
+    found = (which or shutil.which)("uv")
+    pytest_args = ["-m", "pytest", "-q", *(paths or ["tests", "tools", "modules"])]
+    if found:
+        return [found, "run", "--with", "pytest", "--with", "jsonschema", "python", *pytest_args]
+    return [sys.executable, *pytest_args]
+
+
+def cmd_test(args: argparse.Namespace) -> int:
+    import subprocess
+
+    command = pytest_command(args.paths)
+    print("running: " + " ".join(command), flush=True)
+    return subprocess.run(command, cwd=Path(__file__).resolve().parents[1]).returncode
+
+
+def cmd_migrate(args: argparse.Namespace) -> int:
+    import migrate
+
+    rows = migrate.scan(args.project)
+    if not rows:
+        print("Nothing to migrate: every config file is at schema_version "
+              f"{core.SUPPORTED_VERSION} (registered migrations: {len(migrate.MIGRATIONS)}).")
+        return 0
+    for row in rows:
+        print(migrate.describe(row))
+    if args.check:
+        return 1  # something is outdated, newer or unreadable
+    for line in migrate.apply(rows):
+        print(line)
+    return 0 if all(r["status"] == "outdated" for r in rows) else 1
 
 
 def cmd_modules(args: argparse.Namespace) -> int:
@@ -229,6 +322,22 @@ def build_parser() -> argparse.ArgumentParser:
     mode.add_argument("--check", action="store_true", help="exit 1 when targets/ is missing, stale or hand-edited")
     mode.add_argument("--yes", action="store_true", help="apply: back up the agent config, then install")
     install.add_argument("--target", choices=("claude", "codex"), help="limit --plan and --check to one agent")
+    state_cmd = top.add_parser("state", help="machine output in state/: rotate old logs, adopt legacy logs from local/")
+    state_cmd.add_argument("--root", help=argparse.SUPPRESS)
+    state_sub = state_cmd.add_subparsers(dest="action", required=True)
+    state_rotate = state_sub.add_parser("rotate", help="delete old and surplus files in the known state subdirectories (tools/state.py)")
+    state_rotate.add_argument("--dry-run", action="store_true", help="only count what would be removed")
+    state_adopt = state_sub.add_parser("adopt-logs", help="move legacy local/flow-debug-*.log into state/flow-debug/ (never deletes)")
+    state_adopt.add_argument("--yes", action="store_true", help="really move; without it only the count and size are printed")
+    backup_cmd = top.add_parser("backup", help="zip the agent config (tools/backup.py); list or restore backups")
+    backup_mode = backup_cmd.add_mutually_exclusive_group()
+    backup_mode.add_argument("--list", action="store_true", help="list existing backups")
+    backup_mode.add_argument("--restore", metavar="ZIP", help="put a backup back in place (backs up the current state first)")
+    test_cmd = top.add_parser("test", help="run this repo's test suite the way it is normally run")
+    test_cmd.add_argument("paths", nargs="*", help="default: tests tools modules")
+    migrate_cmd = top.add_parser("migrate", help="upgrade config files whose schema_version is older than supported")
+    migrate_cmd.add_argument("--check", action="store_true", help="only list outdated files and the migrations that would run; exit 1 if any")
+    migrate_cmd.add_argument("--project", help="project root (adds the project and project-private layers)")
     top.add_parser("modules", help="list modules by kind: what, when to run, entry commands")
     ext = top.add_parser("ext", help="extension registry: plugins, mods, skills, reference packs")
     ext.add_argument("--root", help=argparse.SUPPRESS)
@@ -261,7 +370,10 @@ def build_parser() -> argparse.ArgumentParser:
 # (command, action) -> handler; add new subcommands here.
 COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_config_resolve,
             ("flow", "show"): cmd_flow_show, ("flow", "check"): cmd_flow_check,
-            ("index", None): cmd_index, ("install", None): cmd_install, ("modules", None): cmd_modules}
+            ("index", None): cmd_index, ("install", None): cmd_install, ("modules", None): cmd_modules,
+            ("backup", None): cmd_backup, ("test", None): cmd_test, ("migrate", None): cmd_migrate}
+for _action in ("rotate", "adopt-logs"):
+    COMMANDS[("state", _action)] = cmd_state
 for _action in ("list", "show", "add", "enable", "disable", "remove", "install"):
     COMMANDS[("ext", _action)] = cmd_ext
 

@@ -36,7 +36,13 @@ SCHEMA_PATH = ROOT / "core" / "config.schema.json"
 SHIPPED_SAFETY = Path(__file__).resolve().parent / "safety.json"   # rule ids when a fake root has no core/safety.json
 SUPPORTED_VERSION = 1
 DIRECTIVES = ("$append", "$remove", "$delete")
-MIGRATE_HINT = "`sox migrate` is not implemented yet; edit the file by hand"
+
+
+def migrate_hint(version: object) -> str:
+    """What to do about a file whose schema_version is not SUPPORTED_VERSION (see core/migrate.py)."""
+    if isinstance(version, int) and not isinstance(version, bool) and version < SUPPORTED_VERSION:
+        return "run `sox migrate --check` to list outdated files and the migrations that would run, then `sox migrate`"
+    return "the file is newer than this SocratexAI; update SocratexAI (`sox migrate` only upgrades older files)"
 
 
 class ConfigError(Exception):
@@ -186,7 +192,7 @@ def _check_file_header(path: Path, data: object, schema_name: str, allow_directi
         raise ConfigError(f"{path}: missing required key 'schema_version'")
     if data["schema_version"] != SUPPORTED_VERSION:
         raise ConfigError(f"{path}: schema_version {data['schema_version']!r} is not supported "
-                          f"(expected {SUPPORTED_VERSION}); {MIGRATE_HINT}")
+                          f"(expected {SUPPORTED_VERSION}); {migrate_hint(data['schema_version'])}")
     errors = validate(data, _core_schema(schema_name), "$", allow_directives=allow_directives)
     if errors:
         raise ConfigError(f"{path}: " + "; ".join(errors))
@@ -452,6 +458,7 @@ def write_effective(project_root: Path | str | None = None, root: Path | None = 
     log_safety(result, project_root, root)
     text = json.dumps(result, indent=2, ensure_ascii=False) + "\n"
     effective_path(root).write_text(text, encoding="utf-8", newline="\n")
+    state.rotate_daily(root)  # silent, at most once per day, never raises
     return result
 
 
@@ -706,8 +713,14 @@ def check_flow(project_root: Path | str | None = None, root: Path | None = None)
         return exc.errors
     roles = _known_roles(base)
     errors: list[str] = []
+    position = {s["id"]: number for number, s in enumerate(flow["steps"])}
     for step in flow["steps"]:
         where = f"{flow['origin'][step['id']]['file']}: step {step['id']}"
+        for need in step.get("needs", []):
+            if need not in position:
+                errors.append(f"{where}: needs step '{need}', which does not exist (removed by an override or never defined)")
+            elif position[need] >= position[step["id"]]:
+                errors.append(f"{where}: needs step '{need}', which does not come before it")
         for action in step["then"]:
             kind, _, target = action.partition(":")
             if kind == "stage" and not (base / "modules" / "stages" / target).is_dir():
@@ -717,6 +730,41 @@ def check_flow(project_root: Path | str | None = None, root: Path | None = None)
             elif kind in ("rule", "tool") and not target.startswith("project:") and not (base / target).is_file():
                 errors.append(f"{where}: {kind} path '{target}' does not exist")
     return errors
+
+
+# ---------- stage registry provenance ----------
+
+STAGE_NAMES = ("review", "planning")
+
+
+def stage_provenance(project_root: Path | str | None = None, root: Path | None = None) -> dict[str, dict]:
+    """Per stage, which checkers an override layer changed or added: {stage: {"changes": [...], "error": str | None}}.
+
+    Uses the engine's layered registry loader (modules/engine/common.py, loaded from <root> so a fake root works) and
+    only reports; it never changes how a registry is merged. A stage without checkers.json is left out; an unreadable
+    registry is reported in `error`. Each change: {checker, kind, field, from, to, layer, file} (see the engine docstring)."""
+    import importlib.util
+
+    base = Path(root) if root else ROOT
+    engine = base / "modules" / "engine" / "common.py"
+    if not engine.is_file():
+        return {}
+    spec = importlib.util.spec_from_file_location("socratex_engine_common", engine)
+    common = importlib.util.module_from_spec(spec)  # type: ignore[arg-type]
+    spec.loader.exec_module(common)  # type: ignore[union-attr]
+    common.LOCAL_DIR = base / "local"
+    project = Path(project_root).resolve() if project_root else None
+    result: dict[str, dict] = {}
+    for stage in STAGE_NAMES:
+        registry = base / "modules" / "stages" / stage / "checkers.json"
+        if not registry.is_file():
+            continue
+        try:
+            _, changes = common.load_registry_with_provenance(registry, project)
+            result[stage] = {"changes": changes, "error": None}
+        except common.RegistryError as exc:
+            result[stage] = {"changes": [], "error": str(exc)}
+    return result
 
 
 # ---------- initializer budget ----------

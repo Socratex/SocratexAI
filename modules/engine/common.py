@@ -100,7 +100,22 @@ def override_layers(pipeline: str, project_dir: Path | None) -> list[tuple[str, 
 
 
 def load_registry(path: Path, project_dir: Path | None) -> dict:
+    """Load a registry with its override layers; see `load_registry_with_provenance` (this drops the change list)."""
+    return load_registry_with_provenance(path, project_dir)[0]
+
+
+def _change_kind(field: str, value: object) -> str:
+    if field == "enabled":
+        return "enabled" if value else "disabled"
+    return {"tier": "retiered", "max_chunk_lines": "max_chunk_lines"}.get(field, "changed")
+
+
+def load_registry_with_provenance(path: Path, project_dir: Path | None) -> tuple[dict, list[dict]]:
     """Load and validate a registry, then apply the override layers (see `override_layers`) on a copy; nothing is written.
+
+    Returns (registry, provenance). Each provenance row is {checker, kind, field, from, to, layer, file}: kind is
+    `added` for an appended checker, else `disabled`, `enabled`, `retiered`, `max_chunk_lines` or `changed`; layer and
+    file name the override that did it. Only real value changes are listed. The registry is what `load_registry` returns.
 
     Each layer may change fields of existing checkers (`checkers`, including `enabled`, `tier`, `max_chunk_lines`),
     append new ones (`add`) and set the registry-wide keys; later layers win. `{here}` in select and fix commands
@@ -122,6 +137,7 @@ def load_registry(path: Path, project_dir: Path | None) -> dict:
     skip_patterns = list(base.get("skip_patterns", []))
     settings = {key: base[key] for key in ("min_changed_lines", "gates", "implementer_tier") if key in base}
     aliases: dict = {}
+    provenance: list[dict] = []
     for label, source, layer_here in override_layers(pipeline, project_dir):
         if not source.is_file():
             continue
@@ -133,8 +149,15 @@ def load_registry(path: Path, project_dir: Path | None) -> dict:
         for checker_id, changes in override.get("checkers", {}).items():
             if checker_id not in by_id:
                 raise RegistryError(f"{label}: unknown checker {checker_id!r}")
+            for field, value in changes.items():
+                before = by_id[checker_id].get(field, True if field == "enabled" else None)
+                if before != value:
+                    provenance.append({"checker": checker_id, "kind": _change_kind(field, value), "field": field,
+                                       "from": before, "to": value, "layer": label, "file": str(source)})
             by_id[checker_id].update(changes)
         added = copy.deepcopy(override.get("add", []))
+        provenance += [{"checker": raw.get("id"), "kind": "added", "field": None, "from": None, "to": None,
+                        "layer": label, "file": str(source)} for raw in added]
         checkers += added
         added_here.update({raw.get("id"): layer_here for raw in added})
         skip_patterns += override.get("skip_patterns", [])
@@ -159,7 +182,7 @@ def load_registry(path: Path, project_dir: Path | None) -> dict:
         "aliases": aliases,
         "gates": list(settings.get("gates", [])),
         "implementer_tier": settings.get("implementer_tier", "standard"),
-    }
+    }, provenance
 
 
 class RunLog:

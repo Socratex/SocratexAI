@@ -16,12 +16,14 @@
           "id": {"type": "string"},
           "when": {"type": "object"},
           "then": {"type": "array", "items": {"type": "string"}},
-          "why": {"type": "string"}
+          "why": {"type": "string"},
+          "needs": {"type": "array", "items": {"type": "string"}}
         }
       }
     }
   },
   "x-semantics": [
+    "`needs` (optional) lists step ids this step depends on. After all layer overrides, a needed id that is missing, equal to the step itself or placed after it is an error that `sox flow check` reports with file and step id (so removing a step that others need is caught).",
     "Steps run in array order. The agent sets the facts below as it learns them and re-checks the later steps; a step whose `when` holds must be done, one whose `when` does not hold is skipped.",
     "A fact that is not known yet matches nothing (equality is false, `not` is true).",
     "Overrides (local/overrides/flow.json, <project>/.socratex/flow.json, local/projects/<project>/flow.json) are applied in that order on top of core/flow.json. Their `steps` is an object with $remove (ids, a missing id is ignored), $delete (ids, a missing id is an error) and $append (full steps, an existing id is an error; optional `before` or `after` names a step id, default is the end). $remove and $delete run before $append, so remove plus append replaces a step."
