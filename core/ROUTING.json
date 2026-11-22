@@ -1,6 +1,6 @@
 {
     "schema": "socratex-model-routing/v1",
-    "note": "Single source of truth for model choice (Claude and Codex). Mirrored by claude/agents/*.md and codex/agents/*.toml, checked by modules/tools/scripts/tests. Human-readable policy: core/rules/ROUTING.md. Aliases, not pinned IDs, so a model retirement does not silently break routing. A project may override tiers in its own .ai/ROUTING.json.",
+    "note": "Single source of truth for model choice (Claude and Codex). Mirrored by claude/agents/*.md and codex/agents/*.toml, checked by modules/tools/scripts/tests. Human-readable policy: core/rules/ROUTING.md. Aliases, not pinned IDs, so a model retirement does not silently break routing. Project tier overrides: the config key routing.tier_overrides is the one path. DEPRECATED: a project's .ai/ROUTING.json (no code reads it; `sox project check` reports PRJ-ROUTING-LEGACY).",
     "principles": [
         "Plan with the expensive tier once; execute with the cheaper tier; verify with a deterministic gate (tests, analyzers, finalizer) before trusting the result.",
         "Send predictable, well-specified steps to the cheapest tier that passes the gate; escalate only the ambiguous remainder.",

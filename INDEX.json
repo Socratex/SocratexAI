@@ -171,6 +171,14 @@
       "what": "Schema of one profile file (defaults/profiles/<name>.json), id socratex-profile/v1; `config` is a bundle of config values validated by core/config.schema.json (without `profile`)"
     },
     {
+      "path": "core/project-check.json",
+      "what": "socratex-project-check/v1"
+    },
+    {
+      "path": "core/project-check.schema.json",
+      "what": "Schema of core/project-check.json: the rules `sox project check` applies to a project"
+    },
+    {
       "path": "core/RISK-RULES.json",
       "what": "socratex-risk-rules/v1"
     },
@@ -409,6 +417,10 @@
       "what": "Schema migrations for the config files that carry `schema_version` (`sox migrate`)."
     },
     {
+      "path": "core/project_check.py",
+      "what": "`sox project check | init | explain`: audit a project against the current SocratexAI setup and onboard it."
+    },
+    {
       "path": "core/shims.py",
       "what": "Redirect shims at the old tools/<name>.py paths, kept for projects that still call $SOCRATEX_HOME/tools/...."
     },
@@ -447,6 +459,10 @@
     {
       "path": "tests/test_paths.py",
       "what": "No living file may point to a path the restructure removed or moved (history in docs/specs and the shims excepted)."
+    },
+    {
+      "path": "tests/test_project_check.py",
+      "what": "Tests for `sox project check | init | explain` (core/project_check.py, core/project-check.json). Fixtures live in temp dirs."
     },
     {
       "path": "tests/test_safety.py",
@@ -553,8 +569,8 @@
     {
       "name": "core",
       "kind": "tools",
-      "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer, named safety rules, generated install targets",
-      "when": "Reading the effective config (with the checker overrides per stage) or the flow table at the start of a task, checking flow references and step dependencies, rotating or adopting state logs, migrating config schema versions, backing up the agent config, running the test suite, regenerating the index, planning or applying the agent config install (sox install), relaxing a safety rule",
+      "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer, project audit and onboarding (sox project), named safety rules, generated install targets",
+      "when": "Reading the effective config (with the checker overrides per stage) or the flow table at the start of a task, checking flow references and step dependencies, rotating or adopting state logs, migrating config schema versions, backing up the agent config, running the test suite, regenerating the index, planning or applying the agent config install (sox install), relaxing a safety rule, auditing or onboarding a project (check, init, explain)",
       "entry": [
         "core/sox config show",
         "core/sox flow show",
@@ -565,6 +581,8 @@
         "core/sox install --check",
         "core/sox state rotate --dry-run",
         "core/sox migrate --check",
+        "core/sox project check PATH",
+        "core/sox project init PATH",
         "core/sox backup --list",
         "core/sox test"
       ],
@@ -583,7 +601,10 @@
         "defaults",
         "core/safety.json",
         "core/safety.schema.json",
-        "core/targets.py"
+        "core/targets.py",
+        "core/project_check.py",
+        "core/project-check.json",
+        "core/project-check.schema.json"
       ]
     },
     {

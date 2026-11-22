@@ -1,0 +1,122 @@
+{
+  "schema": "socratex-project-check/v1",
+  "note": "Rules of `sox project check PATH` (code: core/project_check.py, one function per rule id). Globs are matched with fnmatch against the project-relative posix path; `*` also crosses `/`; a pattern without `/` also matches the file name; a trailing `/` means a folder prefix. `exclude` is applied to every rule; projects add more with the config key project_check.exclude and the read_only_dirs of .ai/guard.json.",
+  "exclude": [
+    "audits/archive/*",
+    ".claude/worktrees/*",
+    ".git/*",
+    "node_modules/*",
+    "*/node_modules/*",
+    "vendor/*",
+    "*/vendor/*",
+    "third_party/*",
+    "*.min.js",
+    "package-lock.json",
+    "*.lock"
+  ],
+  "max_file_bytes": 1048576,
+  "rules": [
+    {
+      "id": "PRJ-LEGACY-REF",
+      "severity": "error",
+      "what": "A text file still refers to the retired SocratexAI v1 pipeline, its files or its old tool paths.",
+      "fix": "Delete the reference or point it at the current mechanism (`$SOCRATEX_HOME/modules/tools/scripts/`, `sox`, `.socratex/config.json`).",
+      "files": ["*.md", "*.json", "*.py", "*.sh", "*.cmd", "*.bat", "*.ps1", "*.toml", "*.yml", "*.yaml", "*.txt"],
+      "patterns": ["legacy-pipeline", "SOCRATEX.md", "SocratexPipeline", ".aiassistant/", "$SOCRATEX_HOME/tools/", "SocratexAI/tools/", "AI-compiled"]
+    },
+    {
+      "id": "PRJ-LEGACY-FILE",
+      "severity": "error",
+      "what": "A file of the retired SocratexAI v1 setup is still in the project.",
+      "fix": "Move anything worth keeping into AGENTS.md or .socratex/config.json, then delete the file.",
+      "files": ["SOCRATEX.md", ".aiassistant/socratex/*", "SocratexAI/PIPELINE-CONFIG.json"]
+    },
+    {
+      "id": "PRJ-NO-CONFIG",
+      "severity": "error",
+      "what": ".socratex/config.json is missing, so the project is not onboarded.",
+      "fix": "Run `sox project init PATH --write`, or create .socratex/config.json containing {\"schema_version\": 1}."
+    },
+    {
+      "id": "PRJ-CONFIG-INVALID",
+      "severity": "error",
+      "what": "The config resolved for the project has errors, or the project file tries to relax a safety rule (safety.allow).",
+      "fix": "Fix the key named in the message (`sox config show --project PATH` shows the result); safety.allow may only be set in the owner's local/ layers."
+    },
+    {
+      "id": "PRJ-FLOW-INVALID",
+      "severity": "error",
+      "what": ".socratex/flow.json breaks the flow grammar or points to a missing stage, role, rule or tool.",
+      "fix": "Run `sox flow check --project PATH` and fix the listed steps."
+    },
+    {
+      "id": "PRJ-AGENTS-LONG",
+      "severity": "error",
+      "what": "An entry file is longer than its limit: the project file should hold project facts only.",
+      "fix": "Move detail into docs referenced from INDEX.json; delete anything the core rules already say.",
+      "limits": {"AGENTS.md": 80, "CLAUDE.md": 50}
+    },
+    {
+      "id": "PRJ-CLAUDE-IMPORT",
+      "severity": "error",
+      "what": "CLAUDE.md does not import AGENTS.md, so Claude and Codex read different rules.",
+      "fix": "Put `@AGENTS.md` on the first line of CLAUDE.md and keep only Claude-specific notes below it.",
+      "patterns": ["@AGENTS.md"]
+    },
+    {
+      "id": "PRJ-INDEX-SCHEMA",
+      "severity": "error",
+      "what": "INDEX.json is not valid project-index/v1, or an entry points to a path that does not exist.",
+      "fix": "Set \"schema\": \"project-index/v1\" and remove or correct the listed paths (template: templates/project/INDEX.json).",
+      "patterns": ["project-index/v1"]
+    },
+    {
+      "id": "PRJ-DUP-RULE",
+      "severity": "warning",
+      "what": "An entry file or doc repeats a core rule instead of pointing to it.",
+      "fix": "Delete the copy: core rules load from $SOCRATEX_HOME/core/RULES.md, and a copy drifts. Keep only what differs for this project.",
+      "files": ["AGENTS.md", "CLAUDE.md", "docs/*.md"],
+      "ignore_case": true,
+      "patterns": ["reply profile UCE", "reset --hard", "100% English", "git add -A", "force push", "Borrow before inventing", "Never read or edit secret files"]
+    },
+    {
+      "id": "PRJ-FORK-SCRIPT",
+      "severity": "error",
+      "what": "A project file has the name of a core script (modules/tools/scripts) or core agent (claude/agents): a fork that will drift.",
+      "fix": "Delete the fork and call the core one from $SOCRATEX_HOME, or give the project tool a different name if it is not a copy. Generic script names listed in `patterns` are exempt.",
+      "patterns": ["install.py", "update.py", "state.py", "backup.py", "generated.py"]
+    },
+    {
+      "id": "PRJ-DUP-HOOK",
+      "severity": "warning",
+      "what": "The project's .claude/settings.json adds a PreToolUse guard hook next to the global one.",
+      "fix": "Remove the hook; put project-specific blocks into .ai/guard.json (blocked_commands, read_only_dirs, big_files).",
+      "files": [".claude/settings.json"],
+      "patterns": ["pretool_guard", "guard"]
+    },
+    {
+      "id": "PRJ-NONSTD-OVERRIDE",
+      "severity": "error",
+      "what": "A routing, risk or guard override lives outside .ai/ under a non-standard name, so nothing reads it.",
+      "fix": "Move it to the standard place: .ai/RISK-RULES.json, .ai/guard.json, or the config key routing.tier_overrides for model tiers.",
+      "patterns": ["*MODEL-ROUTING*.json", "*RISK-RULES*.json", "*guard*.json"]
+    },
+    {
+      "id": "PRJ-GUARD-SCHEMA",
+      "severity": "error",
+      "what": "A project override file has a key the core does not read (keys starting with _ are allowed as notes).",
+      "fix": "Remove or rename the key; the allowed keys are listed in `sox project explain PRJ-GUARD-SCHEMA`.",
+      "known_keys": {
+        ".ai/guard.json": ["big_files", "big_file_reader", "read_only_dirs", "blocked_commands"],
+        ".ai/review.json": ["checkers", "add", "skip_patterns", "aliases", "min_changed_lines", "gates", "implementer_tier"],
+        ".ai/planning.json": ["checkers", "add", "skip_patterns", "aliases", "min_changed_lines", "gates", "implementer_tier"]
+      }
+    },
+    {
+      "id": "PRJ-ROUTING-LEGACY",
+      "severity": "warning",
+      "what": ".ai/ROUTING.json is deprecated and no code reads it.",
+      "fix": "Move the tiers to .socratex/config.json: {\"routing\": {\"tier_overrides\": {\"<agent>\": \"cheap|standard|high\"}}}, then delete the file."
+    }
+  ]
+}

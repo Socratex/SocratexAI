@@ -43,6 +43,13 @@
         }
       }
     },
+    "project_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "exclude": {"type": "array", "items": {"type": "string"}}
+      }
+    },
     "safety": {
       "type": "object",
       "additionalProperties": false,

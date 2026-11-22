@@ -2,8 +2,8 @@
   "schema": "socratex-module/v1",
   "name": "core",
   "kind": "tools",
-  "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer, named safety rules, generated install targets",
-  "when": "Reading the effective config (with the checker overrides per stage) or the flow table at the start of a task, checking flow references and step dependencies, rotating or adopting state logs, migrating config schema versions, backing up the agent config, running the test suite, regenerating the index, planning or applying the agent config install (sox install), relaxing a safety rule",
+  "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer, project audit and onboarding (sox project), named safety rules, generated install targets",
+  "when": "Reading the effective config (with the checker overrides per stage) or the flow table at the start of a task, checking flow references and step dependencies, rotating or adopting state logs, migrating config schema versions, backing up the agent config, running the test suite, regenerating the index, planning or applying the agent config install (sox install), relaxing a safety rule, auditing or onboarding a project (check, init, explain)",
   "entry": [
     "core/sox config show",
     "core/sox flow show",
@@ -14,6 +14,8 @@
     "core/sox install --check",
     "core/sox state rotate --dry-run",
     "core/sox migrate --check",
+    "core/sox project check PATH",
+    "core/sox project init PATH",
     "core/sox backup --list",
     "core/sox test"
   ],
@@ -32,7 +34,10 @@
     "defaults",
     "core/safety.json",
     "core/safety.schema.json",
-    "core/targets.py"
+    "core/targets.py",
+    "core/project_check.py",
+    "core/project-check.json",
+    "core/project-check.schema.json"
   ],
   "tests": [
     "tests/test_core.py",
@@ -40,6 +45,7 @@
     "tests/test_flow.py",
     "tests/test_safety.py",
     "tests/test_targets.py",
-    "tests/test_cleanup.py"
+    "tests/test_cleanup.py",
+    "tests/test_project_check.py"
   ]
 }

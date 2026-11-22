@@ -7,7 +7,7 @@ updated: 2026-11-19
 
 # 🤖 AI model routing (Claude and Codex)
 
-Source of truth: `core/ROUTING.json` (mirrored by `claude/agents/*.md` and `codex/agents/*.toml`, checked by `modules/tools/scripts/tests`). A project may override tiers in its own `.ai/ROUTING.json`. Aliases, not pinned model IDs.
+Source of truth: `core/ROUTING.json` (mirrored by `claude/agents/*.md` and `codex/agents/*.toml`, checked by `modules/tools/scripts/tests`). A project overrides tiers with the config key `routing.tier_overrides` (the one path; `.ai/ROUTING.json` is deprecated, `sox project check` warns). Aliases, not pinned model IDs.
 
 ## 🧭 Principles
 - Plan once with the expensive tier, execute with the cheaper tier, verify with a deterministic gate before trusting the result.

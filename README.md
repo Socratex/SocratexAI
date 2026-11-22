@@ -138,6 +138,18 @@ core/sox ext enable|disable <name> [--project P]
 core/sox ext install <name> [--yes]     # dry run; --yes backs up the agent config first, then runs the commands
 ```
 
+## 🚪 Onboarding a project
+
+`sox project check` audits a project against the current setup (rules: `core/project-check.json`): leftovers of the v1 pipeline, missing or invalid `.socratex/config.json`, long or duplicated entry files, forked core scripts, non-standard overrides. It only reads. `sox project init` creates the files a project is missing from `templates/project/` and never overwrites.
+
+```bash
+core/sox project check <path> [--json] [--strict]   # one line per finding; exit 1 on errors (--strict: warnings too), 2 on wrong usage
+core/sox project init <path> [--write]              # dry run by default; --write creates only the missing files
+core/sox project explain <RULE-ID>                  # what the rule means and how to fix it
+```
+
+Extra folders to skip: config key `project_check.exclude` (globs) and `read_only_dirs` in `.ai/guard.json`. Project model tiers: only the config key `routing.tier_overrides`; `.ai/ROUTING.json` is deprecated.
+
 ## 🧱 Structure
 
 ```
