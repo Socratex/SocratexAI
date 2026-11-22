@@ -143,7 +143,7 @@ SocratexAI/
   local/       your private layer (gitignored); `local.example/` seeds it
 ```
 
-Config layers, last wins: `defaults/` and `modules/` -> `local/overrides/` -> the project's `.socratex/config.json` -> `local/projects/<project>/`. Safety rules can only be relaxed from the owner's `local/` layers. `sox config show` prints every value with its source. Project rules win over the core, except safety rules, which projects can only make stricter. Projects keep their own `INDEX.json`, `AGENTS.md`, `CLAUDE.md` and optional `.ai/` overrides; start from `templates/project/`.
+Config layers, last wins: `defaults/` and `modules/` -> `local/overrides/` -> the project's `.socratex/config.json` -> `local/projects/<project>/`. Safety rules can only be relaxed from the owner's `local/` layers. `sox config show` prints every value with its source. Project rules win over the core, except safety rules, which projects can only make stricter. Projects keep their own `INDEX.json`, `AGENTS.md`, `CLAUDE.md` and optional `.ai/` overrides; start from `templates/project/`. Override format (files, keys, merge rules, examples): `docs/OVERRIDES.md`.
 
 What to run when: [docs/FLOW.md](docs/FLOW.md) (generated: `sox flow doc`).
 
