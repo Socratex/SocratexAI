@@ -1,5 +1,5 @@
 {
-  "purpose": "Schema of one SocratexAI config layer file (defaults, local overrides, project, project-private)",
+  "purpose": "Schema of one SocratexAI config layer file (defaults, profile, local overrides, project, project-private)",
   "type": "object",
   "required": ["schema_version"],
   "additionalProperties": false,
@@ -14,6 +14,33 @@
         "additionalProperties": false,
         "properties": {
           "enabled": {"type": "boolean"}
+        }
+      }
+    },
+    "codex": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "review": {"type": "boolean"},
+        "delegate": {"type": "boolean"}
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allow": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "preferences": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "load_when": {"type": "string"},
+          "files": {"type": "array", "items": {"type": "string"}}
         }
       }
     }

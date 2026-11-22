@@ -1,0 +1,8 @@
+{
+  "schema": "socratex-preferences/v1",
+  "schema_version": 1,
+  "name": "communication",
+  "what": "Reply profile for reports and answers to the owner",
+  "load_when": "writing any report or answer to the owner",
+  "files": ["core/STYLE.md"]
+}

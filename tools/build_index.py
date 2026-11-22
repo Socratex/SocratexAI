@@ -9,7 +9,7 @@ Sources:
   docs/specs/*/*.md                   -> frontmatter `description`
   modules/engine|stages/review|stages/planning/*.json -> `purpose` or `title` (module.json excluded)
   core/*.json                         -> `purpose` or `schema`
-  defaults/*.json                     -> fixed description
+  defaults/*.json                     -> fixed description; defaults/profiles and defaults/preferences -> `what`
   core/*.py, core/sox, tests/test_*.py -> docstring / test name
   modules/**/module.json              -> `modules` section (name, kind, what, when, entry, paths); validated first
 
@@ -144,6 +144,8 @@ def build() -> dict:
              for payload in [json.loads(p.read_text(encoding="utf-8"))]]
     data += [{"path": rel(p), "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"}
              for p in sorted((ROOT / "defaults").glob("*.json"))]
+    data += [{"path": rel(p), "what": json.loads(p.read_text(encoding="utf-8"))["what"]}
+             for p in sorted((ROOT / "defaults").glob("*/*.json")) + sorted((ROOT / "defaults").glob("preferences/*/*.json"))]
     data += [{"path": rel(p), "what": "Machine-readable list of AI workflow improvements and their status"}
              for p in [ROOT / "docs" / "IMPROVEMENTS.json"] if p.exists()]
     skills = [{"name": frontmatter(p).get("name", p.parent.name), "path": rel(p.parent),

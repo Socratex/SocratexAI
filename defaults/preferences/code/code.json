@@ -1,0 +1,8 @@
+{
+  "schema": "socratex-preferences/v1",
+  "schema_version": 1,
+  "name": "code",
+  "what": "Engineering standard for writing and reviewing code",
+  "load_when": "writing, changing or reviewing code",
+  "files": ["core/rules/CODE-STYLE.md"]
+}

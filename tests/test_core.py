@@ -35,6 +35,10 @@ def env(tmp_path):
         "schema_version": 1, "profile": "duo", "extensions": ["a", "b"],
         "stages": {"review": {"enabled": True}, "planning": {"enabled": True}},
     })
+    for name in ("solo", "duo", "yolo"):
+        write(root / "defaults" / "profiles" / f"{name}.json", {
+            "schema": "socratex-profile/v1", "schema_version": 1, "name": name, "what": name,
+            "config": {"codex": {"enabled": name != "solo"}}})
     project = tmp_path / "myproj"
     project.mkdir()
     return root, project
@@ -59,7 +63,7 @@ def val(env, key="profile"):
 
 def test_layer_order(env):
     root, project = env
-    assert [l["name"] for l in core.layers(project, root)] == ["defaults", "local", "project", "project-private"]
+    assert [l["name"] for l in core.layers(project, root)] == ["defaults", "profile", "local", "project", "project-private"]
 
 
 def test_defaults_only_when_layers_absent(env):
@@ -67,12 +71,12 @@ def test_defaults_only_when_layers_absent(env):
     result = core.resolve(project, root)
     assert result["values"]["profile"] == "duo"
     assert result["provenance"]["profile"]["layer"] == "defaults"
-    assert [s["layer"] for s in result["sources"]] == ["defaults"]
+    assert [s["layer"] for s in result["sources"]] == ["defaults", "profile"]
 
 
 def test_no_project_root_skips_project_layers(env):
     root, _ = env
-    assert [l["name"] for l in core.layers(None, root)] == ["defaults", "local"]
+    assert [l["name"] for l in core.layers(None, root)] == ["defaults", "profile", "local"]
 
 
 def test_local_overrides_defaults(env):
@@ -238,7 +242,7 @@ def test_effective_written_with_hashes_and_recomputed_when_stale(env):
     path = core.effective_path(root)
     assert path.is_file()
     assert first["values"]["profile"] == "solo"
-    assert {s["layer"] for s in first["sources"]} == {"defaults", "local"}
+    assert {s["layer"] for s in first["sources"]} == {"defaults", "profile", "local"}
     assert all(len(s["sha256"]) == 64 for s in first["sources"])
     # fresh: served from the cache even if the cached values are tampered with
     cached = json.loads(path.read_text(encoding="utf-8"))

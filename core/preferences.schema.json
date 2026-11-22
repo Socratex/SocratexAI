@@ -1,0 +1,14 @@
+{
+  "purpose": "Schema of one preference index (defaults/preferences/<name>/<name>.json), id socratex-preferences/v1: which documents to load for a kind of work, and when",
+  "type": "object",
+  "required": ["schema", "schema_version", "name", "what", "load_when", "files"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"type": "string", "enum": ["socratex-preferences/v1"]},
+    "schema_version": {"type": "integer", "enum": [1]},
+    "name": {"type": "string"},
+    "what": {"type": "string"},
+    "load_when": {"type": "string"},
+    "files": {"type": "array", "items": {"type": "string"}}
+  }
+}

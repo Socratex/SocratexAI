@@ -50,6 +50,48 @@ def cmd_config_resolve(args: argparse.Namespace) -> int:
     return 0
 
 
+def _parse_facts(pairs: list[str]) -> dict:
+    """Turn `key=value` arguments into a facts dict: true/false/ints are typed, `a,b` becomes a list."""
+    facts: dict = {}
+    for pair in pairs:
+        key, sep, raw = pair.partition("=")
+        if not sep:
+            raise core.ConfigError(f"fact '{pair}' must look like key=value")
+        if raw in ("true", "false"):
+            facts[key] = raw == "true"
+        elif raw.lstrip("-").isdigit():
+            facts[key] = int(raw)
+        else:
+            facts[key] = raw.split(",") if "," in raw else raw
+    return facts
+
+
+def cmd_flow_show(args: argparse.Namespace) -> int:
+    flow = core.load_flow(args.project)
+    schema = core._flow_schema()
+    known = _parse_facts(args.match or [])
+    steps = [s for s in flow["steps"] if not args.match or core.matches(s["when"], known, schema)]
+    if args.json:
+        print(json.dumps({"steps": steps, "origin": flow["origin"]}, indent=2, ensure_ascii=False))
+        return 0
+    for number, step in enumerate(steps, 1):
+        layer = flow["origin"][step["id"]]["layer"]
+        print(f"{number:>2}. {step['id']}" + (f"  ({layer})" if layer != "core" else ""))
+        print(f"    when: {_fmt(step['when']) if step['when'] else 'always'}")
+        print(f"    then: {', '.join(step['then'])}")
+        print(f"    why:  {step['why']}")
+    return 0
+
+
+def cmd_flow_check(args: argparse.Namespace) -> int:
+    errors = core.check_flow(args.project)
+    for line in errors:
+        print(line, file=sys.stderr)
+    if not errors:
+        print("Flow is valid.")
+    return 1 if errors else 0
+
+
 def cmd_index(args: argparse.Namespace) -> int:
     return build_index.run_index(args.check)
 
@@ -80,6 +122,14 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("--json", action="store_true")
     resolve = sub.add_parser("resolve", help="write state/effective.json")
     resolve.add_argument("--project")
+    flow = top.add_parser("flow", help="inspect and check the flow table (core/flow.json plus overrides)")
+    flow_sub = flow.add_subparsers(dest="action", required=True)
+    flow_show = flow_sub.add_parser("show", help="print the steps in order")
+    flow_show.add_argument("--project", help="project root (adds the project and project-private overrides)")
+    flow_show.add_argument("--match", nargs="+", metavar="FACT=VALUE", help="print only steps whose condition holds for these facts, e.g. task_size=big touches=auth,data")
+    flow_show.add_argument("--json", action="store_true")
+    flow_check = flow_sub.add_parser("check", help="exit 1 when a step points to a missing stage, role, rule or tool, or the grammar is broken")
+    flow_check.add_argument("--project")
     index = top.add_parser("index", help="regenerate INDEX.json from files and module manifests")
     index.add_argument("--check", action="store_true", help="exit 1 when INDEX.json is stale")
     top.add_parser("modules", help="list modules by kind: what, when to run, entry commands")
@@ -89,6 +139,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 # (command, action) -> handler; add new subcommands here.
 COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_config_resolve,
+            ("flow", "show"): cmd_flow_show, ("flow", "check"): cmd_flow_check,
             ("index", None): cmd_index, ("modules", None): cmd_modules}
 
 

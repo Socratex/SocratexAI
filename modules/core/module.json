@@ -1,0 +1,32 @@
+{
+  "schema": "socratex-module/v1",
+  "name": "core",
+  "kind": "tools",
+  "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer",
+  "when": "Reading the effective config or the flow table at the start of a task, checking flow references, regenerating the index",
+  "entry": [
+    "core/sox config show",
+    "core/sox flow show",
+    "core/sox flow check",
+    "core/sox index",
+    "core/sox modules"
+  ],
+  "paths": [
+    "core/sox",
+    "core/sox.cmd",
+    "core/core.py",
+    "core/INIT.md",
+    "core/flow.json",
+    "core/flow.schema.json",
+    "core/config.schema.json",
+    "core/module.schema.json",
+    "core/profile.schema.json",
+    "core/preferences.schema.json",
+    "defaults"
+  ],
+  "tests": [
+    "tests/test_core.py",
+    "tests/test_modules.py",
+    "tests/test_flow.py"
+  ]
+}

@@ -2,7 +2,8 @@
 """Config resolver: merges layered config files, validates them and records where every value came from.
 
 Layers, low to high (the later layer wins):
-    defaults         defaults/config.json
+    defaults         defaults/preferences/*/*.json (index of documents per kind of work), then defaults/config.json
+    profile          defaults/profiles/<name>.json, <name> = the last `profile` value set by any other layer
     local            local/overrides/config.json
     project          <project>/.socratex/config.json
     project-private  local/projects/<project folder name>/config.json
@@ -12,7 +13,9 @@ Merge rules (written explicitly in the later layer's file):
     {"$append": [..]}  append to a list      {"$remove": [..]}  drop items from a list (missing items ignored)
     {"$delete": true}  remove the key (a missing key is fine)
 
-Stdlib only. Used by `core/sox config ...`.
+The flow table (core/flow.json) has its own overrides in the same places, see the flow section below.
+
+Stdlib only. Used by `core/sox config ...` and `core/sox flow ...`.
 """
 
 from __future__ import annotations
@@ -44,18 +47,40 @@ def _read_json(path: Path) -> object:
         raise ConfigError(f"{path}: cannot read JSON: {exc}") from exc
 
 
-def layers(project_root: Path | str | None = None, root: Path | None = None) -> list[dict]:
-    """Return the ordered layers (low to high) as {name, path, exists}."""
-    base = Path(root) if root else ROOT
-    found = [
-        ("defaults", base / "defaults" / "config.json"),
-        ("local", base / "local" / "overrides" / "config.json"),
-    ]
+def _config_layers(project_root: Path | str | None, base: Path) -> list[dict]:
+    found = [("defaults", base / "defaults" / "config.json"), ("local", base / "local" / "overrides" / "config.json")]
     if project_root:
         project = Path(project_root).resolve()
         found.append(("project", project / ".socratex" / "config.json"))
         found.append(("project-private", base / "local" / "projects" / project.name / "config.json"))
-    return [{"name": n, "path": p, "exists": p.is_file()} for n, p in found]
+    return [{"name": n, "path": p, "exists": p.is_file(), "kind": "config"} for n, p in found]
+
+
+def selected_profile(project_root: Path | str | None = None, root: Path | None = None) -> str | None:
+    """Return the profile name: the last `profile` string set by a present config layer (a $delete clears it)."""
+    name = None
+    for layer in _config_layers(project_root, Path(root) if root else ROOT):
+        if not layer["exists"]:
+            continue
+        data = _read_json(layer["path"])
+        if isinstance(data, dict) and "profile" in data:
+            value = data["profile"]
+            name = value if isinstance(value, str) else (None if _directive(value) else name)
+    return name
+
+
+def layers(project_root: Path | str | None = None, root: Path | None = None) -> list[dict]:
+    """Return the ordered layers (low to high) as {name, path, exists, kind}; kind is config, profile or preferences."""
+    base = Path(root) if root else ROOT
+    configs = _config_layers(project_root, base)
+    prefs = [{"name": "defaults", "path": p, "exists": True, "kind": "preferences"}
+             for p in sorted((base / "defaults" / "preferences").glob("*/*.json"))]
+    profile = selected_profile(project_root, root)
+    middle = []
+    if profile:
+        path = base / "defaults" / "profiles" / f"{profile}.json"
+        middle = [{"name": "profile", "path": path, "exists": path.is_file(), "kind": "profile"}]
+    return prefs + configs[:1] + middle + configs[1:]
 
 
 # ---------- validation ----------
@@ -130,21 +155,54 @@ def _schema() -> dict:
     return _read_json(SCHEMA_PATH)  # type: ignore[return-value]
 
 
-def load_layer_file(path: Path) -> dict:
-    """Read one layer file and validate it (directives allowed); errors name the file and key."""
-    data = _read_json(path)
+def _core_schema(name: str) -> dict:
+    return _read_json(Path(__file__).resolve().parent / name)  # type: ignore[return-value]
+
+
+def _check_file_header(path: Path, data: object, schema_name: str, allow_directives: bool = False) -> dict:
+    """Validate a whole layer-like file against core/<schema_name>; errors name the file and key."""
     if not isinstance(data, dict):
         raise ConfigError(f"{path}: top level must be an object")
     if "schema_version" not in data:
         raise ConfigError(f"{path}: missing required key 'schema_version'")
-    version = data["schema_version"]
-    if version != SUPPORTED_VERSION:
-        raise ConfigError(
-            f"{path}: schema_version {version!r} is not supported (expected {SUPPORTED_VERSION}); {MIGRATE_HINT}")
-    errors = validate(data, _schema(), "$", allow_directives=True)
+    if data["schema_version"] != SUPPORTED_VERSION:
+        raise ConfigError(f"{path}: schema_version {data['schema_version']!r} is not supported "
+                          f"(expected {SUPPORTED_VERSION}); {MIGRATE_HINT}")
+    errors = validate(data, _core_schema(schema_name), "$", allow_directives=allow_directives)
     if errors:
         raise ConfigError(f"{path}: " + "; ".join(errors))
     return data
+
+
+def _profile_config_schema() -> dict:
+    schema = dict(_schema())
+    schema["required"] = []
+    schema["properties"] = {k: v for k, v in schema["properties"].items() if k not in ("profile", "schema_version")}
+    return schema
+
+
+def load_layer_file(path: Path) -> dict:
+    """Read one layer file and validate it (directives allowed); errors name the file and key."""
+    data = _read_json(path)
+    return _check_file_header(path, data, "config.schema.json", allow_directives=True)
+
+
+def load_profile_file(path: Path) -> dict:
+    """Read a profile file; return its config bundle as a layer dict (no schema_version: the config layers carry it)."""
+    data = _check_file_header(path, _read_json(path), "profile.schema.json")
+    errors = validate(data["config"], _profile_config_schema(), "config")
+    if errors:
+        raise ConfigError(f"{path}: " + "; ".join(errors))
+    return dict(data["config"])
+
+
+def load_preferences_file(path: Path) -> dict:
+    """Read a preference index; return it as a config layer dict {preferences: {name: {load_when, files}}}."""
+    data = _check_file_header(path, _read_json(path), "preferences.schema.json")
+    return {"preferences": {data["name"]: {"load_when": data["load_when"], "files": data["files"]}}}
+
+
+_LOADERS = {"config": load_layer_file, "profile": load_profile_file, "preferences": load_preferences_file}
 
 
 # ---------- merge with provenance ----------
@@ -194,10 +252,16 @@ def resolve(project_root: Path | str | None = None, root: Path | None = None) ->
     values: dict = {}
     prov: dict = {}
     sources = []
+    loaded = []
+    missing_profile = None
     for layer in layers(project_root, root):
         if not layer["exists"]:
+            missing_profile = layer["path"] if layer["name"] == "profile" else missing_profile
             continue
-        data = load_layer_file(layer["path"])
+        loaded.append((layer, _LOADERS[layer["kind"]](layer["path"])))
+    if missing_profile:  # reported after the other files so a bad `profile` value shows its own error first
+        raise ConfigError(f"{missing_profile}: the selected profile has no file")
+    for layer, data in loaded:
         sources.append({"layer": layer["name"], "file": str(layer["path"]), "sha256": file_hash(layer["path"])})
         _merge(values, prov, data, layer["name"], str(layer["path"]), "")
     errors = validate(values, _schema(), "$")
@@ -243,3 +307,272 @@ def effective(project_root: Path | str | None = None, root: Path | None = None) 
         except ValueError:
             pass
     return write_effective(project_root, root)
+
+
+# ---------- flow table ----------
+
+FLOW_SCHEMA_PATH = ROOT / "core" / "flow.schema.json"
+ACTION_PREFIXES = ("stage", "role", "rule", "gate", "tool")
+
+
+class FlowError(ConfigError):
+    """The flow table or one of its override files is invalid; `errors` holds one `file: step <id>: message` line each."""
+
+    def __init__(self, errors: list[str]) -> None:
+        super().__init__("\n".join(errors))
+        self.errors = errors
+
+
+def flow_layers(project_root: Path | str | None = None, root: Path | None = None) -> list[dict]:
+    """Return the flow files, low to high: core/flow.json, then flow.json in the local, project and project-private layers."""
+    base = Path(root) if root else ROOT
+    found = [("core", base / "core" / "flow.json"), ("local", base / "local" / "overrides" / "flow.json")]
+    if project_root:
+        project = Path(project_root).resolve()
+        found.append(("project", project / ".socratex" / "flow.json"))
+        found.append(("project-private", base / "local" / "projects" / project.name / "flow.json"))
+    return [{"name": n, "path": p, "exists": p.is_file()} for n, p in found]
+
+
+def _flow_schema() -> dict:
+    return _read_json(FLOW_SCHEMA_PATH)  # type: ignore[return-value]
+
+
+def check_condition(cond: object, facts: dict, where: str = "when") -> list[str]:
+    """Return grammar errors of one `when` condition (see x-condition-grammar in core/flow.schema.json)."""
+    if not isinstance(cond, dict):
+        return [f"{where}: a condition must be an object"]
+    errors: list[str] = []
+    for key, value in cond.items():
+        if key in ("all", "any"):
+            if not isinstance(value, list) or not value:
+                errors.append(f"{where}.{key}: needs a non-empty list of conditions")
+            else:
+                for i, sub in enumerate(value):
+                    errors += check_condition(sub, facts, f"{where}.{key}[{i}]")
+        elif key == "not":
+            errors += check_condition(value, facts, f"{where}.not")
+        elif key not in facts:
+            errors.append(f"{where}: unknown fact '{key}'")
+        else:
+            error = _check_operand(key, facts[key], value)
+            if error:
+                errors.append(f"{where}: {error}")
+    return errors
+
+
+def _check_operand(fact: str, spec: dict, value: object) -> str | None:
+    kind = spec["type"]
+    if kind == "integer":
+        if isinstance(value, dict) and len(value) == 1:
+            op, limit = next(iter(value.items()))
+            if op in ("gte", "lt") and isinstance(limit, int) and not isinstance(limit, bool):
+                return None
+        return f"fact '{fact}' takes {{\"gte\": n}} or {{\"lt\": n}}"
+    if kind == "boolean":
+        return None if isinstance(value, bool) else f"fact '{fact}' takes true or false"
+    if isinstance(value, dict):
+        if set(value) != {"not"} or isinstance(value["not"], dict):
+            return f"fact '{fact}' takes a value, a list or {{\"not\": value-or-list}}"
+        value = value["not"]
+    items = value if isinstance(value, list) else [value]
+    bad = [i for i in items if i not in spec["values"]]
+    if not items:
+        return f"fact '{fact}': empty list"
+    return f"fact '{fact}': {bad[0]!r} is not one of {spec['values']}" if bad else None
+
+
+def _fact_holds(value: object, spec: dict, actual: object) -> bool:
+    if isinstance(value, dict) and set(value) == {"not"}:
+        return not _fact_holds(value["not"], spec, actual)
+    if actual is None:
+        return False
+    if spec["type"] == "integer":
+        op, limit = next(iter(value.items()))  # type: ignore[union-attr]
+        return actual >= limit if op == "gte" else actual < limit  # type: ignore[operator]
+    wanted = value if isinstance(value, list) else [value]
+    if spec["type"] == "set":
+        have = actual if isinstance(actual, (list, set, tuple)) else [actual]
+        return any(w in have for w in wanted)
+    return actual in wanted
+
+
+def _holds(cond: dict, facts: dict, known: dict) -> bool:
+    for key, value in cond.items():
+        if key == "all":
+            ok = all(_holds(c, facts, known) for c in value)
+        elif key == "any":
+            ok = any(_holds(c, facts, known) for c in value)
+        elif key == "not":
+            ok = not _holds(value, facts, known)
+        else:
+            ok = _fact_holds(value, facts[key], known.get(key))
+        if not ok:
+            return False
+    return True
+
+
+def matches(when: dict, known: dict, schema: dict | None = None) -> bool:
+    """Evaluate a `when` condition against known facts {name: value}; a missing fact matches nothing."""
+    return _holds(when, (schema or _flow_schema())["x-facts"], known)
+
+
+def check_action(action: str, gates: dict) -> str | None:
+    """Return an error for a malformed action string, else None (existence is checked by check_flow)."""
+    if action == "ask":
+        return None
+    prefix, sep, target = action.partition(":")
+    if not sep or prefix not in ACTION_PREFIXES or not target:
+        return f"action {action!r} is not 'ask' or one of {', '.join(p + ':<x>' for p in ACTION_PREFIXES)}"
+    if prefix == "gate" and target not in gates:
+        return f"gate '{target}' is not one of {sorted(gates)}"
+    return None
+
+
+def _override_schema(schema: dict) -> dict:
+    step = json.loads(json.dumps(schema["properties"]["steps"]["items"]))
+    step["properties"].update({"before": {"type": "string"}, "after": {"type": "string"}})
+    ids = {"type": "array", "items": {"type": "string"}}
+    return {"type": "object", "required": ["schema"], "additionalProperties": False, "properties": {
+        "schema": schema["properties"]["schema"], "purpose": {"type": "string"},
+        "steps": {"type": "object", "additionalProperties": False, "properties": {
+            "$append": {"type": "array", "items": step}, "$remove": ids, "$delete": ids}}}}
+
+
+def _check_flow_file(path: Path, data: object, schema: dict, override: bool) -> list[str]:
+    """Schema, condition and action grammar of one flow file; each error names the file and the step id."""
+    if not isinstance(data, dict):
+        return [f"{path}: top level must be an object"]
+    errors = [f"{path}: {e}" for e in validate(data, _override_schema(schema) if override else schema, "$")]
+    if errors:
+        return errors
+    steps = data.get("steps", {}).get("$append", []) if override else data["steps"]
+    seen: set[str] = set()
+    for step in steps:
+        sid = step["id"]
+        if sid in seen:
+            errors.append(f"{path}: step {sid}: duplicate id")
+        seen.add(sid)
+        errors += [f"{path}: step {sid}: {e}" for e in check_condition(step["when"], schema["x-facts"])]
+        if not step["then"]:
+            errors.append(f"{path}: step {sid}: then is empty")
+        errors += [f"{path}: step {sid}: {e}" for a in step["then"] if (e := check_action(a, schema["x-gates"]))]
+    return errors
+
+
+def _apply_override(steps: list[dict], origin: dict, ops: dict, layer: dict) -> list[str]:
+    """Apply $remove, $delete, then $append of one override file in place; return error lines."""
+    errors: list[str] = []
+    file = str(layer["path"])
+    existing = {s["id"] for s in steps}
+    errors += [f"{file}: step {sid}: $delete names a step that does not exist" for sid in ops.get("$delete", []) if sid not in existing]
+    gone = set(ops.get("$remove", [])) | set(ops.get("$delete", []))
+    steps[:] = [s for s in steps if s["id"] not in gone]
+    for sid in gone:
+        origin.pop(sid, None)
+    for new in ops.get("$append", []):
+        new = dict(new)
+        before, after = new.pop("before", None), new.pop("after", None)
+        anchor = before or after
+        if any(s["id"] == new["id"] for s in steps):
+            errors.append(f"{file}: step {new['id']}: id already exists (use $remove first to replace it)")
+            continue
+        position = len(steps)
+        if anchor:
+            index = next((i for i, s in enumerate(steps) if s["id"] == anchor), None)
+            if index is None:
+                errors.append(f"{file}: step {new['id']}: before/after names unknown step '{anchor}'")
+                continue
+            position = index if before else index + 1
+        steps.insert(position, new)
+        origin[new["id"]] = {"layer": layer["name"], "file": file}
+    return errors
+
+
+def load_flow(project_root: Path | str | None = None, root: Path | None = None) -> dict:
+    """Merge core/flow.json with the override files present. Returns {steps, origin, sources}; raises FlowError."""
+    schema = _flow_schema()
+    steps: list[dict] = []
+    origin: dict[str, dict] = {}
+    sources: list[dict] = []
+    errors: list[str] = []
+    for layer in flow_layers(project_root, root):
+        is_core = layer["name"] == "core"
+        if not layer["exists"]:
+            if is_core:
+                raise FlowError([f"{layer['path']}: flow table is missing"])
+            continue
+        try:
+            data = _read_json(layer["path"])
+        except ConfigError as exc:
+            errors.append(str(exc))
+            continue
+        problems = _check_flow_file(layer["path"], data, schema, override=not is_core)
+        if problems:
+            errors += problems
+            continue
+        sources.append({"layer": layer["name"], "file": str(layer["path"]), "sha256": file_hash(layer["path"])})
+        if is_core:
+            steps = list(data["steps"])  # type: ignore[index]
+            origin = {s["id"]: {"layer": "core", "file": str(layer["path"])} for s in steps}
+        else:
+            errors += _apply_override(steps, origin, data.get("steps", {}), layer)  # type: ignore[union-attr]
+    if errors:
+        raise FlowError(errors)
+    return {"steps": steps, "origin": origin, "sources": sources}
+
+
+def _known_roles(base: Path) -> set[str]:
+    roles = {p.stem for p in (base / "claude" / "agents").glob("*.md")}
+    return roles | {p.stem for p in (base / "modules" / "routing" / "roles").glob("*")}
+
+
+def check_flow(project_root: Path | str | None = None, root: Path | None = None) -> list[str]:
+    """Return every problem of the merged flow: grammar errors plus actions that point to something missing."""
+    base = Path(root) if root else ROOT
+    try:
+        flow = load_flow(project_root, root)
+    except FlowError as exc:
+        return exc.errors
+    roles = _known_roles(base)
+    errors: list[str] = []
+    for step in flow["steps"]:
+        where = f"{flow['origin'][step['id']]['file']}: step {step['id']}"
+        for action in step["then"]:
+            kind, _, target = action.partition(":")
+            if kind == "stage" and not (base / "modules" / "stages" / target).is_dir():
+                errors.append(f"{where}: stage '{target}' does not exist (modules/stages/{target})")
+            elif kind == "role" and target not in roles:
+                errors.append(f"{where}: role '{target}' does not exist (claude/agents, modules/routing/roles)")
+            elif kind in ("rule", "tool") and not target.startswith("project:") and not (base / target).is_file():
+                errors.append(f"{where}: {kind} path '{target}' does not exist")
+    return errors
+
+
+# ---------- initializer budget ----------
+
+INIT_MAX_BYTES = 2500            # core/INIT.md alone; measured 1915 bytes on 2026-11-22, headroom for small edits
+INIT_TOTAL_MAX_BYTES = 4000      # INIT.md plus one summary line per enabled extension
+
+
+def extension_summaries(values: dict, root: Path | None = None) -> list[str]:
+    """One line per enabled extension: `name: when_to_use` from its manifest, or just the name while no manifest exists."""
+    base = Path(root) if root else ROOT
+    lines = []
+    for name in values.get("extensions", []):
+        text = name
+        for folder in (base / "local" / "extensions", base / "modules" / "extensions"):
+            manifest = folder / f"{name}.json"
+            if manifest.is_file():
+                text = f"{name}: {_read_json(manifest).get('when_to_use', '')}"  # type: ignore[union-attr]
+                break
+        lines.append(text)
+    return lines
+
+
+def init_size(project_root: Path | str | None = None, root: Path | None = None) -> int:
+    """Bytes the initializer costs at session start: core/INIT.md plus the summary lines of enabled extensions."""
+    base = Path(root) if root else ROOT
+    values = resolve(project_root, root)["values"]
+    lines = extension_summaries(values, root)
+    return (base / "core" / "INIT.md").stat().st_size + sum(len(line.encode("utf-8")) + 1 for line in lines)

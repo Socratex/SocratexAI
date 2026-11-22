@@ -9,6 +9,10 @@
   },
   "docs": [
     {
+      "path": "core/INIT.md",
+      "what": "Small agent-facing entry point; routes to the flow table, effective config and rule documents without repeating them."
+    },
+    {
       "path": "core/RULES.md",
       "what": "Always-loaded rules shared by Claude Code and Codex in every project."
     },
@@ -128,15 +132,31 @@
   "data": [
     {
       "path": "core/config.schema.json",
-      "what": "Schema of one SocratexAI config layer file (defaults, local overrides, project, project-private)"
+      "what": "Schema of one SocratexAI config layer file (defaults, profile, local overrides, project, project-private)"
     },
     {
       "path": "core/DIRECTIVES.json",
       "what": "socratex-directives/v1"
     },
     {
+      "path": "core/flow.json",
+      "what": "The only place with the order of work steps: if (facts) then (stage, role, rule, gate, tool, ask). Facts and grammar: core/flow.schema.json"
+    },
+    {
+      "path": "core/flow.schema.json",
+      "what": "Schema, fact table and condition grammar of the flow table (core/flow.json and its per-layer overrides), id socratex-flow/v1"
+    },
+    {
       "path": "core/module.schema.json",
       "what": "Schema of one module manifest (modules/<group>/<name>/module.json), id socratex-module/v1"
+    },
+    {
+      "path": "core/preferences.schema.json",
+      "what": "Schema of one preference index (defaults/preferences/<name>/<name>.json), id socratex-preferences/v1: which documents to load for a kind of work, and when"
+    },
+    {
+      "path": "core/profile.schema.json",
+      "what": "Schema of one profile file (defaults/profiles/<name>.json), id socratex-profile/v1; `config` is a bundle of config values validated by core/config.schema.json (without `profile`)"
     },
     {
       "path": "core/RISK-RULES.json",
@@ -161,6 +181,26 @@
     {
       "path": "defaults/config.json",
       "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"
+    },
+    {
+      "path": "defaults/profiles/duo.json",
+      "what": "Claude lead with Codex as subcontractor for search, tests and second-opinion review"
+    },
+    {
+      "path": "defaults/profiles/solo.json",
+      "what": "Claude alone: no Codex subcontractor, review and planning stay on"
+    },
+    {
+      "path": "defaults/profiles/yolo.json",
+      "what": "Duo plus relaxed safety rules; the rule names below are placeholders until core/safety.json exists"
+    },
+    {
+      "path": "defaults/preferences/code/code.json",
+      "what": "Engineering standard for writing and reviewing code"
+    },
+    {
+      "path": "defaults/preferences/communication/communication.json",
+      "what": "Reply profile for reports and answers to the owner"
     },
     {
       "path": "docs/IMPROVEMENTS.json",
@@ -341,6 +381,10 @@
       "what": "Tests for core/core.py (config resolver) and core/sox (CLI)."
     },
     {
+      "path": "tests/test_flow.py",
+      "what": "Tests for the flow table, profiles, preference indexes and the initializer budget (core/core.py, core/sox)."
+    },
+    {
       "path": "tests/test_modules.py",
       "what": "Tests for module manifests (modules/**/module.json), their schema and the index generated from them."
     },
@@ -435,9 +479,35 @@
       ]
     },
     {
+      "name": "core",
+      "kind": "tools",
+      "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer",
+      "when": "Reading the effective config or the flow table at the start of a task, checking flow references, regenerating the index",
+      "entry": [
+        "core/sox config show",
+        "core/sox flow show",
+        "core/sox flow check",
+        "core/sox index",
+        "core/sox modules"
+      ],
+      "paths": [
+        "core/sox",
+        "core/sox.cmd",
+        "core/core.py",
+        "core/INIT.md",
+        "core/flow.json",
+        "core/flow.schema.json",
+        "core/config.schema.json",
+        "core/module.schema.json",
+        "core/profile.schema.json",
+        "core/preferences.schema.json",
+        "defaults"
+      ]
+    },
+    {
       "name": "scripts",
       "kind": "tools",
-      "what": "Maintenance scripts and the sox command line: install, backup, update, leak check, index, config resolver, state helper, reference packs",
+      "what": "Maintenance scripts: install, backup, update, leak check, index, state helper, reference packs",
       "when": "Installing or updating the core, before changing agent config (backup), before a push (leaks), after editing docs or manifests (index)",
       "entry": [
         "python tools/install.py --check",
@@ -446,10 +516,7 @@
         "python tools/check_leaks.py",
         "python tools/build_index.py --check",
         "python tools/json_read.py <file> [<path>]",
-        "python tools/subrepos.py list",
-        "core/sox config show",
-        "core/sox index",
-        "core/sox modules"
+        "python tools/subrepos.py list"
       ],
       "paths": [
         "tools/install.py",
@@ -460,13 +527,7 @@
         "tools/json_read.py",
         "tools/subrepos.py",
         "tools/state.py",
-        "subrepos.json",
-        "core/sox",
-        "core/sox.cmd",
-        "core/core.py",
-        "core/config.schema.json",
-        "core/module.schema.json",
-        "defaults/config.json"
+        "subrepos.json"
       ]
     }
   ]
