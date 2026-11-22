@@ -90,4 +90,4 @@ Wzorce projektu dopisują się do reguł rdzenia, nie zastępują ich.
 ## Weryfikacja
 - `sox config show --project <ścieżka>`: wynik końcowy ze źródłem każdej wartości
 - `sox flow check`: poprawność flow
-- `sox project check <ścieżka>`: zgodność projektu ze standardem (komenda w budowie)
+- `sox project check <ścieżka>`: zgodność projektu ze standardem
