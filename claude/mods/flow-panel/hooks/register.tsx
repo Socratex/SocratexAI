@@ -868,7 +868,8 @@ const groupIdle = (rows: Row[]): Row[] => {
 
 const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: string[] = [selfId], shade = 0): Row[] =>
   groupIdle([
-  ...mergeCheap(s.nodes.map((nd): Row => {
+  // A background task (/tasks, dark blue) is drawn only while it runs; an idle one is hidden.
+  ...mergeCheap(s.nodes.filter(nd => !nd.taskId || nd.running > 0).map((nd): Row => {
     const noUsage = nd.hasUsage === false
     const usd = noUsage ? undefined : nodeUsd(nd, s.perW)
     const isRunning = nd.running > 0
