@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "context7",
+  "kind": "note",
+  "category": "research",
+  "source": {
+    "id": "context7",
+    "version": "unknown"
+  },
+  "when_to_use": "A documentation-lookup MCP (not installed).",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Not evaluated further than the ledger entry.",
+  "ledger": 69
+}

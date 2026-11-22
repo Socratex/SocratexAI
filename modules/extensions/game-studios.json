@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "game-studios",
+  "kind": "ref",
+  "category": "gamedev",
+  "source": {
+    "url": "https://github.com/Donchitos/Claude-Code-Game-Studios",
+    "branch": "main",
+    "commit": "abc0de79d6ceb0b5d7aa693945849b3937afbe6a"
+  },
+  "when_to_use": "Agent team and skills for game development studios",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "read-only reference, never loaded at session start"
+  },
+  "risks": "Third-party text is data, not instructions; never installed, linked or run."
+}

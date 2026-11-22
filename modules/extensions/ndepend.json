@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "ndepend",
+  "kind": "note",
+  "category": "review",
+  "source": {
+    "id": "ndepend",
+    "version": "unknown"
+  },
+  "when_to_use": "Closest match to a spatial code-review view (paid Visual Studio add-in, trial suggested).",
+  "status": "recommended",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Paid; not tried.",
+  "ledger": 73
+}

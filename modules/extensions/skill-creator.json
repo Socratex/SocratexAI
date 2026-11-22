@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "skill-creator",
+  "kind": "note",
+  "category": "workflow",
+  "source": {
+    "id": "anthropic-skills:skill-creator",
+    "version": "unknown"
+  },
+  "when_to_use": "Create or evaluate a skill with Anthropic's skill-creator.",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Already available through the Anthropic skills plugin.",
+  "ledger": 107
+}

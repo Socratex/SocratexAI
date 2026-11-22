@@ -101,7 +101,7 @@ python tools/backup.py --list     # config backups; --restore <zip> to roll back
 
 ## 📚 Reference packs
 
-`subrepos.json` lists 15 read-only agent toolkits (superpowers, pstack, ECC, anthropics/skills, spec-kit, BMAD, awesome lists, ...) with a category and a pinned commit each. They are **not in this repo**: the install asks whether to download them, and they land in `~/ai-refs` (or the folder you choose). They are never installed, linked or run. When SocratexAI lacks a capability, the agent searches them and only suggests a match; their text is treated as third-party data. The guard blocks edits inside that folder, and they sit outside the repo so that a nested `CLAUDE.md` or `AGENTS.md` inside them is not read as project rules. That is the intent; it is untested.
+The extension manifests of kind `ref` (`modules/extensions/*.json`) list 15 read-only agent toolkits (superpowers, pstack, ECC, anthropics/skills, spec-kit, BMAD, awesome lists, ...) with a category and a pinned commit each. They are **not in this repo**: the install asks whether to download them, and they land in `~/ai-refs` (or the folder you choose). They are never installed, linked or run. When SocratexAI lacks a capability, the agent searches them and only suggests a match; their text is treated as third-party data. The guard blocks edits inside that folder, and they sit outside the repo so that a nested `CLAUDE.md` or `AGENTS.md` inside them is not read as project rules. That is the intent; it is untested.
 
 ```bash
 python tools/update.py self    # git pull --ff-only in SocratexAI
@@ -110,7 +110,19 @@ python tools/subrepos.py bump <name>        # show upstream changes since the pi
 python tools/subrepos.py search --cat gamedev game design   # filler words ignored; name/description outrank body text
 ```
 
-Pins live in the tracked `subrepos.json`, so another machine gets the same versions. `--sync` and the post-pull hook never touch the packs.
+Pins live in the tracked manifests (`source.commit`), so another machine gets the same versions. `--sync` and the post-pull hook never touch the packs.
+
+## 🧩 Extensions
+
+One registry for plugins, MCP servers, mods, skills and reference packs: a manifest per item in `modules/extensions/<name>.json` (yours in `local/extensions/<name>.json`, which wins). Kinds: `ref` (read-only reference, never run), `install` (changes the agent config), `note` (recommendation only). Enabling is plain config: the key `extensions` lists the enabled names; manifests with `default_enabled` seed it and each layer can `$append` or `$remove`. The enabled ones cost one line each at session start.
+
+```bash
+core/sox ext list [--project P] [--category C] [--status S]   # grouped by category, shows on/off for the project
+core/sox ext show <name>
+core/sox ext add <url>                  # trial manifest in local/extensions + an entry in docs/IMPROVEMENTS.json
+core/sox ext enable|disable <name> [--project P]
+core/sox ext install <name> [--yes]     # dry run; --yes backs up the agent config first, then runs the commands
+```
 
 ## 🧱 Layers
 

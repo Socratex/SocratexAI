@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "obsidian-skills",
+  "kind": "note",
+  "category": "memory",
+  "source": {
+    "id": "obsidian-skills",
+    "version": "unknown"
+  },
+  "when_to_use": "Skills for working with Obsidian vaults.",
+  "status": "recommended",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Open together with Obsidian.",
+  "ledger": 114
+}

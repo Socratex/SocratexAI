@@ -1,0 +1,22 @@
+{
+  "schema": "socratex-module/v1",
+  "name": "extensions",
+  "kind": "tools",
+  "what": "Extension registry: manifests of plugins, MCP servers, mods, skills and read-only reference packs, with sox ext (list, show, add, enable, disable, remove, install)",
+  "when": "Choosing or evaluating a plugin, tool, mod or reference pack, enabling one per project, or looking up what is already known about it before proposing it again",
+  "entry": [
+    "core/sox ext list",
+    "core/sox ext show <name>",
+    "core/sox ext add <url>",
+    "core/sox ext enable <name> [--project PATH]",
+    "core/sox ext install <name>"
+  ],
+  "paths": [
+    "core/extension.schema.json",
+    "core/extensions.py",
+    "modules/extensions"
+  ],
+  "tests": [
+    "tests/test_extensions.py"
+  ]
+}

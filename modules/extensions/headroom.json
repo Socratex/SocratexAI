@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "headroom",
+  "kind": "note",
+  "category": "context",
+  "source": {
+    "id": "headroom",
+    "version": "unknown"
+  },
+  "when_to_use": "A proxy wrapper (`headroom wrap claude`) claiming about 20% fewer tokens.",
+  "status": "recommended",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Measure before adopting; the saving is a vendor claim.",
+  "ledger": 109
+}

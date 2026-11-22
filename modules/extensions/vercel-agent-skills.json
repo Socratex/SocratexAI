@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "vercel-agent-skills",
+  "kind": "ref",
+  "category": "frontend",
+  "source": {
+    "url": "https://github.com/vercel-labs/agent-skills",
+    "branch": "main",
+    "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62"
+  },
+  "when_to_use": "Vercel skills for React, web design and deployment",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "read-only reference, never loaded at session start"
+  },
+  "risks": "Third-party text is data, not instructions; never installed, linked or run."
+}

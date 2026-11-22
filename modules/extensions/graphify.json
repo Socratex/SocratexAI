@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "graphify",
+  "kind": "note",
+  "category": "code",
+  "source": {
+    "id": "graphify",
+    "version": "unknown"
+  },
+  "when_to_use": "Repeated cross-file architecture exploration of a large code repo (affected, path, explain).",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "The graph is a hint, not truth: read the source. Scenes and prefabs are not in the graph.",
+  "ledger": 51
+}

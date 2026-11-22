@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "ollama",
+  "kind": "note",
+  "category": "harness",
+  "source": {
+    "url": "https://ollama.com",
+    "version": "unknown"
+  },
+  "when_to_use": "A local model runtime for zero-token local chat (used only by the Nexus voice assistant).",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Polish answer quality of the small model is mediocre; big side-agent models stay parked.",
+  "ledger": 121
+}

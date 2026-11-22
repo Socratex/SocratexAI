@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "codelayers",
+  "kind": "note",
+  "category": "review",
+  "source": {
+    "id": "codelayers",
+    "version": "unknown"
+  },
+  "when_to_use": "A 3D impact view of a pull request.",
+  "status": "recommended",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Not tried; C# support unchecked.",
+  "ledger": 74
+}

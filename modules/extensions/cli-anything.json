@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "cli-anything",
+  "kind": "note",
+  "category": "harness",
+  "source": {
+    "url": "https://github.com/HKUDS/CLI-Anything",
+    "version": "unknown"
+  },
+  "when_to_use": "A plugin that generates a CLI harness (JSON output, REPL, SKILL.md) for software with a codebase.",
+  "status": "recommended",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Not installed; quality of generated harnesses untested here.",
+  "ledger": 127
+}

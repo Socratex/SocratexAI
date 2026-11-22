@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "claude-mem",
+  "kind": "note",
+  "category": "memory",
+  "source": {
+    "id": "claude-mem",
+    "version": "unknown"
+  },
+  "when_to_use": "Persistent memory plugin with a background compression model.",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Rejected.",
+  "ledger": 110
+}

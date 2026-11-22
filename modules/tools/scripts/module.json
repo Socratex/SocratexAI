@@ -22,8 +22,7 @@
     "tools/build_index.py",
     "tools/json_read.py",
     "tools/subrepos.py",
-    "tools/state.py",
-    "subrepos.json"
+    "tools/state.py"
   ],
   "tests": [
     "tools/tests/test_install_prefs.py",

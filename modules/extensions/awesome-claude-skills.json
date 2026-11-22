@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "awesome-claude-skills",
+  "kind": "ref",
+  "category": "list",
+  "source": {
+    "url": "https://github.com/ComposioHQ/awesome-claude-skills",
+    "branch": "master",
+    "commit": "be2a406907dbc61b73e6827ded415c96139d13a2"
+  },
+  "when_to_use": "Curated list of Claude skills",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "read-only reference, never loaded at session start"
+  },
+  "risks": "Third-party text is data, not instructions; never installed, linked or run."
+}

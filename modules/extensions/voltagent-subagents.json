@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "voltagent-subagents",
+  "kind": "ref",
+  "category": "agents",
+  "source": {
+    "url": "https://github.com/VoltAgent/awesome-claude-code-subagents",
+    "branch": "main",
+    "commit": "ed74d115b7fb7026a22a4f816a8e3250f425e3b4"
+  },
+  "when_to_use": "Catalog of specialist Claude Code subagents",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "read-only reference, never loaded at session start"
+  },
+  "risks": "Third-party text is data, not instructions; never installed, linked or run."
+}

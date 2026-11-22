@@ -1,0 +1,20 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "flow-panel",
+  "kind": "install",
+  "category": "statusline",
+  "source": {
+    "path": "claude/mods/flow-panel"
+  },
+  "when_to_use": "A side panel should show how work and the 5-hour limit flow between you, Claude, sub-agents and tools.",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "costs no model tokens: it only listens to engine events and draws SVG"
+  },
+  "risks": "Sets CLAUDE_CODE_PLUGIN_DIRS in settings.json (agent config); switch off with FLOW_PANEL=0.",
+  "install": [
+    "python tools/install.py --reconfigure"
+  ]
+}

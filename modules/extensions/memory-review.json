@@ -1,0 +1,22 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "memory-review",
+  "kind": "install",
+  "category": "workflow",
+  "source": {
+    "path": "skills/memory-review"
+  },
+  "when_to_use": "Monthly clean-up of agent memory, scripts, skills and rule documents (/memory-review).",
+  "status": "adopted",
+  "default_enabled": true,
+  "context_cost": {
+    "level": "low",
+    "note": "skill description is listed at session start; the body loads on use"
+  },
+  "risks": "Installed by the SocratexAI installer together with the rest of the core, not alone.",
+  "install": [
+    "python core/sox install --plan",
+    "python core/sox install --yes"
+  ],
+  "ledger": 44
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "agentshield",
+  "kind": "install",
+  "category": "security",
+  "source": {
+    "id": "ecc-agentshield",
+    "version": "1.6.0"
+  },
+  "when_to_use": "Business projects only: scan the agent setup for secrets, wildcard permissions, risky hooks and MCP servers.",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "not loaded at session start"
+  },
+  "risks": "Use only the basic offline scan; --opus, --injection, --provider and --supply-chain-online send config out. No --fix without a second yes.",
+  "install": [
+    "npm install -g ecc-agentshield@1.6.0"
+  ],
+  "ledger": 59
+}

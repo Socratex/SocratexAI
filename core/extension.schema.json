@@ -1,0 +1,48 @@
+{
+  "purpose": "Schema of one extension manifest (modules/extensions/<name>.json shipped, local/extensions/<name>.json owner's), id socratex-extension/v1",
+  "type": "object",
+  "required": ["schema", "name", "kind", "category", "source", "when_to_use", "status", "default_enabled", "context_cost", "risks"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"type": "string", "enum": ["socratex-extension/v1"]},
+    "name": {"type": "string"},
+    "kind": {"type": "string", "enum": ["ref", "install", "note"]},
+    "category": {"type": "string"},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {"type": "string"},
+        "commit": {"type": "string"},
+        "version": {"type": "string"},
+        "branch": {"type": "string"},
+        "path": {"type": "string"},
+        "id": {"type": "string"}
+      }
+    },
+    "when_to_use": {"type": "string"},
+    "status": {"type": "string", "enum": ["recommended", "trial", "adopted", "rejected"]},
+    "default_enabled": {"type": "boolean"},
+    "context_cost": {
+      "type": "object",
+      "required": ["level", "note"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {"type": "string", "enum": ["none", "low", "medium", "high", "unknown"]},
+        "note": {"type": "string"}
+      }
+    },
+    "risks": {"type": "string"},
+    "install": {"type": "array", "items": {"type": "string"}},
+    "ledger": {"type": "integer"}
+  },
+  "x-rules": [
+    "name equals the file name without .json and is lower-case letters, digits and hyphens",
+    "when_to_use is one sentence on one line, at most 200 characters",
+    "source has a locator: url, path (a local file or folder of this repo) or id; with url or id it also has commit or version (the value 'unknown' is allowed and means not pinned yet)",
+    "kind ref: source.url (https) and source.commit (40 hex characters or 'unknown'), no install, default_enabled false",
+    "kind install: a non-empty install list of command strings; they run only with `sox ext install <name> --yes`, after a backup",
+    "kind note: no install list",
+    "ledger is the id of the matching entry in docs/IMPROVEMENTS.json"
+  ]
+}

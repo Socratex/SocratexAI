@@ -1,0 +1,22 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "prompt-analytics",
+  "kind": "install",
+  "category": "context",
+  "source": {
+    "id": "prompt-analytics-for-claude-code",
+    "version": "unknown"
+  },
+  "when_to_use": "Token usage and cost of local Claude Code logs need numbers (summary, overhead, burn-rate).",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "not loaded at session start"
+  },
+  "risks": "`categorize` calls a model and costs money: only with consent; always use --format json and --since.",
+  "install": [
+    "uv tool install prompt-analytics-for-claude-code"
+  ],
+  "ledger": 18
+}

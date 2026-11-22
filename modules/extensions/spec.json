@@ -1,0 +1,22 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "spec",
+  "kind": "install",
+  "category": "workflow",
+  "source": {
+    "path": "skills/spec"
+  },
+  "when_to_use": "Before work over about an hour or touching architecture, data, saves, payments or auth: interview that ends in SPEC.md.",
+  "status": "adopted",
+  "default_enabled": true,
+  "context_cost": {
+    "level": "low",
+    "note": "skill description is listed at session start; the body loads on use"
+  },
+  "risks": "Installed by the SocratexAI installer together with the rest of the core, not alone.",
+  "install": [
+    "python core/sox install --plan",
+    "python core/sox install --yes"
+  ],
+  "ledger": 4
+}

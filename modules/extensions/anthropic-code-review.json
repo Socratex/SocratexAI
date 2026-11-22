@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "anthropic-code-review",
+  "kind": "note",
+  "category": "review",
+  "source": {
+    "id": "anthropic-code-review",
+    "version": "unknown"
+  },
+  "when_to_use": "Anthropic's official review plugin.",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Rejected: already covered.",
+  "ledger": 115
+}

@@ -18,20 +18,56 @@ def skill(pack: Path, rel: str, name: str, description: str, body: str = "") -> 
     path.write_text(f"---\nname: {name}\ndescription: {description}\n---\n{body}\n", encoding="utf-8")
 
 
+def ref_manifest(name: str, cat: str, **source: str) -> dict:
+    return {"schema": "socratex-extension/v1", "name": name, "kind": "ref", "category": cat,
+            "source": {"url": "https://example.com/x", "branch": "main", "commit": "unknown", **source},
+            "when_to_use": "w", "status": "adopted", "default_enabled": False,
+            "context_cost": {"level": "none", "note": "n"}, "risks": "r"}
+
+
 def fake_packs(tmp_path, monkeypatch) -> Path:
-    manifest = tmp_path / "subrepos.json"
-    repos = [{"name": "a", "cat": "workflow", "url": "x", "branch": "main", "what": ""},
-             {"name": "b", "cat": "frontend", "url": "x", "branch": "main", "what": ""}]
-    manifest.write_text(json.dumps({"repos": repos}), encoding="utf-8")
-    monkeypatch.setattr(subrepos, "MANIFEST", manifest)
+    folder = tmp_path / "modules" / "extensions"
+    folder.mkdir(parents=True)
+    for name, cat in (("a", "workflow"), ("b", "frontend")):
+        (folder / f"{name}.json").write_text(json.dumps(ref_manifest(name, cat)), encoding="utf-8")
+    monkeypatch.setattr(subrepos, "ROOT", tmp_path)
     monkeypatch.setenv("SOCRATEX_REFS", str(tmp_path / "packs"))
     return tmp_path / "packs"
 
 
 def test_real_manifest_is_github_https_pinned_and_categorised():
-    for repo in subrepos.load_manifest():
+    repos = subrepos.load_manifest()
+    assert len(repos) >= 15
+    for repo in repos:
         assert repo["url"].startswith("https://github.com/") and repo["branch"] and repo["cat"]
         assert len(repo.get("commit", "x" * 40)) == 40
+
+
+def test_packs_come_from_ref_manifests_only(tmp_path, monkeypatch):
+    fake_packs(tmp_path, monkeypatch)
+    note = ref_manifest("c", "list")
+    note.update(kind="note")
+    (tmp_path / "modules" / "extensions" / "c.json").write_text(json.dumps(note), encoding="utf-8")
+    assert [repo["name"] for repo in subrepos.load_manifest()] == ["a", "b"]
+
+
+def test_unknown_pin_counts_as_unpinned_and_local_manifest_is_a_pack(tmp_path, monkeypatch):
+    fake_packs(tmp_path, monkeypatch)
+    local = tmp_path / "local" / "extensions"
+    local.mkdir(parents=True)
+    (local / "z.json").write_text(json.dumps(ref_manifest("z", "list", commit="1" * 40)), encoding="utf-8")
+    repos = {repo["name"]: repo for repo in subrepos.load_manifest()}
+    assert "commit" not in repos["a"] and repos["z"]["commit"] == "1" * 40
+
+
+def test_bump_writes_the_new_pin_into_the_manifest_file(tmp_path, monkeypatch):
+    fake_packs(tmp_path, monkeypatch)
+    repos = subrepos.load_manifest()
+    repos[0]["commit"] = "2" * 40
+    subrepos.save_manifest(repos)
+    saved = json.loads((tmp_path / "modules" / "extensions" / "a.json").read_text(encoding="utf-8"))
+    assert saved["source"]["commit"] == "2" * 40 and saved["name"] == "a"
+    assert json.loads((tmp_path / "modules" / "extensions" / "b.json").read_text(encoding="utf-8"))["source"]["commit"] == "unknown"
 
 
 def test_packs_live_outside_the_repo(monkeypatch):

@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "ast-grep",
+  "kind": "note",
+  "category": "code",
+  "source": {
+    "id": "ast-grep",
+    "version": "unknown"
+  },
+  "when_to_use": "Syntax-shape search such as allocations or call patterns (rejected as a default).",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "AST matches do not resolve types; use rg for literal names.",
+  "ledger": 53
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "rtk",
+  "kind": "note",
+  "category": "code",
+  "source": {
+    "id": "rtk",
+    "version": "unknown"
+  },
+  "when_to_use": "Verbose Git, search or build output needs shortening (rejected as a default).",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "No proof of gain in an A/B test; keep raw logs and exit codes for verification.",
+  "ledger": 53
+}

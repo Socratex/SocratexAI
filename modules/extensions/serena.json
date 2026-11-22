@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "serena",
+  "kind": "note",
+  "category": "code",
+  "source": {
+    "id": "serena",
+    "version": "2.1"
+  },
+  "when_to_use": "Symbol-level navigation (find_symbol, references) in a code repo where ripgrep is not enough.",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "medium",
+    "note": "MCP tool list loads each session; disable when unused (ledger 50)"
+  },
+  "risks": "MCP server; disable when unused. C# needs .NET 10 and the Roslyn dependency.",
+  "ledger": 50
+}

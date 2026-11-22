@@ -466,6 +466,20 @@ def test_init_size_counts_one_line_per_enabled_extension(tmp_path):
     (root / "core").mkdir(parents=True)
     (root / "core" / "INIT.md").write_text("x" * 100, encoding="utf-8")
     write(root / "defaults" / "config.json", {"schema_version": 1, "extensions": ["alpha", "beta"]})
-    write(root / "modules" / "extensions" / "alpha.json", {"when_to_use": "when A"})
-    assert core.extension_summaries({"extensions": ["alpha", "beta"]}, root) == ["alpha: when A", "beta"]
-    assert core.init_size(None, root) == 100 + len("alpha: when A") + 1 + len("beta") + 1
+    write(root / "modules" / "extensions" / "alpha.json", ext_manifest("alpha", "when A"))
+    write(root / "modules" / "extensions" / "beta.json", ext_manifest("beta", "when B"))
+    values = {"extensions": ["alpha", "beta", "alpha"]}
+    assert core.extension_summaries(values, root) == ["alpha: when A", "beta: when B"]
+    assert core.extension_block(values, root) == [core.EXTENSION_HEADER, "alpha: when A", "beta: when B"]
+    lines = [core.EXTENSION_HEADER, "alpha: when A", "beta: when B"]
+    assert core.init_size(None, root) == 100 + sum(len(line) + 1 for line in lines)
+
+
+def test_extension_summaries_keep_a_bare_name_without_manifest(tmp_path):
+    assert core.extension_summaries({"extensions": ["ghost"]}, tmp_path) == ["ghost"]
+
+
+def ext_manifest(name: str, when: str) -> dict:
+    return {"schema": "socratex-extension/v1", "name": name, "kind": "note", "category": "c", "source": {"id": name, "version": "1"},
+            "when_to_use": when, "status": "adopted", "default_enabled": False,
+            "context_cost": {"level": "none", "note": "n"}, "risks": "r"}

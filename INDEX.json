@@ -139,6 +139,10 @@
       "what": "socratex-directives/v1"
     },
     {
+      "path": "core/extension.schema.json",
+      "what": "Schema of one extension manifest (modules/extensions/<name>.json shipped, local/extensions/<name>.json owner's), id socratex-extension/v1"
+    },
+    {
       "path": "core/flow.json",
       "what": "The only place with the order of work steps: if (facts) then (stage, role, rule, gate, tool, ask). Facts and grammar: core/flow.schema.json"
     },
@@ -385,6 +389,10 @@
       "what": "Config resolver: merges layered config files, validates them and records where every value came from."
     },
     {
+      "path": "core/extensions.py",
+      "what": "Extension registry: manifests of plugins, MCP servers, mods, skills and reference packs, and the `sox ext` actions."
+    },
+    {
       "path": "core/targets.py",
       "what": "Generated install targets: targets/claude/* and targets/codex/* (build output, gitignored, never edited by hand)."
     },
@@ -395,6 +403,10 @@
     {
       "path": "tests/test_core.py",
       "what": "Tests for core/core.py (config resolver) and core/sox (CLI)."
+    },
+    {
+      "path": "tests/test_extensions.py",
+      "what": "Tests for the extension registry (core/extensions.py, `sox ext`): manifests, layers, add, enable, install, startup budget."
     },
     {
       "path": "tests/test_flow.py",
@@ -534,6 +546,24 @@
       ]
     },
     {
+      "name": "extensions",
+      "kind": "tools",
+      "what": "Extension registry: manifests of plugins, MCP servers, mods, skills and read-only reference packs, with sox ext (list, show, add, enable, disable, remove, install)",
+      "when": "Choosing or evaluating a plugin, tool, mod or reference pack, enabling one per project, or looking up what is already known about it before proposing it again",
+      "entry": [
+        "core/sox ext list",
+        "core/sox ext show <name>",
+        "core/sox ext add <url>",
+        "core/sox ext enable <name> [--project PATH]",
+        "core/sox ext install <name>"
+      ],
+      "paths": [
+        "core/extension.schema.json",
+        "core/extensions.py",
+        "modules/extensions"
+      ]
+    },
+    {
       "name": "scripts",
       "kind": "tools",
       "what": "Maintenance scripts: install, backup, update, leak check, index, state helper, reference packs",
@@ -556,8 +586,7 @@
         "tools/build_index.py",
         "tools/json_read.py",
         "tools/subrepos.py",
-        "tools/state.py",
-        "subrepos.json"
+        "tools/state.py"
       ]
     }
   ]

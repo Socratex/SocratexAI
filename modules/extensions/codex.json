@@ -1,0 +1,24 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "codex",
+  "kind": "install",
+  "category": "review",
+  "source": {
+    "url": "https://github.com/openai/codex-plugin-cc",
+    "id": "codex@openai-codex",
+    "version": "unknown"
+  },
+  "when_to_use": "A second opinion on a diff (/codex:review) or delegated mechanical work (/codex:rescue) is needed.",
+  "status": "adopted",
+  "default_enabled": true,
+  "context_cost": {
+    "level": "low",
+    "note": "slash commands and a subagent; the always-on review gate stays off"
+  },
+  "risks": "A second vendor receives the code; check company policy first. The auto-review gate burns limits of both agents.",
+  "install": [
+    "claude plugin marketplace add openai/codex-plugin-cc",
+    "claude plugin install codex@openai-codex"
+  ],
+  "ledger": 48
+}

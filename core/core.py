@@ -11,6 +11,7 @@ Layers, low to high (the later layer wins):
 Merge rules (written explicitly in the later layer's file):
     objects deep-merge; scalars and lists replace
     {"$append": [..]}  append to a list      {"$remove": [..]}  drop items from a list (missing items ignored)
+    {"$remove": [..], "$append": [..]}  both in one value: drop first, then append
     {"$delete": true}  remove the key (a missing key is fine)
 
 The flow table (core/flow.json) has its own overrides in the same places, see the flow section below.
@@ -116,6 +117,8 @@ def _directive(value: object) -> tuple[str, object] | None:
         key = next(iter(value))
         if key in DIRECTIVES:
             return key, value[key]
+    if isinstance(value, dict) and set(value) == {"$append", "$remove"}:
+        return "$both", value
     return None
 
 
@@ -130,6 +133,12 @@ def validate(value: object, schema: dict, where: str, allow_directives: bool = F
                 errors.append(f"{where}: $delete must be true")
         elif schema.get("type") != "array":
             errors.append(f"{where}: {name} only applies to a list")
+        elif name == "$both":
+            for part in ("$remove", "$append"):
+                if not isinstance(arg[part], list):  # type: ignore[index]
+                    errors.append(f"{where}: {part} needs a list")
+                else:
+                    errors += [e for i, item in enumerate(arg[part]) for e in validate(item, schema.get("items", {}), f"{where}.{part}[{i}]")]  # type: ignore[index]
         elif not isinstance(arg, list):
             errors.append(f"{where}: {name} needs a list")
         else:
@@ -238,10 +247,13 @@ def _merge(base: dict, prov: dict, over: dict, layer: str, file: str, prefix: st
             if name == "$delete":
                 base.pop(key, None)
                 _drop(prov, path)
-            elif name == "$append" or key in base:
+            elif name != "$remove" or key in base:
                 current = base[key] if isinstance(base.get(key), list) else []
                 previous = _drop(prov, path)
-                new = current + list(arg) if name == "$append" else [i for i in current if i not in arg]  # type: ignore[operator]
+                if name == "$both":
+                    new = [i for i in current if i not in arg["$remove"]] + list(arg["$append"])  # type: ignore[index]
+                else:
+                    new = current + list(arg) if name == "$append" else [i for i in current if i not in arg]  # type: ignore[operator]
                 base[key] = new
                 _set_leaf(prov, path, new, layer, file, previous)
         elif isinstance(value, dict):
@@ -272,15 +284,6 @@ def _drop_project_relaxations(layer: dict, data: dict, chosen_by: str | None, pr
     return None
 
 
-def _relax_source(entry: dict, rule: str) -> dict:
-    """Layer and file where `rule` entered safety.allow: the oldest layer of the unbroken run that still lists it."""
-    chain = entry["overridden"] + [entry]
-    index = max(i for i, item in enumerate(chain) if rule in item["value"])
-    while index > 0 and rule in chain[index - 1]["value"]:
-        index -= 1
-    return {"layer": chain[index]["layer"], "file": chain[index]["file"]}
-
-
 def _safety_rules(base: Path) -> dict[str, dict]:
     path = base / "core" / "safety.json"
     data = _read_json(path if path.is_file() else SHIPPED_SAFETY)
@@ -297,7 +300,7 @@ def _relaxed_rules(values: dict, prov: dict, base: Path) -> tuple[list[dict], li
         elif not known[rule]["relaxable"]:
             errors.append(f"safety.allow: rule '{rule}' cannot be relaxed")
         else:
-            relaxed.append({"rule": rule, **_relax_source(prov["safety.allow"], rule)})
+            relaxed.append({"rule": rule, **_list_origin(prov["safety.allow"], rule)})
     return relaxed, errors
 
 
@@ -324,15 +327,60 @@ def resolve(project_root: Path | str | None = None, root: Path | None = None) ->
         loaded.append((layer, data))
     if missing_profile:  # reported after the other files so a bad `profile` value shows its own error first
         raise ConfigError(f"{missing_profile}: the selected profile has no file")
+    base_extensions = _extension_base(root)
+    if base_extensions:
+        sources.append(base_extensions[0])
+        _merge(values, prov, {"extensions": base_extensions[1]}, "defaults", base_extensions[0]["file"], "")
     for layer, data in loaded:
         sources.append({"layer": layer["name"], "file": str(layer["path"]), "sha256": file_hash(layer["path"])})
         _merge(values, prov, data, layer["name"], str(layer["path"]), "")
     errors = validate(values, _schema(), "$")
+    errors += _unknown_extensions(values, root)
     if errors:
         raise ConfigError("resolved config: " + "; ".join(errors))
     relaxed, unusable = _relaxed_rules(values, prov, Path(root) if root else ROOT)
     return {"values": values, "provenance": prov, "sources": sources,
             "safety": {"relaxed": relaxed, "errors": safety_errors + unusable}}
+
+
+def _extension_base(root: Path | None) -> tuple[dict, list[str]] | None:
+    """The lowest `extensions` value: every manifest with default_enabled (None when the root has no manifests)."""
+    import extensions
+    root = Path(root) if root else ROOT
+    if not extensions.has_manifests(root):
+        return None
+    names = extensions.default_enabled(root)
+    fingerprint = extensions.fingerprint(root)
+    return (fingerprint, names) if names and fingerprint else None
+
+
+def _unknown_extensions(values: dict, root: Path | None) -> list[str]:
+    """Enabled names that have no manifest (only checked once the root has manifests at all)."""
+    import extensions
+    root = Path(root) if root else ROOT
+    if not extensions.has_manifests(root):
+        return []
+    known = extensions.load_manifests(root)
+    return [f"extensions: '{name}' has no manifest (modules/extensions or local/extensions); "
+            f"remove it with `sox ext disable {name}` or add the manifest"
+            for name in dict.fromkeys(values.get("extensions", [])) if name not in known]
+
+
+def _list_origin(entry: dict, member: object) -> dict:
+    """Layer and file where `member` entered a list value: the oldest layer of the unbroken run that still holds it."""
+    chain = entry["overridden"] + [entry]
+    index = max(i for i, item in enumerate(chain) if member in item["value"])
+    while index > 0 and member in chain[index - 1]["value"]:
+        index -= 1
+    return {"layer": chain[index]["layer"], "file": chain[index]["file"]}
+
+
+def enabled_extensions(result: dict) -> list[dict]:
+    """The enabled extensions of a resolve() result as {name, layer, file}: the layer that switched each one on."""
+    entry = result["provenance"].get("extensions")
+    if not entry:
+        return []
+    return [{"name": name, **_list_origin(entry, name)} for name in dict.fromkeys(entry["value"])]
 
 
 def relaxed_rule_ids(project_root: Path | str | None = None, root: Path | None = None) -> set[str]:
@@ -411,6 +459,9 @@ def _is_fresh(cached: dict, project_root: Path | str | None, root: Path | None) 
     if cached.get("project") != (str(Path(project_root).resolve()) if project_root else None):
         return False
     current = {str(l["path"]): file_hash(l["path"]) for l in layers(project_root, root) if l["exists"]}
+    base_extensions = _extension_base(root)
+    if base_extensions:
+        current[base_extensions[0]["file"]] = base_extensions[0]["sha256"]
     recorded = {s["file"]: s["sha256"] for s in cached.get("sources", [])}
     return current == recorded
 
@@ -671,14 +722,14 @@ def check_flow(project_root: Path | str | None = None, root: Path | None = None)
 # ---------- initializer budget ----------
 
 INIT_MAX_BYTES = 2500            # core/INIT.md alone; measured 1915 bytes on 2026-11-22, headroom for small edits
-INIT_TOTAL_MAX_BYTES = 4000      # INIT.md plus one summary line per enabled extension
+INIT_TOTAL_MAX_BYTES = 4000      # INIT.md plus the generated block: one summary line per enabled extension
 
 
 def extension_summaries(values: dict, root: Path | None = None) -> list[str]:
     """One line per enabled extension: `name: when_to_use` from its manifest, or just the name while no manifest exists."""
     base = Path(root) if root else ROOT
     lines = []
-    for name in values.get("extensions", []):
+    for name in dict.fromkeys(values.get("extensions", [])):
         text = name
         for folder in (base / "local" / "extensions", base / "modules" / "extensions"):
             manifest = folder / f"{name}.json"
@@ -689,9 +740,18 @@ def extension_summaries(values: dict, root: Path | None = None) -> list[str]:
     return lines
 
 
+EXTENSION_HEADER = "Enabled extensions (`sox ext show <name>` for details):"
+
+
+def extension_block(values: dict, root: Path | None = None) -> list[str]:
+    """The generated startup lines for the enabled extensions: a header, then one `name: when_to_use` line each (empty when none)."""
+    lines = extension_summaries(values, root)
+    return [EXTENSION_HEADER] + lines if lines else []
+
+
 def init_size(project_root: Path | str | None = None, root: Path | None = None) -> int:
-    """Bytes the initializer costs at session start: core/INIT.md plus the summary lines of enabled extensions."""
+    """Bytes the initializer costs at session start: core/INIT.md plus the generated extension lines."""
     base = Path(root) if root else ROOT
     values = resolve(project_root, root)["values"]
-    lines = extension_summaries(values, root)
+    lines = extension_block(values, root)
     return (base / "core" / "INIT.md").stat().st_size + sum(len(line.encode("utf-8")) + 1 for line in lines)

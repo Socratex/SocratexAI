@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "obsidian",
+  "kind": "note",
+  "category": "memory",
+  "source": {
+    "id": "obsidian",
+    "version": "unknown"
+  },
+  "when_to_use": "Obsidian as a viewer and graph for the Markdown notes.",
+  "status": "recommended",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Not researched.",
+  "ledger": 117
+}

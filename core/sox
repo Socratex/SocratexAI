@@ -36,12 +36,24 @@ def print_relaxed_safety(safety: dict) -> None:
     print()
 
 
+def print_enabled_extensions(enabled: list[dict]) -> None:
+    """The second block of `config show`: enabled extensions with the layer that switched each one on."""
+    print("Enabled extensions:")
+    for item in enabled:
+        print(f"  {item['name']}  <- {item['layer']}: {item['file']}")
+    if not enabled:
+        print("  none")
+    print()
+
+
 def cmd_config_show(args: argparse.Namespace) -> int:
     result = core.resolve(args.project)
+    enabled = core.enabled_extensions(result)
     if args.json:
-        print(json.dumps(result, indent=2, ensure_ascii=False))
+        print(json.dumps({**result, "enabled_extensions": enabled}, indent=2, ensure_ascii=False))
         return 0
     print_relaxed_safety(result["safety"])
+    print_enabled_extensions(enabled)
     rows = []
     for key in sorted(result["provenance"]):
         entry = result["provenance"][key]
@@ -165,6 +177,32 @@ def cmd_modules(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_ext(args: argparse.Namespace) -> int:
+    """`sox ext`: list, show, add, enable, disable, remove and install extensions (see core/extensions.py)."""
+    import extensions
+
+    root = args.root
+    action = args.action
+    if action == "list":
+        lines = extensions.list_lines(root, args.project, args.category, args.status)
+    elif action == "show":
+        lines = extensions.show_lines(args.name, root, args.project)
+    elif action == "add":
+        path, ledger_id = extensions.add_extension(args.url, root, args.name, args.kind, args.category)
+        lines = [f"Created {path} (status trial, off) and ledger entry {ledger_id} in docs/IMPROVEMENTS.json.",
+                 "Fields marked 'unknown' and the TODO lines in the ledger entry are yours to fill in."]
+    elif action in ("enable", "disable"):
+        lines = [extensions.set_enabled(args.name, action == "enable", root, args.project)]
+    elif action == "remove":
+        touched = extensions.remove_extension(args.name, root)
+        lines = [f"Removed local manifest '{args.name}'."] + [f"Dropped it from {path}" for path in touched]
+        lines.append("Its ledger entry stays: the ledger is history.")
+    else:
+        lines = extensions.install_extension(args.name, args.yes, root)
+    print("\n".join(lines))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="sox", description=__doc__)
     top = parser.add_subparsers(dest="command", required=True)
@@ -192,6 +230,30 @@ def build_parser() -> argparse.ArgumentParser:
     mode.add_argument("--yes", action="store_true", help="apply: back up the agent config, then install")
     install.add_argument("--target", choices=("claude", "codex"), help="limit --plan and --check to one agent")
     top.add_parser("modules", help="list modules by kind: what, when to run, entry commands")
+    ext = top.add_parser("ext", help="extension registry: plugins, mods, skills, reference packs")
+    ext.add_argument("--root", help=argparse.SUPPRESS)
+    ext_sub = ext.add_subparsers(dest="action", required=True)
+    ext_list = ext_sub.add_parser("list", help="extensions grouped by category with status, kind and on/off for the project")
+    ext_list.add_argument("--project", help="project root (adds the project layers to the on/off column)")
+    ext_list.add_argument("--category")
+    ext_list.add_argument("--status", choices=("recommended", "trial", "adopted", "rejected"))
+    ext_show = ext_sub.add_parser("show", help="print one manifest")
+    ext_show.add_argument("name")
+    ext_show.add_argument("--project")
+    ext_add = ext_sub.add_parser("add", help="create a trial manifest in local/extensions and an entry in docs/IMPROVEMENTS.json")
+    ext_add.add_argument("url")
+    ext_add.add_argument("--name")
+    ext_add.add_argument("--kind", choices=("ref", "install", "note"), default="note")
+    ext_add.add_argument("--category")
+    for verb in ("enable", "disable"):
+        ext_switch = ext_sub.add_parser(verb, help=f"{verb} an extension in one config layer file")
+        ext_switch.add_argument("name")
+        ext_switch.add_argument("--project", help="project root: writes local/projects/<project>/config.json instead of local/overrides")
+    ext_remove = ext_sub.add_parser("remove", help="delete a local manifest and drop it from the owner's config layers")
+    ext_remove.add_argument("name")
+    ext_install = ext_sub.add_parser("install", help="kind install only: print the commands; with --yes back up the agent config, then run them")
+    ext_install.add_argument("name")
+    ext_install.add_argument("--yes", action="store_true", help="the owner's explicit yes: backup first, then run the commands")
     parser.set_defaults(action=None)
     return parser
 
@@ -200,6 +262,8 @@ def build_parser() -> argparse.ArgumentParser:
 COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_config_resolve,
             ("flow", "show"): cmd_flow_show, ("flow", "check"): cmd_flow_check,
             ("index", None): cmd_index, ("install", None): cmd_install, ("modules", None): cmd_modules}
+for _action in ("list", "show", "add", "enable", "disable", "remove", "install"):
+    COMMANDS[("ext", _action)] = cmd_ext
 
 
 def main(argv: list[str] | None = None) -> int:

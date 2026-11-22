@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "qa-guide",
+  "kind": "note",
+  "category": "statusline",
+  "source": {
+    "id": "qa-guide@claude-qamods",
+    "version": "unknown"
+  },
+  "when_to_use": "A side pane that explains why Claude asks a question and where each option leads.",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Uses model calls, so it may spend tokens; not judged yet.",
+  "ledger": 126
+}

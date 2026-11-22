@@ -1,0 +1,21 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "token-efficient-code",
+  "kind": "install",
+  "category": "code",
+  "source": {
+    "path": "skills/token-efficient-code"
+  },
+  "when_to_use": "Bounded code retrieval or CLI output reduction with locally installed RTK, ast-grep, Serena, Graphify, TOON or Repomix.",
+  "status": "adopted",
+  "default_enabled": true,
+  "context_cost": {
+    "level": "low",
+    "note": "skill description is listed at session start; the body loads on use"
+  },
+  "risks": "Installed by the SocratexAI installer together with the rest of the core, not alone.",
+  "install": [
+    "python core/sox install --plan",
+    "python core/sox install --yes"
+  ]
+}

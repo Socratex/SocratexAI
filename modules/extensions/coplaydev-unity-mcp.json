@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "coplaydev-unity-mcp",
+  "kind": "note",
+  "category": "gamedev",
+  "source": {
+    "id": "coplaydev-unity-mcp",
+    "version": "unknown"
+  },
+  "when_to_use": "A second Unity MCP (not wired: duplicate of the official one).",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Not evaluated further than the ledger entry.",
+  "ledger": 70
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "cc-usage-band",
+  "kind": "install",
+  "category": "statusline",
+  "source": {
+    "url": "https://github.com/JetsonChan/CC-Usage-Band",
+    "id": "usage-band@cc-usage-band",
+    "version": "1.0.6"
+  },
+  "when_to_use": "One band above the prompt should show the 5h and 7d limits, context window and cache hit rate.",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "low",
+    "note": "draws a band; no model calls (code read for version 1.0.6)"
+  },
+  "risks": "Third-party plugin; read its code again before installing a newer version than 1.0.6.",
+  "install": [
+    "claude plugin marketplace add JetsonChan/CC-Usage-Band",
+    "claude plugin install usage-band@cc-usage-band"
+  ],
+  "ledger": 125
+}

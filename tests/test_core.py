@@ -279,6 +279,7 @@ def test_cli_show_lists_every_key_with_source(env, capsys, monkeypatch):
 
 def test_cli_show_json_and_error_exit(env, capsys, monkeypatch):
     root, project = env
+    monkeypatch.setattr(core, "ROOT", root)
     original = core.layers
     monkeypatch.setattr(core, "layers", lambda project_root=None, root_=None: original(project_root, root))
     assert sox.main(["config", "show", "--project", str(project), "--json"]) == 0
@@ -286,6 +287,27 @@ def test_cli_show_json_and_error_exit(env, capsys, monkeypatch):
     proj(project, {"bogus": 1})
     assert sox.main(["config", "show", "--project", str(project)]) == 2
     assert "bogus" in capsys.readouterr().err
+
+
+def test_remove_and_append_in_one_value_drop_first_then_append(env):
+    root, project = env
+    local(root, {"extensions": {"$remove": ["a"], "$append": ["c", "a"]}})
+    assert val(env, "extensions") == ["b", "c", "a"]
+    prov = core.resolve(project, root)["provenance"]["extensions"]
+    assert prov["layer"] == "local" and prov["overridden"][0]["value"] == ["a", "b"]
+
+
+def test_combined_directive_is_validated(env):
+    root, project = env
+    local(root, {"extensions": {"$remove": ["a"], "$append": "c"}})
+    with pytest.raises(core.ConfigError, match=r"config.json.*extensions: \$append needs a list"):
+        core.resolve(project, root)
+    local(root, {"extensions": {"$remove": [1], "$append": []}})
+    with pytest.raises(core.ConfigError, match=r"extensions.\$remove\[0\]"):
+        core.resolve(project, root)
+    local(root, {"stages": {"$remove": [], "$append": []}})
+    with pytest.raises(core.ConfigError, match="only applies to a list"):
+        core.resolve(project, root)
 
 
 def test_shipped_defaults_file_is_valid():

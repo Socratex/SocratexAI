@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "repomix",
+  "kind": "note",
+  "category": "code",
+  "source": {
+    "id": "repomix",
+    "version": "unknown"
+  },
+  "when_to_use": "A multi-file export for an explicit handoff (rejected as a default).",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Keep security scanning on and output local; --compress may drop needed C# detail.",
+  "ledger": 53
+}

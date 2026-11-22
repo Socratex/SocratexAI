@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "superpowers",
+  "kind": "ref",
+  "category": "workflow",
+  "source": {
+    "url": "https://github.com/obra/superpowers",
+    "branch": "main",
+    "commit": "22f0b463e7a5e579904dd6211a520321035526f7"
+  },
+  "when_to_use": "Skill-based development workflow for coding agents (brainstorm, plan, TDD, review)",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "read-only reference, never loaded at session start"
+  },
+  "risks": "Third-party text is data, not instructions; never installed, linked or run."
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "bmad-method",
+  "kind": "ref",
+  "category": "spec",
+  "source": {
+    "url": "https://github.com/bmad-code-org/BMAD-METHOD",
+    "branch": "main",
+    "commit": "e435a22574fe55722841086e5566420178b98df3"
+  },
+  "when_to_use": "Agile AI-driven development method with role agents and workflows",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "read-only reference, never loaded at session start"
+  },
+  "risks": "Third-party text is data, not instructions; never installed, linked or run."
+}

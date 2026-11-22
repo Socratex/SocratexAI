@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "elephant-goldfish",
+  "kind": "note",
+  "category": "workflow",
+  "source": {
+    "id": "egm-plugin",
+    "version": "unknown"
+  },
+  "when_to_use": "The main session keeps all context while fresh-context agents do the work (EGM plugin).",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Rejected.",
+  "ledger": 123
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "openspec",
+  "kind": "ref",
+  "category": "spec",
+  "source": {
+    "url": "https://github.com/Fission-AI/OpenSpec",
+    "branch": "main",
+    "commit": "f085c850f9440f497ccc76ecbc2859c09e0e0ac7"
+  },
+  "when_to_use": "Lightweight spec-driven development for AI coding assistants",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "read-only reference, never loaded at session start"
+  },
+  "risks": "Third-party text is data, not instructions; never installed, linked or run."
+}

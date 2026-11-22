@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "ponytail",
+  "kind": "note",
+  "category": "workflow",
+  "source": {
+    "id": "ponytail",
+    "version": "unknown"
+  },
+  "when_to_use": "Makes the agent check cheaper options before writing code.",
+  "status": "recommended",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Needs Node hooks; skipped for now.",
+  "ledger": 108
+}

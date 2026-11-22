@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "claude-code-setup",
+  "kind": "note",
+  "category": "harness",
+  "source": {
+    "id": "claude-code-setup",
+    "version": "unknown"
+  },
+  "when_to_use": "Anthropic plugin that recommends automations for a project.",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Rejected: the setup is already heavy.",
+  "ledger": 116
+}

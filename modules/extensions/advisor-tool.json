@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "advisor-tool",
+  "kind": "note",
+  "category": "harness",
+  "source": {
+    "id": "claude --advisor",
+    "version": "unknown"
+  },
+  "when_to_use": "The main model consults a stronger one at key moments (`claude --advisor opus`, built in).",
+  "status": "recommended",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Untested here.",
+  "ledger": 106
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "ui-ux-pro-max",
+  "kind": "ref",
+  "category": "frontend",
+  "source": {
+    "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+    "branch": "main",
+    "commit": "f984fcd3dec8c71cf88f2b47ff8acd0ff4ca99c2"
+  },
+  "when_to_use": "Design intelligence skill for building UI/UX",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "read-only reference, never loaded at session start"
+  },
+  "risks": "Third-party text is data, not instructions; never installed, linked or run."
+}

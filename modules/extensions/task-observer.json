@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "task-observer",
+  "kind": "note",
+  "category": "workflow",
+  "source": {
+    "id": "task-observer",
+    "version": "unknown"
+  },
+  "when_to_use": "Meta-skill that logs skill-improvement observations.",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Rejected: duplicates skill_learn and skill-reflect.",
+  "ledger": 111
+}

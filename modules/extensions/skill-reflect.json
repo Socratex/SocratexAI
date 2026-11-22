@@ -1,0 +1,22 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "skill-reflect",
+  "kind": "install",
+  "category": "workflow",
+  "source": {
+    "path": "skills/skill-reflect"
+  },
+  "when_to_use": "Logged skill learnings should become small owner-approved SKILL.md edits (/skill-reflect).",
+  "status": "adopted",
+  "default_enabled": true,
+  "context_cost": {
+    "level": "low",
+    "note": "skill description is listed at session start; the body loads on use"
+  },
+  "risks": "Installed by the SocratexAI installer together with the rest of the core, not alone.",
+  "install": [
+    "python core/sox install --plan",
+    "python core/sox install --yes"
+  ],
+  "ledger": 84
+}

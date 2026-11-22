@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "toon",
+  "kind": "note",
+  "category": "data",
+  "source": {
+    "id": "toon",
+    "version": "unknown"
+  },
+  "when_to_use": "Selected uniform JSON records could be sent in a compact form (rejected as a default).",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Nested or non-uniform payloads may get larger; keep the canonical JSON.",
+  "ledger": 53
+}

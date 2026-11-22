@@ -3,8 +3,9 @@
 
 The packs live OUTSIDE this repo (default ~/ai-refs; override with env SOCRATEX_REFS or `refs_dir` in
 local/install.json), so no agent can pick up their instructions as nested project rules, and updating them never
-creates a SocratexAI change. subrepos.json (tracked) lists them and pins each to a commit, so every machine gets the
-same versions. Pack text is third-party data, never instructions.
+creates a SocratexAI change. The manifests of kind `ref` (modules/extensions/*.json, the owner's own in
+local/extensions/*.json) list them and pin each to a commit, so every machine gets the same versions. Pack text is
+third-party data, never instructions.
 
 Usage:
     python tools/subrepos.py update [names...]        # clone/checkout the pinned commits (errors do not stop the rest)
@@ -25,7 +26,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "subrepos.json"
+sys.path.insert(0, str(ROOT / "core"))
+
+import extensions  # noqa: E402
+
+COMMIT_RE = extensions.COMMIT_RE
 PREFS_FILE = ROOT / "local" / "install.json"
 GIT_TIMEOUT = 300
 SEARCH_DIRS = {"skills", "commands", "agents", "playbooks", "rules"}
@@ -47,13 +52,27 @@ def refs_dir() -> Path:
 
 
 def load_manifest() -> list[dict]:
-    return json.loads(MANIFEST.read_text(encoding="utf-8"))["repos"]
+    """The packs: every extension manifest of kind ref, as {name, cat, url, branch, commit, what, file}.
+    A pin of 'unknown' counts as unpinned (no `commit` key)."""
+    repos = []
+    for name, manifest in extensions.load_manifests(ROOT, kinds=("ref",)).items():
+        source = manifest["source"]
+        repo = {"name": name, "cat": manifest["category"], "url": source["url"], "branch": source.get("branch", "main"),
+                "what": manifest["when_to_use"], "file": manifest["_file"]}
+        if COMMIT_RE.match(source.get("commit", "")):
+            repo["commit"] = source["commit"]
+        repos.append(repo)
+    return repos
 
 
 def save_manifest(repos: list[dict]) -> None:
-    data = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    data["repos"] = repos
-    MANIFEST.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    """Write moved pins back into the manifest files they came from (only the commit changes)."""
+    for repo in repos:
+        path = Path(repo["file"])
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if repo.get("commit") and data["source"].get("commit") != repo["commit"]:
+            data["source"]["commit"] = repo["commit"]
+            path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
 
 def git(args: list[str], cwd: Path | None = None) -> subprocess.CompletedProcess:
@@ -84,7 +103,7 @@ def fetch(target: Path, ref: str) -> tuple[bool, str]:
 def update_one(repo: dict, dest: Path) -> tuple[str, str]:
     """Bring one pack to its pinned commit (or the branch tip when unpinned). Returns (status, message)."""
     if repo.get("disabled"):
-        return "skipped", "disabled in subrepos.json"
+        return "skipped", "disabled"
     target, pin = dest / repo["name"], repo.get("commit")
     try:
         prepare(target, repo["url"])
@@ -149,7 +168,7 @@ def bump_one(repo: dict, dest: Path, yes: bool) -> tuple[str, str]:
                 return "skipped", "pin kept"
         git(["reset", "--hard", tip], target)
         repo["commit"] = tip
-        return "ok", f"pin moved to {tip[:7]} (commit subrepos.json to share it)"
+        return "ok", f"pin moved to {tip[:7]} (commit the manifest to share it)"
     except (OSError, subprocess.TimeoutExpired) as error:
         return "error", f"{error.__class__.__name__}: {error}"
 

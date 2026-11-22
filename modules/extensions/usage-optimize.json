@@ -1,0 +1,22 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "usage-optimize",
+  "kind": "install",
+  "category": "context",
+  "source": {
+    "path": "claude/skills/usage-optimize"
+  },
+  "when_to_use": "Cost, tokens or limits of Claude Code work need analysis with prompt-analytics (/usage-optimize).",
+  "status": "adopted",
+  "default_enabled": true,
+  "context_cost": {
+    "level": "low",
+    "note": "skill description is listed at session start; the body loads on use"
+  },
+  "risks": "Installed by the SocratexAI installer together with the rest of the core, not alone.",
+  "install": [
+    "python core/sox install --plan",
+    "python core/sox install --yes"
+  ],
+  "ledger": 19
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "grill-me",
+  "kind": "note",
+  "category": "workflow",
+  "source": {
+    "id": "grill-me",
+    "version": "unknown"
+  },
+  "when_to_use": "Interviews the user about a plan, one question at a time.",
+  "status": "rejected",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Rejected: duplicates spec.",
+  "ledger": 112
+}

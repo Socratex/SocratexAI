@@ -1,0 +1,19 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "code-review-graph",
+  "kind": "note",
+  "category": "review",
+  "source": {
+    "id": "code-review-graph",
+    "version": "unknown"
+  },
+  "when_to_use": "A visual review graph of a diff, started by hand, supports C#.",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "unknown",
+    "note": "not measured"
+  },
+  "risks": "Owner has not judged the visual quality yet.",
+  "ledger": 71
+}
