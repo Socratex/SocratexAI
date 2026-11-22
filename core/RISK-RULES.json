@@ -1,6 +1,6 @@
 {
     "schema": "socratex-risk-rules/v1",
-    "note": "Default rules read by tools/risk_score.py. A project overrides the whole file with .ai/RISK-RULES.json. Points are starting values; change them only through routing_stats proposals approved by the owner. Design: docs/ROUTER-LOOP.md.",
+    "note": "Default rules read by modules/tools/scripts/risk_score.py. A project overrides the whole file with .ai/RISK-RULES.json. Points are starting values; change them only through routing_stats proposals approved by the owner. Design: docs/ROUTER-LOOP.md.",
     "levels": {
         "light_max": 2,
         "standard_max": 5,

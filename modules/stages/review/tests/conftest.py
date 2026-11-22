@@ -15,7 +15,7 @@ PIPELINE_DIR = REVIEW_DIR.parents[1] / "engine"
 REGISTRY_PATH = REVIEW_DIR / "checkers.json"
 sys.path.insert(0, str(REVIEW_DIR))
 sys.path.insert(0, str(PIPELINE_DIR))
-sys.path.insert(0, str(REVIEW_DIR.parents[2] / "tools"))
+sys.path.insert(0, str(REVIEW_DIR.parents[2] / "modules" / "tools" / "scripts"))
 
 APP_V1 = "def add(a, b):\n    return a + b\n"
 APP_V2_COMMENTS = (

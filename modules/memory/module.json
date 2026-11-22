@@ -5,10 +5,10 @@
   "what": "Learning memory: skill learnings log and the ledger of named AI improvements with machine checks",
   "when": "When the owner corrects a skill, and when checking which ledger improvements fail on this machine",
   "entry": [
-    "python tools/skill_learn.py add --skill <skill> --kind correction --note \"<note>\"",
-    "python tools/skill_learn.py status",
-    "python tools/improvements_check.py"
+    "python modules/tools/scripts/skill_learn.py add --skill <skill> --kind correction --note \"<note>\"",
+    "python modules/tools/scripts/skill_learn.py status",
+    "python modules/tools/scripts/improvements_check.py"
   ],
-  "paths": ["tools/skill_learn.py", "tools/improvements_check.py", "docs/IMPROVEMENTS.json"],
-  "tests": ["tools/tests/test_skill_learn.py", "tools/tests/test_improvements_check.py"]
+  "paths": ["modules/tools/scripts/skill_learn.py", "modules/tools/scripts/improvements_check.py", "docs/IMPROVEMENTS.json"],
+  "tests": ["modules/tools/scripts/tests/test_skill_learn.py", "modules/tools/scripts/tests/test_improvements_check.py"]
 }

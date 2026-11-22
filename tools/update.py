@@ -1,50 +1,16 @@
 #!/usr/bin/env python3
-"""Update SocratexAI and the reference packs as two independent steps.
-
-Usage:
-    python tools/update.py self    # git pull --ff-only in SocratexAI (the post-merge hook then regenerates configs)
-    python tools/update.py refs    # fast path to `subrepos.py update`: pinned commits, one try per pack
-    python tools/update.py all     # both; a failure in one never skips the other
-Every step prints ok / skipped / error and the exit code is 1 on any error, so a stale checkout is never silent.
-"""
-
-from __future__ import annotations
-
-import argparse
-import subprocess
-import sys
+# REDIRECT to modules/tools/scripts/update.py; kept for external callers (see `sox shims`).
+import json, runpy, sys, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-import subrepos  # noqa: E402
-
-
-def update_self() -> int:
-    try:
-        done = subprocess.run(["git", "pull", "--ff-only"], cwd=ROOT, capture_output=True, text=True, timeout=300)
-    except (OSError, subprocess.TimeoutExpired) as error:
-        print(f"[error  ] SocratexAI: {error.__class__.__name__}: {error}")
-        return 1
-    if done.returncode != 0:
-        print(f"[error  ] SocratexAI: pull failed ({(done.stderr or done.stdout).strip()[:200]})")
-        return 1
-    print(f"[ok     ] SocratexAI: {done.stdout.strip().splitlines()[-1] if done.stdout.strip() else 'done'}")
-    return 0
-
-
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Update SocratexAI and/or the reference packs.")
-    parser.add_argument("target", choices=["self", "refs", "all"])
-    args = parser.parse_args(argv)
-    codes = []
-    if args.target in ("self", "all"):
-        codes.append(update_self())
-    if args.target in ("refs", "all"):
-        codes.append(subrepos.cmd_update([]))
-    return 1 if any(codes) else 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+try:  # usage counter; any failure is ignored so the command never breaks
+    (ROOT / "state").mkdir(exist_ok=True)
+    with open(ROOT / "state" / "shim-usage.jsonl", "a", encoding="utf-8") as log:
+        log.write(json.dumps({"ts": time.strftime("%Y-%m-%d %H:%M:%S"), "shim": "update", "argv0": sys.argv[0]}) + "\n")
+except Exception:
+    pass
+NEW = ROOT / "modules/tools/scripts/update.py"
+sys.path.insert(0, str(NEW.parent))
+sys.argv[0] = str(NEW)
+runpy.run_path(str(NEW), run_name="__main__")

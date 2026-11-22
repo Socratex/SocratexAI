@@ -11,8 +11,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import core  # noqa: E402
+import flowdoc  # noqa: E402
+import shims  # noqa: E402
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "modules" / "tools" / "scripts"))
 
 import build_index  # noqa: E402
 import state  # noqa: E402
@@ -137,6 +139,49 @@ def cmd_flow_check(args: argparse.Namespace) -> int:
     return 1 if errors else 0
 
 
+def command_help(parser: argparse.ArgumentParser) -> list[tuple[str, str]]:
+    """[(`sox <command> [<action>]`, help)] from the parser: the one list of commands (used by docs/FLOW.md)."""
+    def choices(p: argparse.ArgumentParser) -> list[tuple[str, str, argparse.ArgumentParser]]:
+        for action in p._actions:  # noqa: SLF001 - argparse has no public listing of subparsers
+            if isinstance(action, argparse._SubParsersAction):  # noqa: SLF001
+                helps = {a.dest: a.help or "" for a in action._choices_actions}  # noqa: SLF001
+                return [(name, helps.get(name, ""), sub) for name, sub in action.choices.items()]
+        return []
+
+    rows = []
+    for name, text, sub in choices(parser):
+        nested = choices(sub)
+        if nested:
+            rows += [(f"sox {name} {action}", help_text) for action, help_text, _ in nested]
+        else:
+            rows.append((f"sox {name}", text))
+    return rows
+
+
+def cmd_flow_doc(args: argparse.Namespace) -> int:
+    """`sox flow doc [--check]`: write docs/FLOW.md from core/flow.json, the parser help and the directory map."""
+    commands = command_help(build_parser())
+    if args.check:
+        if flowdoc.is_current(commands):
+            print("docs/FLOW.md is up to date.")
+            return 0
+        print("docs/FLOW.md is stale: run `sox flow doc`.", file=sys.stderr)
+        return 1
+    print(f"Wrote {flowdoc.write(commands)}")
+    return 0
+
+
+def cmd_shims(args: argparse.Namespace) -> int:
+    """`sox shims [--list | --usage | --regenerate]`: the redirect shims at tools/ and how often they were called."""
+    if args.regenerate:
+        changed = shims.regenerate()
+        print(f"Rewrote {len(changed)} shim(s).")
+        return 0
+    both = not args.list and not args.usage
+    print("\n".join(shims.lines(show_list=args.list or both, show_usage=args.usage or both)))
+    return 0
+
+
 def cmd_install(args: argparse.Namespace) -> int:
     """Generate targets/ and plan, check or apply the install into the agent config folders."""
     import difflib
@@ -188,7 +233,7 @@ def _human_size(count: int) -> str:
 
 
 def cmd_state(args: argparse.Namespace) -> int:
-    """`sox state rotate [--dry-run]` and `sox state adopt-logs [--yes]` (see tools/state.py)."""
+    """`sox state rotate [--dry-run]` and `sox state adopt-logs [--yes]` (see modules/tools/scripts/state.py)."""
     root = Path(args.root) if args.root else None
     if args.action == "rotate":
         removed = state.rotate_known(root, dry_run=args.dry_run)
@@ -211,7 +256,7 @@ def cmd_state(args: argparse.Namespace) -> int:
 
 
 def cmd_backup(args: argparse.Namespace) -> int:
-    """`sox backup [--list | --restore ZIP]`: delegates to tools/backup.py (no logic copy)."""
+    """`sox backup [--list | --restore ZIP]`: delegates to modules/tools/scripts/backup.py (no logic copy)."""
     import backup
 
     argv = ["--list"] if args.list else ["--restore", args.restore] if args.restore else []
@@ -223,7 +268,7 @@ def pytest_command(paths: list[str], which=None) -> list[str]:
     import shutil
 
     found = (which or shutil.which)("uv")
-    pytest_args = ["-m", "pytest", "-q", *(paths or ["tests", "tools", "modules"])]
+    pytest_args = ["-m", "pytest", "-q", *(paths or ["tests", "modules"])]
     if found:
         return [found, "run", "--with", "pytest", "--with", "jsonschema", "python", *pytest_args]
     return [sys.executable, *pytest_args]
@@ -314,6 +359,8 @@ def build_parser() -> argparse.ArgumentParser:
     flow_show.add_argument("--json", action="store_true")
     flow_check = flow_sub.add_parser("check", help="exit 1 when a step points to a missing stage, role, rule or tool, or the grammar is broken")
     flow_check.add_argument("--project")
+    flow_doc = flow_sub.add_parser("doc", help="write docs/FLOW.md (what to run when) from the flow table, commands and directory map")
+    flow_doc.add_argument("--check", action="store_true", help="exit 1 when docs/FLOW.md is stale")
     index = top.add_parser("index", help="regenerate INDEX.json from files and module manifests")
     index.add_argument("--check", action="store_true", help="exit 1 when INDEX.json is stale")
     install = top.add_parser("install", help="generate targets/ and plan, check or apply the agent config install")
@@ -325,19 +372,24 @@ def build_parser() -> argparse.ArgumentParser:
     state_cmd = top.add_parser("state", help="machine output in state/: rotate old logs, adopt legacy logs from local/")
     state_cmd.add_argument("--root", help=argparse.SUPPRESS)
     state_sub = state_cmd.add_subparsers(dest="action", required=True)
-    state_rotate = state_sub.add_parser("rotate", help="delete old and surplus files in the known state subdirectories (tools/state.py)")
+    state_rotate = state_sub.add_parser("rotate", help="delete old and surplus files in the known state subdirectories (modules/tools/scripts/state.py)")
     state_rotate.add_argument("--dry-run", action="store_true", help="only count what would be removed")
     state_adopt = state_sub.add_parser("adopt-logs", help="move legacy local/flow-debug-*.log into state/flow-debug/ (never deletes)")
     state_adopt.add_argument("--yes", action="store_true", help="really move; without it only the count and size are printed")
-    backup_cmd = top.add_parser("backup", help="zip the agent config (tools/backup.py); list or restore backups")
+    backup_cmd = top.add_parser("backup", help="zip the agent config (modules/tools/scripts/backup.py); list or restore backups")
     backup_mode = backup_cmd.add_mutually_exclusive_group()
     backup_mode.add_argument("--list", action="store_true", help="list existing backups")
     backup_mode.add_argument("--restore", metavar="ZIP", help="put a backup back in place (backs up the current state first)")
     test_cmd = top.add_parser("test", help="run this repo's test suite the way it is normally run")
-    test_cmd.add_argument("paths", nargs="*", help="default: tests tools modules")
+    test_cmd.add_argument("paths", nargs="*", help="default: tests modules")
     migrate_cmd = top.add_parser("migrate", help="upgrade config files whose schema_version is older than supported")
     migrate_cmd.add_argument("--check", action="store_true", help="only list outdated files and the migrations that would run; exit 1 if any")
     migrate_cmd.add_argument("--project", help="project root (adds the project and project-private layers)")
+    shims_cmd = top.add_parser("shims", help="list the tools/ redirect shims and how often external callers used them")
+    shims_mode = shims_cmd.add_mutually_exclusive_group()
+    shims_mode.add_argument("--list", action="store_true", help="only the shim to script mapping")
+    shims_mode.add_argument("--usage", action="store_true", help="only the call counts (state/shim-usage.jsonl)")
+    shims_mode.add_argument("--regenerate", action="store_true", help="rewrite the shims from the template")
     top.add_parser("modules", help="list modules by kind: what, when to run, entry commands")
     ext = top.add_parser("ext", help="extension registry: plugins, mods, skills, reference packs")
     ext.add_argument("--root", help=argparse.SUPPRESS)
@@ -369,7 +421,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 # (command, action) -> handler; add new subcommands here.
 COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_config_resolve,
-            ("flow", "show"): cmd_flow_show, ("flow", "check"): cmd_flow_check,
+            ("flow", "show"): cmd_flow_show, ("flow", "check"): cmd_flow_check, ("flow", "doc"): cmd_flow_doc,
+            ("shims", None): cmd_shims,
             ("index", None): cmd_index, ("install", None): cmd_install, ("modules", None): cmd_modules,
             ("backup", None): cmd_backup, ("test", None): cmd_test, ("migrate", None): cmd_migrate}
 for _action in ("rotate", "adopt-logs"):

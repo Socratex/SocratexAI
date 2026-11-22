@@ -23,6 +23,6 @@ tags: [optional, tags]
 <body: free-form Markdown, the most important point first>
 ```
 
-- `type`, `title` and `description` are required; `tools/build_index.py` reads them to refresh `INDEX.json` (it never removes entries by hand-written keys).
+- `type`, `title` and `description` are required; `modules/tools/scripts/build_index.py` reads them to refresh `INDEX.json` (it never removes entries by hand-written keys).
 - Data that scripts consume stays in JSON; this format is for text that people and models read.
 - Change history belongs in git; a long-lived knowledge folder may add a `log.md` with dated one-line entries.

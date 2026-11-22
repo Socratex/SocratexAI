@@ -15,6 +15,6 @@
   },
   "risks": "Sets CLAUDE_CODE_PLUGIN_DIRS in settings.json (agent config); switch off with FLOW_PANEL=0.",
   "install": [
-    "python tools/install.py --reconfigure"
+    "python modules/tools/scripts/install.py --reconfigure"
   ]
 }

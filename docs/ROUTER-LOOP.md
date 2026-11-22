@@ -7,7 +7,7 @@ updated: 2026-11-16
 
 # Design: risk-based verification + router learning loop (state 2026-11-16)
 
-Status (2026-11-16): **steps 1, 2 and 4 are implemented in report-only mode** (`tools/risk_score.py`, `tools/routing_log.py`, `tools/routing_stats.py`, default rules in `core/RISK-RULES.json`; a project can override them with `.ai/RISK-RULES.json`). The risk level is only reported for now. Step 3 (wiring the levels into the project's stop gate) waits for owner review after about a week of comparisons. The log is a separate script called by the router, not part of the project's finalizer. This closes two gaps against the scheme "router -> model + effort -> verify by risk -> escalate / learned".
+Status (2026-11-16): **steps 1, 2 and 4 are implemented in report-only mode** (`modules/tools/scripts/risk_score.py`, `modules/tools/scripts/routing_log.py`, `modules/tools/scripts/routing_stats.py`, default rules in `core/RISK-RULES.json`; a project can override them with `.ai/RISK-RULES.json`). The risk level is only reported for now. Step 3 (wiring the levels into the project's stop gate) waits for owner review after about a week of comparisons. The log is a separate script called by the router, not part of the project's finalizer. This closes two gaps against the scheme "router -> model + effort -> verify by risk -> escalate / learned".
 
 Before this design: the router ran on fixed rules (`core/ROUTING.json`, the model tiers), escalation on evidence worked, but verification had one level "at discretion" and task outcomes did not flow back to the router.
 
@@ -17,7 +17,7 @@ Before this design: the router ran on fixed rules (`core/ROUTING.json`, the mode
 
 ### 1.1 Risk score (0-10)
 
-`tools/risk_score.py` reads `git diff --numstat` of the changed paths and sums points according to the rules file (`core/RISK-RULES.json`, or the project override `.ai/RISK-RULES.json`):
+`modules/tools/scripts/risk_score.py` reads `git diff --numstat` of the changed paths and sums points according to the rules file (`core/RISK-RULES.json`, or the project override `.ai/RISK-RULES.json`):
 
 | Signal | Points (initial, to be calibrated) |
 |---|---|
@@ -41,7 +41,7 @@ Rules: the level can be raised manually, never lowered below the script's score;
 
 ### 1.3 Where it plugs in
 
-- `tools/risk_score.py` (reads the diff + rules file, prints JSON `{score, level, reasons}`).
+- `modules/tools/scripts/risk_score.py` (reads the diff + rules file, prints JSON `{score, level, reasons}`).
 - The project's stop gate: runs the gate according to the level instead of a constant (step 3, pending).
 - The finalizer / router report: writes the level and score to the log from section 2.
 - A rule in the directives index: "finishing a code change -> verification level from `risk_score`".
@@ -52,7 +52,7 @@ Rules: the level can be raised manually, never lowered below the script's score;
 
 ### 2.1 Outcome log (this is also the "quality diary", item 27 of `IMPROVEMENTS.json`)
 
-File `audits/routing_log.jsonl` in each project, one row per task, appended by `tools/routing_log.py` (called by the router):
+File `audits/routing_log.jsonl` in each project, one row per task, appended by `modules/tools/scripts/routing_log.py` (called by the router):
 
 ```json
 {"date":"2026-11-16","task":"a1b2c3","type":"implementation","domain":"ui","tier":"standard","agent":"implementer","effort":"medium","risk":4,"level":"STANDARD","first_pass":true,"fixes":0,"escalated":false,"regression_of":null}
@@ -61,7 +61,7 @@ File `audits/routing_log.jsonl` in each project, one row per task, appended by `
 - `type` from a small fixed list: search, implementation, refactor, docs, debug, review, plan.
 - `regression_of`: when a bug later appears in that area, the fix entry points to the source task (manually, or via the commit that touched it).
 
-### 2.2 Analysis (`tools/routing_stats.py`, weekly or inside a usage-optimize run)
+### 2.2 Analysis (`modules/tools/scripts/routing_stats.py`, weekly or inside a usage-optimize run)
 
 | Signal (minimum 10 tasks in the group type + tier) | Proposal |
 |---|---|

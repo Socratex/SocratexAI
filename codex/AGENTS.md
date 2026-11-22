@@ -1,7 +1,7 @@
 ---
 type: rules
 title: Codex-specific rules
-description: Codex additions to the shared core; tools/install.py concatenates core rules, this file and the local profile into ~/.codex/AGENTS.md.
+description: Codex additions to the shared core; modules/tools/scripts/install.py concatenates core rules, this file and the local profile into ~/.codex/AGENTS.md.
 updated: 2026-11-19
 ---
 
@@ -9,7 +9,7 @@ updated: 2026-11-19
 
 ## 📌 Session start
 - Read `$SOCRATEX_HOME/core/DIRECTIVES.json`, then the project's `INDEX.json` and `AGENTS.md`.
-- `~/.codex/AGENTS.md` is generated; change the sources in SocratexAI and rerun `tools/install.py` (a `git pull` in SocratexAI reruns it through the post-merge hook).
+- `~/.codex/AGENTS.md` is generated; change the sources in SocratexAI and rerun `modules/tools/scripts/install.py` (a `git pull` in SocratexAI reruns it through the post-merge hook).
 
 ## 🤖 Execution
 - Prioritize execution, verification and concrete outcomes over stylistic discussion; keep status updates brief and factual.

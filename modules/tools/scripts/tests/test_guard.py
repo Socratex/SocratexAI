@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-GUARD = Path(__file__).resolve().parents[2] / "claude" / "hooks" / "guard.py"
+GUARD = Path(__file__).resolve().parents[4] / "claude" / "hooks" / "guard.py"
 
 
 def run_guard(payload, tmp_path: Path, project_config: dict | None = None, env: dict | None = None):
@@ -65,7 +65,7 @@ def test_blocks_dangerous_bash(command, tmp_path):
 @pytest.mark.parametrize("command", [
     "git status",
     "git add src/app.py",
-    "git add docs/README.md tools/install.py",
+    "git add docs/README.md modules/tools/scripts/install.py",
     "git commit -m 'simple message'",
     "git push origin main",
     "git push origin feature",
@@ -154,7 +154,7 @@ def test_reference_packs_folder_is_read_only(tmp_path):
                     "mv subrepos ~/ai-refs/_old", "cd /tmp && rm -rf ~/ai-refs"):
         assert run_guard(bash(command), tmp_path, env=env)[0] == 2, command
     for command in ("ls ~/ai-refs", "cat ~/ai-refs/pack/SKILL.md", "rg skill ~/ai-refs | head",
-                    "python tools/subrepos.py update", "git -C ~/ai-refs/pack log -1"):
+                    "python modules/tools/scripts/subrepos.py update", "git -C ~/ai-refs/pack log -1"):
         assert run_guard(bash(command), tmp_path, env=env)[0] == 0, command
 
 

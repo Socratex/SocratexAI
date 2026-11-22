@@ -28,7 +28,7 @@ description: Analyze token usage and cost of Claude Code work with `prompt-analy
 `by-category` works only after `prompt-analytics categorize`, which calls an LLM and costs money: run it only with the owner's approval.
 
 ## 2. 🔎 Signal -> lever
-- **Tool output over 40% of context**: big dumps (logs, diffs, JSON, other agents' results) go through a subagent or `head` / `tools/json_read.py`; wide searches through a cheap subagent.
+- **Tool output over 40% of context**: big dumps (logs, diffs, JSON, other agents' results) go through a subagent or `head` / `modules/tools/scripts/json_read.py`; wide searches through a cheap subagent.
 - **Config or turn-1 overhead over about 60k**: trim always-loaded rules, disable unused MCP servers, move rare rules to on-demand documents.
 - **`ttl` losses after 1h+ breaks**: start a new session from a short state file instead of resuming a fat one.
 - **Router session with many expensive notifications**: every notification is a full turn with the whole context; batch steps, let a cheap subagent collect results and return 3 lines.
@@ -36,7 +36,7 @@ description: Analyze token usage and cost of Claude Code work with `prompt-analy
 - **Context grows with depth or `recommend` is not empty**: /compact or a new session at a batch boundary.
 - **Expensive single "continue" prompts or long pastes**: shorter start prompt, a link to a state file instead of pasted history.
 - **Subagents over 30% of cost**: check for duplicated work or repeated reads; narrower briefs and cheaper models.
-- Also run `python $SOCRATEX_HOME/tools/routing_stats.py` in the project and include its proposals.
+- Also run `python $SOCRATEX_HOME/modules/tools/scripts/routing_stats.py` in the project and include its proposals.
 
 Saving estimate: source cost x realistic reduction %. State the assumption in a few words, for example "~50% tool output".
 

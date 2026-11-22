@@ -5,18 +5,18 @@
   "what": "Model routing: tier table, risk scoring of a diff, outcome log and routing proposals, tier agents",
   "when": "Before delegating (risk score), after each commit (log) and when tuning the rules (stats)",
   "entry": [
-    "python tools/risk_score.py --commit HEAD",
-    "python tools/routing_log.py --type implementation --tier standard --agent implementer --effort medium --first-pass yes --fixes 0 --escalated no --commit HEAD",
-    "python tools/routing_stats.py"
+    "python modules/tools/scripts/risk_score.py --commit HEAD",
+    "python modules/tools/scripts/routing_log.py --type implementation --tier standard --agent implementer --effort medium --first-pass yes --fixes 0 --escalated no --commit HEAD",
+    "python modules/tools/scripts/routing_stats.py"
   ],
   "paths": [
-    "tools/risk_score.py",
-    "tools/routing_log.py",
-    "tools/routing_stats.py",
+    "modules/tools/scripts/risk_score.py",
+    "modules/tools/scripts/routing_log.py",
+    "modules/tools/scripts/routing_stats.py",
     "core/ROUTING.json",
     "core/RISK-RULES.json",
     "claude/agents",
     "docs/ROUTER-LOOP.md"
   ],
-  "tests": ["tools/tests/test_routing_loop.py"]
+  "tests": ["modules/tools/scripts/tests/test_routing_loop.py"]
 }

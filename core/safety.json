@@ -50,7 +50,7 @@
       "severity": "block",
       "relaxable": true,
       "enforce": [
-        {"kind": "project-big-files", "project_key": "big_files", "reader_key": "big_file_reader", "default_reader": "read single fields with $SOCRATEX_HOME/tools/json_read.py", "max_read_limit": 300}
+        {"kind": "project-big-files", "project_key": "big_files", "reader_key": "big_file_reader", "default_reader": "read single fields with $SOCRATEX_HOME/modules/tools/scripts/json_read.py", "max_read_limit": 300}
       ]
     },
     {
@@ -59,7 +59,7 @@
       "severity": "block",
       "relaxable": true,
       "enforce": [
-        {"kind": "refs-write", "reason": "the reference packs folder is read-only third-party content; change nothing there.", "bash_reason": "the reference packs folder is read-only third-party content; use tools/subrepos.py to manage it."}
+        {"kind": "refs-write", "reason": "the reference packs folder is read-only third-party content; change nothing there.", "bash_reason": "the reference packs folder is read-only third-party content; use modules/tools/scripts/subrepos.py to manage it."}
       ]
     },
     {

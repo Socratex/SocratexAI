@@ -11,7 +11,7 @@ only with `install --yes`, after a backup), `note` recommendation only.
 Enabling is plain config: the config key `extensions` is the list of enabled names (core.py seeds it from every manifest
 with `default_enabled`, then the layers' $append/$remove apply). `enable` and `disable` edit that key in one layer file.
 
-Stdlib only. Used by core/core.py, core/sox and tools/subrepos.py.
+Stdlib only. Used by core/core.py, core/sox and modules/tools/scripts/subrepos.py.
 """
 
 from __future__ import annotations
@@ -49,7 +49,7 @@ class ExtensionError(core.ConfigError):
 # ---------- hooks the tests replace ----------
 
 def _real_backup(label: str) -> Path:
-    sys.path.insert(0, str(ROOT / "tools"))
+    sys.path.insert(0, str(ROOT / "modules" / "tools" / "scripts"))
     import backup
     return backup.backup(label)
 
@@ -430,7 +430,7 @@ def install_extension(name: str, yes: bool, root: Path | str | None = None) -> l
     manifest = manifests[name]
     if manifest["kind"] == "ref":
         raise ExtensionError(f"'{name}' is a read-only reference pack (kind ref): it is never installed or run; "
-                             "read it through tools/subrepos.py")
+                             "read it through modules/tools/scripts/subrepos.py")
     if manifest["kind"] == "note":
         raise ExtensionError(f"'{name}' is a recommendation only (kind note): it has no install commands")
     if manifest["status"] == "rejected":

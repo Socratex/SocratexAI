@@ -10,7 +10,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).parents[2]
+ROOT = Path(__file__).parents[4]
 SOURCE = ROOT / "claude/mods/flow-panel/hooks/register.tsx"
 NODES = [str(Path.home() / ".local/opt/node22/bin/node"), "node"]
 

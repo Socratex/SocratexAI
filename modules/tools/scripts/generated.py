@@ -3,7 +3,7 @@
 
 The body is the file text without the marker line, so editing a generated file by hand changes the body and the hash
 no longer matches. Markdown carries the marker as an HTML comment (or a frontmatter field), JSON under `_generated`.
-Used by tools/install.py and core/targets.py; stdlib only.
+Used by modules/tools/scripts/install.py and core/targets.py; stdlib only.
 """
 
 from __future__ import annotations

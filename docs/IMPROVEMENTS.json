@@ -1,7 +1,7 @@
 {
   "schema": "socratex-improvements/v1",
   "updated": "2026-11-18",
-  "usage": "Bare list of AI-workflow improvements for a receiving agent. Read all of it, do NOT apply in bulk. Ask the owner with one form which items fit (company policy, client NDA, repo, allowed hooks). Back up the configuration before any change (item 41). Do not copy secrets or private paths from this list. Details: AI-PRACTICES.md (findings log). Optional fields: scope (business or game; none = everywhere), verify (command that exits 0 when installed), install (how, needs consent). On a new computer run tools/improvements_check.py after pull. Status field: adopted / rejected / considering (see status_legend). One file for every concept weighed, so check here before proposing a plugin or tool again.",
+  "usage": "Bare list of AI-workflow improvements for a receiving agent. Read all of it, do NOT apply in bulk. Ask the owner with one form which items fit (company policy, client NDA, repo, allowed hooks). Back up the configuration before any change (item 41). Do not copy secrets or private paths from this list. Details: AI-PRACTICES.md (findings log). Optional fields: scope (business or game; none = everywhere), verify (command that exits 0 when installed), install (how, needs consent). On a new computer run modules/tools/scripts/improvements_check.py after pull. Status field: adopted / rejected / considering (see status_legend). One file for every concept weighed, so check here before proposing a plugin or tool again.",
   "legend": {
     "P": "port as is",
     "A": "adapt to the repo or company",
@@ -731,7 +731,7 @@
       "area": "Plugins, MCP, tools",
       "title": "AgentShield config scan",
       "what": "Security scan of the agent setup (secrets in files, wildcard permissions, risky hooks, MCP servers, prompt injection in CLAUDE.md) with the npm package ecc-agentshield. Business projects only. Use the basic offline scan (npx ecc-agentshield scan, command from its README ?). Never use --opus, --injection, --provider or --supply-chain-online: they send config content out (client NDA). Do not apply --fix without a second yes. Findings in templates can be false alarms. Install only the official package, never a fork, and ask company policy first.",
-      "install": "After owner consent and tools/backup.py: npm install -g ecc-agentshield@1.6.0 (pinned; check for a newer release older than two weeks).",
+      "install": "After owner consent and modules/tools/scripts/backup.py: npm install -g ecc-agentshield@1.6.0 (pinned; check for a newer release older than two weeks).",
       "verify": [
         "npm",
         "ls",
@@ -835,7 +835,7 @@
       "tag": "P",
       "area": "Memory, tooling, self-improvement",
       "title": "Missing-improvements check",
-      "what": "tools/improvements_check.py lists items whose verify command fails on this computer. On a new machine run it after pull; offer the missing installs in one form, then install with consent and backup.",
+      "what": "modules/tools/scripts/improvements_check.py lists items whose verify command fails on this computer. On a new machine run it after pull; offer the missing installs in one form, then install with consent and backup.",
       "why": "Turns this list from a document into a checkable index.",
       "status": "adopted",
       "expected_result": "",
@@ -1689,7 +1689,7 @@
       "title": "/usage breakdown and f key (built-in)",
       "status": "adopted",
       "decided": "recommended",
-      "what": "Built-in /usage shows what contributes to usage (skills, subagents, plugins, MCP, max effort, large tool results). w = week view. f applies the fixes Claude Code knows, one prompt that shows each change first; needs v2.1.305+. Use for reading; press f only after tools/backup.py and with the owner's yes (config rule).",
+      "what": "Built-in /usage shows what contributes to usage (skills, subagents, plugins, MCP, max effort, large tool results). w = week view. f applies the fixes Claude Code knows, one prompt that shows each change first; needs v2.1.305+. Use for reading; press f only after modules/tools/scripts/backup.py and with the owner's yes (config rule).",
       "why": "Free, no install; complements prompt-analytics and usage-optimize with the vendor's own attribution.",
       "date": "2026-11-17",
       "source": "Usprawnienia AI ciag dalszy",

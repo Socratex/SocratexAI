@@ -2,32 +2,33 @@
   "schema": "socratex-module/v1",
   "name": "scripts",
   "kind": "tools",
-  "what": "Maintenance scripts: install, backup, update, leak check, index, state helper, reference packs",
+  "what": "Maintenance scripts: install, backup, update, leak check, index, state helper, reference packs; tools/ holds redirect shims for external callers",
   "when": "Installing or updating the core, before changing agent config (backup), before a push (leaks), after editing docs or manifests (index)",
   "entry": [
-    "python tools/install.py --check",
-    "python tools/backup.py",
-    "python tools/update.py all",
-    "python tools/check_leaks.py",
-    "python tools/build_index.py --check",
-    "python tools/json_read.py <file> [<path>]",
-    "python tools/subrepos.py list"
+    "python modules/tools/scripts/install.py --check",
+    "python modules/tools/scripts/backup.py",
+    "python modules/tools/scripts/update.py all",
+    "python modules/tools/scripts/check_leaks.py",
+    "python modules/tools/scripts/build_index.py --check",
+    "python modules/tools/scripts/json_read.py <file> [<path>]",
+    "python modules/tools/scripts/subrepos.py list",
+    "python core/sox shims"
   ],
   "paths": [
-    "tools/install.py",
-    "tools/generated.py",
-    "tools/backup.py",
-    "tools/update.py",
-    "tools/check_leaks.py",
-    "tools/build_index.py",
-    "tools/json_read.py",
-    "tools/subrepos.py",
-    "tools/state.py"
+    "modules/tools/scripts/install.py",
+    "modules/tools/scripts/generated.py",
+    "modules/tools/scripts/backup.py",
+    "modules/tools/scripts/update.py",
+    "modules/tools/scripts/check_leaks.py",
+    "modules/tools/scripts/build_index.py",
+    "modules/tools/scripts/json_read.py",
+    "modules/tools/scripts/subrepos.py",
+    "modules/tools/scripts/state.py",
+    "core/shims.py",
+    "tools"
   ],
   "tests": [
-    "tools/tests/test_install_prefs.py",
-    "tools/tests/test_install_tools.py",
-    "tools/tests/test_state.py",
-    "tools/tests/test_subrepos.py"
+    "modules/tools/scripts/tests",
+    "tests/test_shims.py"
   ]
 }

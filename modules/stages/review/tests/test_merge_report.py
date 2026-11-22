@@ -134,14 +134,14 @@ def test_directives_has_review_row_and_index_lists_new_tools_and_doc():
 
 
 def test_index_is_current():
-    sys.path.insert(0, str(ROOT / "tools"))
+    sys.path.insert(0, str(ROOT / "modules" / "tools" / "scripts"))
     import build_index
     expected = json.dumps(build_index.build(), indent=2, ensure_ascii=False) + "\n"
     assert (ROOT / "INDEX.json").read_text(encoding="utf-8") == expected
 
 
 def test_no_private_references_in_review_files():
-    sys.path.insert(0, str(ROOT / "tools"))
+    sys.path.insert(0, str(ROOT / "modules" / "tools" / "scripts"))
     import check_leaks
     files = [p for folder in ("stages/review", "engine") for p in (ROOT / "modules" / folder).rglob("*")
              if p.is_file() and "__pycache__" not in p.parts]

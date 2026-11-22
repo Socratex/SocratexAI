@@ -51,7 +51,7 @@
     "touches": {"type": "set", "values": ["auth", "data", "saves", "payments", "architecture", "agent_config"], "doc": "areas the task changes; agent_config means settings, hooks, permissions, MCP or installs"},
     "unclear_requirements": {"type": "boolean", "doc": "an unknown that changes the result and cannot be found in the repo"},
     "owner_answers": {"type": "boolean", "doc": "the owner answered the question form and a plan exists"},
-    "risk": {"type": "enum", "values": ["light", "standard", "full"], "doc": "level printed by tools/risk_score.py for the diff"},
+    "risk": {"type": "enum", "values": ["light", "standard", "full"], "doc": "level printed by modules/tools/scripts/risk_score.py for the diff"},
     "profile": {"type": "enum", "values": ["solo", "duo", "yolo"], "doc": "config value `profile` (sox config show)"},
     "codex": {"type": "boolean", "doc": "config value `codex.enabled`"},
     "tier": {"type": "enum", "values": ["cheap", "standard", "high", "top"], "doc": "tier of the agent that produced the current result"},

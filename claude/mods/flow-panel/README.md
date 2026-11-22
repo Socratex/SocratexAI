@@ -21,7 +21,7 @@ A side panel for Claude Code (desktop app). It costs no model tokens: it only li
 
 ## Always on
 
-`tools/install.py` adds `CLAUDE_CODE_PLUGIN_DIRS` (this folder) to the `env` block of `~/.claude/settings.json`, so the mod loads in every session after a restart. The panel opens at session start and again at every prompt.
+`modules/tools/scripts/install.py` adds `CLAUDE_CODE_PLUGIN_DIRS` (this folder) to the `env` block of `~/.claude/settings.json`, so the mod loads in every session after a restart. The panel opens at session start and again at every prompt.
 
 ## Switching off (outside SocratexAI)
 
@@ -49,4 +49,4 @@ Set `FLOW_PANEL` to `0` in the `env` block of a settings file; the project value
 - Figures refresh after each main turn, not continuously. Redraws are batched to one per 2 seconds, with dots keeping their phase, to avoid blinking.
 - Size guard: the pane refuses an SVG over 131072 characters and then shows "nothing to show yet" for the whole panel. Idle sessions sink to the bottom of their level and show no children. From 10 idle sessions on one level they become one tile "12 sessions" with their summed figure and a tooltip of their names, one per line (nested ones indented); working sessions keep their branches. A drawing still over 126000 characters folds all idle sessions, then loses moving dots and ticking times, then fewer nested session levels.
 - At most 12 blocks per session level (`MAX_NODES`); the idlest finished one is dropped first, a running one never.
-- Tuning constants (font, weights) are at the top of `hooks/register.tsx`. The pure parts have tests (`tools/tests/test_flow_*.py`): `<tiers>`, `<merge>`, `<tasks>` and `<recheck>` blocks, and the whole drawing with fixed data.
+- Tuning constants (font, weights) are at the top of `hooks/register.tsx`. The pure parts have tests (`modules/tools/scripts/tests/test_flow_*.py`): `<tiers>`, `<merge>`, `<tasks>` and `<recheck>` blocks, and the whole drawing with fixed data.

@@ -1473,7 +1473,7 @@ async function poll($: EngineInterface): Promise<void> {
 
 // Debugging aid: the last lines of what redrew the pane and why, kept in
 // $SOCRATEX_HOME/state/flow-debug/<session>.log (outside git; the mod cannot delete files,
-// so old logs are rotated by `python tools/state.py rotate flow-debug`).
+// so old logs are rotated by `python modules/tools/scripts/state.py rotate flow-debug`).
 let dbgLines: string[] = []
 
 async function dbg($: EngineInterface, msg: string): Promise<void> {

@@ -2,10 +2,24 @@
 type: spec
 title: Restrukturyzacja SocratexAI (core, defaults, modules, targets, state, local)
 description: Docelowa struktura repo, kolejność nadpisywania, flow jako dane i plan migracji bez przerwy w działaniu
-updated: 2026-11-21
+updated: 2026-11-22
+status: done
 ---
 
 # Restrukturyzacja SocratexAI
+
+## Stan wykonania
+Status: wykonane, wszystkie fazy. Każda faza to osobny commit z zielonymi testami.
+- [x] Faza 0: `state/` z rotacją, `.gitignore` (`8043556`)
+- [x] Faza 1: `core.py` i `sox config show` (`56bc7bb`)
+- [x] Faza 2: `module.json` i `INDEX.json` z manifestów (`e9cb5e4`)
+- [x] Faza 3: review, planning i engine pod `modules/` z przekierowaniami (`42bcce0`)
+- [x] Faza 4: `defaults/`, `flow.json` jako dane, `INIT.md` (`0938296`)
+- [x] Faza 5: `targets/` generowane, `safety.json` z luzowaniem (`d3943c3`)
+- [x] Faza 5b: `modules/extensions/` i `sox ext` (`34fd454`)
+- [x] Sprzątanie: rotacja logów, pochodzenie sprawdzaczy, `needs` we flow, reszta komend `sox` (`914253b`)
+- [x] Faza 6: skrypty pod `modules/tools/scripts/`, przekierowania review i planning usunięte, `tools/*.py` zostały jako cienkie shimy dla zewnętrznych wywołań (licznik: `sox shims`), `docs/FLOW.md` z `sox flow doc`, wersja 3.0.0 (commit "restructure phase 6: scripts under modules/tools, shims for external callers, flow doc, version 3.0.0")
+- Odstępstwo od planu: przekierowania skryptów nie znikają całkiem; zostają shimy w `tools/` do czasu, gdy `sox shims --usage` pokaże zero wywołań.
 
 ## Cel
 - Jasne, co leży gdzie, co kiedy się odpala i jaki jest główny flow.

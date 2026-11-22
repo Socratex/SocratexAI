@@ -80,7 +80,7 @@
         {
             "pipeline": "review",
             "id": "leaks",
-            "concern": "Secrets and personal data (patterns of tools/check_leaks.py).",
+            "concern": "Secrets and personal data (patterns of modules/tools/scripts/check_leaks.py).",
             "scope": "hunk",
             "max_chunk_lines": 300,
             "select": "{python} {here}/select_leaks.py",

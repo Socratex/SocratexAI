@@ -487,7 +487,7 @@ def summarize(run_id: str, files: list[str], changed: int, doc: dict, results: l
     escalated = any(e["event"] == "escalation" for e in review.log.events)
     unresolved = statuses.get("open", 0) + statuses.get("reported", 0)
     fixes = doc["rounds"]
-    hint = (f"python tools/routing_log.py --type review --tier {main_tier} --agent reviewer --first-pass "
+    hint = (f"python modules/tools/scripts/routing_log.py --type review --tier {main_tier} --agent reviewer --first-pass "
             f"{'yes' if not unresolved and not fixes else 'no'} --fixes {fixes} "
             f"--escalated {'yes' if escalated else 'no'} --commit HEAD")
     return {"run_id": run_id, "files": files, "changed_lines": changed, "model_calls": sum(

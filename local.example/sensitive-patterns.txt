@@ -1,3 +1,3 @@
-# One regular expression per line (case-insensitive). tools/check_leaks.py blocks a push when a tracked file matches.
+# One regular expression per line (case-insensitive). modules/tools/scripts/check_leaks.py blocks a push when a tracked file matches.
 # Put here names of private projects, clients, people and folders that must never reach the public repo.
 # example-private-project

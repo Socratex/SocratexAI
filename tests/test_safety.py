@@ -210,7 +210,7 @@ def test_agent_cannot_write_safety_files_from_bash(world, command):
     "cat {root}/core/safety.json",
     "git add {root}/core/safety.json",
     "cp {root}/core/safety.json /tmp/copy.json",
-    "python tools/json_read.py {root}/core/safety.json rules",
+    "python modules/tools/scripts/json_read.py {root}/core/safety.json rules",
     "echo hi > {root}/notes.txt",
 ])
 def test_reading_and_staging_safety_files_is_fine(world, command):

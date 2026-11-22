@@ -24,7 +24,7 @@
      "why": "Tests, reviews, search and mechanical edits go to the Codex subcontractor; code and maths stay with Claude."},
     {"id": "implement", "when": {"task_size": {"not": "trivial"}}, "then": ["role:implementer"],
      "why": "Implementation from a complete brief goes to the standard tier in its own context."},
-    {"id": "risk", "when": {}, "then": ["tool:tools/risk_score.py"],
+    {"id": "risk", "when": {}, "then": ["tool:modules/tools/scripts/risk_score.py"],
      "why": "The diff is scored by paths and size, never by a model's opinion; the level sets the verification depth."},
     {"id": "gate_fast", "when": {}, "then": ["gate:fast"],
      "why": "A deterministic gate decides, not the author's confidence."},
@@ -44,7 +44,7 @@
      "why": "Business changes touching auth, secrets, payments or external input get the security review."},
     {"id": "commit", "when": {"gate": {"not": "failed"}}, "then": ["rule:core/rules/COMMITS.md"],
      "why": "Commit own paths only, with the project's finalizer when it has one."},
-    {"id": "log", "when": {}, "then": ["tool:tools/risk_score.py", "tool:tools/routing_log.py"],
+    {"id": "log", "when": {}, "then": ["tool:modules/tools/scripts/risk_score.py", "tool:modules/tools/scripts/routing_log.py"],
      "why": "After the commit: score HEAD (report-only), then log the outcome once so routing can learn."}
   ]
 }

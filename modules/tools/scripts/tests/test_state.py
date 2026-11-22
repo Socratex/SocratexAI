@@ -1,4 +1,4 @@
-"""Tests for tools/state.py: state dir creation and rotation by age and count."""
+"""Tests for modules/tools/scripts/state.py: state dir creation and rotation by age and count."""
 
 from __future__ import annotations
 

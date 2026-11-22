@@ -34,7 +34,7 @@ Merged value of the legacy FLOWS, WORKFLOW and TASK-WORK documents. Pick the flo
 - What was checked: the gate or tests that ran, and what did not run.
 - What is left: remaining risk, open question or skipped step.
 - Any tool that failed mechanically: fix the tool or the input contract, do not keep a manual workaround.
-- Complex or risky diff (architecture, hot path, migration): one adversarial pass. Compare what the commit message claims with what the diff really does. Verification depth comes from `tools/risk_score.py`.
+- Complex or risky diff (architecture, hot path, migration): one adversarial pass. Compare what the commit message claims with what the diff really does. Verification depth comes from `modules/tools/scripts/risk_score.py`.
 - Checks run at boundaries, after all edits of the scope. Not after every small edit.
 
 ## 🪜 Big task (file-based state, not chat memory)

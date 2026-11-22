@@ -16,7 +16,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 CORE_DIR = REPO / "core"
 sys.path.insert(0, str(CORE_DIR))
-sys.path.insert(0, str(REPO / "tools"))
+sys.path.insert(0, str(REPO / "modules" / "tools" / "scripts"))
 
 import core  # noqa: E402
 import migrate  # noqa: E402
@@ -205,7 +205,7 @@ def test_sox_backup_delegates_to_tools_backup(monkeypatch):
 def test_pytest_command_uses_uv_when_present():
     with_uv = sox.pytest_command([], which=lambda name: "/bin/uv")
     assert with_uv == ["/bin/uv", "run", "--with", "pytest", "--with", "jsonschema", "python", "-m", "pytest", "-q",
-                       "tests", "tools", "modules"]
+                       "tests", "modules"]
     without = sox.pytest_command(["tests/test_core.py"], which=lambda name: None)
     assert without == [sys.executable, "-m", "pytest", "-q", "tests/test_core.py"]
 

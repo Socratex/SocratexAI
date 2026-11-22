@@ -24,7 +24,7 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 ## 🧳 Use only part of it
 
 The pieces are plain files, so you can take only what you need:
-- **Rules only:** the rule text in `core/RULES.md`, `core/STYLE.md` and `core/rules/` reads fine without Python. But it points at things you would not have: `tools/skill_learn.py`, `risk_score.py`, `routing_log.py` and `json_read.py`, the `$SOCRATEX_HOME` variable, `local/profile.md`, `core/DIRECTIVES.json` and `INDEX.json`. Those references would dangle; edit them out or copy the tools too. Python-free means "text only", not "everything works".
+- **Rules only:** the rule text in `core/RULES.md`, `core/STYLE.md` and `core/rules/` reads fine without Python. But it points at things you would not have: `modules/tools/scripts/skill_learn.py`, `risk_score.py`, `routing_log.py` and `json_read.py`, the `$SOCRATEX_HOME` variable, `local/profile.md`, `core/DIRECTIVES.json` and `INDEX.json`. Those references would dangle; edit them out or copy the tools too. Python-free means "text only", not "everything works".
 - **Skills only:** `skills/<name>/SKILL.md` are standard skill folders. We only tested them in Claude Code and Codex; other agents that read this format should work but are untested.
 - **Guard only:** `claude/hooks/guard.py` is one stdlib-only Python file for the Claude Code `PreToolUse` hook.
 - A separate "rules and skills only" installer mode does not exist yet.
@@ -53,7 +53,7 @@ Not claimed anywhere above: that SocratexAI gives better results than any of the
 
 ```bash
 git clone https://github.com/Socratex/SocratexAI.git ~/SocratexAI
-python ~/SocratexAI/tools/install.py
+python ~/SocratexAI/modules/tools/scripts/install.py
 ```
 
 ## 🙋 What it changes on your machine
@@ -73,8 +73,8 @@ Nothing happens before you answer. The installer asks, shows the reason for each
 Also recommended, outside the installer: the third-party mod [CC-Usage-Band](https://github.com/JetsonChan/CC-Usage-Band) (MIT). It puts one line above the prompt with the 5-hour and 7-day limits, context window and cache hit rate, and draws it as SVG in the desktop Code tab. Install it yourself: `claude plugin marketplace add JetsonChan/CC-Usage-Band`, then `claude plugin install usage-band@cc-usage-band`. We read its code before installing (no network, no process execution, no file writes), but only for the version we tried (1.0.6); read it again before you install. It overlaps with the flow panel only a little: the band shows limits, the panel shows where tokens go.
 
 ```bash
-python tools/install.py --yes           # no questions, recommended answers (for scripts)
-python tools/install.py --reconfigure   # ask again
+python modules/tools/scripts/install.py --yes           # no questions, recommended answers (for scripts)
+python modules/tools/scripts/install.py --reconfigure   # ask again
 ```
 
 The installer is idempotent. It backs up your current agent config first (`~/claude-backup/`), then (for the parts you accepted):
@@ -94,9 +94,9 @@ The installer is idempotent. It backs up your current agent config first (`~/cla
 Trust: because of the `post-merge` hook, code from this repo runs on your machine on every update, and `settings.json` gets the guard hook. Read the diff before you pull, or skip the git hooks at install.
 
 ```bash
-python tools/install.py --check   # what is missing or stale, changes nothing
-python tools/install.py --sync    # regenerate (the post-merge hook does this)
-python tools/backup.py --list     # config backups; --restore <zip> to roll back
+python modules/tools/scripts/install.py --check   # what is missing or stale, changes nothing
+python modules/tools/scripts/install.py --sync    # regenerate (the post-merge hook does this)
+python modules/tools/scripts/backup.py --list     # config backups; --restore <zip> to roll back
 ```
 
 ## 📚 Reference packs
@@ -104,10 +104,10 @@ python tools/backup.py --list     # config backups; --restore <zip> to roll back
 The extension manifests of kind `ref` (`modules/extensions/*.json`) list 15 read-only agent toolkits (superpowers, pstack, ECC, anthropics/skills, spec-kit, BMAD, awesome lists, ...) with a category and a pinned commit each. They are **not in this repo**: the install asks whether to download them, and they land in `~/ai-refs` (or the folder you choose). They are never installed, linked or run. When SocratexAI lacks a capability, the agent searches them and only suggests a match; their text is treated as third-party data. The guard blocks edits inside that folder, and they sit outside the repo so that a nested `CLAUDE.md` or `AGENTS.md` inside them is not read as project rules. That is the intent; it is untested.
 
 ```bash
-python tools/update.py self    # git pull --ff-only in SocratexAI
-python tools/update.py refs    # download/checkout the pinned commits (one try per pack, errors listed, exit 1 on any)
-python tools/subrepos.py bump <name>        # show upstream changes since the pin, move the pin only after your yes
-python tools/subrepos.py search --cat gamedev game design   # filler words ignored; name/description outrank body text
+python modules/tools/scripts/update.py self    # git pull --ff-only in SocratexAI
+python modules/tools/scripts/update.py refs    # download/checkout the pinned commits (one try per pack, errors listed, exit 1 on any)
+python modules/tools/scripts/subrepos.py bump <name>        # show upstream changes since the pin, move the pin only after your yes
+python modules/tools/scripts/subrepos.py search --cat gamedev game design   # filler words ignored; name/description outrank body text
 ```
 
 Pins live in the tracked manifests (`source.commit`), so another machine gets the same versions. `--sync` and the post-pull hook never touch the packs.
@@ -124,26 +124,41 @@ core/sox ext enable|disable <name> [--project P]
 core/sox ext install <name> [--yes]     # dry run; --yes backs up the agent config first, then runs the commands
 ```
 
-## 🧱 Layers
+## 🧱 Structure
 
-1. **Core** (`core/`): always loaded. `RULES.md` (epistemics, ambiguity, work loop, context economy, routing, safety, finishing), `STYLE.md` (reply profile), `DIRECTIVES.json` (situation -> rule document), on-demand rules in `core/rules/`, `ROUTING.json`, `RISK-RULES.json`, templates.
-2. **Local** (`local/`, gitignored): your language, name, machine paths and private leak patterns. Created from `local.example/` on install.
-3. **Project**: each project keeps its own `INDEX.json`, `AGENTS.md`, `CLAUDE.md` and optional `.ai/` overrides (`guard.json`, `RISK-RULES.json`, `ROUTING.json`). No copy of SocratexAI inside projects. Start from `templates/project/`.
+```
+SocratexAI/
+  core/        INIT.md, flow.json (the order of work steps), safety.json, core.py (resolver), sox (the CLI), rules/, templates/
+  defaults/    preferences/ (code, communication) and profiles/ (solo, duo, yolo)
+  modules/     self-contained capabilities, each with a module.json and its tests next to the code
+    stages/      review, planning (checker registries and scripts)    engine/   shared engine of both stages
+    routing/     tiers, risk score, routing log                       memory/   skill learnings, improvements ledger
+    tools/scripts/  install, backup, update, check_leaks, build_index, state, subrepos, ...
+    gpt/         ChatGPT share and archive tools                      extensions/  manifests: plugins, MCP, mods, skills, reference packs
+  targets/     generated agent files (`sox install`); never edit by hand
+  tests/       tests of the core, resolver and sox
+  skills/, claude/, codex/, templates/project/, docs/
+  tools/       thin redirects to the old script paths for projects that still call them (`sox shims` shows whether anything does)
+  state/       machine output with rotation (gitignored)
+  local/       your private layer (gitignored); `local.example/` seeds it
+```
 
-Project rules win over the core, except safety rules, which projects can only make stricter.
+Config layers, last wins: `defaults/` and `modules/` -> `local/overrides/` -> the project's `.socratex/config.json` -> `local/projects/<project>/`. Safety rules can only be relaxed from the owner's `local/` layers. `sox config show` prints every value with its source. Project rules win over the core, except safety rules, which projects can only make stricter. Projects keep their own `INDEX.json`, `AGENTS.md`, `CLAUDE.md` and optional `.ai/` overrides; start from `templates/project/`.
+
+What to run when: [docs/FLOW.md](docs/FLOW.md) (generated: `sox flow doc`).
 
 ## 🧰 Tools
 
 | Tool | Purpose |
 |---|---|
-| `tools/risk_score.py` | 0-10 risk score of the current diff -> model tier and effort (`core/RISK-RULES.json`, project override `.ai/RISK-RULES.json`) |
-| `tools/routing_log.py`, `tools/routing_stats.py` | log routing outcomes per project and propose rule tuning |
-| `tools/json_read.py` | read one key or search a big JSON file without loading it whole |
-| `tools/skill_learn.py` | log a correction or failure next to a skill (`LEARNINGS.jsonl`); merges repeats, marks a skill READY for `skill-reflect` |
-| `tools/improvements_check.py` | list ledger items whose `verify` command fails on this machine (report only) |
-| `tools/backup.py` | zip and restore global agent config (never credential files) |
-| `tools/build_index.py` | regenerate `INDEX.json`; `--check` in CI |
-| `tools/check_leaks.py` | block private paths, tokens and local patterns before a push |
+| `modules/tools/scripts/risk_score.py` | 0-10 risk score of the current diff -> model tier and effort (`core/RISK-RULES.json`, project override `.ai/RISK-RULES.json`) |
+| `modules/tools/scripts/routing_log.py`, `modules/tools/scripts/routing_stats.py` | log routing outcomes per project and propose rule tuning |
+| `modules/tools/scripts/json_read.py` | read one key or search a big JSON file without loading it whole |
+| `modules/tools/scripts/skill_learn.py` | log a correction or failure next to a skill (`LEARNINGS.jsonl`); merges repeats, marks a skill READY for `skill-reflect` |
+| `modules/tools/scripts/improvements_check.py` | list ledger items whose `verify` command fails on this machine (report only) |
+| `modules/tools/scripts/backup.py` | zip and restore global agent config (never credential files) |
+| `modules/tools/scripts/build_index.py` | regenerate `INDEX.json`; `--check` in CI |
+| `modules/tools/scripts/check_leaks.py` | block private paths, tokens and local patterns before a push |
 | `claude/hooks/guard.py` | PreToolUse guard: destructive git, secrets, project big files and read-only folders |
 
 ## 🧩 Agents and skills
@@ -155,6 +170,7 @@ Project rules win over the core, except safety rules, which projects can only ma
 
 ## 📚 Docs
 
+- `docs/FLOW.md`: what to run when (flow table, sox commands, directory map); generated, `sox flow doc --check` keeps it current.
 - `docs/AI-PRACTICES.md`: findings about working with AI agents (what helped, what failed, why).
 - `docs/IMPROVEMENTS.json`: one ledger of every idea we weighed. Each item has a `status` (adopted, rejected, considering), the promise (`expected_result`), our verdict (`result`) and proof (`result_evidence`, `own:` = measured by us). Check it before proposing a plugin or tool again.
 - `docs/AUDIT-pstack-ecc.md`: why we borrow ideas from pstack and ECC but install neither.
@@ -163,7 +179,7 @@ Project rules win over the core, except safety rules, which projects can only ma
 
 ## 🔒 Privacy
 
-Everything that names you, your machine or private projects belongs in `local/`. The pre-push hook runs `tools/check_leaks.py`, which blocks user-profile paths, tokens and every pattern in `local/sensitive-patterns.txt`.
+Everything that names you, your machine or private projects belongs in `local/`. The pre-push hook runs `modules/tools/scripts/check_leaks.py`, which blocks user-profile paths, tokens and every pattern in `local/sensitive-patterns.txt`.
 
 ## 📄 License
 

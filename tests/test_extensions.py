@@ -14,7 +14,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 CORE_DIR = REPO / "core"
 sys.path.insert(0, str(CORE_DIR))
-sys.path.insert(0, str(REPO / "tools"))
+sys.path.insert(0, str(REPO / "modules" / "tools" / "scripts"))
 
 import core  # noqa: E402
 import extensions  # noqa: E402

@@ -1,11 +1,11 @@
-"""Tier-script checker for leaks: applies the tools/check_leaks.py patterns to changed lines, no model involved."""
+"""Tier-script checker for leaks: applies the modules/tools/scripts/check_leaks.py patterns to changed lines, no model involved."""
 
 from __future__ import annotations
 
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "tools"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "modules" / "tools" / "scripts"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "engine"))
 
 import check_leaks  # noqa: E402

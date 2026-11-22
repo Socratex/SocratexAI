@@ -21,7 +21,7 @@ The shared core (`core/RULES.md`, `core/STYLE.md`) applies first; this file adds
 - Give every subagent a complete brief (goal, paths, criteria, result format) and pass the reply profile when it writes to the owner. Do not delegate tasks whose brief is longer than the work.
 - A separate session that must not touch the shared tree (big refactor, experiment): `claude --worktree <name>`.
 
-## 🔒 Hooks (enforced by the harness, installed by `tools/install.py`)
+## 🔒 Hooks (enforced by the harness, installed by `modules/tools/scripts/install.py`)
 - `PreToolUse` runs `claude/hooks/guard.py` (destructive git, secret files, ledger dumps; projects add patterns in `.ai/guard.json`).
 - UCE reply check (`claude/hooks/uce_check.py`) is no longer wired as a Stop hook (owner decision 2026-11-17): chat replies are never blocked or re-prompted. Follow `core/STYLE.md` yourself; when writing files, self-correct against the project style.
 - A project may add its own `Stop` gate in its `.claude/settings.json` (fast tests of the changed area). Fix the code, not the tests.

@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).parents[2]
+ROOT = Path(__file__).parents[4]
 ALWAYS_LOADED = ["core/RULES.md", "core/STYLE.md", "claude/CLAUDE.md", "core/DIRECTIVES.json"]
 BUDGET_BYTES = 20_000  # about 5K tokens; today about 19K with DIRECTIVES. Raise only with a written reason.
 

@@ -33,7 +33,7 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 - Clear, local, reversible request: do it, do not over-discuss. Complex or multi-boundary work: short plan or impact note first.
 - Quality does not depend on the model tier: cheaper models keep the same standard (readable code, explicit contracts, borrowed over invented, documented decisions); gates and review enforce it.
 - Borrow before inventing: check proven patterns, engine or framework features and existing project tools before building a custom solution; name the cost when you do build one.
-- Repeated fixes become small scripts, duplicates get a shared helper, the correct path is the default path; log skill corrections right away with `tools/skill_learn.py add` (details: `core/rules/WORKFLOW-DETAILS.md`).
+- Repeated fixes become small scripts, duplicates get a shared helper, the correct path is the default path; log skill corrections right away with `modules/tools/scripts/skill_learn.py add` (details: `core/rules/WORKFLOW-DETAILS.md`).
 - Code is 100% English (identifiers, comments, UI strings, logs, prompts). Documents and talk use the language from `local/profile.md`. Commit messages: simple English.
 - Data that scripts read lives in JSON; text that people and models read lives in Markdown with YAML frontmatter (`type`, `title`, `description`, `updated`).
 
@@ -51,10 +51,10 @@ These rules load in every session for Claude and Codex. `$SOCRATEX_HOME` is the 
 ## 🔒 Safety
 - Never touch other agents' or sessions' uncommitted changes. Commit only your own paths, never `git add -A`.
 - No destructive git (`reset --hard`, `clean -f`, `checkout .`, force push, `branch -D`) without an explicit owner yes. Never read or edit secret files (`.env`, keys, credentials).
-- Changes to agent configuration (settings, hooks, permissions, installed tools, MCP servers) only after a backup (`tools/backup.py`) and the owner's explicit yes. The agent never widens its own permissions.
+- Changes to agent configuration (settings, hooks, permissions, installed tools, MCP servers) only after a backup (`modules/tools/scripts/backup.py`) and the owner's explicit yes. The agent never widens its own permissions.
 - A command blocked by a hook is a boundary, not an obstacle: use the safe alternative or ask.
 
 ## 📦 Finishing
 - Commit your own finished work at the end of the prompt, without asking, using the project's finalizer when it has one (rules: `core/rules/COMMITS.md`). Push only when the project says the AI pushes; otherwise the owner pushes.
-- After the commit: `tools/risk_score.py --commit HEAD`, then log once with `tools/routing_log.py`; log new AI findings in `$SOCRATEX_HOME/docs/AI-PRACTICES.md` (details: `core/rules/WORKFLOW-DETAILS.md`).
+- After the commit: `modules/tools/scripts/risk_score.py --commit HEAD`, then log once with `modules/tools/scripts/routing_log.py`; log new AI findings in `$SOCRATEX_HOME/docs/AI-PRACTICES.md` (details: `core/rules/WORKFLOW-DETAILS.md`).
 - Report per `core/STYLE.md`.
