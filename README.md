@@ -1,6 +1,8 @@
 # 🧭 SocratexAI
 
-One global AI core for **Claude Code** and **Codex**: shared rules, reply style, model routing, risk scoring, tier agents, skills (with a self-improving loop), hooks and tools. Clone it once per machine. Every project then gets the same behavior by default, and a `git pull` updates all of them.
+One global AI core for **Claude Code** and **Codex**: shared rules, reply style, a work flow kept as data, model routing with risk-based escalation, tier agents, skills (with a self-improving loop), hooks and tools. Clone it once per machine. Every project then gets the same behavior by default, changes only what it names in a standard override format, and a `git pull` updates all of them.
+
+Version 3.0 (tag `v3.0`): core, defaults, modules, targets, state and local layers; the flow, safety rules, profiles and extensions are data you can override per project. Earlier tags: `v2.0` (global core, legacy pipeline removed), `v1.2` (last version with the legacy pipeline, branch `legacy`).
 
 ## 🎯 What it is, and what it is not
 
@@ -8,18 +10,28 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 
 **What you get**
 - One shared source of rules for Claude Code and Codex.
-- A guard hook that blocks destructive git, secret-file reads and whole-file dumps of big ledgers. Fail-closed, covered by tests.
+- A guard hook that blocks destructive git, secret-file reads and whole-file dumps of big ledgers. Fail-closed, covered by tests. Its rules are named data in `core/safety.json`; the owner can relax a single rule from `local/` (never from a project file, never by the agent), and `sox config show` lists every relaxed rule.
+- The work flow as a table (`core/flow.json`): ordered if -> then steps that point at stages, roles, rule documents and gates. A tiny `core/INIT.md` is what loads at session start; everything else loads when a step asks for it.
+- Profiles (`solo`, `duo`, `yolo`) and one extension registry (plugins, MCP servers, mods, skills, reference packs) you can switch on or off per project.
 - Model routing with escalation on evidence (a failed gate or a BLOCKED report moves work one tier up), a risk score for each diff, and an outcome log.
 - Five shared skills, tier agents, and a loop that turns logged corrections into reviewed skill edits.
 - An installer that asks first and backs up your config before touching it.
 
 **What you do not get**
 - Not a full process kit. The task flows are short tables, not long skills. There is no enforced TDD, no long debugging method and no playbook library.
-- Process rules are text the model follows. Only the guard is enforced by a hook, and the guard is a safety net against mistakes, not a sandbox: it matches common command shapes and misses indirect writes (for example through `bash -c`).
+- Process rules are text the model follows. The flow table is validated by code (`sox flow check`), but nothing forces the model to walk it. Only the guard is enforced by a hook, and the guard is a safety net against mistakes, not a sandbox: it matches common command shapes and misses indirect writes (for example through `bash -c`).
 - Only Claude Code and Codex are supported. Cursor, Gemini, OpenCode and others are not.
 - Needs Python 3 for the installer and tools (CI runs 3.12 on Linux and Windows; the minimum version is not verified). Node is not needed, except for the optional flow-panel mod.
 - Young and small: one author, first commit 2026-04-28, no benchmarks of its effect. The routing loop and risk score are report-only and have little real data yet.
 - Some defaults are the author's taste (emoji reply style, Polish profile example). The reply style is optional at install; language and name live in your own `local/profile.md`.
+
+## 🧠 How it works
+
+1. **Start:** the agent loads `core/INIT.md` (about 2 KB), the reply style and your profile. `INIT.md` only routes.
+2. **Flow:** `sox flow show` prints the table in `core/flow.json`. The agent sets a few facts (task size and type, areas touched, unclear requirements, risk) and walks the steps whose condition holds: spec for big or unclear work, plan, delegate to a tier role, implement, deterministic gate, risk-based review, commit, log.
+3. **Roles and routing:** `scout` (cheap), `implementer` (standard), `planner` and `reviewer` (high). A failed gate or a blocked report moves work one tier up; `risk_score.py` sets how deep verification goes. Codex is an optional subcontractor, switched by profile (`solo` or `duo`).
+4. **Config:** layered, last wins (see Structure). Defaults work out of the box; a project overrides single values in `.socratex/config.json`, checker registries in `.ai/review.json` and `.ai/planning.json`, flow steps in `.socratex/flow.json` and guard patterns in `.ai/guard.json`. Format and examples: [docs/OVERRIDES.md](docs/OVERRIDES.md).
+5. **Generated files:** `sox install` builds `targets/` from the sources and applies it to your agent config after a backup. Hand edits of generated files are detected.
 
 ## 🧳 Use only part of it
 
@@ -81,7 +93,7 @@ The installer is idempotent. It backs up your current agent config first (`~/cla
 
 | Target | What it gets |
 |---|---|
-| `~/.claude/CLAUDE.md` | managed block importing `core/RULES.md`, `core/STYLE.md`, `claude/CLAUDE.md`, `local/profile.md` (your own text outside the block stays) |
+| `~/.claude/CLAUDE.md` | managed, generated block importing `core/INIT.md`, `core/RULES.md` (while `startup.load_rules` is true), `core/STYLE.md`, `claude/CLAUDE.md`, `local/profile.md`, plus one line per enabled extension (your own text outside the block stays) |
 | `~/.claude/settings.json` | deep merge of `claude/settings.json`: guard hook, deny rules for secrets, `SOCRATEX_HOME` env |
 | `~/.claude/agents`, `~/.claude/skills/<name>` | links to `claude/agents`, `skills/`, `claude/skills/` |
 | `~/.claude/INDEX.json` | entry pointing at this repo's `INDEX.json` (other indexes kept) |
@@ -94,6 +106,8 @@ The installer is idempotent. It backs up your current agent config first (`~/cla
 Trust: because of the `post-merge` hook, code from this repo runs on your machine on every update, and `settings.json` gets the guard hook. Read the diff before you pull, or skip the git hooks at install.
 
 ```bash
+python core/sox install --plan                    # generate targets/ and diff against your agent config, changes nothing
+python core/sox install --yes                     # apply after an automatic backup (refuses without --yes)
 python modules/tools/scripts/install.py --check   # what is missing or stale, changes nothing
 python modules/tools/scripts/install.py --sync    # regenerate (the post-merge hook does this)
 python modules/tools/scripts/backup.py --list     # config backups; --restore <zip> to roll back
@@ -128,26 +142,61 @@ core/sox ext install <name> [--yes]     # dry run; --yes backs up the agent conf
 
 ```
 SocratexAI/
-  core/        INIT.md, flow.json (the order of work steps), safety.json, core.py (resolver), sox (the CLI), rules/, templates/
-  defaults/    preferences/ (code, communication) and profiles/ (solo, duo, yolo)
-  modules/     self-contained capabilities, each with a module.json and its tests next to the code
-    stages/      review, planning (checker registries and scripts)    engine/   shared engine of both stages
-    routing/     tiers, risk score, routing log                       memory/   skill learnings, improvements ledger
-    tools/scripts/  install, backup, update, check_leaks, build_index, state, subrepos, ...
-    gpt/         ChatGPT share and archive tools                      extensions/  manifests: plugins, MCP, mods, skills, reference packs
-  targets/     generated agent files (`sox install`); never edit by hand
-  tests/       tests of the core, resolver and sox
-  skills/, claude/, codex/, templates/project/, docs/
-  tools/       thin redirects to the old script paths for projects that still call them (`sox shims` shows whether anything does)
-  state/       machine output with rotation (gitignored)
-  local/       your private layer (gitignored); `local.example/` seeds it
+  core/          in the repo, not overridden by users: the part that decides
+    INIT.md        the only startup file; routes to the flow
+    flow.json      ordered if -> then work steps (stages, roles, rules, gates)
+    safety.json    named safety rules the guard enforces; relaxable only by the owner
+    core.py        resolver: merges the layers, validates them, writes state/effective.json
+    sox            the one command line (config, flow, ext, install, index, ...)
+    *.schema.json  schemas of config, flow, profile, safety, module and extension files
+    RULES.md, STYLE.md, DIRECTIVES.json, ROUTING.json, RISK-RULES.json, rules/, templates/
+  defaults/      what works without any setup
+    config.json    base config
+    profiles/      solo, duo, yolo (bundles of config values)
+    preferences/   code and communication standards (pointers to the rule documents)
+  modules/       self-contained capabilities, each with module.json and tests next to the code
+    stages/        review and planning (checker registries, selectors, reports)
+    engine/        shared engine of both stages (chunking, merge, findings schema)
+    routing/       tiers, roles and escalation (risk score, routing log; tier agents live in claude/agents)
+    memory/        skill learnings and the improvements ledger
+    tools/scripts/ install, backup, update, check_leaks, build_index, state, subrepos, ...
+    extensions/    one manifest per plugin, MCP server, mod, skill or reference pack
+    gpt/           ChatGPT share and archive tools
+    core/          manifest that owns the core files above
+  targets/       generated agent files (`sox install`); gitignored, never edit by hand
+  claude/, codex/  adapters: Claude Code agents, hook, mods, settings; Codex entry file
+  skills/        shared skills (spec, memory-review, skill-reflect, ...)
+  templates/project/  starting files for a project (AGENTS.md, CLAUDE.md, INDEX.json)
+  tests/         tests of the core, resolver and sox
+  docs/          FLOW.md (generated), OVERRIDES.md, specs/, ledgers
+  tools/         thin redirects to the old script paths for projects that still call them (`sox shims`)
+  state/         logs, effective config, ledgers: machine output with rotation (gitignored)
+  local/         your private layer (gitignored); `local.example/` seeds it
+    overrides/     global overrides of defaults, stages, profiles and extensions
+    projects/<project>/  private per-project overrides and settings that do not live in the project repo
 ```
+
+Three kinds of place: **in the repo** (`core/`, `defaults/`, `modules/`, adapters; changed by pull requests), **generated** (`targets/`, `docs/FLOW.md`, `INDEX.json`; rebuilt from sources) and **yours** (`local/`, `state/`; never committed).
 
 Config layers, last wins: `defaults/` and `modules/` -> `local/overrides/` -> the project's `.socratex/config.json` -> `local/projects/<project>/`. Safety rules can only be relaxed from the owner's `local/` layers. `sox config show` prints every value with its source. Project rules win over the core, except safety rules, which projects can only make stricter. Projects keep their own `INDEX.json`, `AGENTS.md`, `CLAUDE.md` and optional `.ai/` overrides; start from `templates/project/`. Override format (files, keys, merge rules, examples): `docs/OVERRIDES.md`.
 
 What to run when: [docs/FLOW.md](docs/FLOW.md) (generated: `sox flow doc`).
 
 ## 🧰 Tools
+
+The `sox` command line (`python core/sox <command>`):
+
+| Command | Purpose |
+|---|---|
+| `sox config show [--project P]` | effective config with the source of every value, relaxed safety rules, enabled extensions, stage registry changes |
+| `sox flow show \| check \| doc` | print the flow table (`--match fact=value`), validate it, regenerate `docs/FLOW.md` |
+| `sox modules` | modules by kind: what, when to run, entry commands |
+| `sox ext ...` | extension registry (see Extensions) |
+| `sox install --plan \| --check \| --yes` | generated targets and the agent config install |
+| `sox index [--check]` | regenerate `INDEX.json` from files and module manifests |
+| `sox state rotate \| adopt-logs`, `sox backup`, `sox test`, `sox migrate`, `sox shims` | log rotation, config backup, test suite, schema migrations, old-path redirects |
+
+Scripts:
 
 | Tool | Purpose |
 |---|---|
@@ -171,6 +220,8 @@ What to run when: [docs/FLOW.md](docs/FLOW.md) (generated: `sox flow doc`).
 ## 📚 Docs
 
 - `docs/FLOW.md`: what to run when (flow table, sox commands, directory map); generated, `sox flow doc --check` keeps it current.
+- `docs/OVERRIDES.md`: the per-project override format (files, keys, merge rules, examples).
+- `docs/specs/restructure/SPEC.md`: the spec and the record of the 3.0 restructure.
 - `docs/AI-PRACTICES.md`: findings about working with AI agents (what helped, what failed, why).
 - `docs/IMPROVEMENTS.json`: one ledger of every idea we weighed. Each item has a `status` (adopted, rejected, considering), the promise (`expected_result`), our verdict (`result`) and proof (`result_evidence`, `own:` = measured by us). Check it before proposing a plugin or tool again.
 - `docs/AUDIT-pstack-ecc.md`: why we borrow ideas from pstack and ECC but install neither.
