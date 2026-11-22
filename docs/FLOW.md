@@ -24,18 +24,19 @@ Ta strona jest generowana: `sox flow doc` zapisuje ją, `sox flow doc --check` w
 | 7 | `plan_check` | owner_answers i task_size ∈ {medium, big} | `stage:planning` |
 | 8 | `search` | task_size ≠ trivial | `role:scout` |
 | 9 | `delegate_codex` | codex i task_size ≠ trivial | `rule:core/rules/ROUTING.md` |
-| 10 | `implement` | task_size ≠ trivial | `role:implementer` |
-| 11 | `risk` | zawsze | `tool:modules/tools/scripts/risk_score.py` |
-| 12 | `gate_fast` | zawsze | `gate:fast` |
-| 13 | `gate_full` | risk ∈ {standard, full} | `gate:full` |
-| 14 | `escalate_to_standard` | gate = failed i attempts_on_tier ≥ 2 i tier = cheap | `role:implementer` |
-| 15 | `escalate_to_high` | gate = failed i attempts_on_tier ≥ 2 i tier = standard | `role:planner` |
-| 16 | `escalate_to_owner` | gate = failed i attempts_on_tier ≥ 2 i tier ∈ {high, top} | `ask` |
-| 17 | `review_stage` | task_size ≠ trivial i gate ≠ failed | `stage:review` |
-| 18 | `review_independent` | risk = full | `role:reviewer`, `rule:core/rules/REVIEW.md` |
-| 19 | `security_review` | touches ∈ {auth, payments} | `rule:core/rules/SECURITY-REVIEW.md` |
-| 20 | `commit` | gate ≠ failed | `rule:core/rules/COMMITS.md` |
-| 21 | `log` | zawsze | `tool:modules/tools/scripts/risk_score.py`, `tool:modules/tools/scripts/routing_log.py` |
+| 10 | `code_style` | task_type ∈ {feature, bug, refactor} | `rule:core/rules/CODE-STYLE.md` |
+| 11 | `implement` | task_size ≠ trivial | `role:implementer` |
+| 12 | `risk` | zawsze | `tool:modules/tools/scripts/risk_score.py` |
+| 13 | `gate_fast` | zawsze | `gate:fast` |
+| 14 | `gate_full` | risk ∈ {standard, full} | `gate:full` |
+| 15 | `escalate_to_standard` | gate = failed i attempts_on_tier ≥ 2 i tier = cheap | `role:implementer` |
+| 16 | `escalate_to_high` | gate = failed i attempts_on_tier ≥ 2 i tier = standard | `role:planner` |
+| 17 | `escalate_to_owner` | gate = failed i attempts_on_tier ≥ 2 i tier ∈ {high, top} | `ask` |
+| 18 | `review_stage` | task_size ≠ trivial i gate ≠ failed | `stage:review` |
+| 19 | `review_independent` | risk = full | `role:reviewer`, `rule:core/rules/REVIEW.md` |
+| 20 | `security_review` | touches ∈ {auth, payments} | `rule:core/rules/SECURITY-REVIEW.md` |
+| 21 | `commit` | gate ≠ failed | `rule:core/rules/COMMITS.md` |
+| 22 | `log` | zawsze | `tool:modules/tools/scripts/risk_score.py`, `tool:modules/tools/scripts/routing_log.py` |
 
 ## Kolejność warstw konfiguracji
 

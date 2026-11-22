@@ -22,6 +22,8 @@
      "why": "Search and fact gathering go to the cheap tier, never the router session."},
     {"id": "delegate_codex", "when": {"codex": true, "task_size": {"not": "trivial"}}, "then": ["rule:core/rules/ROUTING.md"],
      "why": "Tests, reviews, search and mechanical edits go to the Codex subcontractor; code and maths stay with Claude."},
+    {"id": "code_style", "when": {"task_type": ["feature", "bug", "refactor"]}, "then": ["rule:core/rules/CODE-STYLE.md"],
+     "why": "Writing or changing code follows the code standard: contracts, reading order, comments, quality, domain rules."},
     {"id": "implement", "when": {"task_size": {"not": "trivial"}}, "then": ["role:implementer"],
      "why": "Implementation from a complete brief goes to the standard tier in its own context."},
     {"id": "risk", "when": {}, "then": ["tool:modules/tools/scripts/risk_score.py"],
