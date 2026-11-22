@@ -891,7 +891,8 @@ const rowsOf = (s: Src, now: number, count: { n: number }, depth = 0, path: stri
       liveN: isRunning ? nd.running : 0,
       liveSum: isRunning ? (nd.startSum ?? 0) : 0,
       text: figureText(shownFigure, { usd, tok: nd.tok ?? 0, ms: (nd.ms ?? 0) + (isRunning ? liveElapsed(0, nd.running, nd.startSum ?? 0, nowMsOf(now)) : 0), noUsage }),
-      isActive: isRunning || s.mainRunning,
+      // A background task has its own lifetime: once it ended, a running main turn must not light it again.
+      isActive: isRunning || (s.mainRunning && !nd.taskId),
       tps: nd.tps ?? s.tps,
       tpsIn: nd.tpsIn,
       shade,
