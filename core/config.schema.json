@@ -7,6 +7,13 @@
     "schema_version": {"type": "integer", "enum": [1]},
     "profile": {"type": "string", "enum": ["solo", "duo", "yolo"]},
     "extensions": {"type": "array", "items": {"type": "string"}},
+    "startup": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "load_rules": {"type": "boolean"}
+      }
+    },
     "stages": {
       "type": "object",
       "additionalProperties": {

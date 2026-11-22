@@ -1,0 +1,100 @@
+{
+  "schema": "socratex-safety/v1",
+  "schema_version": 1,
+  "purpose": "Named safety rules enforced by claude/hooks/guard.py; an owner layer relaxes one with safety.allow: [id]",
+  "override_env": {
+    "SOCRATEX_GUARD=0": "disables the whole guard for one session (owner only, set outside the agent)",
+    "SOCRATEX_GUARD_ALLOW_SAFETY_EDIT=1": "lets the agent edit the protected safety and config files for one session (owner only)"
+  },
+  "fragments": {
+    "GIT": "\\bgit\\s+(?:-[Cc]\\s+\\S+\\s+|--[\\w-]+(?:=\\S+)?\\s+)*",
+    "READ_VERBS": "(?:cat|type|Get-Content|gc|head|tail|more|less|bat)"
+  },
+  "rules": [
+    {
+      "id": "destructive-git",
+      "what": "Git commands that wipe uncommitted work of other sessions or rewrite shared history",
+      "severity": "block",
+      "relaxable": true,
+      "enforce": [
+        {"kind": "bash-regex", "regex": "{GIT}reset\\s+--hard\\b", "reason": "git reset --hard would destroy uncommitted work (other sessions share this tree)."},
+        {"kind": "bash-regex", "regex": "{GIT}clean\\s+-\\w*[fdx]", "reason": "git clean would delete untracked work."},
+        {"kind": "bash-regex", "regex": "{GIT}(?:checkout|restore)\\s+(?:--\\s+)?\\.(?:\\s|$)", "reason": "Bulk checkout/restore of '.' would wipe uncommitted work."},
+        {"kind": "bash-regex", "regex": "{GIT}stash\\s+(?:drop|clear)\\b", "reason": "Dropping stashes loses work."},
+        {"kind": "bash-regex", "regex": "{GIT}push\\b[^|;&]*\\s(?:--force\\b|-f\\b)", "reason": "Force push rewrites shared history; ask the owner."},
+        {"kind": "bash-regex", "regex": "{GIT}branch\\s+-D\\b", "reason": "Force-deleting a branch loses commits; ask the owner."}
+      ]
+    },
+    {
+      "id": "git-add-all",
+      "what": "git add -A, --all or . stages other sessions' uncommitted work; stage your own paths",
+      "severity": "block",
+      "relaxable": true,
+      "enforce": [
+        {"kind": "bash-regex", "regex": "{GIT}add\\s+(?:-\\w*A\\w*|--all|\\.)(?:\\s|$)", "reason": "Stage your own paths only; add -A or . would sweep in other sessions' uncommitted work."}
+      ]
+    },
+    {
+      "id": "secret-files",
+      "what": "Secret files (.env, keys, credentials) are never read or edited by the agent",
+      "severity": "block",
+      "relaxable": true,
+      "enforce": [
+        {"kind": "bash-regex", "regex": "{READ_VERBS}\\s+[^|;&]*\\.env(?:\\.(?!example|sample|template)\\w+)?(?:\\s|$|[\"'])", "reason": "Secret files are off limits."},
+        {"kind": "file-name", "name_regex": "^(\\.env(\\..+)?|.+\\.(pem|pfx|key|p12)|id_rsa|id_ed25519|\\.credentials\\.json|auth\\.json)$", "except_regex": "\\.(example|sample|template)$", "tools": ["Read", "Edit", "Write"], "reason": "{name} looks like a secret file; the agent must not read or edit it."}
+      ]
+    },
+    {
+      "id": "ledger-dumps",
+      "what": "Whole-file dumps of the project's big ledger files (project .ai/guard.json big_files)",
+      "severity": "block",
+      "relaxable": true,
+      "enforce": [
+        {"kind": "project-big-files", "project_key": "big_files", "reader_key": "big_file_reader", "default_reader": "read single fields with $SOCRATEX_HOME/tools/json_read.py", "max_read_limit": 300}
+      ]
+    },
+    {
+      "id": "refs-read-only",
+      "what": "The reference packs folder (SOCRATEX_REFS, default ~/ai-refs) is read-only third-party content",
+      "severity": "block",
+      "relaxable": true,
+      "enforce": [
+        {"kind": "refs-write", "reason": "the reference packs folder is read-only third-party content; change nothing there.", "bash_reason": "the reference packs folder is read-only third-party content; use tools/subrepos.py to manage it."}
+      ]
+    },
+    {
+      "id": "project-read-only-dirs",
+      "what": "Folders a project marks read-only in .ai/guard.json read_only_dirs",
+      "severity": "block",
+      "relaxable": true,
+      "enforce": [
+        {"kind": "project-read-only-dirs", "project_key": "read_only_dirs", "tools": ["Edit", "Write"]}
+      ]
+    },
+    {
+      "id": "project-blocked-commands",
+      "what": "Commands a project blocks in .ai/guard.json blocked_commands",
+      "severity": "block",
+      "relaxable": true,
+      "enforce": [
+        {"kind": "project-blocked-commands", "project_key": "blocked_commands"}
+      ]
+    },
+    {
+      "id": "safety-config-edits",
+      "what": "The agent must not edit the files that define or relax safety rules: only the owner edits them by hand",
+      "severity": "block",
+      "relaxable": false,
+      "enforce": [
+        {
+          "kind": "protected-paths",
+          "tools": ["Edit", "Write", "Bash"],
+          "repo_paths": ["core/safety.json", "core/safety.schema.json", "local/overrides/**", "local/projects/**", "defaults/config.json", "defaults/profiles/**"],
+          "anywhere_paths": [".socratex/config.json"],
+          "override_env": "SOCRATEX_GUARD_ALLOW_SAFETY_EDIT",
+          "reason": "{path} defines or relaxes safety rules; only the owner edits it by hand (owner override for one session: SOCRATEX_GUARD_ALLOW_SAFETY_EDIT=1)."
+        }
+      ]
+    }
+  ]
+}

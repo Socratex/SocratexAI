@@ -2,14 +2,16 @@
   "schema": "socratex-module/v1",
   "name": "core",
   "kind": "tools",
-  "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer",
-  "when": "Reading the effective config or the flow table at the start of a task, checking flow references, regenerating the index",
+  "what": "The sox command line and the core resolver: layered config, profiles, preferences index, flow table, initializer, named safety rules, generated install targets",
+  "when": "Reading the effective config or the flow table at the start of a task, checking flow references, regenerating the index, planning or applying the agent config install (sox install), relaxing a safety rule",
   "entry": [
     "core/sox config show",
     "core/sox flow show",
     "core/sox flow check",
     "core/sox index",
-    "core/sox modules"
+    "core/sox modules",
+    "core/sox install --plan",
+    "core/sox install --check"
   ],
   "paths": [
     "core/sox",
@@ -22,11 +24,16 @@
     "core/module.schema.json",
     "core/profile.schema.json",
     "core/preferences.schema.json",
-    "defaults"
+    "defaults",
+    "core/safety.json",
+    "core/safety.schema.json",
+    "core/targets.py"
   ],
   "tests": [
     "tests/test_core.py",
     "tests/test_modules.py",
-    "tests/test_flow.py"
+    "tests/test_flow.py",
+    "tests/test_safety.py",
+    "tests/test_targets.py"
   ]
 }

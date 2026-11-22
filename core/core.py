@@ -23,6 +23,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +32,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 import state  # noqa: E402
 
 SCHEMA_PATH = ROOT / "core" / "config.schema.json"
+SHIPPED_SAFETY = Path(__file__).resolve().parent / "safety.json"   # rule ids when a fake root has no core/safety.json
 SUPPORTED_VERSION = 1
 DIRECTIVES = ("$append", "$remove", "$delete")
 MIGRATE_HINT = "`sox migrate` is not implemented yet; edit the file by hand"
@@ -56,17 +58,25 @@ def _config_layers(project_root: Path | str | None, base: Path) -> list[dict]:
     return [{"name": n, "path": p, "exists": p.is_file(), "kind": "config"} for n, p in found]
 
 
-def selected_profile(project_root: Path | str | None = None, root: Path | None = None) -> str | None:
-    """Return the profile name: the last `profile` string set by a present config layer (a $delete clears it)."""
-    name = None
+def _profile_choice(project_root: Path | str | None, root: Path | None) -> tuple[str | None, str | None]:
+    """Return (profile name, name of the layer that set it): the last `profile` string of a present config layer."""
+    name = chosen_by = None
     for layer in _config_layers(project_root, Path(root) if root else ROOT):
         if not layer["exists"]:
             continue
         data = _read_json(layer["path"])
         if isinstance(data, dict) and "profile" in data:
             value = data["profile"]
-            name = value if isinstance(value, str) else (None if _directive(value) else name)
-    return name
+            if isinstance(value, str):
+                name, chosen_by = value, layer["name"]
+            elif _directive(value):
+                name = chosen_by = None
+    return name, chosen_by
+
+
+def selected_profile(project_root: Path | str | None = None, root: Path | None = None) -> str | None:
+    """Return the profile name: the last `profile` string set by a present config layer (a $delete clears it)."""
+    return _profile_choice(project_root, root)[0]
 
 
 def layers(project_root: Path | str | None = None, root: Path | None = None) -> list[dict]:
@@ -247,18 +257,71 @@ def _merge(base: dict, prov: dict, over: dict, layer: str, file: str, prefix: st
             _set_leaf(prov, path, value, layer, file, previous)
 
 
+def _drop_project_relaxations(layer: dict, data: dict, chosen_by: str | None, project_file: object) -> str | None:
+    """Remove safety.allow that a project file sets (or selects through a profile); return the error line, if any."""
+    safety = data.get("safety")
+    if layer["name"] == "project" and layer["kind"] == "config" and isinstance(safety, dict) and "allow" in safety:
+        del safety["allow"]
+        if not safety:
+            del data["safety"]
+        return f"{layer['path']}: safety.allow in a project file is ignored; only owner layers may relax safety rules"
+    if layer["kind"] == "profile" and chosen_by == "project" and isinstance(safety, dict) and safety.get("allow"):
+        del data["safety"]
+        return (f"{layer['path']}: profile selected by the project file {project_file} relaxes safety rules; "
+                "ignored (an owner layer must select it)")
+    return None
+
+
+def _relax_source(entry: dict, rule: str) -> dict:
+    """Layer and file where `rule` entered safety.allow: the oldest layer of the unbroken run that still lists it."""
+    chain = entry["overridden"] + [entry]
+    index = max(i for i, item in enumerate(chain) if rule in item["value"])
+    while index > 0 and rule in chain[index - 1]["value"]:
+        index -= 1
+    return {"layer": chain[index]["layer"], "file": chain[index]["file"]}
+
+
+def _safety_rules(base: Path) -> dict[str, dict]:
+    path = base / "core" / "safety.json"
+    data = _read_json(path if path.is_file() else SHIPPED_SAFETY)
+    return {rule["id"]: rule for rule in data["rules"]}  # type: ignore[index]
+
+
+def _relaxed_rules(values: dict, prov: dict, base: Path) -> tuple[list[dict], list[str]]:
+    known = _safety_rules(base)
+    relaxed: list[dict] = []
+    errors: list[str] = []
+    for rule in dict.fromkeys(values.get("safety", {}).get("allow", [])):
+        if rule not in known:
+            errors.append(f"safety.allow: unknown rule id '{rule}' (ids are listed in core/safety.json)")
+        elif not known[rule]["relaxable"]:
+            errors.append(f"safety.allow: rule '{rule}' cannot be relaxed")
+        else:
+            relaxed.append({"rule": rule, **_relax_source(prov["safety.allow"], rule)})
+    return relaxed, errors
+
+
 def resolve(project_root: Path | str | None = None, root: Path | None = None) -> dict:
-    """Merge all present layers. Returns {values, provenance, sources}; provenance maps each leaf key to its layer, file and overridden values."""
+    """Merge all present layers. Returns {values, provenance, sources, safety}: provenance maps each leaf key to its layer,
+    file and overridden values; safety lists the relaxed rules (rule, layer, file) and the error lines of ignored relaxations."""
     values: dict = {}
     prov: dict = {}
     sources = []
     loaded = []
     missing_profile = None
-    for layer in layers(project_root, root):
+    all_layers = layers(project_root, root)
+    chosen_by = _profile_choice(project_root, root)[1]
+    project_file = next((l["path"] for l in all_layers if l["name"] == "project"), None)
+    safety_errors: list[str] = []
+    for layer in all_layers:
         if not layer["exists"]:
             missing_profile = layer["path"] if layer["name"] == "profile" else missing_profile
             continue
-        loaded.append((layer, _LOADERS[layer["kind"]](layer["path"])))
+        data = _LOADERS[layer["kind"]](layer["path"])
+        problem = _drop_project_relaxations(layer, data, chosen_by, project_file)
+        if problem:
+            safety_errors.append(problem)
+        loaded.append((layer, data))
     if missing_profile:  # reported after the other files so a bad `profile` value shows its own error first
         raise ConfigError(f"{missing_profile}: the selected profile has no file")
     for layer, data in loaded:
@@ -267,7 +330,62 @@ def resolve(project_root: Path | str | None = None, root: Path | None = None) ->
     errors = validate(values, _schema(), "$")
     if errors:
         raise ConfigError("resolved config: " + "; ".join(errors))
-    return {"values": values, "provenance": prov, "sources": sources}
+    relaxed, unusable = _relaxed_rules(values, prov, Path(root) if root else ROOT)
+    return {"values": values, "provenance": prov, "sources": sources,
+            "safety": {"relaxed": relaxed, "errors": safety_errors + unusable}}
+
+
+def relaxed_rule_ids(project_root: Path | str | None = None, root: Path | None = None) -> set[str]:
+    """Ids of the safety rules the effective config relaxes (what the guard skips)."""
+    return {item["rule"] for item in resolve(project_root, root)["safety"]["relaxed"]}
+
+
+# ---------- safety log ----------
+
+def _log_state(path: Path, project: str | None) -> dict[tuple, str]:
+    """Replay state/safety-log.jsonl: the relaxations and rejections currently on record for one project."""
+    current: dict[tuple, str] = {}
+    if not path.is_file():
+        return current
+    for line in path.read_text(encoding="utf-8").splitlines():
+        try:
+            record = json.loads(line)
+        except ValueError:
+            continue
+        if record.get("project") != project:
+            continue
+        kind = "relaxed" if record["event"] in ("relaxed", "restored") else "rejected"
+        key = (kind, record["rule"], record.get("detail", ""))
+        if record["event"] in ("relaxed", "rejected"):
+            current[key] = record["source"]
+        else:
+            current.pop(key, None)
+    return current
+
+
+def log_safety(result: dict, project_root: Path | str | None = None, root: Path | None = None) -> list[dict]:
+    """Append one record per relaxed rule (or ignored relaxation) to state/safety-log.jsonl, only when it changed since the
+    last record for this project; a rule that stopped being relaxed gets a `restored` or `cleared` record. Returns what was appended."""
+    project = str(Path(project_root).resolve()) if project_root else None
+    path = state.state_dir(root) / "safety-log.jsonl"
+    desired = {("relaxed", item["rule"], ""): f"{item['layer']}: {item['file']}" for item in result["safety"]["relaxed"]}
+    for message in result["safety"]["errors"]:
+        desired[("rejected", "safety.allow", message)] = message.split(": ", 1)[0]
+    current = _log_state(path, project)
+    now = time.strftime("%Y-%m-%d %H:%M:%S")
+    records = []
+    for key, source in desired.items():
+        if current.get(key) != source:
+            records.append({"time": now, "project": project, "event": key[0], "rule": key[1], "source": source,
+                            **({"detail": key[2]} if key[2] else {})})
+    for key, source in current.items():
+        if key not in desired:
+            records.append({"time": now, "project": project, "event": "restored" if key[0] == "relaxed" else "cleared",
+                            "rule": key[1], "source": source, **({"detail": key[2]} if key[2] else {})})
+    if records:
+        with path.open("a", encoding="utf-8", newline="\n") as handle:
+            handle.writelines(json.dumps(record, ensure_ascii=False) + "\n" for record in records)
+    return records
 
 
 # ---------- effective.json ----------
@@ -283,6 +401,7 @@ def effective_path(root: Path | None = None) -> Path:
 def write_effective(project_root: Path | str | None = None, root: Path | None = None) -> dict:
     result = resolve(project_root, root)
     result["project"] = str(Path(project_root).resolve()) if project_root else None
+    log_safety(result, project_root, root)
     text = json.dumps(result, indent=2, ensure_ascii=False) + "\n"
     effective_path(root).write_text(text, encoding="utf-8", newline="\n")
     return result

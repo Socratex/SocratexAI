@@ -15,6 +15,7 @@
   ],
   "paths": [
     "tools/install.py",
+    "tools/generated.py",
     "tools/backup.py",
     "tools/update.py",
     "tools/check_leaks.py",

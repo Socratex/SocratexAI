@@ -370,7 +370,8 @@ def test_yolo_adds_only_safety_allow_on_top_of_duo(shipped):
     root, project = shipped
     set_profile(project, "duo")
     duo = flat(core.resolve(project, root)["values"])
-    set_profile(project, "yolo")
+    (project / ".socratex" / "config.json").unlink()
+    write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "profile": "yolo"})  # only an owner layer may pick it
     yolo = flat(core.resolve(project, root)["values"])
     assert {k for k in yolo.keys() | duo.keys() if yolo.get(k) != duo.get(k)} == {"profile", "safety.allow"}
 

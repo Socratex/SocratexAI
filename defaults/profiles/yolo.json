@@ -2,7 +2,7 @@
   "schema": "socratex-profile/v1",
   "schema_version": 1,
   "name": "yolo",
-  "what": "Duo plus relaxed safety rules; the rule names below are placeholders until core/safety.json exists",
+  "what": "Duo plus relaxed safety rules (ids from core/safety.json); only an owner layer may select it",
   "config": {
     "codex": {"enabled": true, "review": true, "delegate": true},
     "safety": {"allow": ["destructive-git", "secret-files", "ledger-dumps"]}

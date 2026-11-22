@@ -1,0 +1,48 @@
+{
+  "purpose": "Schema of core/safety.json: the named safety rules the guard hook enforces",
+  "type": "object",
+  "required": ["schema", "schema_version", "fragments", "rules"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": "socratex-safety/v1"},
+    "schema_version": {"type": "integer", "enum": [1]},
+    "purpose": {"type": "string"},
+    "override_env": {"type": "object", "additionalProperties": {"type": "string"}},
+    "fragments": {"type": "object", "additionalProperties": {"type": "string"}},
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "what", "severity", "relaxable", "enforce"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+          "what": {"type": "string", "minLength": 1},
+          "severity": {"type": "string", "enum": ["block"]},
+          "relaxable": {"type": "boolean"},
+          "enforce": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["kind"],
+              "properties": {
+                "kind": {"type": "string", "enum": ["bash-regex", "file-name", "project-big-files", "refs-write", "project-read-only-dirs", "project-blocked-commands", "protected-paths"]},
+                "regex": {"type": "string"},
+                "reason": {"type": "string"},
+                "name_regex": {"type": "string"},
+                "except_regex": {"type": "string"},
+                "tools": {"type": "array", "items": {"type": "string", "enum": ["Read", "Edit", "Write", "Bash"]}},
+                "project_key": {"type": "string"},
+                "repo_paths": {"type": "array", "items": {"type": "string"}},
+                "anywhere_paths": {"type": "array", "items": {"type": "string"}},
+                "override_env": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

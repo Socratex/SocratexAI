@@ -24,11 +24,24 @@ def _fmt(value: object) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
+def print_relaxed_safety(safety: dict) -> None:
+    """The first block of `config show`: relaxed safety rules with their source, then error lines about ignored relaxations."""
+    print("Relaxed safety rules:")
+    for item in safety["relaxed"]:
+        print(f"  {item['rule']}  <- {item['layer']}: {item['file']}")
+    if not safety["relaxed"]:
+        print("  none")
+    for line in safety["errors"]:
+        print(f"  error: {line}")
+    print()
+
+
 def cmd_config_show(args: argparse.Namespace) -> int:
     result = core.resolve(args.project)
     if args.json:
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 0
+    print_relaxed_safety(result["safety"])
     rows = []
     for key in sorted(result["provenance"]):
         entry = result["provenance"][key]
@@ -92,6 +105,46 @@ def cmd_flow_check(args: argparse.Namespace) -> int:
     return 1 if errors else 0
 
 
+def cmd_install(args: argparse.Namespace) -> int:
+    """Generate targets/ and plan, check or apply the install into the agent config folders."""
+    import difflib
+
+    import install
+    import targets
+
+    sys.stdout.reconfigure(encoding="utf-8")
+    install.apply_prefs(install.load_prefs() or {})
+    if args.plan:
+        report, changes = install.collect_plan(args.target)
+        creates = [str(path) for path, old, _ in changes if old is None]
+        changed = [str(path) for path, old, _ in changes if old is not None]
+        print("Plan (dry run, nothing in the agent config folders was written; targets/ was regenerated):")
+        print(f"  create: {', '.join(creates) or 'none'}")
+        print(f"  change: {', '.join(changed) or 'none'}")
+        print("  remove: none (the installer never deletes files; a real folder in the way of a link is moved aside)")
+        for line in report:
+            if not line.startswith("write "):
+                print(f"  {line}")
+        for path, old, new in changes:
+            print()
+            print("\n".join(difflib.unified_diff((old or "").splitlines(), new.splitlines(), lineterm="",
+                                                  fromfile=f"{path} (installed)" if old is not None else "/dev/null",
+                                                  tofile=f"{path} (generated)")))
+        return 0
+    if args.check:
+        problems = targets.check(args.target)
+        for line in problems:
+            print(line, file=sys.stderr)
+        if not problems:
+            print("targets/ is up to date and untouched.")
+        return 1 if problems else 0
+    if not args.yes:
+        print("error: `sox install` changes your agent config (CLAUDE.md, settings.json, links); "
+              "run `sox install --plan` first, then `sox install --yes` (it makes a backup first).", file=sys.stderr)
+        return 2
+    return install.run("full", auto=True)
+
+
 def cmd_index(args: argparse.Namespace) -> int:
     return build_index.run_index(args.check)
 
@@ -132,6 +185,12 @@ def build_parser() -> argparse.ArgumentParser:
     flow_check.add_argument("--project")
     index = top.add_parser("index", help="regenerate INDEX.json from files and module manifests")
     index.add_argument("--check", action="store_true", help="exit 1 when INDEX.json is stale")
+    install = top.add_parser("install", help="generate targets/ and plan, check or apply the agent config install")
+    mode = install.add_mutually_exclusive_group()
+    mode.add_argument("--plan", action="store_true", help="dry run: diff generated files against the installed ones")
+    mode.add_argument("--check", action="store_true", help="exit 1 when targets/ is missing, stale or hand-edited")
+    mode.add_argument("--yes", action="store_true", help="apply: back up the agent config, then install")
+    install.add_argument("--target", choices=("claude", "codex"), help="limit --plan and --check to one agent")
     top.add_parser("modules", help="list modules by kind: what, when to run, entry commands")
     parser.set_defaults(action=None)
     return parser
@@ -140,7 +199,7 @@ def build_parser() -> argparse.ArgumentParser:
 # (command, action) -> handler; add new subcommands here.
 COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_config_resolve,
             ("flow", "show"): cmd_flow_show, ("flow", "check"): cmd_flow_check,
-            ("index", None): cmd_index, ("modules", None): cmd_modules}
+            ("index", None): cmd_index, ("install", None): cmd_install, ("modules", None): cmd_modules}
 
 
 def main(argv: list[str] | None = None) -> int:

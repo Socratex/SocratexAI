@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "profile": "duo",
+  "startup": {"load_rules": true},
   "stages": {
     "review": {"enabled": true},
     "planning": {"enabled": true}
