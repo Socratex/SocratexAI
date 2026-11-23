@@ -95,7 +95,7 @@ The installer is idempotent. It backs up your current agent config first (`~/cla
 |---|---|
 | `~/.claude/CLAUDE.md` | managed, generated block importing `core/INIT.md`, `defaults/RULES.md` (while `startup.load_rules` is true), `defaults/STYLE.md`, `claude/CLAUDE.md`, `local/profile.md`, plus one line per enabled extension (your own text outside the block stays) |
 | `~/.claude/settings.json` | deep merge of `claude/settings.json`: guard hook, deny rules for secrets, `SOCRATEX_HOME` env |
-| `~/.claude/agents`, `~/.claude/skills/<name>` | links to `claude/agents`, `skills/`, `claude/skills/` |
+| `~/.claude/agents`, `~/.claude/skills/<name>` | `agents` links to the generated `targets/claude/agents` (built from the sources in `claude/agents/`); skills link to `skills/`, `claude/skills/` |
 | `~/.claude/INDEX.json` | entry pointing at this repo's `INDEX.json` (other indexes kept) |
 | `~/.codex/AGENTS.md` | generated from the same core rules + `codex/AGENTS.md` + `local/profile.md` |
 | `~/.codex/agents/socratex_*.toml` | agent profiles generated from `defaults/ROUTING.json` |
