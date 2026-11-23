@@ -244,15 +244,15 @@
     },
     {
       "path": "defaults/adapters/duo.json",
-      "what": "Claude lead with Codex as subcontractor for search, tests and second-opinion review"
+      "what": "Main agent plus a second agent (Codex) as subcontractor for search, tests and second-opinion review; opt-in only"
     },
     {
       "path": "defaults/adapters/solo.json",
-      "what": "Claude alone: no Codex subcontractor, review and planning stay on"
+      "what": "Default: one main agent (the one using SocratexAI), no second agent; review and planning stay on"
     },
     {
       "path": "defaults/adapters/yolo.json",
-      "what": "Duo plus relaxed safety rules (ids from core/safety.json); only an owner layer may select it"
+      "what": "Duo (main agent plus second agent) plus relaxed safety rules (ids from core/safety.json); only an owner layer may select it"
     },
     {
       "path": "defaults/preferences/code/code.json",

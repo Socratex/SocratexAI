@@ -28,7 +28,7 @@ The shared core (`defaults/RULES.md`, `defaults/STYLE.md`) applies first; this f
 
 ## 🧰 Tools
 - Standard tools (`rg`, Read, Edit) first. Code navigation by symbol (Serena MCP) or dependency graphs (graphify) only when the project lists them and they beat a plain search; graph hits are pointers, read the source before editing.
-- Plugin `codex@openai-codex`: `/codex:review` (second opinion on a diff) and `/codex:rescue` (delegation). The always-on review gate stays off because it burns both agents' limits. Which work goes to Codex (search, internet research, non-mathematical 2D/3D art, summaries, mechanical edits, second opinions) and which stays with Claude (code, maths, architecture): `defaults/rules/ROUTING.md`, section load balancing.
+- Plugin `codex@openai-codex` (only if `codex.enabled`): `/codex:review` (second opinion on a diff) and `/codex:rescue` (delegation). The always-on review gate stays off because it burns both agents' limits. What goes to the second agent and what stays: `defaults/rules/ROUTING.md`, load balancing.
 - Disable MCP servers and plugins you do not use: each adds a fixed cost to every session.
 
 ## 🧪 When improving AI

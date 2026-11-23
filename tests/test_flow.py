@@ -324,10 +324,10 @@ def test_layer_order_has_adapter_between_defaults_and_local(shipped):
 
 def test_adapter_layer_is_below_local_and_above_defaults(shipped):
     root, project = shipped
-    assert core.resolve(project, root)["values"]["codex"]["enabled"] is True  # duo from defaults
-    write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "codex": {"enabled": False}})
+    assert core.resolve(project, root)["values"]["codex"]["enabled"] is False  # solo from defaults
+    write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "codex": {"enabled": True}})
     result = core.resolve(project, root)
-    assert result["values"]["codex"]["enabled"] is False
+    assert result["values"]["codex"]["enabled"] is True
     prov = result["provenance"]["codex.enabled"]
     assert prov["layer"] == "local" and [o["layer"] for o in prov["overridden"]] == ["adapter"]
 
@@ -378,8 +378,8 @@ def test_yolo_adds_only_safety_allow_on_top_of_duo(shipped):
 
 def test_missing_adapter_file_is_an_error(shipped):
     root, project = shipped
-    (root / "defaults" / "adapters" / "duo.json").unlink()
-    with pytest.raises(core.ConfigError, match="duo.json.*no file"):
+    (root / "defaults" / "adapters" / "solo.json").unlink()
+    with pytest.raises(core.ConfigError, match="solo.json.*no file"):
         core.resolve(project, root)
 
 
@@ -392,7 +392,7 @@ def test_bad_adapter_value_reports_the_enum_not_a_missing_file(shipped):
 
 def test_adapter_file_typo_and_directive_are_errors(shipped):
     root, project = shipped
-    path = root / "defaults" / "adapters" / "duo.json"
+    path = root / "defaults" / "adapters" / "solo.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     data["config"]["codex"]["enable"] = True
     write(path, data)

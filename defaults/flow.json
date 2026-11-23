@@ -21,7 +21,7 @@
     {"id": "search", "when": {"task_size": {"not": "trivial"}}, "then": ["role:scout"],
      "why": "Search and fact gathering go to the cheap tier, never the router session."},
     {"id": "delegate_codex", "when": {"codex": true, "task_size": {"not": "trivial"}}, "then": ["rule:defaults/rules/ROUTING.md"],
-     "why": "Tests, reviews, search and mechanical edits go to the Codex subcontractor; code and maths stay with Claude."},
+     "why": "Only when a second agent is enabled in config (codex.enabled): tests, reviews, search and mechanical edits go to it; code and maths stay with the main agent."},
     {"id": "code_style", "when": {"task_type": ["feature", "bug", "refactor"]}, "then": ["rule:defaults/rules/CODE-STYLE.md"],
      "why": "Writing or changing code follows the code standard: contracts, reading order, comments, quality, domain rules."},
     {"id": "implement", "when": {"task_size": {"not": "trivial"}}, "then": ["role:implementer"],

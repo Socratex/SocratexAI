@@ -2,7 +2,7 @@
   "schema": "socratex-profile/v1",
   "schema_version": 1,
   "name": "duo",
-  "what": "Claude lead with Codex as subcontractor for search, tests and second-opinion review",
+  "what": "Main agent plus a second agent (Codex) as subcontractor for search, tests and second-opinion review; opt-in only",
   "config": {
     "codex": {"enabled": true, "review": true, "delegate": true}
   }

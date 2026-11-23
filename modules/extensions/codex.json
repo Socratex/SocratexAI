@@ -10,7 +10,7 @@
   },
   "when_to_use": "A second opinion on a diff (/codex:review) or delegated mechanical work (/codex:rescue) is needed.",
   "status": "adopted",
-  "default_enabled": true,
+  "default_enabled": false,
   "context_cost": {
     "level": "low",
     "note": "slash commands and a subagent; the always-on review gate stays off"

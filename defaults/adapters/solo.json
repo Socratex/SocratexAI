@@ -2,7 +2,7 @@
   "schema": "socratex-profile/v1",
   "schema_version": 1,
   "name": "solo",
-  "what": "Claude alone: no Codex subcontractor, review and planning stay on",
+  "what": "Default: one main agent (the one using SocratexAI), no second agent; review and planning stay on",
   "config": {
     "codex": {"enabled": false, "review": false, "delegate": false}
   }

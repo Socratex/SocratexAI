@@ -312,5 +312,5 @@ def test_combined_directive_is_validated(env):
 
 def test_shipped_defaults_file_is_valid():
     data = core.load_layer_file(core.ROOT / "defaults" / "config.json")
-    assert data["adapter"] == "duo"
+    assert data["adapter"] == "solo"
     assert data["stages"]["review"]["enabled"] is True

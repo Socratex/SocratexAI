@@ -37,8 +37,8 @@ Każdy plik konfiguracji ma `schema_version` (dziś `1`). Nieznany klucz to bł�
 | Klucz | Znaczenie |
 |---|---|
 | `schema_version` | wymagany, `1` |
-| `adapter` | `solo`, `duo` albo `yolo` (komplet wartości domyślnych) |
-| `codex` | `enabled`, `review`, `delegate` (czy używać Codexa) |
+| `adapter` | `solo` (domyślny: jeden agent główny), `duo` albo `yolo` (agent główny plus drugi agent jako podwykonawca; tylko po włączeniu) |
+| `codex` | `enabled`, `review`, `delegate` (czy używać Codexa jako drugiego agenta; domyślnie wyłączony) |
 | `stages` | `{"review": {"enabled": false}}` wyłącza etap |
 | `routing.tier_overrides` | `{"rola": "cheap" / "standard" / "high"}` |
 | `extensions` | lista włączonych rozszerzeń (zmiany przez `$append`, `$remove`) |

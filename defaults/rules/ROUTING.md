@@ -5,7 +5,7 @@ description: Which model and effort to use, when to delegate or escalate, risk-b
 updated: 2026-11-19
 ---
 
-# 🤖 AI model routing (Claude and Codex)
+# 🤖 AI model routing
 
 Source of truth: `defaults/ROUTING.json` (mirrored by `claude/agents/*.md` and `codex/agents/*.toml`, checked by `modules/tools/scripts/tests`). A project overrides tiers with the config key `routing.tier_overrides` (the one path; `.ai/ROUTING.json` is deprecated, `sox project check` warns). Aliases, not pinned model IDs.
 
@@ -14,7 +14,7 @@ Source of truth: `defaults/ROUTING.json` (mirrored by `claude/agents/*.md` and `
 - Send predictable, well-specified steps to the cheapest tier that passes the gate; escalate only the ambiguous remainder.
 - Escalate on evidence: a failed gate or a blocked report moves the task one tier up with the evidence; after two failed attempts on a tier, stop and move up or ask the owner.
 - Review runs in a separate context from the implementation.
-- The session is a router and ALWAYS delegates (owner decision 2026-11-20, replaces the small-things exception of 2026-11-19): it plans, delegates to the tier agents (`scout`, `implementer`, `planner`, `reviewer`; Codex `socratex_*`), then integrates and verifies. It does no search, implementation, test run, log reading or review itself. It acts directly only for: answering the owner, simple edits it already fully understands (judged by complexity, not line count), the finalizer/commit, and integrating results. Complex tasks (multi-file, several steps, design, many edge cases) are always delegated. A brief longer than the work is not an excuse; write the short brief. Start delegating at the first step of the first task of a session, not after a reminder. One level of delegation, exact ownership, no full-history forks.
+- The session is a router and ALWAYS delegates (owner decision 2026-11-20, replaces the small-things exception of 2026-11-19): it plans, delegates to the tier agents (`scout`, `implementer`, `planner`, `reviewer`; for Codex as main agent `socratex_*`), then integrates and verifies. It does no search, implementation, test run, log reading or review itself. It acts directly only for: answering the owner, simple edits it already fully understands (judged by complexity, not line count), the finalizer/commit, and integrating results. Complex tasks (multi-file, several steps, design, many edge cases) are always delegated. A brief longer than the work is not an excuse; write the short brief. Start delegating at the first step of the first task of a session, not after a reminder. One level of delegation, exact ownership, no full-history forks.
 - Watch the mix: high or top tier above about 15 percent of tasks means routing is too conservative.
 
 ## 🪜 Tiers
@@ -43,10 +43,10 @@ Source of truth: `defaults/ROUTING.json` (mirrored by `claude/agents/*.md` and `
 ## 🔝 Top tier needs owner approval
 Never automatic, not in unattended loops and not because a task is critical. Explain why the high tier is not enough (attempts, evidence, exact scope, expected cost and gain), ask, and wait for an explicit yes. Approval covers analysis only, not implementation, extra agents or xhigh effort.
 
-## ⚖️ Load balancing Claude and Codex (owner decision 2026-11-19)
-Claude is the lead for code and anything mathematical; Codex is Claude's subcontractor in every session so the load and the limits are shared. Claude is the superior: it writes the brief, gives the orders, integrates and verifies. Codex follows the brief and the parent's instructions, reports with a status (DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, BLOCKED) and never commits, pushes or finalizes.
-- Standing rule: in every session Claude splits every task before starting, and sends every part from the Codex list below to Codex. Tests (running suites, gates, long builds), reviews and other expensive work that needs no decision go to Codex by default; Claude keeps decisions, code and maths. No small-things exception (owner decision 2026-11-20).
-- Codex by default (via `/codex:rescue`, in Claude Code; in Codex itself these just stay there):
+## ⚖️ Load balancing with a second agent (optional; owner decision 2026-11-19, made opt-in 2026-11-23)
+Applies only when a second agent is enabled in config (today `codex.enabled`; `sox config show`). Default is `solo`: one main agent, nothing here applies and nothing breaks. With a second agent, the main agent (the one running the session) is the lead for code and anything mathematical and the second agent is its subcontractor, so load and limits are shared. The main agent writes the brief, gives the orders, integrates and verifies. The subcontractor follows the brief and the parent's instructions, reports with a status (DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, BLOCKED) and never commits, pushes or finalizes.
+- Standing rule (second agent enabled): the main agent splits every task before starting, and sends every part from the delegable list below to the second agent. Tests (running suites, gates, long builds), reviews and other expensive work that needs no decision go to the second agent by default; the main agent keeps decisions, code and maths. No small-things exception (owner decision 2026-11-20).
+- Second agent by default (Codex via `/codex:rescue` from Claude Code; when Codex is the main agent these just stay there):
   - searching files and the repo, collecting facts across many files
   - research on the internet (sources, docs, how others solve it)
   - 2D and 3D art that is judged by look, not by maths: concept art, textures, sprites, models and renders made by hand or by a generator
@@ -55,11 +55,11 @@ Claude is the lead for code and anything mathematical; Codex is Claude's subcont
   - running test suites and gates and reporting only failures; independent review of every logic diff (`/codex:review` or `socratex_reviewer`) before commit
   - expensive, non-decision work: long log analysis, broad sweeps, bulk edits
   - rescue after two failed attempts on one tier, or a second diagnosis of a hard bug
-- Claude by default: writing and changing code, algorithms, geometry and other maths (physics, collision, generation formulas), 2D and 3D graphics built on maths (procedural and generated shapes, meshes, noise, shaders, geometry), architecture and plans, integration, finalizer, commits.
-- Balance by load: when one vendor is near its limit or slow, move the delegable part to the other. Never move code or maths to Codex just to save limits.
-- A Codex result is a lead, not proof: Claude checks it with the gate. Art is judged by the owner.
+- Main agent by default: writing and changing code, algorithms, geometry and other maths (physics, collision, generation formulas), 2D and 3D graphics built on maths (procedural and generated shapes, meshes, noise, shaders, geometry), architecture and plans, integration, finalizer, commits.
+- Balance by load: when one vendor is near its limit or slow, move the delegable part to the other. Never move code or maths to the second agent just to save limits.
+- A second agent's result is a lead, not proof: the main agent checks it with the gate. Art is judged by the owner.
 - Client or sensitive data goes to the second vendor only if the project allows it.
 
-## 🧩 Codex specifics
+## 🧩 Subcontractor specifics (second agent)
 - Parent owns integration, task-ledger updates and finalization. Delegates never commit, push, finalize, start unattended loops or mark tasks complete.
 - Tests, gates, architecture approvals and owner acceptance are never relaxed by routing.

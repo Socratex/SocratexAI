@@ -127,7 +127,7 @@ def test_real_defaults_fit_the_startup_budget(tmp_path):
     (copy / "core").mkdir()
     shutil.copy(REPO / "core" / "INIT.md", copy / "core" / "INIT.md")
     values = core.resolve(None, copy)["values"]
-    assert set(values["extensions"]) == set(extensions.default_enabled(REPO)) and len(values["extensions"]) >= 7
+    assert set(values["extensions"]) == set(extensions.default_enabled(REPO)) and len(values["extensions"]) >= 6
     assert core.init_size(None, copy) <= core.INIT_TOTAL_MAX_BYTES
 
 

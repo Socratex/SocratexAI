@@ -12,7 +12,7 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 - One shared source of rules for Claude Code and Codex.
 - A guard hook that blocks destructive git, secret-file reads and whole-file dumps of big ledgers. Fail-closed, covered by tests. Its rules are named data in `core/safety.json`; the owner can relax a single rule from `local/` (never from a project file, never by the agent), and `sox config show` lists every relaxed rule.
 - The work flow as a table (`defaults/flow.json`): ordered if -> then steps that point at stages, roles, rule documents and gates. A tiny `core/INIT.md` is what loads at session start; everything else loads when a step asks for it.
-- Adapters (`solo`, `duo`, `yolo`; config key `adapter`) and one extension registry (plugins, MCP servers, mods, skills, reference packs) you can switch on or off per project.
+- Adapters (`solo` = default, one agent; `duo` and `yolo` = main agent plus second agent, opt-in; config key `adapter`) and one extension registry (plugins, MCP servers, mods, skills, reference packs) you can switch on or off per project.
 - Model routing with escalation on evidence (a failed gate or a BLOCKED report moves work one tier up), a risk score for each diff, and an outcome log.
 - Five shared skills, tier agents, and a loop that turns logged corrections into reviewed skill edits.
 - An installer that asks first and backs up your config before touching it.
@@ -29,7 +29,7 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 
 1. **Start:** the agent loads `core/INIT.md` (about 2 KB), the reply style and your profile. `INIT.md` only routes.
 2. **Flow:** `sox flow show` prints the table in `defaults/flow.json`. The agent sets a few facts (task size and type, areas touched, unclear requirements, risk) and walks the steps whose condition holds: spec for big or unclear work, plan, delegate to a tier role, implement, deterministic gate, risk-based review, commit, log.
-3. **Roles and routing:** `scout` (cheap), `implementer` (standard), `planner` and `reviewer` (high). A failed gate or a blocked report moves work one tier up; `risk_score.py` sets how deep verification goes. Codex is an optional subcontractor, switched by profile (`solo` or `duo`).
+3. **Roles and routing:** `scout` (cheap), `implementer` (standard), `planner` and `reviewer` (high). A failed gate or a blocked report moves work one tier up; `risk_score.py` sets how deep verification goes. The default is `solo`: one main agent, Codex off. A second agent (Codex) works as subcontractor only when you enable it in config (`adapter: duo` or `codex.enabled`).
 4. **Config:** layered, last wins (see Structure). Defaults work out of the box; a project overrides single values in `.socratex/config.json`, checker registries in `.ai/review.json` and `.ai/planning.json`, flow steps in `.socratex/flow.json` and guard patterns in `.ai/guard.json`. Format and examples: [docs/OVERRIDES.md](docs/OVERRIDES.md).
 5. **Generated files:** `sox install` builds `targets/` from the sources and applies it to your agent config after a backup. Hand edits of generated files are detected.
 
@@ -194,7 +194,7 @@ SocratexAI/
     config.json    base config
     flow.json      ordered if -> then work steps (stages, roles, rules, gates)
     RULES.md, STYLE.md, DIRECTIVES.json, ROUTING.json, RISK-RULES.json, project-check.json, rules/, templates/
-    adapters/      solo, duo, yolo (bundles of config values, chosen by the config key `adapter`)
+    adapters/      solo (default), duo, yolo (bundles of config values, chosen by the config key `adapter`)
     preferences/   code, commits and communication standards (pointers to the rule documents)
   modules/       self-contained capabilities, each with module.json and tests next to the code
     stages/        review and planning (checker registries, selectors, reports)
