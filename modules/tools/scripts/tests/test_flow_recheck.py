@@ -14,26 +14,26 @@ def run(expr: str) -> object:
     return run_blocks(expr, "tasks", "recheck")
 
 
-STATE = "{isEnabled: true, failures: 0, mainRunning: false, liveAgents: 0, nodes: [{taskId: 'a', running: 1}]}"
+STATE = "{isEnabled: true, failures: 0, nodes: [{taskId: 'a', running: 1}]}"
 
 
 def state(**over: str) -> str:
-    base = {"isEnabled": "true", "failures": "0", "mainRunning": "false", "liveAgents": "0", "nodes": "[{taskId: 'a', running: 1}]"}
+    base = {"isEnabled": "true", "failures": "0", "nodes": "[{taskId: 'a', running: 1}]"}
     base.update(over)
     return "{" + ", ".join(f"{k}: {v}" for k, v in base.items()) + "}"
 
 
 class FlowRecheck(unittest.TestCase):
-    def test_checks_when_only_background_tasks_run(self) -> None:
+    def test_checks_when_a_background_task_is_displayed_as_running(self) -> None:
         self.assertTrue(run(f"shouldRecheck({STATE})"))
         nodes = "[{taskId: 'a', running: 1}, {key: 'x', running: 0}]"
         self.assertTrue(run(f"shouldRecheck({state(nodes=nodes)})"))
 
-    def test_no_check_while_other_work_runs(self) -> None:
-        self.assertFalse(run(f"shouldRecheck({state(mainRunning='true')})"))
-        self.assertFalse(run(f"shouldRecheck({state(liveAgents='1')})"))
-        nodes = "[{taskId: 'a', running: 1}, {running: 1}]"  # a tool or side fork is running too
-        self.assertFalse(run(f"shouldRecheck({state(nodes=nodes)})"))
+    def test_other_running_work_does_not_matter(self) -> None:
+        nodes = "[{taskId: 'a', running: 1}, {running: 1}]"  # a tool, agent or side fork runs too
+        self.assertTrue(run(f"shouldRecheck({state(nodes=nodes)})"))
+        only_other = "[{running: 1}]"  # no task block: never checks
+        self.assertFalse(run(f"shouldRecheck({state(nodes=only_other)})"))
 
     def test_no_check_without_tasks_or_when_switched_off_or_given_up(self) -> None:
         self.assertFalse(run(f"shouldRecheck({state(nodes='[]')})"))

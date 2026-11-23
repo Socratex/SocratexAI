@@ -527,11 +527,12 @@ const goneTasks = (live: ReadonlyMap<string, number>, rows: readonly TaskRow[] |
 
 // ----------------------------------------------- background task re-check
 // <recheck>
-// While the only live things are background tasks (nothing else runs), the mod asks the
-// engine's GetTask tool about each of them (once right away, then every minute) and closes only the ones it
-// lists as finished (an explicit ended status). Best effort: whether GetTask accepts the ids of a background Bash or a
-// Monitor is not proven, so every doubt leaves the task running (a longer glow, never a
-// false close). The Stop event's own list (above) still reconciles while other work runs.
+// While at least one background task block is shown as running (whatever else runs), the
+// mod asks the engine's GetTask tool about each of them (once right away, then every
+// minute) and closes only the ones it lists as finished (an explicit ended status). Best
+// effort: whether GetTask accepts the ids of a background Bash or a Monitor is not proven,
+// so every doubt leaves the task running (a longer glow, never a false close). The Stop
+// event's own list (above) still reconciles at the end of each turn.
 const RECHECK_MS = 60000
 const RECHECK_MAX_FAILS = 3 // consecutive useless answers after which the tool is given up
 const RECHECK_ENDED: Record<string, 'completed' | 'failed' | 'killed'> = {
@@ -548,19 +549,14 @@ const RECHECK_RUNNING = ['working', 'running', 'pending', 'in_progress', 'progre
 type RecheckState = {
   isEnabled: boolean // FLOW_TASK_RECHECK is not 0
   failures: number // consecutive probes that told nothing usable
-  mainRunning: boolean
-  liveAgents: number // background agents this process follows
   nodes: Array<{ taskId?: string; running: number }>
 }
 
-// True when something still runs that is a background task and nothing else does.
+// True when a background task block (the only nodes with a taskId) is shown as running.
 const shouldRecheck = (s: RecheckState): boolean =>
   s.isEnabled &&
   s.failures < RECHECK_MAX_FAILS &&
-  !s.mainRunning &&
-  s.liveAgents === 0 &&
-  s.nodes.some(n => n.running > 0 && !!n.taskId) &&
-  s.nodes.every(n => n.running === 0 || !!n.taskId)
+  s.nodes.some(n => n.running > 0 && !!n.taskId)
 
 type TaskProbe =
   | { kind: 'ended'; status: 'completed' | 'failed' | 'killed' }
@@ -1148,8 +1144,8 @@ const liveTasks = new Map<string, number>() // task id -> when it was seen start
 // Whether the log already holds a sample of a task notification (one line each, once).
 let hasLoggedEnd = false
 let hasLoggedOther = false
-// Re-check of background tasks (see the <recheck> block): the timer exists only while
-// nothing but background tasks runs.
+// Re-check of background tasks (see the <recheck> block): the timer exists only while a
+// background task is shown as running.
 let recheckTimer: { cancel: () => void } | undefined
 let recheckBook: ProbeBook = { failures: 0 }
 let isRechecking = false
@@ -1556,8 +1552,8 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
   })
 }
 
-// Arms the 60 s re-check while the only live things are background tasks, and drops it
-// the moment other work starts, no task remains, or the tool proved useless. Reads the
+// Arms the 60 s re-check while a background task is shown as running, and drops it
+// the moment no task remains or the tool proved useless. Reads the
 // state it is given; touches no view, so it can never redraw anything by itself.
 async function syncRecheck($: EngineInterface, v: FlowView): Promise<void> {
   try {
@@ -1565,8 +1561,6 @@ async function syncRecheck($: EngineInterface, v: FlowView): Promise<void> {
     const want = shouldRecheck({
       isEnabled: isRecheckEnabled,
       failures: recheckBook.failures,
-      mainRunning: v.mainRunning,
-      liveAgents: liveAgents.size,
       nodes: v.nodes,
     })
     if (isInitialCheckDue(want, !!recheckTimer)) {
@@ -1594,7 +1588,7 @@ async function recheckTasks($: EngineInterface, shown?: FlowView): Promise<void>
     const now = await $.clock.now()
     const ids = tasksToProbe(cur.nodes, liveTasks, now)
     for (const id of ids) {
-      if (!recheckTimer) break // other work started meanwhile
+      if (!recheckTimer) break // the timer was dropped meanwhile
       let probe: TaskProbe
       let raw = ''
       try {
