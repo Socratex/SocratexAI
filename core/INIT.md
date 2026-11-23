@@ -10,7 +10,7 @@ updated: 2026-11-22
 This file only routes. Rules live in the documents the flow points to; open one only when a step says so.
 
 ## Start of every task
-1. Read order: run `sox context --project <repo root>` and read the listed files top to bottom (general to specific, a later row wins on conflict, `(missing)` rows are skipped). It is the only read-order step.
+1. Read order: run `sox context --project <repo root>` and read the listed files top to bottom (general to specific, a later row wins on conflict, `(missing)` rows are skipped). It is the only read-order step. A router session started in the SocratexAI folder has no project of its own: run it for the repo the task is about, as soon as the task names one, and again when the task moves to another repo.
 2. Run `sox flow show` (or read `defaults/flow.json`): the ordered if-then table of work steps.
 3. Classify the task and set the facts the table uses: `task_size`, `task_type`, `touches`, `unclear_requirements`. Fact names and values: `core/flow.schema.json` (`x-facts`).
 4. Walk the steps in order. A step whose `when` holds is mandatory; its `then` names what to do (`stage:`, `role:`, `rule:`, `gate:`, `tool:`, `ask`). Update facts as you learn them (`risk` after scoring, `gate` after a gate).
