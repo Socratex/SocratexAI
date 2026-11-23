@@ -5,11 +5,11 @@
   "what": "ChatGPT conversation tools: extract a public share page and search local conversation exports",
   "when": "When the owner pastes a chatgpt.com/share link or asks to search an exported ChatGPT archive",
   "entry": [
-    "python modules/gpt/gpt_shared_conversation_extract.py --help",
-    "python modules/gpt/gpt_conversation_archive.py list --source <conversations.json>"
+    "python modules/extensions/gpt/gpt_shared_conversation_extract.py --help",
+    "python modules/extensions/gpt/gpt_conversation_archive.py list --source <conversations.json>"
   ],
   "paths": [
-    "modules/gpt",
+    "modules/extensions/gpt",
     "skills/gpt-share-read"
   ],
   "tests": []

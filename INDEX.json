@@ -139,12 +139,20 @@
   ],
   "data": [
     {
-      "path": "core/config.schema.json",
-      "what": "Schema of one SocratexAI config layer file (defaults, profile, local overrides, project, project-private)"
-    },
-    {
       "path": "core/DIRECTIVES.json",
       "what": "socratex-directives/v1"
+    },
+    {
+      "path": "core/RISK-RULES.json",
+      "what": "socratex-risk-rules/v1"
+    },
+    {
+      "path": "core/ROUTING.json",
+      "what": "socratex-model-routing/v1"
+    },
+    {
+      "path": "core/config.schema.json",
+      "what": "Schema of one SocratexAI config layer file (defaults, profile, local overrides, project, project-private)"
     },
     {
       "path": "core/extension.schema.json",
@@ -177,14 +185,6 @@
     {
       "path": "core/project-check.schema.json",
       "what": "Schema of core/project-check.json: the rules `sox project check` applies to a project"
-    },
-    {
-      "path": "core/RISK-RULES.json",
-      "what": "socratex-risk-rules/v1"
-    },
-    {
-      "path": "core/ROUTING.json",
-      "what": "socratex-model-routing/v1"
     },
     {
       "path": "core/safety.json",
@@ -498,11 +498,11 @@
       "what": "ChatGPT conversation tools: extract a public share page and search local conversation exports",
       "when": "When the owner pastes a chatgpt.com/share link or asks to search an exported ChatGPT archive",
       "entry": [
-        "python modules/gpt/gpt_shared_conversation_extract.py --help",
-        "python modules/gpt/gpt_conversation_archive.py list --source <conversations.json>"
+        "python modules/extensions/gpt/gpt_shared_conversation_extract.py --help",
+        "python modules/extensions/gpt/gpt_conversation_archive.py list --source <conversations.json>"
       ],
       "paths": [
-        "modules/gpt",
+        "modules/extensions/gpt",
         "skills/gpt-share-read"
       ]
     },

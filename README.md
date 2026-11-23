@@ -173,7 +173,7 @@ SocratexAI/
     memory/        skill learnings and the improvements ledger
     tools/scripts/ install, backup, update, check_leaks, build_index, state, subrepos, ...
     extensions/    one manifest per plugin, MCP server, mod, skill or reference pack
-    gpt/           ChatGPT share and archive tools
+      gpt/         ChatGPT share and archive tools (a module nested in the registry)
     core/          manifest that owns the core files above
   targets/       generated agent files (`sox install`); gitignored, never edit by hand
   claude/, codex/  adapters: Claude Code agents, hook, mods, settings; Codex entry file

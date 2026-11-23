@@ -76,9 +76,13 @@ def manifest_files(root: Path = ROOT) -> list[Path]:
     return sorted((root / MODULES_DIR).glob("**/module.json"))
 
 
-def _overlaps(a: str, b: str) -> bool:
+def _overlaps(a: str, b: str, module_dirs: frozenset[str] = frozenset()) -> bool:
+    """True when two claimed paths collide; a module folder nested inside another module's path is not a collision."""
     a, b = a.strip("/"), b.strip("/")
-    return a == b or a.startswith(b + "/") or b.startswith(a + "/")
+    if a == b:
+        return True
+    inner, outer = (a, b) if a.startswith(b + "/") else (b, a) if b.startswith(a + "/") else ("", "")
+    return bool(inner) and inner not in module_dirs
 
 
 def validate_manifests(root: Path = ROOT) -> tuple[list[dict], list[str]]:
@@ -87,6 +91,7 @@ def validate_manifests(root: Path = ROOT) -> tuple[list[dict], list[str]]:
     errors: list[str] = []
     manifests: list[dict] = []
     claimed: list[tuple[str, str, str]] = []
+    module_dirs = frozenset(f.parent.relative_to(root).as_posix() for f in manifest_files(root))
     for file in manifest_files(root):
         label = file.relative_to(root).as_posix()
         try:
@@ -105,7 +110,7 @@ def validate_manifests(root: Path = ROOT) -> tuple[list[dict], list[str]]:
             errors += [f"{label}: {key}: '{item}' does not exist" for item in data[key] if not (root / item).exists()]
         for item in data["paths"]:
             errors += [f"{label}: paths: '{item}' overlaps '{other}' of module '{owner}' ({other_label})"
-                       for other, owner, other_label in claimed if owner != data["name"] and _overlaps(item, other)]
+                       for other, owner, other_label in claimed if owner != data["name"] and _overlaps(item, other, module_dirs)]
         claimed += [(item, data["name"], label) for item in data["paths"]]
     names: set[str] = set()
     for data in manifests:

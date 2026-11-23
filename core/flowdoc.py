@@ -30,7 +30,7 @@ DIRECTORY_MAP = (
     ("modules/routing/", "role, wielu agentów, eskalacja"),
     ("modules/memory/", "kod pamięci (dane w `state/`)"),
     ("modules/tools/scripts/", "skrypty: install, backup, update, check_leaks, build_index, risk_score, routing_*, skill_learn, subrepos, state"),
-    ("modules/gpt/", "narzędzia do rozmów z ChatGPT (link udostępniania, archiwum)"),
+    ("modules/extensions/gpt/", "narzędzia do rozmów z ChatGPT (link udostępniania, archiwum)"),
     ("modules/extensions/", "manifesty rozszerzeń: pluginy, MCP, mody, skille, paczki referencyjne"),
     ("targets/", "wygenerowane pliki dla agentów (`sox install`), nie edytować"),
     ("tools/", "cienkie przekierowania na stare ścieżki skryptów dla zewnętrznych wywołań (`sox shims`)"),

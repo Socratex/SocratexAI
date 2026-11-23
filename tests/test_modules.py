@@ -54,10 +54,11 @@ def test_every_real_path_and_test_exists():
 
 
 def test_no_real_path_is_claimed_twice():
+    dirs = frozenset(f.parent.relative_to(ROOT).as_posix() for f in build_index.manifest_files(ROOT))
     claims = [(item, m["name"]) for m in build_index.load_modules(ROOT) for item in m["paths"]]
     for i, (a, owner_a) in enumerate(claims):
         for b, owner_b in claims[i + 1:]:
-            assert not build_index._overlaps(a, b), f"{a} ({owner_a}) overlaps {b} ({owner_b})"
+            assert not build_index._overlaps(a, b, dirs), f"{a} ({owner_a}) overlaps {b} ({owner_b})"
 
 
 def test_real_requires_point_to_existing_modules():
@@ -134,3 +135,10 @@ def test_load_modules_raises_on_broken_manifest(fake):
     fake(manifest(kind="nonsense"))
     with pytest.raises(build_index.ManifestError):
         build_index.load_modules(fake.root)
+
+
+def test_a_module_folder_may_nest_inside_another_modules_path():
+    dirs = frozenset({"modules/extensions/gpt"})
+    assert not build_index._overlaps("modules/extensions/gpt", "modules/extensions", dirs)
+    assert build_index._overlaps("modules/extensions/other", "modules/extensions", dirs)
+    assert build_index._overlaps("modules/extensions", "modules/extensions", dirs)
