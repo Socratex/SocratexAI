@@ -24,7 +24,10 @@ from cli_helpers import configure_stdio  # noqa: E402
 
 
 STREAM_ENQUEUE_RE = re.compile(r"streamController\.enqueue\((\"(?:\\.|[^\"\\])*\")\)")
-DEFAULT_USER_AGENT = "Mozilla/5.0 SocratexAI-GPT-Share-Extractor/1.0"
+DEFAULT_USER_AGENT = (
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/120.0.0.0 Safari/537.36"
+)
 
 
 def fetch_html(url: str, timeout_seconds: int) -> str:
