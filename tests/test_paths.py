@@ -16,7 +16,7 @@ REMOVED = re.compile(r"(?<![A-Za-z0-9_./-])tools/(review|planning|pipeline)/")
 MOVED = re.compile(r"(?<![A-Za-z0-9_./-])tools/((?:" + "|".join(shims.SHIM_NAMES + ("generated",)) + r")\.py|tests\b|gpt/)")
 HISTORY = ("docs/specs/",)
 SHIM_FILES = {f"tools/{name}.py" for name in shims.SHIM_NAMES} | {"core/shims.py", "tests/test_shims.py", "tests/test_paths.py"}
-MOVED_ALLOWED = {"docs/IMPROVEMENTS.json"}   # ledger results are history: they name the path that was used then
+MOVED_ALLOWED = {"docs/IMPROVEMENTS.json", "tests/test_project_check.py"}   # ledger results are history; the fixture names the old path on purpose
 
 
 def living_files() -> list[tuple[str, str]]:

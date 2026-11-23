@@ -26,7 +26,8 @@ def state(**over: str) -> str:
 class FlowRecheck(unittest.TestCase):
     def test_checks_when_only_background_tasks_run(self) -> None:
         self.assertTrue(run(f"shouldRecheck({STATE})"))
-        self.assertTrue(run(f"shouldRecheck({state(nodes="[{taskId: 'a', running: 1}, {key: 'x', running: 0}]")})"))
+        nodes = "[{taskId: 'a', running: 1}, {key: 'x', running: 0}]"
+        self.assertTrue(run(f"shouldRecheck({state(nodes=nodes)})"))
 
     def test_no_check_while_other_work_runs(self) -> None:
         self.assertFalse(run(f"shouldRecheck({state(mainRunning='true')})"))
@@ -36,7 +37,8 @@ class FlowRecheck(unittest.TestCase):
 
     def test_no_check_without_tasks_or_when_switched_off_or_given_up(self) -> None:
         self.assertFalse(run(f"shouldRecheck({state(nodes='[]')})"))
-        self.assertFalse(run(f"shouldRecheck({state(nodes="[{taskId: 'a', running: 0}]")})"))
+        idle = "[{taskId: 'a', running: 0}]"
+        self.assertFalse(run(f"shouldRecheck({state(nodes=idle)})"))
         self.assertFalse(run(f"shouldRecheck({state(isEnabled='false')})"))
         self.assertFalse(run(f"shouldRecheck({state(failures='3')})"))
         self.assertTrue(run(f"shouldRecheck({state(failures='2')})"))

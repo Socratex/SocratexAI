@@ -75,5 +75,5 @@ def test_directory_map_points_to_existing_directories():
 def test_every_top_level_directory_is_in_the_map():
     mapped = " ".join(path for path, _ in flowdoc.DIRECTORY_MAP)
     for entry in REPO.iterdir():
-        if entry.is_dir() and not entry.name.startswith((".", "__")) and entry.name not in ("audits", "local.example", "subrepos"):
+        if entry.is_dir() and not entry.name.startswith((".", "__")) and entry.name not in ("audits", "local.example", "subrepos", "temp"):
             assert f"{entry.name}/" in mapped, entry.name
