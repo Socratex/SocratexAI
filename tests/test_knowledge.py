@@ -373,3 +373,66 @@ def test_schemas_and_templates_are_shipped():
 def test_init_md_points_to_sox_context():
     text = (CORE_DIR / "INIT.md").read_text(encoding="utf-8")
     assert "sox context" in text and text.index("sox context") < text.index("sox flow show")
+
+
+# ---------- group inheritance (extends) and conditional rule files ----------
+
+def gj(root: Path, name: str, **data) -> Path:
+    return write(root / "local" / "groups" / name / "group.json", {"schema_version": 1, "name": name, **data})
+
+
+def test_group_extends_applies_base_first_then_group(root, tmp_path):
+    project = repo(tmp_path)
+    pj(root, "app", group="child")
+    gj(root, "base")
+    gj(root, "child", extends=["base"])
+    write(root / "local" / "groups" / "base" / "config.json", {"schema_version": 1, "codex": {"review": True, "delegate": True}})
+    write(root / "local" / "groups" / "child" / "config.json", {"schema_version": 1, "codex": {"review": False}})
+    values = core.resolve(project, root)
+    assert values["values"]["codex"]["review"] is False and values["values"]["codex"]["delegate"] is True
+    names = [layer["name"] for layer in core.layers(project, root) if layer["kind"] == "config"]
+    assert names == ["defaults", "local", "group", "group", "project", "project-private"]
+    write(root / "local" / "groups" / "base" / "GROUP.md", "b")
+    write(root / "local" / "groups" / "base" / "rules" / "r.md", "r")
+    write(root / "local" / "groups" / "child" / "GROUP.md", "c")
+    rows = [(Path(r["file"]).parent.name, Path(r["file"]).name) for r in knowledge.build_context(str(project), root)["rows"] if r["layer"] == "group"]
+    assert rows == [("base", "GROUP.md"), ("rules", "r.md"), ("child", "GROUP.md")]
+
+
+def test_group_extends_diamond_lists_each_base_once(root):
+    gj(root, "a")
+    gj(root, "b", extends=["a"])
+    gj(root, "c", extends=["a"])
+    gj(root, "d", extends=["b", "c"])
+    assert knowledge.group_chain("d", root) == ["a", "b", "c", "d"]
+
+
+def test_group_extends_cycle_and_unknown_are_errors_naming_file_and_key(root):
+    gj(root, "x", extends=["y"])
+    gj(root, "y", extends=["x"])
+    with pytest.raises(core.ConfigError, match=r"group\.json.*'extends'.*cycle"):
+        knowledge.group_chain("x", root)
+    gj(root, "z", extends=["nope"])
+    with pytest.raises(core.ConfigError, match=r"z/group\.json.*'extends'.*unknown group 'nope'"):
+        knowledge.group_chain("z", root)
+
+
+def test_context_cycle_is_reported_not_raised(root, tmp_path):
+    project = repo(tmp_path)
+    pj(root, "app", group="x")
+    gj(root, "x", extends=["y"])
+    gj(root, "y", extends=["x"])
+    assert any("cycle" in e for e in knowledge.build_context(str(project), root)["errors"])
+
+
+def test_rules_with_load_when_are_listed_conditionally(root, tmp_path):
+    project = repo(tmp_path)
+    pj(root, "app", group="g", rules=[{"file": "own.md", "load_when": "touching the cart"}])
+    gj(root, "g", rules=[{"file": "inspect.md", "load_when": "reviewing PHP"}])
+    for rel in ("groups/g/rules/inspect.md", "groups/g/rules/plain.md", "projects/app/rules/own.md", "projects/app/rules/p.md"):
+        write(root / "local" / rel, "x")
+    rows = {Path(r["file"]).name: r for r in knowledge.build_context(str(project), root)["rows"]}
+    assert rows["inspect.md"]["load_when"] == "reviewing PHP" and "conditional" in rows["inspect.md"]["why"]
+    assert rows["own.md"]["load_when"] == "touching the cart"
+    assert "load_when" not in rows["plain.md"] and "load_when" not in rows["p.md"]
+    assert any("[load when: reviewing PHP]" in line for line in knowledge.format_context({"rows": list(rows.values())}))

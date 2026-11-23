@@ -159,8 +159,11 @@ local/tickets/<PREFIX>/<TICKET>/   ticket working memory (a prefix with no proje
 ```
 
 - Key: the repo folder name, unless a `project.json` binds a different repo folder with its `path` (the `name` field is the key). Two repos with the same folder name: `sox project init <path> --name <other-key>`.
-- `project.json` (`schema_version` 1): `name`, `summary`, `group`, `path`, `ticket_prefixes`, `knowledge: {"mode": "local" | "repo" | "external", "path": "..."}`. Mode `local` (default) keeps the documents next to `project.json`; `repo` (path relative to the repo) and `external` (absolute path) keep them elsewhere, and only the reference stays here. Unknown keys are errors naming file and key.
-- Config layers: `defaults` -> adapter -> `local/overrides` -> **group** -> project `.socratex` -> `local/projects/<key>/config.json`; `sox config show` prints `group` as the source.
+- `project.json` (`schema_version` 1): `name`, `summary`, `group`, `path`, `ticket_prefixes`, `rules`, `knowledge: {"mode": "local" | "repo" | "external", "path": "..."}`. Mode `local` (default) keeps the documents next to `project.json`; `repo` (path relative to the repo) and `external` (absolute path) keep them elsewhere, and only the reference stays here. Unknown keys are errors naming file and key.
+- Config layers: `defaults` -> adapter -> `local/overrides` -> **base group(s)** -> **group** -> project `.socratex` -> `local/projects/<key>/config.json`; `sox config show` prints `group` as the source for both group layers.
+- Group inheritance: `group.json` may list `extends: ["other-group"]`; bases apply first (config and `sox context` rows), then the group itself, so the project's own group wins. A cycle or an unknown base is an error naming the file and the key.
+- Conditional rule files: `group.json` and `project.json` may declare `rules: [{"file": "x.md", "load_when": "..."}]` (file relative to that folder's `rules/`). `sox context` lists those files with the condition (`[load when: ...]`) instead of as unconditional reads; undeclared rule files stay unconditional.
+- Generated, big data (code graphs, tools, indexes) lives in `local/cache/`; `sox backup` saves `local/projects`, `groups`, `tickets`, `handovers`, `notes` and `archive`, never `cache`.
 - `DEVIATIONS.md`: where the project differs from the SocratexAI standards and why; `sox project list` shows which config keys it overrides.
 
 ```bash

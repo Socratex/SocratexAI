@@ -65,8 +65,8 @@ def _config_layers(project_root: Path | str | None, base: Path) -> list[dict]:
         project = Path(project_root).resolve()
         key = knowledge.project_key(project, base)
         group = knowledge.project_group(key, base)
-        if group:
-            found.append(("group", knowledge.group_config_path(group, base)))
+        for name in knowledge.group_chain(group, base):   # bases first, the project's own group last
+            found.append(("group", knowledge.group_config_path(name, base)))
         found.append(("project", project / ".socratex" / "config.json"))
         found.append(("project-private", base / "local" / "projects" / str(key) / "config.json"))
     return [{"name": n, "path": p, "exists": p.is_file(), "kind": "config"} for n, p in found]

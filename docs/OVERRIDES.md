@@ -13,7 +13,7 @@ Projekt trzyma tylko własne fakty i nadpisania. Ogólne zasady przychodzą z So
 1. `defaults/` i `modules/` (w repo SocratexAI, nie edytujesz)
 2. adapter (`defaults/adapters/<adapter>.json`, wybierany kluczem `adapter`; stary klucz `profile` działa jeszcze jako alias z ostrzeżeniem)
 3. `local/overrides/` (Twoje, globalnie, poza repo)
-4. `local/groups/<grupa>/config.json` (Twoje, wspólne dla grupy projektów; grupa z `project.json`, źródło w `sox config show`: `group`)
+4. `local/groups/<grupa>/config.json` (Twoje, wspólne dla grupy projektów; grupa z `project.json`, najpierw grupy bazowe z `extends`, źródło w `sox config show`: `group`)
 5. `<projekt>/.socratex/config.json` (w repo projektu, widzi zespół)
 6. `local/projects/<klucz>/config.json` (Twoje, prywatne, poza repo; klucz = nazwa folderu projektu albo pole `name` z `project.json`)
 
@@ -59,7 +59,7 @@ Przykład:
 ```
 
 ## Wiedza o projekcie (`project.json`, `group.json`)
-`local/projects/<klucz>/project.json` (`schema_version` 1): `name` (= klucz = nazwa folderu), `summary`, `group`, `path` (folder repo, wiąże klucz z repo), `ticket_prefixes`, `knowledge`: `{"mode": "local" | "repo" | "external", "path": "..."}`. `local/groups/<grupa>/group.json`: `name`, `summary`. Nieznany klucz to błąd z nazwą pliku i klucza. Kolejność czytania plików wiedzy zwraca `sox context --project <repo>` (od najogólniejszego do najważniejszego); opis w README, sekcja Project knowledge hub.
+`local/projects/<klucz>/project.json` (`schema_version` 1): `name` (= klucz = nazwa folderu), `summary`, `group`, `path` (folder repo, wiąże klucz z repo), `ticket_prefixes`, `knowledge`: `{"mode": "local" | "repo" | "external", "path": "..."}`. `rules`: lista `{"file", "load_when"}` (plik względem `rules/` projektu; `sox context` pokazuje go jako warunkowy). `local/groups/<grupa>/group.json`: `name`, `summary`, `extends` (lista grup bazowych: najpierw baza, potem grupa, wygrywa ostatnia; cykl lub nieznana grupa to błąd z nazwą pliku i klucza), `rules` (jak wyżej). Nieznany klucz to błąd z nazwą pliku i klucza. Kolejność czytania plików wiedzy zwraca `sox context --project <repo>` (od najogólniejszego do najważniejszego); opis w README, sekcja Project knowledge hub.
 
 ## Reguły scalania
 - Obiekty scalają się w głąb, a wartości proste i listy się podmieniają.

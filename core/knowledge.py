@@ -118,10 +118,33 @@ def project_group(key: str | None, root: Path | None = None) -> str | None:
     if not key or not path.is_file():
         return None
     group = load_project_json(path).get("group")
-    gjson = groups_dir(root) / group / "group.json" if group else None
-    if gjson and gjson.is_file():
-        load_group_json(gjson)   # an unknown key in group.json is an error naming file and key
+    group_chain(group, root)   # validates group.json files; an unknown key, unknown base or cycle is an error naming file and key
     return group
+
+
+def group_chain(group: str | None, root: Path | None = None) -> list[str]:
+    """The groups to apply for `group`, weakest first: every base from `extends` (depth first, each once), then the group itself.
+
+    A group.json that is missing is tolerated for the group itself (no extends); an `extends` entry without a folder,
+    or a cycle, is a ConfigError naming the file and the key."""
+    out: list[str] = []
+
+    def visit(name: str, trail: list[str], via: Path | None) -> None:
+        gjson = groups_dir(root) / name / "group.json"
+        if name in trail:
+            raise core.ConfigError(f"{via}: key 'extends': cycle {' -> '.join(trail + [name])}")
+        if name in out:
+            return
+        if via is not None and not (groups_dir(root) / name).is_dir():
+            raise core.ConfigError(f"{via}: key 'extends': unknown group '{name}' (no folder {groups_dir(root) / name})")
+        data = load_group_json(gjson) if gjson.is_file() else {}
+        for base in data.get("extends", []):
+            visit(base, trail + [name], gjson)
+        out.append(name)
+
+    if group:
+        visit(group, [], None)
+    return out
 
 
 def group_config_path(group: str, root: Path | None = None) -> Path:
@@ -134,8 +157,19 @@ def _row(layer: str, path: Path, why: str) -> dict:
     return {"layer": layer, "file": str(path), "why": why, "exists": path.is_file()}
 
 
-def _rule_rows(layer: str, folder: Path, label: str) -> list[dict]:
-    return [_row(layer, p, f"{label} rule") for p in sorted(folder.glob("*.md")) if p.name.lower() != "readme.md"]
+def _rule_rows(layer: str, folder: Path, label: str, declared: list[dict] | None = None) -> list[dict]:
+    """Rows for the rule files of a group or project. Files declared in `rules` ({file, load_when}, file relative to the
+    rules folder) are listed with their condition instead of as unconditional reads; the rest are unconditional."""
+    conditions = {item["file"]: item.get("load_when", "") for item in declared or []}
+    rows = []
+    for path in sorted(folder.glob("*.md")):
+        if path.name.lower() != "readme.md" and path.name not in conditions:
+            rows.append(_row(layer, path, f"{label} rule"))
+    for name, when in conditions.items():
+        row = _row(layer, folder / name, f"{label} rule, conditional (skip unless the condition holds)")
+        row["load_when"] = when
+        rows.append(row)
+    return rows
 
 
 def _split_project_arg(arg: str | None) -> tuple[Path | None, str | None]:
@@ -210,11 +244,19 @@ def build_context(project: str | None = None, root: Path | None = None) -> dict:
         group = data.get("group")
         info["group"] = group
     if group:
-        gdir = groups_dir(root) / group
-        if not gdir.is_dir():
-            errors.append(f"project {key}: group '{group}' has no folder {gdir}")
-        rows.append(_row("group", gdir / "GROUP.md", f"group {group}: shared facts"))
-        rows += _rule_rows("group", gdir / "rules", f"group {group}")
+        if not (groups_dir(root) / group).is_dir():
+            errors.append(f"project {key}: group '{group}' has no folder {groups_dir(root) / group}")
+        try:
+            chain = group_chain(group, root)
+        except core.ConfigError as exc:
+            errors.append(str(exc))
+            chain = [group]
+        for name in chain:   # bases first, the project's own group last (the later row wins)
+            gdir = groups_dir(root) / name
+            gdata = _quiet_project(gdir / "group.json") or {}
+            suffix = "" if name == group else f" (base of {group})"
+            rows.append(_row("group", gdir / "GROUP.md", f"group {name}{suffix}: shared facts"))
+            rows += _rule_rows("group", gdir / "rules", f"group {name}{suffix}", gdata.get("rules"))
     if repo:
         rows.append(_row("project-repo", repo / "AGENTS.md", "project rules kept in the repo"))
         rows.append(_row("project-repo", repo / "INDEX.json", "project map kept in the repo"))
@@ -232,7 +274,7 @@ def build_context(project: str | None = None, root: Path | None = None) -> dict:
             errors.append(f"project {key}: knowledge.path {kdir} does not exist")
         rows.append(_row("project", kdir / "PROJECT.md", f"facts about {key}"))
         rows.append(_row("project", kdir / "DOMAIN.md", f"business reasons behind {key}"))
-        rows += _rule_rows("project", kdir / "rules", f"project {key}")
+        rows += _rule_rows("project", kdir / "rules", f"project {key}", data.get("rules"))
         rows.append(_row("project", kdir / "DEVIATIONS.md", f"where {key} differs from the SocratexAI standards, and why (most specific)"))
     return {"project": info, "rows": rows, "errors": errors}
 
@@ -240,7 +282,8 @@ def build_context(project: str | None = None, root: Path | None = None) -> dict:
 def format_context(result: dict) -> list[str]:
     lines = []
     for number, row in enumerate(result["rows"], 1):
-        lines.append(f"{number:>2}. [{row['layer']}] {row['file']}  - {row['why']}" + ("" if row["exists"] else "  (missing)"))
+        when = f"  [load when: {row['load_when']}]" if row.get("load_when") else ""
+        lines.append(f"{number:>2}. [{row['layer']}] {row['file']}  - {row['why']}{when}" + ("" if row["exists"] else "  (missing)"))
     return lines
 
 

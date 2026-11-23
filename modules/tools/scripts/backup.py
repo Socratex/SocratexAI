@@ -16,6 +16,7 @@ import zipfile
 from pathlib import Path
 
 HOME = Path.home()
+ROOT = Path(__file__).resolve().parents[3]   # the SocratexAI checkout
 BACKUP_DIR = HOME / "claude-backup"
 FILES = [
     ".claude/CLAUDE.md",
@@ -26,6 +27,9 @@ FILES = [
     ".codex/config.toml",
 ]
 DIRS = [".claude/agents", ".claude/skills", ".claude/hooks", ".claude/scheduled-tasks", ".codex/rules", ".codex/agents"]
+# Knowledge that lives only in local/ (outside git); after the WORK migration this is the one copy. local/cache is not saved.
+KNOWLEDGE_DIRS = ["local/projects", "local/groups", "local/tickets", "local/handovers", "local/notes", "local/archive"]
+EXTERNAL_PREFIX = "SocratexAI/"   # archive name prefix for a checkout that is not under HOME
 NEVER = {".credentials.json", "auth.json", "auth.json.lock"}
 
 
@@ -35,7 +39,24 @@ def collect() -> list[Path]:
         root = HOME / folder
         if root.is_dir():
             paths += [path for path in root.rglob("*") if path.is_file() and "__pycache__" not in path.parts]
+    for folder in KNOWLEDGE_DIRS:
+        root = ROOT / folder
+        if root.is_dir():
+            paths += [path for path in root.rglob("*") if path.is_file() and not {"__pycache__", ".git"} & set(path.parts)]
     return [path for path in paths if path.name not in NEVER]
+
+
+def archive_name(path: Path) -> str:
+    """Name inside the zip: relative to HOME; a file of a checkout outside HOME is stored as SocratexAI/<path in the checkout>."""
+    try:
+        return path.relative_to(HOME).as_posix()
+    except ValueError:
+        return EXTERNAL_PREFIX + path.relative_to(ROOT).as_posix()
+
+
+def restore_target(name: str) -> Path:
+    inside_home = (ROOT / "x").is_relative_to(HOME)
+    return ROOT / name[len(EXTERNAL_PREFIX):] if name.startswith(EXTERNAL_PREFIX) and not inside_home else HOME / name
 
 
 def backup(label: str = "ai-config") -> Path:
@@ -43,7 +64,7 @@ def backup(label: str = "ai-config") -> Path:
     out = BACKUP_DIR / f"{label}-{dt.datetime.now():%Y%m%d-%H%M%S}.zip"
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as archive:
         for path in collect():
-            archive.write(path, path.relative_to(HOME).as_posix())
+            archive.write(path, archive_name(path))
     return out
 
 
@@ -53,7 +74,7 @@ def restore(zip_path: Path) -> int:
         for name in archive.namelist():
             if Path(name).name in NEVER or ".." in Path(name).parts:
                 continue
-            target = HOME / name
+            target = restore_target(name)
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(archive.read(name))
     print(f"Restored {zip_path.name}; previous state saved in {safety}")
