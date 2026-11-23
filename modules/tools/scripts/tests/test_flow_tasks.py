@@ -115,5 +115,14 @@ class FlowTasks(unittest.TestCase):
         self.assertEqual(run(f"goneTasks({live}, undefined, 100000)"), [])  # no list: close nothing
 
 
+    def test_notification_row_ends_the_task_it_names(self) -> None:
+        row = "{origin: {kind: 'task-notification'}, task: {id: 'bu0y', status: 'failed'}}"
+        self.assertEqual(run(f"endedTaskOfRow({row})"), {"id": "bu0y", "status": "failed"})
+        self.assertIsNone(run("endedTaskOfRow({origin: {kind: 'user'}, task: {id: 'b', status: 'failed'}})"))
+        self.assertIsNone(run("endedTaskOfRow({origin: {kind: 'task-notification'}, task: {id: 'b'}})"))
+        self.assertIsNone(run("endedTaskOfRow({origin: {kind: 'task-notification'}, task: {id: 'b', status: 'running'}})"))
+        self.assertIsNone(run("endedTaskOfRow(undefined)"))
+
+
 if __name__ == "__main__":
     unittest.main()

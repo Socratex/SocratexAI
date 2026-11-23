@@ -483,6 +483,16 @@ const parseTaskEnd = (text: string): { id: string; status: string; summary: stri
   return { id, status, summary: squash(tag('summary')), isEnded: status !== '' && !RUNNING_WORDS.includes(status) }
 }
 
+// A transcript row of a task notification (`ui.render` UserMessage) names the task and how it
+// ended; undefined for any other row or a status that is not an end.
+const endedTaskOfRow = (row: unknown): { id: string; status: string } | undefined => {
+  const r = row as { origin?: { kind?: string }; task?: { id?: string; status?: string } } | undefined
+  const id = r?.task?.id
+  const status = (r?.task?.status ?? '').toLowerCase()
+
+  return r?.origin?.kind === 'task-notification' && id && status !== '' && !RUNNING_WORDS.includes(status) ? { id, status } : undefined
+}
+
 // A background agent is done when the agent list says it ended, or has dropped it
 // (the engine drops a finished agent's row a little later). A freshly started
 // agent may not be listed yet, hence the grace.
@@ -2002,6 +2012,23 @@ export const register: Register = on => {
         if (monitorMs > 0) $.clock.after(monitorMs + 5000, () => endTask($, id, 'timeout'))
       }
     }
+  })
+
+  // A notification that reaches a running turn does not always raise `prompt.submit`, and
+  // the Stop event can be skipped by an earlier plugin: the transcript row is the one place
+  // the end is always drawn. The row names the task and how it ended; the end is idempotent.
+  on('ui.render', { component: 'UserMessage' }, async ($, e, next) => {
+    try {
+      const ended = endedTaskOfRow(e)
+      if (ended && (liveTasks.has(ended.id) || liveAgents.has(ended.id))) {
+        await endTask($, ended.id, ended.status)
+        await endAgent($, ended.id)
+      }
+    } catch {
+      // drawing the row must never fail because of this
+    }
+
+    return next(e)
   })
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
