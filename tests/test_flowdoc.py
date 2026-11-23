@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.machinery
 import importlib.util
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -75,5 +76,6 @@ def test_directory_map_points_to_existing_directories():
 def test_every_top_level_directory_is_in_the_map():
     mapped = " ".join(path for path, _ in flowdoc.DIRECTORY_MAP)
     for entry in REPO.iterdir():
-        if entry.is_dir() and not entry.name.startswith((".", "__")) and entry.name not in ("audits", "local.example", "subrepos", "temp"):
+        ignored = not subprocess.run(["git", "ls-files", entry.name], cwd=REPO, capture_output=True, text=True).stdout.strip()  # local scratch dir: nothing tracked
+        if entry.is_dir() and not ignored and not entry.name.startswith((".", "__")) and entry.name not in ("audits", "local.example", "subrepos"):
             assert f"{entry.name}/" in mapped, entry.name
