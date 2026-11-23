@@ -49,4 +49,4 @@ updated: 2026-11-19
 - Domain-specific ids instead of bare primitives where mixing them up would be a bug.
 - Risky work always ships with a check that can fail (test, assertion or gate).
 - Before writing new code, search for existing code that already does it (borrow before inventing). This is inference from duplication data, not a proven effect.
-- A decision future work must not undo gets a short record: `core/templates/DECISION.md`.
+- A decision future work must not undo gets a short record: `defaults/templates/DECISION.md`.

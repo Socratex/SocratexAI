@@ -5,7 +5,7 @@ The score is deterministic: it comes from changed paths and sizes, never from a 
 Levels: LIGHT (fast gate of the changed area), STANDARD (+ full quality gate),
 FULL (+ independent high-tier reviewer on diff and spec, + manual check request).
 
-Rules: the project's .ai/RISK-RULES.json when present, else core/RISK-RULES.json.
+Rules: the project's .ai/RISK-RULES.json when present, else defaults/RISK-RULES.json.
 Run from inside the project (it scores the git repository of the current directory).
 
 Usage:
@@ -27,7 +27,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 SOCRATEX_HOME = Path(__file__).resolve().parents[3]
-DEFAULT_RULES = SOCRATEX_HOME / "core" / "RISK-RULES.json"
+DEFAULT_RULES = SOCRATEX_HOME / "defaults" / "RISK-RULES.json"
 PROJECT_RULES = Path(".ai") / "RISK-RULES.json"
 
 

@@ -11,20 +11,20 @@ Ta strona jest generowana: `sox flow doc` zapisuje ją, `sox flow doc --check` w
 
 ## Główny flow
 
-Źródło: `core/flow.json` (jedyne miejsce z kolejnością kroków). Krok, którego warunek zachodzi, jest obowiązkowy. Fakty i gramatyka: `core/flow.schema.json`; podgląd z faktami: `sox flow show --match task_size=big`.
+Źródło: `defaults/flow.json` (jedyne miejsce z kolejnością kroków). Krok, którego warunek zachodzi, jest obowiązkowy. Fakty i gramatyka: `core/flow.schema.json`; podgląd z faktami: `sox flow show --match task_size=big`.
 
 | # | krok | kiedy | wtedy |
 |---|---|---|---|
-| 1 | `session_start` | zawsze | `rule:core/DIRECTIVES.json` |
-| 2 | `classify` | zawsze | `rule:core/rules/TASK-GATING.md` |
+| 1 | `session_start` | zawsze | `rule:defaults/DIRECTIVES.json` |
+| 2 | `classify` | zawsze | `rule:defaults/rules/TASK-GATING.md` |
 | 3 | `ask_unclear` | unclear_requirements | `ask` |
 | 4 | `spec` | (task_size = big lub touches ∈ {auth, data, saves, payments, architecture} lub unclear_requirements) | `rule:skills/spec/SKILL.md` |
-| 5 | `safe_config` | touches = agent_config | `rule:core/rules/SAFETY.md`, `ask` |
-| 6 | `plan` | (task_size ∈ {medium, big} lub touches ∈ {auth, data, saves, payments, architecture}) | `role:planner`, `rule:core/rules/TASK-GATING.md` |
+| 5 | `safe_config` | touches = agent_config | `rule:defaults/rules/SAFETY.md`, `ask` |
+| 6 | `plan` | (task_size ∈ {medium, big} lub touches ∈ {auth, data, saves, payments, architecture}) | `role:planner`, `rule:defaults/rules/TASK-GATING.md` |
 | 7 | `plan_check` | owner_answers i task_size ∈ {medium, big} | `stage:planning` |
 | 8 | `search` | task_size ≠ trivial | `role:scout` |
-| 9 | `delegate_codex` | codex i task_size ≠ trivial | `rule:core/rules/ROUTING.md` |
-| 10 | `code_style` | task_type ∈ {feature, bug, refactor} | `rule:core/rules/CODE-STYLE.md` |
+| 9 | `delegate_codex` | codex i task_size ≠ trivial | `rule:defaults/rules/ROUTING.md` |
+| 10 | `code_style` | task_type ∈ {feature, bug, refactor} | `rule:defaults/rules/CODE-STYLE.md` |
 | 11 | `implement` | task_size ≠ trivial | `role:implementer` |
 | 12 | `risk` | zawsze | `tool:modules/tools/scripts/risk_score.py` |
 | 13 | `gate_fast` | zawsze | `gate:fast` |
@@ -33,9 +33,9 @@ Ta strona jest generowana: `sox flow doc` zapisuje ją, `sox flow doc --check` w
 | 16 | `escalate_to_high` | gate = failed i attempts_on_tier ≥ 2 i tier = standard | `role:planner` |
 | 17 | `escalate_to_owner` | gate = failed i attempts_on_tier ≥ 2 i tier ∈ {high, top} | `ask` |
 | 18 | `review_stage` | task_size ≠ trivial i gate ≠ failed | `stage:review` |
-| 19 | `review_independent` | risk = full | `role:reviewer`, `rule:core/rules/REVIEW.md` |
-| 20 | `security_review` | touches ∈ {auth, payments} | `rule:core/rules/SECURITY-REVIEW.md` |
-| 21 | `commit` | gate ≠ failed | `rule:core/rules/COMMITS.md` |
+| 19 | `review_independent` | risk = full | `role:reviewer`, `rule:defaults/rules/REVIEW.md` |
+| 20 | `security_review` | touches ∈ {auth, payments} | `rule:defaults/rules/SECURITY-REVIEW.md` |
+| 21 | `commit` | gate ≠ failed | `rule:defaults/rules/COMMITS.md` |
 | 22 | `log` | zawsze | `tool:modules/tools/scripts/risk_score.py`, `tool:modules/tools/scripts/routing_log.py` |
 
 ## Kolejność warstw konfiguracji
@@ -84,8 +84,8 @@ Lista z pomocy parsera (`sox <komenda> --help` ma szczegóły).
 
 | katalog | co tam leży |
 |---|---|
-| `core/` | rdzeń: `INIT.md`, `flow.json`, `safety.json`, resolver `core.py`, CLI `sox`, reguły w `rules/` |
-| `defaults/` | domyślne preferencje (`code`, `communication`) i profile (`solo`, `duo`, `yolo`) |
+| `core/` | rdzeń (kod): `INIT.md`, `safety.json`, resolver `core.py`, CLI `sox`, schematy `*.schema.json` |
+| `defaults/` | domyślne dane i dokumenty: `RULES.md`, `STYLE.md`, `flow.json`, `ROUTING.json`, reguły w `rules/`, preferencje (`code`, `commits`, `communication`) i adaptery (`solo`, `duo`, `yolo`) |
 | `modules/stages/` | etapy `review` i `planning`: rejestry sprawdzaczy i ich skrypty |
 | `modules/engine/` | wspólny silnik review i planning |
 | `modules/routing/` | role, wielu agentów, eskalacja |

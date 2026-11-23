@@ -3,7 +3,7 @@
 
 Items may carry `verify` (a command as an argument list; exit code 0 means installed) and `scope`
 ("business" or "game"; no scope means everywhere). The tool only reports. Installing is a separate step
-that follows core/rules/SAFETY.md: backup, one form to the owner, wait for the yes.
+that follows defaults/rules/SAFETY.md: backup, one form to the owner, wait for the yes.
 
 Usage:
     improvements_check.py                 # all items with a check

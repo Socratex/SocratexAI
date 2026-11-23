@@ -7,7 +7,7 @@ updated: 2026-11-19
 
 # 🤖 AI model routing (Claude and Codex)
 
-Source of truth: `core/ROUTING.json` (mirrored by `claude/agents/*.md` and `codex/agents/*.toml`, checked by `modules/tools/scripts/tests`). A project overrides tiers with the config key `routing.tier_overrides` (the one path; `.ai/ROUTING.json` is deprecated, `sox project check` warns). Aliases, not pinned model IDs.
+Source of truth: `defaults/ROUTING.json` (mirrored by `claude/agents/*.md` and `codex/agents/*.toml`, checked by `modules/tools/scripts/tests`). A project overrides tiers with the config key `routing.tier_overrides` (the one path; `.ai/ROUTING.json` is deprecated, `sox project check` warns). Aliases, not pinned model IDs.
 
 ## 🧭 Principles
 - Plan once with the expensive tier, execute with the cheaper tier, verify with a deterministic gate before trusting the result.
@@ -29,10 +29,10 @@ Source of truth: `core/ROUTING.json` (mirrored by `claude/agents/*.md` and `code
 - A subagent starts with a clean context: give it the goal, paths, acceptance criteria and result format. Independent parts run in parallel; dependent ones in order.
 - A delegate ends its report with one status: DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT or BLOCKED. BLOCKED or NEEDS_CONTEXT is the evidence that triggers escalation or a better brief; the parent never retries it unchanged.
 - Deterministic scripts and the current agent come before delegation for tiny or mechanical work.
-- Effort per task type: `core/ROUTING.json` `effort_by_task_type`.
+- Effort per task type: `defaults/ROUTING.json` `effort_by_task_type`.
 
 ## 🧪 Verification by risk
-- `modules/tools/scripts/risk_score.py` scores the diff (never the model): sensitive paths, size, code without test changes, cheap tier or retry, learned rules. Default rules: `core/RISK-RULES.json`; a project overrides with `.ai/RISK-RULES.json`.
+- `modules/tools/scripts/risk_score.py` scores the diff (never the model): sensitive paths, size, code without test changes, cheap tier or retry, learned rules. Default rules: `defaults/RISK-RULES.json`; a project overrides with `.ai/RISK-RULES.json`.
 - LIGHT 0-2: fast gate of the changed area. STANDARD 3-5: plus the full project quality gate. FULL 6+: plus an independent `reviewer` on diff and spec and a manual-check request.
 - A level may be raised by hand, never lowered below the script. Status: report-only until the owner switches it on in the project's stop gate.
 

@@ -2,7 +2,7 @@
 
 One global AI core for **Claude Code** and **Codex**: shared rules, reply style, a work flow kept as data, model routing with risk-based escalation, tier agents, skills (with a self-improving loop), hooks and tools. Clone it once per machine. Every project then gets the same behavior by default, changes only what it names in a standard override format, and a `git pull` updates all of them.
 
-Version 3.0 (tag `v3.0`): core, defaults, modules, targets, state and local layers; the flow, safety rules, profiles and extensions are data you can override per project. Earlier tags: `v2.0` (global core, legacy pipeline removed), `v1.2` (last version with the legacy pipeline, branch `legacy`).
+Version 3.0 (tag `v3.0`): core, defaults, modules, targets, state and local layers; the flow, safety rules, adapters and extensions are data you can override per project. Earlier tags: `v2.0` (global core, legacy pipeline removed), `v1.2` (last version with the legacy pipeline, branch `legacy`).
 
 ## 🎯 What it is, and what it is not
 
@@ -11,8 +11,8 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 **What you get**
 - One shared source of rules for Claude Code and Codex.
 - A guard hook that blocks destructive git, secret-file reads and whole-file dumps of big ledgers. Fail-closed, covered by tests. Its rules are named data in `core/safety.json`; the owner can relax a single rule from `local/` (never from a project file, never by the agent), and `sox config show` lists every relaxed rule.
-- The work flow as a table (`core/flow.json`): ordered if -> then steps that point at stages, roles, rule documents and gates. A tiny `core/INIT.md` is what loads at session start; everything else loads when a step asks for it.
-- Profiles (`solo`, `duo`, `yolo`) and one extension registry (plugins, MCP servers, mods, skills, reference packs) you can switch on or off per project.
+- The work flow as a table (`defaults/flow.json`): ordered if -> then steps that point at stages, roles, rule documents and gates. A tiny `core/INIT.md` is what loads at session start; everything else loads when a step asks for it.
+- Adapters (`solo`, `duo`, `yolo`; config key `adapter`) and one extension registry (plugins, MCP servers, mods, skills, reference packs) you can switch on or off per project.
 - Model routing with escalation on evidence (a failed gate or a BLOCKED report moves work one tier up), a risk score for each diff, and an outcome log.
 - Five shared skills, tier agents, and a loop that turns logged corrections into reviewed skill edits.
 - An installer that asks first and backs up your config before touching it.
@@ -28,7 +28,7 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 ## 🧠 How it works
 
 1. **Start:** the agent loads `core/INIT.md` (about 2 KB), the reply style and your profile. `INIT.md` only routes.
-2. **Flow:** `sox flow show` prints the table in `core/flow.json`. The agent sets a few facts (task size and type, areas touched, unclear requirements, risk) and walks the steps whose condition holds: spec for big or unclear work, plan, delegate to a tier role, implement, deterministic gate, risk-based review, commit, log.
+2. **Flow:** `sox flow show` prints the table in `defaults/flow.json`. The agent sets a few facts (task size and type, areas touched, unclear requirements, risk) and walks the steps whose condition holds: spec for big or unclear work, plan, delegate to a tier role, implement, deterministic gate, risk-based review, commit, log.
 3. **Roles and routing:** `scout` (cheap), `implementer` (standard), `planner` and `reviewer` (high). A failed gate or a blocked report moves work one tier up; `risk_score.py` sets how deep verification goes. Codex is an optional subcontractor, switched by profile (`solo` or `duo`).
 4. **Config:** layered, last wins (see Structure). Defaults work out of the box; a project overrides single values in `.socratex/config.json`, checker registries in `.ai/review.json` and `.ai/planning.json`, flow steps in `.socratex/flow.json` and guard patterns in `.ai/guard.json`. Format and examples: [docs/OVERRIDES.md](docs/OVERRIDES.md).
 5. **Generated files:** `sox install` builds `targets/` from the sources and applies it to your agent config after a backup. Hand edits of generated files are detected.
@@ -36,7 +36,7 @@ A small rule core, not a framework. Total always-loaded text is about 19 KB (a t
 ## 🧳 Use only part of it
 
 The pieces are plain files, so you can take only what you need:
-- **Rules only:** the rule text in `core/RULES.md`, `core/STYLE.md` and `core/rules/` reads fine without Python. But it points at things you would not have: `modules/tools/scripts/skill_learn.py`, `risk_score.py`, `routing_log.py` and `json_read.py`, the `$SOCRATEX_HOME` variable, `local/profile.md`, `core/DIRECTIVES.json` and `INDEX.json`. Those references would dangle; edit them out or copy the tools too. Python-free means "text only", not "everything works".
+- **Rules only:** the rule text in `defaults/RULES.md`, `defaults/STYLE.md` and `defaults/rules/` reads fine without Python. But it points at things you would not have: `modules/tools/scripts/skill_learn.py`, `risk_score.py`, `routing_log.py` and `json_read.py`, the `$SOCRATEX_HOME` variable, `local/profile.md`, `defaults/DIRECTIVES.json` and `INDEX.json`. Those references would dangle; edit them out or copy the tools too. Python-free means "text only", not "everything works".
 - **Skills only:** `skills/<name>/SKILL.md` are standard skill folders. We only tested them in Claude Code and Codex; other agents that read this format should work but are untested.
 - **Guard only:** `claude/hooks/guard.py` is one stdlib-only Python file for the Claude Code `PreToolUse` hook.
 - A separate "rules and skills only" installer mode does not exist yet.
@@ -93,12 +93,12 @@ The installer is idempotent. It backs up your current agent config first (`~/cla
 
 | Target | What it gets |
 |---|---|
-| `~/.claude/CLAUDE.md` | managed, generated block importing `core/INIT.md`, `core/RULES.md` (while `startup.load_rules` is true), `core/STYLE.md`, `claude/CLAUDE.md`, `local/profile.md`, plus one line per enabled extension (your own text outside the block stays) |
+| `~/.claude/CLAUDE.md` | managed, generated block importing `core/INIT.md`, `defaults/RULES.md` (while `startup.load_rules` is true), `defaults/STYLE.md`, `claude/CLAUDE.md`, `local/profile.md`, plus one line per enabled extension (your own text outside the block stays) |
 | `~/.claude/settings.json` | deep merge of `claude/settings.json`: guard hook, deny rules for secrets, `SOCRATEX_HOME` env |
 | `~/.claude/agents`, `~/.claude/skills/<name>` | links to `claude/agents`, `skills/`, `claude/skills/` |
 | `~/.claude/INDEX.json` | entry pointing at this repo's `INDEX.json` (other indexes kept) |
 | `~/.codex/AGENTS.md` | generated from the same core rules + `codex/AGENTS.md` + `local/profile.md` |
-| `~/.codex/agents/socratex_*.toml` | agent profiles generated from `core/ROUTING.json` |
+| `~/.codex/agents/socratex_*.toml` | agent profiles generated from `defaults/ROUTING.json` |
 | `~/.codex/skills/<name>` | links to the shared `skills/` |
 | `SOCRATEX_HOME` | user environment variable and Codex shell environment |
 | `.git/hooks` | `post-merge` reruns `install.py --sync` after every pull; `pre-push` runs the leak check |
@@ -140,7 +140,7 @@ core/sox ext install <name> [--yes]     # dry run; --yes backs up the agent conf
 
 ## 🚪 Onboarding a project
 
-`sox project check` audits a project against the current setup (rules: `core/project-check.json`): leftovers of the v1 pipeline, missing or invalid `.socratex/config.json`, long or duplicated entry files, forked core scripts, non-standard overrides. It only reads. `sox project init` creates the files a project is missing from `templates/project/` and never overwrites.
+`sox project check` audits a project against the current setup (rules: `defaults/project-check.json`): leftovers of the v1 pipeline, missing or invalid `.socratex/config.json`, long or duplicated entry files, forked core scripts, non-standard overrides. It only reads. `sox project init` creates the files a project is missing from `templates/project/` and never overwrites.
 
 ```bash
 core/sox project check <path> [--json] [--strict]   # one line per finding; exit 1 on errors (--strict: warnings too), 2 on wrong usage
@@ -154,18 +154,19 @@ Extra folders to skip: config key `project_check.exclude` (globs) and `read_only
 
 ```
 SocratexAI/
-  core/          in the repo, not overridden by users: the part that decides
+  core/          in the repo, not overridden by users: the code and the few files that decide
     INIT.md        the only startup file; routes to the flow
-    flow.json      ordered if -> then work steps (stages, roles, rules, gates)
     safety.json    named safety rules the guard enforces; relaxable only by the owner
     core.py        resolver: merges the layers, validates them, writes state/effective.json
     sox            the one command line (config, flow, ext, install, index, ...)
-    *.schema.json  schemas of config, flow, profile, safety, module and extension files
-    RULES.md, STYLE.md, DIRECTIVES.json, ROUTING.json, RISK-RULES.json, rules/, templates/
-  defaults/      what works without any setup
+    extensions.py, flowdoc.py, migrate.py, project_check.py, shims.py, targets.py   helpers of core.py and sox
+    *.schema.json  schemas of config, flow, adapter, safety, module and extension files
+  defaults/      what works without any setup (data and documents, overridable per layer)
     config.json    base config
-    profiles/      solo, duo, yolo (bundles of config values)
-    preferences/   code and communication standards (pointers to the rule documents)
+    flow.json      ordered if -> then work steps (stages, roles, rules, gates)
+    RULES.md, STYLE.md, DIRECTIVES.json, ROUTING.json, RISK-RULES.json, project-check.json, rules/, templates/
+    adapters/      solo, duo, yolo (bundles of config values, chosen by the config key `adapter`)
+    preferences/   code, commits and communication standards (pointers to the rule documents)
   modules/       self-contained capabilities, each with module.json and tests next to the code
     stages/        review and planning (checker registries, selectors, reports)
     engine/        shared engine of both stages (chunking, merge, findings schema)
@@ -184,7 +185,7 @@ SocratexAI/
   tools/         thin redirects to the old script paths for projects that still call them (`sox shims`)
   state/         logs, effective config, ledgers: machine output with rotation (gitignored)
   local/         your private layer (gitignored); `local.example/` seeds it
-    overrides/     global overrides of defaults, stages, profiles and extensions
+    overrides/     global overrides of defaults, stages, adapters and extensions
     projects/<project>/  private per-project overrides and settings that do not live in the project repo
 ```
 
@@ -212,7 +213,7 @@ Scripts:
 
 | Tool | Purpose |
 |---|---|
-| `modules/tools/scripts/risk_score.py` | 0-10 risk score of the current diff -> model tier and effort (`core/RISK-RULES.json`, project override `.ai/RISK-RULES.json`) |
+| `modules/tools/scripts/risk_score.py` | 0-10 risk score of the current diff -> model tier and effort (`defaults/RISK-RULES.json`, project override `.ai/RISK-RULES.json`) |
 | `modules/tools/scripts/routing_log.py`, `modules/tools/scripts/routing_stats.py` | log routing outcomes per project and propose rule tuning |
 | `modules/tools/scripts/json_read.py` | read one key or search a big JSON file without loading it whole |
 | `modules/tools/scripts/skill_learn.py` | log a correction or failure next to a skill (`LEARNINGS.jsonl`); merges repeats, marks a skill READY for `skill-reflect` |
@@ -224,10 +225,10 @@ Scripts:
 
 ## 🧩 Agents and skills
 
-- **Tier agents** (`claude/agents/`): `scout` (cheap search), `implementer` (execution from a spec), `planner` (plans, read-only), `reviewer` (independent review; a finding is CONFIRMED only when reproduced). Codex gets matching profiles generated from `core/ROUTING.json`.
+- **Tier agents** (`claude/agents/`): `scout` (cheap search), `implementer` (execution from a spec), `planner` (plans, read-only), `reviewer` (independent review; a finding is CONFIRMED only when reproduced). Codex gets matching profiles generated from `defaults/ROUTING.json`.
 - **Shared skills** (`skills/`): `spec` (one-form interview ending in `SPEC.md`), `memory-review` (monthly clean-up), `skill-reflect` (turns logged learnings into owner-approved edits of `SKILL.md`), `token-efficient-code`, `gpt-share-read`.
 - **Claude-only skill** (`claude/skills/`): `usage-optimize` (token and cost analysis with `prompt-analytics`).
-- **On-demand rules** (`core/rules/`): code style, commits, review, ROI, routing, safety, security review (business projects only), task gating.
+- **On-demand rules** (`defaults/rules/`): code style, commits, review, ROI, routing, safety, security review (business projects only), task gating.
 
 ## 📚 Docs
 

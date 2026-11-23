@@ -16,7 +16,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-ROUTING = ROOT / "core" / "ROUTING.json"
+ROUTING = ROOT / "defaults" / "ROUTING.json"
 LOCAL_DIR = ROOT / "local"
 REGISTRY_SCHEMA = "socratex-checker-registry/v1"
 PIPELINES = ("review", "planning")

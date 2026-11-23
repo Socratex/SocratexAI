@@ -1,4 +1,4 @@
-"""Tests for the flow table, profiles, preference indexes and the initializer budget (core/core.py, core/sox)."""
+"""Tests for the flow table, adapters, preference indexes and the initializer budget (core/core.py, core/sox)."""
 
 from __future__ import annotations
 
@@ -49,13 +49,13 @@ def repo(tmp_path):
     (root / "modules" / "stages" / "review").mkdir(parents=True)
     (root / "claude" / "agents").mkdir(parents=True)
     (root / "claude" / "agents" / "scout.md").write_text("x", encoding="utf-8")
-    (root / "core" / "rules").mkdir(parents=True)
-    (root / "core" / "rules" / "A.md").write_text("x", encoding="utf-8")
+    (root / "defaults" / "rules").mkdir(parents=True)
+    (root / "defaults" / "rules" / "A.md").write_text("x", encoding="utf-8")
     (root / "tools").mkdir()
     (root / "tools" / "t.py").write_text("x", encoding="utf-8")
-    write(root / "core" / "flow.json", flow_doc(
+    write(root / "defaults" / "flow.json", flow_doc(
         step("first", {}, ["stage:review"]),
-        step("second", {"task_size": "big"}, ["role:scout", "rule:core/rules/A.md", "tool:tools/t.py", "gate:fast"]),
+        step("second", {"task_size": "big"}, ["role:scout", "rule:defaults/rules/A.md", "tool:tools/t.py", "gate:fast"]),
         step("third", {"touches": ["auth"]}, ["ask"])))
     project = tmp_path / "proj"
     project.mkdir()
@@ -144,9 +144,9 @@ def test_check_clean_fake_repo(repo):
 
 def test_missing_stage_role_rule_tool_name_file_and_step(repo):
     root, project = repo
-    path = write(root / "core" / "flow.json", flow_doc(
+    path = write(root / "defaults" / "flow.json", flow_doc(
         step("a", {}, ["stage:nope"]), step("b", {}, ["role:ghost"]),
-        step("c", {}, ["rule:core/rules/missing.md"]), step("d", {}, ["tool:tools/missing.py"]),
+        step("c", {}, ["rule:defaults/rules/missing.md"]), step("d", {}, ["tool:tools/missing.py"]),
         step("e", {}, ["rule:project:docs/x.md"])))
     errors = core.check_flow(project, root)
     assert len(errors) == 4
@@ -158,13 +158,13 @@ def test_role_may_live_in_modules_routing_roles(repo):
     root, project = repo
     (root / "modules" / "routing" / "roles").mkdir(parents=True)
     (root / "modules" / "routing" / "roles" / "tester.md").write_text("x", encoding="utf-8")
-    write(root / "core" / "flow.json", flow_doc(step("a", {}, ["role:tester"])))
+    write(root / "defaults" / "flow.json", flow_doc(step("a", {}, ["role:tester"])))
     assert core.check_flow(project, root) == []
 
 
 def test_grammar_errors_name_file_and_step(repo):
     root, project = repo
-    path = write(root / "core" / "flow.json", flow_doc(
+    path = write(root / "defaults" / "flow.json", flow_doc(
         step("a", {"bogus": 1}), step("b", {}, ["gate:slow"]), step("c", {}, ["run:thing"]),
         step("d", {}, []), step("a")))
     errors = core.check_flow(project, root)
@@ -177,14 +177,14 @@ def test_grammar_errors_name_file_and_step(repo):
 
 def test_schema_errors_name_file_and_key(repo):
     root, project = repo
-    path = write(root / "core" / "flow.json", {"schema": "socratex-flow/v1", "steps": [{"id": "x", "when": {}}]})
+    path = write(root / "defaults" / "flow.json", {"schema": "socratex-flow/v1", "steps": [{"id": "x", "when": {}}]})
     errors = core.check_flow(project, root)
     assert any(str(path) in e and "then" in e for e in errors)
 
 
 def test_missing_flow_file_is_an_error(repo):
     root, project = repo
-    (root / "core" / "flow.json").unlink()
+    (root / "defaults" / "flow.json").unlink()
     assert "flow table is missing" in core.check_flow(project, root)[0]
 
 
@@ -192,7 +192,7 @@ def test_cli_flow_check_exit_codes(repo, capsys, monkeypatch):
     root, project = repo
     monkeypatch.setattr(core, "ROOT", root)
     assert sox.main(["flow", "check"]) == 0
-    write(root / "core" / "flow.json", flow_doc(step("broken", {}, ["stage:nope"])))
+    write(root / "defaults" / "flow.json", flow_doc(step("broken", {}, ["stage:nope"])))
     assert sox.main(["flow", "check"]) == 1
     err = capsys.readouterr().err
     assert "flow.json" in err and "step broken" in err
@@ -291,7 +291,7 @@ def test_override_reference_to_missing_stage_is_reported_with_its_file(repo):
     assert len(errors) == 1 and str(path) in errors[0] and "step x" in errors[0]
 
 
-# ---------- profiles ----------
+# ---------- adapters ----------
 
 @pytest.fixture()
 def shipped(tmp_path):
@@ -303,8 +303,8 @@ def shipped(tmp_path):
     return root, project
 
 
-def set_profile(project, name):
-    write(project / ".socratex" / "config.json", {"schema_version": 1, "profile": name})
+def set_adapter(project, name):
+    write(project / ".socratex" / "config.json", {"schema_version": 1, "adapter": name})
 
 
 def flat(values: dict, prefix: str = "") -> dict:
@@ -315,84 +315,84 @@ def flat(values: dict, prefix: str = "") -> dict:
     return out
 
 
-def test_layer_order_has_profile_between_defaults_and_local(shipped):
+def test_layer_order_has_adapter_between_defaults_and_local(shipped):
     root, project = shipped
     names = [l["name"] for l in core.layers(project, root)]
-    # two preference indexes and defaults/config.json are all "defaults", then the profile, then the owner layers
-    assert names == ["defaults"] * 3 + ["profile", "local", "project", "project-private"]
+    # three preference indexes and defaults/config.json are all "defaults", then the adapter, then the owner layers
+    assert names == ["defaults"] * 4 + ["adapter", "local", "project", "project-private"]
 
 
-def test_profile_layer_is_below_local_and_above_defaults(shipped):
+def test_adapter_layer_is_below_local_and_above_defaults(shipped):
     root, project = shipped
     assert core.resolve(project, root)["values"]["codex"]["enabled"] is True  # duo from defaults
     write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "codex": {"enabled": False}})
     result = core.resolve(project, root)
     assert result["values"]["codex"]["enabled"] is False
     prov = result["provenance"]["codex.enabled"]
-    assert prov["layer"] == "local" and [o["layer"] for o in prov["overridden"]] == ["profile"]
+    assert prov["layer"] == "local" and [o["layer"] for o in prov["overridden"]] == ["adapter"]
 
 
-def test_profile_choice_follows_the_highest_layer(shipped):
+def test_adapter_choice_follows_the_highest_layer(shipped):
     root, project = shipped
-    write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "profile": "solo"})
+    write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "adapter": "solo"})
     assert core.resolve(None, root)["values"]["codex"]["enabled"] is False
-    set_profile(project, "duo")
+    set_adapter(project, "duo")
     assert core.resolve(project, root)["values"]["codex"]["enabled"] is True
 
 
 def test_switching_solo_duo_changes_only_codex_keys(shipped):
     root, project = shipped
-    set_profile(project, "solo")
+    set_adapter(project, "solo")
     solo = flat(core.resolve(project, root)["values"])
-    set_profile(project, "duo")
+    set_adapter(project, "duo")
     duo = flat(core.resolve(project, root)["values"])
     changed = {k for k in solo.keys() | duo.keys() if solo.get(k) != duo.get(k)}
-    assert changed == {"codex.enabled", "codex.review", "codex.delegate"} | {"profile"}
-    assert {k for k in changed if not k.startswith("codex.")} == {"profile"}
+    assert changed == {"codex.enabled", "codex.review", "codex.delegate"} | {"adapter"}
+    assert {k for k in changed if not k.startswith("codex.")} == {"adapter"}
     assert solo["codex.enabled"] is False and duo["codex.enabled"] is True
 
 
-def test_config_show_profile_switch_changes_only_codex_rows(shipped, capsys, monkeypatch):
+def test_config_show_adapter_switch_changes_only_codex_rows(shipped, capsys, monkeypatch):
     root, project = shipped
     monkeypatch.setattr(core, "ROOT", root)
     original = core.layers
     monkeypatch.setattr(core, "layers", lambda project_root=None, root_=None: original(project_root, root))
     rows = {}
     for name in ("solo", "duo"):
-        set_profile(project, name)
+        set_adapter(project, name)
         assert sox.main(["config", "show", "--project", str(project), "--json"]) == 0
         rows[name] = flat(json.loads(capsys.readouterr().out)["values"])
     assert {k for k in rows["solo"] if rows["solo"][k] != rows["duo"][k]} == {
-        "profile", "codex.enabled", "codex.review", "codex.delegate"}
+        "adapter", "codex.enabled", "codex.review", "codex.delegate"}
 
 
 def test_yolo_adds_only_safety_allow_on_top_of_duo(shipped):
     root, project = shipped
-    set_profile(project, "duo")
+    set_adapter(project, "duo")
     duo = flat(core.resolve(project, root)["values"])
     (project / ".socratex" / "config.json").unlink()
-    write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "profile": "yolo"})  # only an owner layer may pick it
+    write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "adapter": "yolo"})  # only an owner layer may pick it
     yolo = flat(core.resolve(project, root)["values"])
-    assert {k for k in yolo.keys() | duo.keys() if yolo.get(k) != duo.get(k)} == {"profile", "safety.allow"}
+    assert {k for k in yolo.keys() | duo.keys() if yolo.get(k) != duo.get(k)} == {"adapter", "safety.allow"}
 
 
-def test_missing_profile_file_is_an_error(shipped):
+def test_missing_adapter_file_is_an_error(shipped):
     root, project = shipped
-    (root / "defaults" / "profiles" / "duo.json").unlink()
+    (root / "defaults" / "adapters" / "duo.json").unlink()
     with pytest.raises(core.ConfigError, match="duo.json.*no file"):
         core.resolve(project, root)
 
 
-def test_bad_profile_value_reports_the_enum_not_a_missing_file(shipped):
+def test_bad_adapter_value_reports_the_enum_not_a_missing_file(shipped):
     root, project = shipped
-    set_profile(project, "turbo")
+    set_adapter(project, "turbo")
     with pytest.raises(core.ConfigError, match="turbo.*not one of"):
         core.resolve(project, root)
 
 
-def test_profile_file_typo_and_directive_are_errors(shipped):
+def test_adapter_file_typo_and_directive_are_errors(shipped):
     root, project = shipped
-    path = root / "defaults" / "profiles" / "duo.json"
+    path = root / "defaults" / "adapters" / "duo.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     data["config"]["codex"]["enable"] = True
     write(path, data)
@@ -404,17 +404,17 @@ def test_profile_file_typo_and_directive_are_errors(shipped):
         core.resolve(project, root)
 
 
-def test_shipped_profiles_are_valid_and_named_after_their_file():
+def test_shipped_adapters_are_valid_and_named_after_their_file():
     for name in ("solo", "duo", "yolo"):
-        path = REPO / "defaults" / "profiles" / f"{name}.json"
+        path = REPO / "defaults" / "adapters" / f"{name}.json"
         assert json.loads(path.read_text(encoding="utf-8"))["name"] == name
-        assert core.load_profile_file(path)["codex"]["enabled"] is (name != "solo")
+        assert core.load_adapter_file(path)["codex"]["enabled"] is (name != "solo")
 
 
 # ---------- preferences ----------
 
 def test_preference_indexes_point_to_existing_documents():
-    for name in ("code", "communication"):
+    for name in ("code", "commits", "communication"):
         path = REPO / "defaults" / "preferences" / name / f"{name}.json"
         layer = core.load_preferences_file(path)["preferences"][name]
         assert layer["load_when"] and layer["files"]
@@ -424,14 +424,15 @@ def test_preference_indexes_point_to_existing_documents():
 def test_preferences_are_layered_config_with_provenance(shipped):
     root, project = shipped
     prefs = core.resolve(project, root)["values"]["preferences"]
-    assert prefs["code"]["files"] == ["core/rules/CODE-STYLE.md"]
-    assert prefs["communication"]["files"] == ["core/STYLE.md"]
+    assert prefs["code"]["files"] == ["defaults/rules/CODE-STYLE.md"]
+    assert prefs["commits"]["files"] == ["defaults/rules/COMMITS.md"]
+    assert prefs["communication"]["files"] == ["defaults/STYLE.md"]
     write(project / ".socratex" / "config.json",
           {"schema_version": 1, "preferences": {"code": {"files": {"$append": ["docs/PROJECT-STYLE.md"]}}}})
     write(root / "local" / "overrides" / "config.json",
-          {"schema_version": 1, "preferences": {"communication": {"files": {"$remove": ["core/STYLE.md"]}}}})
+          {"schema_version": 1, "preferences": {"communication": {"files": {"$remove": ["defaults/STYLE.md"]}}}})
     result = core.resolve(project, root)
-    assert result["values"]["preferences"]["code"]["files"] == ["core/rules/CODE-STYLE.md", "docs/PROJECT-STYLE.md"]
+    assert result["values"]["preferences"]["code"]["files"] == ["defaults/rules/CODE-STYLE.md", "docs/PROJECT-STYLE.md"]
     assert result["values"]["preferences"]["communication"]["files"] == []
     prov = result["provenance"]["preferences.code.files"]
     assert prov["layer"] == "project" and prov["overridden"][0]["layer"] == "defaults"
@@ -483,3 +484,24 @@ def ext_manifest(name: str, when: str) -> dict:
     return {"schema": "socratex-extension/v1", "name": name, "kind": "note", "category": "c", "source": {"id": name, "version": "1"},
             "when_to_use": when, "status": "adopted", "default_enabled": False,
             "context_cost": {"level": "none", "note": "n"}, "risks": "r"}
+
+
+def test_commits_preference_can_be_overridden_by_the_project(shipped):
+    root, project = shipped
+    write(project / ".socratex" / "config.json",
+          {"schema_version": 1, "preferences": {"commits": {"files": ["docs/OUR-COMMITS.md"]}}})
+    result = core.resolve(project, root)
+    assert result["values"]["preferences"]["commits"]["files"] == ["docs/OUR-COMMITS.md"]
+    assert result["provenance"]["preferences.commits.files"]["layer"] == "project"
+    assert result["values"]["preferences"]["commits"]["load_when"]
+
+
+# ---------- legacy `profile` key ----------
+
+def test_legacy_profile_key_is_an_alias_for_adapter_with_a_warning(shipped, capsys):
+    root, project = shipped
+    write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "profile": "solo"})
+    result = core.resolve(project, root)
+    assert result["values"]["adapter"] == "solo" and "profile" not in result["values"]
+    assert result["provenance"]["adapter"]["layer"] == "local"
+    assert "`profile` was renamed to `adapter`" in capsys.readouterr().err

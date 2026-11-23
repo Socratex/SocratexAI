@@ -2,7 +2,7 @@
 """Schema migrations for the config files that carry `schema_version` (`sox migrate`).
 
 MIGRATIONS maps (schema name, from_version) to a function that takes the parsed file and returns it at from_version + 1
-(it must set `schema_version` itself). Schema names are the layer kinds of core.layers(): `config`, `profile`,
+(it must set `schema_version` itself). Schema names are the layer kinds of core.layers(): `config`, `adapter`,
 `preferences`. There are no migrations today (schema_version 1 is the only version), so `sox migrate --check` reports
 "nothing to do"; the registry and the runner exist so the first schema change is a function plus a test, not a new tool.
 
@@ -38,10 +38,10 @@ def chain(schema: str, version: int, target: int | None = None) -> tuple[list[in
 
 
 def candidate_files(project_root: Path | str | None = None, root: Path | None = None) -> list[tuple[str, Path]]:
-    """(schema name, path) of every existing layer file plus every shipped profile, without duplicates."""
+    """(schema name, path) of every existing layer file plus every shipped adapter, without duplicates."""
     base = Path(root) if root else core.ROOT
     found = [(layer["kind"], Path(layer["path"])) for layer in core.layers(project_root, root) if layer["exists"]]
-    found += [("profile", path) for path in sorted((base / "defaults" / "profiles").glob("*.json"))]
+    found += [("adapter", path) for path in sorted((base / "defaults" / "adapters").glob("*.json"))]
     seen: set[Path] = set()
     unique = []
     for kind, path in found:

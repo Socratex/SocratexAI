@@ -1,5 +1,5 @@
 {
-  "purpose": "Schema of one profile file (defaults/profiles/<name>.json), id socratex-profile/v1; `config` is a bundle of config values validated by core/config.schema.json (without `profile`)",
+  "purpose": "Schema of one profile file (defaults/adapters/<name>.json), id socratex-profile/v1; `config` is a bundle of config values validated by core/config.schema.json (without `profile`)",
   "type": "object",
   "required": ["schema", "schema_version", "name", "what", "config"],
   "additionalProperties": false,

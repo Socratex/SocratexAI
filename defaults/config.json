@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "profile": "duo",
+  "adapter": "duo",
   "startup": {"load_rules": true},
   "stages": {
     "review": {"enabled": true},

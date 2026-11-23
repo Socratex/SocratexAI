@@ -1,4 +1,4 @@
-"""Tests for `sox flow doc`: docs/FLOW.md is generated from core/flow.json, the parser help and the directory map."""
+"""Tests for `sox flow doc`: docs/FLOW.md is generated from defaults/flow.json, the parser help and the directory map."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def test_flow_doc_check_passes_on_the_repo(capsys):
 
 def test_flow_doc_has_a_row_per_step_with_its_then():
     text = (REPO / "docs" / "FLOW.md").read_text(encoding="utf-8")
-    steps = json.loads((REPO / "core" / "flow.json").read_text(encoding="utf-8"))["steps"]
+    steps = json.loads((REPO / "defaults" / "flow.json").read_text(encoding="utf-8"))["steps"]
     for step in steps:
         row = next(line for line in text.splitlines() if line.startswith("|") and f"`{step['id']}`" in line)
         assert all(f"`{action}`" in row for action in step["then"])
@@ -35,9 +35,9 @@ def test_flow_doc_has_a_row_per_step_with_its_then():
 
 
 def test_flow_doc_check_detects_a_stale_page(monkeypatch, tmp_path, capsys):
-    flow_file = tmp_path / "core" / "flow.json"
+    flow_file = tmp_path / "defaults" / "flow.json"
     flow_file.parent.mkdir()
-    flow_file.write_text((REPO / "core" / "flow.json").read_text(encoding="utf-8"), encoding="utf-8")
+    flow_file.write_text((REPO / "defaults" / "flow.json").read_text(encoding="utf-8"), encoding="utf-8")
     monkeypatch.setattr(flowdoc, "ROOT", tmp_path)
     assert sox.main(["flow", "doc", "--check"]) == 1          # no page yet
     assert "stale" in capsys.readouterr().err

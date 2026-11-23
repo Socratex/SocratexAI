@@ -73,7 +73,7 @@ def test_index_has_modules_and_keeps_entries():
     assert [m["name"] for m in index["modules"]]
     assert {"name", "kind", "what", "when", "entry", "paths"} == set(index["modules"][0])
     paths = {e["path"] for section in ("docs", "data", "tools") for e in index[section]}
-    assert {"modules/stages/review/run.py", "core/ROUTING.json", "modules/tools/scripts/build_index.py"} <= paths
+    assert {"modules/stages/review/run.py", "defaults/ROUTING.json", "modules/tools/scripts/build_index.py"} <= paths
 
 
 def test_index_is_current_and_generation_is_idempotent():

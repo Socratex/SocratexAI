@@ -1,5 +1,5 @@
 {
-  "purpose": "Schema, fact table and condition grammar of the flow table (core/flow.json and its per-layer overrides), id socratex-flow/v1",
+  "purpose": "Schema, fact table and condition grammar of the flow table (defaults/flow.json and its per-layer overrides), id socratex-flow/v1",
   "type": "object",
   "required": ["schema", "steps"],
   "additionalProperties": false,
@@ -26,7 +26,7 @@
     "`needs` (optional) lists step ids this step depends on. After all layer overrides, a needed id that is missing, equal to the step itself or placed after it is an error that `sox flow check` reports with file and step id (so removing a step that others need is caught).",
     "Steps run in array order. The agent sets the facts below as it learns them and re-checks the later steps; a step whose `when` holds must be done, one whose `when` does not hold is skipped.",
     "A fact that is not known yet matches nothing (equality is false, `not` is true).",
-    "Overrides (local/overrides/flow.json, <project>/.socratex/flow.json, local/projects/<project>/flow.json) are applied in that order on top of core/flow.json. Their `steps` is an object with $remove (ids, a missing id is ignored), $delete (ids, a missing id is an error) and $append (full steps, an existing id is an error; optional `before` or `after` names a step id, default is the end). $remove and $delete run before $append, so remove plus append replaces a step."
+    "Overrides (local/overrides/flow.json, <project>/.socratex/flow.json, local/projects/<project>/flow.json) are applied in that order on top of defaults/flow.json. Their `steps` is an object with $remove (ids, a missing id is ignored), $delete (ids, a missing id is an error) and $append (full steps, an existing id is an error; optional `before` or `after` names a step id, default is the end). $remove and $delete run before $append, so remove plus append replaces a step."
   ],
   "x-condition-grammar": [
     "`when` is an object; an empty object always holds. Every key must hold (AND).",
@@ -47,12 +47,12 @@
   },
   "x-facts": {
     "task_size": {"type": "enum", "values": ["trivial", "small", "medium", "big"], "doc": "trivial: one obvious edit; small: local and clear; medium: several files or steps; big: context above about 1500 lines, more than 3 substantial steps, or may outlive the session"},
-    "task_type": {"type": "enum", "values": ["question", "feature", "bug", "refactor", "docs", "review"], "doc": "task type as in core/rules/FLOWS.md"},
+    "task_type": {"type": "enum", "values": ["question", "feature", "bug", "refactor", "docs", "review"], "doc": "task type as in defaults/rules/FLOWS.md"},
     "touches": {"type": "set", "values": ["auth", "data", "saves", "payments", "architecture", "agent_config"], "doc": "areas the task changes; agent_config means settings, hooks, permissions, MCP or installs"},
     "unclear_requirements": {"type": "boolean", "doc": "an unknown that changes the result and cannot be found in the repo"},
     "owner_answers": {"type": "boolean", "doc": "the owner answered the question form and a plan exists"},
     "risk": {"type": "enum", "values": ["light", "standard", "full"], "doc": "level printed by modules/tools/scripts/risk_score.py for the diff"},
-    "profile": {"type": "enum", "values": ["solo", "duo", "yolo"], "doc": "config value `profile` (sox config show)"},
+    "adapter": {"type": "enum", "values": ["solo", "duo", "yolo"], "doc": "config value `adapter` (sox config show)"},
     "codex": {"type": "boolean", "doc": "config value `codex.enabled`"},
     "tier": {"type": "enum", "values": ["cheap", "standard", "high", "top"], "doc": "tier of the agent that produced the current result"},
     "gate": {"type": "enum", "values": ["none", "passed", "failed"], "doc": "result of the last deterministic gate"},

@@ -1,6 +1,6 @@
 # 🧭 <Project> agent rules
 
-Global rules load from SocratexAI (`$SOCRATEX_HOME/core/RULES.md`). This file adds only what is specific to this project.
+Global rules load from SocratexAI (`$SOCRATEX_HOME/defaults/RULES.md`). This file adds only what is specific to this project.
 
 ## 📦 Project
 - What it is: <one line>.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """`sox project check | init | explain`: audit a project against the current SocratexAI setup and onboard it.
 
-The rules are data in core/project-check.json (schema core/project-check.schema.json); this module holds one
+The rules are data in defaults/project-check.json (schema core/project-check.schema.json); this module holds one
 check function per rule id. `check` only reads; `init` only creates missing files from templates/project and never
 overwrites. Stdlib only.
 """
@@ -18,7 +18,7 @@ from pathlib import Path
 import core
 
 ROOT = Path(__file__).resolve().parents[1]
-RULES_PATH = Path(__file__).resolve().parent / "project-check.json"
+RULES_PATH = ROOT / "defaults" / "project-check.json"
 RULES_SCHEMA_PATH = Path(__file__).resolve().parent / "project-check.schema.json"
 TEMPLATE_DIR = Path("templates") / "project"
 # Template files that cannot live in templates/project because the guard protects every .socratex/config.json.

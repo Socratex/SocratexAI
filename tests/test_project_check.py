@@ -1,4 +1,4 @@
-"""Tests for `sox project check | init | explain` (core/project_check.py, core/project-check.json). Fixtures live in temp dirs."""
+"""Tests for `sox project check | init | explain` (core/project_check.py, defaults/project-check.json). Fixtures live in temp dirs."""
 
 from __future__ import annotations
 
@@ -313,7 +313,7 @@ def test_init_dry_run_write_and_idempotency(tmp_path, capsys):
 def test_init_never_overwrites_an_existing_file(tmp_path, capsys):
     project = tmp_path / "p"
     (project / ".socratex").mkdir(parents=True)
-    (project / ".socratex" / "config.json").write_text('{"schema_version": 1, "profile": "solo"}', encoding="utf-8")
+    (project / ".socratex" / "config.json").write_text('{"schema_version": 1, "adapter": "solo"}', encoding="utf-8")
     sox.main(["project", "init", str(project), "--write"])
     assert "skipped (exists) .socratex/config.json" in capsys.readouterr().out
     assert '"solo"' in (project / ".socratex" / "config.json").read_text(encoding="utf-8")

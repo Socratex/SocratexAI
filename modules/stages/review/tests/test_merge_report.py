@@ -120,7 +120,7 @@ def test_report_cli_reads_findings_file(tmp_path, capsys):
 
 
 def test_directives_has_review_row_and_index_lists_new_tools_and_doc():
-    directives = json.loads((ROOT / "core" / "DIRECTIVES.json").read_text(encoding="utf-8"))
+    directives = json.loads((ROOT / "defaults" / "DIRECTIVES.json").read_text(encoding="utf-8"))
     rows = [r for r in directives["rows"] if "modules/stages/review/run.py" in r["follow"]]
     assert rows and "SPEC.md" in rows[0]["follow"]
     index = json.loads((ROOT / "INDEX.json").read_text(encoding="utf-8"))

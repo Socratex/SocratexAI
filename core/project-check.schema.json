@@ -1,5 +1,5 @@
 {
-  "purpose": "Schema of core/project-check.json: the rules `sox project check` applies to a project",
+  "purpose": "Schema of defaults/project-check.json: the rules `sox project check` applies to a project",
   "type": "object",
   "required": ["schema", "exclude", "max_file_bytes", "rules"],
   "additionalProperties": false,

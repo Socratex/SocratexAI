@@ -11,7 +11,7 @@ Projekt trzyma tylko własne fakty i nadpisania. Ogólne zasady przychodzą z So
 
 ## Kolejność warstw (wygrywa ostatnia)
 1. `defaults/` i `modules/` (w repo SocratexAI, nie edytujesz)
-2. profil (`defaults/profiles/<profil>.json`, wybierany kluczem `profile`)
+2. adapter (`defaults/adapters/<adapter>.json`, wybierany kluczem `adapter`; stary klucz `profile` działa jeszcze jako alias z ostrzeżeniem)
 3. `local/overrides/` (Twoje, globalnie, poza repo)
 4. `<projekt>/.socratex/config.json` (w repo projektu, widzi zespół)
 5. `local/projects/<nazwa folderu projektu>/` (Twoje, prywatne, poza repo)
@@ -36,7 +36,7 @@ Każdy plik konfiguracji ma `schema_version` (dziś `1`). Nieznany klucz to bł�
 | Klucz | Znaczenie |
 |---|---|
 | `schema_version` | wymagany, `1` |
-| `profile` | `solo`, `duo` albo `yolo` (komplet wartości domyślnych) |
+| `adapter` | `solo`, `duo` albo `yolo` (komplet wartości domyślnych) |
 | `codex` | `enabled`, `review`, `delegate` (czy używać Codexa) |
 | `stages` | `{"review": {"enabled": false}}` wyłącza etap |
 | `routing.tier_overrides` | `{"rola": "cheap" / "standard" / "high"}` |
@@ -49,7 +49,7 @@ Przykład:
 ```json
 {
   "schema_version": 1,
-  "profile": "duo",
+  "adapter": "duo",
   "codex": {"enabled": true, "review": false, "delegate": true},
   "stages": {"planning": {"enabled": false}},
   "extensions": {"$append": ["serena"], "$remove": ["usage-optimize"]},

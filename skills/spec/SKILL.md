@@ -33,4 +33,4 @@ Goal: collect the missing decisions BEFORE writing code and save them as a check
 ## Rules
 - The spec is the source of truth. When the result is wrong, fix the spec and rerun; do not patch with prompts.
 - Tasks from a ledger: link the entry in the spec, do not copy its text.
-- Report in the UCE profile (`core/STYLE.md`).
+- Report in the UCE profile (`defaults/STYLE.md`).

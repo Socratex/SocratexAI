@@ -2,7 +2,7 @@
 """Render docs/FLOW.md (Polish): the main flow table, layer order, sox commands and directory map, from the real data.
 
 `sox flow doc` writes the page, `sox flow doc --check` exits 1 when the file differs from what the data
-(core/flow.json, the sox parser help, DIRECTORY_MAP) would produce, so the page cannot go stale. Stdlib only.
+(defaults/flow.json, the sox parser help, DIRECTORY_MAP) would produce, so the page cannot go stale. Stdlib only.
 """
 
 from __future__ import annotations
@@ -23,8 +23,8 @@ LAYERS = (
 
 # (directory, what it holds); tests/test_flowdoc.py checks that every directory exists.
 DIRECTORY_MAP = (
-    ("core/", "rdzeń: `INIT.md`, `flow.json`, `safety.json`, resolver `core.py`, CLI `sox`, reguły w `rules/`"),
-    ("defaults/", "domyślne preferencje (`code`, `communication`) i profile (`solo`, `duo`, `yolo`)"),
+    ("core/", "rdzeń (kod): `INIT.md`, `safety.json`, resolver `core.py`, CLI `sox`, schematy `*.schema.json`"),
+    ("defaults/", "domyślne dane i dokumenty: `RULES.md`, `STYLE.md`, `flow.json`, `ROUTING.json`, reguły w `rules/`, preferencje (`code`, `commits`, `communication`) i adaptery (`solo`, `duo`, `yolo`)"),
     ("modules/stages/", "etapy `review` i `planning`: rejestry sprawdzaczy i ich skrypty"),
     ("modules/engine/", "wspólny silnik review i planning"),
     ("modules/routing/", "role, wielu agentów, eskalacja"),
@@ -85,8 +85,8 @@ def condition(when: dict) -> str:
 
 
 def flow_rows(root: Path | None = None) -> list[dict]:
-    """Steps of core/flow.json only (no local overrides), so the page is the same on every machine."""
-    data = json.loads(((root or ROOT) / "core" / "flow.json").read_text(encoding="utf-8"))
+    """Steps of defaults/flow.json only (no local overrides), so the page is the same on every machine."""
+    data = json.loads(((root or ROOT) / "defaults" / "flow.json").read_text(encoding="utf-8"))
     return data["steps"]
 
 
@@ -99,7 +99,7 @@ def render(commands: list[tuple[str, str]], root: Path | None = None) -> str:
         "# Co kiedy odpalać", "",
         "Ta strona jest generowana: `sox flow doc` zapisuje ją, `sox flow doc --check` wykrywa, że jest nieaktualna. Nie edytuj jej ręcznie.", "",
         "## Główny flow", "",
-        "Źródło: `core/flow.json` (jedyne miejsce z kolejnością kroków). Krok, którego warunek zachodzi, jest obowiązkowy. "
+        "Źródło: `defaults/flow.json` (jedyne miejsce z kolejnością kroków). Krok, którego warunek zachodzi, jest obowiązkowy. "
         "Fakty i gramatyka: `core/flow.schema.json`; podgląd z faktami: `sox flow show --match task_size=big`.", "",
         "| # | krok | kiedy | wtedy |", "|---|---|---|---|",
     ]

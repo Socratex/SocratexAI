@@ -22,7 +22,7 @@ The second half of the self-improving skill loop, after capture (`modules/tools/
 3. **Curate** (budget): `## Learned` holds at most 8 bullets. When it would go over, merge similar bullets or promote one into the steps and delete it from the list. SKILL.md stays under about 150 lines.
 4. **Ask once**: one form for all skills (up to 4 questions; multi-select per skill; each option = one edit, shown as before -> after in the preview). Recommendation first.
 5. **Apply** only the approved edits with Edit, then close the entries: `skill_learn.py close --skill <name> --ids ... --as applied`, and the rejected ones `--as rejected`.
-6. Run `python $SOCRATEX_HOME/modules/tools/scripts/build_index.py --check` when a `description` changed. Commit per `core/rules/COMMITS.md` (message like "Refine <skill> from learnings").
+6. Run `python $SOCRATEX_HOME/modules/tools/scripts/build_index.py --check` when a `description` changed. Commit per `defaults/rules/COMMITS.md` (message like "Refine <skill> from learnings").
 7. Report in UCE: skills touched, edits applied or rejected, bullets in `## Learned` per skill.
 
 ## Rules

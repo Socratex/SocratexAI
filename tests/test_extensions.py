@@ -302,7 +302,7 @@ def test_disable_replaces_a_redundant_append_with_a_remove(root):
 
 
 def test_a_switch_that_did_not_take_effect_is_restored(root, monkeypatch):
-    path = write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "profile": "duo"})
+    path = write(root / "local" / "overrides" / "config.json", {"schema_version": 1, "adapter": "duo"})
     before = path.read_text(encoding="utf-8")
     monkeypatch.setattr(extensions, "enabled_names", lambda *a, **k: [])
     with pytest.raises(extensions.ExtensionError, match="cannot enable 'beta' in this layer alone"):

@@ -1,0 +1,8 @@
+{
+  "schema": "socratex-preferences/v1",
+  "schema_version": 1,
+  "name": "commits",
+  "what": "When and how to commit, push and squash",
+  "load_when": "committing, pushing or finishing a change",
+  "files": ["defaults/rules/COMMITS.md"]
+}

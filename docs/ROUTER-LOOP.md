@@ -7,9 +7,9 @@ updated: 2026-11-16
 
 # Design: risk-based verification + router learning loop (state 2026-11-16)
 
-Status (2026-11-16): **steps 1, 2 and 4 are implemented in report-only mode** (`modules/tools/scripts/risk_score.py`, `modules/tools/scripts/routing_log.py`, `modules/tools/scripts/routing_stats.py`, default rules in `core/RISK-RULES.json`; a project can override them with `.ai/RISK-RULES.json`). The risk level is only reported for now. Step 3 (wiring the levels into the project's stop gate) waits for owner review after about a week of comparisons. The log is a separate script called by the router, not part of the project's finalizer. This closes two gaps against the scheme "router -> model + effort -> verify by risk -> escalate / learned".
+Status (2026-11-16): **steps 1, 2 and 4 are implemented in report-only mode** (`modules/tools/scripts/risk_score.py`, `modules/tools/scripts/routing_log.py`, `modules/tools/scripts/routing_stats.py`, default rules in `defaults/RISK-RULES.json`; a project can override them with `.ai/RISK-RULES.json`). The risk level is only reported for now. Step 3 (wiring the levels into the project's stop gate) waits for owner review after about a week of comparisons. The log is a separate script called by the router, not part of the project's finalizer. This closes two gaps against the scheme "router -> model + effort -> verify by risk -> escalate / learned".
 
-Before this design: the router ran on fixed rules (`core/ROUTING.json`, the model tiers), escalation on evidence worked, but verification had one level "at discretion" and task outcomes did not flow back to the router.
+Before this design: the router ran on fixed rules (`defaults/ROUTING.json`, the model tiers), escalation on evidence worked, but verification had one level "at discretion" and task outcomes did not flow back to the router.
 
 ## 1. Risk-based verification (LIGHT / STANDARD / FULL)
 
@@ -17,7 +17,7 @@ Before this design: the router ran on fixed rules (`core/ROUTING.json`, the mode
 
 ### 1.1 Risk score (0-10)
 
-`modules/tools/scripts/risk_score.py` reads `git diff --numstat` of the changed paths and sums points according to the rules file (`core/RISK-RULES.json`, or the project override `.ai/RISK-RULES.json`):
+`modules/tools/scripts/risk_score.py` reads `git diff --numstat` of the changed paths and sums points according to the rules file (`defaults/RISK-RULES.json`, or the project override `.ai/RISK-RULES.json`):
 
 | Signal | Points (initial, to be calibrated) |
 |---|---|
@@ -48,7 +48,7 @@ Rules: the level can be raised manually, never lowered below the script's score;
 
 ## 2. Learning loop (LEARNED / FEEDBACK)
 
-**Principle:** every task outcome leaves one data row; once a week a script computes statistics and **proposes** routing changes. The router never changes itself: every change to `core/ROUTING.json` / the risk rules goes to the owner by form, after a backup.
+**Principle:** every task outcome leaves one data row; once a week a script computes statistics and **proposes** routing changes. The router never changes itself: every change to `defaults/ROUTING.json` / the risk rules goes to the owner by form, after a backup.
 
 ### 2.1 Outcome log (this is also the "quality diary", item 27 of `IMPROVEMENTS.json`)
 
@@ -76,11 +76,11 @@ File `audits/routing_log.jsonl` in each project, one row per task, appended by `
 
 1. The script writes a report `audits/routing_stats_<date>.md` (numbers + proposals).
 2. The router shows 3-6 proposals in one form.
-3. After "yes": backup, change `core/ROUTING.json` / the risk rules, run the consistency test of agents against the file, add an entry to `AI-PRACTICES.md`.
+3. After "yes": backup, change `defaults/ROUTING.json` / the risk rules, run the consistency test of agents against the file, add an entry to `AI-PRACTICES.md`.
 
 ## 3. Effort AUTO
 
-Effort goes into `core/ROUTING.json` as a field per task type (for example search=low, implementation=medium, debug=high) and is set at delegation. The loop from section 2 calibrates it the same way as the tier. **[?]** check whether the Claude agent frontmatter accepts `effort`; if not, effort applies only on the Codex side and to sessions.
+Effort goes into `defaults/ROUTING.json` as a field per task type (for example search=low, implementation=medium, debug=high) and is set at delegation. The loop from section 2 calibrates it the same way as the tier. **[?]** check whether the Claude agent frontmatter accepts `effort`; if not, effort applies only on the Codex side and to sessions.
 
 ## 4. Implementation order
 

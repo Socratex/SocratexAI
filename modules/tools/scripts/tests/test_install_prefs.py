@@ -38,10 +38,10 @@ def test_codex_plugin_and_flow_panel_are_optional():
 
 def test_plain_style_drops_the_reply_style_document_everywhere():
     install.apply_prefs({"style": "plain"})
-    assert "core/STYLE.md" not in install.claude_block()
+    assert "defaults/STYLE.md" not in install.claude_block()
     assert "Reply profile UCE" not in install.codex_agents_md()
     install.apply_prefs({"style": "uce"})
-    assert "core/STYLE.md" in install.claude_block()
+    assert "defaults/STYLE.md" in install.claude_block()
     assert "Reply profile UCE" in install.codex_agents_md()
 
 

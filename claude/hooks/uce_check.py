@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Claude Code Stop hook: check that the final reply follows the UCE shape (core/STYLE.md).
+"""Claude Code Stop hook: check that the final reply follows the UCE shape (defaults/STYLE.md).
 
 Deterministic checks only (no judgment calls):
   1. Every top-level line starts with an emoji (a bullet "- " followed by an emoji is fine).
@@ -88,7 +88,7 @@ def main() -> int:
         return 0
     shown = "; ".join(found[:3])
     sys.stderr.write(
-        "UCE check failed (core/STYLE.md): every top-level line starts with an emoji, "
+        "UCE check failed (defaults/STYLE.md): every top-level line starts with an emoji, "
         f"one thought per line. Rewrite the reply once. Problems: {shown}\n"
     )
     return 2

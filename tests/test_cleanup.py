@@ -144,7 +144,7 @@ def test_print_stage_registries_lines(capsys):
 
 def flow_repo(tmp_path, steps):
     root = tmp_path / "repo"
-    write(root / "core" / "flow.json", {"schema": "socratex-flow/v1", "steps": steps})
+    write(root / "defaults" / "flow.json", {"schema": "socratex-flow/v1", "steps": steps})
     project = tmp_path / "proj"
     project.mkdir(exist_ok=True)
     return root, project
@@ -169,7 +169,7 @@ def test_needs_satisfied_and_removed_step_is_an_error(tmp_path):
     write(project / ".socratex" / "flow.json", {"schema": "socratex-flow/v1", "steps": {"$remove": ["a"]}})
     errors = core.check_flow(project, root)
     assert len(errors) == 1
-    assert "core" in errors[0] and "flow.json: step b: needs step 'a', which does not exist" in errors[0]
+    assert "defaults" in errors[0] and "flow.json: step b: needs step 'a', which does not exist" in errors[0]
 
 
 def test_needs_must_point_backwards_and_be_a_list(tmp_path):
@@ -244,21 +244,21 @@ def test_migrate_check_lists_outdated_files_and_steps(tmp_path, fake_migration):
 
 
 def test_migrate_applies_chain_with_backup_and_reports_gaps(tmp_path, fake_migration):
-    path = write(tmp_path / "local" / "overrides" / "config.json", {"schema_version": 1, "profile": "duo"})
-    prof = write(tmp_path / "defaults" / "profiles" / "duo.json", {"schema_version": 1, "name": "duo"})
+    path = write(tmp_path / "local" / "overrides" / "config.json", {"schema_version": 1, "adapter": "duo"})
+    prof = write(tmp_path / "defaults" / "adapters" / "duo.json", {"schema_version": 1, "name": "duo"})
     rows = migrate.scan(None, tmp_path)
     by_file = {r["file"]: r for r in rows}
     assert by_file[str(prof)]["status"] == "no-migration" and by_file[str(prof)]["missing"] == 1
     assert len(migrate.apply(rows)) == 1
-    assert json.loads(path.read_text(encoding="utf-8")) == {"schema_version": 2, "profile": "duo", "migrated": True}
+    assert json.loads(path.read_text(encoding="utf-8")) == {"schema_version": 2, "adapter": "duo", "migrated": True}
     assert json.loads(path.with_name("config.json.pre-migrate.bak").read_text(encoding="utf-8"))["schema_version"] == 1
     assert json.loads(prof.read_text(encoding="utf-8"))["schema_version"] == 1  # gap: untouched
 
 
 def test_migrate_reports_newer_and_unreadable(tmp_path):
     write(tmp_path / "local" / "overrides" / "config.json", {"schema_version": 9})
-    (tmp_path / "defaults" / "profiles").mkdir(parents=True)
-    (tmp_path / "defaults" / "profiles" / "duo.json").write_text("{not json", encoding="utf-8")
+    (tmp_path / "defaults" / "adapters").mkdir(parents=True)
+    (tmp_path / "defaults" / "adapters" / "duo.json").write_text("{not json", encoding="utf-8")
     statuses = {Path(r["file"]).name: r["status"] for r in migrate.scan(None, tmp_path)}
     assert statuses == {"config.json": "newer", "duo.json": "unreadable"}
 
@@ -280,7 +280,7 @@ def test_unsupported_version_hint_points_to_migrate(tmp_path):
 # ---------- routing config keys ----------
 
 def test_routing_tier_overrides_validate_against_routing_tiers():
-    routing = json.loads((REPO / "core" / "ROUTING.json").read_text(encoding="utf-8"))
+    routing = json.loads((REPO / "defaults" / "ROUTING.json").read_text(encoding="utf-8"))
     schema = json.loads((REPO / "core" / "config.schema.json").read_text(encoding="utf-8"))
     allowed = schema["properties"]["routing"]["properties"]["tier_overrides"]["additionalProperties"]["enum"]
     assert set(allowed) == set(routing["claude"]) - {"top"}  # top needs an explained owner yes, never a config value

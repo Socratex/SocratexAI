@@ -74,7 +74,7 @@
       "id": "PRJ-DUP-RULE",
       "severity": "warning",
       "what": "An entry file or doc repeats a core rule instead of pointing to it.",
-      "fix": "Delete the copy: core rules load from $SOCRATEX_HOME/core/RULES.md, and a copy drifts. Keep only what differs for this project.",
+      "fix": "Delete the copy: core rules load from $SOCRATEX_HOME/defaults/RULES.md, and a copy drifts. Keep only what differs for this project.",
       "files": ["AGENTS.md", "CLAUDE.md", "docs/*.md"],
       "ignore_case": true,
       "patterns": ["reply profile UCE", "reset --hard", "100% English", "git add -A", "force push", "Borrow before inventing", "Never read or edit secret files"]

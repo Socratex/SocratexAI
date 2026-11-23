@@ -160,7 +160,7 @@ def command_help(parser: argparse.ArgumentParser) -> list[tuple[str, str]]:
 
 
 def cmd_flow_doc(args: argparse.Namespace) -> int:
-    """`sox flow doc [--check]`: write docs/FLOW.md from core/flow.json, the parser help and the directory map."""
+    """`sox flow doc [--check]`: write docs/FLOW.md from defaults/flow.json, the parser help and the directory map."""
     commands = command_help(build_parser())
     if args.check:
         if flowdoc.is_current(commands):
@@ -343,7 +343,7 @@ def cmd_ext(args: argparse.Namespace) -> int:
 
 
 def cmd_project(args: argparse.Namespace) -> int:
-    """`sox project check|init|explain`: audit and onboard a project (see core/project_check.py and core/project-check.json)."""
+    """`sox project check|init|explain`: audit and onboard a project (see core/project_check.py and defaults/project-check.json)."""
     if args.action == "explain":
         print("\n".join(project_check.explain(args.rule)))
         return 0
@@ -375,7 +375,7 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("--json", action="store_true")
     resolve = sub.add_parser("resolve", help="write state/effective.json")
     resolve.add_argument("--project")
-    flow = top.add_parser("flow", help="inspect and check the flow table (core/flow.json plus overrides)")
+    flow = top.add_parser("flow", help="inspect and check the flow table (defaults/flow.json plus overrides)")
     flow_sub = flow.add_subparsers(dest="action", required=True)
     flow_show = flow_sub.add_parser("show", help="print the steps in order")
     flow_show.add_argument("--project", help="project root (adds the project and project-private overrides)")

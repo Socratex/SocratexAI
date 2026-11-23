@@ -80,9 +80,9 @@ def test_safety_json_matches_its_schema():
     assert not next(r for r in data["rules"] if r["id"] == "safety-config-edits")["relaxable"]
 
 
-def test_yolo_profile_names_real_rules():
+def test_yolo_adapter_names_real_rules():
     ids = {rule["id"] for rule in json.loads((REPO / "core" / "safety.json").read_text(encoding="utf-8"))["rules"]}
-    yolo = json.loads((REPO / "defaults" / "profiles" / "yolo.json").read_text(encoding="utf-8"))
+    yolo = json.loads((REPO / "defaults" / "adapters" / "yolo.json").read_text(encoding="utf-8"))
     assert set(yolo["config"]["safety"]["allow"]) <= ids
 
 
@@ -118,9 +118,9 @@ def test_allow_skips_only_that_rule(world):
     assert guard(bash("cat .env"), root, project)[0] == 2
 
 
-def test_yolo_profile_relaxes_its_three_rules(world):
+def test_yolo_adapter_relaxes_its_three_rules(world):
     root, project = world
-    owner(root, {"profile": "yolo"})
+    owner(root, {"adapter": "yolo"})
     assert guard(bash("git reset --hard"), root, project)[0] == 0
     assert guard(bash("cat .env"), root, project)[0] == 0
     assert guard(tool("Read", project / ".env"), root, project)[0] == 0
@@ -143,9 +143,9 @@ def test_project_file_cannot_relax_and_is_reported(world):
     assert "safety" not in result["values"]
 
 
-def test_project_file_cannot_select_a_relaxing_profile(world):
+def test_project_file_cannot_select_a_relaxing_adapter(world):
     root, project = world
-    project_file(project, {"profile": "yolo"})
+    project_file(project, {"adapter": "yolo"})
     result = core.resolve(project, root)
     assert result["safety"]["relaxed"] == [] and "allow" not in result["values"].get("safety", {})
     assert any("selected by the project file" in line for line in result["safety"]["errors"])
@@ -163,16 +163,16 @@ def test_unknown_and_unrelaxable_ids_are_errors(world):
 
 def test_relaxation_source_is_the_layer_that_introduced_it(world):
     root, project = world
-    owner(root, {"profile": "yolo", "safety": {"allow": {"$append": ["git-add-all"]}}})
+    owner(root, {"adapter": "yolo", "safety": {"allow": {"$append": ["git-add-all"]}}})
     relaxed = {item["rule"]: item for item in core.resolve(project, root)["safety"]["relaxed"]}
-    assert relaxed["destructive-git"]["layer"] == "profile" and relaxed["destructive-git"]["file"].endswith("yolo.json")
+    assert relaxed["destructive-git"]["layer"] == "adapter" and relaxed["destructive-git"]["file"].endswith("yolo.json")
     assert relaxed["git-add-all"]["layer"] == "local"
 
 
 # ---------- the agent cannot edit the files that relax rules ----------
 
 PROTECTED = ["core/safety.json", "core/safety.schema.json", "local/overrides/config.json", "local/projects/p/config.json",
-             "defaults/config.json", "defaults/profiles/yolo.json"]
+             "defaults/config.json", "defaults/adapters/yolo.json"]
 
 
 @pytest.mark.parametrize("relative", PROTECTED)
@@ -192,7 +192,7 @@ def test_agent_cannot_edit_a_project_socratex_config(world):
     "echo '{}' > {root}/local/overrides/config.json",
     "echo '{}' >> {root}/core/safety.json",
     "cp /tmp/x {root}/local/projects/p/config.json",
-    "mv /tmp/x {root}/defaults/profiles/yolo.json",
+    "mv /tmp/x {root}/defaults/adapters/yolo.json",
     "sed -i s/a/b/ {root}/core/safety.json",
     "tee {root}/defaults/config.json",
     "rm {root}/core/safety.json",
@@ -244,10 +244,10 @@ def test_config_show_starts_with_the_relaxed_rules_block(world, monkeypatch, cap
     out = run_show(world, monkeypatch, capsys)
     assert out.splitlines()[:2] == ["Relaxed safety rules:", "  none"]
     root, _ = world
-    owner(root, {"profile": "yolo"})
+    owner(root, {"adapter": "yolo"})
     lines = run_show(world, monkeypatch, capsys).splitlines()
     assert lines[0] == "Relaxed safety rules:"
-    assert lines[1].startswith("  destructive-git  <- profile: ") and lines[1].endswith("yolo.json")
+    assert lines[1].startswith("  destructive-git  <- adapter: ") and lines[1].endswith("yolo.json")
     assert {l.split()[0] for l in lines[1:4]} == {"destructive-git", "secret-files", "ledger-dumps"}
 
 
@@ -266,13 +266,13 @@ def read_log(root):
 
 def test_safety_log_gets_one_record_per_change(world):
     root, project = world
-    owner(root, {"profile": "yolo"})
+    owner(root, {"adapter": "yolo"})
     core.write_effective(project, root)
     core.write_effective(project, root)
     log = read_log(root)
     assert [r["rule"] for r in log] == ["destructive-git", "secret-files", "ledger-dumps"]
     assert all(r["event"] == "relaxed" and r["project"] == str(project.resolve()) and r["time"] and r["source"] for r in log)
-    owner(root, {"profile": "yolo", "safety": {"allow": {"$append": ["git-add-all"]}}})
+    owner(root, {"adapter": "yolo", "safety": {"allow": {"$append": ["git-add-all"]}}})
     core.write_effective(project, root)
     core.write_effective(project, root)
     assert [r["rule"] for r in read_log(root)][3:] == ["git-add-all"]

@@ -1,13 +1,13 @@
 ---
 type: rules
 title: Workflow details moved out of the startup files
-description: Verbatim detail bullets from core/RULES.md (named solutions, repeated fixes, skill learnings, context economy, finishing); the startup file keeps one short line per topic.
+description: Verbatim detail bullets from defaults/RULES.md (named solutions, repeated fixes, skill learnings, context economy, finishing); the startup file keeps one short line per topic.
 updated: 2026-11-21
 ---
 
 # Workflow details
 
-Opened from `core/RULES.md` when you actually do the thing described. The text below is moved verbatim from `core/RULES.md`.
+Opened from `defaults/RULES.md` when you actually do the thing described. The text below is moved verbatim from `defaults/RULES.md`.
 
 ## Named solutions ledger
 - Named solutions ledger: whenever the owner asks to use, try or evaluate an existing named solution (plugin, skill pack, methodology, tool, program, MCP server), record it in `$SOCRATEX_HOME/docs/IMPROVEMENTS.json` (status adopted / rejected / considering, `expected_result`, `result`, `result_evidence`) and commit it to SocratexAI. Read the ledger first, so nothing already rejected is proposed again. Plain "remember this rule" requests are not named solutions and do not go there.
@@ -25,5 +25,5 @@ Opened from `core/RULES.md` when you actually do the thing described. The text b
 - Wide searches across many files: a cheap subagent returns the conclusion, not the dump.
 
 ## Finishing (details)
-- After the commit: `modules/tools/scripts/risk_score.py --commit HEAD` (verification level, report-only until the owner switches it on) and log the outcome once with `modules/tools/scripts/routing_log.py` (see `core/rules/ROUTING.md`).
+- After the commit: `modules/tools/scripts/risk_score.py --commit HEAD` (verification level, report-only until the owner switches it on) and log the outcome once with `modules/tools/scripts/routing_log.py` (see `defaults/rules/ROUTING.md`).
 - Log every new finding about working with AI in `$SOCRATEX_HOME/docs/AI-PRACTICES.md` (findings log: date, what, evidence, verdict) and commit it with the core.

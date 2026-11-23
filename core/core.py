@@ -3,7 +3,7 @@
 
 Layers, low to high (the later layer wins):
     defaults         defaults/preferences/*/*.json (index of documents per kind of work), then defaults/config.json
-    profile          defaults/profiles/<name>.json, <name> = the last `profile` value set by any other layer
+    adapter          defaults/adapters/<name>.json, <name> = the last `adapter` value set by any other layer
     local            local/overrides/config.json
     project          <project>/.socratex/config.json
     project-private  local/projects/<project folder name>/config.json
@@ -14,7 +14,7 @@ Merge rules (written explicitly in the later layer's file):
     {"$remove": [..], "$append": [..]}  both in one value: drop first, then append
     {"$delete": true}  remove the key (a missing key is fine)
 
-The flow table (core/flow.json) has its own overrides in the same places, see the flow section below.
+The flow table (defaults/flow.json) has its own overrides in the same places, see the flow section below.
 
 Stdlib only. Used by `core/sox config ...` and `core/sox flow ...`.
 """
@@ -65,15 +65,34 @@ def _config_layers(project_root: Path | str | None, base: Path) -> list[dict]:
     return [{"name": n, "path": p, "exists": p.is_file(), "kind": "config"} for n, p in found]
 
 
-def _profile_choice(project_root: Path | str | None, root: Path | None) -> tuple[str | None, str | None]:
-    """Return (profile name, name of the layer that set it): the last `profile` string of a present config layer."""
+_LEGACY_WARNED: set[str] = set()
+
+
+def _legacy_adapter_key(data: object, path: Path) -> object:
+    """Accept the old config key `profile` as `adapter` (renamed 2026-11-23), warning once per file on stderr."""
+    if isinstance(data, dict) and "profile" in data:
+        if str(path) not in _LEGACY_WARNED:
+            _LEGACY_WARNED.add(str(path))
+            print(f"warning: {path}: config key `profile` was renamed to `adapter`; rename it in that file", file=sys.stderr)
+        data = dict(data)
+        legacy = data.pop("profile")
+        data.setdefault("adapter", legacy)
+    return data
+
+
+def _read_layer_json(path: Path) -> object:
+    return _legacy_adapter_key(_read_json(path), path)
+
+
+def _adapter_choice(project_root: Path | str | None, root: Path | None) -> tuple[str | None, str | None]:
+    """Return (adapter name, name of the layer that set it): the last `adapter` string of a present config layer."""
     name = chosen_by = None
     for layer in _config_layers(project_root, Path(root) if root else ROOT):
         if not layer["exists"]:
             continue
-        data = _read_json(layer["path"])
-        if isinstance(data, dict) and "profile" in data:
-            value = data["profile"]
+        data = _read_layer_json(layer["path"])
+        if isinstance(data, dict) and "adapter" in data:
+            value = data["adapter"]
             if isinstance(value, str):
                 name, chosen_by = value, layer["name"]
             elif _directive(value):
@@ -81,22 +100,22 @@ def _profile_choice(project_root: Path | str | None, root: Path | None) -> tuple
     return name, chosen_by
 
 
-def selected_profile(project_root: Path | str | None = None, root: Path | None = None) -> str | None:
-    """Return the profile name: the last `profile` string set by a present config layer (a $delete clears it)."""
-    return _profile_choice(project_root, root)[0]
+def selected_adapter(project_root: Path | str | None = None, root: Path | None = None) -> str | None:
+    """Return the adapter name: the last `adapter` string set by a present config layer (a $delete clears it)."""
+    return _adapter_choice(project_root, root)[0]
 
 
 def layers(project_root: Path | str | None = None, root: Path | None = None) -> list[dict]:
-    """Return the ordered layers (low to high) as {name, path, exists, kind}; kind is config, profile or preferences."""
+    """Return the ordered layers (low to high) as {name, path, exists, kind}; kind is config, adapter or preferences."""
     base = Path(root) if root else ROOT
     configs = _config_layers(project_root, base)
     prefs = [{"name": "defaults", "path": p, "exists": True, "kind": "preferences"}
              for p in sorted((base / "defaults" / "preferences").glob("*/*.json"))]
-    profile = selected_profile(project_root, root)
+    adapter = selected_adapter(project_root, root)
     middle = []
-    if profile:
-        path = base / "defaults" / "profiles" / f"{profile}.json"
-        middle = [{"name": "profile", "path": path, "exists": path.is_file(), "kind": "profile"}]
+    if adapter:
+        path = base / "defaults" / "adapters" / f"{adapter}.json"
+        middle = [{"name": "adapter", "path": path, "exists": path.is_file(), "kind": "adapter"}]
     return prefs + configs[:1] + middle + configs[1:]
 
 
@@ -199,23 +218,23 @@ def _check_file_header(path: Path, data: object, schema_name: str, allow_directi
     return data
 
 
-def _profile_config_schema() -> dict:
+def _adapter_config_schema() -> dict:
     schema = dict(_schema())
     schema["required"] = []
-    schema["properties"] = {k: v for k, v in schema["properties"].items() if k not in ("profile", "schema_version")}
+    schema["properties"] = {k: v for k, v in schema["properties"].items() if k not in ("adapter", "schema_version")}
     return schema
 
 
 def load_layer_file(path: Path) -> dict:
     """Read one layer file and validate it (directives allowed); errors name the file and key."""
-    data = _read_json(path)
+    data = _read_layer_json(path)
     return _check_file_header(path, data, "config.schema.json", allow_directives=True)
 
 
-def load_profile_file(path: Path) -> dict:
-    """Read a profile file; return its config bundle as a layer dict (no schema_version: the config layers carry it)."""
+def load_adapter_file(path: Path) -> dict:
+    """Read an adapter file; return its config bundle as a layer dict (no schema_version: the config layers carry it)."""
     data = _check_file_header(path, _read_json(path), "profile.schema.json")
-    errors = validate(data["config"], _profile_config_schema(), "config")
+    errors = validate(data["config"], _adapter_config_schema(), "config")
     if errors:
         raise ConfigError(f"{path}: " + "; ".join(errors))
     return dict(data["config"])
@@ -227,7 +246,7 @@ def load_preferences_file(path: Path) -> dict:
     return {"preferences": {data["name"]: {"load_when": data["load_when"], "files": data["files"]}}}
 
 
-_LOADERS = {"config": load_layer_file, "profile": load_profile_file, "preferences": load_preferences_file}
+_LOADERS = {"config": load_layer_file, "adapter": load_adapter_file, "preferences": load_preferences_file}
 
 
 # ---------- merge with provenance ----------
@@ -276,16 +295,16 @@ def _merge(base: dict, prov: dict, over: dict, layer: str, file: str, prefix: st
 
 
 def _drop_project_relaxations(layer: dict, data: dict, chosen_by: str | None, project_file: object) -> str | None:
-    """Remove safety.allow that a project file sets (or selects through a profile); return the error line, if any."""
+    """Remove safety.allow that a project file sets (or selects through an adapter); return the error line, if any."""
     safety = data.get("safety")
     if layer["name"] == "project" and layer["kind"] == "config" and isinstance(safety, dict) and "allow" in safety:
         del safety["allow"]
         if not safety:
             del data["safety"]
         return f"{layer['path']}: safety.allow in a project file is ignored; only owner layers may relax safety rules"
-    if layer["kind"] == "profile" and chosen_by == "project" and isinstance(safety, dict) and safety.get("allow"):
+    if layer["kind"] == "adapter" and chosen_by == "project" and isinstance(safety, dict) and safety.get("allow"):
         del data["safety"]
-        return (f"{layer['path']}: profile selected by the project file {project_file} relaxes safety rules; "
+        return (f"{layer['path']}: adapter selected by the project file {project_file} relaxes safety rules; "
                 "ignored (an owner layer must select it)")
     return None
 
@@ -317,22 +336,22 @@ def resolve(project_root: Path | str | None = None, root: Path | None = None) ->
     prov: dict = {}
     sources = []
     loaded = []
-    missing_profile = None
+    missing_adapter = None
     all_layers = layers(project_root, root)
-    chosen_by = _profile_choice(project_root, root)[1]
+    chosen_by = _adapter_choice(project_root, root)[1]
     project_file = next((l["path"] for l in all_layers if l["name"] == "project"), None)
     safety_errors: list[str] = []
     for layer in all_layers:
         if not layer["exists"]:
-            missing_profile = layer["path"] if layer["name"] == "profile" else missing_profile
+            missing_adapter = layer["path"] if layer["name"] == "adapter" else missing_adapter
             continue
         data = _LOADERS[layer["kind"]](layer["path"])
         problem = _drop_project_relaxations(layer, data, chosen_by, project_file)
         if problem:
             safety_errors.append(problem)
         loaded.append((layer, data))
-    if missing_profile:  # reported after the other files so a bad `profile` value shows its own error first
-        raise ConfigError(f"{missing_profile}: the selected profile has no file")
+    if missing_adapter:  # reported after the other files so a bad `adapter` value shows its own error first
+        raise ConfigError(f"{missing_adapter}: the selected adapter has no file")
     base_extensions = _extension_base(root)
     if base_extensions:
         sources.append(base_extensions[0])
@@ -501,9 +520,9 @@ class FlowError(ConfigError):
 
 
 def flow_layers(project_root: Path | str | None = None, root: Path | None = None) -> list[dict]:
-    """Return the flow files, low to high: core/flow.json, then flow.json in the local, project and project-private layers."""
+    """Return the flow files, low to high: defaults/flow.json, then flow.json in the local, project and project-private layers."""
     base = Path(root) if root else ROOT
-    found = [("core", base / "core" / "flow.json"), ("local", base / "local" / "overrides" / "flow.json")]
+    found = [("core", base / "defaults" / "flow.json"), ("local", base / "local" / "overrides" / "flow.json")]
     if project_root:
         project = Path(project_root).resolve()
         found.append(("project", project / ".socratex" / "flow.json"))
@@ -667,7 +686,7 @@ def _apply_override(steps: list[dict], origin: dict, ops: dict, layer: dict) -> 
 
 
 def load_flow(project_root: Path | str | None = None, root: Path | None = None) -> dict:
-    """Merge core/flow.json with the override files present. Returns {steps, origin, sources}; raises FlowError."""
+    """Merge defaults/flow.json with the override files present. Returns {steps, origin, sources}; raises FlowError."""
     schema = _flow_schema()
     steps: list[dict] = []
     origin: dict[str, dict] = {}

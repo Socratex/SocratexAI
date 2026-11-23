@@ -9,7 +9,7 @@ Sources:
   docs/specs/*/*.md                   -> frontmatter `description`
   modules/engine|stages/review|stages/planning/*.json -> `purpose` or `title` (module.json excluded)
   core/*.json                         -> `purpose` or `schema`
-  defaults/*.json                     -> fixed description; defaults/profiles and defaults/preferences -> `what`
+  defaults/*.json                     -> fixed description; defaults/adapters and defaults/preferences -> `what`
   core/*.py, core/sox, tests/test_*.py -> docstring / test name
   modules/**/module.json              -> `modules` section (name, kind, what, when, entry, paths); validated first
 
@@ -33,7 +33,7 @@ import core  # noqa: E402
 
 INDEX = ROOT / "INDEX.json"
 MODULES_DIR = "modules"
-DOC_DIRS = ["core", "core/rules", "core/templates", "docs", "claude", "claude/mods/flow-panel", "codex", "templates/project"]
+DOC_DIRS = ["core", "defaults", "defaults/rules", "defaults/templates", "docs", "claude", "claude/mods/flow-panel", "codex", "templates/project"]
 
 
 def frontmatter(path: Path) -> dict[str, str]:
@@ -135,6 +135,14 @@ def modules_section(root: Path = ROOT) -> list[dict]:
     return [{key: m[key] for key in keep} for m in sorted(load_modules(root), key=lambda m: (m["kind"], m["name"]))]
 
 
+def default_json_what(path: Path) -> str:
+    """One line for a defaults/*.json file: its `purpose`, else a fixed line for config.json, else its schema id."""
+    if path.name == "config.json":
+        return "Shipped default values of the layered config (lowest layer, read by core/core.py)"
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return payload.get("purpose") or payload.get("schema", path.stem)
+
+
 def build() -> dict:
     docs = [{"path": rel(p), "what": frontmatter(p)["description"]}
             for folder in doc_folders() if (ROOT / folder).is_dir()
@@ -147,8 +155,7 @@ def build() -> dict:
              for folder in ("stages/review", "engine", "stages/planning")
              for p in sorted((ROOT / "modules" / folder).glob("*.json")) if p.name != "module.json"
              for payload in [json.loads(p.read_text(encoding="utf-8"))]]
-    data += [{"path": rel(p), "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"}
-             for p in sorted((ROOT / "defaults").glob("*.json"))]
+    data += [{"path": rel(p), "what": default_json_what(p)} for p in sorted((ROOT / "defaults").glob("*.json"))]
     data += [{"path": rel(p), "what": json.loads(p.read_text(encoding="utf-8"))["what"]}
              for p in sorted((ROOT / "defaults").glob("*/*.json")) + sorted((ROOT / "defaults").glob("preferences/*/*.json"))]
     data += [{"path": rel(p), "what": "Machine-readable list of AI workflow improvements and their status"}
@@ -172,7 +179,7 @@ def build() -> dict:
         "purpose": "Map of the SocratexAI global AI core. Read this first; open only the entry you need.",
         "generated_by": "modules/tools/scripts/build_index.py (do not edit by hand)",
         "layers": {
-            "core": "core/RULES.md + core/STYLE.md: always loaded for Claude and Codex",
+            "defaults": "defaults/RULES.md + defaults/STYLE.md: always loaded for Claude and Codex",
             "local": "local/: private, gitignored owner profile and patterns (created from local.example/)",
             "project": "each project's INDEX.json, AGENTS.md/CLAUDE.md and optional .ai/ overrides",
         },

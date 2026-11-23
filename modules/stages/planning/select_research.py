@@ -2,7 +2,7 @@
 
 Deterministic, no model. Each candidate is one unknown; its category names the executor (research-codex,
 research-scout) or says the research was skipped (research-skipped). No candidates means research is not needed.
-Executors follow core/ROUTING.json: internet and summaries go to Codex, repo search goes to scout; when Codex is
+Executors follow defaults/ROUTING.json: internet and summaries go to Codex, repo search goes to scout; when Codex is
 unavailable, summaries and repo search use scout and internet research is skipped with a note (scout has no web access).
 Codex availability: PLANNING_CODEX_AVAILABLE=0|1 overrides the check for the `codex` command.
 """
@@ -28,7 +28,7 @@ finally:
     for _path in _added:
         sys.path.remove(_path)
 
-ROUTING = HERE.parents[2] / "core" / "ROUTING.json"
+ROUTING = HERE.parents[2] / "defaults" / "ROUTING.json"
 CODEX_ENV = "PLANNING_CODEX_AVAILABLE"
 UNKNOWN = re.compile(r"\b(unknown|tbd|to verify|to check|need to check|needs checking|not sure|unclear|find out)\b"
                      r"|niewiadom|do sprawdzenia|nie wiadomo|do ustalenia|sprawdzi[cć]|niejasn|\?\s*$",
@@ -48,7 +48,7 @@ def codex_available() -> bool:
 
 
 def routing_executors() -> dict[str, str]:
-    """Executor ids from core/ROUTING.json: the Codex family and the cheap Claude agent used for search."""
+    """Executor ids from defaults/ROUTING.json: the Codex family and the cheap Claude agent used for search."""
     routing = json.loads(ROUTING.read_text(encoding="utf-8"))
     scout = next(name for name, tier in routing["claude_agents"].items() if tier == "cheap")
     codex = "codex" if "codex" in routing else ""

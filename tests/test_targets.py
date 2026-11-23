@@ -180,8 +180,8 @@ def test_sync_waits_for_the_first_approved_apply(monkeypatch, capsys):
 def test_load_rules_toggles_the_rules_document(monkeypatch, load):
     monkeypatch.setattr(install, "load_rules", lambda: load)
     block = install.claude_block()
-    assert ("core/RULES.md" in block) is load
-    assert "core/INIT.md" in block and "core/STYLE.md" in block and "claude/CLAUDE.md" in block and "local/profile.md" in block
+    assert ("defaults/RULES.md" in block) is load
+    assert "core/INIT.md" in block and "defaults/STYLE.md" in block and "claude/CLAUDE.md" in block and "local/profile.md" in block
     agents = install.codex_agents_md()
     assert (RULES_TITLE in agents) is load
     assert INIT_TITLE in agents and "Reply profile UCE" in agents
@@ -193,7 +193,7 @@ def test_startup_size_shrinks_without_the_rules_document(monkeypatch):
     full = {name: targets.startup_bytes(name) for name in ("claude", "codex")}
     monkeypatch.setattr(install, "load_rules", lambda: False)
     lean = {name: targets.startup_bytes(name) for name in ("claude", "codex")}
-    rules = (REPO / "core" / "RULES.md").stat().st_size
+    rules = (REPO / "defaults" / "RULES.md").stat().st_size
     assert all(lean[name] < full[name] for name in full) and full["claude"] - lean["claude"] >= rules
 
 

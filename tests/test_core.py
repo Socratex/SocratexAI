@@ -32,11 +32,11 @@ def env(tmp_path):
     """A fake repo root with defaults, plus a project folder."""
     root = tmp_path / "repo"
     write(root / "defaults" / "config.json", {
-        "schema_version": 1, "profile": "duo", "extensions": ["a", "b"],
+        "schema_version": 1, "adapter": "duo", "extensions": ["a", "b"],
         "stages": {"review": {"enabled": True}, "planning": {"enabled": True}},
     })
     for name in ("solo", "duo", "yolo"):
-        write(root / "defaults" / "profiles" / f"{name}.json", {
+        write(root / "defaults" / "adapters" / f"{name}.json", {
             "schema": "socratex-profile/v1", "schema_version": 1, "name": name, "what": name,
             "config": {"codex": {"enabled": name != "solo"}}})
     project = tmp_path / "myproj"
@@ -56,41 +56,41 @@ def private(root, project, data):
     return write(root / "local" / "projects" / project.name / "config.json", {"schema_version": 1, **data})
 
 
-def val(env, key="profile"):
+def val(env, key="adapter"):
     root, project = env
     return core.resolve(project, root)["values"][key]
 
 
 def test_layer_order(env):
     root, project = env
-    assert [l["name"] for l in core.layers(project, root)] == ["defaults", "profile", "local", "project", "project-private"]
+    assert [l["name"] for l in core.layers(project, root)] == ["defaults", "adapter", "local", "project", "project-private"]
 
 
 def test_defaults_only_when_layers_absent(env):
     root, project = env
     result = core.resolve(project, root)
-    assert result["values"]["profile"] == "duo"
-    assert result["provenance"]["profile"]["layer"] == "defaults"
-    assert [s["layer"] for s in result["sources"]] == ["defaults", "profile"]
+    assert result["values"]["adapter"] == "duo"
+    assert result["provenance"]["adapter"]["layer"] == "defaults"
+    assert [s["layer"] for s in result["sources"]] == ["defaults", "adapter"]
 
 
 def test_no_project_root_skips_project_layers(env):
     root, _ = env
-    assert [l["name"] for l in core.layers(None, root)] == ["defaults", "profile", "local"]
+    assert [l["name"] for l in core.layers(None, root)] == ["defaults", "adapter", "local"]
 
 
 def test_local_overrides_defaults(env):
     root, _ = env
-    local(root, {"profile": "solo"})
+    local(root, {"adapter": "solo"})
     assert val(env) == "solo"
 
 
 def test_project_overrides_local(env):
     root, project = env
-    local(root, {"profile": "solo"})
-    proj(project, {"profile": "yolo"})
+    local(root, {"adapter": "solo"})
+    proj(project, {"adapter": "yolo"})
     assert val(env) == "yolo"
-    prov = core.resolve(project, root)["provenance"]["profile"]
+    prov = core.resolve(project, root)["provenance"]["adapter"]
     assert prov["layer"] == "project"
     assert [o["layer"] for o in prov["overridden"]] == ["defaults", "local"]
     assert [o["value"] for o in prov["overridden"]] == ["duo", "solo"]
@@ -98,21 +98,21 @@ def test_project_overrides_local(env):
 
 def test_private_overrides_project(env):
     root, project = env
-    proj(project, {"profile": "yolo"})
-    private(root, project, {"profile": "solo"})
+    proj(project, {"adapter": "yolo"})
+    private(root, project, {"adapter": "solo"})
     assert val(env) == "solo"
-    assert core.resolve(project, root)["provenance"]["profile"]["layer"] == "project-private"
+    assert core.resolve(project, root)["provenance"]["adapter"]["layer"] == "project-private"
 
 
 def test_project_overrides_defaults_directly(env):
     root, project = env
-    proj(project, {"profile": "solo"})
+    proj(project, {"adapter": "solo"})
     assert val(env) == "solo"
 
 
 def test_private_overrides_defaults_directly(env):
     root, project = env
-    private(root, project, {"profile": "solo"})
+    private(root, project, {"adapter": "solo"})
     assert val(env) == "solo"
 
 
@@ -161,12 +161,12 @@ def test_remove_from_missing_list_is_noop(env):
 
 def test_delete_key_and_missing_key(env):
     root, project = env
-    local(root, {"profile": {"$delete": True}, "extensions": {"$delete": True}})
+    local(root, {"adapter": {"$delete": True}, "extensions": {"$delete": True}})
     proj(project, {"extensions": {"$delete": True}})
     result = core.resolve(project, root)
-    assert "profile" not in result["values"]
+    assert "adapter" not in result["values"]
     assert "extensions" not in result["values"]
-    assert "profile" not in result["provenance"]
+    assert "adapter" not in result["provenance"]
 
 
 def test_delete_nested_key(env):
@@ -193,8 +193,8 @@ def test_unknown_nested_key_error(env):
 
 def test_wrong_type_and_enum_errors(env):
     root, project = env
-    local(root, {"profile": "turbo"})
-    with pytest.raises(core.ConfigError, match="profile"):
+    local(root, {"adapter": "turbo"})
+    with pytest.raises(core.ConfigError, match="adapter"):
         core.resolve(project, root)
     local(root, {"stages": {"review": {"enabled": "yes"}}})
     with pytest.raises(core.ConfigError, match="stages.review.enabled"):
@@ -203,7 +203,7 @@ def test_wrong_type_and_enum_errors(env):
 
 def test_missing_schema_version_error(env):
     root, project = env
-    path = write(project / ".socratex" / "config.json", {"profile": "solo"})
+    path = write(project / ".socratex" / "config.json", {"adapter": "solo"})
     with pytest.raises(core.ConfigError) as err:
         core.resolve(project, root)
     assert str(path) in str(err.value)
@@ -230,37 +230,37 @@ def test_invalid_json_error_names_file(env):
 
 def test_directive_on_non_list_rejected(env):
     root, project = env
-    local(root, {"profile": {"$append": ["x"]}})
-    with pytest.raises(core.ConfigError, match="profile"):
+    local(root, {"adapter": {"$append": ["x"]}})
+    with pytest.raises(core.ConfigError, match="adapter"):
         core.resolve(project, root)
 
 
 def test_effective_written_with_hashes_and_recomputed_when_stale(env):
     root, project = env
-    local(root, {"profile": "solo"})
+    local(root, {"adapter": "solo"})
     first = core.effective(project, root)
     path = core.effective_path(root)
     assert path.is_file()
-    assert first["values"]["profile"] == "solo"
-    assert {s["layer"] for s in first["sources"]} == {"defaults", "profile", "local"}
+    assert first["values"]["adapter"] == "solo"
+    assert {s["layer"] for s in first["sources"]} == {"defaults", "adapter", "local"}
     assert all(len(s["sha256"]) == 64 for s in first["sources"])
     # fresh: served from the cache even if the cached values are tampered with
     cached = json.loads(path.read_text(encoding="utf-8"))
-    cached["values"]["profile"] = "CACHED"
+    cached["values"]["adapter"] = "CACHED"
     path.write_text(json.dumps(cached), encoding="utf-8")
-    assert core.effective(project, root)["values"]["profile"] == "CACHED"
+    assert core.effective(project, root)["values"]["adapter"] == "CACHED"
     # stale: a source changed
-    local(root, {"profile": "yolo"})
-    assert core.effective(project, root)["values"]["profile"] == "yolo"
-    assert json.loads(path.read_text(encoding="utf-8"))["values"]["profile"] == "yolo"
+    local(root, {"adapter": "yolo"})
+    assert core.effective(project, root)["values"]["adapter"] == "yolo"
+    assert json.loads(path.read_text(encoding="utf-8"))["values"]["adapter"] == "yolo"
     # stale: a new layer file appeared
-    proj(project, {"profile": "duo"})
-    assert core.effective(project, root)["values"]["profile"] == "duo"
+    proj(project, {"adapter": "duo"})
+    assert core.effective(project, root)["values"]["adapter"] == "duo"
 
 
 def test_cli_show_lists_every_key_with_source(env, capsys, monkeypatch):
     root, project = env
-    local(root, {"profile": "solo"})
+    local(root, {"adapter": "solo"})
     proj(project, {"stages": {"review": {"enabled": False}}})
     monkeypatch.setattr(core, "ROOT", root)
     original = core.layers
@@ -283,7 +283,7 @@ def test_cli_show_json_and_error_exit(env, capsys, monkeypatch):
     original = core.layers
     monkeypatch.setattr(core, "layers", lambda project_root=None, root_=None: original(project_root, root))
     assert sox.main(["config", "show", "--project", str(project), "--json"]) == 0
-    assert json.loads(capsys.readouterr().out)["values"]["profile"] == "duo"
+    assert json.loads(capsys.readouterr().out)["values"]["adapter"] == "duo"
     proj(project, {"bogus": 1})
     assert sox.main(["config", "show", "--project", str(project)]) == 2
     assert "bogus" in capsys.readouterr().err
@@ -312,5 +312,5 @@ def test_combined_directive_is_validated(env):
 
 def test_shipped_defaults_file_is_valid():
     data = core.load_layer_file(core.ROOT / "defaults" / "config.json")
-    assert data["profile"] == "duo"
+    assert data["adapter"] == "duo"
     assert data["stages"]["review"]["enabled"] is True

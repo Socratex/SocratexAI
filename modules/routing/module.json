@@ -13,8 +13,8 @@
     "modules/tools/scripts/risk_score.py",
     "modules/tools/scripts/routing_log.py",
     "modules/tools/scripts/routing_stats.py",
-    "core/ROUTING.json",
-    "core/RISK-RULES.json",
+    "defaults/ROUTING.json",
+    "defaults/RISK-RULES.json",
     "claude/agents",
     "docs/ROUTER-LOOP.md"
   ],

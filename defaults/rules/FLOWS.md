@@ -7,7 +7,7 @@ updated: 2026-11-16
 
 # 🔀 Task flows
 
-Merged value of the legacy FLOWS, WORKFLOW and TASK-WORK documents. Pick the flow by task type, then follow only that flow. Tool and model choices come from `core/rules/ROUTING.md`, gating from `core/rules/TASK-GATING.md`.
+Merged value of the legacy FLOWS, WORKFLOW and TASK-WORK documents. Pick the flow by task type, then follow only that flow. Tool and model choices come from `defaults/rules/ROUTING.md`, gating from `defaults/rules/TASK-GATING.md`.
 
 ## 🧭 Pick the flow
 | Task type | Read first | Do | Done when |
@@ -70,4 +70,4 @@ How:
 - product direction is needed,
 - a check changes the plan,
 - a step is destructive, external or unusually expensive.
-Ask in one form with a recommended default (`core/RULES.md`, Ambiguity).
+Ask in one form with a recommended default (`defaults/RULES.md`, Ambiguity).
