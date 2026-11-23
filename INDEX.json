@@ -141,10 +141,6 @@
       "what": "Ready patch for core/safety.json and claude/hooks/guard.py so the agent can edit knowledge documents but not config files in local/projects and local/groups"
     },
     {
-      "path": "docs/specs/project-knowledge/HOOK-PATCH.md",
-      "what": "Ready replacement of ~/.claude/hooks/socratex-pipeline-loader.sh so the SessionStart hook prints the output of sox context; the owner applies it by hand"
-    },
-    {
       "path": "docs/specs/project-knowledge/SPEC.md",
       "what": "Jedno miejsce prawdy o projektach (zasady, wiedza, tickety, odstępstwa od standardów) w SocratexAI/local, z deterministyczną kolejnością czytania i trybem referencji"
     },
