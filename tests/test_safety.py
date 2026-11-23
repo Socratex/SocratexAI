@@ -172,6 +172,7 @@ def test_relaxation_source_is_the_layer_that_introduced_it(world):
 # ---------- the agent cannot edit the files that relax rules ----------
 
 PROTECTED = ["core/safety.json", "core/safety.schema.json", "local/overrides/config.json", "local/projects/p/config.json",
+             "local/projects/p/flow.json", "local/projects/p/review.json", "local/groups/g/config.json",
              "defaults/config.json", "defaults/adapters/yolo.json"]
 
 
@@ -181,6 +182,19 @@ def test_agent_cannot_edit_safety_files(world, relative, name):
     root, project = world
     code, err = guard(tool(name, root / relative), root, project)
     assert code == 2 and "defines or relaxes safety rules" in err
+
+
+@pytest.mark.parametrize("relative", ["local/projects/p/PROJECT.md", "local/projects/p/DEVIATIONS.md", "local/projects/p/rules/r.md",
+                                      "local/groups/g/GROUP.md", "local/tickets/APP/APP-1/STATE.json"])
+@pytest.mark.parametrize("name", ["Write", "Edit"])
+def test_agent_can_edit_knowledge_documents(world, relative, name):
+    root, project = world
+    assert guard(tool(name, root / relative), root, project)[0] == 0
+
+
+def test_agent_can_write_knowledge_documents_from_bash(world):
+    root, project = world
+    assert guard(bash(f"echo hi > {root.as_posix()}/local/projects/p/PROJECT.md"), root, project)[0] == 0
 
 
 def test_agent_cannot_edit_a_project_socratex_config(world):

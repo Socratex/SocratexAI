@@ -89,7 +89,7 @@
         {
           "kind": "protected-paths",
           "tools": ["Edit", "Write", "Bash"],
-          "repo_paths": ["core/safety.json", "core/safety.schema.json", "local/overrides/**", "local/projects/**", "defaults/config.json", "defaults/adapters/**"],
+          "repo_paths": ["core/safety.json", "core/safety.schema.json", "local/overrides/**", "local/projects/*/config.json", "local/projects/*/flow.json", "local/projects/*/review.json", "local/projects/*/planning.json", "local/groups/*/config.json", "local/groups/*/flow.json", "defaults/config.json", "defaults/adapters/**"],
           "anywhere_paths": [".socratex/config.json"],
           "override_env": "SOCRATEX_GUARD_ALLOW_SAFETY_EDIT",
           "reason": "{path} defines or relaxes safety rules; only the owner edits it by hand (owner override for one session: SOCRATEX_GUARD_ALLOW_SAFETY_EDIT=1)."

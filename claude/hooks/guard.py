@@ -18,6 +18,7 @@ SOCRATEX_HOME overrides the SocratexAI folder the rules and layers are read from
 
 from __future__ import annotations
 
+import fnmatch
 import json
 import os
 import re
@@ -132,13 +133,17 @@ def protected_hit(entry: dict, token: str) -> bool:
             wanted = wanted[:-3]
             if path == wanted or path.startswith(wanted + "/"):
                 return True
+        elif "*" in pattern:
+            if fnmatch.fnmatchcase(path, wanted):
+                return True
         elif path == wanted:
             return True
     return any(path == name.lower() or path.endswith("/" + name.lower()) for name in entry.get("anywhere_paths", []))
 
 
 def protected_needles(entry: dict) -> list[str]:
-    return [p.lower().removesuffix("/**") for p in entry.get("repo_paths", [])] + [p.lower() for p in entry.get("anywhere_paths", [])]
+    return [p.lower().split("*")[0].removesuffix("/").removesuffix("/**") if "*" in p else p.lower().removesuffix("/**")
+            for p in entry.get("repo_paths", [])] + [p.lower() for p in entry.get("anywhere_paths", [])]
 
 
 # ---------- Bash command analysis ----------
