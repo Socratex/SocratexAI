@@ -1332,7 +1332,7 @@ async function scanStore($: EngineInterface): Promise<void> {
         if (e.kind !== 'file' || !/^local_.*\.json$/.test(e.name) || now - e.mtimeMs > STORE_AGE_MS) continue
         const path = `${dir}/${e.name}`
         const old = stored.get(path)
-        const isWatched = !!old && (old.cli === selfId || (!!mine && old.from === mine))
+        const isWatched = !!old && (old.cli === selfId || !old.cli || (!!mine && old.from === mine))
         if (old && !(isWatched && old.mtime !== e.mtimeMs)) continue
         try {
           const j = JSON.parse(String(await $.fs.read(path))) as Record<string, any>
