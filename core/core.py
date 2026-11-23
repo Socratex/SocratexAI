@@ -5,8 +5,9 @@ Layers, low to high (the later layer wins):
     defaults         defaults/preferences/*/*.json (index of documents per kind of work), then defaults/config.json
     adapter          defaults/adapters/<name>.json, <name> = the last `adapter` value set by any other layer
     local            local/overrides/config.json
+    group            local/groups/<group>/config.json, <group> = `group` in local/projects/<key>/project.json
     project          <project>/.socratex/config.json
-    project-private  local/projects/<project folder name>/config.json
+    project-private  local/projects/<key>/config.json, <key> = project folder name unless a project.json binds the folder (core/knowledge.py)
 
 Merge rules (written explicitly in the later layer's file):
     objects deep-merge; scalars and lists replace
@@ -59,9 +60,15 @@ def _read_json(path: Path) -> object:
 def _config_layers(project_root: Path | str | None, base: Path) -> list[dict]:
     found = [("defaults", base / "defaults" / "config.json"), ("local", base / "local" / "overrides" / "config.json")]
     if project_root:
+        import knowledge
+
         project = Path(project_root).resolve()
+        key = knowledge.project_key(project, base)
+        group = knowledge.project_group(key, base)
+        if group:
+            found.append(("group", knowledge.group_config_path(group, base)))
         found.append(("project", project / ".socratex" / "config.json"))
-        found.append(("project-private", base / "local" / "projects" / project.name / "config.json"))
+        found.append(("project-private", base / "local" / "projects" / str(key) / "config.json"))
     return [{"name": n, "path": p, "exists": p.is_file(), "kind": "config"} for n, p in found]
 
 
@@ -524,9 +531,11 @@ def flow_layers(project_root: Path | str | None = None, root: Path | None = None
     base = Path(root) if root else ROOT
     found = [("core", base / "defaults" / "flow.json"), ("local", base / "local" / "overrides" / "flow.json")]
     if project_root:
+        import knowledge
+
         project = Path(project_root).resolve()
         found.append(("project", project / ".socratex" / "flow.json"))
-        found.append(("project-private", base / "local" / "projects" / project.name / "flow.json"))
+        found.append(("project-private", base / "local" / "projects" / str(knowledge.project_key(project, base)) / "flow.json"))
     return [{"name": n, "path": p, "exists": p.is_file()} for n, p in found]
 
 

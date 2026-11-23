@@ -33,7 +33,7 @@ import core  # noqa: E402
 
 INDEX = ROOT / "INDEX.json"
 MODULES_DIR = "modules"
-DOC_DIRS = ["core", "defaults", "defaults/rules", "defaults/templates", "docs", "claude", "claude/mods/flow-panel", "codex", "templates/project"]
+DOC_DIRS = ["core", "defaults", "defaults/rules", "defaults/templates", "docs", "claude", "claude/mods/flow-panel", "codex", "templates/project", "templates/knowledge"]
 
 
 def frontmatter(path: Path) -> dict[str, str]:

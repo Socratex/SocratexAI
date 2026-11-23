@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import core  # noqa: E402
 import flowdoc  # noqa: E402
+import knowledge  # noqa: E402
 import project_check  # noqa: E402
 import shims  # noqa: E402
 
@@ -342,27 +343,120 @@ def cmd_ext(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_project(args: argparse.Namespace) -> int:
-    """`sox project check|init|explain`: audit and onboard a project (see core/project_check.py and defaults/project-check.json)."""
-    if args.action == "explain":
-        print("\n".join(project_check.explain(args.rule)))
-        return 0
-    if args.action == "init":
-        print("\n".join(project_check.init_project(args.path, args.write)))
-        if not args.write:
-            print("Dry run: nothing was written; add --write to create the missing files.")
-        return 0
-    findings = project_check.run_check(args.path)
-    code = project_check.exit_code(findings, args.strict)
-    totals = project_check.counts(findings)
+def _root(args: argparse.Namespace) -> Path | None:
+    return Path(args.root) if getattr(args, "root", None) else None
+
+
+def cmd_context(args: argparse.Namespace) -> int:
+    """`sox context [--project P] [--json]`: the ordered read list (general to most important), see core/knowledge.py."""
+    result = knowledge.build_context(args.project, _root(args))
     if args.json:
-        print(json.dumps({"project": str(Path(args.path).resolve()), "findings": findings, "counts": totals,
-                          "strict": args.strict, "exit": code}, indent=2, ensure_ascii=False))
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+    else:
+        print("\n".join(knowledge.format_context(result)))
+        print("Read top to bottom; a later row wins on conflict; a row marked (missing) is skipped.")
+    for line in result["errors"]:
+        print(f"error: {line}", file=sys.stderr)
+    return 1 if result["errors"] else 0
+
+
+def _print_knowledge_findings(findings: list[dict]) -> None:
+    for item in findings:
+        mark = "(warning) " if item["severity"] == "warning" else ""
+        print(f"{item['code']} {item['file']} {mark}{item['message']}")
+
+
+def _project_check(args: argparse.Namespace) -> int:
+    root = _root(args)
+    if args.path:
+        findings = project_check.run_check(args.path, root)
+        try:
+            key = knowledge.resolve_key(args.path, root)
+        except core.ConfigError as exc:
+            key = None
+            extra = [{"code": "K-COLLISION", "severity": "error", "file": args.path, "message": str(exc)}]
+        else:
+            has = key and (knowledge.projects_dir(root) / key / "project.json").is_file()
+            extra = knowledge.check_knowledge(root, key) if has else []
+    else:
+        findings, extra = [], knowledge.check_knowledge(root)
+    code = project_check.exit_code(findings, args.strict)
+    if any(f["severity"] == "error" or args.strict for f in extra):
+        code = 1
+    totals = project_check.counts(findings)
+    for severity in ("error", "warning"):
+        totals[severity] += sum(1 for f in extra if f["severity"] == severity)
+    if args.json:
+        payload = {"project": str(Path(args.path).resolve()) if args.path else None, "findings": findings, "counts": totals,
+                   "strict": args.strict, "exit": code}
+        if extra or not args.path:
+            payload["knowledge"] = extra
+        print(json.dumps(payload, indent=2, ensure_ascii=False))
         return code
     for finding in findings:
         print(project_check.format_line(finding))
+    _print_knowledge_findings(extra)
     print(f"{totals['error']} error(s), {totals['warning']} warning(s)" + (" (strict: warnings fail)" if args.strict else ""))
     return code
+
+
+def _project_list(args: argparse.Namespace) -> int:
+    rows = knowledge.list_rows(_root(args))
+    if args.json:
+        print(json.dumps(rows, indent=2, ensure_ascii=False))
+        return 0
+    heads = ("project", "group", "mode", "overrides", "summary")
+    cells = [(r["project"], r["group"] or "-", r["mode"] or "?", ", ".join(r["overrides"]) or "-",
+              r["summary"] or ("(invalid project.json)" if r["error"] else "-")) for r in rows]
+    widths = [max([len(h)] + [len(c[i]) for c in cells]) for i, h in enumerate(heads)]
+    print("  ".join(h.ljust(w) for h, w in zip(heads, widths)))
+    for cell in cells:
+        print("  ".join(c.ljust(w) for c, w in zip(cell, widths)))
+    if not rows:
+        print("no projects yet (`sox project init <repo folder>` creates one)")
+    return 0
+
+
+def _project_adopt(args: argparse.Namespace) -> int:
+    root = _root(args)
+    source = Path(args.source)
+    if not source.is_dir():
+        raise core.ConfigError(f"{args.source}: not a directory")
+    key = knowledge.resolve_key(args.project, root)
+    rows = knowledge.adopt_plan(source.resolve(), key, root, args.include or [], args.exclude or [])
+    for row in rows:
+        print(f"{row['action']:<8} {row['sha']}  {row['src']} -> {row['dst']}")
+    counts = {a: sum(1 for r in rows if r["action"] == a) for a in ("copy", "same", "conflict")}
+    print(f"{counts['copy']} to copy, {counts['same']} already identical, {counts['conflict']} conflict (kept, never overwritten); nothing is deleted.")
+    if not args.yes:
+        print("Plan only: nothing was written; add --yes to copy.")
+        return 0
+    print(f"Copied {knowledge.adopt_apply(rows)} file(s) into {knowledge.projects_dir(root) / key}.")
+    return 0
+
+
+def cmd_project(args: argparse.Namespace) -> int:
+    """`sox project check|init|list|show|adopt|explain`: audit, onboard and browse projects (core/project_check.py, core/knowledge.py)."""
+    root = _root(args)
+    if args.action == "explain":
+        print("\n".join(project_check.explain(args.rule)))
+        return 0
+    if args.action == "list":
+        return _project_list(args)
+    if args.action == "show":
+        print("\n".join(knowledge.show_lines(args.project, root)))
+        return 0
+    if args.action == "adopt":
+        return _project_adopt(args)
+    if args.action == "init":
+        repo = project_check.require_project(args.path)
+        print("\n".join(project_check.init_project(args.path, args.write, root)))
+        if not args.no_knowledge:
+            print("\n".join(knowledge.init_knowledge(repo, args.write, root, args.name, args.group, args.prefix, args.summary)))
+        if not args.write:
+            print("Dry run: nothing was written; add --write to create the missing files.")
+        return 0
+    return _project_check(args)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -439,16 +533,37 @@ def build_parser() -> argparse.ArgumentParser:
     ext_install = ext_sub.add_parser("install", help="kind install only: print the commands; with --yes back up the agent config, then run them")
     ext_install.add_argument("name")
     ext_install.add_argument("--yes", action="store_true", help="the owner's explicit yes: backup first, then run the commands")
-    project = top.add_parser("project", help="audit and onboard a project against the current SocratexAI setup")
+    context_cmd = top.add_parser("context", help="ordered list of files to read for a project, general to most important")
+    context_cmd.add_argument("--project", help="project repo folder (or a project key); without it only the global layers are listed")
+    context_cmd.add_argument("--json", action="store_true")
+    context_cmd.add_argument("--root", help=argparse.SUPPRESS)
+    project = top.add_parser("project", help="audit, onboard and browse projects (repo audit and project knowledge)")
+    root_opt = argparse.ArgumentParser(add_help=False)
+    root_opt.add_argument("--root", help=argparse.SUPPRESS)
     project_sub = project.add_subparsers(dest="action", required=True)
-    project_check_cmd = project_sub.add_parser("check", help="read-only audit of a project: one line per finding, exit 1 on errors")
-    project_check_cmd.add_argument("path")
+    project_check_cmd = project_sub.add_parser("check", parents=[root_opt], help="read-only audit: with a repo path the repo files plus its knowledge; without a path the whole hub; exit 1 on errors")
+    project_check_cmd.add_argument("path", nargs="?")
     project_check_cmd.add_argument("--json", action="store_true", help="machine-readable result")
     project_check_cmd.add_argument("--strict", action="store_true", help="warnings fail too")
-    project_init = project_sub.add_parser("init", help="create the missing project files from templates/project (dry run unless --write)")
+    project_init = project_sub.add_parser("init", parents=[root_opt], help="create the missing project files from templates (repo files and the knowledge skeleton); dry run unless --write")
     project_init.add_argument("path")
     project_init.add_argument("--write", action="store_true", help="really create the files; existing files are never overwritten")
-    project_explain = project_sub.add_parser("explain", help="print one project-check rule and how to fix it")
+    project_init.add_argument("--no-knowledge", action="store_true", help="only the repo files, no knowledge skeleton")
+    project_init.add_argument("--name", help="project key (default: the folder name); use it when two repos share a folder name")
+    project_init.add_argument("--group")
+    project_init.add_argument("--prefix", action="append", help="ticket prefix (repeatable)")
+    project_init.add_argument("--summary")
+    project_list = project_sub.add_parser("list", parents=[root_opt], help="all projects: group, knowledge mode, overridden keys, summary")
+    project_list.add_argument("--json", action="store_true")
+    project_show = project_sub.add_parser("show", parents=[root_opt], help="one project: summary, group, overrides and its DEVIATIONS.md")
+    project_show.add_argument("project", help="repo folder or project key")
+    project_adopt = project_sub.add_parser("adopt", parents=[root_opt], help="copy old knowledge files into a project's knowledge folder (plan only unless --yes; never overwrites or deletes)")
+    project_adopt.add_argument("source", help="folder holding the old knowledge files")
+    project_adopt.add_argument("--project", required=True, help="repo folder or project key that receives the files")
+    project_adopt.add_argument("--include", action="append", help="glob of files to take (repeatable; default all)")
+    project_adopt.add_argument("--exclude", action="append", help="glob of files to skip (repeatable)")
+    project_adopt.add_argument("--yes", action="store_true", help="really copy")
+    project_explain = project_sub.add_parser("explain", parents=[root_opt], help="print one project-check rule and how to fix it")
     project_explain.add_argument("rule")
     parser.set_defaults(action=None)
     return parser
@@ -460,8 +575,9 @@ COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_conf
             ("shims", None): cmd_shims,
             ("index", None): cmd_index, ("install", None): cmd_install, ("modules", None): cmd_modules,
             ("backup", None): cmd_backup, ("test", None): cmd_test, ("migrate", None): cmd_migrate}
-for _action in ("check", "init", "explain"):
+for _action in ("check", "init", "list", "show", "adopt", "explain"):
     COMMANDS[("project", _action)] = cmd_project
+COMMANDS[("context", None)] = cmd_context
 for _action in ("rotate", "adopt-logs"):
     COMMANDS[("state", _action)] = cmd_state
 for _action in ("list", "show", "add", "enable", "disable", "remove", "install"):

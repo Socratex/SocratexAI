@@ -148,6 +148,32 @@ core/sox project init <path> [--write]              # dry run by default; --writ
 core/sox project explain <RULE-ID>                  # what the rule means and how to fix it
 ```
 
+### 🗂️ Project knowledge hub
+
+Everything an agent should know about a project lives in one place per computer: `local/` (outside git). `sox context` prints the files to read in one fixed order, so nobody has to guess what was missed.
+
+```
+local/projects/<key>/   project.json, PROJECT.md, DOMAIN.md, DEVIATIONS.md, rules/*.md, config.json, flow.json
+local/groups/<group>/   group.json, GROUP.md, rules/*.md, config.json   (projects that share rules, set by `group` in project.json)
+local/tickets/<PREFIX>/<TICKET>/   ticket working memory (a prefix with no project is reported by `sox project check`)
+```
+
+- Key: the repo folder name, unless a `project.json` binds a different repo folder with its `path` (the `name` field is the key). Two repos with the same folder name: `sox project init <path> --name <other-key>`.
+- `project.json` (`schema_version` 1): `name`, `summary`, `group`, `path`, `ticket_prefixes`, `knowledge: {"mode": "local" | "repo" | "external", "path": "..."}`. Mode `local` (default) keeps the documents next to `project.json`; `repo` (path relative to the repo) and `external` (absolute path) keep them elsewhere, and only the reference stays here. Unknown keys are errors naming file and key.
+- Config layers: `defaults` -> adapter -> `local/overrides` -> **group** -> project `.socratex` -> `local/projects/<key>/config.json`; `sox config show` prints `group` as the source.
+- `DEVIATIONS.md`: where the project differs from the SocratexAI standards and why; `sox project list` shows which config keys it overrides.
+
+```bash
+core/sox context [--project <repo folder>] [--json]   # ordered read list: layer, file, why, exists; general to most important
+core/sox project init <path> [--write] [--name K] [--group G] [--prefix P] [--summary S]   # repo files plus the knowledge skeleton (dry run by default)
+core/sox project list [--json]                        # project, group, knowledge mode, overridden keys, summary
+core/sox project show <repo folder or key>            # summary, group, overrides and DEVIATIONS.md
+core/sox project check [path]                         # without path: the whole hub (collisions, orphan prefixes, broken files); with path: repo audit plus its knowledge
+core/sox project adopt <old folder> --project <key> [--include G] [--exclude G] [--yes]   # copy old knowledge files in; plan only without --yes, never overwrites or deletes
+```
+
+On a clean clone there is no `local/`: `sox context` lists only the defaults and `sox project init` creates the folders. Preference files in `sox context` are relative to the SocratexAI root; `project:<path>` means relative to the project repo.
+
 Extra folders to skip: config key `project_check.exclude` (globs) and `read_only_dirs` in `.ai/guard.json`. Project model tiers: only the config key `routing.tier_overrides`; `.ai/ROUTING.json` is deprecated.
 
 ## 🧱 Structure
@@ -159,8 +185,8 @@ SocratexAI/
     safety.json    named safety rules the guard enforces; relaxable only by the owner
     core.py        resolver: merges the layers, validates them, writes state/effective.json
     sox            the one command line (config, flow, ext, install, index, ...)
-    extensions.py, flowdoc.py, migrate.py, project_check.py, shims.py, targets.py   helpers of core.py and sox
-    *.schema.json  schemas of config, flow, adapter, safety, module and extension files
+    extensions.py, flowdoc.py, knowledge.py, migrate.py, project_check.py, shims.py, targets.py   helpers of core.py and sox
+    *.schema.json  schemas of config, flow, adapter, safety, module, extension, project.json and group.json files
   defaults/      what works without any setup (data and documents, overridable per layer)
     config.json    base config
     flow.json      ordered if -> then work steps (stages, roles, rules, gates)
@@ -179,19 +205,22 @@ SocratexAI/
   targets/       generated agent files (`sox install`); gitignored, never edit by hand
   claude/, codex/  adapters: Claude Code agents, hook, mods, settings; Codex entry file
   skills/        shared skills (spec, memory-review, skill-reflect, ...)
-  templates/project/  starting files for a project (AGENTS.md, CLAUDE.md, INDEX.json)
+  templates/project/  starting files for a project repo (AGENTS.md, CLAUDE.md, INDEX.json)
+  templates/knowledge/ starting knowledge files per project (PROJECT.md, DOMAIN.md, DEVIATIONS.md, rules/)
   tests/         tests of the core, resolver and sox
   docs/          FLOW.md (generated), OVERRIDES.md, specs/, ledgers
   tools/         thin redirects to the old script paths for projects that still call them (`sox shims`)
   state/         logs, effective config, ledgers: machine output with rotation (gitignored)
   local/         your private layer (gitignored); `local.example/` seeds it
     overrides/     global overrides of defaults, stages, adapters and extensions
-    projects/<project>/  private per-project overrides and settings that do not live in the project repo
+    projects/<key>/  private per-project knowledge, overrides and settings that do not live in the project repo
+    groups/<group>/  shared knowledge and overrides of a group of projects
+    tickets/         ticket working memory (see the project knowledge hub)
 ```
 
 Three kinds of place: **in the repo** (`core/`, `defaults/`, `modules/`, adapters; changed by pull requests), **generated** (`targets/`, `docs/FLOW.md`, `INDEX.json`; rebuilt from sources) and **yours** (`local/`, `state/`; never committed).
 
-Config layers, last wins: `defaults/` and `modules/` -> `local/overrides/` -> the project's `.socratex/config.json` -> `local/projects/<project>/`. Safety rules can only be relaxed from the owner's `local/` layers. `sox config show` prints every value with its source. Project rules win over the core, except safety rules, which projects can only make stricter. Projects keep their own `INDEX.json`, `AGENTS.md`, `CLAUDE.md` and optional `.ai/` overrides; start from `templates/project/`. Override format (files, keys, merge rules, examples): `docs/OVERRIDES.md`.
+Config layers, last wins: `defaults/` and `modules/` -> `local/overrides/` -> `local/groups/<group>/` -> the project's `.socratex/config.json` -> `local/projects/<key>/`. Safety rules can only be relaxed from the owner's `local/` layers. `sox config show` prints every value with its source. Project rules win over the core, except safety rules, which projects can only make stricter. Projects keep their own `INDEX.json`, `AGENTS.md`, `CLAUDE.md` and optional `.ai/` overrides; start from `templates/project/`. Override format (files, keys, merge rules, examples): `docs/OVERRIDES.md`.
 
 What to run when: [docs/FLOW.md](docs/FLOW.md) (generated: `sox flow doc`).
 
@@ -203,6 +232,8 @@ The `sox` command line (`python core/sox <command>`):
 |---|---|
 | `sox config show [--project P]` | effective config with the source of every value, relaxed safety rules, enabled extensions, stage registry changes |
 | `sox flow show \| check \| doc` | print the flow table (`--match fact=value`), validate it, regenerate `docs/FLOW.md` |
+| `sox context [--project P]` | the ordered list of files to read for a project (the one read-order step) |
+| `sox project check \| init \| list \| show \| adopt` | onboarding, audit and browsing of projects and their knowledge |
 | `sox modules` | modules by kind: what, when to run, entry commands |
 | `sox ext ...` | extension registry (see Extensions) |
 | `sox install --plan \| --check \| --yes` | generated targets and the agent config install |

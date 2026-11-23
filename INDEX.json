@@ -121,8 +121,28 @@
       "what": "Claude notes for <Project>"
     },
     {
+      "path": "templates/knowledge/DEVIATIONS.md",
+      "what": "Each place where {{name}} differs from the SocratexAI defaults, with the reason"
+    },
+    {
+      "path": "templates/knowledge/DOMAIN.md",
+      "what": "Pointers to the business reasons behind {{name}}; mark gaps instead of guessing"
+    },
+    {
+      "path": "templates/knowledge/PROJECT.md",
+      "what": "Facts about the {{name}} project (stack, zones, layout, secrets policy)"
+    },
+    {
       "path": "docs/specs/planning-pipeline/SPEC.md",
       "what": "Planowanie w trzech tanich etapach (formularz, research, sprawdzenie interpretacji) na wspólnym schemacie rejestru i wspólnym runnerze z pipeline'em review."
+    },
+    {
+      "path": "docs/specs/project-knowledge/GUARD-PATCH.md",
+      "what": "Ready patch for core/safety.json and claude/hooks/guard.py so the agent can edit knowledge documents but not config files in local/projects and local/groups"
+    },
+    {
+      "path": "docs/specs/project-knowledge/SPEC.md",
+      "what": "Jedno miejsce prawdy o projektach (zasady, wiedza, tickety, odstępstwa od standardów) w SocratexAI/local, z deterministyczną kolejnością czytania i trybem referencji"
     },
     {
       "path": "docs/specs/restructure/SPEC.md",
@@ -151,6 +171,10 @@
       "what": "Schema, fact table and condition grammar of the flow table (defaults/flow.json and its per-layer overrides), id socratex-flow/v1"
     },
     {
+      "path": "core/group.schema.json",
+      "what": "Schema of local/groups/<group>/group.json: identity of a group of projects that share rules and config"
+    },
+    {
       "path": "core/module.schema.json",
       "what": "Schema of one module manifest (modules/<group>/<name>/module.json), id socratex-module/v1"
     },
@@ -165,6 +189,10 @@
     {
       "path": "core/project-check.schema.json",
       "what": "Schema of defaults/project-check.json: the rules `sox project check` applies to a project"
+    },
+    {
+      "path": "core/project.schema.json",
+      "what": "Schema of local/projects/<key>/project.json: identity, group and knowledge place of one project"
     },
     {
       "path": "core/safety.json",
@@ -417,6 +445,10 @@
       "what": "Render docs/FLOW.md (Polish): the main flow table, layer order, sox commands and directory map, from the real data."
     },
     {
+      "path": "core/knowledge.py",
+      "what": "Project knowledge hub: layout of local/projects and local/groups, project keys, `sox context` and `sox project ...`."
+    },
+    {
       "path": "core/migrate.py",
       "what": "Schema migrations for the config files that carry `schema_version` (`sox migrate`)."
     },
@@ -455,6 +487,10 @@
     {
       "path": "tests/test_flowdoc.py",
       "what": "Tests for `sox flow doc`: docs/FLOW.md is generated from defaults/flow.json, the parser help and the directory map."
+    },
+    {
+      "path": "tests/test_knowledge.py",
+      "what": "Tests for the project knowledge hub: group layer, project.json, `sox context`, `sox project init|list|show|check|adopt`."
     },
     {
       "path": "tests/test_modules.py",

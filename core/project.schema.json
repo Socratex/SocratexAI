@@ -1,0 +1,22 @@
+{
+  "purpose": "Schema of local/projects/<key>/project.json: identity, group and knowledge place of one project",
+  "type": "object",
+  "required": ["schema_version", "name"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "integer", "enum": [1]},
+    "name": {"type": "string"},
+    "summary": {"type": "string"},
+    "group": {"type": "string"},
+    "path": {"type": "string"},
+    "ticket_prefixes": {"type": "array", "items": {"type": "string"}},
+    "knowledge": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mode": {"type": "string", "enum": ["local", "repo", "external"]},
+        "path": {"type": "string"}
+      }
+    }
+  }
+}

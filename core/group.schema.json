@@ -1,0 +1,11 @@
+{
+  "purpose": "Schema of local/groups/<group>/group.json: identity of a group of projects that share rules and config",
+  "type": "object",
+  "required": ["schema_version", "name"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "integer", "enum": [1]},
+    "name": {"type": "string"},
+    "summary": {"type": "string"}
+  }
+}

@@ -76,8 +76,12 @@ Lista z pomocy parsera (`sox <komenda> --help` ma szczegóły).
 | `sox ext disable` | disable an extension in one config layer file |
 | `sox ext remove` | delete a local manifest and drop it from the owner's config layers |
 | `sox ext install` | kind install only: print the commands; with --yes back up the agent config, then run them |
-| `sox project check` | read-only audit of a project: one line per finding, exit 1 on errors |
-| `sox project init` | create the missing project files from templates/project (dry run unless --write) |
+| `sox context` | ordered list of files to read for a project, general to most important |
+| `sox project check` | read-only audit: with a repo path the repo files plus its knowledge; without a path the whole hub; exit 1 on errors |
+| `sox project init` | create the missing project files from templates (repo files and the knowledge skeleton); dry run unless --write |
+| `sox project list` | all projects: group, knowledge mode, overridden keys, summary |
+| `sox project show` | one project: summary, group, overrides and its DEVIATIONS.md |
+| `sox project adopt` | copy old knowledge files into a project's knowledge folder (plan only unless --yes; never overwrites or deletes) |
 | `sox project explain` | print one project-check rule and how to fix it |
 
 ## Mapa katalogów

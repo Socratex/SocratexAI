@@ -267,9 +267,7 @@ def test_cli_exit_codes_and_output(tmp_path, capsys):
     assert "PRJ-LEGACY-FILE SOCRATEX.md:1" in capsys.readouterr().out
     assert sox.main(["project", "check", str(tmp_path / "missing")]) == 2
     assert "not a directory" in capsys.readouterr().err
-    with pytest.raises(SystemExit) as exc:
-        sox.main(["project", "check"])
-    assert exc.value.code == 2
+    assert sox.main(["project", "check", "--root", str(tmp_path / "empty-root")]) == 0   # no path: the knowledge hub check, empty hub is fine
 
 
 def test_cli_json_output(tmp_path, capsys):
@@ -292,11 +290,11 @@ def test_explain(capsys):
 def test_init_dry_run_write_and_idempotency(tmp_path, capsys):
     project = tmp_path / "new"
     project.mkdir()
-    assert sox.main(["project", "init", str(project)]) == 0
+    assert sox.main(["project", "init", str(project), "--no-knowledge"]) == 0
     out = capsys.readouterr().out
     assert "would create .socratex/config.json" in out and "would create .ai/guard.json" in out
     assert list(project.iterdir()) == []                              # dry run writes nothing
-    assert sox.main(["project", "init", str(project), "--write"]) == 0
+    assert sox.main(["project", "init", str(project), "--write", "--no-knowledge"]) == 0
     assert "created .socratex/config.json" in capsys.readouterr().out
     assert json.loads((project / ".socratex" / "config.json").read_text(encoding="utf-8")) == {"schema_version": 1}
     guard = json.loads((project / ".ai" / "guard.json").read_text(encoding="utf-8"))
@@ -305,7 +303,7 @@ def test_init_dry_run_write_and_idempotency(tmp_path, capsys):
     assert {k for k in guard if not k.startswith("_")} <= set(allowed)
     (project / "AGENTS.md").write_text("mine\n", encoding="utf-8")
     first = {p.relative_to(project).as_posix(): p.read_bytes() for p in project.rglob("*") if p.is_file()}
-    assert sox.main(["project", "init", str(project), "--write"]) == 0
+    assert sox.main(["project", "init", str(project), "--write", "--no-knowledge"]) == 0
     assert "created" not in capsys.readouterr().out
     assert first == {p.relative_to(project).as_posix(): p.read_bytes() for p in project.rglob("*") if p.is_file()}
 
@@ -314,7 +312,7 @@ def test_init_never_overwrites_an_existing_file(tmp_path, capsys):
     project = tmp_path / "p"
     (project / ".socratex").mkdir(parents=True)
     (project / ".socratex" / "config.json").write_text('{"schema_version": 1, "adapter": "solo"}', encoding="utf-8")
-    sox.main(["project", "init", str(project), "--write"])
+    sox.main(["project", "init", str(project), "--write", "--no-knowledge"])
     assert "skipped (exists) .socratex/config.json" in capsys.readouterr().out
     assert '"solo"' in (project / ".socratex" / "config.json").read_text(encoding="utf-8")
 
@@ -327,4 +325,4 @@ def test_init_output_passes_the_check(tmp_path):
 
 
 def test_init_on_a_missing_folder_is_a_usage_error(tmp_path):
-    assert sox.main(["project", "init", str(tmp_path / "nope")]) == 2
+    assert sox.main(["project", "init", str(tmp_path / "nope"), "--no-knowledge"]) == 2

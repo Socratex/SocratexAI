@@ -13,10 +13,11 @@ Projekt trzyma tylko własne fakty i nadpisania. Ogólne zasady przychodzą z So
 1. `defaults/` i `modules/` (w repo SocratexAI, nie edytujesz)
 2. adapter (`defaults/adapters/<adapter>.json`, wybierany kluczem `adapter`; stary klucz `profile` działa jeszcze jako alias z ostrzeżeniem)
 3. `local/overrides/` (Twoje, globalnie, poza repo)
-4. `<projekt>/.socratex/config.json` (w repo projektu, widzi zespół)
-5. `local/projects/<nazwa folderu projektu>/` (Twoje, prywatne, poza repo)
+4. `local/groups/<grupa>/config.json` (Twoje, wspólne dla grupy projektów; grupa z `project.json`, źródło w `sox config show`: `group`)
+5. `<projekt>/.socratex/config.json` (w repo projektu, widzi zespół)
+6. `local/projects/<klucz>/config.json` (Twoje, prywatne, poza repo; klucz = nazwa folderu projektu albo pole `name` z `project.json`)
 
-Luzować bezpieczeństwo (`safety.allow`) wolno tylko z warstw 2-3 i 5, nie z pliku projektu (4). Taki wpis w projekcie jest ignorowany i zgłaszany jako błąd.
+Luzować bezpieczeństwo (`safety.allow`) wolno tylko z warstw 2-4 i 6, nie z pliku projektu (5). Taki wpis w projekcie jest ignorowany i zgłaszany jako błąd.
 
 ## Pliki w projekcie
 
@@ -56,6 +57,9 @@ Przykład:
   "routing": {"tier_overrides": {"implementer": "high"}}
 }
 ```
+
+## Wiedza o projekcie (`project.json`, `group.json`)
+`local/projects/<klucz>/project.json` (`schema_version` 1): `name` (= klucz = nazwa folderu), `summary`, `group`, `path` (folder repo, wiąże klucz z repo), `ticket_prefixes`, `knowledge`: `{"mode": "local" | "repo" | "external", "path": "..."}`. `local/groups/<grupa>/group.json`: `name`, `summary`. Nieznany klucz to błąd z nazwą pliku i klucza. Kolejność czytania plików wiedzy zwraca `sox context --project <repo>` (od najogólniejszego do najważniejszego); opis w README, sekcja Project knowledge hub.
 
 ## Reguły scalania
 - Obiekty scalają się w głąb, a wartości proste i listy się podmieniają.
