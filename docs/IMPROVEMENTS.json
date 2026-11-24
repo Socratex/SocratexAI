@@ -1741,6 +1741,21 @@
       "expected_result": "Agent-driveable CLI for Blender/other desktop tools; only useful if it beats existing Blender MCP.",
       "result": "Not installed. Repo is real, widely starred; quality of generated harnesses untested here.",
       "result_evidence": "web search 2026-11-20"
+    },
+    {
+      "id": 128,
+      "tag": "P",
+      "area": "Context and memory",
+      "title": "billion-context (ranxianglei/billion-context)",
+      "status": "considering",
+      "decided": "claude",
+      "what": "Local proxy plugin between the coding agent and the model API; the model decides what to fold in the history, compressed parts are reversible via a decompress tool; replaces built-in auto-compaction.",
+      "why": "Owner asked if it is worth it (2026-11-24). Overlaps with items 93, 94, 109 (compaction and context compression).",
+      "date": "2026-11-24",
+      "source": "owner question",
+      "expected_result": "Long sessions without quality loss from auto-compaction.",
+      "result": "Not installed. Claims (months-long sessions, 5x fewer tokens) come from the project's own paper and listings; no independent benchmark found. A proxy sees all traffic including auth. One write-up says the Claude Desktop Code tab bypasses the proxy, so it would not apply to this app. Park; evaluate together with 88 (measure start context) and 109.",
+      "result_evidence": "Web search 2026-11-24: marketplace listing, HackerNoon hands-on, npm paper. Not verified in the repo or by a trial."
     }
   ]
 }
