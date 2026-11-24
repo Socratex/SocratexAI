@@ -2562,8 +2562,8 @@
       "date": "2026-11-24",
       "source": "owner question",
       "expected_result": "Fewer tokens per multi-step task, less intermediate output in context.",
-      "result": "Enabled 2026-11-24 on owner request: CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1 in ~/.claude/settings.json env (config backup /home/socratex/claude-backup/ai-config-20261124-091947.zip). Takes effect after a Claude Code restart and the first-start confirmation. Trial: still unverified whether guard.py fires for calls inside the generated JavaScript and whether it works in the Desktop Code tab. Undo: remove the env key (sessions started in Code Mode then need the variable to resume).",
-      "result_evidence": "Settings edited and parsed as valid JSON; behavior not yet observed in a restarted session.",
+      "result": "Enabled 2026-11-24 on owner request: CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1 in ~/.claude/settings.json env (config backup /home/socratex/claude-backup/ai-config-20261124-091947.zip). Takes effect after a Claude Code restart and the first-start confirmation. Trial: still unverified whether guard.py fires for calls inside the generated JavaScript and whether it works in the Desktop Code tab. Undo: remove the env key (sessions started in Code Mode then need the variable to resume). Check 2026-11-24: a fresh Desktop Code tab session had NO Code Mode tool (cause unverified: app ignores the variable, or needs a full app restart and the confirmation prompt). Plain Read of a dummy .env was blocked by guard.py as expected. Guard behavior inside Code Mode is still untested; test it in a terminal `claude` session with a dummy .env before relying on Code Mode.",
+      "result_evidence": "Test session transcript 2026-11-24: Code Mode absent, plain Read blocked by guard.py.",
       "keywords": [
         "code mode",
         "too many tool calls",
