@@ -159,6 +159,10 @@
     {
       "path": "docs/specs/review-pipeline/SPEC.md",
       "what": "Rejestr tanich, oskryptowanych sprawdzaczy (po jednym na zagadnienie), które tylko zgłaszają; poprawki robi jeden wykonawca; zbiera osobna sesja."
+    },
+    {
+      "path": "docs/specs/self-improvement-loop/SPEC.md",
+      "what": "Gdy agent trafi na blokadę albo właściciel narzeka na brak możliwości, agent sprawdza listę usprawnień i podpowiada pasujące narzędzie."
     }
   ],
   "data": [
