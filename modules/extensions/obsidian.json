@@ -7,9 +7,9 @@
     "id": "obsidian",
     "version": "unknown"
   },
-  "when_to_use": "Optional viewer and link graph over the Markdown notes in local/; open local/ as a vault, never the repo root.",
+  "when_to_use": "When writing notes under local/, link related notes with [[note-name]] and never edit .obsidian/. Vault is local/, never the repo root.",
   "status": "adopted",
-  "default_enabled": false,
+  "default_enabled": true,
   "context_cost": {
     "level": "low",
     "note": "An enabled extension adds one startup line; the Obsidian app itself costs 0 tokens."

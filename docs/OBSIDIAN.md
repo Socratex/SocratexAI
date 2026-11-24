@@ -1,11 +1,17 @@
 ---
 type: guide
 title: Obsidian (optional)
-description: How to open the SocratexAI notes in Obsidian as a viewer and graph; optional, off by default.
+description: How to open the SocratexAI notes in Obsidian as a viewer and graph; the extension is on by default per project, the app is optional.
 updated: 2026-11-24
 ---
 
 # Obsidian (optional)
+
+## Default and opt-out
+- The `obsidian` extension is on by default for every project. The Obsidian app itself stays optional.
+- In an enabled project, agents write notes with `[[note-name]]` links and never touch `.obsidian/`.
+- Opt out for one project: remove it in the project layer (`.socratex/config.json` shared, or `local/projects/<key>/config.json` private), or run `sox ext disable obsidian --project <repo>` (private layer).
+- Limit: the agent reads this switch and `sox config show` displays it; it does not switch any tool off by itself.
 
 ## What it is
 - Obsidian is a desktop app that opens a folder of Markdown files (a "vault") and shows them as notes with links and a graph view.
@@ -19,7 +25,7 @@ updated: 2026-11-24
 1. Install Obsidian from obsidian.md.
 2. Choose "Open folder as vault" and select `SocratexAI/local/`, not the repo root. `local/` is git-ignored, so the `.obsidian/` settings folder stays private and is never tracked.
 3. Turn on the Graph view (core plugin, in Settings -> Core plugins if it is off).
-4. Optional: `sox ext enable obsidian` (adds one startup line; the app itself costs 0 tokens).
+4. The extension is already on by default (it adds one startup line; the app itself costs 0 tokens).
 
 ## Link convention
 - Link notes with `[[note-name]]` wiki links.

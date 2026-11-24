@@ -90,7 +90,7 @@
     },
     {
       "path": "docs/OBSIDIAN.md",
-      "what": "How to open the SocratexAI notes in Obsidian as a viewer and graph; optional, off by default."
+      "what": "How to open the SocratexAI notes in Obsidian as a viewer and graph; the extension is on by default per project, the app is optional."
     },
     {
       "path": "docs/OVERRIDES.md",
