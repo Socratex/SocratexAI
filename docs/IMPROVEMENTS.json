@@ -2526,6 +2526,29 @@
         "data catalog",
         "metadata"
       ]
+    },
+    {
+      "id": 131,
+      "tag": "?",
+      "area": "Game publishing",
+      "title": "BLA (Blind LLM Agents)",
+      "status": "considering",
+      "decided": "owner",
+      "what": "Named by the owner; not researched. Possibly useful when the owner publishes a game.",
+      "why": "Owner asked to add it to the list only (2026-11-24). Clearly no use for SocratexAI itself.",
+      "date": "2026-11-24",
+      "source": "owner",
+      "expected_result": "",
+      "result": "Not evaluated. List entry only; look at it when a game release is planned.",
+      "result_evidence": "",
+      "keywords": [
+        "blind llm agents",
+        "bla",
+        "game release",
+        "publishing a game",
+        "wydawanie gry",
+        "wydanie gry"
+      ]
     }
   ]
 }
