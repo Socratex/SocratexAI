@@ -7,13 +7,13 @@
     "id": "obsidian",
     "version": "unknown"
   },
-  "when_to_use": "Obsidian as a viewer and graph for the Markdown notes.",
-  "status": "recommended",
+  "when_to_use": "Optional viewer and link graph over the Markdown notes in local/; open local/ as a vault, never the repo root.",
+  "status": "adopted",
   "default_enabled": false,
   "context_cost": {
-    "level": "unknown",
-    "note": "not measured"
+    "level": "low",
+    "note": "An enabled extension adds one startup line; the Obsidian app itself costs 0 tokens."
   },
-  "risks": "Not researched.",
+  "risks": "Closed-source freeware app. Vault must be local/, not the repo root, or .obsidian/ gets tracked. Graph is sparse until [[links]] are added.",
   "ledger": 117
 }

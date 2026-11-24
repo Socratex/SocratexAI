@@ -959,7 +959,7 @@
       "date": "2026-11-08",
       "source": "Wizualizacja grafu dla code review",
       "expected_result": "",
-      "result": "Needs [[links]] in the notes first.",
+      "result": "Needs [[links]] in the notes first. Viewer now available via Obsidian, links still missing.",
       "result_evidence": ""
     },
     {
@@ -1544,7 +1544,7 @@
       "date": "2026-11-16",
       "source": "Plugin review",
       "expected_result": "Skills for working with Obsidian vaults.",
-      "result": "Open together with Obsidian.",
+      "result": "Open together with Obsidian. Decide after the graph pilot.",
       "result_evidence": ""
     },
     {
@@ -1582,15 +1582,15 @@
       "tag": "?",
       "area": "Plugins, MCP, tools",
       "title": "Obsidian (notes vault)",
-      "status": "considering",
+      "status": "adopted",
       "decided": "owner",
       "what": "Obsidian as a viewer/graph for the MD notes; pairs with Obsidian skills and the notes graph item.",
       "why": "Owner wants it considered (2026-11-16). Notes currently have no [[links]]; not researched.",
       "date": "2026-11-16",
       "source": "Plugin review",
-      "expected_result": "Notes viewer and graph.",
-      "result": "Open; not researched.",
-      "result_evidence": ""
+      "expected_result": "keep",
+      "result": "Optional support shipped 2026-11-24, doc docs/OBSIDIAN.md.",
+      "result_evidence": "Shipped (doc and extension manifest); not yet used by the owner."
     },
     {
       "id": 118,

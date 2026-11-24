@@ -89,6 +89,10 @@
       "what": "Jedna strona o tym, co odpalać i kiedy - tabela głównego flow, kolejność warstw, komendy sox i mapa katalogów (generowana z danych)"
     },
     {
+      "path": "docs/OBSIDIAN.md",
+      "what": "How to open the SocratexAI notes in Obsidian as a viewer and graph; optional, off by default."
+    },
+    {
       "path": "docs/OVERRIDES.md",
       "what": "Standardowy format nadpisań SocratexAI per projekt - które pliki, jakie klucze, reguły scalania i przykłady"
     },
