@@ -12,6 +12,16 @@ Opened from `defaults/RULES.md` when you actually do the thing described. The te
 ## Named solutions ledger
 - Named solutions ledger: whenever the owner asks to use, try or evaluate an existing named solution (plugin, skill pack, methodology, tool, program, MCP server), record it in `$SOCRATEX_HOME/docs/IMPROVEMENTS.json` (status adopted / rejected / considering, `expected_result`, `result`, `result_evidence`) and commit it to SocratexAI. Read the ledger first, so nothing already rejected is proposed again. Plain "remember this rule" requests are not named solutions and do not go there.
 
+## Self-improvement loop
+- Trigger (DIRECTIVES row): you cannot do something, hit a limit, repeat a workaround, or the owner misses a capability. Run `sox ledger find "<2-5 words>" [--project <repo>]` (read-only, max 3 hits, exit 1 = no hits, exit 2 = query too short). `--all` also shows rejected items; use it only to check, never to suggest.
+- Suggest in one UCE line, for example: `💡 w tym projekcie może pomóc X (pozycja N, status)`. Status "adopted, on": remind how to use it; "adopted, off": propose that the owner enables it; "considering": give the result and the entry condition.
+- At most once per item per session, at most 3 hits, never rejected items. Never install, enable or run the suggested solution: the owner decides (`defaults/rules/SAFETY.md`).
+- Zero hits: ask the owner whether to search the web for a ready solution of any kind (tool, plugin, MCP, skill, framework, method, script). Search only after a yes. Record anything adopted or evaluated in the ledger (section Named solutions ledger).
+- Spec: `docs/specs/self-improvement-loop/SPEC.md`.
+
+## Reference packs
+- Packs are updated only on request: `modules/tools/scripts/update.py refs`; pins move only with `subrepos.py bump`.
+
 ## Doing the work (details)
 - Repeated mechanical fix (formatting, index drift, cache refresh): use or write a small owning script and wire it into the finalizer, so nobody has to remember the manual sequence. Third repetition of anything: propose script > skill > memory note.
 - Two scripts doing the same thing: extract a shared helper and parameterize it, do not keep a second copy.

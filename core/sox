@@ -343,6 +343,20 @@ def cmd_ext(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_ledger(args: argparse.Namespace) -> int:
+    """`sox ledger find`: up to --limit matching ledger items, one line each; exit 1 when nothing matches, 2 on a bad query."""
+    import ledger_find
+
+    try:
+        hits = ledger_find.find(args.query, args.root, args.project, args.all, args.limit)
+    except ledger_find.QueryError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    for hit in hits:
+        print(ledger_find.format_line(hit))
+    return 0 if hits else 1
+
+
 def _root(args: argparse.Namespace) -> Path | None:
     return Path(args.root) if getattr(args, "root", None) else None
 
@@ -533,6 +547,14 @@ def build_parser() -> argparse.ArgumentParser:
     ext_install = ext_sub.add_parser("install", help="kind install only: print the commands; with --yes back up the agent config, then run them")
     ext_install.add_argument("name")
     ext_install.add_argument("--yes", action="store_true", help="the owner's explicit yes: backup first, then run the commands")
+    ledger = top.add_parser("ledger", help="improvements ledger: find known solutions for a problem (read-only)")
+    ledger.add_argument("--root", help=argparse.SUPPRESS)
+    ledger_sub = ledger.add_subparsers(dest="action", required=True)
+    ledger_find_cmd = ledger_sub.add_parser("find", help="up to 3 ledger items or extensions matching the text; exit 1 when none")
+    ledger_find_cmd.add_argument("query", help="at least two words")
+    ledger_find_cmd.add_argument("--project", help="project root (adopted items are labelled on/off for it)")
+    ledger_find_cmd.add_argument("--all", action="store_true", help="include rejected items")
+    ledger_find_cmd.add_argument("--limit", type=int, default=3)
     context_cmd = top.add_parser("context", help="ordered list of files to read for a project, general to most important")
     context_cmd.add_argument("--project", help="project repo folder (or a project key); without it only the global layers are listed")
     context_cmd.add_argument("--json", action="store_true")
@@ -578,6 +600,7 @@ COMMANDS = {("config", "show"): cmd_config_show, ("config", "resolve"): cmd_conf
 for _action in ("check", "init", "list", "show", "adopt", "explain"):
     COMMANDS[("project", _action)] = cmd_project
 COMMANDS[("context", None)] = cmd_context
+COMMANDS[("ledger", "find")] = cmd_ledger
 for _action in ("rotate", "adopt-logs"):
     COMMANDS[("state", _action)] = cmd_state
 for _action in ("list", "show", "add", "enable", "disable", "remove", "install"):

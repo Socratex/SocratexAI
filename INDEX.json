@@ -365,6 +365,10 @@
       "what": "Read single fields from a big JSON file instead of dumping the whole file into the agent context."
     },
     {
+      "path": "modules/tools/scripts/ledger_find.py",
+      "what": "`sox ledger find`: deterministic text search of docs/IMPROVEMENTS.json and the extension manifests."
+    },
+    {
       "path": "modules/tools/scripts/risk_score.py",
       "what": "Score the risk of a change from its diff and pick a verification level."
     },
@@ -697,7 +701,8 @@
         "python modules/tools/scripts/build_index.py --check",
         "python modules/tools/scripts/json_read.py <file> [<path>]",
         "python modules/tools/scripts/subrepos.py list",
-        "python core/sox shims"
+        "python core/sox shims",
+        "python core/sox ledger find \"<problem in 2-5 words>\" [--project <repo>]"
       ],
       "paths": [
         "modules/tools/scripts/install.py",
@@ -709,6 +714,7 @@
         "modules/tools/scripts/json_read.py",
         "modules/tools/scripts/subrepos.py",
         "modules/tools/scripts/state.py",
+        "modules/tools/scripts/ledger_find.py",
         "core/shims.py",
         "tools"
       ]

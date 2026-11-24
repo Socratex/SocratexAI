@@ -76,6 +76,7 @@ Lista z pomocy parsera (`sox <komenda> --help` ma szczegóły).
 | `sox ext disable` | disable an extension in one config layer file |
 | `sox ext remove` | delete a local manifest and drop it from the owner's config layers |
 | `sox ext install` | kind install only: print the commands; with --yes back up the agent config, then run them |
+| `sox ledger find` | up to 3 ledger items or extensions matching the text; exit 1 when none |
 | `sox context` | ordered list of files to read for a project, general to most important |
 | `sox project check` | read-only audit: with a repo path the repo files plus its knowledge; without a path the whole hub; exit 1 on errors |
 | `sox project init` | create the missing project files from templates (repo files and the knowledge skeleton); dry run unless --write |

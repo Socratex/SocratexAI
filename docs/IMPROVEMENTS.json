@@ -1,7 +1,7 @@
 {
   "schema": "socratex-improvements/v1",
   "updated": "2026-11-18",
-  "usage": "Bare list of AI-workflow improvements for a receiving agent. Read all of it, do NOT apply in bulk. Ask the owner with one form which items fit (company policy, client NDA, repo, allowed hooks). Back up the configuration before any change (item 41). Do not copy secrets or private paths from this list. Details: AI-PRACTICES.md (findings log). Optional fields: scope (business or game; none = everywhere), verify (command that exits 0 when installed), install (how, needs consent). On a new computer run modules/tools/scripts/improvements_check.py after pull. Status field: adopted / rejected / considering (see status_legend). One file for every concept weighed, so check here before proposing a plugin or tool again.",
+  "usage": "Bare list of AI-workflow improvements for a receiving agent. Read all of it, do NOT apply in bulk. Ask the owner with one form which items fit (company policy, client NDA, repo, allowed hooks). Back up the configuration before any change (item 41). Do not copy secrets or private paths from this list. Details: AI-PRACTICES.md (findings log). Optional fields: keywords (lowercase strings; `sox ledger find` matches them first), scope (business or game; none = everywhere), verify (command that exits 0 when installed), install (how, needs consent). On a new computer run modules/tools/scripts/improvements_check.py after pull. Status field: adopted / rejected / considering (see status_legend). One file for every concept weighed, so check here before proposing a plugin or tool again.",
   "legend": {
     "P": "port as is",
     "A": "adapt to the repo or company",
