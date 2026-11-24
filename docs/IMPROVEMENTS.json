@@ -1756,6 +1756,21 @@
       "expected_result": "Long sessions without quality loss from auto-compaction.",
       "result": "Not installed. Claims (months-long sessions, 5x fewer tokens) come from the project's own paper and listings; no independent benchmark found. A proxy sees all traffic including auth. One write-up says the Claude Desktop Code tab bypasses the proxy, so it would not apply to this app. Park; evaluate together with 88 (measure start context) and 109.",
       "result_evidence": "Web search 2026-11-24: marketplace listing, HackerNoon hands-on, npm paper. Not verified in the repo or by a trial."
+    },
+    {
+      "id": 129,
+      "tag": "P",
+      "area": "Agent tooling",
+      "title": "agent-desktop (vercel-labs/agent-desktop)",
+      "status": "considering",
+      "decided": "claude",
+      "what": "Open-source (Apache-2.0) Rust CLI that lets an agent read and operate desktop apps through the OS accessibility tree with stable element refs instead of screenshots; macOS, Windows, Linux; installable as a skill.",
+      "why": "Owner asked if it is worth it (2026-11-24). Same niche as items 83 (Blender MCP) and 127 (CLI-Anything): agent driving desktop apps.",
+      "date": "2026-11-24",
+      "source": "owner question",
+      "expected_result": "Agent drives desktop apps (e.g. Blender, Unity editor) without screenshot guessing.",
+      "result": "Not installed. No concrete task needs it today. Gives an agent control of the whole desktop session, so it needs a clear scope and guard rules before any trial. Linux support is new (launch end of October 2026) and no verified gain over screenshot-based control was found. Park; revisit with 83 and 127 when a real desktop-app task appears.",
+      "result_evidence": "Web search 2026-11-24: secondary news and blog coverage (several look like AI-generated aggregators); repo itself not read; not tried."
     }
   ]
 }
