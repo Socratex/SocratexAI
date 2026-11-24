@@ -1771,6 +1771,18 @@
       "expected_result": "Agent drives desktop apps (e.g. Blender, Unity editor) without screenshot guessing.",
       "result": "Not installed. No concrete task needs it today. Gives an agent control of the whole desktop session, so it needs a clear scope and guard rules before any trial. Linux support is new (launch end of October 2026) and no verified gain over screenshot-based control was found. Park; revisit with 83 and 127 when a real desktop-app task appears.",
       "result_evidence": "Web search 2026-11-24: secondary news and blog coverage (several look like AI-generated aggregators); repo itself not read; not tried."
+    },
+    {
+      "id": 130,
+      "tag": "P",
+      "area": "Context and memory",
+      "title": "NVIDIA Auto Ontology (NVIDIA/auto-ontology)",
+      "status": "considering",
+      "decided": "claude",
+      "what": "Python framework run as a service next to databases: profiles schema and metadata, uses an LLM to map business entities to tables and columns, builds a graph (ontology) and serves it to agents over MCP, skills or REST for grounded SQL generation.",
+      "date": "2026-11-24",
+      "source": "owner question",
+      "result_evidence": "Web search 2026-11-24: GitHub repo listing and README summary, plus LinkedIn posts; code not read; not tried."
     }
   ]
 }
