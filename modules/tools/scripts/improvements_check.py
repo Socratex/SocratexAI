@@ -36,16 +36,34 @@ def missing(items: list[dict], scope: str | None) -> list[dict]:
     return [i for i in wanted if not passes(i["verify"])]
 
 
+def keyword_errors(items: list[dict]) -> list[str]:
+    """Error lines for items whose optional `keywords` is not a list of non-empty lowercase strings."""
+    errors = []
+    for item in items:
+        if "keywords" not in item:
+            continue
+        value = item["keywords"]
+        if not isinstance(value, list):
+            errors.append(f"ERROR {item.get('id')} keywords: must be a list of lowercase strings")
+            continue
+        errors += [f"ERROR {item.get('id')} keywords: {k!r} must be a non-empty lowercase string"
+                   for k in value if not isinstance(k, str) or not k.strip() or k != k.lower()]
+    return errors
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Report improvements missing on this computer.")
     parser.add_argument("--scope", choices=("business", "game"), help="Only items for this kind of project.")
     args = parser.parse_args(argv)
     items = json.loads(ITEMS.read_text(encoding="utf-8"))["items"]
+    problems = keyword_errors(items)
+    for line in problems:
+        print(line)
     absent = missing(items, args.scope)
     for item in absent:
         print(f"MISSING {item['id']} {item['title']}: {item.get('install', 'see docs/IMPROVEMENTS.json')}")
     print("all checked improvements present" if not absent else f"{len(absent)} missing")
-    return 1 if absent else 0
+    return 1 if absent or problems else 0
 
 
 if __name__ == "__main__":

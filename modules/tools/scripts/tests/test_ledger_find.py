@@ -105,7 +105,7 @@ def test_considering_has_plain_status(root):
 def test_items_without_keywords_match_by_title_what_area_and_fold_diacritics(root):
     assert ids(ledger_find.find("zarzadzanie pamiecia", root=root)) == [5]
     assert ids(ledger_find.find("słów kluczowych", root=root)) == [5]
-    assert ids(ledger_find.find("memory agent", root=root)) == [5]
+    assert ids(ledger_find.find("memory agenta", root=root)) == [5]
 
 
 def test_manifest_without_ledger_id_matches_by_name_and_when(root):
@@ -149,3 +149,27 @@ def test_find_never_writes(root):
     before = {p: p.read_bytes() for p in root.rglob("*") if p.is_file()}
     ledger_find.find("desktop control", root=root, include_rejected=True)
     assert before == {p: p.read_bytes() for p in root.rglob("*") if p.is_file()}
+
+
+def test_single_weak_word_in_multiword_keyword_is_not_a_hit(root, capsys):
+    write(root / "docs" / "IMPROVEMENTS.json", {"schema": "socratex-improvements/v1", "updated": "2026-01-01",
+          "items": [item(1, "Output tool", keywords=["hard to read output"])]})
+    code = sox.main(["ledger", "--root", str(root), "find", "cannot read pdf"])
+    out = capsys.readouterr()
+    assert code == 1 and out.out == ""
+
+
+def test_query_of_only_filler_words_is_a_query_error(root):
+    try:
+        result = ledger_find.find("x y", root=root)
+    except ledger_find.QueryError:
+        return
+    assert result == []
+
+
+def test_multiword_query_needs_two_distinct_matching_words(root):
+    write(root / "docs" / "IMPROVEMENTS.json", {"schema": "socratex-improvements/v1", "updated": "2026-01-01",
+          "items": [item(1, "Desk", keywords=["control desktop app"])]})
+    assert ids(ledger_find.find("control desktop app", root=root)) == [1]
+    assert ids(ledger_find.find("desktop gui", root=root)) == []
+    assert ids(ledger_find.find("slow tests", root=root)) == []

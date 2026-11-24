@@ -34,6 +34,11 @@ class ImprovementsCheckTest(unittest.TestCase):
         self.assertEqual([i["id"] for i in tool.missing(items, "business")], [1])
         self.assertEqual([i["id"] for i in tool.missing(items, None)], [1, 2])
 
+    def test_keywords_must_be_a_list_of_lowercase_strings(self) -> None:
+        self.assertEqual(tool.keyword_errors([{"id": 1, "keywords": ["desktop", "gui app"]}, {"id": 2}]), [])
+        self.assertEqual(len(tool.keyword_errors([{"id": 1, "keywords": "desktop"}])), 1)
+        self.assertEqual(len(tool.keyword_errors([{"id": 1, "keywords": ["Desktop", "", 3]}])), 3)
+
 
 if __name__ == "__main__":
     unittest.main()

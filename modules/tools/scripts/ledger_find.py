@@ -20,12 +20,14 @@ import extensions  # noqa: E402
 KEYWORD_WEIGHT = 10
 TITLE_WEIGHT = 4
 TEXT_WEIGHT = 1
+MIN_WORD_LEN = 3
+STOPWORDS = frozenset({"to", "too", "the", "and", "for", "not", "cannot", "can", "how", "nie", "jak", "na", "do"})
 DEFAULT_LIMIT = 3
 RESULT_MAX = 100
 
 
 class QueryError(ValueError):
-    """The query is empty or has fewer than two words."""
+    """The query is empty, has fewer than two words or only filler words."""
 
 
 def fold(text: str) -> str:
@@ -39,17 +41,21 @@ def words(text: str) -> list[str]:
 
 
 def _score(query: list[str], keywords: list[str], title: str, text: str) -> int:
+    """Sum of word weights; 0 unless at least min(2, len(query)) distinct query words match."""
     kw = [fold(k) for k in keywords]
     title_words, text_words = set(words(title)), set(words(text))
     total = 0
+    matched = 0
     for word in dict.fromkeys(query):
+        before = total
         if any(word == k or word in words(k) or (len(word) >= 4 and word in k) for k in kw):
             total += KEYWORD_WEIGHT
         elif word in title_words:
             total += TITLE_WEIGHT
         elif word in text_words:
             total += TEXT_WEIGHT
-    return total
+        matched += total > before
+    return total if matched >= min(2, len(set(query))) else 0
 
 
 def _one_line(text: str) -> str:
@@ -88,8 +94,8 @@ def _candidates(root: Path | str | None, project: Path | str | None) -> list[dic
 def find(query: str, root: Path | str | None = None, project: Path | str | None = None,
          include_rejected: bool = False, limit: int = DEFAULT_LIMIT) -> list[dict]:
     """Best matches, highest score first (ties: ledger ids before extension names, then id). Raises QueryError."""
-    q = words(query)
-    if len(q) < 2:
+    q = [w for w in words(query) if len(w) >= MIN_WORD_LEN and w not in STOPWORDS]
+    if len(q) < 1 or len(words(query)) < 2:
         raise QueryError("query needs at least two words, for example: sox ledger find \"control desktop app\"")
     hits = []
     for row in _candidates(root, project):
