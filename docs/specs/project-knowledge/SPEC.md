@@ -19,9 +19,11 @@ Agent zawsze dostaje tę samą, uporządkowaną listę plików do przeczytania i
 1. **Zakres**: wiedza i tickety przenoszone, dane generowane zostają (faza 3: `local/cache/`). Powód: nie mieszać wiedzy z 5 GB cache.
 2. **Układ `local/`** (cały poza gitem SocratexAI):
    - `local/projects/<folder repo>/`: `project.json`, `PROJECT.md`, `DOMAIN.md`, `DEVIATIONS.md`, `rules/`, `config.json`
+   - `local/groups/<grupa>/`: `group.json`, `GROUP.md`, `rules/`, `config.json`
    - `local/tickets/<PREFIX>/<TICKET>/`: STATE, PLAN, `repos.md`, `sql/` (jak dziś w `WORK/<PREFIX>/<TICKET>/`; `_slugs`, `_branches` obok)
    - `local/handovers/`, `local/notes/`, `local/archive/` (stare `legacy/`)
    Powód: jedno miejsce, jedna nazwa, ticket przecina kilka repo więc nie siedzi w projekcie.
+3. **Klucz projektu** to nazwa folderu repo (jak dziś w resolverze). Powód: jeden klucz bez tłumaczenia.
 4. **Grupa** to nowa warstwa configu i wiedzy. Kolejność od najsłabszej: SocratexAI (`defaults/`, adapter) -> `local/overrides` -> grupa -> projekt w repo (`.socratex`) -> projekt prywatny (`local/projects`). Ostatnia wygrywa: "takie zasady, bo SocratexAI; to ważniejsze, nadpisane; a to per projekt, najważniejsze".
 5. **`project.json`** (schema_version 1): `name`, `summary` (jedno zdanie), `group`, `ticket_prefixes`, `knowledge`: `{"mode": "local" | "repo" | "external", "path": "..."}`. Domyślnie `mode: local`. Przy `repo` lub `external` lokalnie leży tylko referencja projekt -> miejsce, a `sox context` czyta ze wskazanej ścieżki. Hybrydowo per projekt.
 6. **`sox context --project P [--json]`** drukuje uporządkowaną listę: warstwa, plik, po co, czy istnieje, od najogólniejszego do najważniejszego. Hook startu sesji i `core/INIT.md` wołają tę komendę, więc lista jest zawsze ta sama. Zasada "czytaj w tej kolejności, późniejsze wygrywa przy konflikcie" jest w `INIT.md`, nie w głowie agenta.
@@ -35,20 +37,24 @@ Agent zawsze dostaje tę samą, uporządkowaną listę plików do przeczytania i
 
 ## Fazy
 1. Układ, resolver (warstwa grupy), `project.json`, `sox context`, `sox project init|list|show|check`, zawężenie guarda, szablony, testy.
+2. Migracja treści z `WORK/` (kopia, mapowanie nazw), `DEVIATIONS.md` dla projektów (strefy `application`/`app`, commit bez pusha).
 3. Zmiana hooka startu sesji, wskaźnika w workspace `CLAUDE.md`, skryptów z odwołaniami do `WORK/`, przeniesienie danych generowanych do `local/cache/` z poprawą ścieżek narzędzi (graphify, superplan-index).
 4. README, `docs/OVERRIDES.md`, INDEX, tryb domyślny dla świeżej instalacji.
 
 ## Kryteria akceptacji
+1. `sox context --project <ścieżka>` dla kilku różnych projektów daje tę samą kolejność warstw: SocratexAI, globalne, grupa, projekt; każdy wiersz ma plik, powód i źródło.
 2. Projekt z `knowledge.mode: repo` lub `external` jest czytany z podanej ścieżki, a `sox context` pokazuje referencję (projekt -> miejsce).
 3. Resolver scala warstwę grupy według tej samej reguły co reszta; `sox config show` pokazuje źródło `group`. Nieznany klucz w `group.json` lub `project.json` to błąd z nazwą pliku i klucza.
 4. `sox project list` pokazuje wszystkie projekty z kolumnami: grupa, tryb, nadpisane klucze, podsumowanie. `sox project show <p>` pokazuje odstępstwa z powodami.
 5. `sox project init <folder>` tworzy kompletny szkielet, a `sox project check` na nim przechodzi. `sox project adopt` pokazuje plan kopiowania, bez `--yes` niczego nie zapisuje i niczego nie usuwa. Na czystym klonie SocratexAI (bez `local/`) cały przepływ init -> context -> check działa bez żadnych danych z tego komputera.
 6. Po migracji każdy plik z `WORK/<P>/` (poza danymi generowanymi i `legacy/`) istnieje pod mapowaną nazwą w `local/`, a sumy kontrolne zgadzają się. Lista niezmapowanych plików jest pusta.
 7. Agent (przy `sox install` zastosowanym) zapisuje `local/projects/<p>/PROJECT.md`, ale zapis do `config.json` blokuje guard.
+8. Hook startu sesji wypisuje wynik `sox context`; w nowej sesji w repo projektu agent wskazuje, które pliki dostał i w jakiej kolejności, bez zgadywania.
 9. `sox backup` kopiuje `local/projects`, `groups`, `tickets`, `handovers`, `notes`.
 10. Testy (`sox test`), `sox index --check`, `sox flow check` przechodzą, README opisuje układ `local/` i komendy.
 
 ## Przypadki brzegowe
+- Dwa repo o tej samej nazwie folderu: `sox project check` zgłasza kolizję; rozwiązanie przez pole `name` w `project.json` i wskazanie ścieżki. Oczekiwany wynik: błąd z obiema ścieżkami, bez po cichu wybranej.
 - Projekt bez `project.json`: `sox context` używa tylko warstw globalnych i pisze wprost "brak wiedzy projektu", a nie zgaduje.
 - `knowledge.path` wskazuje na nieistniejące miejsce: błąd z nazwą projektu i ścieżką, lista dalej się drukuje z oznaczeniem "brak".
 - Ticket z prefiksem bez projektu: `sox project check` ostrzega o osieroconym prefiksie.
@@ -57,7 +63,9 @@ Agent zawsze dostaje tę samą, uporządkowaną listę plików do przeczytania i
 
 ## Weryfikacja
 - `python3 core/sox test`, `python3 core/sox index --check`, `python3 core/sox flow check`.
+- `python3 core/sox context --project <ścieżka>` dla kilku różnych projektów, porównanie z oczekiwaną kolejnością.
 - Skrypt migracji drukuje raport: plik źródłowy, cel, suma kontrolna, brakujące. Wynik 0 niezmapowanych.
+- Test ręczny: nowa sesja w repo projektu, pytanie "jakie pliki dostałeś na starcie i dlaczego w tej kolejności".
 
 ## Ryzyka i założenia
 - **ASSUMED**: Claude Code nadal ładuje `CLAUDE.md` z drzewa katalogów, więc wskaźnik w workspace wystarczy. Do potwierdzenia w fazie 3.

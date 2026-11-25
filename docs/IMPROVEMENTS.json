@@ -2515,8 +2515,11 @@
       "status": "considering",
       "decided": "claude",
       "what": "Python framework run as a service next to databases: profiles schema and metadata, uses an LLM to map business entities to tables and columns, builds a graph (ontology) and serves it to agents over MCP, skills or REST for grounded SQL generation.",
+      "why": "Owner asked if it is worth it (2026-11-24). Possible fit for database work (weak business-domain knowledge, SQL in tickets); no fit for SocratexAI notes or code.",
       "date": "2026-11-24",
       "source": "owner question",
+      "expected_result": "Agent writes correct SQL and understands database tables without guessing joins.",
+      "result": "Not installed. Official repo exists. Defaults to NVIDIA NIM endpoints, so schema metadata would leave the machine: needs the company's OK before any trial on company data. Needs a running service and a database connector; heavy for an occasional SQL task. Park; trial only on a non-production schema when a concrete SQL-heavy ticket appears.",
       "result_evidence": "Web search 2026-11-24: GitHub repo listing and README summary, plus LinkedIn posts; code not read; not tried.",
       "keywords": [
         "database schema understanding",

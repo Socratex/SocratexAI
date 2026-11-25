@@ -99,6 +99,9 @@ def test_bad_knowledge_mode_is_an_error(root, tmp_path):
 
 
 def test_project_private_layer_follows_the_bound_key(root, tmp_path):
+    project = repo(tmp_path, "superplan", "proj-a")
+    pj(root, "proj-b-superplan", path=str(project))
+    write(root / "local" / "projects" / "proj-b-superplan" / "config.json", {"schema_version": 1, "codex": {"delegate": True}})
     assert core.resolve(project, root)["provenance"]["codex.delegate"]["layer"] == "project-private"
 
 
