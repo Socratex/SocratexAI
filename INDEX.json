@@ -223,20 +223,8 @@
       "what": "Registry of planning micro-checkers. Stage 1 (questions) is the normal AskUserQuestion form led by the main session and has no entry here. A project may add, disable or retier entries in .ai/planning.json. Spec: docs/specs/planning-pipeline/SPEC.md"
     },
     {
-      "path": "defaults/config.json",
-      "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"
-    },
-    {
       "path": "defaults/DIRECTIVES.json",
       "what": "socratex-directives/v1"
-    },
-    {
-      "path": "defaults/flow.json",
-      "what": "The only place with the order of work steps: if (facts) then (stage, role, rule, gate, tool, ask). Facts and grammar: core/flow.schema.json"
-    },
-    {
-      "path": "defaults/project-check.json",
-      "what": "socratex-project-check/v1"
     },
     {
       "path": "defaults/RISK-RULES.json",
@@ -245,6 +233,18 @@
     {
       "path": "defaults/ROUTING.json",
       "what": "socratex-model-routing/v1"
+    },
+    {
+      "path": "defaults/config.json",
+      "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"
+    },
+    {
+      "path": "defaults/flow.json",
+      "what": "The only place with the order of work steps: if (facts) then (stage, role, rule, gate, tool, ask). Facts and grammar: core/flow.schema.json"
+    },
+    {
+      "path": "defaults/project-check.json",
+      "what": "socratex-project-check/v1"
     },
     {
       "path": "defaults/adapters/duo.json",
@@ -347,6 +347,10 @@
     {
       "path": "modules/tools/scripts/check_leaks.py",
       "what": "Fail when tracked files contain private references: user paths or patterns from local/sensitive-patterns.txt."
+    },
+    {
+      "path": "modules/tools/scripts/env_safe.py",
+      "what": "Read env files safely for AI agents: show keys and provably non-secret values, mask everything else."
     },
     {
       "path": "modules/tools/scripts/generated.py",
@@ -491,6 +495,10 @@
     {
       "path": "tests/test_core.py",
       "what": "Tests for core/core.py (config resolver) and core/sox (CLI)."
+    },
+    {
+      "path": "tests/test_env_safe.py",
+      "what": "env_safe.py shows only provably non-secret env values and masks the rest."
     },
     {
       "path": "tests/test_extensions.py",
@@ -700,6 +708,7 @@
         "python modules/tools/scripts/check_leaks.py",
         "python modules/tools/scripts/build_index.py --check",
         "python modules/tools/scripts/json_read.py <file> [<path>]",
+        "python modules/tools/scripts/env_safe.py <env file> [--keys-only | --compare <other>]",
         "python modules/tools/scripts/subrepos.py list",
         "python core/sox shims",
         "python core/sox ledger find \"<problem in 2-5 words>\" [--project <repo>]"
@@ -712,6 +721,7 @@
         "modules/tools/scripts/check_leaks.py",
         "modules/tools/scripts/build_index.py",
         "modules/tools/scripts/json_read.py",
+        "modules/tools/scripts/env_safe.py",
         "modules/tools/scripts/subrepos.py",
         "modules/tools/scripts/state.py",
         "modules/tools/scripts/ledger_find.py",
