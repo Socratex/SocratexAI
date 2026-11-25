@@ -416,7 +416,7 @@ def test_group_extends_cycle_and_unknown_are_errors_naming_file_and_key(root):
     with pytest.raises(core.ConfigError, match=r"group\.json.*'extends'.*cycle"):
         knowledge.group_chain("x", root)
     gj(root, "z", extends=["nope"])
-    with pytest.raises(core.ConfigError, match=r"z/group\.json.*'extends'.*unknown group 'nope'"):
+    with pytest.raises(core.ConfigError, match=r"z[/\\]group\.json.*'extends'.*unknown group 'nope'"):
         knowledge.group_chain("z", root)
 
 

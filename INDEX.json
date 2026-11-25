@@ -223,20 +223,12 @@
       "what": "Registry of planning micro-checkers. Stage 1 (questions) is the normal AskUserQuestion form led by the main session and has no entry here. A project may add, disable or retier entries in .ai/planning.json. Spec: docs/specs/planning-pipeline/SPEC.md"
     },
     {
-      "path": "defaults/DIRECTIVES.json",
-      "what": "socratex-directives/v1"
-    },
-    {
-      "path": "defaults/RISK-RULES.json",
-      "what": "socratex-risk-rules/v1"
-    },
-    {
-      "path": "defaults/ROUTING.json",
-      "what": "socratex-model-routing/v1"
-    },
-    {
       "path": "defaults/config.json",
       "what": "Shipped default values of the layered config (lowest layer, read by core/core.py)"
+    },
+    {
+      "path": "defaults/DIRECTIVES.json",
+      "what": "socratex-directives/v1"
     },
     {
       "path": "defaults/flow.json",
@@ -245,6 +237,14 @@
     {
       "path": "defaults/project-check.json",
       "what": "socratex-project-check/v1"
+    },
+    {
+      "path": "defaults/RISK-RULES.json",
+      "what": "socratex-risk-rules/v1"
+    },
+    {
+      "path": "defaults/ROUTING.json",
+      "what": "socratex-model-routing/v1"
     },
     {
       "path": "defaults/adapters/duo.json",
