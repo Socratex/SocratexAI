@@ -373,6 +373,10 @@
       "what": "`sox ledger find`: deterministic text search of docs/IMPROVEMENTS.json and the extension manifests."
     },
     {
+      "path": "modules/tools/scripts/panel_stack.py",
+      "what": "Optional desktop side panel: Work map (lot-map) and Flow (flow-panel) stacked in one pane (side-stack)."
+    },
+    {
       "path": "modules/tools/scripts/risk_score.py",
       "what": "Score the risk of a change from its diff and pick a verification level."
     },
