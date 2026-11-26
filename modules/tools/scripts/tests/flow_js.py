@@ -1,4 +1,4 @@
-"""Shared helper of the flow-panel tests: runs parts of the real register.tsx with Node 22+."""
+"""Shared helper of the flow-panel tests: runs the real pure modules of the mod (model, rules, format, palette, draw) with Node 22+."""
 
 from __future__ import annotations
 
@@ -11,7 +11,8 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).parents[4]
-SOURCE = ROOT / "claude/mods/flow-panel/hooks/register.tsx"
+HOOKS = ROOT / "claude/mods/flow-panel/hooks"
+PURE = ["model", "rules", "format", "palette", "draw"]  # no engine imports: Node can load them as they are
 NODES = [str(Path.home() / ".local/opt/node22/bin/node"), "node"]
 
 
@@ -27,13 +28,24 @@ def node_path() -> str | None:
     return None
 
 
+def _stage(tmp: Path) -> None:
+    """Copy the pure modules next to the test script. The mod imports siblings without an extension (what the engine
+    resolves); Node needs the extension, so it is added in the copy only."""
+    for name in PURE:
+        text = (HOOKS / f"{name}.ts").read_text(encoding="utf-8")
+        (tmp / f"{name}.ts").write_text(re.sub(r"from '(\./[a-z]+)'", r"from '\1.ts'", text), encoding="utf-8")
+
+
 def _execute(code: str) -> object:
     node = node_path()
     if node is None:
         raise unittest.SkipTest("Node 22+ not available")
     with tempfile.TemporaryDirectory() as tmp:
-        script = Path(tmp) / "t.ts"
-        script.write_text(code, encoding="utf-8")
+        _stage(Path(tmp))
+        script = Path(tmp) / "t.mts"
+        imports = "\n".join(f"import * as m{i} from './{name}.ts'" for i, name in enumerate(PURE))
+        scope = "Object.assign(globalThis, " + ", ".join(f"m{i}" for i in range(len(PURE))) + ")"
+        script.write_text(f"{imports}\n{scope}\n{code}\n", encoding="utf-8")
         res = subprocess.run(
             [node, "--experimental-strip-types", "--no-warnings", str(script)], capture_output=True, text=True, encoding="utf-8"
         )
@@ -41,24 +53,11 @@ def _execute(code: str) -> object:
     return json.loads(res.stdout)
 
 
-def block(name: str) -> str:
-    found = re.search(rf"// <{name}>\n(.*?)// </{name}>", SOURCE.read_text(encoding="utf-8"), re.S)
-    assert found, f"{name} block markers missing in register.tsx"
-    return found.group(1)
-
-
-def run_blocks(expr: str, *names: str) -> object:
-    """Evaluate a JS expression with the named marked blocks of register.tsx in scope."""
-    code = "\n".join(block(n) for n in names) + f"\nconsole.log(JSON.stringify(({expr}) ?? null))\n"
-    return _execute(code)
+def run_blocks(expr: str, *_names: str) -> object:
+    """Evaluate a JS expression with every exported name of the pure modules in scope (the names are kept for old callers)."""
+    return _execute(f"console.log(JSON.stringify(({expr}) ?? null))")
 
 
 def run_module(tail: str) -> object:
-    """Evaluate JS after everything in register.tsx before `export const register` (the pure part, drawing included).
-
-    The one value import from the engine is replaced by a stub; the rest is type-only.
-    """
-    text = SOURCE.read_text(encoding="utf-8")
-    head = text[: text.index("export const register")]
-    head = re.sub(r"^import \{[^}]*\} from 'claude-code'\n", "const atom = (..._a: unknown[]): unknown => ({})\nconst read = 0\nconst update = 0\n", head, count=1, flags=re.M)
-    return _execute(head + "\n" + tail + "\n")
+    """Evaluate JS statements with every exported name of the pure modules in scope (the drawing included)."""
+    return _execute(tail)
