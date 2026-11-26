@@ -13,8 +13,9 @@
     "level": "none",
     "note": "costs no model tokens: it only listens to engine events and draws SVG"
   },
-  "risks": "Sets CLAUDE_CODE_PLUGIN_DIRS in settings.json (agent config); switch off with FLOW_PANEL=0.",
+  "risks": "Sets CLAUDE_CODE_PLUGIN_DIRS in settings.json (agent config); switch off with FLOW_PANEL=0. The optional panel stack installs third-party plugins (side-stack, patched lot-map) from pinned upstream commits; install.py asks first.",
   "install": [
-    "python modules/tools/scripts/install.py --reconfigure"
+    "python modules/tools/scripts/install.py --reconfigure",
+    "python modules/tools/scripts/panel_stack.py   # optional: stack Work map (lot-map) above Flow in one pane via side-stack; --check / --remove"
   ]
 }

@@ -10,8 +10,11 @@ import { paneTree } from './pane'
 import { endedTaskOfRow, isFollowedAgent, monitorDeadlineMs, parseTaskEnd, spawnKind, squash, stoppedTaskOf, taskIdOf, tokensOf } from './rules'
 import { armLiveRefresh, armReconcile, requestReconcile } from './schedule'
 import { bindPicture, dispatch, getState, markEnded, paneView, pickedFigure, pickFigure } from './state'
+import { hasSection, HOST_CHECKS_MS, hostPresent, placeSection } from './stack-guest'
+import type { StackHook } from './stack-guest'
 
 const PANE = 'flow-panel'
+const PLUGIN = 'flow-panel' // the name in .claude-plugin/plugin.json: also our section name in the side-stack pane
 
 // The store compares pictures (to skip a redraw that would look the same) with the same drawing.
 bindPicture((v, now, selfId) => draw(v, now, 'cost', selfId))
@@ -28,7 +31,7 @@ export const register: Register = on => {
     // ~/.claude/settings.json for everywhere, a project's .claude/settings.json
     // (or settings.local.json) for one project; the project value wins.
     if ((await $.env.get('FLOW_PANEL')) !== '0') {
-      void $.ui.open({ id: PANE, title: 'Flow' })
+      void openOwnPane($)
     }
     const { rateLimits } = await $.session.usage()
     await dispatch($, { type: 'limit', win: rateLimits.find(r => r.kind === 'five_hour') })
@@ -50,7 +53,7 @@ export const register: Register = on => {
     // Open only when it is not up: a repeated open re-seats the pane.
     if ((await $.env.get('FLOW_PANEL')) !== '0') {
       const isUp = (await $.ui.panes()).some(pane => pane.id === PANE)
-      if (!isUp) void $.ui.open({ id: PANE, title: 'Flow' })
+      if (!isUp) void openOwnPane($)
     }
     await dispatch($, { type: 'prompt', usd: (await $.session.usage()).cost?.usd ?? 0 })
 
@@ -184,19 +187,51 @@ export const register: Register = on => {
     return next(e)
   })
 
-  on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
-    const elements = $.ui.resolve(e)
-    const { view, selfId } = await paneView($)
-    armReconcile($) // the pane loaded: reconcile now, then on the cadence
-    const now = await $.clock.now()
-    const figure = await pickedFigure($)
-    const source = fitted(view, now, figure, selfId)
-    await noteRender($, source)
+  on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => drawFlow($, e))
 
-    return paneTree(elements, source, figure, f => {
-      void pickFigure($, f)
-    })
+  // side-stack (optional host, https://github.com/lucas-saldanha-werneck/side-stack): draw our section in its Stack pane.
+  // Without side-stack installed nothing here does anything. Claude Code 2.1.327+ hears only a plugin's own drawings
+  // unless the matcher names `plugin`; older builds run the second registration. hasSection keeps it to one drawing.
+  on('ui.render', { component: 'Pane', requestId: 'side-stack', plugin: '*' }, drawInStack)
+  on('ui.render', { component: 'Pane', requestId: 'side-stack' }, drawInStack)
+}
+
+// Our section of the Stack pane: the same drawing as our own pane.
+const drawInStack: StackHook = async ($, e, next) => {
+  const below = await next(e)
+  if (hasSection(below, PLUGIN)) return below
+
+  return placeSection($, e, below, PLUGIN, await drawFlow($, e).catch(() => null))
+}
+
+type Resolvable = Parameters<EngineInterface['ui']['resolve']>[0]
+
+// The drawing of the pane, shared by our own pane and our section of the Stack pane.
+const drawFlow = async ($: EngineInterface, e: Resolvable) => {
+  const elements = $.ui.resolve(e)
+  const { view, selfId } = await paneView($)
+  armReconcile($) // the pane loaded: reconcile now, then on the cadence
+  const now = await $.clock.now()
+  const figure = await pickedFigure($)
+  const source = fitted(view, now, figure, selfId)
+  await noteRender($, source)
+
+  return paneTree(elements, source, figure, f => {
+    void pickFigure($, f)
   })
+}
+
+// Opens our own pane unless side-stack is there to show the flow in its Stack pane. Plugin load order is not
+// known, so the host is looked for again later: where it turns up after our pane opened, the pane is closed.
+async function openOwnPane($: EngineInterface): Promise<void> {
+  if (await hostPresent($)) return
+  await $.ui.open({ id: PANE, title: 'Flow' })
+  for (const ms of HOST_CHECKS_MS) $.clock.after(ms, () => void closeWhenStacked($))
+}
+
+async function closeWhenStacked($: EngineInterface): Promise<void> {
+  if (!(await hostPresent($))) return
+  if ((await $.ui.panes()).some(pane => pane.id === PANE)) await $.ui.close({ id: PANE })
 }
 
 // The engine's message that a background task ended arrives as a prompt flagged as a task
