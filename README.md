@@ -84,6 +84,8 @@ Nothing happens before you answer. The installer asks, shows the reason for each
 
 Also recommended, outside the installer: the third-party mod [CC-Usage-Band](https://github.com/JetsonChan/CC-Usage-Band) (MIT). It puts one line above the prompt with the 5-hour and 7-day limits, context window and cache hit rate, and draws it as SVG in the desktop Code tab. Install it yourself: `claude plugin marketplace add JetsonChan/CC-Usage-Band`, then `claude plugin install usage-band@cc-usage-band`. We read its code before installing (no network, no process execution, no file writes), but only for the version we tried (1.0.6); read it again before you install. It overlaps with the flow panel only a little: the band shows limits, the panel shows where tokens go.
 
+Also recommended: the third-party mod [lot-map](https://github.com/alexeyw/lot-map) (MIT). It draws a live map of tool calls, agents, skills and hooks in a pane beside the chat, with a context ring; it makes no model calls and no network requests (per its privacy page and our grep of its hooks, version 0.14.1). Install it yourself: `claude plugin marketplace add alexeyw/lot-map`, then `claude plugin install lot-map@lot-map`, then `/lot-map` in a session. It follows its main branch, so read the diff before updating. In the desktop app it shares one plugin pane with the flow panel as a second tab.
+
 ```bash
 python modules/tools/scripts/install.py --yes           # no questions, recommended answers (for scripts)
 python modules/tools/scripts/install.py --reconfigure   # ask again

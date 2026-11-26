@@ -2678,6 +2678,71 @@
       "decided": "owner",
       "date": "2026-11-26",
       "source": "owner question"
+    },
+    {
+      "id": 137,
+      "tag": "N",
+      "area": "UI mods",
+      "title": "hivemap (andreas131989)",
+      "status": "rejected",
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "lot-map comparison session (livemap request)",
+      "what": "Live graph of Claude Code sessions, subagents, tool calls and files. Web page plus terminal view; stdlib Python, no hooks, no model calls. MIT. Plugin hivemap@hivemap.",
+      "why": "Linux and macOS only (bash launcher, tmux, ps), a separate browser window instead of a pane in the desktop app. Costs no tokens except about one short model turn per /hivemap:map. Never installed here; the clone was deleted.",
+      "expected_result": "Compare live-map plugins by token cost and fit.",
+      "result": "Code read 2026-11-26 (static): no network beyond 127.0.0.1, no hooks, no API calls. Rejected for platform fit.",
+      "result_evidence": "own: code read, not run",
+      "keywords": [
+        "live map claude sessions",
+        "agent graph browser",
+        "tmux",
+        "session visualizer"
+      ]
+    },
+    {
+      "id": 138,
+      "tag": "?",
+      "area": "UI mods",
+      "title": "claude-agent-graph (gobi12b)",
+      "status": "considering",
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "lot-map comparison session (livemap request)",
+      "what": "Rust app: live graph of sessions and subagents from ~/.claude transcripts, plus a workflow builder with an AI judge that runs claude -p, gemini, gpt or ollama. Windows, macOS, Linux. Installer downloads a prebuilt binary from GitHub Releases.",
+      "why": "The map part costs no tokens (reads transcripts every 0.5 s). The workflow runner and judge spend tokens when a workflow runs (their demo: 0.12 USD). Parked: separate browser window, unverified binary, and a permissions editor that writes ~/.claude/settings.json. Revisit only if workflows are wanted.",
+      "expected_result": "Windows-capable live map and workflow runner.",
+      "result": "Code skimmed 2026-11-26 (static). Not installed.",
+      "result_evidence": "own: grep of src/*.rs and install scripts, not run",
+      "keywords": [
+        "live map",
+        "workflow builder",
+        "ai judge",
+        "claude -p",
+        "windows"
+      ]
+    },
+    {
+      "id": 139,
+      "tag": "P",
+      "area": "UI mods",
+      "title": "lot-map mod (alexeyw)",
+      "status": "adopted",
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "lot-map comparison session (livemap request)",
+      "what": "Mod: a live work map in a pane beside the chat (stations for memory, files, shell, web, agents, skills, hooks; context ring; optional per-call context cost). MIT. Install: plugin lot-map@lot-map, then /lot-map.",
+      "why": "Same mechanism as our flow-panel (a desktop-app mod); no network, no processes, no model calls per its PRIVACY.md and our grep of hooks/*.ts. Windows works. Follows the main branch, so read the diff before updating.",
+      "expected_result": "A second pane (tab) next to Flow in the desktop Code tab at zero token cost.",
+      "result": "Installed (user scope) and opened with /lot-map 2026-11-26. Opens as a tab in the same plugin pane as Flow; tabs of one pane cannot be split up and down in this desktop version. Token cost not yet measured.",
+      "result_evidence": "own: owner screenshot 2026-11-26 shows Flow and Work map tabs; code read static",
+      "keywords": [
+        "live map",
+        "work map",
+        "desktop app side pane",
+        "tool call graph",
+        "context ring"
+      ]
     }
   ]
 }

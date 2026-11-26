@@ -1,0 +1,26 @@
+{
+  "schema": "socratex-extension/v1",
+  "name": "lot-map",
+  "kind": "install",
+  "category": "statusline",
+  "source": {
+    "url": "https://github.com/alexeyw/lot-map",
+    "id": "lot-map@lot-map",
+    "version": "0.14.1"
+  },
+  "when_to_use": "A pane beside the chat should draw a live map of what Claude is doing: tool calls, agents, skills, hooks, memory and the context ring.",
+  "status": "adopted",
+  "default_enabled": false,
+  "context_cost": {
+    "level": "none",
+    "note": "no model calls, no network, adds nothing to the conversation (PRIVACY.md and grep of hooks for version 0.14.1; not yet measured)"
+  },
+  "risks": "Third-party plugin that follows its main branch; it is handed the full input of every tool call (commands, paths, prompts) and keeps only short names. Read the diff before updating past 0.14.1. Shares one plugin pane with flow-panel as a tab.",
+  "install": [
+    "python modules/tools/scripts/backup.py",
+    "claude plugin marketplace add alexeyw/lot-map",
+    "claude plugin install lot-map@lot-map",
+    "then type /lot-map in a session"
+  ],
+  "ledger": 139
+}
