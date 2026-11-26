@@ -14,3 +14,7 @@ Build a local copy (do not edit the installed plugin: updates would overwrite it
 
 After a lot-map update, re-check that the patch still applies. The earlier pane-grid patch was dropped: pane-grid draws a text-only
 grid in the desktop app (ledger item 140).
+
+## Where it runs (2026-11-26)
+Local marketplace `sox-local` in `~/claude-mods/sox-local` (outside git): `side-stack` (upstream 0.5.2) and `lot-map` (patched copy).
+Installed as `side-stack@sox-local` and `lot-map@sox-local`; the upstream `lot-map@lot-map` is uninstalled.
