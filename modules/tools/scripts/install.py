@@ -555,7 +555,26 @@ def run(mode: str, auto: bool = False, reconfigure: bool = False) -> int:
         print("SocratexAI installed:" if report else "SocratexAI: nothing to change.")
         for line in report:
             print("  " + line)
+    if mode == "full":
+        print_suggested_mods()
     return 0
+
+
+SUGGESTED_MODS = (
+    ("usage-band", "limits, context window and cache hit rate in one line above the prompt (CC-Usage-Band)",
+     ("claude plugin marketplace add JetsonChan/CC-Usage-Band", "claude plugin install usage-band@cc-usage-band")),
+    ("lot-map", "live work map of tool calls, agents and skills in a side pane, then /lot-map (alexeyw/lot-map)",
+     ("claude plugin marketplace add alexeyw/lot-map", "claude plugin install lot-map@lot-map")),
+)
+
+
+def print_suggested_mods() -> None:
+    """Third-party desktop-app mods we use. Only printed: the owner installs them (agent config, third-party code)."""
+    print("\nSuggested mods (not installed by this script; read their code before you install, see modules/extensions/):")
+    for name, what, commands in SUGGESTED_MODS:
+        print(f"  {name}: {what}")
+        for command in commands:
+            print(f"    {command}")
 
 
 def main(argv: list[str] | None = None) -> int:
