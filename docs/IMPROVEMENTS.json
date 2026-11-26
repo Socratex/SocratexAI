@@ -2756,13 +2756,34 @@
       "what": "Mod that splits the desktop plugin pane into a tmux-style grid of other mods' panes (split, resize, zoom, layout tabs). Only grid-ready mods can be placed. MIT. Install: plugin pane-grid@pane-grid.",
       "why": "Owner wanted Flow on top and lot-map below; mod panes otherwise open as tabs of one pane and the app cannot split them. Alternative considered: side-stack (one vertical stack, guests need its protocol); workbench rejected by owner. Owner tried it 2026-11-26 in the desktop app: /grid split works but the grid is text only, so the SVG of flow-panel and lot-map cannot be shown in a cell.",
       "expected_result": "Flow in one cell and lot-map in another, each scrolling in its cell.",
-      "result": "Installed and tried 2026-11-26, then uninstalled with its marketplace (desktop surface not tested by the author; text-only grid). flow-panel keeps its grid hooks (harmless without pane-grid); lot-map patch in claude/mods/patches stays unused.",
+      "result": "Installed and tried 2026-11-26, then uninstalled with its marketplace (desktop surface not tested by the author; text-only grid). Grid hooks and the pane-grid patch were removed; replaced by side-stack (item 141).",
       "result_evidence": "owner: saw a 100% text grid in the desktop app",
       "keywords": [
         "split pane",
         "grid layout",
         "desktop side pane",
         "grid-ready",
+        "stack mods"
+      ]
+    },
+    {
+      "id": 141,
+      "tag": "N",
+      "area": "UI mods",
+      "title": "side-stack mod (lucas-saldanha-werneck)",
+      "status": "trying",
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "lot-map comparison session (split Flow and Work map)",
+      "what": "One 'Stack' pane in which guest mods draw sections one under another (guest protocol: a Box keyed side-stack:<name>). MIT, v0.5.2. Install: plugin side-stack@lucas-tools.",
+      "why": "pane-grid was text only in the desktop app. side-stack draws real elements; an SVG probe guest showed correctly in the desktop Stack pane (owner confirmed 2026-11-26).",
+      "expected_result": "Flow on top and Work map below in one pane, with scrolling when more is added.",
+      "result": "SVG probe works. flow-panel is now a guest (stack-guest.tsx, commit 352f1f8). lot-map guest patch: claude/mods/patches/lot-map-side-stack.patch (validates, not yet run live).",
+      "result_evidence": "owner: 'tak, widać' on the probe",
+      "keywords": [
+        "side stack",
+        "guest mod",
+        "desktop side pane",
         "stack mods"
       ]
     }
