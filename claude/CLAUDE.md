@@ -11,7 +11,7 @@ The shared core (`defaults/RULES.md`, `defaults/STYLE.md`) applies first; this f
 
 ## 📌 Session start
 - Read `$SOCRATEX_HOME/defaults/DIRECTIVES.json`, then the project's `INDEX.json` (and the project `DIRECTIVES` it points to, if any). Open further rule documents only when you do that thing.
-- Check where you run (`Platform` in the session context): sandboxed VMs have time limits and no local apps.
+- Owner works on Linux and Windows: check `Platform` in the session context, never assume. Sandboxed VMs have time limits, no local apps.
 
 ## 🪆 Subagents
 - The main session is the router: plans, delegates, waits, verifies and integrates.
