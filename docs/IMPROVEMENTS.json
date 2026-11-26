@@ -2743,6 +2743,28 @@
         "tool call graph",
         "context ring"
       ]
+    },
+    {
+      "id": 140,
+      "tag": "P",
+      "area": "UI mods",
+      "title": "pane-grid mod (hwanyong)",
+      "status": "adopted",
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "lot-map comparison session (split Flow and Work map)",
+      "what": "Mod that splits the desktop plugin pane into a tmux-style grid of other mods' panes (split, resize, zoom, layout tabs). Only grid-ready mods can be placed. MIT. Install: plugin pane-grid@pane-grid.",
+      "why": "Owner wanted Flow on top and lot-map below; mod panes otherwise open as tabs of one pane and the app cannot split them. Alternative considered: side-stack (one vertical stack, guests need its protocol); workbench rejected by owner.",
+      "expected_result": "Flow in one cell and lot-map in another, each scrolling in its cell.",
+      "result": "Installed 2026-11-26 (user scope, after backup.py; static read: no network, processes or model calls; uses $.fs for its layout file). flow-panel made grid-ready (hooks/pane-grid.ts plus a grid render hook, claude plugin validate passes). lot-map is not grid-ready: needs a patch or an adapter. Not yet tried in a live session.",
+      "result_evidence": "own: claude plugin validate output shows the grid hook; no live test yet",
+      "keywords": [
+        "split pane",
+        "grid layout",
+        "desktop side pane",
+        "grid-ready",
+        "stack mods"
+      ]
     }
   ]
 }
