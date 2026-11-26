@@ -12,9 +12,8 @@ const FONT = 20 // label size in CSS px (the SVG is drawn 1:1)
 // times larger than its viewBox is stretched to the pane width (scaled up or down).
 const FIT = 1
 const MIN_W = 300
-const STALE_MS = 3 * 60 * 1000 // an idle session file this old is dropped (the app tells the mod nothing about archiving)
-const SYNC_MS = 3000 // how often the shared session files are looked at
-const ATTACH_WINDOW_MS = 120000 // a new session file this soon after start_session is its child
+const RECONCILE_MS = 30000 // how often the real sources (session store, agent list) are read again
+const RECONCILE_DEBOUNCE_MS = 2000 // an event-triggered reconcile runs at most this often
 const RADIUS = 10
 const MAX_NODES = 12
 const ERROR_MS = 6000
@@ -493,14 +492,6 @@ const endedTaskOfRow = (row: unknown): { id: string; status: string } | undefine
   return r?.origin?.kind === 'task-notification' && id && status !== '' && !RUNNING_WORDS.includes(status) ? { id, status } : undefined
 }
 
-// A background agent is done when the agent list says it ended, or has dropped it
-// (the engine drops a finished agent's row a little later). A freshly started
-// agent may not be listed yet, hence the grace.
-const AGENT_GRACE_MS = 10000
-const AGENT_ENDED = ['completed', 'failed', 'killed']
-const isAgentDone = (status: string | undefined, ageMs: number): boolean =>
-  status === undefined ? ageMs > AGENT_GRACE_MS : AGENT_ENDED.includes(status)
-
 // Task nodes that still run in a stored view but that this process never saw start:
 // they ended while nobody listened, so they are closed. `isKnown` says which ids were
 // seen live.
@@ -510,106 +501,54 @@ const isStaleTask = (n: TaskNode, isKnown: (id: string) => boolean): boolean =>
 const closeStaleTasks = <T extends TaskNode>(nodes: T[], isKnown: (id: string) => boolean): T[] =>
   nodes.map(n => (isStaleTask(n, isKnown) ? { ...n, running: 0, startSum: 0, isBackground: false } : n))
 
-// The engine's own list of in-flight background work (what /tasks shows) is handed to the
-// mod only with the Stop event (`background_tasks`, one row per shell, monitor, subagent
-// or workflow). A task this process saw start that is absent from a Stop's list, or
-// listed with an ended status, is over. A freshly started task gets a grace period.
-const TASK_GRACE_MS = 10000
+// What is true about background work, from the real sources: `$.agent.list()` (subagents,
+// readable any time) and the Stop event's `background_tasks` (one row per shell, monitor,
+// subagent or workflow; the only place the engine lists shells and monitors, so that part
+// of the truth is as old as the last Stop). The cache of started work is only a guess; a
+// cached item that is absent from the truth in TASK_MISSES reconciles in a row is closed.
+// A row with an ended status closes it at once. A freshly started item is not judged for
+// TASK_GRACE_MS, and a Stop list older than the item's start says nothing about it.
+const TASK_GRACE_MS = 30000
+const TASK_MISSES = 2
 const TASK_ENDED = ['completed', 'failed', 'killed', 'stopped', 'cancelled', 'canceled', 'error']
 type TaskRow = { id: string; status?: string }
-const isTaskGone = (row: TaskRow | undefined, ageMs: number): boolean =>
-  row === undefined ? ageMs > TASK_GRACE_MS : TASK_ENDED.includes((row.status ?? '').toLowerCase())
-// Ids of the live tasks (id -> start time) that the list says are over. An undefined list
-// (an engine that sends none) closes nothing.
-const goneTasks = (live: ReadonlyMap<string, number>, rows: readonly TaskRow[] | undefined, now: number): string[] =>
-  rows === undefined ? [] : [...live].filter(([id, at]) => isTaskGone(rows.find(r => r.id === id), now - at)).map(([id]) => id)
-// </tasks>
-
-// ----------------------------------------------- background task re-check
-// <recheck>
-// While at least one background task block is shown as running (whatever else runs), the
-// mod asks the engine's GetTask tool about each of them (once right away, then every
-// minute) and closes only the ones it lists as finished (an explicit ended status). Best
-// effort: whether GetTask accepts the ids of a background Bash or a Monitor is not proven,
-// so every doubt leaves the task running (a longer glow, never a false close). The Stop
-// event's own list (above) still reconciles at the end of each turn.
-const RECHECK_MS = 60000
-const RECHECK_MAX_FAILS = 3 // consecutive useless answers after which the tool is given up
-const RECHECK_ENDED: Record<string, 'completed' | 'failed' | 'killed'> = {
-  completed: 'completed',
-  failed: 'failed',
-  error: 'failed',
-  killed: 'killed',
-  stopped: 'killed',
-  cancelled: 'killed',
-  canceled: 'killed',
+type TaskTruth = {
+  agents?: readonly TaskRow[] // `$.agent.list()`; undefined when it could not be read
+  stop?: { at: number; rows: readonly TaskRow[] } // the last Stop's `background_tasks`
 }
-const RECHECK_RUNNING = ['working', 'running', 'pending', 'in_progress', 'progress']
+type TaskVerdict = { close: string[]; misses: Map<string, number> }
 
-type RecheckState = {
-  isEnabled: boolean // FLOW_TASK_RECHECK is not 0
-  failures: number // consecutive probes that told nothing usable
-  nodes: Array<{ taskId?: string; running: number }>
-}
-
-// True when a background task block (the only nodes with a taskId) is shown as running.
-const shouldRecheck = (s: RecheckState): boolean =>
-  s.isEnabled &&
-  s.failures < RECHECK_MAX_FAILS &&
-  s.nodes.some(n => n.running > 0 && !!n.taskId)
-
-type TaskProbe =
-  | { kind: 'ended'; status: 'completed' | 'failed' | 'killed' }
-  | { kind: 'running' }
-  | { kind: 'unknown' } // an answer of a shape or status not understood
-  | { kind: 'error' } // the call threw, was denied or reported an error
-
-// What GetTask answered: `{ result: { status, ... } }` (or the bare record), `{ deny }`,
-// or `{ isError, text }`.
-const probeOfResult = (ran: unknown): TaskProbe => {
-  const top = (ran && typeof ran === 'object' ? ran : {}) as Record<string, unknown>
-  if (typeof top.deny === 'string') return { kind: 'error' }
-  if (top.isError === true) return { kind: 'error' } // includes "task not found": that never closes a task
-  const status = recordOf(ran).status
-  if (typeof status !== 'string') return { kind: 'unknown' }
-  const word = status.trim().toLowerCase()
-  if (word in RECHECK_ENDED) return { kind: 'ended', status: RECHECK_ENDED[word] }
-
-  return RECHECK_RUNNING.includes(word) ? { kind: 'running' } : { kind: 'unknown' }
-}
-
-// A thrown error is a failure whatever its text (an unknown task included).
-const probeOfError = (_err: unknown): TaskProbe => ({ kind: 'error' })
-
-type ProbeBook = { failures: number }
-// What one probe changes: whether to close the task (with which end status) and the
-// book-keeping. Only an explicit ended status closes; every other answer (running, not
-// found, error, unknown shape) leaves the task running, and all but "running" count as
-// a useless answer toward the give-up limit.
-const decideProbe = (p: TaskProbe, b: ProbeBook): { close?: 'completed' | 'failed' | 'killed'; book: ProbeBook } => {
-  if (p.kind === 'running') return { book: { failures: 0 } }
-  if (p.kind === 'ended') return { close: p.status, book: { failures: 0 } }
-
-  return { book: { failures: b.failures + 1 } }
-}
-const isRecheckOff = (failures: number): boolean => failures >= RECHECK_MAX_FAILS
-
-// One check runs right away when the timer condition begins to hold (not a minute later);
-// while the timer already runs, only its ticks check.
-const isInitialCheckDue = (want: boolean, isTimerRunning: boolean): boolean => want && !isTimerRunning
-
-// Ids to probe now: tasks the panel shows as running that this process saw start, past
-// the same start grace as the Stop-list check.
-const tasksToProbe = (
-  nodes: ReadonlyArray<{ taskId?: string; running: number }>,
+// `live`: id -> when it was seen starting; `agentIds`: which of them are subagents.
+const reconcileTasks = (
   live: ReadonlyMap<string, number>,
+  misses: ReadonlyMap<string, number>,
+  agentIds: ReadonlySet<string>,
+  truth: TaskTruth,
   now: number,
-): string[] => {
-  const ids = nodes.filter(n => n.running > 0 && !!n.taskId && live.has(n.taskId)).map(n => n.taskId as string)
+): TaskVerdict => {
+  const close: string[] = []
+  const next = new Map<string, number>()
+  for (const [id, startedAt] of live) {
+    const isAgent = agentIds.has(id)
+    const rows = isAgent ? truth.agents : truth.stop && truth.stop.at > startedAt ? truth.stop.rows : undefined
+    const kept = misses.get(id) ?? 0
+    const row = rows?.find(r => r.id === id)
+    if (row && TASK_ENDED.includes((row.status ?? '').toLowerCase())) {
+      close.push(id)
+    } else if (rows === undefined || now - startedAt < TASK_GRACE_MS) {
+      next.set(id, kept) // no usable truth yet: neither a miss nor a reset
+    } else if (row) {
+      next.set(id, 0)
+    } else if (kept + 1 >= TASK_MISSES) {
+      close.push(id)
+    } else {
+      next.set(id, kept + 1)
+    }
+  }
 
-  return [...new Set(ids)].filter(id => now - (live.get(id) ?? now) > TASK_GRACE_MS)
+  return { close, misses: next }
 }
-// </recheck>
+// </tasks>
 
 // ---------------------------------------------------------------- drawing
 
@@ -1136,7 +1075,7 @@ const turnStartedAt = new Map<string, number>()
 const spawnedAt = new Map<string, number>()
 // Background agents still working, by agent id. They survive a new prompt: the
 // prompt wipes the view, but not these. The periodic poll reads the engine's agent
-// list (`$.agent.list()`) and ends the ones it reports finished (see `syncAgents`).
+// list (`$.agent.list()`) and ends the ones it reports finished (see `reconcileTasks`).
 const liveAgents = new Map<string, { key: string; spawnAt: number }>()
 // Background tasks seen starting in this process. The view outlives a reload, this does
 // not: a task node that is running in the view but is not here ended while nobody listened.
@@ -1144,13 +1083,10 @@ const liveTasks = new Map<string, number>() // task id -> when it was seen start
 // Whether the log already holds a sample of a task notification (one line each, once).
 let hasLoggedEnd = false
 let hasLoggedOther = false
-// Re-check of background tasks (see the <recheck> block): the timer exists only while a
-// background task is shown as running.
-let recheckTimer: { cancel: () => void } | undefined
-let recheckBook: ProbeBook = { failures: 0 }
-let isRechecking = false
-let isRecheckEnabled: boolean | undefined
-const loggedProbes = new Set<string>() // outcome kinds already written to the debug log
+// Misses of the cached background work against the real sources (see `reconcileTasks`).
+let taskMisses = new Map<string, number>()
+// The last Stop event's `background_tasks`: the only place the engine lists shells and monitors.
+let lastStop: { at: number; rows: readonly TaskRow[] } | undefined
 
 const freshTokens = (u: Usage | undefined): number =>
   u ? (u.input_tokens ?? 0) + (u.output_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0) : 0
@@ -1179,10 +1115,6 @@ let held: FlowView | undefined
 
 let startedAt = 0
 let lastPublished = ''
-const HEAD_CHARS = 400 // how much of its first prompt a session shares
-const SNIPPET_CHARS = 60 // how much of a brief identifies the session it started
-type Spawn = { at: number; snippet: string }
-const norm = (s: string) => s.replace(/\s+/g, ' ').trim()
 
 const treeOf = (v: FlowView): SubTree => ({
   id: selfId,
@@ -1269,25 +1201,57 @@ async function restoredFor($: EngineInterface, v: FlowView): Promise<FlowView> {
 
 // ------------------------------------------- the desktop app's own session store
 // The Claude desktop app keeps one small file per session (title, who started it,
-// archived or not). Where it exists it tells exactly which sessions are ours, so
-// nothing has to be guessed; elsewhere the brief matching below is the fallback.
-type Entry = { name: string; kind: string; mtimeMs: number }
+// archived or not). It is the truth of which sessions are ours: the tree below this
+// session is derived from it on every reconcile, nothing is remembered between them.
+// <tree>
 type Stored = {
-  local: string
-  cli: string // the id a mod sees as its session id
-  from: string // the session that started it
+  local: string // the app's own id (`local_<uuid>`), the file name; what `spawnedFrom.sessionId` names
+  cli: string // the id a mod sees as its session id; empty until the session first runs
+  prior: string[] // earlier ids of the same session (after a clear or compaction)
+  lastCli: string
+  from: string // the local id of the session that started it
   isFork: boolean // a side chat the person forked, not work we started
   isArchived: boolean
   title: string
   created: number
   mtime: number
 }
+type StoredNode = { entry: Stored; kids: StoredNode[] }
 
-const STORE_SCAN_MS = 10000
-const STORE_AGE_MS = 3 * 24 * 3600 * 1000 // older session files are not looked at
-const stored = new Map<string, Stored>()
+const MAX_TREE_DEPTH = 8
+
+// This session's local id. A known one is kept (the engine id can change under it); else
+// the store entry that carries our engine id, as current, as last answered, or as earlier id.
+const localIdOf = (entries: readonly Stored[], selfId: string, known: string): string => {
+  if (known) return known
+  const byCli = entries.find(e => e.cli === selfId)
+  const byHistory = entries.find(e => e.lastCli === selfId || e.prior.includes(selfId))
+
+  return (byCli ?? byHistory)?.local ?? ''
+}
+
+// Everything the root started, children of children included: not archived, not a fork. A
+// child that has no engine id yet is in the tree (its tile says it is starting).
+const treeBelow = (entries: readonly Stored[], rootLocal: string): StoredNode[] => {
+  const seen = new Set([rootLocal])
+  const grow = (parent: string, depth: number): StoredNode[] => {
+    if (depth > MAX_TREE_DEPTH) return []
+    const kids = entries
+      .filter(e => e.from === parent && !e.isFork && !e.isArchived && !seen.has(e.local))
+      .sort((a, b) => a.created - b.created)
+    kids.forEach(k => seen.add(k.local))
+
+    return kids.map(entry => ({ entry, kids: grow(entry.local, depth + 1) }))
+  }
+
+  return grow(rootLocal, 1)
+}
+// </tree>
+
+type Entry = { name: string; kind: string; mtimeMs: number }
+const stored = new Map<string, Stored>() // path -> parsed file, re-read only when its mtime changes
 let storeDirs: string[] | undefined
-let lastStoreAt = 0
+let localId = '' // this session's local id once learned
 
 async function entriesOf($: EngineInterface, path: string): Promise<Entry[]> {
   try {
@@ -1325,41 +1289,44 @@ async function findStoreDirs($: EngineInterface): Promise<string[]> {
   return dirs
 }
 
-// Reads new session files once; a file of ours or one we started is read again when it changes.
-async function scanStore($: EngineInterface): Promise<void> {
-  const now = await $.clock.now()
-  if (now - lastStoreAt < STORE_SCAN_MS) return
-  lastStoreAt = now
+const parseStored = (name: string, mtime: number, j: Record<string, any>): Stored => ({
+  local: name.replace(/\.json$/, ''),
+  cli: String(j.cliSessionId ?? ''),
+  prior: Array.isArray(j.priorCliSessionIds) ? j.priorCliSessionIds.map(String) : [],
+  lastCli: String(j.lastAssistantCliSessionId ?? ''),
+  from: String(j.spawnedFrom?.sessionId ?? ''),
+  isFork: j.spawnedFrom?.userFork === true,
+  isArchived: j.isArchived === true,
+  title: String(j.title ?? ''),
+  created: Number(j.createdAt ?? 0),
+  mtime,
+})
+
+// One scan per reconcile: lists every store folder once and reads only the files that are new
+// or changed since the last scan. A file that is gone leaves the result.
+async function scanStore($: EngineInterface): Promise<Stored[]> {
   try {
-    if (!storeDirs) storeDirs = await findStoreDirs($)
-    const mine = [...stored.values()].find(s => s.cli === selfId)?.local
+    if (!storeDirs?.length) storeDirs = await findStoreDirs($)
+    const seen = new Set<string>()
     for (const dir of storeDirs) {
       for (const e of await entriesOf($, dir)) {
-        if (e.kind !== 'file' || !/^local_.*\.json$/.test(e.name) || now - e.mtimeMs > STORE_AGE_MS) continue
+        if (e.kind !== 'file' || !/^local_.*\.json$/.test(e.name)) continue
         const path = `${dir}/${e.name}`
-        const old = stored.get(path)
-        const isWatched = !!old && (old.cli === selfId || !old.cli || (!!mine && old.from === mine))
-        if (old && !(isWatched && old.mtime !== e.mtimeMs)) continue
+        seen.add(path)
+        if (stored.get(path)?.mtime === e.mtimeMs) continue
         try {
-          const j = JSON.parse(String(await $.fs.read(path))) as Record<string, any>
-          stored.set(path, {
-            local: e.name.replace(/\.json$/, ''),
-            cli: String(j.cliSessionId ?? ''),
-            from: String(j.spawnedFrom?.sessionId ?? ''),
-            isFork: j.spawnedFrom?.userFork === true,
-            isArchived: j.isArchived === true,
-            title: String(j.title ?? ''),
-            created: Number(j.createdAt ?? 0),
-            mtime: e.mtimeMs,
-          })
+          stored.set(path, parseStored(e.name, e.mtimeMs, JSON.parse(String(await $.fs.read(path))) as Record<string, any>))
         } catch {
           // half-written or unreadable: tried again on the next change
         }
       }
     }
+    for (const path of [...stored.keys()]) if (!seen.has(path)) stored.delete(path)
   } catch {
     storeDirs = []
   }
+
+  return [...stored.values()]
 }
 
 let lastTitleAt = 0
@@ -1388,95 +1355,106 @@ async function refreshTitle($: EngineInterface): Promise<void> {
 // and which children it lists, to find why children vanish from the tree.
 let lastTrace = ''
 
-async function traceStore($: EngineInterface, mine: Stored | undefined): Promise<void> {
-  const kids = mine ? [...stored.values()].filter(s => s.from === mine.local) : []
+async function traceStore($: EngineInterface, entries: readonly Stored[]): Promise<void> {
+  const kids = localId ? entries.filter(s => s.from === localId) : []
   const line =
-    `store self=${selfId.slice(0, 8)} found=${!!mine} entries=${stored.size} ` +
-    `kids=[${kids.map(k => `${k.local.slice(6, 14)}:cli=${k.cli.slice(0, 8)}:arch=${k.isArchived}:fork=${k.isFork}`).join(',')}] ` +
-    `cliOfSelfCandidates=[${[...stored.values()].filter(s => s.local === mine?.local || s.cli === selfId).map(s => s.cli.slice(0, 8)).join(',')}]`
+    `store self=${selfId.slice(0, 8)} local=${localId.slice(6, 14)} entries=${entries.length} ` +
+    `kids=[${kids.map(k => `${k.local.slice(6, 14)}:cli=${k.cli.slice(0, 8)}:arch=${k.isArchived}:fork=${k.isFork}`).join(',')}]`
   if (line === lastTrace) return
   lastTrace = line
   await dbg($, line)
 }
 
-async function poll($: EngineInterface): Promise<void> {
-  await syncAgents($)
+// A tile for one store node: the child's own shared tree when it has written one, an empty
+// "starting" tile while it has no engine id yet; its children come from the store, not from
+// whatever its own file says.
+async function tileOf($: EngineInterface, dir: string, node: StoredNode): Promise<SubTree> {
+  const { entry } = node
+  const file = entry.cli ? await loadShared($, dir, entry.cli) : undefined
+  const base: SubTree = file?.tree ?? { id: '', nodes: [], subs: [], mainRunning: false, isWaiting: false, wTotal: 0, k: 0 }
+  const title = entry.title || base.title || 'Session'
+  const subs = await Promise.all(node.kids.map(kid => tileOf($, dir, kid)))
+
+  return { ...base, id: entry.cli || entry.local, title: entry.cli ? title : `${title} (starting)`, subs }
+}
+
+// Background work against the real sources: the engine's agent list, the last Stop's task
+// list. Caches that the sources no longer confirm are closed (see `reconcileTasks`).
+async function reconcileWork($: EngineInterface): Promise<void> {
+  const now = await $.clock.now()
+  let agents: readonly TaskRow[] | undefined
+  try {
+    agents = await $.agent.list()
+  } catch {
+    agents = undefined // no agent list: agents stay as they are until it can be read
+  }
+  const live = new Map<string, number>([...liveTasks, ...[...liveAgents].map(([id, a]): [string, number] => [id, a.spawnAt])])
+  const verdict = reconcileTasks(live, taskMisses, new Set(liveAgents.keys()), { agents, stop: lastStop }, now)
+  taskMisses = verdict.misses
+  for (const id of verdict.close) {
+    await endTask($, id, 'completed')
+    await endAgent($, id)
+  }
   await dropStaleTasks($)
+}
+
+// The sessions below this one, from the store: the whole tree, children of children included.
+async function reconcileSessions($: EngineInterface): Promise<void> {
   const dir = await folderOf($)
   if (!dir) return
-  await scanStore($)
-  void armLiveRefresh($)
-  const mine = [...stored.values()].find(s => s.cli === selfId)
-  await traceStore($, mine)
-  if (!mine) await refreshTitle($)
-  const cur = held ?? (await read($, view))
-  const spawns = cur.spawns ?? []
-  const now = await $.clock.now()
+  const entries = await scanStore($)
+  localId = localIdOf(entries, selfId, localId)
+  await traceStore($, entries)
+  const mine = entries.find(e => e.local === localId)
+  if (!mine) {
+    await refreshTitle($)
 
-  if (mine) {
-    // The app says exactly which sessions we started: draw those, nothing else.
-    const kids = [...stored.values()]
-      .filter(s => s.from === mine.local && !s.isFork && !s.isArchived && s.cli !== '' && s.cli !== selfId)
-      .sort((a, b) => a.created - b.created)
-    const subs: SubTree[] = []
-    for (const k of kids) {
-      const f = await loadShared($, dir, k.cli)
-      const tree: SubTree = f?.tree ?? {
-        id: k.cli,
-        nodes: [],
-        subs: [],
-        mainRunning: false,
-        isWaiting: false,
-        wTotal: 0,
-        k: 0,
-      }
-      subs.push({ ...tree, id: k.cli, title: k.title || tree.title })
-    }
-    change($, v => ({ ...v, title: mine.title || v.title, sessionIds: kids.map(k => k.cli), subs }))
+    return // not a desktop session, or the app has not written it yet: nothing is guessed
+  }
+  const nodes = treeBelow(entries, localId)
+  const subs = await Promise.all(nodes.map(n => tileOf($, dir, n)))
+  change($, v => ({ ...v, title: mine.title || v.title, sessionIds: nodes.map(n => n.entry.cli).filter(Boolean), subs }))
+}
 
-    return
-  }
+// Rebuilds what is shown from the real sources. Events only update the cache and may ask for
+// this; none of them is the only way a state ends.
+let isReconciling = false
+let lastReconcileAt = 0
+let isReconcileScheduled = false
+let reconcileTimer: { cancel: () => void } | undefined
 
-  // Ours only when its first prompt is the brief of one of our start_session calls.
-  const isOurs = (f: Shared | undefined): boolean => {
-    const head = f?.view?.head
-    return !!head && spawns.some(s => s.snippet !== '' && head.includes(s.snippet))
+async function reconcile($: EngineInterface): Promise<void> {
+  if (isReconciling) return
+  isReconciling = true
+  try {
+    lastReconcileAt = await $.clock.now()
+    await reconcileWork($)
+    await reconcileSessions($)
+    void armLiveRefresh($)
+  } catch (err) {
+    await dbg($, `reconcile failed: ${err instanceof Error ? err.message : String(err)}`)
+  } finally {
+    isReconciling = false
   }
-  const ids: string[] = []
-  for (const id of cur.sessionIds.filter(id => id !== 'last' && id !== selfId)) {
-    if (isOurs(await loadShared($, dir, id))) ids.push(id) // drops ids attached by older, looser rules
-  }
+}
 
-  // A file born soon after one of our start_session calls, with that brief as its head.
-  if (spawns.some(s => now - s.at < ATTACH_WINDOW_MS * 5)) {
-    let names: Array<{ name: string }> = []
-    try {
-      names = await $.fs.list(dir)
-    } catch {
-      names = []
-    }
-    for (const n of names) {
-      const id = n.name.replace(/\.json$/, '')
-      if (!n.name.endsWith('.json') || id === 'last' || id === selfId || ids.includes(id)) continue
-      const f = await loadShared($, dir, id)
-      const born = f?.startedAt ?? 0
-      if (f && isOurs(f) && spawns.some(s => born >= s.at - 2000 && born <= s.at + ATTACH_WINDOW_MS)) {
-        ids.push(id)
-      }
-    }
-  }
+// An event asks for a reconcile: at most one per RECONCILE_DEBOUNCE_MS.
+async function requestReconcile($: EngineInterface): Promise<void> {
+  if (isReconcileScheduled) return
+  isReconcileScheduled = true
+  const wait = Math.max(0, lastReconcileAt + RECONCILE_DEBOUNCE_MS - (await $.clock.now()))
+  $.clock.after(wait, async () => {
+    isReconcileScheduled = false
+    await reconcile($)
+  })
+}
 
-  const subs: SubTree[] = []
-  const kept: string[] = []
-  for (const id of ids) {
-    const f = await loadShared($, dir, id)
-    // Gone when it said it ended (archived, closed) or has not been heard from for long.
-    if (f && !f.ended && (f.tree.mainRunning || now - f.updatedAt < STALE_MS)) {
-      subs.push({ ...f.tree, id })
-      kept.push(id)
-    }
-  }
-  change($, v => ({ ...v, sessionIds: kept, subs }))
+// Starts the 30 s cadence from whichever hook fires first (a resumed session may never raise
+// session.start) and reconciles once right away. Idempotent.
+function armReconcile($: EngineInterface): void {
+  if (reconcileTimer) return
+  reconcileTimer = $.clock.every(RECONCILE_MS, () => reconcile($))
+  void requestReconcile($)
 }
 
 // Debugging aid: the last lines of what redrew the pane and why, kept in
@@ -1538,7 +1516,6 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
     const next = batch.reduce((acc, f) => f(acc), cur)
     const before = draw(cur, at)
     const after = draw(next, at)
-    void syncRecheck($, next)
     if (after === before) {
       held = next
       await publish($, next)
@@ -1550,76 +1527,6 @@ function change($: EngineInterface, fn: (v: FlowView) => FlowView): void {
     await update($, view, () => next)
     await publish($, next)
   })
-}
-
-// Arms the 60 s re-check while a background task is shown as running, and drops it
-// the moment no task remains or the tool proved useless. Reads the
-// state it is given; touches no view, so it can never redraw anything by itself.
-async function syncRecheck($: EngineInterface, v: FlowView): Promise<void> {
-  try {
-    if (isRecheckEnabled === undefined) isRecheckEnabled = (await $.env.get('FLOW_TASK_RECHECK')) !== '0'
-    const want = shouldRecheck({
-      isEnabled: isRecheckEnabled,
-      failures: recheckBook.failures,
-      nodes: v.nodes,
-    })
-    if (isInitialCheckDue(want, !!recheckTimer)) {
-      recheckTimer = $.clock.every(RECHECK_MS, () => {
-        void recheckTasks($)
-      })
-      // No task shown means no call: recheckTasks probes only displayed running tasks.
-      void recheckTasks($, v)
-    } else if (!want && recheckTimer) {
-      recheckTimer.cancel()
-      recheckTimer = undefined
-    }
-  } catch {
-    // a best-effort aid
-  }
-}
-
-// One tick: ask GetTask about each task, close the ones it lists as finished. Any doubt
-// leaves the task as it is.
-async function recheckTasks($: EngineInterface, shown?: FlowView): Promise<void> {
-  if (isRechecking) return
-  isRechecking = true
-  try {
-    const cur = shown ?? held ?? (await read($, view))
-    const now = await $.clock.now()
-    const ids = tasksToProbe(cur.nodes, liveTasks, now)
-    for (const id of ids) {
-      if (!recheckTimer) break // the timer was dropped meanwhile
-      let probe: TaskProbe
-      let raw = ''
-      try {
-        // Raised by the mod itself: this plugin's own tool.call hook does not see it.
-        const ran = await $.tool.call({ tool: 'GetTask', taskId: id } as Parameters<typeof $.tool.call>[0])
-        probe = probeOfResult(ran)
-        raw = JSON.stringify(ran) ?? ''
-      } catch (err) {
-        probe = probeOfError(err)
-        raw = `threw ${err instanceof Error ? err.message : String(err)}`
-      }
-      if (loggedProbes.size === 0) await dbg($, `recheck first call GetTask(${id}) raw ${JSON.stringify(raw.slice(0, 600))}`)
-      if (!loggedProbes.has(probe.kind)) {
-        loggedProbes.add(probe.kind)
-        await dbg($, `recheck outcome ${probe.kind} for ${id}: ${JSON.stringify(raw.slice(0, 300))}`)
-      }
-      const decided = decideProbe(probe, recheckBook)
-      recheckBook = decided.book
-      if (decided.close) await endTask($, id, decided.close)
-      if (isRecheckOff(recheckBook.failures)) {
-        await dbg($, `recheck off: ${recheckBook.failures} useless GetTask answers in a row`)
-        break
-      }
-    }
-    isRechecking = false // lets a re-armed timer run its first check at once
-    await syncRecheck($, cur)
-  } catch {
-    // a best-effort aid
-  } finally {
-    isRechecking = false
-  }
 }
 
 // A background agent is over: its branch stops running (grey ring off) and the
@@ -1644,21 +1551,6 @@ async function endAgent($: EngineInterface, id: string): Promise<void> {
         : n,
     ),
   }))
-}
-
-// The poll's look at the engine's agent list: a background agent that finished (or
-// that the engine has dropped) ends here. Replaces a guess from idle time.
-async function syncAgents($: EngineInterface): Promise<void> {
-  if (liveAgents.size === 0) return
-  try {
-    const list = await $.agent.list()
-    const now = await $.clock.now()
-    for (const [id, a] of [...liveAgents]) {
-      if (isAgentDone(list.find(x => x.id === id)?.status, now - a.spawnAt)) await endAgent($, id)
-    }
-  } catch {
-    // no agent list: the agents stay as they are until it can be read
-  }
 }
 
 // A background task is over (notification, TaskStop, Monitor timeout): the block
@@ -1730,13 +1622,14 @@ export const register: Register = on => {
     const { rateLimits } = await $.session.usage()
     const win = rateLimits.find(r => r.kind === 'five_hour')
     await change($, v => applyLimit(v, win))
-    $.clock.every(SYNC_MS, () => poll($))
+    armReconcile($)
 
     return next(e)
   })
 
   // Every prompt brings the panel back if it was closed (unless switched off).
   on('prompt.submit', async ($, e, next) => {
+    armReconcile($)
     // A background task's notification is not the owner's prompt: it must neither
     // clear the panel nor restart the prompt's cost. It only ends the task it names.
     if (e.origin?.kind === 'task-notification') {
@@ -1749,9 +1642,6 @@ export const register: Register = on => {
       const isUp = (await $.ui.panes()).some(pane => pane.id === PANE)
       if (!isUp) void $.ui.open({ id: PANE, title: 'Flow' })
     }
-    // The session's first prompt (the brief, for a started session) is how its
-    // parent recognises it.
-    const head = e.command ? '' : norm(e.text).slice(0, HEAD_CHARS)
     // A new prompt starts a fresh view: only segments used since then show.
     const usdNow = (await $.session.usage()).cost?.usd ?? 0
     await change($, v => ({
@@ -1759,7 +1649,6 @@ export const register: Register = on => {
       // Background agents and tasks that still work stay (their branch, running, grey).
       nodes: v.nodes.filter(n => n.running > 0 && ((!!n.taskId && liveTasks.has(n.taskId)) || [...liveAgents.values()].some(a => a.key === n.key))),
       agentNode: Object.fromEntries(Object.entries(v.agentNode).filter(([id]) => liveAgents.has(id))),
-      head: v.head || head || undefined,
       promptUsd: usdNow,
       lastUsd: usdNow,
       baseUsd: v.baseUsd ?? usdNow, // the ledger before this mod saw any turn
@@ -1788,8 +1677,9 @@ export const register: Register = on => {
   on('classic.Stop', async ($, e, next) => {
     try {
       const rows = (e as { background_tasks?: TaskRow[] }).background_tasks
-      const now = await $.clock.now()
-      for (const id of goneTasks(liveTasks, rows, now)) await endTask($, id, 'completed')
+      if (rows) lastStop = { at: await $.clock.now(), rows }
+      armReconcile($)
+      void requestReconcile($)
     } catch {
       // no list: the tasks stay as they are
     }
@@ -1798,6 +1688,7 @@ export const register: Register = on => {
   })
 
   on('turn.start', async ($, e, next) => {
+    armReconcile($)
     const startedAt = await $.clock.now()
     turnStartedAt.set(e.agentId ?? '', startedAt)
     if (e.agentId === undefined) {
@@ -1918,16 +1809,10 @@ export const register: Register = on => {
     const args = e as unknown as Record<string, unknown>
     const c = classify(String(e.tool), args)
     const isBackground = args.run_in_background === true
-    // A session we start gets a brief: remember its start, so the child can be
-    // recognised by that brief later (and no other session is taken for it).
-    const spawn: Spawn[] =
-      /start_session|hand_off_to_session/.test(String(e.tool)) && typeof args.prompt === 'string'
-        ? [{ at: now, snippet: norm(args.prompt).slice(0, SNIPPET_CHARS) }]
-        : []
+    armReconcile($)
     void armLiveRefresh($)
     await change($, v => ({
       ...v,
-      spawns: [...(v.spawns ?? []), ...spawn].slice(-20),
       nodes: touch(v.nodes, c, now, n => ({
         ...n,
         at: now,
@@ -2029,7 +1914,7 @@ export const register: Register = on => {
     const { Box, Text, Svg, Button } = $.ui.resolve(e)
     await folderOf($) // makes sure the session id is known before drawing
     const v = await restoredFor($, await read($, view))
-    void syncRecheck($, v) // the panel loaded with tasks still shown: check at once
+    armReconcile($) // the pane loaded: reconcile now, then every RECONCILE_MS
     const now = await $.clock.now()
     // The picture must never depend on the toggle: if its value cannot be read, show cost.
     let figure: Figure = 'cost'

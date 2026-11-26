@@ -14,6 +14,10 @@ def run(expr: str) -> object:
     return run_blocks(expr, "tasks")
 
 
+def verdict(expr: str) -> object:
+    return run(f"(v => ({{close: v.close, misses: [...v.misses]}}))({expr})")
+
+
 class FlowTasks(unittest.TestCase):
     def test_background_bash_task_id_comes_from_the_result(self) -> None:
         self.assertEqual(run("taskIdOf('Bash', {result: {stdout: '', backgroundTaskId: 'bx1'}})"), "bx1")
@@ -77,14 +81,6 @@ class FlowTasks(unittest.TestCase):
     def test_loose_id_formats(self) -> None:
         self.assertEqual(run("parseTaskEnd('task id: ab-12 status')")["id"], "ab-12")
 
-    def test_agent_done_by_list_status_or_when_dropped(self) -> None:
-        for status in ("completed", "failed", "killed"):
-            self.assertTrue(run(f"isAgentDone('{status}', 0)"), status)
-        for status in ("pending", "running", "waiting", "idle"):
-            self.assertFalse(run(f"isAgentDone('{status}', 999999)"), status)
-        self.assertFalse(run("isAgentDone(undefined, 5000)"))  # not listed yet: grace
-        self.assertTrue(run("isAgentDone(undefined, 20000)"))  # dropped by the engine
-
     def test_task_not_seen_starting_in_this_process_is_closed(self) -> None:
         # regression: the stored view survives a reload, the set of live tasks does not
         got = run(
@@ -99,21 +95,45 @@ class FlowTasks(unittest.TestCase):
         self.assertTrue(run("isStaleTask({taskId: 'x', running: 1, isBackground: true}, () => false)"))
         self.assertFalse(run("isStaleTask({taskId: 'x', running: 1, isBackground: true}, () => true)"))
 
-    def test_task_gone_by_stop_list(self) -> None:
-        self.assertTrue(run("isTaskGone({id: 'a', status: 'completed'}, 0)"))
-        self.assertTrue(run("isTaskGone({id: 'a', status: 'Killed'}, 0)"))
-        self.assertFalse(run("isTaskGone({id: 'a', status: 'running'}, 999999)"))
-        self.assertFalse(run("isTaskGone({id: 'a'}, 999999)"))  # listed without a status: still in flight
-        self.assertFalse(run("isTaskGone(undefined, 5000)"))  # not listed yet: grace
-        self.assertTrue(run("isTaskGone(undefined, 20000)"))  # dropped from the list
+    def test_agent_closes_after_two_missed_reconciles_not_before(self) -> None:
+        agents = "new Set(['a'])"
+        live = "new Map([['a', 0]])"
+        first = verdict(f"reconcileTasks({live}, new Map(), {agents}, {{agents: []}}, 100000)")
+        self.assertEqual(first["close"], [])
+        self.assertEqual(first["misses"], [["a", 1]])
+        second = verdict(f"reconcileTasks({live}, new Map([['a', 1]]), {agents}, {{agents: []}}, 130000)")
+        self.assertEqual(second["close"], ["a"])
 
-    def test_gone_tasks_from_a_list(self) -> None:
-        live = "new Map([['a', 0], ['b', 0], ['c', 95000], ['d', 0]])"
-        rows = "[{id: 'a', status: 'running'}, {id: 'd', status: 'failed'}]"
-        self.assertEqual(run(f"goneTasks({live}, {rows}, 100000)"), ["b", "d"])  # c is inside its grace
-        self.assertEqual(run(f"goneTasks({live}, [], 100000)"), ["a", "b", "d"])  # nothing in flight
-        self.assertEqual(run(f"goneTasks({live}, undefined, 100000)"), [])  # no list: close nothing
+    def test_running_row_resets_the_misses(self) -> None:
+        got = verdict("reconcileTasks(new Map([['a', 0]]), new Map([['a', 1]]), new Set(['a']), {agents: [{id: 'a', status: 'running'}]}, 100000)")
+        self.assertEqual(got["close"], [])
+        self.assertEqual(got["misses"], [["a", 0]])
 
+    def test_ended_status_closes_at_once_even_inside_the_grace(self) -> None:
+        for status in ("completed", "Failed", "killed"):
+            got = verdict(f"reconcileTasks(new Map([['a', 99000]]), new Map(), new Set(['a']), {{agents: [{{id: 'a', status: '{status}'}}]}}, 100000)")
+            self.assertEqual(got["close"], ["a"], status)
+
+    def test_fresh_work_is_not_judged_inside_the_grace(self) -> None:
+        got = verdict("reconcileTasks(new Map([['a', 90000]]), new Map(), new Set(['a']), {agents: []}, 100000)")  # 10 s old
+        self.assertEqual(got["close"], [])
+        self.assertEqual(got["misses"], [["a", 0]])
+
+    def test_shell_truth_is_the_stop_list_and_only_when_newer_than_the_start(self) -> None:
+        live = "new Map([['b', 50000]])"
+        stale = verdict(f"reconcileTasks({live}, new Map([['b', 1]]), new Set(), {{stop: {{at: 40000, rows: []}}}}, 100000)")
+        self.assertEqual(stale["close"], [])  # the Stop was before the task started: it says nothing
+        self.assertEqual(stale["misses"], [["b", 1]])  # neither a miss nor a reset
+        none = verdict(f"reconcileTasks({live}, new Map([['b', 1]]), new Set(), {{}}, 100000)")
+        self.assertEqual(none["close"], [])  # no Stop yet
+        fresh = verdict(f"reconcileTasks({live}, new Map([['b', 1]]), new Set(), {{stop: {{at: 70000, rows: []}}}}, 100000)")
+        self.assertEqual(fresh["close"], ["b"])  # second miss
+        listed = verdict(f"reconcileTasks({live}, new Map([['b', 1]]), new Set(), {{stop: {{at: 70000, rows: [{{id: 'b'}}]}}}}, 100000)")
+        self.assertEqual(listed["close"], [])  # listed without a status: still in flight
+
+    def test_unreadable_agent_list_closes_nothing(self) -> None:
+        got = verdict("reconcileTasks(new Map([['a', 0]]), new Map([['a', 5]]), new Set(['a']), {}, 100000)")
+        self.assertEqual(got["close"], [])
 
     def test_notification_row_ends_the_task_it_names(self) -> None:
         row = "{origin: {kind: 'task-notification'}, task: {id: 'bu0y', status: 'failed'}}"

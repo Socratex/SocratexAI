@@ -42,8 +42,6 @@ export type FlowView = {
   lastUsd?: number // the engine's cost ledger at the last turn, dollars
   promptUsd?: number // the ledger when the last prompt started
   baseUsd?: number // the ledger before this mod saw any turn (a resumed session has spent before)
-  head?: string // this session's first prompt: how its parent recognises it
-  spawns?: Array<{ at: number; snippet: string }> // start_session calls made here: when, and the start of the brief
   title?: string // first prompt of this session (its name in the parent's tooltip)
   sessionIds: string[] // sessions this one started (found by their shared files)
   subs: SubTree[] // their trees, in the same order
