@@ -2610,11 +2610,11 @@
       "tag": "?",
       "area": "Plugins, MCP, tools",
       "title": "Playwright MCP in extension mode (existing browser tabs)",
-      "status": "considering",
+      "status": "adopted",
       "what": "@playwright/mcp with --extension attaches to the owner's already-open Chrome or Edge tabs and logged-in sessions; controlled tabs go into a tab group named Playwright and are listed and selected with browser_tabs.",
-      "why": "Owner confirmed this is the tool remembered for tagging and reusing existing browser views and said to add it (2026-11-26). Blocked: package needs Node >=20, this machine has Node 18.19. Alternatives weighed: Chrome DevTools MCP (Chrome only, Google usage statistics on by default, opt out --no-usage-statistics), agent-browser connect (already installed), Browser MCP (Linux support unverified).",
+      "why": "Owner confirmed this is the tool remembered for tagging and reusing existing browser views and said to add it (2026-11-26). Needed Node >=20 (machine had 18.19): solved with nvm. Alternatives weighed: Chrome DevTools MCP (Chrome only, Google usage statistics on by default, opt out --no-usage-statistics), agent-browser connect (already installed), Browser MCP (Linux support unverified).",
       "expected_result": "Agent works in tabs the owner already has open, with stable tab selection.",
-      "result": "Not installed yet: needs Node 20+ (no sudo or version manager present) plus the browser extension installed by the owner in Chrome or Edge. Security: attached sessions expose logged-in accounts; keep off Jira, Confluence and banking tabs.",
+      "result": "Registered 2026-11-26: claude mcp add --scope user playwright, pinned @playwright/mcp@0.0.84 (26 days old; newest 0.0.86 was under 2 weeks), --extension. Runs on Node 22 from nvm (nvm 0.40.3 installed to ~/.nvm with PROFILE=/dev/null, so no shell profile edits; system Node 18 untouched). Config backup ~/claude-backup/ai-config-20261126-095857.zip. claude mcp list: Connected. Still to do by owner: install the Playwright MCP Bridge extension in Chrome or Edge and approve the connection. Security: attached tabs expose logged-in accounts; keep off Jira, Confluence and banking tabs.",
       "keywords": [
         "playwright",
         "existing tabs",
@@ -2627,7 +2627,13 @@
       "install": "Node >=20, then: claude mcp add playwright -- npx @playwright/mcp@<pinned version> --extension; owner installs the extension (needs consent)",
       "decided": "owner",
       "date": "2026-11-26",
-      "source": "owner question"
+      "source": "owner question",
+      "verify": [
+        "claude",
+        "mcp",
+        "get",
+        "playwright"
+      ]
     },
     {
       "id": 135,
