@@ -9,7 +9,7 @@ Build a local copy (do not edit the installed plugin: updates would overwrite it
 
     git clone https://github.com/alexeyw/lot-map.git lot-map-grid
     cd lot-map-grid && git checkout ea9de48f
-    patch -p1 < ../claude/mods/patches/lot-map-pane-grid.patch
+    patch -p1 -l < ../claude/mods/patches/lot-map-pane-grid.patch
 
 Load that folder with `claude --plugin-dir <folder>` for a test, and disable the installed `lot-map@lot-map` so the two do not draw twice.
 After a lot-map update, re-check that the patch still applies.

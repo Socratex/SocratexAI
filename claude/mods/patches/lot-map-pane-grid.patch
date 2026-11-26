@@ -1,6 +1,6 @@
-diff -ruN lot-map-orig/hooks/pane-grid.ts lot-map-grid/hooks/pane-grid.ts
---- lot-map-orig/hooks/pane-grid.ts	1970-01-01 01:00:00.000000000 +0100
-+++ lot-map-grid/hooks/pane-grid.ts	2026-11-26 22:41:41.336130400 +0100
+diff -ruN n-orig/hooks/pane-grid.ts n-grid/hooks/pane-grid.ts
+--- n-orig/hooks/pane-grid.ts	1970-01-01 01:00:00.000000000 +0100
++++ n-grid/hooks/pane-grid.ts	2026-11-26 22:42:49.291243700 +0100
 @@ -0,0 +1,182 @@
 +import type { EngineInterface, RenderElement, RenderNode, UiScrollInput } from 'claude-code'
 +
@@ -184,9 +184,9 @@ diff -ruN lot-map-orig/hooks/pane-grid.ts lot-map-grid/hooks/pane-grid.ts
 +  const { column, row } = e.pointer
 +  return column >= placement.column && column < placement.column + placement.columns && row >= placement.row && row < placement.row + placement.rows
 +}
-diff -ruN lot-map-orig/hooks/register.tsx lot-map-grid/hooks/register.tsx
---- lot-map-orig/hooks/register.tsx	2026-11-22 22:01:09.000000000 +0100
-+++ lot-map-grid/hooks/register.tsx	2026-11-26 22:42:15.868120200 +0100
+diff -ruN n-orig/hooks/register.tsx n-grid/hooks/register.tsx
+--- n-orig/hooks/register.tsx	2026-11-26 22:42:48.729277800 +0100
++++ n-grid/hooks/register.tsx	2026-11-26 22:42:49.398766300 +0100
 @@ -1,6 +1,6 @@
  // The hooks: what the mod listens to, and what each puts on the board. The board is in `board.ts`, the pane's
  // drawing in `pane.tsx`, the sums of `contextCost` in `cost.ts`.
