@@ -36,7 +36,7 @@ Opened from `defaults/RULES.md` when you actually do the thing described. The te
 
 ## Env files (details)
 - Agents never read `.env*` directly (the guard blocks it). To learn which variables a project needs or how two env files differ, run `python $SOCRATEX_HOME/modules/tools/scripts/env_safe.py <file>`: it prints `KEY=value` only when the value is provably non-secret (empty, boolean, small integer or port, local host, URL without credentials, path, placeholder, `${VAR}` reference) and `KEY=<masked>` for everything else, unknown values included. Secret-looking key names (password, secret, token, key, dsn, auth, salt, ...) are always masked.
-- `--keys-only` prints names only; `--compare <other>` prints `<different>` for differing unsafe values (the Omega machine_constants comparator rule), `a -> b` for differing safe ones, and marks keys present in one file only.
+- `--keys-only` prints names only; `--compare <other>` prints `<different>` for differing unsafe values (the config comparator rule), `a -> b` for differing safe ones, and marks keys present in one file only.
 
 ## Finishing (details)
 - After the commit: `modules/tools/scripts/risk_score.py --commit HEAD` (verification level, report-only until the owner switches it on) and log the outcome once with `modules/tools/scripts/routing_log.py` (see `defaults/rules/ROUTING.md`).
