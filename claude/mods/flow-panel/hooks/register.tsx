@@ -1,19 +1,20 @@
 // HOOKS: the entry of the mod. Each hook translates an engine event into a `dispatch` (the rules in
 // rules.ts decide what it means) and, where an event may have ended something, asks for a
 // reconcile. No rule lives here. Reading order of the mod: rules.ts (header) -> this file.
-import type { EngineInterface, Register, StateWrite } from 'claude-code'
+import type { EngineInterface, Register } from 'claude-code'
 
 import type { TaskRow } from './model'
 import { dbgOnce, noteRender } from './debug'
 import { draw, fitted } from './draw'
 import { paneTree } from './pane'
-import { fillSlot, offerChoice, offerKey, placementIn, readPlacement } from './pane-grid'
 import { endedTaskOfRow, isFollowedAgent, monitorDeadlineMs, parseTaskEnd, spawnKind, squash, stoppedTaskOf, taskIdOf, tokensOf } from './rules'
 import { armLiveRefresh, armReconcile, requestReconcile } from './schedule'
 import { bindPicture, dispatch, getState, markEnded, paneView, pickedFigure, pickFigure } from './state'
+import { hasSection, HOST_CHECKS_MS, hostPresent, placeSection } from './stack-guest'
+import type { StackHook } from './stack-guest'
 
 const PANE = 'flow-panel'
-const PLUGIN = 'flow-panel' // the name in .claude-plugin/plugin.json: also our pane-grid member id
+const PLUGIN = 'flow-panel' // the name in .claude-plugin/plugin.json: also our section name in the side-stack pane
 
 // The store compares pictures (to skip a redraw that would look the same) with the same drawing.
 bindPicture((v, now, selfId) => draw(v, now, 'cost', selfId))
@@ -61,7 +62,6 @@ export const register: Register = on => {
 
   // The command opens it by hand even where the panel is switched off.
   on('command.run', { command: 'flow-panel' }, async $ => {
-    if (await readPlacement($, PLUGIN)) return { text: 'Flow is drawn in a pane-grid cell: use /grid place - to bring its own pane back.' }
     await $.ui.open({ id: PANE, title: 'Flow' })
 
     return { text: 'Flow pane opened.' }
@@ -189,42 +189,24 @@ export const register: Register = on => {
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => drawFlow($, e))
 
-  // pane-grid (optional companion): draw in a grid cell, and step out of our own pane while placed.
-  // Without pane-grid installed, readPlacement is undefined and nothing here changes anything.
-  on('ui.render', { component: 'Pane', requestId: /^grid-/, plugin: 'pane-grid' }, async ($, e, next) => {
-    const placement = await readPlacement($, PLUGIN)
-    const below = await next(e)
-    const { Box, Button } = $.ui.resolve(e)
-    const offered = offerChoice(below, PLUGIN, placement, choice => (
-      <Button key={choice.key} plain label={choice.label} hotkey={choice.hotkey} onPress={() => {}} />
-    ))
-    const offer = <Box key={offerKey(PLUGIN)} />
-    if (!placement || placement.requestId != e.requestId) return <Box flexDirection="column">{offered}{offer}</Box>
-    const cell = (
-      <Box key={`cell:${PLUGIN}`} flexDirection="column">
-        {await drawFlow($, e)}
-      </Box>
-    )
+  // side-stack (optional host, https://github.com/lucas-saldanha-werneck/side-stack): draw our section in its Stack pane.
+  // Without side-stack installed nothing here does anything. Claude Code 2.1.327+ hears only a plugin's own drawings
+  // unless the matcher names `plugin`; older builds run the second registration. hasSection keeps it to one drawing.
+  on('ui.render', { component: 'Pane', requestId: 'side-stack', plugin: '*' }, drawInStack)
+  on('ui.render', { component: 'Pane', requestId: 'side-stack' }, drawInStack)
+}
 
-    return fillSlot(offered, PLUGIN, cell) ?? <Box flexDirection="column">{offered}{offer}{cell}</Box>
-  })
+// Our section of the Stack pane: the same drawing as our own pane.
+const drawInStack: StackHook = async ($, e, next) => {
+  const below = await next(e)
+  if (hasSection(below, PLUGIN)) return below
 
-  // A cell appeared: close our own pane. The cell was removed: open it again (a pane the person closed stays closed).
-  on('state.set', { plugin: 'pane-grid' as never, key: 'layout' as never }, async ($, e, next) => {
-    const write = e as StateWrite
-    const result = await next(e)
-    const isPlaced = placementIn(write.value, PLUGIN) != undefined
-    const isOpen = (await $.ui.panes()).some(pane => pane.id === PANE)
-    if (isPlaced && isOpen) await $.ui.close({ id: PANE })
-    else if (!isPlaced && !isOpen && placementIn(write.previous, PLUGIN) != undefined) await openOwnPane($)
-
-    return result
-  })
+  return placeSection($, e, below, PLUGIN, await drawFlow($, e).catch(() => null))
 }
 
 type Resolvable = Parameters<EngineInterface['ui']['resolve']>[0]
 
-// The drawing of the pane, shared by our own pane and a pane-grid cell. The picture has its own size, so no width is needed.
+// The drawing of the pane, shared by our own pane and our section of the Stack pane.
 const drawFlow = async ($: EngineInterface, e: Resolvable) => {
   const elements = $.ui.resolve(e)
   const { view, selfId } = await paneView($)
@@ -239,10 +221,17 @@ const drawFlow = async ($: EngineInterface, e: Resolvable) => {
   })
 }
 
-// Opens our own pane unless a pane-grid cell already shows the flow.
+// Opens our own pane unless side-stack is there to show the flow in its Stack pane. Plugin load order is not
+// known, so the host is looked for again later: where it turns up after our pane opened, the pane is closed.
 async function openOwnPane($: EngineInterface): Promise<void> {
-  if (await readPlacement($, PLUGIN)) return
+  if (await hostPresent($)) return
   await $.ui.open({ id: PANE, title: 'Flow' })
+  for (const ms of HOST_CHECKS_MS) $.clock.after(ms, () => void closeWhenStacked($))
+}
+
+async function closeWhenStacked($: EngineInterface): Promise<void> {
+  if (!(await hostPresent($))) return
+  if ((await $.ui.panes()).some(pane => pane.id === PANE)) await $.ui.close({ id: PANE })
 }
 
 // The engine's message that a background task ended arrives as a prompt flagged as a task
