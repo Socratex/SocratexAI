@@ -1,6 +1,6 @@
 {
   "schema": "socratex-improvements/v1",
-  "updated": "2026-11-18",
+  "updated": "2026-11-26",
   "usage": "Bare list of AI-workflow improvements for a receiving agent. Read all of it, do NOT apply in bulk. Ask the owner with one form which items fit (company policy, client NDA, repo, allowed hooks). Back up the configuration before any change (item 41). Do not copy secrets or private paths from this list. Details: AI-PRACTICES.md (findings log). Optional fields: keywords (lowercase strings; `sox ledger find` matches them first), scope (business or game; none = everywhere), verify (command that exits 0 when installed), install (how, needs consent). On a new computer run modules/tools/scripts/improvements_check.py after pull. Status field: adopted / rejected / considering (see status_legend). One file for every concept weighed, so check here before proposing a plugin or tool again.",
   "legend": {
     "P": "port as is",
@@ -2576,6 +2576,102 @@
         "batch tool calls",
         "za duzo narzedzi w kontekscie"
       ]
+    },
+    {
+      "id": 133,
+      "tag": "A",
+      "area": "Plugins, MCP, tools",
+      "title": "agent-browser (Vercel Labs, token-light browser CLI)",
+      "status": "adopted",
+      "what": "CLI that drives Chrome over CDP and returns a compact accessibility snapshot with short refs (@e1) instead of raw HTML; can attach to a running Chrome (connect, --auto-connect) and pin a tab per agent (--pin-tab).",
+      "why": "Owner asked for an AI-friendly browser that cuts tokens on web research. Audit (read-only, 2026-11-26): no telemetry in source; only extra calls are a Chrome-version check to chromereleases.googleblog.com (off with AGENT_BROWSER_NO_VERSION_CHECK=1) and Chrome for Testing download; daemon and dashboard bind to localhost only; Apache-2.0, npm provenance. Caveats: closed prebuilt binary, postinstall download has no checksum, Ubuntu AppArmor userns issue (upstream #2755).",
+      "expected_result": "Fewer tokens per web research or page-check task than the built-in browser pane or raw fetches.",
+      "result": "Installed 2026-11-26: npm i -g agent-browser --ignore-scripts --prefix ~/.local, then agent-browser install (Chrome 158). Config backup ~/claude-backup/ai-config-20261126-095633.zip. Smoke test open + snapshot -i on example.com worked. Token saving not measured yet. Not set persistently: AGENT_BROWSER_NO_VERSION_CHECK=1. Needs a throwaway profile or session, never the daily profile.",
+      "result_evidence": "Smoke test output 2026-11-26; claim of 93-97% saving is the vendor's, unverified.",
+      "keywords": [
+        "token light browser",
+        "web research",
+        "accessibility snapshot",
+        "browser for agent",
+        "agent browser",
+        "przegladarka dla ai"
+      ],
+      "verify": [
+        "agent-browser",
+        "--version"
+      ],
+      "install": "npm i -g agent-browser --ignore-scripts --prefix ~/.local; agent-browser install (downloads Chrome, needs consent)",
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "owner question"
+    },
+    {
+      "id": 134,
+      "tag": "?",
+      "area": "Plugins, MCP, tools",
+      "title": "Playwright MCP in extension mode (existing browser tabs)",
+      "status": "considering",
+      "what": "@playwright/mcp with --extension attaches to the owner's already-open Chrome or Edge tabs and logged-in sessions; controlled tabs go into a tab group named Playwright and are listed and selected with browser_tabs.",
+      "why": "Owner confirmed this is the tool remembered for tagging and reusing existing browser views and said to add it (2026-11-26). Blocked: package needs Node >=20, this machine has Node 18.19. Alternatives weighed: Chrome DevTools MCP (Chrome only, Google usage statistics on by default, opt out --no-usage-statistics), agent-browser connect (already installed), Browser MCP (Linux support unverified).",
+      "expected_result": "Agent works in tabs the owner already has open, with stable tab selection.",
+      "result": "Not installed yet: needs Node 20+ (no sudo or version manager present) plus the browser extension installed by the owner in Chrome or Edge. Security: attached sessions expose logged-in accounts; keep off Jira, Confluence and banking tabs.",
+      "keywords": [
+        "playwright",
+        "existing tabs",
+        "browser extension",
+        "attach to browser",
+        "tab group",
+        "logged in browser",
+        "playwright mcp"
+      ],
+      "install": "Node >=20, then: claude mcp add playwright -- npx @playwright/mcp@<pinned version> --extension; owner installs the extension (needs consent)",
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "owner question"
+    },
+    {
+      "id": 135,
+      "tag": "?",
+      "area": "UI mods",
+      "title": "Generic quality-of-life mods (statusline family)",
+      "status": "considering",
+      "what": "Community mods in the Anthropic directory: Desktop Statusline (folder, branch, cost, context meter, 5h and weekly limits, cache TTL idle time, toasts at 80% and 95% usage), Token Status Line, claude-usage-statusline, rich-statusline.",
+      "why": "Owner asked for existing generic QoL mods. Community plugins with privileged reach: read the code before enabling. Desktop Statusline fits best (limits and cache TTL).",
+      "expected_result": "Usage limits and cache state visible without running a command.",
+      "result": "Not installed. Next step: review source, then owner decides.",
+      "keywords": [
+        "statusline",
+        "usage limits",
+        "cache ttl",
+        "quality of life mod",
+        "desktop statusline",
+        "status line mod"
+      ],
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "owner question"
+    },
+    {
+      "id": 136,
+      "tag": "?",
+      "area": "UI mods",
+      "title": "Own mod: open items, questions and decisions panel with session links",
+      "status": "considering",
+      "what": "Mod with a Pane that collects open questions (AskUserQuestion, wrap_up asks) and decisions, with links to sessions (#local_<id>).",
+      "why": "Owner asked for a summary of how many issues, questions and decisions are open, with session links. Findings: the mod API has no slot in the right-hand column (Environment, Context, Connectors, Changes); a mod gets Pane, AbovePrompt, status line and toast only, so a collapsible section there is not possible. Unverified: whether a mod can list other sessions; fallback is list_sessions on demand.",
+      "expected_result": "One place to see what waits for the owner across sessions.",
+      "result": "Not built. Needs the owner's yes to turn on mods in this session and a check of what the session API exposes.",
+      "keywords": [
+        "open questions summary",
+        "pending decisions",
+        "session links",
+        "pane mod",
+        "collapsible section",
+        "what waits for me"
+      ],
+      "decided": "owner",
+      "date": "2026-11-26",
+      "source": "owner question"
     }
   ]
 }
