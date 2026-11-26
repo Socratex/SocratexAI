@@ -73,3 +73,10 @@ def test_full_install_without_terminal_or_yes_refuses_to_guess(monkeypatch, tmp_
     monkeypatch.setattr(sys.stdin, "isatty", lambda: False)
     assert install.resolve_prefs("full", auto=False, reconfigure=False) is False
     assert "--yes" in capsys.readouterr().out
+
+
+def test_panel_stack_is_off_by_default_and_needs_flow_panel():
+    install.apply_prefs({})
+    assert install.PREFS["panel_stack"] is False
+    install.apply_prefs({"panel_stack": True})
+    assert install.PREFS["panel_stack"] is True

@@ -54,7 +54,7 @@ CLAUDE_SKILLS = SOCRATEX / "claude" / "skills"
 STYLE_DOC = "defaults/STYLE.md"
 
 # Answers of the install questions. Defaults reproduce the original full install; the wizard narrows them.
-PREF_DEFAULTS = {"claude": True, "codex": True, "merge_settings": True, "codex_plugin": True, "flow_panel": True,
+PREF_DEFAULTS = {"claude": True, "codex": True, "merge_settings": True, "codex_plugin": True, "flow_panel": True, "panel_stack": False,
                  "style": "uce", "git_hooks": True, "set_env": True, "subrepos": False, "refs_dir": "", "claude_dir": "", "codex_dir": "",
                  "targets_applied": False}
 PREFS = dict(PREF_DEFAULTS)
@@ -153,8 +153,13 @@ def collect_prefs(auto: bool) -> dict:
         prefs["flow_panel"] = prefs["merge_settings"] and ask(
             "Enable the flow-panel mod (live session cost view)?",
             "Optional local UI for session usage. Sets CLAUDE_CODE_PLUGIN_DIRS in settings.json.", False, auto)
+        prefs["panel_stack"] = prefs["flow_panel"] and ask(
+            "Show the Work map (lot-map) with Flow, stacked in one side pane (side-stack)?",
+            "Builds side-stack and a patched lot-map from pinned upstream sources into ~/claude-mods/sox-local and installs "
+            "them with `claude plugin` (third-party code, read it first; needs git and the claude CLI). No: Flow alone in its own pane.",
+            False, auto)
     else:
-        prefs.update(merge_settings=False, codex_plugin=False, flow_panel=False)
+        prefs.update(merge_settings=False, codex_plugin=False, flow_panel=False, panel_stack=False)
     prefs["style"] = "uce" if ask(
         "Use the UCE reply style (emoji-led, very short, one thought per line)?",
         "Recommended by the author for skimming readers; it is a personal preference, say no for neutral replies.",
@@ -505,9 +510,22 @@ def install_steps(python: str, report: list[str], check: bool, mode: str = "chec
             report.append("note: settings.json untouched, so the guard hook is not active")
     if PREFS["codex"]:
         install_codex(report, check)
+    if PREFS["claude"] and PREFS["panel_stack"]:
+        install_panel_stack(report, check, mode)
     install_env(report, check)
     install_git_hooks(python, report, check)
     install_subrepos(mode, report)
+
+
+def install_panel_stack(report: list[str], check: bool, mode: str) -> None:
+    """Optional combo pane: see panel_stack.py. Built only by a full install (it clones third-party code)."""
+    import panel_stack
+    if check or mode != "full":
+        report.extend(panel_stack.check())
+    elif panel_stack.install():
+        report.append("panel stack: setup failed, see the message above; run panel_stack.py to retry")
+    else:
+        report.append("panel stack: side-stack + lot-map installed, restart Claude Desktop")
 
 
 def collect_plan(target: str | None = None) -> tuple[list[str], list[tuple[Path, str | None, str]]]:
