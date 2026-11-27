@@ -28,6 +28,7 @@ Source of truth: `defaults/ROUTING.json` (mirrored by `claude/agents/*.md` and `
 - Claude: the router session stays on sonnet; opus runs as a subagent or a separate session. Delegate through `subagent_type`, not a hand-written `model`.
 - A subagent starts with a clean context: give it the goal, paths, acceptance criteria and result format. Independent parts run in parallel; dependent ones in order.
 - A delegate ends its report with one status: DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT or BLOCKED. BLOCKED or NEEDS_CONTEXT is the evidence that triggers escalation or a better brief; the parent never retries it unchanged.
+- Queue escalation (called bridge in some projects): a standard run that reports blocked with escalate=true is retried once on high; a second failure goes to the owner.
 - Deterministic scripts and the current agent come before delegation for tiny or mechanical work.
 - Effort per task type: `defaults/ROUTING.json` `effort_by_task_type`.
 
@@ -41,7 +42,7 @@ Source of truth: `defaults/ROUTING.json` (mirrored by `claude/agents/*.md` and `
 - Weekly (or inside `usage-optimize`): `modules/tools/scripts/routing_stats.py --out logs/routing_stats_<date>.md`. It only proposes (tier up or down per task type, lower effort, risk points per area, high-tier share), with at least 10 tasks per group. Proposals go to the owner in one form; approved ones change `ROUTING.json` or `RISK-RULES.json` after a backup. Design: `docs/ROUTER-LOOP.md`.
 
 ## 🔝 Top tier needs owner approval
-Never automatic, not in unattended loops and not because a task is critical. Explain why the high tier is not enough (attempts, evidence, exact scope, expected cost and gain), ask, and wait for an explicit yes. Approval covers analysis only, not implementation, extra agents or xhigh effort.
+Never automatic, not in unattended runs (AUTO), not in the task queue or bridge, and not because a task is critical. Explain why the high tier is not enough (attempts, evidence, exact scope, expected cost and gain), ask, and wait for an explicit yes. Approval covers analysis only, not implementation, extra agents or xhigh effort.
 
 ## ⚖️ Load balancing with a second agent (optional; owner decision 2026-11-19, made opt-in 2026-11-23)
 Applies only when a second agent is enabled in config (today `codex.enabled`; `sox config show`). Default is `solo`: one main agent, nothing here applies and nothing breaks. With a second agent, the main agent (the one running the session) is the lead for code and anything mathematical and the second agent is its subcontractor, so load and limits are shared. The main agent writes the brief, gives the orders, integrates and verifies. The subcontractor follows the brief and the parent's instructions, reports with a status (DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT, BLOCKED) and never commits, pushes or finalizes.

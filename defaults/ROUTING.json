@@ -19,7 +19,7 @@
         "cheap": {"model": "gpt-6-luna", "effort": "medium", "profile": "socratex_quick", "use": ["simple, fully specified, low-risk, easily verified work"]},
         "standard": {"model": "gpt-6.1-terra", "effort": "medium", "profile": "socratex_standard", "use": ["spec implementation", "queue tasks", "routine refactors"]},
         "high": {"model": "gpt-6.1-sol", "effort": "high", "profile": "socratex_deep, socratex_reviewer", "use": ["parent that plans and integrates", "review", "uncertain or coupled work", "escalated tasks"]},
-        "top": {"model": "gpt-6-astra", "effort": null, "rule": "Never automatic. Analysis only, after multiple evidenced failed repairs, and only with owner approval after an explanation (attempts, evidence, scope). Approval does not authorize implementation, extra agents or xhigh effort."}
+        "top": {"model": "gpt-6-astra", "effort": null, "rule": "Never automatic, also not in unattended runs (AUTO) or the queue/bridge. Analysis only, after multiple evidenced failed repairs, and only with owner approval after an explanation (attempts, evidence, scope). Approval does not authorize implementation, extra agents or xhigh effort."}
     },
     "effort_by_task_type": {
         "search": "low",
@@ -32,7 +32,7 @@
         "debug": "high"
     },
     "escalation": {
-        "queue": "A standard run that reports blocked with escalate=true is retried once on high; a second failure goes to the owner.",
+        "queue": "Applies to the task queue, also called the bridge in some projects. A standard run that reports blocked with escalate=true is retried once on high; a second failure goes to the owner.",
         "interactive": "After two failed attempts on a tier, stop, summarize evidence and move up one tier or ask the owner."
     },
     "claude_agents": {
