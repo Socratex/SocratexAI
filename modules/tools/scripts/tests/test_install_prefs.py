@@ -80,3 +80,11 @@ def test_panel_stack_is_off_by_default_and_needs_flow_panel():
     assert install.PREFS["panel_stack"] is False
     install.apply_prefs({"panel_stack": True})
     assert install.PREFS["panel_stack"] is True
+
+
+def test_panel_stack_adds_the_quiet_option_for_lot_map():
+    install.apply_prefs({"panel_stack": True})
+    options = install.settings_fragment("python")["pluginConfigs"]["lot-map@sox-local"]["options"]
+    assert options == {"guardedHooks": False}
+    install.apply_prefs({})
+    assert "pluginConfigs" not in install.settings_fragment("python")
