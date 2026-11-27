@@ -98,8 +98,8 @@
     {
       "id": "PRJ-NONSTD-OVERRIDE",
       "severity": "error",
-      "what": "A routing, risk or guard override lives outside .ai/ under a non-standard name, so nothing reads it.",
-      "fix": "Move it to the standard place: .ai/RISK-RULES.json, .ai/guard.json, or the config key routing.tier_overrides for model tiers.",
+      "what": "A routing, risk or guard override lives outside .ai/ and the project's SocratexAI/ folder under a non-standard name, so nothing reads it.",
+      "fix": "Move it to the standard place: the project's SocratexAI/ folder (risk rules via config key risk_rules), .ai/guard.json, or the config key routing.tier_overrides for model tiers.",
       "patterns": ["*MODEL-ROUTING*.json", "*RISK-RULES*.json", "*guard*.json"]
     },
     {

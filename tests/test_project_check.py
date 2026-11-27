@@ -195,7 +195,8 @@ def test_dup_hook(tmp_path):
 
 def test_nonstd_override(tmp_path):
     project = make(tmp_path, {"config/MODEL-ROUTING.json": "{}", "RISK-RULES.json": "{}", "tools/guard.json": "{}",
-                              ".ai/RISK-RULES.json": "{}", ".ai/guard.json": "{}", "data/other.json": "{}"})
+                              ".ai/RISK-RULES.json": "{}", ".ai/guard.json": "{}", "data/other.json": "{}",
+                              "SocratexAI/RISK-RULES.json": "{}", "SocratexAI/MODEL-ROUTING.json": "{}"})
     assert sorted(h["file"] for h in found(project, "PRJ-NONSTD-OVERRIDE")) == ["RISK-RULES.json", "config/MODEL-ROUTING.json", "tools/guard.json"]
 
 

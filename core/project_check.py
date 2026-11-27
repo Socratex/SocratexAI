@@ -258,8 +258,8 @@ def check_dup_hook(ctx: Context, rule: dict) -> None:
 def check_nonstd_override(ctx: Context, rule: dict) -> None:
     for rel in ctx.files:
         parts = rel.split("/")
-        if ".ai" not in parts[:-1] and any(glob_match(parts[-1], p, True) for p in rule["patterns"]):
-            ctx.add(rule, rel, 1, "non-standard override file; the standard ones live in .ai/")
+        if not ({".ai", "SocratexAI"} & set(parts[:-1])) and any(glob_match(parts[-1], p, True) for p in rule["patterns"]):
+            ctx.add(rule, rel, 1, "non-standard override file; the standard ones live in .ai/ or SocratexAI/")
 
 
 def check_guard_schema(ctx: Context, rule: dict) -> None:
