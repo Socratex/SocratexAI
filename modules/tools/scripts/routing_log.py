@@ -21,7 +21,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import risk_score  # noqa: E402
 
-LOG_PATH = risk_score.ROOT / "audits" / "routing_log.jsonl"
+_AUDITS_DIR = risk_score.ROOT / "docs" / "audits"
+if not _AUDITS_DIR.is_dir():
+    _AUDITS_DIR = risk_score.ROOT / "audits"
+LOG_PATH = _AUDITS_DIR / "routing_log.jsonl"
 TASK_TYPES = ("search", "implementation", "refactor", "docs", "debug", "review", "plan", "ops")
 TIERS = ("cheap", "standard", "high", "top")
 EFFORTS = ("low", "medium", "high", "xhigh", "max", "default")
