@@ -88,3 +88,9 @@ def test_panel_stack_adds_the_quiet_option_for_lot_map():
     assert options == {"guardedHooks": False}
     install.apply_prefs({})
     assert "pluginConfigs" not in install.settings_fragment("python")
+
+
+def test_legacy_generated_block_is_stripped():
+    text = "A\n" + install.LEGACY_BEGIN + "\n@x\n" + install.END + "\n\nmine\n"
+    out = install.strip_legacy_block(text)
+    assert install.LEGACY_BEGIN not in out and "@x" not in out and "mine" in out and out.startswith("A")
