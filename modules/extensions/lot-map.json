@@ -20,7 +20,7 @@
     "python modules/tools/scripts/backup.py",
     "claude plugin marketplace add alexeyw/lot-map",
     "claude plugin install lot-map@lot-map",
-    "then type /lot-map in a session"
+    "echo Type /lot-map in a session to open the map"
   ],
   "ledger": 139
 }
