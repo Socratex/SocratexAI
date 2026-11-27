@@ -37,8 +37,8 @@ Source of truth: `defaults/ROUTING.json` (mirrored by `claude/agents/*.md` and `
 - A level may be raised by hand, never lowered below the script. Status: report-only until the owner switches it on in the project's stop gate.
 
 ## 🔁 Feedback loop
-- Every finished task appends one line to the project's `audits/routing_log.jsonl`: `modules/tools/scripts/routing_log.py --type <type> --tier <tier> --first-pass yes|no --fixes N --commit HEAD`. A fix of an earlier task's bug adds `--regression-of <ref>`.
-- Weekly (or inside `usage-optimize`): `modules/tools/scripts/routing_stats.py --out audits/routing_stats_<date>.md`. It only proposes (tier up or down per task type, lower effort, risk points per area, high-tier share), with at least 10 tasks per group. Proposals go to the owner in one form; approved ones change `ROUTING.json` or `RISK-RULES.json` after a backup. Design: `docs/ROUTER-LOOP.md`.
+- Every finished task appends one line to the project's `logs/routing_log.jsonl`: `modules/tools/scripts/routing_log.py --type <type> --tier <tier> --first-pass yes|no --fixes N --commit HEAD`. A fix of an earlier task's bug adds `--regression-of <ref>`.
+- Weekly (or inside `usage-optimize`): `modules/tools/scripts/routing_stats.py --out logs/routing_stats_<date>.md`. It only proposes (tier up or down per task type, lower effort, risk points per area, high-tier share), with at least 10 tasks per group. Proposals go to the owner in one form; approved ones change `ROUTING.json` or `RISK-RULES.json` after a backup. Design: `docs/ROUTER-LOOP.md`.
 
 ## 🔝 Top tier needs owner approval
 Never automatic, not in unattended loops and not because a task is critical. Explain why the high tier is not enough (attempts, evidence, exact scope, expected cost and gain), ask, and wait for an explicit yes. Approval covers analysis only, not implementation, extra agents or xhigh effort.

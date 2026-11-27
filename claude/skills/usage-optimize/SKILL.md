@@ -50,4 +50,4 @@ Saving estimate: source cost x realistic reduction %. State the assumption in a 
 ```
 - No tables or session IDs unless the owner asks.
 - Offer to apply the top lever (rules change, routing, skill, habit); apply only after a yes.
-- Save a short dated summary to the project's `audits/usage_<YYYYMMDD>.md` so the next analysis can compare the trend.
+- Save a short dated summary to the project's `logs/usage_<YYYYMMDD>.md` so the next analysis can compare the trend.

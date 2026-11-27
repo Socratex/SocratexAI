@@ -3,6 +3,7 @@
   "note": "Rules of `sox project check PATH` (code: core/project_check.py, one function per rule id). Globs are matched with fnmatch against the project-relative posix path; `*` also crosses `/`; a pattern without `/` also matches the file name; a trailing `/` means a folder prefix. `exclude` is applied to every rule; projects add more with the config key project_check.exclude and the read_only_dirs of .ai/guard.json.",
   "exclude": [
     "audits/archive/*",
+    "logs/*",
     ".claude/worktrees/*",
     ".git/*",
     "node_modules/*",

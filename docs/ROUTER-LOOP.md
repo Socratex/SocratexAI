@@ -52,7 +52,7 @@ Rules: the level can be raised manually, never lowered below the script's score;
 
 ### 2.1 Outcome log (this is also the "quality diary", item 27 of `IMPROVEMENTS.json`)
 
-File `audits/routing_log.jsonl` in each project, one row per task, appended by `modules/tools/scripts/routing_log.py` (called by the router):
+File `logs/routing_log.jsonl` in each project, one row per task, appended by `modules/tools/scripts/routing_log.py` (called by the router):
 
 ```json
 {"date":"2026-11-16","task":"a1b2c3","type":"implementation","domain":"ui","tier":"standard","agent":"implementer","effort":"medium","risk":4,"level":"STANDARD","first_pass":true,"fixes":0,"escalated":false,"regression_of":null}
@@ -74,7 +74,7 @@ File `audits/routing_log.jsonl` in each project, one row per task, appended by `
 
 ### 2.3 Closing the loop
 
-1. The script writes a report `audits/routing_stats_<date>.md` (numbers + proposals).
+1. The script writes a report `logs/routing_stats_<date>.md` (numbers + proposals).
 2. The router shows 3-6 proposals in one form.
 3. After "yes": backup, change `defaults/ROUTING.json` / the risk rules, run the consistency test of agents against the file, add an entry to `AI-PRACTICES.md`.
 

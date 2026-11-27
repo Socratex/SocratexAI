@@ -382,11 +382,11 @@
     },
     {
       "path": "modules/tools/scripts/routing_log.py",
-      "what": "Append one task outcome to audits/routing_log.jsonl (the router feedback loop)."
+      "what": "Append one task outcome to logs/routing_log.jsonl (the router feedback loop)."
     },
     {
       "path": "modules/tools/scripts/routing_stats.py",
-      "what": "Read audits/routing_log.jsonl and propose routing changes (the LEARNED half of the loop)."
+      "what": "Read logs/routing_log.jsonl and propose routing changes (the LEARNED half of the loop)."
     },
     {
       "path": "modules/tools/scripts/skill_learn.py",

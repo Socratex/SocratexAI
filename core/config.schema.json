@@ -7,6 +7,8 @@
     "schema_version": {"type": "integer", "enum": [1]},
     "adapter": {"type": "string", "enum": ["solo", "duo", "yolo"]},
     "extensions": {"type": "array", "items": {"type": "string"}},
+    "profiles": {"type": "array", "items": {"type": "string"}},
+    "risk_rules": {"type": "array", "items": {"type": "string"}},
     "startup": {
       "type": "object",
       "additionalProperties": false,

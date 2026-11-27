@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Append one task outcome to audits/routing_log.jsonl (the router feedback loop).
+"""Append one task outcome to logs/routing_log.jsonl (the router feedback loop).
 
 The router calls this once per finished task. Risk comes from risk_score.py (deterministic);
 the outcome fields come from the router's own record of the task. routing_stats.py reads the log.
@@ -21,10 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import risk_score  # noqa: E402
 
-_AUDITS_DIR = risk_score.ROOT / "docs" / "audits"
-if not _AUDITS_DIR.is_dir():
-    _AUDITS_DIR = risk_score.ROOT / "audits"
-LOG_PATH = _AUDITS_DIR / "routing_log.jsonl"
+LOG_PATH = risk_score.ROOT / "logs" / "routing_log.jsonl"
 TASK_TYPES = ("search", "implementation", "refactor", "docs", "debug", "review", "plan", "ops")
 TIERS = ("cheap", "standard", "high", "top")
 EFFORTS = ("low", "medium", "high", "xhigh", "max", "default")

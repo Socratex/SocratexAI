@@ -2,7 +2,7 @@
 type: doc
 title: Nadpisania w projekcie
 description: Standardowy format nadpisań SocratexAI per projekt - które pliki, jakie klucze, reguły scalania i przykłady
-updated: 2026-11-22
+updated: 2026-11-27
 ---
 
 # Nadpisania w projekcie
@@ -27,7 +27,7 @@ Luzować bezpieczeństwo (`safety.allow`) wolno tylko z warstw 2-4 i 6, nie z pl
 | `.socratex/flow.json` | zmiany w tabeli flow (kroki dopisz, usuń) |
 | `.ai/guard.json` | własne wzorce dla hooka bezpieczeństwa |
 | `.ai/review.json`, `.ai/planning.json` | nadpisania sprawdzaczy etapów review i planning |
-| `.ai/RISK-RULES.json` | własne reguły oceny ryzyka diffa |
+| `.ai/RISK-RULES.json` | własne reguły oceny ryzyka diffa (stary sposób: podmienia całość, tylko gdy klucze `profiles` i `risk_rules` nie są ustawione) |
 | `AGENTS.md`, `CLAUDE.md`, `INDEX.json` | tylko fakty i reguły projektu; start z `templates/project/` |
 
 Każdy plik konfiguracji ma `schema_version` (dziś `1`). Nieznany klucz to błąd z nazwą pliku i klucza, nic nie jest po cichu pomijane.
@@ -43,6 +43,8 @@ Każdy plik konfiguracji ma `schema_version` (dziś `1`). Nieznany klucz to bł�
 | `routing.tier_overrides` | `{"rola": "cheap" / "standard" / "high"}` |
 | `extensions` | lista włączonych rozszerzeń (zmiany przez `$append`, `$remove`) |
 | `preferences` | `{"code": {"files": [...], "load_when": "..."}}` |
+| `profiles` | lista profili z `modules/profiles/<nazwa>/` (np. `["gamedev"]`); każdy dokłada swoje `RISK-RULES.json` |
+| `risk_rules` | lista plików z regułami ryzyka projektu (ścieżka względem korzenia projektu albo bezwzględna) |
 | `startup.load_rules` | czy `RULES.md` ładuje się na starcie |
 | `safety.allow` | luzowanie reguł bezpieczeństwa (tylko warstwy właściciela) |
 
@@ -56,6 +58,16 @@ Przykład:
   "extensions": {"$append": ["serena"], "$remove": ["usage-optimize"]},
   "routing": {"tier_overrides": {"implementer": "high"}}
 }
+```
+
+## Reguły ryzyka (`profiles`, `risk_rules`)
+`risk_score.py` składa reguły warstwami (później wygrywa): `defaults/RISK-RULES.json`, potem `modules/profiles/<nazwa>/RISK-RULES.json` dla każdego wpisu `profiles`, potem każdy plik z `risk_rules`.
+- Listy (`path_rules`, `ignore_globs`, `code_suffixes`, `test_markers`, `learned`) dopisują się bez duplikatów; reguła ścieżek o tej samej nazwie łączy globy i bierze późniejsze punkty.
+- Bloki skalarne (`levels`, `size`, `missing_tests.points`, `writer`, `docs_only`) podmienia późniejsza warstwa.
+- Brak obu kluczy: działa stary tryb, czyli `.ai/RISK-RULES.json` podmienia wszystko (gdy go nie ma, obowiązują domyślne).
+- Nieistniejący profil albo plik to błąd z nazwą ścieżki.
+```json
+{"schema_version": 1, "profiles": ["gamedev"], "risk_rules": ["SocratexAI/RISK-RULES.json"]}
 ```
 
 ## Wiedza o projekcie (`project.json`, `group.json`)

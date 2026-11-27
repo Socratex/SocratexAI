@@ -1,0 +1,25 @@
+{
+    "schema": "socratex-risk-rules/v1",
+    "note": "Game development layer for risk_score.py: engine project files, save data, runtime flow, world generation. Enabled by config key `profiles: [\"gamedev\"]`; merged over defaults/RISK-RULES.json (same-name path rules join their globs).",
+    "ignore_globs": ["*.meta"],
+    "path_rules": [
+        {
+            "name": "persistent data",
+            "points": 4,
+            "globs": ["*/Save/*", "*/save/*"]
+        },
+        {
+            "name": "build and project config",
+            "points": 4,
+            "globs": ["*.asmdef", "*ProjectSettings/*", "*Packages/manifest.json"]
+        },
+        {
+            "name": "core runtime flow",
+            "points": 2,
+            "globs": ["*Bootstrap*", "*Sessions/*", "*WorldGen*", "*Generation*"]
+        }
+    ],
+    "missing_tests": {
+        "code_suffixes": [".gd"]
+    }
+}

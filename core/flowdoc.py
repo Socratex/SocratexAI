@@ -29,6 +29,7 @@ DIRECTORY_MAP = (
     ("modules/engine/", "wspólny silnik review i planning"),
     ("modules/routing/", "role, wielu agentów, eskalacja"),
     ("modules/memory/", "kod pamięci (dane w `state/`)"),
+    ("modules/profiles/", "profile projektów (np. `gamedev`): paczki reguł włączane kluczem `profiles`"),
     ("modules/tools/scripts/", "skrypty: install, backup, update, check_leaks, build_index, risk_score, routing_*, skill_learn, subrepos, state"),
     ("modules/extensions/gpt/", "narzędzia do rozmów z ChatGPT (link udostępniania, archiwum)"),
     ("modules/extensions/", "manifesty rozszerzeń: pluginy, MCP, mody, skille, paczki referencyjne"),
@@ -39,6 +40,7 @@ DIRECTORY_MAP = (
     ("tests/", "testy rdzenia, resolvera i `sox` (testy modułów leżą obok ich kodu)"),
     ("docs/", "dokumentacja, rejestr usprawnień, specyfikacje"),
     ("state/", "wyjście maszynowe z rotacją, poza gitem"),
+    ("logs/", "log routingu i raporty projektu (`routing_log.jsonl`), poza gitem"),
     ("local/", "twoja prywatna warstwa, poza gitem"),
 )
 

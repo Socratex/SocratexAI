@@ -5,7 +5,10 @@ The score is deterministic: it comes from changed paths and sizes, never from a 
 Levels: LIGHT (fast gate of the changed area), STANDARD (+ full quality gate),
 FULL (+ independent high-tier reviewer on diff and spec, + manual check request).
 
-Rules: the project's .ai/RISK-RULES.json when present, else defaults/RISK-RULES.json.
+Rules, layered (later wins): defaults/RISK-RULES.json, then modules/profiles/<name>/RISK-RULES.json for each
+config key `profiles`, then each file of config key `risk_rules` (project-relative or absolute paths).
+Lists append without duplicates (path rules with the same name join their globs); scalar values are replaced.
+Legacy: when neither key is set, the project's .ai/RISK-RULES.json replaces the defaults entirely.
 Run from inside the project (it scores the git repository of the current directory).
 
 Usage:
@@ -29,6 +32,7 @@ from pathlib import Path
 SOCRATEX_HOME = Path(__file__).resolve().parents[3]
 DEFAULT_RULES = SOCRATEX_HOME / "defaults" / "RISK-RULES.json"
 PROJECT_RULES = Path(".ai") / "RISK-RULES.json"
+PROFILES_DIR = SOCRATEX_HOME / "modules" / "profiles"
 
 
 def project_root(start: Path | None = None) -> Path:
@@ -39,7 +43,6 @@ def project_root(start: Path | None = None) -> Path:
 
 
 ROOT = project_root()
-RULES_PATH = ROOT / PROJECT_RULES if (ROOT / PROJECT_RULES).exists() else DEFAULT_RULES
 LEVELS = ("LIGHT", "STANDARD", "FULL")
 
 
@@ -49,8 +52,78 @@ class FileChange:
     lines: int
 
 
-def load_rules(path: Path = RULES_PATH) -> dict:
+def layered_config(root: Path, socratex_home: Path | None = None) -> tuple[list[str], list[str]]:
+    """Config keys `profiles` and `risk_rules` of the project (merged config layers; see docs/OVERRIDES.md)."""
+    home = socratex_home or SOCRATEX_HOME
+    sys.path.insert(0, str(home / "core"))
+    try:
+        import core
+        values = core.resolve(root, home)["values"]
+    except Exception as exc:  # a broken config must not stop scoring; the legacy path still works
+        print(f"warning: config not read, using default risk rules: {exc}", file=sys.stderr)
+        return [], []
+    finally:
+        sys.path.remove(str(home / "core"))
+    return list(values.get("profiles", [])), list(values.get("risk_rules", []))
+
+
+def merge_rules(base: dict, over: dict) -> dict:
+    """Merge one rules layer over another: dicts deep-merge, lists append without duplicates, scalars are replaced.
+    Path rules with the same name join their globs and take the later points."""
+    merged = dict(base)
+    for key, value in over.items():
+        current = merged.get(key)
+        if isinstance(current, dict) and isinstance(value, dict):
+            merged[key] = merge_rules(current, value)
+        elif key == "path_rules" and isinstance(current, list) and isinstance(value, list):
+            merged[key] = merge_path_rules(current, value)
+        elif isinstance(current, list) and isinstance(value, list):
+            merged[key] = current + [item for item in value if item not in current]
+        else:
+            merged[key] = value
+    return merged
+
+
+def merge_path_rules(base: list[dict], over: list[dict]) -> list[dict]:
+    rules = [dict(rule) for rule in base]
+    for rule in over:
+        same = next((r for r in rules if r["name"] == rule["name"]), None)
+        if same is None:
+            rules.append(dict(rule))
+        else:
+            same["points"] = rule["points"]
+            same["globs"] = same["globs"] + [g for g in rule["globs"] if g not in same["globs"]]
+    return rules
+
+
+def _read_rules(path: Path) -> dict:
+    if not path.is_file():
+        raise FileNotFoundError(f"risk rules file not found: {path}")
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def build_rules(root: Path, profiles: list[str], files: list[str], default: Path = DEFAULT_RULES,
+                profiles_dir: Path = PROFILES_DIR) -> dict:
+    """Layer defaults, profile files, then extra files (relative ones against the project root)."""
+    rules = _read_rules(default)
+    for name in profiles:
+        rules = merge_rules(rules, _read_rules(profiles_dir / name / "RISK-RULES.json"))
+    for entry in files:
+        path = Path(entry)
+        rules = merge_rules(rules, _read_rules(path if path.is_absolute() else root / path))
+    return rules
+
+
+def load_rules(path: Path | None = None, root: Path | None = None) -> dict:
+    """Rules for scoring: an explicit file as is; else layered config; else legacy .ai file; else defaults."""
+    if path is not None:
+        return _read_rules(path)
+    root = root or ROOT
+    profiles, files = layered_config(root)
+    if profiles or files:
+        return build_rules(root, profiles, files)
+    legacy = root / PROJECT_RULES
+    return _read_rules(legacy if legacy.exists() else DEFAULT_RULES)
 
 
 def matches(path: str, globs: list[str]) -> bool:

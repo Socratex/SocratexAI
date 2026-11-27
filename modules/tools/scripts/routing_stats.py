@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read audits/routing_log.jsonl and propose routing changes (the LEARNED half of the loop).
+"""Read logs/routing_log.jsonl and propose routing changes (the LEARNED half of the loop).
 
 Proposals only: nothing here edits MODEL-ROUTING.json or RISK-RULES.json. The router shows the
 proposals to the owner in one form; approved ones are applied after a backup.
@@ -7,7 +7,7 @@ proposals to the owner in one form; approved ones are applied after a backup.
 Usage:
     routing_stats.py                 # Markdown report to stdout
     routing_stats.py --json
-    routing_stats.py --out audits/routing_stats_20261123.md
+    routing_stats.py --out logs/routing_stats_20261123.md
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import risk_score  # noqa: E402
 
 ROOT = risk_score.ROOT
-LOG_PATH = ROOT / "audits" / "routing_log.jsonl"
+LOG_PATH = ROOT / "logs" / "routing_log.jsonl"
 
 MIN_SAMPLE = 10
 GOOD_RATE = 0.90
@@ -162,7 +162,9 @@ def main() -> int:
     report = to_markdown(summary)
     if args.out:
         out = Path(args.out)
-        (out if out.is_absolute() else ROOT / out).write_text(report, encoding="utf-8")
+        target = out if out.is_absolute() else ROOT / out
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(report, encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False) if args.json else report, end="" if not args.json else "\n")
     return 0
 
