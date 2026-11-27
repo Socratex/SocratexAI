@@ -343,6 +343,9 @@ def settings_fragment(python: str) -> dict:
         fragment.pop("enabledPlugins", None)
     if not PREFS["flow_panel"]:
         fragment.get("env", {}).pop("CLAUDE_CODE_PLUGIN_DIRS", None)
+    if PREFS["panel_stack"]:
+        # keeps lot-map from putting "hook was skipped" notices into the chat; synced on every sync/pull
+        fragment["pluginConfigs"] = {"lot-map@sox-local": {"options": {"guardedHooks": False}}}
     return fragment
 
 

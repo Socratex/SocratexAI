@@ -2,5 +2,13 @@
   "name": "flow-panel",
   "version": "0.3.0",
   "description": "Animated node graph of Claude's work: you, Claude, sub-agents, tools, MCP servers and skills, with the 5-hour limit growth and a per-path cost estimate in percent.",
-  "types": "./types/index.d.ts"
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "guardedHooks": {
+      "type": "boolean",
+      "title": "Hooks a guard skips",
+      "default": false,
+      "description": "Off (default): the mod adds no classic.Stop hook, so an organisation's guard has nothing to skip and nothing is written into the chat. The cost: a background task that ended is noticed from the transcript row instead of the Stop event, a little later."
+    }
+  }
 }

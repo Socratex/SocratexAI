@@ -19,7 +19,7 @@ const PLUGIN = 'flow-panel' // the name in .claude-plugin/plugin.json: also our 
 // The store compares pictures (to skip a redraw that would look the same) with the same drawing.
 bindPicture((v, now, selfId) => draw(v, now, 'cost', selfId))
 
-export const register: Register = on => {
+export const register: Register = (on, options) => {
   // Dots are pinned to the wall clock, so a redraw does not restart them; still there is no steady
   // timer: the cadence is in schedule.ts.
   on('session.start', async ($, e, next) => {
@@ -75,20 +75,24 @@ export const register: Register = on => {
     return next(e)
   })
 
-  // The one place the engine lists its background tasks: the Stop event carries them. The reconcile
-  // closes the tasks this process follows that the list no longer holds (or ends).
-  on('classic.Stop', async ($, e, next) => {
-    try {
-      const rows = (e as { background_tasks?: TaskRow[] }).background_tasks
-      await dispatch($, { type: 'stop', now: await $.clock.now(), rows })
-      armReconcile($)
-      void requestReconcile($)
-    } catch {
-      // no list: the tasks stay as they are
-    }
+  // Off by default (option guardedHooks): on a Team or Enterprise login an organisation's guard skips classic.* hooks
+  // with a notice in the chat each time. Without the hook the task end comes from the transcript row (ui.render below).
+  if (options?.guardedHooks === true || options?.guardedHooks === 'true') {
+    // The one place the engine lists its background tasks: the Stop event carries them. The reconcile
+    // closes the tasks this process follows that the list no longer holds (or ends).
+    on('classic.Stop', async ($, e, next) => {
+      try {
+        const rows = (e as { background_tasks?: TaskRow[] }).background_tasks
+        await dispatch($, { type: 'stop', now: await $.clock.now(), rows })
+        armReconcile($)
+        void requestReconcile($)
+      } catch {
+        // no list: the tasks stay as they are
+      }
 
-    return next(e)
-  })
+      return next(e)
+    })
+  }
 
   on('turn.start', async ($, e, next) => {
     armReconcile($)

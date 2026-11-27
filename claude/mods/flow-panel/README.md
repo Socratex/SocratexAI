@@ -79,3 +79,6 @@ Imports only go downwards; the files are imported without an extension (what the
 | `hooks/pane.tsx` | view | The pane's elements (figure toggle and drawing), from ready data. |
 
 State life cycle: a followed background task or agent is `running` until one rule of `CLOSE_RULES` closes it (`closed(reason)`); it is never reopened. To change when something closes, edit that rule (or its constant: `TASK_GRACE_MS`, `TASK_MISSES`, `TASK_ENDED`). To change which sub-sessions show, edit `isShownChild`. To change a hook's effect, edit its case in `nextState`.
+
+## Chat notices
+The mod writes nothing into the chat. Option `guardedHooks` (default off) controls the one hook that an organisation's guard can skip with a notice (`classic.Stop`); off, the end of a background task is read from the transcript row instead. Turn it on with `/plugin configure flow-panel` only if the delay matters.
